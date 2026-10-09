@@ -21,6 +21,7 @@ import (
 	"astralive/backend/internal/ids"
 	"astralive/backend/internal/metrics"
 	"astralive/backend/internal/runtime"
+	"astralive/backend/internal/userconfig"
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
@@ -30,6 +31,7 @@ import (
 )
 
 type Server struct {
+	Config     *userconfig.Service
 	S          *app.Service
 	Redis      *redis.Client
 	Env, Token string
@@ -120,6 +122,10 @@ func (h *Server) Router() http.Handler {
 	r := chi.NewRouter()
 	r.Use(h.requestContext)
 	r.Use(h.validateContract)
+	if h.Config != nil {
+		r.Mount("/api/v0.3/config", h.Config.PublicRouter())
+		r.Mount("/internal/v0.3", h.Config.InternalRouter())
+	}
 	r.Get("/health/live", func(w http.ResponseWriter, r *http.Request) {
 		_ = json.NewEncoder(w).Encode(map[string]any{"status": "UP"})
 	})
@@ -185,7 +191,7 @@ func (h *Server) requestContext(next http.Handler) http.Handler {
 		}
 		metrics.HTTPRequests.WithLabelValues(r.Method, route, strconv.Itoa(status)).Inc()
 		metrics.HTTPDuration.WithLabelValues(r.Method, route).Observe(float64(time.Since(start).Milliseconds()))
-		h.Log.Info("http request", "requestId", id, "route", r.URL.Path, "durationMs", time.Since(start).Milliseconds())
+		h.Log.Info("http request", "requestId", id, "route", route, "durationMs", time.Since(start).Milliseconds())
 	})
 }
 

@@ -9,3 +9,6 @@ Mac保留：streaming全部源代码/协议/实验Runtime副本、reports、原�
 school-linux的前期结果档案仍保留完整169文件/25MP4，本次实际重新校验0缺失/0不匹配；完整600秒Worker视频也保留。Mac保留其10秒末段和全部PTS日志。历史RESULT-SHA256SUMS是当时完整档案的清单，Mac清理后不能再宣称其169项全部存在；需到school档案检验历史全量证据。新收尾归档使用独立manifest。
 
 云GPU不再需要复制的内容：虚拟环境本体、CUDA/系统缓存、15GB全部模型权重、MuseTalk环境和权重、轮包目录、重复输出。通过官方指定commit和权重manifest可重新恢复SoulX Lite，保持Torch2.8/cu128和FlashAttention2.8.3。关机/销毁后不假定实例文件仍存在，下一次必须重新检查。
+
+
+2026-10-09 本地追加清理：重复备份经 SHA-256 核对后删除，原录像/日志保留；同时删除已关闭测试浏览器 profile、Python 字节码及普通 Linux wheel 缓存。目录占用 18.84 GiB → 9.60 GiB。原备份校验清单是去重前历史状态；详情见 [本地空间清理](LOCAL-STORAGE-CLEANUP-2026-10-09.md)。唯一已验证 FlashAttention wheel继续保留，远端未修改。

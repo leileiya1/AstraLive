@@ -16,6 +16,7 @@ import (
 	"astralive/backend/internal/eventbus"
 	"astralive/backend/internal/httpapi"
 	"astralive/backend/internal/runtime"
+	"astralive/backend/internal/userconfig"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/redis/go-redis/v9"
 )
@@ -51,7 +52,12 @@ func main() {
 	rc := redis.NewClient(opts)
 	defer rc.Close()
 	s := app.New(pool, runtime.New(c.RuntimeURL), log)
-	h := &httpapi.Server{S: s, Redis: rc, Env: c.Env, Token: c.InternalToken, Log: log}
+	cfg, e := userconfig.FromEnvironment(pool)
+	if e != nil {
+		log.Error("configuration setup failed", "reason", e.Error())
+		os.Exit(1)
+	}
+	h := &httpapi.Server{S: s, Redis: rc, Env: c.Env, Token: c.InternalToken, Log: log, Config: cfg}
 	go func() {
 		if err := eventbus.New(rc, s, c.EventStream, log).Run(ctx); err != nil && ctx.Err() == nil {
 			log.Error("event consumer stopped", "error", err)
