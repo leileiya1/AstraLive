@@ -1,0 +1,56 @@
+<!doctype html><meta charset="utf-8"><title>SoulX isolated acceptance</title><video id="input" muted autoplay playsinline style="position:absolute;width:1px;height:1px;opacity:.01;pointer-events:none"></video><canvas id="display" width="512" height="512"></canvas><pre id="status"></pre><script>
+(async()=>{
+const faultProbe=FAULT_PROBE_ENABLED;const duration=DURATION_SECONDS, checkpoints=[90,300,900,1800,3600];
+const input=document.querySelector('#input'),canvas=document.querySelector('#display'),ctx=canvas.getContext('2d'),scratch=document.createElement('canvas');scratch.width=scratch.height=512;const scan=scratch.getContext('2d',{willReadFrequently:true});
+let stamp=null;let displayed=0,gpuDisplayed=0;let writes=Promise.resolve();let pc,rec,audioCtx,sid,rid,expected=null,minimumGeneration=1,blocked=false,stopped=false,batch=[],lastIdle=null,lastStats=null,segment=0,cycle=0,clockOffset=null,clockRTT=Infinity;
+const sleep=t=>new Promise(r=>setTimeout(r,t));
+const log=(event,more={})=>batch.push({event,browserMonotonic:performance.now()/1000,...more});
+async function flush(){if(!batch.length)return;let rows=batch;batch=[];await fetch('/events',{method:'POST',body:rows.map(x=>JSON.stringify(x)).join('\n')+'\n'});}
+async function api(path,body){let r=await fetch(path,{method:body?'POST':'GET',headers:{'Content-Type':'application/json','Idempotency-Key':crypto.randomUUID()},body:body?JSON.stringify(body):undefined});let j=await r.json();if(!r.ok)throw Error(path+' '+JSON.stringify(j));return j.data??j;}
+async function diag(){let t=performance.now()/1000,j=await api('/diag'),end=performance.now()/1000;if(end-t<clockRTT){clockRTT=end-t;clockOffset=j.schoolMonotonic-(t+end)/2;}j.sessions=j.sessions.filter(x=>x.sessionId===sid);j.events=j.events.filter(x=>x.sessionId===sid);expected=j.sessions[0]??expected;return j;}
+async function until(fn,ms=60000){let begin=performance.now();while(performance.now()-begin<ms){let value=await fn();if(value)return value;await sleep(100);}throw Error('gate timeout');}
+function readBits(row,count){let value=0;for(let b=0;b<count;b++){let index=((row+4)*192+b*8+4)*4;if(stamp[index]>stamp[index+1])value+=2**b;}return value;}
+function frame(now,m){if(stopped)return;scan.drawImage(input,0,0,512,512);stamp=scan.getImageData(0,0,192,24).data;let marker=readBits(0,16),sequence=readBits(8,24),generation=readBits(16,16),source=marker&32768?'LIGHTWEIGHT_AVATAR':marker===16384?'CACHED_IDLE':'GPU_INFERENCE';
+ let accept=expected&&generation===expected.generationId&&generation>=minimumGeneration&&(source==='CACHED_IDLE'||(marker&8191)===expected.marker);
+ if(blocked&&accept&&generation>=minimumGeneration)blocked=false;
+ if(accept&&!blocked){displayed++;if(source==='GPU_INFERENCE')gpuDisplayed++;ctx.drawImage(scratch,0,0);if(!expected.speaking&&source==='GPU_INFERENCE'){lastIdle=document.createElement('canvas');lastIdle.width=lastIdle.height=512;lastIdle.getContext('2d').drawImage(canvas,0,0);}log('BrowserFrameDisplayed',{marker,sequence,generation,source,mediaTime:m.mediaTime,presentedFrames:m.presentedFrames});}
+ else log('BrowserFrameRejected',{marker,sequence,generation,mediaTime:m.mediaTime});
+ input.requestVideoFrameCallback(frame);}
+async function stats(){let j={connection:pc.connectionState,ice:pc.iceConnectionState,audioPackets:0,videoFrames:0,videoPackets:0,packetsLost:0,framesDropped:0};for(let s of (await pc.getStats()).values())if(s.type==='inbound-rtp'){if(s.kind==='audio')j.audioPackets+=s.packetsReceived||0;else if(s.kind==='video'){j.videoFrames+=s.framesDecoded||0;j.videoPackets+=s.packetsReceived||0;j.framesDropped+=s.framesDropped||0;}j.packetsLost+=s.packetsLost||0;}return j;}
+async function comment(text){let j=await api('/api/v1/dev/platform-events',{eventType:'COMMENT',roomId:rid,user:{externalId:'soulx-lab-viewer',nickname:'实验观众'},payload:{text}});log('COMMENT',{utteranceId:j.utteranceId,text});return j.utteranceId;}
+async function force(text){minimumGeneration=(expected?.generationId??minimumGeneration)+1;blocked=true;if(lastIdle)ctx.drawImage(lastIdle,0,0);else ctx.clearRect(0,0,512,512);log('FORCE_DisplayFence',{minimumGeneration});let j=await api(`/api/v1/live-sessions/${sid}/utterances`,{text,priority:100,interruptPolicy:'FORCE',source:'OPERATOR'});return j.utteranceId;}
+async function done(uid){return until(async()=>{let j=await diag();let failure=j.events.find(x=>x.utteranceId===uid&&x.eventType==='UTTERANCE_FAILED');if(failure)throw Error(JSON.stringify(failure));return j.events.find(x=>x.utteranceId===uid&&x.eventType==='UTTERANCE_COMPLETED');},90000);}
+let result={status:'RUNNING',requestedDurationSeconds:duration};let timer,diagnosticTimer,healthTimer,lastProgress=0,monitorError=null;
+try{
+ let avatar=await api('/api/v1/avatars',{name:'soulx-acceptance-'+Date.now(),engine:'MOCK'}),voice=await api('/api/v1/voices',{name:'soulx-acceptance',provider:'MOCK',providerVoiceId:'xiao-ya'});
+ let room=await api('/api/v1/live-rooms',{name:'soulx-acceptance-'+Date.now(),avatarId:avatar.avatarId,voiceId:voice.voiceId,systemPrompt:'你是数字人实验直播间主持人。观众要求两句话时只回答两句，尽量简短自然，不谈任何商品。'});rid=room.roomId;sid=(await api('/api/v1/live-sessions',{roomId:rid})).sessionId;result.sessionId=sid;result.roomId=rid;
+ await api(`/api/v1/live-sessions/${sid}/start`,{});await until(async()=>{let j=await diag();let fail=j.events.find(x=>x.eventType==='SESSION_FAILED');if(fail)throw Error(JSON.stringify(fail));return expected?.state==='LIVE';});
+ pc=new RTCPeerConnection();pc.addTransceiver('audio',{direction:'recvonly'});pc.addTransceiver('video',{direction:'recvonly'});let received=new MediaStream();pc.ontrack=e=>{received.addTrack(e.track);if(e.track.kind==='video')input.srcObject=new MediaStream([e.track]);};
+ await pc.setLocalDescription(await pc.createOffer());await until(()=>pc.iceGatheringState==='complete',15000);await pc.setRemoteDescription(await api(`/api/v1/live-sessions/${sid}/webrtc/offer`,{type:'offer',sdp:pc.localDescription.sdp}));await until(()=>pc.connectionState==='connected'&&input.readyState>=2&&received.getAudioTracks().length===1,25000);await input.play();input.requestVideoFrameCallback(frame);
+ audioCtx=new AudioContext({sampleRate:48000});await audioCtx.resume();let audioSource=audioCtx.createMediaStreamSource(new MediaStream(received.getAudioTracks())),destination=audioCtx.createMediaStreamDestination();audioSource.connect(destination);
+ let audioElement=document.createElement('audio');audioElement.muted=true;audioElement.autoplay=true;audioElement.srcObject=new MediaStream(received.getAudioTracks());document.body.appendChild(audioElement);await audioElement.play();
+ let zero=audioCtx.createGain();zero.gain.value=0;audioSource.connect(zero);zero.connect(audioCtx.destination);
+ let analyser=audioCtx.createAnalyser();analyser.fftSize=2048;audioSource.connect(analyser);const audioProbe=setInterval(()=>{if(stopped){clearInterval(audioProbe);return;}let samples=new Float32Array(2048);analyser.getFloatTimeDomainData(samples);let rms=Math.sqrt(samples.reduce((n,x)=>n+x*x,0)/samples.length);log('AudioContextProbe',{rms,contextState:audioCtx.state,contextTime:audioCtx.currentTime,audioPaused:audioElement.paused,trackMuted:received.getAudioTracks()[0].muted});},1000);
+ let recording=new MediaStream([...canvas.captureStream(25).getVideoTracks(),...destination.stream.getAudioTracks()]);rec=new MediaRecorder(recording,{mimeType:'video/webm;codecs=vp8,opus'});rec.ondataavailable=e=>{if(e.data.size){let n=segment++;writes=writes.then(()=>fetch('/record-chunk?segment='+n,{method:'POST',body:e.data}));}};rec.start(1000);
+ timer=setInterval(()=>flush().catch(e=>{monitorError=String(e)}),500);diagnosticTimer=setInterval(()=>diag().catch(e=>{monitorError=String(e)}),100);
+ let first=await comment('请用两句话欢迎观众，并说正在验证实时数字人。');await done(first);await sleep(1800);
+ // A short entry gate precedes the one and only formal timer.
+ let old=await comment('请用六句话解释自然动作如何测试。');await until(()=>expected?.speaking);await sleep(1200);let forced=await force('请只说一句：收到，现在开始新的回答。');await done(forced);await sleep(1500);
+ if(gpuDisplayed<50)throw Error('insufficient real GPU canvas display');result.entryGatesCompleted=true;
+ if(faultProbe){let fault=await comment('请用四句话说明数字人的自然动作测试。');await until(()=>expected?.speaking);await sleep(1400);log('GPU_TunnelDisconnect');await fetch('/fault',{method:'POST',body:'disconnect'});await done(fault);let follow=await comment('请只说一句：服务继续运行，谢谢大家。');await done(follow);await sleep(2000);if(!expected?.degraded)throw Error('did not fall back after disconnect');result.faultProbeCompleted=true;}
+log('EntryGatesCompleted',{sessionId:sid});
+ let begin=performance.now()/1000;result.timerStartBrowserMonotonic=begin;lastStats=await stats();lastProgress=begin;let passed=new Set();healthTimer=setInterval(async()=>{try{let elapsed=performance.now()/1000-begin;for(let cp of checkpoints)if(cp<=duration&&elapsed>=cp&&!passed.has(cp)){passed.add(cp);log('Checkpoint',{requestedSeconds:cp,actualSeconds:elapsed,sessionId:sid,stats:await stats(),workerEpoch:expected?.workerEpoch});await flush();}}catch(e){monitorError=String(e);}},500);
+ while(performance.now()/1000-begin<duration){
+  let uid=await comment(cycle%2===0?'请用两句话欢迎直播间观众。':'请用两句话说明现在的数字人测试。');await done(uid);cycle++;await sleep(3000);
+  let elapsed=performance.now()/1000-begin,current=await stats();if(current.connection!=='connected')throw Error('peer disconnected');if(current.audioPackets<=lastStats.audioPackets||current.videoFrames<=lastStats.videoFrames)throw Error('media counters stopped');if(expected?.degraded)throw Error('GPU degraded during formal session');if(monitorError)throw Error(monitorError);log('Cycle',{cycle,elapsedSeconds:elapsed,stats:current,workerEpoch:expected?.workerEpoch});lastStats=current;
+  for(let cp of checkpoints)if(cp<=duration&&elapsed>=cp&&!passed.has(cp)){passed.add(cp);log('Checkpoint',{requestedSeconds:cp,actualSeconds:elapsed,sessionId:sid,stats:current});await flush();}
+ }
+ result={...result,status:faultProbe?'FAULT_PROBE_COMPLETED':'CONTINUOUS_SESSION_COMPLETED',cycles:cycle,actualDurationSeconds:performance.now()/1000-begin,finalStats:await stats(),displayedFrames:displayed,gpuDisplayedFrames:gpuDisplayed,clockOffsetSchoolMinusBrowser:clockOffset,clockRTT};
+}catch(e){result={...result,status:'FAILED',error:String(e)};}
+finally{
+ if(healthTimer)clearInterval(healthTimer);if(diagnosticTimer)clearInterval(diagnosticTimer);if(timer)clearInterval(timer);
+ if(sid)try{await api(`/api/v1/live-sessions/${sid}/stop`,{});log('NormalStop',{sessionId:sid});result.normalStopRequested=true;}catch(e){result.stopError=String(e);}
+ if(rec?.state==='recording'){await new Promise(r=>{rec.onstop=r;rec.stop();});await writes;}
+ stopped=true;if(pc)pc.close();if(audioCtx)await audioCtx.close();await flush();await fetch('/report',{method:'POST',body:JSON.stringify(result)});
+}
+})();</script>
