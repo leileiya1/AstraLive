@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "vite",
     "generate:api": "openapi-typescript ../contracts/control-api.openapi.yaml -o src/api/generated.ts",
-    "build": "bun run generate:api && bun run generate:config-api && tsgo --noEmit && vite build",
+    "build": "bun run generate:api && bun run generate:config-api && bun run generate:personal-api && tsgo --noEmit && vite build",
     "test": "vitest run",
-    "generate:config-api": "openapi-typescript ../contracts/user-config/schema.json -o src/api/config-generated.ts"
+    "generate:config-api": "openapi-typescript ../contracts/user-config/schema.json -o src/api/config-generated.ts",
+    "generate:personal-api": "openapi-typescript ../contracts/personal-assets/schema.json -o src/api/personal-assets-generated.ts"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",

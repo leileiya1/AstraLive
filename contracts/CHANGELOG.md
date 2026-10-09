@@ -1,5 +1,12 @@
 # Contract Changelog
 
+## Personal media v0.3.1 — additive contract freeze (2026-10-09)
+
+- 补齐独立 AvatarProfile、VoiceProfile、AssetStorage 三项共享契约及统一交付索引 `PERSONAL-ASSETS-HANDOFF.md`。
+- 冻结私有上传/规范化/预览、异步 Job 与 Worker claim/输出校验、Provider 能力差异、租户及用户隔离、原子会话版本快照。
+- 增加 `personal-assets/schema.json`、生成 TypeScript 类型、Go DTO/接口及严格参数/真实 readiness 校验；现有 v1.1 和 user-config v0.3.0 wire 不变。
+- 新 HTTP 路由明确标记 CONTRACT_ONLY；契约与迁移设计完成不代表上传服务或真实模型端到端验收完成。
+
 ## v1.1.0 — Cross-module migration (2026-10-06)
 
 - **CCR-001 resolved:** Control OpenAPI requestBody/response component 符号统一为不与 schema 冲突的 `*Body` / `*Result`；Route 与已有 JSON wire format 不变，可直接输入 oapi-codegen。

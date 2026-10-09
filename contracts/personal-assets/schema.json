@@ -1,0 +1,4752 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "AstraLive Personal Avatar, Voice and AssetStorage",
+    "version": "0.3.1",
+    "description": "Frozen additive contracts. CONTRACT_ONLY paths must not be advertised as deployed handlers. See contracts/PERSONAL-ASSETS-HANDOFF.md."
+  },
+  "paths": {
+    "/api/v0.3/config/personal-capabilities": {
+      "get": {
+        "operationId": "get__api_v0.3_config_personal-capabilities",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Capabilities"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/asset-uploads": {
+      "post": {
+        "operationId": "post__api_v0.3_config_asset-uploads",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/UploadTicket"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUpload"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/asset-uploads/{uploadId}/content": {
+      "put": {
+        "operationId": "put__api_v0.3_config_asset-uploads__uploadId__content",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uploadId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/asset-uploads/{uploadId}/complete": {
+      "post": {
+        "operationId": "post__api_v0.3_config_asset-uploads__uploadId__complete",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "202": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Job"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uploadId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {},
+                "required": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/asset-uploads/{uploadId}": {
+      "delete": {
+        "operationId": "delete__api_v0.3_config_asset-uploads__uploadId_",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uploadId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v0.3/config/assets": {
+      "get": {
+        "operationId": "get__api_v0.3_config_assets",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Asset"
+                      }
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/assets/{assetId}": {
+      "get": {
+        "operationId": "get__api_v0.3_config_assets__assetId_",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Asset"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "assetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "delete__api_v0.3_config_assets__assetId_",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "assetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/assets/{assetId}/preview": {
+      "get": {
+        "operationId": "get__api_v0.3_config_assets__assetId__preview",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Authenticated normalized image, audio or generated preview bytes",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "audio/wav": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "video/mp4": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Authenticated normalized image, audio or generated preview bytes",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "audio/wav": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "video/mp4": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "416": {
+            "description": "Invalid or multiple range; Content-Range: bytes */length"
+          }
+        },
+        "parameters": [
+          {
+            "name": "assetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Range",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v0.3/config/avatar-profiles": {
+      "get": {
+        "operationId": "get__api_v0.3_config_avatar-profiles",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AvatarProfile"
+                      }
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "post__api_v0.3_config_avatar-profiles",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AvatarProfile"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAvatarProfile"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/avatar-profiles/{avatarProfileId}": {
+      "get": {
+        "operationId": "get__api_v0.3_config_avatar-profiles__avatarProfileId_",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AvatarProfile"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "avatarProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "put__api_v0.3_config_avatar-profiles__avatarProfileId_",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AvatarProfile"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "avatarProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAvatarProfile"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "delete__api_v0.3_config_avatar-profiles__avatarProfileId_",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "avatarProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/avatar-profiles/{avatarProfileId}/default": {
+      "post": {
+        "operationId": "post__api_v0.3_config_avatar-profiles__avatarProfileId__default",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AvatarProfile"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "avatarProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/avatar-profiles/{avatarProfileId}/disable": {
+      "post": {
+        "operationId": "post__api_v0.3_config_avatar-profiles__avatarProfileId__disable",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AvatarProfile"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "avatarProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/avatar-profiles/{avatarProfileId}/prepare": {
+      "post": {
+        "operationId": "post__api_v0.3_config_avatar-profiles__avatarProfileId__prepare",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "202": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Job"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "avatarProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/avatar-profiles/{avatarProfileId}/preview": {
+      "post": {
+        "operationId": "post__api_v0.3_config_avatar-profiles__avatarProfileId__preview",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "202": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Job"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "avatarProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AvatarPreviewInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/voice-profiles": {
+      "get": {
+        "operationId": "get__api_v0.3_config_voice-profiles",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/VoiceProfile"
+                      }
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "post__api_v0.3_config_voice-profiles",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/VoiceProfile"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVoiceProfile"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/voice-profiles/{voiceProfileId}": {
+      "get": {
+        "operationId": "get__api_v0.3_config_voice-profiles__voiceProfileId_",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/VoiceProfile"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "voiceProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "put__api_v0.3_config_voice-profiles__voiceProfileId_",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/VoiceProfile"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "voiceProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVoiceProfile"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "delete__api_v0.3_config_voice-profiles__voiceProfileId_",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "voiceProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/voice-profiles/{voiceProfileId}/default": {
+      "post": {
+        "operationId": "post__api_v0.3_config_voice-profiles__voiceProfileId__default",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/VoiceProfile"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "voiceProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/voice-profiles/{voiceProfileId}/disable": {
+      "post": {
+        "operationId": "post__api_v0.3_config_voice-profiles__voiceProfileId__disable",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/VoiceProfile"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "voiceProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/voice-profiles/{voiceProfileId}/prepare": {
+      "post": {
+        "operationId": "post__api_v0.3_config_voice-profiles__voiceProfileId__prepare",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "202": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Job"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "voiceProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/voice-profiles/{voiceProfileId}/preview": {
+      "post": {
+        "operationId": "post__api_v0.3_config_voice-profiles__voiceProfileId__preview",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "202": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Job"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "voiceProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoicePreviewInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v0.3/config/personal-jobs/{jobId}": {
+      "get": {
+        "operationId": "get__api_v0.3_config_personal-jobs__jobId_",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Job"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "delete__api_v0.3_config_personal-jobs__jobId_",
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Job"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/internal/v0.3/personal-session-bindings": {
+      "post": {
+        "operationId": "post__internal_v0.3_personal-session-bindings",
+        "security": [
+          {
+            "orchestrator": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PersonalBinding"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaptureBinding"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/v0.3/personal-session-bindings/{bindingId}": {
+      "delete": {
+        "operationId": "delete__internal_v0.3_personal-session-bindings__bindingId_",
+        "security": [
+          {
+            "orchestrator": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "bindingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BindingAccess"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/v0.3/personal-session-bindings/{bindingId}/resolve": {
+      "post": {
+        "operationId": "post__internal_v0.3_personal-session-bindings__bindingId__resolve",
+        "security": [
+          {
+            "orchestrator": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ResolvedPersonalBinding"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "bindingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BindingAccess"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/v0.3/personal-session-bindings/{bindingId}/renew": {
+      "post": {
+        "operationId": "post__internal_v0.3_personal-session-bindings__bindingId__renew",
+        "security": [
+          {
+            "orchestrator": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PersonalBinding"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "bindingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BindingAccess"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/v0.3/personal-session-bindings/{bindingId}/assets/{assetId}/content": {
+      "get": {
+        "operationId": "get__internal_v0.3_personal-session-bindings__bindingId__assets__assetId__content",
+        "security": [
+          {
+            "processor": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Binding-authorized immutable bytes; digest in X-Asset-SHA256; no filesystem paths",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "bindingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "assetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ]
+      }
+    },
+    "/internal/v0.3/personal-jobs/{jobId}/claim": {
+      "post": {
+        "operationId": "post__internal_v0.3_personal-jobs__jobId__claim",
+        "security": [
+          {
+            "processor": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/JobClaim"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/v0.3/personal-jobs/{jobId}/inputs/{assetId}/content": {
+      "get": {
+        "operationId": "get__internal_v0.3_personal-jobs__jobId__inputs__assetId__content",
+        "security": [
+          {
+            "processor": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Claim-authorized immutable bytes; X-Job-Claim header required",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "assetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "X-Job-Claim",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 32
+            }
+          }
+        ]
+      }
+    },
+    "/internal/v0.3/personal-jobs/{jobId}/heartbeat": {
+      "post": {
+        "operationId": "post__internal_v0.3_personal-jobs__jobId__heartbeat",
+        "security": [
+          {
+            "processor": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/JobClaim"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "claimToken": {
+                    "type": "string",
+                    "minLength": 32
+                  },
+                  "attempt": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "required": [
+                  "claimToken",
+                  "attempt"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/v0.3/personal-jobs/{jobId}/outputs": {
+      "post": {
+        "operationId": "post__internal_v0.3_personal-jobs__jobId__outputs",
+        "security": [
+          {
+            "processor": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/OutputTicket"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "X-Job-Claim",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 32
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OutputUploadInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/v0.3/personal-output-uploads/{uploadId}/content": {
+      "put": {
+        "operationId": "put__internal_v0.3_personal-output-uploads__uploadId__content",
+        "security": [
+          {
+            "processor": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uploadId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          {
+            "name": "X-Job-Claim",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 32
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/v0.3/personal-jobs/{jobId}/result": {
+      "post": {
+        "operationId": "post__internal_v0.3_personal-jobs__jobId__result",
+        "security": [
+          {
+            "processor": []
+          }
+        ],
+        "x-implementation-status": "CONTRACT_ONLY",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Job"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data",
+                    "requestId",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Redacted error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobResultInput"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Scope": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tenantId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "userId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "tenantId",
+          "userId"
+        ]
+      },
+      "ErrorCode": {
+        "type": "string",
+        "enum": [
+          "NONE",
+          "INVALID_ARGUMENT",
+          "UNAUTHORIZED",
+          "FORBIDDEN",
+          "RESOURCE_NOT_FOUND",
+          "CONFIG_VERSION_CONFLICT",
+          "ASSET_NOT_READY",
+          "ASSET_IN_USE",
+          "ASSET_REJECTED",
+          "UPLOAD_EXPIRED",
+          "UPLOAD_SIZE_MISMATCH",
+          "UPLOAD_HASH_MISMATCH",
+          "QUOTA_EXCEEDED",
+          "CONSENT_REQUIRED",
+          "CAPABILITY_UNSUPPORTED",
+          "PROCESSOR_UNAVAILABLE",
+          "WORKER_NOT_READY",
+          "JOB_CLAIM_EXPIRED",
+          "JOB_CANCELLED",
+          "JOB_TIMEOUT",
+          "BINDING_EXPIRED",
+          "OUTPUT_INVALID",
+          "INTERNAL_ERROR",
+          "PHOTO_SIZE_INVALID",
+          "PHOTO_FORMAT_INVALID",
+          "PHOTO_DIMENSIONS_INVALID",
+          "PHOTO_DECODE_FAILED",
+          "FACE_CHECK_UNAVAILABLE",
+          "FACE_CHECK_FAILED",
+          "PHOTO_REQUIRES_ONE_FACE",
+          "PHOTO_FACE_NOT_FRONTAL",
+          "PHOTO_FACE_TOO_SMALL",
+          "PHOTO_FACE_BLURRED",
+          "PHOTO_FACE_CROP_CLIPPED",
+          "REFERENCE_AUDIO_SIZE_INVALID",
+          "REFERENCE_TEXT_REQUIRED",
+          "REFERENCE_AUDIO_FORMAT_INVALID",
+          "REFERENCE_AUDIO_STREAMS_INVALID",
+          "REFERENCE_AUDIO_DURATION_INVALID",
+          "REFERENCE_AUDIO_RATE_CHANGED",
+          "REFERENCE_AUDIO_DECODE_FAILED",
+          "REFERENCE_AUDIO_TOO_QUIET",
+          "REFERENCE_AUDIO_CLIPPED",
+          "PROVIDER_TEST_FAILED"
+        ]
+      },
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {},
+            "required": []
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "details",
+          "requestId",
+          "timestamp"
+        ]
+      },
+      "VersionInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "expectedVersion"
+        ]
+      },
+      "ConsentInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accepted": {
+            "type": "string",
+            "enum": [
+              "PERSONAL_MEDIA_PROCESSING_V1"
+            ]
+          },
+          "rightsConfirmed": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          }
+        },
+        "required": [
+          "accepted",
+          "rightsConfirmed"
+        ]
+      },
+      "ConsentReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "policyVersion": {
+            "type": "string",
+            "enum": [
+              "PERSONAL_MEDIA_PROCESSING_V1"
+            ]
+          },
+          "acceptedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "policyVersion",
+          "acceptedAt"
+        ]
+      },
+      "Asset": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "AVATAR_PHOTO",
+              "VOICE_REFERENCE",
+              "NORMALIZED_PHOTO",
+              "NORMALIZED_AUDIO",
+              "AVATAR_PREVIEW",
+              "VOICE_PREVIEW"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "STAGED",
+              "UPLOADED",
+              "VALIDATING",
+              "READY",
+              "REJECTED",
+              "DELETING",
+              "DELETED"
+            ]
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "byteLength": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 20971520
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "preprocessingVersion": {
+            "type": "string"
+          },
+          "sourceAssetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "errorCode": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "consent": {
+            "$ref": "#/components/schemas/ConsentReceipt"
+          }
+        },
+        "required": [
+          "assetId",
+          "purpose",
+          "state",
+          "version",
+          "byteLength",
+          "sha256",
+          "mediaType",
+          "preprocessingVersion",
+          "errorCode",
+          "createdAt",
+          "consent"
+        ]
+      },
+      "PhotoUpload": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "AVATAR_PHOTO"
+            ]
+          },
+          "byteLength": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10485760
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "mediaType": {
+            "type": "string",
+            "enum": [
+              "image/jpeg",
+              "image/png",
+              "image/webp"
+            ]
+          },
+          "consent": {
+            "$ref": "#/components/schemas/ConsentInput"
+          }
+        },
+        "required": [
+          "purpose",
+          "byteLength",
+          "sha256",
+          "mediaType",
+          "consent"
+        ]
+      },
+      "AudioUpload": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "VOICE_REFERENCE"
+            ]
+          },
+          "byteLength": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20971520
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "mediaType": {
+            "type": "string",
+            "enum": [
+              "audio/wav",
+              "audio/mpeg",
+              "audio/ogg",
+              "audio/webm",
+              "audio/mp4",
+              "audio/flac"
+            ]
+          },
+          "referenceText": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "consent": {
+            "$ref": "#/components/schemas/ConsentInput"
+          }
+        },
+        "required": [
+          "purpose",
+          "byteLength",
+          "sha256",
+          "mediaType",
+          "referenceText",
+          "consent"
+        ]
+      },
+      "CreateUpload": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/PhotoUpload"
+          },
+          {
+            "$ref": "#/components/schemas/AudioUpload"
+          }
+        ]
+      },
+      "UploadTicket": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "uploadId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "asset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "uploadId",
+          "asset",
+          "expiresAt"
+        ]
+      },
+      "XiaoYaVoiceConfig": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": [
+              "xiaoya"
+            ]
+          },
+          "voiceId": {
+            "type": "string",
+            "enum": [
+              "xiao_ya"
+            ]
+          },
+          "modelRef": {
+            "type": "string",
+            "enum": [
+              "xiaoya-default"
+            ]
+          },
+          "speed": {
+            "type": "number",
+            "enum": [
+              1
+            ]
+          },
+          "volume": {
+            "type": "number",
+            "enum": [
+              1
+            ]
+          }
+        },
+        "required": [
+          "provider",
+          "voiceId",
+          "modelRef",
+          "speed",
+          "volume"
+        ]
+      },
+      "ReferenceVoiceConfig": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": [
+              "cosyvoice"
+            ]
+          },
+          "modelRef": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "referenceAssetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "referenceText": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "speed": {
+            "type": "number",
+            "enum": [
+              1
+            ]
+          },
+          "volume": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2
+          }
+        },
+        "required": [
+          "provider",
+          "modelRef",
+          "referenceAssetId",
+          "referenceText",
+          "speed",
+          "volume"
+        ]
+      },
+      "VoiceConfig": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/XiaoYaVoiceConfig"
+          },
+          {
+            "$ref": "#/components/schemas/ReferenceVoiceConfig"
+          }
+        ]
+      },
+      "AvatarConfig": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": [
+              "soulx_lite"
+            ]
+          },
+          "photoAssetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "workerProfileId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "modelRef": {
+            "type": "string",
+            "enum": [
+              "soulx-flashhead-lite"
+            ]
+          },
+          "preprocessingVersion": {
+            "type": "string",
+            "enum": [
+              "photo-face512-v1"
+            ]
+          }
+        },
+        "required": [
+          "provider",
+          "photoAssetId",
+          "workerProfileId",
+          "modelRef",
+          "preprocessingVersion"
+        ]
+      },
+      "ProfileState": {
+        "type": "string",
+        "enum": [
+          "CREATED",
+          "VALIDATING",
+          "PREPARING",
+          "READY",
+          "FAILED",
+          "DISABLED",
+          "DELETED"
+        ]
+      },
+      "CreateAvatarProfile": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "config": {
+            "$ref": "#/components/schemas/AvatarConfig"
+          }
+        },
+        "required": [
+          "name",
+          "config"
+        ]
+      },
+      "UpdateAvatarProfile": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "config": {
+            "$ref": "#/components/schemas/AvatarConfig"
+          }
+        },
+        "required": [
+          "expectedVersion",
+          "name",
+          "config"
+        ]
+      },
+      "CreateVoiceProfile": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "config": {
+            "$ref": "#/components/schemas/VoiceConfig"
+          }
+        },
+        "required": [
+          "name",
+          "config"
+        ]
+      },
+      "UpdateVoiceProfile": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "config": {
+            "$ref": "#/components/schemas/VoiceConfig"
+          }
+        },
+        "required": [
+          "expectedVersion",
+          "name",
+          "config"
+        ]
+      },
+      "Readiness": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "REAL",
+              "SIMULATION"
+            ]
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modelRevision": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "preprocessingVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "inputSHA256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "cacheId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "workerProfileVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "warmupFrames": {
+            "type": "integer",
+            "minimum": 3
+          },
+          "encoderReady": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "mode",
+          "checkedAt",
+          "modelRevision",
+          "preprocessingVersion",
+          "inputSHA256",
+          "cacheId",
+          "workerProfileVersion",
+          "warmupFrames",
+          "encoderReady"
+        ]
+      },
+      "AvatarProfile": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "avatarProfileId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "state": {
+            "$ref": "#/components/schemas/ProfileState"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "config": {
+            "$ref": "#/components/schemas/AvatarConfig"
+          },
+          "normalizedPhotoAssetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "readiness": {
+            "$ref": "#/components/schemas/Readiness"
+          },
+          "errorCode": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "avatarProfileId",
+          "name",
+          "version",
+          "state",
+          "enabled",
+          "isDefault",
+          "config",
+          "errorCode",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "VoiceCapabilities": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "referenceAudio": {
+            "type": "boolean"
+          },
+          "incrementalPCM": {
+            "type": "boolean"
+          },
+          "speed": {
+            "type": "boolean"
+          },
+          "volume": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "referenceAudio",
+          "incrementalPCM",
+          "speed",
+          "volume"
+        ]
+      },
+      "VoiceProfile": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "voiceProfileId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "state": {
+            "$ref": "#/components/schemas/ProfileState"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "config": {
+            "$ref": "#/components/schemas/VoiceConfig"
+          },
+          "normalizedAudioAssetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "capabilities": {
+            "$ref": "#/components/schemas/VoiceCapabilities"
+          },
+          "errorCode": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "voiceProfileId",
+          "name",
+          "version",
+          "state",
+          "enabled",
+          "isDefault",
+          "config",
+          "capabilities",
+          "errorCode",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "JobKind": {
+        "type": "string",
+        "enum": [
+          "VALIDATE_PHOTO",
+          "VALIDATE_AUDIO",
+          "PREPARE_AVATAR",
+          "PREVIEW_AVATAR",
+          "PREVIEW_VOICE"
+        ]
+      },
+      "Job": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/JobKind"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "VALIDATE",
+              "PREPARE",
+              "PREVIEW"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "QUEUED",
+              "RUNNING",
+              "SUCCEEDED",
+              "FAILED",
+              "CANCELLED"
+            ]
+          },
+          "attempt": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "profileVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "errorCode": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "outputAssetIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "jobId",
+          "kind",
+          "action",
+          "state",
+          "attempt",
+          "errorCode",
+          "outputAssetIds",
+          "createdAt",
+          "expiresAt"
+        ]
+      },
+      "AvatarPreviewInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "audioAssetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          }
+        },
+        "required": [
+          "expectedVersion",
+          "audioAssetId"
+        ]
+      },
+      "VoicePreviewInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "expectedVersion",
+          "text"
+        ]
+      },
+      "Capabilities": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "contractVersion": {
+            "type": "string",
+            "enum": [
+              "0.3.1"
+            ]
+          },
+          "assetStorage": {
+            "type": "boolean"
+          },
+          "photoValidation": {
+            "type": "boolean"
+          },
+          "audioValidation": {
+            "type": "boolean"
+          },
+          "avatarPreparation": {
+            "type": "boolean"
+          },
+          "avatarPreview": {
+            "type": "boolean"
+          },
+          "voicePreview": {
+            "type": "boolean"
+          },
+          "xiaoya": {
+            "$ref": "#/components/schemas/VoiceCapabilities"
+          },
+          "cosyvoice": {
+            "$ref": "#/components/schemas/VoiceCapabilities"
+          }
+        },
+        "required": [
+          "contractVersion",
+          "assetStorage",
+          "photoValidation",
+          "audioValidation",
+          "avatarPreparation",
+          "avatarPreview",
+          "voicePreview",
+          "xiaoya",
+          "cosyvoice"
+        ]
+      },
+      "RevisionRef": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "profileId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "profileId",
+          "version"
+        ]
+      },
+      "AssetDescriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "AVATAR_PHOTO",
+              "VOICE_REFERENCE",
+              "NORMALIZED_PHOTO",
+              "NORMALIZED_AUDIO",
+              "AVATAR_PREVIEW",
+              "VOICE_PREVIEW"
+            ]
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "byteLength": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20971520
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "preprocessingVersion": {
+            "type": "string"
+          },
+          "sourceAssetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          }
+        },
+        "required": [
+          "assetId",
+          "purpose",
+          "sha256",
+          "byteLength",
+          "mediaType",
+          "preprocessingVersion"
+        ]
+      },
+      "CaptureBinding": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "sessionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          }
+        },
+        "required": [
+          "scope",
+          "sessionId"
+        ]
+      },
+      "PersonalBinding": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "bindingId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "sessionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "contractVersion": {
+            "type": "string",
+            "enum": [
+              "0.3.1"
+            ]
+          },
+          "avatar": {
+            "$ref": "#/components/schemas/RevisionRef"
+          },
+          "voice": {
+            "$ref": "#/components/schemas/RevisionRef"
+          },
+          "providerBindingId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "assets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssetDescriptor"
+            }
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "bindingId",
+          "sessionId",
+          "contractVersion",
+          "avatar",
+          "voice",
+          "providerBindingId",
+          "assets",
+          "expiresAt"
+        ]
+      },
+      "WorkerSelection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "profileId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "workerRef": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          }
+        },
+        "required": [
+          "profileId",
+          "version",
+          "workerRef"
+        ]
+      },
+      "ResolvedPersonalBinding": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "binding": {
+            "$ref": "#/components/schemas/PersonalBinding"
+          },
+          "avatar": {
+            "$ref": "#/components/schemas/AvatarProfile"
+          },
+          "voice": {
+            "$ref": "#/components/schemas/VoiceProfile"
+          },
+          "worker": {
+            "$ref": "#/components/schemas/WorkerSelection"
+          }
+        },
+        "required": [
+          "binding",
+          "avatar",
+          "voice",
+          "worker"
+        ]
+      },
+      "BindingAccess": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          }
+        },
+        "required": [
+          "scope"
+        ]
+      },
+      "ClaimInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "workerRef": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          }
+        },
+        "required": [
+          "scope",
+          "workerRef"
+        ]
+      },
+      "JobClaim": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "job": {
+            "$ref": "#/components/schemas/Job"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "claimToken": {
+            "type": "string",
+            "minLength": 32
+          },
+          "leaseExpiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "inputAssets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssetDescriptor"
+            }
+          },
+          "avatar": {
+            "$ref": "#/components/schemas/AvatarProfile"
+          },
+          "voice": {
+            "$ref": "#/components/schemas/VoiceProfile"
+          },
+          "previewText": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "referenceText": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "job",
+          "scope",
+          "claimToken",
+          "leaseExpiresAt",
+          "inputAssets"
+        ]
+      },
+      "OutputUploadInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "claimToken": {
+            "type": "string",
+            "minLength": 32
+          },
+          "attempt": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "NORMALIZED_PHOTO",
+              "NORMALIZED_AUDIO",
+              "AVATAR_PREVIEW",
+              "VOICE_PREVIEW"
+            ]
+          },
+          "byteLength": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20971520
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "mediaType": {
+            "type": "string",
+            "enum": [
+              "image/png",
+              "audio/wav",
+              "video/mp4"
+            ]
+          }
+        },
+        "required": [
+          "claimToken",
+          "attempt",
+          "purpose",
+          "byteLength",
+          "sha256",
+          "mediaType"
+        ]
+      },
+      "OutputTicket": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "uploadId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "assetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "uploadId",
+          "assetId",
+          "expiresAt"
+        ]
+      },
+      "ValidatedResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "VALIDATE_PHOTO",
+              "VALIDATE_AUDIO"
+            ]
+          },
+          "outputAssetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "preprocessingVersion": {
+            "type": "string",
+            "enum": [
+              "photo-face512-v1",
+              "reference-pcm16k-v1"
+            ]
+          }
+        },
+        "required": [
+          "kind",
+          "outputAssetId",
+          "preprocessingVersion"
+        ]
+      },
+      "PreparedResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PREPARE_AVATAR"
+            ]
+          },
+          "readiness": {
+            "$ref": "#/components/schemas/Readiness"
+          }
+        },
+        "required": [
+          "kind",
+          "readiness"
+        ]
+      },
+      "PreviewResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PREVIEW_AVATAR",
+              "PREVIEW_VOICE"
+            ]
+          },
+          "outputAssetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          }
+        },
+        "required": [
+          "kind",
+          "outputAssetId"
+        ]
+      },
+      "SuccessResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "claimToken": {
+            "type": "string",
+            "minLength": 32
+          },
+          "attempt": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED"
+            ]
+          },
+          "result": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ValidatedResult"
+              },
+              {
+                "$ref": "#/components/schemas/PreparedResult"
+              },
+              {
+                "$ref": "#/components/schemas/PreviewResult"
+              }
+            ]
+          }
+        },
+        "required": [
+          "claimToken",
+          "attempt",
+          "state",
+          "result"
+        ]
+      },
+      "FailureResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "claimToken": {
+            "type": "string",
+            "minLength": 32
+          },
+          "attempt": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "FAILED"
+            ]
+          },
+          "errorCode": {
+            "type": "string",
+            "enum": [
+              "INVALID_ARGUMENT",
+              "UNAUTHORIZED",
+              "FORBIDDEN",
+              "RESOURCE_NOT_FOUND",
+              "CONFIG_VERSION_CONFLICT",
+              "ASSET_NOT_READY",
+              "ASSET_IN_USE",
+              "ASSET_REJECTED",
+              "UPLOAD_EXPIRED",
+              "UPLOAD_SIZE_MISMATCH",
+              "UPLOAD_HASH_MISMATCH",
+              "QUOTA_EXCEEDED",
+              "CONSENT_REQUIRED",
+              "CAPABILITY_UNSUPPORTED",
+              "PROCESSOR_UNAVAILABLE",
+              "WORKER_NOT_READY",
+              "JOB_CLAIM_EXPIRED",
+              "JOB_CANCELLED",
+              "JOB_TIMEOUT",
+              "BINDING_EXPIRED",
+              "OUTPUT_INVALID",
+              "INTERNAL_ERROR",
+              "PHOTO_SIZE_INVALID",
+              "PHOTO_FORMAT_INVALID",
+              "PHOTO_DIMENSIONS_INVALID",
+              "PHOTO_DECODE_FAILED",
+              "FACE_CHECK_UNAVAILABLE",
+              "FACE_CHECK_FAILED",
+              "PHOTO_REQUIRES_ONE_FACE",
+              "PHOTO_FACE_NOT_FRONTAL",
+              "PHOTO_FACE_TOO_SMALL",
+              "PHOTO_FACE_BLURRED",
+              "PHOTO_FACE_CROP_CLIPPED",
+              "REFERENCE_AUDIO_SIZE_INVALID",
+              "REFERENCE_TEXT_REQUIRED",
+              "REFERENCE_AUDIO_FORMAT_INVALID",
+              "REFERENCE_AUDIO_STREAMS_INVALID",
+              "REFERENCE_AUDIO_DURATION_INVALID",
+              "REFERENCE_AUDIO_RATE_CHANGED",
+              "REFERENCE_AUDIO_DECODE_FAILED",
+              "REFERENCE_AUDIO_TOO_QUIET",
+              "REFERENCE_AUDIO_CLIPPED",
+              "PROVIDER_TEST_FAILED"
+            ]
+          }
+        },
+        "required": [
+          "claimToken",
+          "attempt",
+          "state",
+          "errorCode"
+        ]
+      },
+      "JobResultInput": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SuccessResult"
+          },
+          {
+            "$ref": "#/components/schemas/FailureResult"
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "cookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "astralive_config_session"
+      },
+      "orchestrator": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Dedicated trusted control-plane identity, not browser or worker token"
+      },
+      "processor": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Dedicated worker identity restricted to registered workerRef and role"
+      }
+    }
+  }
+}
