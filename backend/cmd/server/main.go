@@ -51,11 +51,35 @@ func main() {
 	}
 	rc := redis.NewClient(opts)
 	defer rc.Close()
-	s := app.New(pool, runtime.New(c.RuntimeURL), log)
+	rt := runtime.New(c.RuntimeURL)
+	s := app.New(pool, rt, log)
 	cfg, e := userconfig.FromEnvironment(pool)
 	if e != nil {
 		log.Error("configuration setup failed", "reason", e.Error())
 		os.Exit(1)
+	}
+	if c.Env == "production" && (cfg == nil || !cfg.IntegrationEnabled) {
+		log.Error("production requires authenticated Session integration")
+		os.Exit(1)
+	}
+	if cfg != nil && cfg.IntegrationEnabled {
+		s.Integration = cfg
+		rt.Client.Transport = userconfig.TokenTransport{Path: cfg.RuntimeControlTokenFile, Base: &http.Transport{Proxy: nil}}
+		rt.Client.CheckRedirect = func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }
+		go func() {
+			tick := time.NewTicker(15 * time.Second)
+			defer tick.Stop()
+			for {
+				select {
+				case <-ctx.Done():
+					return
+				case <-tick.C:
+					if err := cfg.Reconcile(ctx); err != nil {
+						log.Error("binding reconciliation pending")
+					}
+				}
+			}
+		}()
 	}
 	h := &httpapi.Server{S: s, Redis: rc, Env: c.Env, Token: c.InternalToken, Log: log, Config: cfg}
 	go func() {

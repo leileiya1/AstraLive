@@ -196,11 +196,11 @@ class RuntimeSession:
                     return
                 self.state = "READY"
             await self.emit("SESSION_READY", self.request.traceId)
-        except Exception:
+        except Exception as exc:
             log.exception("session_prepare_failed", extra={"traceId": self.request.traceId, "sessionId": self.session_id})
             async with self.lock:
                 self.state = "FAILED"
-            await self.emit("SESSION_FAILED", self.request.traceId)
+            await self.emit("SESSION_FAILED", self.request.traceId, payload={"code": exc.code if isinstance(exc, RuntimeFailure) else "PROVIDER_PREPARE_FAILED"})
 
     async def start(self, trace: str) -> None:
         async with self.lock:
@@ -439,6 +439,8 @@ class RuntimeSession:
                 except asyncio.CancelledError:
                     raise
                 except Exception as exc:
+                    if getattr(self.llm, "propagate_failures", False):
+                        raise
                     await self.emit("RUNTIME_WARNING", item.traceId, item.utteranceId, {"code": "LLM_FAILED", "fallback": "input_text", "errorType": type(exc).__name__})
                     if not emitted:
                         yield "我现在暂时无法回答这个问题。" if required_product_facts(item.text) else item.text

@@ -16,6 +16,10 @@ import (
 )
 
 type Service struct {
+	OperatorFile                       string
+	IntegrationEnabled                 bool
+	RuntimeStatusURL                   string
+	RuntimeControlTokenFile            string
 	DB                                 DB
 	Vault                              Vault
 	Origin                             string
@@ -196,7 +200,7 @@ func (s *Service) Test(ctx context.Context, scope Scope, id string, expected int
 		return Profile{}, fault(409, "CONFIG_DISABLED", "configuration disabled")
 	}
 	if p.Kind != "LLM" {
-		return Profile{}, fault(409, "PROVIDER_TEST_UNAVAILABLE", "no connection probe is available for this provider")
+		return s.testLocalProvider(ctx, scope, p)
 	}
 	if !p.CredentialConfigured {
 		return Profile{}, fault(409, "CREDENTIAL_NOT_CONFIGURED", "save a credential first")
@@ -235,21 +239,7 @@ func (s *Service) Test(ctx context.Context, scope Scope, id string, expected int
 	}
 	probeErr := probeLLM(ctx, p, key, client, s.Hosts)
 	key = ""
-	verification, code, health := "VERIFIED", "", "UP"
-	if probeErr != nil {
-		verification, code, health = "FAILED", publicError(probeErr).Code, "DOWN"
-	}
-	tag, e := s.DB.Exec(ctx, `UPDATE config_profiles SET verification=$5,error_code=$6,health=$7,health_at=now(),is_default=CASE WHEN $5='FAILED' THEN false ELSE is_default END,updated_at=now() WHERE tenant_id=$1 AND user_id=$2 AND id=$3 AND version=$4`, scope.TenantID, scope.UserID, id, p.Version, verification, code, health)
-	if e != nil {
-		return Profile{}, e
-	}
-	if tag.RowsAffected() != 1 {
-		return Profile{}, ErrConflict
-	}
-	if probeErr != nil {
-		return Profile{}, probeErr
-	}
-	return s.Get(ctx, scope, id)
+	return s.saveProbeResult(ctx, scope, p, probeErr)
 }
 func (s *Service) Settings(ctx context.Context, scope Scope) (Settings, error) {
 	out := Settings{Version: 0, Policy: Policy{100, "STOP"}, Effect: "NEXT_SESSION"}

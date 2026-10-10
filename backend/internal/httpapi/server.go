@@ -80,6 +80,11 @@ func dbFail(w http.ResponseWriter, r *http.Request, e error, notFound string) {
 	failure(w, r, 500, "INTERNAL_ERROR", "internal error")
 }
 func runtimeFail(w http.ResponseWriter, r *http.Request, e error) {
+	var f *userconfig.Fault
+	if errors.As(e, &f) {
+		configFailure(w, r, e)
+		return
+	}
 	if errors.Is(e, app.ErrConflict) {
 		dbFail(w, r, e, "")
 		return
@@ -121,9 +126,14 @@ func valid(s string) bool { return strings.TrimSpace(s) != "" }
 func (h *Server) Router() http.Handler {
 	r := chi.NewRouter()
 	r.Use(h.requestContext)
+	r.Use(h.authorization)
 	r.Use(h.validateContract)
 	if h.Config != nil {
 		r.Mount("/api/v0.3/config", h.Config.PublicRouter())
+		r.Mount("/api/v0.4/auth", h.Config.AuthRouter())
+		r.Mount("/api/v0.4/workers", h.Config.WorkerChoicesRouter())
+		r.Mount("/api/v0.4/sessions", h.Config.SessionPublicRouter())
+		r.Mount("/internal/v0.4", h.Config.SessionInternalRouter())
 		r.Mount("/internal/v0.3", h.Config.InternalRouter())
 	}
 	r.Get("/health/live", func(w http.ResponseWriter, r *http.Request) {
@@ -220,7 +230,7 @@ func (w *statusWriter) Flush() {
 func (h *Server) authorizeInternal(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
-		if subtle.ConstantTimeCompare([]byte(token), []byte(h.Token)) != 1 {
+		if h.Token == "" || r.Header.Get("Authorization") != "Bearer "+token || subtle.ConstantTimeCompare([]byte(token), []byte(h.Token)) != 1 {
 			failure(w, r, 401, "INVALID_ARGUMENT", "unauthorized")
 			return
 		}
@@ -272,6 +282,10 @@ func (h *Server) idem(next http.HandlerFunc) http.HandlerFunc {
 		digest := sha256.Sum256(b)
 		hash := hex.EncodeToString(digest[:])
 		route := r.URL.Path
+		if h.Config != nil {
+			scope := userconfig.ScopeFromContext(r.Context())
+			route = scope.TenantID + ":" + scope.UserID + ":" + route
+		}
 		tx, e := h.S.DB.Begin(r.Context())
 		if e != nil {
 			dbFail(w, r, e, "")

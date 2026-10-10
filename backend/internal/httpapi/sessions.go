@@ -13,6 +13,7 @@ import (
 	"astralive/backend/internal/metrics"
 	"astralive/backend/internal/runtime"
 	"astralive/backend/internal/sse"
+	"astralive/backend/internal/userconfig"
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5"
 )
@@ -32,11 +33,25 @@ func (h *Server) createSession(w http.ResponseWriter, r *http.Request) {
 		dbFail(w, r, e, "ROOM_NOT_FOUND")
 		return
 	}
-	x, e := h.S.Q.CreateSession(r.Context(), dbgen.CreateSessionParams{ID: ids.New("session"), RoomID: v.RoomID})
+	var x dbgen.LiveSession
+	var e error
+	if h.Config != nil && h.Config.IntegrationEnabled {
+		x, e = h.Config.CreateBusinessSession(r.Context(), userconfig.ScopeFromContext(r.Context()), v.RoomID)
+	} else {
+		x, e = h.S.Q.CreateSession(r.Context(), dbgen.CreateSessionParams{ID: ids.New("session"), RoomID: v.RoomID})
+		if e == nil && !h.claim(w, r, "session", x.ID) {
+			return
+		}
+	}
 	if e != nil {
-		dbFail(w, r, e, "")
+		if h.Config != nil {
+			configFailure(w, r, e)
+		} else {
+			dbFail(w, r, e, "")
+		}
 		return
 	}
+
 	metrics.LiveSessionCount.Inc()
 	respond(w, r, 201, session(x))
 }
@@ -200,6 +215,15 @@ func (h *Server) events(w http.ResponseWriter, r *http.Request) {
 			writeEvent(w, m)
 			fl.Flush()
 		case <-tick.C:
+			if h.Config != nil {
+				cookie, err := r.Cookie(userconfig.ProductCookie)
+				if err != nil {
+					return
+				}
+				if _, err = h.Config.Authenticate(r.Context(), cookie.Value); err != nil {
+					return
+				}
+			}
 			writeHeartbeat(w, time.Now())
 			fl.Flush()
 		}

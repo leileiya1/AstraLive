@@ -1,6 +1,7 @@
 package httpapi
 
 import (
+	"astralive/backend/internal/userconfig"
 	"context"
 	"encoding/json"
 	"net/http/httptest"
@@ -53,4 +54,15 @@ func TestFrozenOpenAPIValidation(t *testing.T) {
 	if e = doc.Components.Schemas["ErrorResponse"].Value.VisitJSON(actual); e != nil {
 		t.Fatalf("actual error response: %v", e)
 	}
+	for _, f := range []*userconfig.Fault{{Status: 401, Code: "UNAUTHENTICATED", Message: "sign in"}, {Status: 403, Code: "ORIGIN_REJECTED", Message: "origin rejected"}, {Status: 409, Code: "CONFIG_NOT_VERIFIED", Message: "verify provider"}} {
+		w = httptest.NewRecorder()
+		configFailure(w, httptest.NewRequest("POST", "/api/v1/live-sessions", nil), f)
+		if e = json.Unmarshal(w.Body.Bytes(), &actual); e != nil {
+			t.Fatal(e)
+		}
+		if e = doc.Components.Schemas["ErrorResponse"].Value.VisitJSON(actual); e != nil {
+			t.Fatalf("integrated authorization error violates frozen DTO: %v", e)
+		}
+	}
+
 }

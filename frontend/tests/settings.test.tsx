@@ -26,9 +26,23 @@ beforeEach(()=>{
 })
 afterEach(()=>{cleanup();vi.restoreAllMocks()})
 describe('configuration center',()=>{
+ it('connects URL, key and model selection to the existing profile API',async()=>{
+  mount();await screen.findByText('未配置 AI 模型')
+  expect(screen.getByLabelText('API URL')).toHaveValue('https://api.deepseek.com')
+  expect(screen.getByLabelText('API URL')).toHaveAttribute('readonly')
+  fireEvent.change(screen.getByLabelText('模型选择'),{target:{value:'deepseek-v4-pro'}})
+  expect(screen.getByLabelText('模型名称')).toHaveValue('deepseek-v4-pro')
+  fireEvent.change(screen.getByLabelText('配置名称'),{target:{value:'Selected model'}})
+  fireEvent.change(screen.getByLabelText('API Key'),{target:{value:'synthetic-key'}})
+  fireEvent.click(screen.getByRole('button',{name:'保存配置'}))
+  await waitFor(()=>expect(requests.some(r=>r.method==='POST')).toBe(true))
+  expect(requests.find(r=>r.method==='POST')?.body).toMatchObject({provider:'deepseek',config:{model:'deepseek-v4-pro'},secret:'synthetic-key'})
+  fireEvent.change(screen.getByLabelText('服务商'),{target:{value:'openai-compatible'}})
+  expect(screen.getByLabelText('API URL')).not.toHaveAttribute('readonly')
+ })
  it('requires authenticated identity',async()=>{
   vi.mocked(fetch).mockResolvedValue(fail('UNAUTHENTICATED',401));mount()
-  expect(await screen.findByText(/Git 登录不能授权/)).toBeInTheDocument();expect(screen.queryByLabelText('API Key')).not.toBeInTheDocument()
+  expect(await screen.findByRole('heading',{name:'登录 AstraLive'})).toBeInTheDocument();expect(screen.queryByLabelText('API Key')).not.toBeInTheDocument()
   expect(requests.some(r=>r.path.endsWith('/profiles'))).toBe(false)
  })
  it('shows saved metadata after refresh without a readable key',async()=>{
@@ -69,7 +83,7 @@ describe('configuration center',()=>{
  it('does not invent a remote credential field for local XiaoYa',async()=>{
   mount();await screen.findByText('未配置 AI 模型');fireEvent.click(screen.getByRole('button',{name:'TTS 音色'}))
   expect(screen.getByLabelText('音色 ID')).toHaveValue('xiao_ya');expect(screen.getByLabelText('语速')).toHaveValue(1)
-  expect(screen.queryByLabelText('API Key')).not.toBeInTheDocument();expect(screen.getByText(/真实合成探测待 Voice Agent 接入/)).toBeInTheDocument()
+  expect(screen.queryByLabelText('API Key')).not.toBeInTheDocument();expect(screen.getByText(/生成真实音频/)).toBeInTheDocument()
  })
  it('requires an OK envelope even for a 200 response',async()=>{
   vi.mocked(fetch).mockResolvedValue(new Response(JSON.stringify({code:'PROVIDER_TEST_FAILED',message:'failed'}),{status:200}))

@@ -6,6 +6,8 @@ import os
 import shutil
 import subprocess
 from uuid import uuid4
+from typing import Literal
+from pydantic import BaseModel, ConfigDict
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -14,6 +16,14 @@ from .events import MemoryEventPublisher, RedisEventPublisher, utc_now
 from .models import Accepted, Command, CreateSession, Interrupt, Utterance, WebRTCOffer
 from .providers import MockAvatarEngine, MockLLMProvider, MockMediaOutput, MockTTSProvider, OpenAICompatibleLLMProvider
 from .session import RuntimeFailure, SessionManager
+from .session_binding import BoundSessionManager, BoundXiaoYa, enabled as binding_enabled, service_token
+import hmac
+
+class TTSProbe(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    voiceId: Literal["xiao_ya"]
+    modelRef: Literal["xiaoya-default"]
+    speed: Literal[1]
 
 
 class JsonFormatter(logging.Formatter):
@@ -21,12 +31,17 @@ class JsonFormatter(logging.Formatter):
         item = {"level": record.levelname, "message": record.getMessage(), "traceId": getattr(record, "traceId", None), "sessionId": getattr(record, "sessionId", None), "utteranceId": getattr(record, "utteranceId", None), "generationId": getattr(record, "generationId", None)}
         if record.exc_info:
             item["errorType"] = record.exc_info[0].__name__
-            item["error"] = str(record.exc_info[1])
+            item["error"] = "runtime operation failed"
         return json.dumps(item, ensure_ascii=False)
 
 
 def create_app(settings: Settings | None = None, publisher=None, factories=None) -> FastAPI:
     settings = settings or Settings.from_env()
+    bound = binding_enabled()
+    if os.getenv("APP_ENV") == "production" and not bound:
+        raise RuntimeError("Production Runtime requires Session bindings")
+    def require_bundle():
+        raise RuntimeFailure("PROVIDER_BINDING_UNAVAILABLE", "A Session binding is required", 409)
     runtime_logger = logging.getLogger("app")
     runtime_logger.setLevel(os.getenv("RUNTIME_LOG_LEVEL", "INFO").upper())
     if not any(isinstance(h.formatter, JsonFormatter) for h in runtime_logger.handlers):
@@ -35,7 +50,9 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
         runtime_logger.addHandler(handler)
     publisher = publisher or (RedisEventPublisher(settings.redis_url) if settings.redis_url else MemoryEventPublisher())
     if factories is None:
-        if settings.mock_llm:
+        if bound:
+            llm_factory = require_bundle
+        elif settings.mock_llm:
             llm_factory = MockLLMProvider
         else:
             base, key, model = (os.getenv(name) for name in ("LLM_BASE_URL", "LLM_API_KEY", "LLM_MODEL"))
@@ -43,7 +60,9 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
                 raise RuntimeError("LLM_BASE_URL, LLM_API_KEY and LLM_MODEL are required")
             max_tokens = int(os.getenv("LLM_MAX_TOKENS", "256"))
             llm_factory = lambda: OpenAICompatibleLLMProvider(base, key, model, max_tokens=max_tokens)
-        if settings.mock_tts:
+        if bound:
+            tts_factory = require_bundle
+        elif settings.mock_tts:
             tts_factory = MockTTSProvider
         else:
             from .real_tts import SherpaOnnxTTSProvider
@@ -81,7 +100,11 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
                 audio_buffer_ms=settings.rtmp.audio_buffer_ms if settings.rtmp.enabled else 400,
             )
         factories = (llm_factory, tts_factory, avatar_factory, media_factory)
-    manager = SessionManager(settings, publisher, *factories)
+    manager = (BoundSessionManager if bound else SessionManager)(settings, publisher, *factories)
+    if bound:
+        control_token=service_token(os.environ["RUNTIME_CONTROL_TOKEN_FILE"])
+        if control_token == service_token(os.environ["CONFIG_WORKER_TOKEN_FILE"]) or control_token == settings.tool_token:
+            raise RuntimeError("Runtime control token must be separate")
 
     async def acceptance_diagnostics() -> None:
         interval = float(os.getenv("RUNTIME_MEDIA_METRICS_INTERVAL_SECONDS", os.getenv("ACCEPTANCE_MEDIA_METRICS_INTERVAL_SECONDS", "0")))
@@ -112,16 +135,62 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
                 await publisher.close()
 
     app = FastAPI(title="AstraLive AI Runtime", version="0.1.0", lifespan=lifespan)
+    @app.middleware("http")
+    async def trusted_control(request: Request, call_next):
+        if bound:
+            try:
+                expected = "Bearer " + service_token(os.environ["RUNTIME_CONTROL_TOKEN_FILE"])
+                authorized = hmac.compare_digest(request.headers.get("Authorization", ""), expected)
+            except Exception:
+                authorized = False
+            if not authorized:
+                return JSONResponse(status_code=401, content={"code":"INVALID_ARGUMENT","message":"Trusted control required","details":{"integrationCode":"UNAUTHENTICATED"},"requestId":f"req_{uuid4().hex}","timestamp":utc_now()})
+        return await call_next(request)
+
+    @app.get("/internal/v0.4/sessions/{sessionId}/providers")
+    async def session_providers(sessionId: str):
+        if not bound:
+            raise RuntimeFailure("PROVIDER_BINDING_UNAVAILABLE", "Integration disabled", 409)
+        return manager.provider_status(sessionId)
+
     app.state.manager = manager
     app.state.publisher = publisher
+    tts_probe_lock=asyncio.Lock()
+
+    @app.post("/internal/v0.4/provider-probes/tts")
+    async def probe_tts(body: TTSProbe):
+        if not bound:
+            raise RuntimeFailure("PROVIDER_TEST_UNAVAILABLE","Integration disabled",409)
+        if tts_probe_lock.locked():
+            raise RuntimeFailure("PROVIDER_TEST_FAILED","TTS probe busy",429)
+        async with tts_probe_lock:
+            try:
+                # Real installed CPU model; no Mock, GPU work or Session creation.
+                provider=await asyncio.to_thread(BoundXiaoYa,os.environ["TTS_MODEL_DIR"])
+                from .providers import GenerationContext
+                from .models import VoiceConfig
+                samples=0;rate=0;nonzero=False
+                async with asyncio.timeout(15):
+                    async for chunk in provider.synthesize_stream("你好，欢迎来到直播间。",VoiceConfig(voiceId="xiao_ya",provider="xiaoya"),GenerationContext(1,"provider-probe","provider-probe","provider-probe")):
+                        rate=chunk.sample_rate;samples+=len(chunk.pcm)//2
+                        nonzero=nonzero or any(chunk.pcm)
+                if not nonzero or samples<1600:
+                    raise ValueError("empty synthesis")
+                return {"provider":"xiaoya","real":True,"sampleRate":rate,"samples":samples}
+            except Exception:
+                raise RuntimeFailure("PROVIDER_TEST_FAILED","Real XiaoYa synthesis unavailable",502) from None
 
     @app.exception_handler(RuntimeFailure)
     async def runtime_error(request: Request, exc: RuntimeFailure):
-        return JSONResponse(status_code=exc.status, content={"code": exc.code, "message": str(exc), "details": {}, "requestId": request.headers.get("X-Request-Id", f"req_{uuid4().hex}"), "timestamp": utc_now()})
+        code,details=exc.code,{}
+        if request.url.path.startswith("/internal/v1/") and code in {"PROVIDER_BINDING_EXPIRED","PROVIDER_BINDING_UNAVAILABLE","PROVIDER_NOT_CONFIGURED","CONFIG_NOT_VERIFIED","PROVIDER_UNSUPPORTED","PROVIDER_BINDING_INVALID","WORKER_NOT_READY","WORKER_UNAVAILABLE","WORKER_UNREGISTERED","RESOURCE_NOT_FOUND"}:
+            code="RUNTIME_UNAVAILABLE" if exc.status>=500 else "CONFLICT"
+            details={"integrationCode":exc.code}
+        return JSONResponse(status_code=exc.status, content={"code": code, "message": str(exc), "details": details, "requestId": request.headers.get("X-Request-Id", f"req_{uuid4().hex}"), "timestamp": utc_now()})
 
     @app.exception_handler(RequestValidationError)
     async def validation_error(request: Request, exc: RequestValidationError):
-        return JSONResponse(status_code=422, content={"code": "INVALID_ARGUMENT", "message": "Invalid request", "details": {"errors": [{"loc": list(e["loc"]), "msg": e["msg"]} for e in exc.errors()]}, "requestId": request.headers.get("X-Request-Id", f"req_{uuid4().hex}"), "timestamp": utc_now()})
+        return JSONResponse(status_code=422, content={"code": "INVALID_ARGUMENT", "message": "Invalid request", "details": {}, "requestId": request.headers.get("X-Request-Id", f"req_{uuid4().hex}"), "timestamp": utc_now()})
 
     @app.exception_handler(Exception)
     async def internal_error(request: Request, exc: Exception):
@@ -175,7 +244,7 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
             outputs.append("webrtc")
         if settings.rtmp.enabled:
             outputs.append("rtmp")
-        return {"status": "UP", "runtimeVersion": "0.1.0", "gpu": {"available": gpu_available}, "activeSessions": sum(s.state not in {"ENDED", "FAILED"} for s in manager.sessions.values()), "providers": {"llm": "mock" if settings.mock_llm else "openai-compatible", "tts": "mock" if settings.mock_tts else "sherpa-onnx", "avatar": "mock" if settings.mock_avatar else "lightweight-2d", "media": "+".join(outputs), "events": "redis" if settings.redis_url else "memory"}}
+        return {"status": "UP", "runtimeVersion": "0.1.0", "gpu": {"available": gpu_available}, "activeSessions": sum(s.state not in {"ENDED", "FAILED"} for s in manager.sessions.values()), "providers": {"llm": "session-binding" if bound else "mock" if settings.mock_llm else "openai-compatible", "tts": "session-binding" if bound else "mock" if settings.mock_tts else "sherpa-onnx", "avatar": "session-binding" if bound else "mock" if settings.mock_avatar else "lightweight-2d", "media": "+".join(outputs), "events": "redis" if settings.redis_url else "memory"}}
 
     return app
 

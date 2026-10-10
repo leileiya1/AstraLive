@@ -179,3 +179,23 @@ func TestMixedDNSAndPinnedDial(t *testing.T) {
 		t.Fatal("validated address not pinned")
 	}
 }
+
+func TestRuntimeIntegrationFaultProjection(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "control-token")
+	if err := os.WriteFile(path, []byte(strings.Repeat("c", 40)), 0600); err != nil {
+		t.Fatal(err)
+	}
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("Authorization") != "Bearer "+strings.Repeat("c", 40) {
+			t.Error("missing control identity")
+		}
+		w.WriteHeader(503)
+		_, _ = io.WriteString(w, `{"code":"RUNTIME_UNAVAILABLE","message":"untrusted synthetic-secret","details":{"integrationCode":"WORKER_UNAVAILABLE"}}`)
+	}))
+	defer server.Close()
+	client := &http.Client{Transport: TokenTransport{Path: path, Base: server.Client().Transport}}
+	_, err := client.Get(server.URL)
+	if f := SafeFault(err); f.Code != "WORKER_UNAVAILABLE" || strings.Contains(f.Message, "synthetic-secret") {
+		t.Fatal("safe fault projection", f.Code)
+	}
+}

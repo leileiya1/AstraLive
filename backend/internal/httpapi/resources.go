@@ -27,6 +27,9 @@ func (h *Server) createAvatar(w http.ResponseWriter, r *http.Request) {
 		dbFail(w, r, e, "")
 		return
 	}
+	if !h.claim(w, r, "avatar", a.ID) {
+		return
+	}
 	respond(w, r, 201, avatar(a))
 }
 func (h *Server) listAvatars(w http.ResponseWriter, r *http.Request) {
@@ -35,8 +38,15 @@ func (h *Server) listAvatars(w http.ResponseWriter, r *http.Request) {
 		dbFail(w, r, e, "")
 		return
 	}
+	owned, ok := h.owned(w, r, "avatar")
+	if !ok {
+		return
+	}
 	v := make([]any, 0, len(a))
 	for _, x := range a {
+		if owned != nil && !owned[x.ID] {
+			continue
+		}
 		v = append(v, avatar(x))
 	}
 	respond(w, r, 200, v)
@@ -77,6 +87,9 @@ func (h *Server) prepareAvatar(w http.ResponseWriter, r *http.Request) {
 		_, _ = h.S.Q.SetAvatarStatus(r.Context(), dbgen.SetAvatarStatusParams{ID: id, Status: "READY"})
 		_, _ = h.S.Q.CompleteJob(r.Context(), j.ID)
 	}
+	if !h.claim(w, r, "job", j.ID) {
+		return
+	}
 	respond(w, r, 202, map[string]any{"jobId": j.ID, "status": "PENDING"})
 }
 func (h *Server) createVoice(w http.ResponseWriter, r *http.Request) {
@@ -97,6 +110,9 @@ func (h *Server) createVoice(w http.ResponseWriter, r *http.Request) {
 		dbFail(w, r, e, "")
 		return
 	}
+	if !h.claim(w, r, "voice", x.ID) {
+		return
+	}
 	respond(w, r, 201, voice(x))
 }
 func (h *Server) listVoices(w http.ResponseWriter, r *http.Request) {
@@ -105,8 +121,15 @@ func (h *Server) listVoices(w http.ResponseWriter, r *http.Request) {
 		dbFail(w, r, e, "")
 		return
 	}
+	owned, ok := h.owned(w, r, "voice")
+	if !ok {
+		return
+	}
 	v := make([]any, 0, len(a))
 	for _, x := range a {
+		if owned != nil && !owned[x.ID] {
+			continue
+		}
 		v = append(v, voice(x))
 	}
 	respond(w, r, 200, v)
@@ -150,6 +173,9 @@ func (h *Server) createProduct(w http.ResponseWriter, r *http.Request) {
 		dbFail(w, r, e, "")
 		return
 	}
+	if !h.claim(w, r, "product", x.ID) {
+		return
+	}
 	respond(w, r, 201, product(x))
 }
 func (h *Server) updateProduct(w http.ResponseWriter, r *http.Request) {
@@ -179,8 +205,15 @@ func (h *Server) listProducts(w http.ResponseWriter, r *http.Request) {
 		dbFail(w, r, e, "")
 		return
 	}
+	owned, ok := h.owned(w, r, "product")
+	if !ok {
+		return
+	}
 	v := make([]any, 0, len(a))
 	for _, x := range a {
+		if owned != nil && !owned[x.ID] {
+			continue
+		}
 		v = append(v, product(x))
 	}
 	respond(w, r, 200, v)
@@ -209,6 +242,9 @@ func (h *Server) createKnowledge(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	m["knowledgeBaseId"] = x.ID
+	if !h.claim(w, r, "knowledge", x.ID) {
+		return
+	}
 	respond(w, r, 201, m)
 }
 func (h *Server) addDocument(w http.ResponseWriter, r *http.Request) {
@@ -230,6 +266,9 @@ func (h *Server) indexKnowledge(w http.ResponseWriter, r *http.Request) {
 	j, e := h.S.Q.CreateJob(r.Context(), dbgen.CreateJobParams{ID: ids.New("job"), Kind: "KNOWLEDGE_INDEX", ResourceID: id})
 	if e != nil {
 		dbFail(w, r, e, "")
+		return
+	}
+	if !h.claim(w, r, "job", j.ID) {
 		return
 	}
 	respond(w, r, 202, map[string]any{"jobId": j.ID, "status": j.Status})
@@ -279,6 +318,9 @@ func (h *Server) createRoom(w http.ResponseWriter, r *http.Request) {
 		dbFail(w, r, e, "")
 		return
 	}
+	if !h.claim(w, r, "room", x.ID) {
+		return
+	}
 	respond(w, r, 201, room(x))
 }
 func (h *Server) updateRoom(w http.ResponseWriter, r *http.Request) {
@@ -299,8 +341,15 @@ func (h *Server) listRooms(w http.ResponseWriter, r *http.Request) {
 		dbFail(w, r, e, "")
 		return
 	}
+	owned, ok := h.owned(w, r, "room")
+	if !ok {
+		return
+	}
 	v := make([]any, 0, len(a))
 	for _, x := range a {
+		if owned != nil && !owned[x.ID] {
+			continue
+		}
 		v = append(v, room(x))
 	}
 	respond(w, r, 200, v)

@@ -21,17 +21,29 @@ import (
 )
 
 type Service struct {
-	DB      *pgxpool.Pool
-	Q       *dbgen.Queries
-	Runtime runtime.Client
-	Hub     *sse.Hub
-	Log     *slog.Logger
+	Integration SessionIntegration
+	DB          *pgxpool.Pool
+	Q           *dbgen.Queries
+	Runtime     runtime.Client
+	Hub         *sse.Hub
+	Log         *slog.Logger
 }
 
 func New(db *pgxpool.Pool, rt runtime.Client, log *slog.Logger) *Service {
-	return &Service{db, dbgen.New(db), rt, sse.New(), log}
+	return &Service{DB: db, Q: dbgen.New(db), Runtime: rt, Hub: sse.New(), Log: log}
 }
 func txt(v string) pgtype.Text { return pgtype.Text{String: v, Valid: v != ""} }
+
+func providerFailureCode(err error) string {
+	var integration interface{ IntegrationCode() string }
+	if errors.As(err, &integration) {
+		switch code := integration.IntegrationCode(); code {
+		case "PROVIDER_BINDING_EXPIRED", "PROVIDER_BINDING_UNAVAILABLE", "CONFIG_NOT_VERIFIED", "WORKER_NOT_READY", "WORKER_UNAVAILABLE", "WORKER_UNREGISTERED", "PROVIDER_NOT_CONFIGURED", "PROVIDER_UNSUPPORTED", "PROVIDER_BINDING_INVALID":
+			return code
+		}
+	}
+	return "RUNTIME_UNAVAILABLE"
+}
 
 var ErrConflict = errors.New("invalid state transition")
 
@@ -68,7 +80,7 @@ func (s *Service) Start(ctx context.Context, id, trace string) (string, error) {
 	if e != nil {
 		return "", e
 	}
-	if av.Status != "READY" && av.Engine != "MOCK" {
+	if s.Integration == nil && av.Status != "READY" && av.Engine != "MOCK" {
 		return "", fmt.Errorf("AVATAR_NOT_READY")
 	}
 	vo, e := s.Q.GetVoice(ctx, ro.VoiceID)
@@ -89,9 +101,17 @@ func (s *Service) Start(ctx context.Context, id, trace string) (string, error) {
 	if ro.KnowledgeBaseID.Valid {
 		req.Context.KnowledgeBaseId = &ro.KnowledgeBaseID.String
 	}
+	if s.Integration != nil {
+		if e = s.Integration.Prepare(ctx, id, &req); e != nil {
+			_, _ = s.Q.FailSession(ctx, dbgen.FailSessionParams{ID: id, FailureCode: txt(providerFailureCode(e)), FailureMessage: txt("provider binding unavailable"), Status: "PREPARING"})
+			_ = s.release(id)
+			return "", e
+		}
+	}
 	op, e := s.Runtime.CreateSession(ctx, req)
 	if e != nil {
-		_, _ = s.Q.FailSession(ctx, dbgen.FailSessionParams{ID: id, FailureCode: txt("RUNTIME_UNAVAILABLE"), FailureMessage: txt(e.Error()), Status: "PREPARING"})
+		_, _ = s.Q.FailSession(ctx, dbgen.FailSessionParams{ID: id, FailureCode: txt(providerFailureCode(e)), FailureMessage: txt("runtime command failed"), Status: "PREPARING"})
+		_ = s.release(id)
 		return "", e
 	}
 	_, e = s.Q.SetRuntimeOperation(ctx, dbgen.SetRuntimeOperationParams{ID: id, RuntimeOperationID: txt(op.OperationID)})
@@ -103,7 +123,8 @@ func (s *Service) Stop(ctx context.Context, id, trace string) (string, error) {
 	}
 	op, e := s.Runtime.StopSession(ctx, id, map[string]any{"commandId": ids.New("cmd"), "traceId": trace})
 	if e != nil {
-		_, _ = s.Q.FailSession(ctx, dbgen.FailSessionParams{ID: id, FailureCode: txt("RUNTIME_UNAVAILABLE"), FailureMessage: txt(e.Error()), Status: "STOPPING"})
+		_, _ = s.Q.FailSession(ctx, dbgen.FailSessionParams{ID: id, FailureCode: txt("RUNTIME_UNAVAILABLE"), FailureMessage: txt("runtime command failed"), Status: "STOPPING"})
+		_ = s.release(id)
 		return "", e
 	}
 	return op.OperationID, nil
@@ -224,6 +245,17 @@ func (s *Service) ApplyEvent(ctx context.Context, e Event) (bool, error) {
 			}
 		}
 	}
+	if e.EventType == "SESSION_FAILED" {
+		code, _ := e.Payload["code"].(string)
+		switch code {
+		case "WORKER_NOT_READY", "PROVIDER_BINDING_EXPIRED", "PROVIDER_START_FAILED", "PROVIDER_PREPARE_FAILED", "PROVIDER_AUTH_FAILED", "LLM_FAILED":
+		default:
+			code = "PROVIDER_UNAVAILABLE"
+		}
+		if _, er := tx.Exec(ctx, `UPDATE live_sessions SET failure_code=$2,failure_message='provider session failed' WHERE id=$1`, e.SessionID, code); er != nil {
+			return false, er
+		}
+	}
 	switch e.EventType {
 	case "UTTERANCE_QUEUED":
 		target = "QUEUED"
@@ -268,6 +300,11 @@ func (s *Service) ApplyEvent(ctx context.Context, e Event) (bool, error) {
 	if e.EventType == "UTTERANCE_FAILED" {
 		metrics.UtteranceFailedCount.Inc()
 	}
+	if e.EventType == "SESSION_ENDED" || e.EventType == "SESSION_FAILED" {
+		if er := s.release(e.SessionID); er != nil {
+			s.Log.Error("binding cleanup pending", "sessionId", e.SessionID)
+		}
+	}
 	s.Hub.Publish(e.SessionID, sse.Message{Name: eventNames[e.EventType], Data: b})
 	if e.EventType == "SESSION_READY" {
 		if err = s.transitionSession(ctx, e.SessionID, "STARTING"); err != nil {
@@ -275,9 +312,19 @@ func (s *Service) ApplyEvent(ctx context.Context, e Event) (bool, error) {
 		}
 		_, err = s.Runtime.StartSession(ctx, e.SessionID, map[string]any{"commandId": ids.New("cmd"), "traceId": e.TraceID})
 		if err != nil {
-			s.Log.Error("runtime start failed", "sessionId", e.SessionID, "error", err)
-			_, _ = s.Q.FailSession(ctx, dbgen.FailSessionParams{ID: e.SessionID, FailureCode: txt("RUNTIME_UNAVAILABLE"), FailureMessage: txt(err.Error()), Status: "STARTING"})
+			s.Log.Error("runtime start failed", "sessionId", e.SessionID)
+			_, _ = s.Q.FailSession(ctx, dbgen.FailSessionParams{ID: e.SessionID, FailureCode: txt("RUNTIME_UNAVAILABLE"), FailureMessage: txt("runtime command failed"), Status: "STARTING"})
+			_ = s.release(e.SessionID)
 		}
 	}
 	return true, err
+}
+
+func (s *Service) release(id string) error {
+	if s.Integration == nil {
+		return nil
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	return s.Integration.Release(ctx, id)
 }

@@ -91,7 +91,7 @@ class OpenAICompatibleLLMProvider:
         import json
         done = False
         terminal_finish = False
-        async with httpx.AsyncClient(timeout=httpx.Timeout(60, connect=10), transport=self.transport) as client:
+        async with httpx.AsyncClient(timeout=httpx.Timeout(60, connect=10), transport=self.transport, trust_env=False, follow_redirects=False) as client:
             async with client.stream(
                 "POST", f"{self.base_url}/chat/completions",
                 headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},

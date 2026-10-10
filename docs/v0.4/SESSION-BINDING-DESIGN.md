@@ -29,3 +29,9 @@ Incomplete bindings, unverified LLM, unsupported TTS parameters, unauthorized wo
 ## Integration gate
 
 SESSION_BINDINGS_ENABLED is explicit opt-in for Backend and Runtime. Accepted legacy development defaults do not change. Production refuses startup without identity/config/control-token integration. Real GPU/product acceptance is required before changing a deployed default. Agent B branch/code is neither merged nor imported here.
+
+## Private probe extension
+
+POST /internal/v0.4/provider-probes/tts on Runtime uses the distinct Runtime control token, forbids unknown fields, and accepts only {voiceId:"xiao_ya",modelRef:"xiaoya-default",speed:1}. It synthesizes a fixed phrase; returns {provider:"xiaoya",real:true,sampleRate,samples} only after nonzero PCM. This is a health probe, not a second profile or voice protocol. Public and private0.4 machine contracts are separate files in this directory; the frozen0.3 binding schema is referenced unchanged.
+
+Bound LLM failure propagation adds only an opt-in provider property to the Session preparation hook. Legacy callers retain behavior; the bound manager tracks terminal cleanup tasks and awaits them before publisher shutdown.

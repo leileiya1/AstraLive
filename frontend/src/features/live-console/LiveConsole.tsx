@@ -1,24 +1,402 @@
-import { useEffect,useState } from 'react'
-import { useMutation,useQuery,useQueryClient } from '@tanstack/react-query'
-import { api } from '../../api/client'
-import { ErrorNotice } from '../../components/feedback'
-import { Button } from '../../components/ui/button'
-import { Card } from '../../components/ui/card'
-import { Input,Textarea } from '../../components/ui/input'
-import { useLiveSessionEvents } from '../../hooks/useLiveSessionEvents'
-import { useLivePreview } from '../../hooks/useLivePreview'
-import { useUi } from '../../stores/ui'
-export function LiveConsole({roomId,sessionId,onSession}:{roomId:string|null;sessionId:string|null;onSession:(id:string)=>void}){const qc=useQueryClient();const room=useQuery({queryKey:['room-list'],queryFn:api.rooms,enabled:!!roomId});const session=useQuery({queryKey:['session',sessionId],queryFn:()=>api.session(sessionId!),enabled:!!sessionId,refetchInterval:10000});const {state,connection}=useLiveSessionEvents(sessionId);const muted=useUi(s=>s.muted);const setMuted=useUi(s=>s.setMuted);const [text,setText]=useState('');const [priority,setPriority]=useState(100);const [policy,setPolicy]=useState<'NONE'|'INTERRUPT_LOWER_PRIORITY'|'FORCE'>('NONE');const [comment,setComment]=useState('');const [nickname,setNickname]=useState('测试用户');const [pendingStart,setPendingStart]=useState(false)
- const create=useMutation({mutationFn:()=>api.createSession({roomId:roomId!}),onSuccess:s=>{onSession(s.sessionId);void qc.invalidateQueries({queryKey:['session',s.sessionId]})}})
- const start=useMutation({mutationFn:()=>api.startSession(sessionId!),onSuccess:()=>{void qc.invalidateQueries({queryKey:['session',sessionId]})},onError:()=>setPendingStart(false)})
- const stop=useMutation({mutationFn:()=>api.stopSession(sessionId!),onSuccess:()=>void qc.invalidateQueries({queryKey:['session',sessionId]})})
- const speak=useMutation({mutationFn:()=>api.speak(sessionId!,{text:text.trim(),priority,interruptPolicy:policy,source:'OPERATOR'}),onSuccess:()=>setText('')})
- const interrupt=useMutation({mutationFn:()=>api.interrupt(sessionId!,{reason:'OPERATOR_INTERRUPT'})})
- const dev=useMutation({mutationFn:()=>api.devEvent({eventType:'COMMENT',roomId:roomId!,user:{externalId:'mock-user-01',nickname:nickname.trim()},payload:{text:comment.trim()}}),onSuccess:()=>setComment('')})
- const shownStatus=state.sessionStatus??(pendingStart?'PREPARING':session.data?.status??null)
- const {videoRef,status:previewStatus,error:previewError,chooseOutput,canChooseOutput,reconnect}=useLivePreview(['LIVE','DEGRADED'].includes(shownStatus??'')?sessionId:null)
- useEffect(()=>{if(['LIVE','FAILED','ENDED'].includes(state.sessionStatus??''))setPendingStart(false)},[state.sessionStatus])
- const active=state.timeline.find(t=>!['COMPLETED','INTERRUPTED','CANCELLED','FAILED'].includes(t.status))
- const roomData=room.data?.find(r=>r.roomId===roomId)
- return <div className="space-y-5"><div className="flex flex-wrap items-center justify-between gap-3"><div><h1 className="text-2xl font-semibold">Live Console</h1><p className="text-sm text-slate-500">{roomData?.name??roomId??'未选择直播间'}</p></div><div className="flex gap-2">{!sessionId&&<Button disabled={!roomId||create.isPending} onClick={()=>create.mutate()}>创建 Session</Button>}{sessionId&&<Button disabled={start.isPending||pendingStart||!['CREATED','READY'].includes(shownStatus??'')} onClick={()=>{setPendingStart(true);start.mutate()}}>Start Live</Button>}<Button variant="danger" disabled={!sessionId||stop.isPending||!['LIVE','DEGRADED'].includes(shownStatus??'')} onClick={()=>stop.mutate()}>Stop</Button></div></div>{[create.error,start.error,stop.error].filter(Boolean).map((e,i)=><ErrorNotice key={i} error={e}/>)}<div className="grid gap-4 xl:grid-cols-[2fr_1fr]"><Card><h2 className="mb-3 font-semibold">WebRTC Preview</h2><div className="relative flex aspect-video items-center justify-center rounded-lg bg-slate-900 text-slate-300"><video ref={videoRef} autoPlay playsInline muted={muted} className="h-full w-full rounded-lg object-contain" aria-label="WebRTC Preview"/>{previewStatus==='idle'&&<span className="absolute rounded bg-slate-900/80 p-3 text-center text-sm">等待直播开始</span>}</div>{previewError!=null&&<ErrorNotice error={previewError}/>}<div className="mt-2 flex items-center justify-between text-sm"><span>Media: {previewStatus}{state.mediaReady?' · ready event received':''}</span>{previewStatus==='failed'&&<Button variant="ghost" onClick={reconnect}>重新连接预览</Button>}{canChooseOutput&&<Button variant="ghost" onClick={()=>void chooseOutput()}>音频输出</Button>}<Button variant="ghost" onClick={()=>setMuted(!muted)}>{muted?'取消静音':'静音'}</Button></div></Card><Card><h2 className="font-semibold">Session Status</h2><dl className="mt-3 grid grid-cols-2 gap-2 text-sm"><dt>Session</dt><dd className="break-all">{sessionId??'—'}</dd><dt>Status</dt><dd data-testid="session-status">{shownStatus??'—'}</dd><dt>Avatar</dt><dd>{roomData?.avatarId??'—'}</dd><dt>Voice</dt><dd>{roomData?.voiceId??'—'}</dd><dt>Runtime events</dt><dd>{connection}</dd><dt>FPS / Delay</dt><dd>未提供指标</dd></dl>{session.error&&<ErrorNotice error={session.error} retry={()=>void session.refetch()}/>}</Card></div><Card><h2 className="mb-3 font-semibold">Speak</h2><form className="flex flex-wrap gap-2" onSubmit={e=>{e.preventDefault();if(text.trim())speak.mutate()}}><Textarea aria-label="Speak text" placeholder="欢迎大家来到直播间" value={text} onChange={e=>setText(e.target.value)} required className="min-w-64 flex-1"/><Input aria-label="Priority" type="number" value={priority} onChange={e=>setPriority(Number(e.target.value))} className="w-24"/><select aria-label="Interrupt policy" value={policy} onChange={e=>setPolicy(e.target.value as typeof policy)} className="rounded-md border border-slate-300 p-2"><option value="NONE">NONE</option><option value="INTERRUPT_LOWER_PRIORITY">INTERRUPT_LOWER_PRIORITY</option><option value="FORCE">FORCE</option></select><Button disabled={!sessionId||speak.isPending||shownStatus!=='LIVE'}>Speak</Button></form><div className="mt-3 flex items-center gap-3"><Button variant="danger" disabled={!sessionId||interrupt.isPending||!active} onClick={()=>interrupt.mutate()}>Interrupt</Button><p className="text-sm text-slate-500">Current: {active?`${active.utteranceId} · priority ${active.priority??'—'} · ${active.status}`:'—'}</p></div>{speak.error&&<ErrorNotice error={speak.error}/>} {interrupt.error&&<ErrorNotice error={interrupt.error}/>}</Card><Card><h2 className="font-semibold">Utterance Timeline</h2>{state.timeline.length===0?<p className="mt-3 text-sm text-slate-500">暂无发言事件</p>:<ol className="mt-3 space-y-2">{state.timeline.map(t=><li key={t.utteranceId} className="flex flex-wrap justify-between rounded border border-slate-200 p-2 text-sm"><span>{t.text??t.utteranceId}</span><span>{t.status} · {new Date(t.occurredAt).toLocaleTimeString()}</span></li>)}</ol>}</Card><Card><h2 className="font-semibold">Runtime Errors</h2>{state.errors.length===0?<p className="mt-2 text-sm text-slate-500">暂无错误</p>:state.errors.map(e=><p key={e.eventId} role="alert" className="mt-2 rounded bg-rose-50 p-2 text-sm text-rose-800">{typeof e.payload.message==='string'?e.payload.message:e.eventType} · {e.traceId}</p>)}</Card><Card><h2 className="font-semibold">Event Timeline</h2><div className="mt-2 max-h-64 overflow-y-auto text-sm">{state.events.length===0?'暂无事件':state.events.map(({name,event})=><p key={event.eventId} className="border-b border-slate-100 py-1">{name} · {new Date(event.occurredAt).toLocaleTimeString()}</p>)}</div></Card>{import.meta.env.DEV&&import.meta.env.VITE_ENABLE_DEV_PLATFORM_EVENTS==='true'&&<Card><h2 className="mb-3 font-semibold">Developer Panel · Mock COMMENT</h2><form className="flex flex-wrap gap-2" onSubmit={e=>{e.preventDefault();if(roomId&&comment.trim())dev.mutate()}}><Input aria-label="Nickname" value={nickname} onChange={e=>setNickname(e.target.value)} required className="max-w-40"/><Input aria-label="Mock comment" value={comment} onChange={e=>setComment(e.target.value)} required placeholder="有 XL 吗？" className="min-w-48 flex-1"/><Button disabled={!roomId||dev.isPending}>发送</Button></form>{dev.isSuccess&&dev.data&&<p role="status" className="mt-2 text-sm">COMMENT 已接受 · {dev.data.utteranceId} · {dev.data.status}；等待 SSE 更新</p>}{dev.error&&<ErrorNotice error={dev.error}/>}</Card>}</div>
+import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { api, ApiError } from "../../api/client";
+import { ErrorNotice } from "../../components/feedback";
+import { Button } from "../../components/ui/button";
+import { Card } from "../../components/ui/card";
+import { Input, Textarea } from "../../components/ui/input";
+import { useLiveSessionEvents } from "../../hooks/useLiveSessionEvents";
+import { useLivePreview } from "../../hooks/useLivePreview";
+import { ProviderStatus } from "./ProviderStatus";
+import { useUi } from "../../stores/ui";
+function PreviewError({ error }: { error: unknown }) {
+  if (error instanceof ApiError) return <ErrorNotice error={error} />;
+  return (
+    <p
+      role="alert"
+      className="rounded-md border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800"
+    >
+      浏览器预览连接失败。请检查浏览器是否允许
+      WebRTC、网络及音频输出，再重新连接预览。服务端 ready
+      事件不代表浏览器已开始播放。
+    </p>
+  );
+}
+export function LiveConsole({
+  roomId,
+  sessionId,
+  onSession,
+}: {
+  roomId: string | null;
+  sessionId: string | null;
+  onSession: (id: string) => void;
+}) {
+  const qc = useQueryClient();
+  const room = useQuery({
+    queryKey: ["room-list"],
+    queryFn: api.rooms,
+    enabled: !!roomId,
+  });
+  const session = useQuery({
+    queryKey: ["session", sessionId],
+    queryFn: () => api.session(sessionId!),
+    enabled: !!sessionId,
+    refetchInterval: 10000,
+  });
+  const { state, connection } = useLiveSessionEvents(sessionId);
+  const muted = useUi((s) => s.muted);
+  const setMuted = useUi((s) => s.setMuted);
+  const [text, setText] = useState("");
+  const [priority, setPriority] = useState(100);
+  const [policy, setPolicy] = useState<
+    "NONE" | "INTERRUPT_LOWER_PRIORITY" | "FORCE"
+  >("NONE");
+  const [comment, setComment] = useState("");
+  const [nickname, setNickname] = useState("测试用户");
+  const [pendingStart, setPendingStart] = useState(false);
+  const [fit, setFit] = useState<"cover" | "contain">("cover");
+  const create = useMutation({
+    mutationFn: () => api.createSession({ roomId: roomId! }),
+    onSuccess: (s) => {
+      onSession(s.sessionId);
+      void qc.invalidateQueries({ queryKey: ["session", s.sessionId] });
+    },
+  });
+  const start = useMutation({
+    mutationFn: () => api.startSession(sessionId!),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ["session", sessionId] });
+    },
+    onError: () => setPendingStart(false),
+  });
+  const stop = useMutation({
+    mutationFn: () => api.stopSession(sessionId!),
+    onSuccess: () =>
+      void qc.invalidateQueries({ queryKey: ["session", sessionId] }),
+  });
+  const speak = useMutation({
+    mutationFn: () =>
+      api.speak(sessionId!, {
+        text: text.trim(),
+        priority,
+        interruptPolicy: policy,
+        source: "OPERATOR",
+      }),
+    onSuccess: () => setText(""),
+  });
+  const interrupt = useMutation({
+    mutationFn: () =>
+      api.interrupt(sessionId!, { reason: "OPERATOR_INTERRUPT" }),
+  });
+  const dev = useMutation({
+    mutationFn: () =>
+      api.devEvent({
+        eventType: "COMMENT",
+        roomId: roomId!,
+        user: { externalId: "mock-user-01", nickname: nickname.trim() },
+        payload: { text: comment.trim() },
+      }),
+    onSuccess: () => setComment(""),
+  });
+  const shownStatus =
+    state.sessionStatus ??
+    (pendingStart ? "PREPARING" : (session.data?.status ?? null));
+  const {
+    videoRef,
+    status: previewStatus,
+    error: previewError,
+    chooseOutput,
+    canChooseOutput,
+    reconnect,
+  } = useLivePreview(
+    ["LIVE", "DEGRADED"].includes(shownStatus ?? "") ? sessionId : null,
+  );
+  useEffect(() => {
+    if (["LIVE", "FAILED", "ENDED"].includes(state.sessionStatus ?? ""))
+      setPendingStart(false);
+  }, [state.sessionStatus]);
+  const active = state.timeline.find(
+    (t) =>
+      !["COMPLETED", "INTERRUPTED", "CANCELLED", "FAILED"].includes(t.status),
+  );
+  const roomData = room.data?.find((r) => r.roomId === roomId);
+  return (
+    <div className="space-y-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold">Live Console</h1>
+          <p className="text-sm text-slate-500">
+            {roomData?.name ?? roomId ?? "未选择直播间"}
+          </p>
+        </div>
+        <div className="flex gap-2">
+          {!sessionId && (
+            <Button
+              disabled={!roomId || create.isPending}
+              onClick={() => create.mutate()}
+            >
+              创建 Session
+            </Button>
+          )}
+          {sessionId && (
+            <Button
+              disabled={
+                start.isPending ||
+                pendingStart ||
+                !["CREATED", "READY"].includes(shownStatus ?? "")
+              }
+              onClick={() => {
+                setPendingStart(true);
+                start.mutate();
+              }}
+            >
+              Start Live
+            </Button>
+          )}
+          <Button
+            variant="danger"
+            disabled={
+              !sessionId ||
+              stop.isPending ||
+              !["LIVE", "DEGRADED"].includes(shownStatus ?? "")
+            }
+            onClick={() => stop.mutate()}
+          >
+            Stop
+          </Button>
+        </div>
+      </div>
+      <ProviderStatus sessionId={sessionId} />
+      {[create.error, start.error, stop.error].filter(Boolean).map((e, i) => (
+        <ErrorNotice key={i} error={e} />
+      ))}
+      <div className="flex min-w-0 flex-col gap-4 lg:flex-row lg:items-start">
+        <Card className="w-full min-w-0 lg:flex-[2]">
+          <h2 className="mb-3 font-semibold">WebRTC Preview</h2>
+          <div className="relative flex w-full aspect-video items-center justify-center overflow-hidden rounded-lg bg-slate-900 text-slate-300">
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              muted={muted}
+              className={`absolute inset-0 h-full w-full object-center ${fit === "cover" ? "object-cover" : "object-contain"}`}
+              aria-label="WebRTC Preview"
+            />
+            {previewStatus === "idle" && (
+              <span className="absolute rounded bg-slate-900/80 p-3 text-center text-sm">
+                等待直播开始
+              </span>
+            )}
+          </div>
+          {previewError != null && <PreviewError error={previewError} />}
+          <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-sm">
+            <span>
+              Media: {previewStatus}
+              {state.mediaReady ? " · ready event received" : ""}
+            </span>
+            {previewStatus === "failed" && (
+              <Button variant="ghost" onClick={reconnect}>
+                重新连接预览
+              </Button>
+            )}
+            {canChooseOutput && (
+              <Button variant="ghost" onClick={() => void chooseOutput()}>
+                音频输出
+              </Button>
+            )}
+            <Button
+              variant="ghost"
+              aria-pressed={fit === "cover"}
+              onClick={() => setFit(fit === "cover" ? "contain" : "cover")}
+            >
+              {fit === "cover" ? "完整画面" : "铺满画面"}
+            </Button>
+            <Button variant="ghost" onClick={() => setMuted(!muted)}>
+              {muted ? "取消静音" : "静音"}
+            </Button>
+          </div>
+        </Card>
+        <Card className="w-full min-w-0 lg:flex-1">
+          <h2 className="font-semibold">Session Status</h2>
+          <dl className="mt-3 grid grid-cols-2 gap-2 text-sm">
+            <dt>Session</dt>
+            <dd className="break-all">{sessionId ?? "—"}</dd>
+            <dt>Status</dt>
+            <dd data-testid="session-status">{shownStatus ?? "—"}</dd>
+            <dt>Avatar</dt>
+            <dd className="break-all">{roomData?.avatarId ?? "—"}</dd>
+            <dt>Voice</dt>
+            <dd className="break-all">{roomData?.voiceId ?? "—"}</dd>
+            <dt>Runtime events</dt>
+            <dd>{connection}</dd>
+            <dt>FPS / Delay</dt>
+            <dd>未提供指标</dd>
+          </dl>
+          {session.error && (
+            <ErrorNotice
+              error={session.error}
+              retry={() => void session.refetch()}
+            />
+          )}
+        </Card>
+      </div>
+      <Card>
+        <h2 className="mb-3 font-semibold">Speak</h2>
+        <form
+          className="flex flex-wrap gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (text.trim()) speak.mutate();
+          }}
+        >
+          <Textarea
+            aria-label="Speak text"
+            placeholder="欢迎大家来到直播间"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            required
+            className="w-full min-w-0 sm:w-auto sm:min-w-64 sm:flex-1"
+          />
+          <Input
+            aria-label="Priority"
+            type="number"
+            value={priority}
+            onChange={(e) => setPriority(Number(e.target.value))}
+            className="w-24"
+          />
+          <select
+            aria-label="Interrupt policy"
+            value={policy}
+            onChange={(e) => setPolicy(e.target.value as typeof policy)}
+            className="rounded-md border border-slate-300 p-2"
+          >
+            <option value="NONE">NONE</option>
+            <option value="INTERRUPT_LOWER_PRIORITY">
+              INTERRUPT_LOWER_PRIORITY
+            </option>
+            <option value="FORCE">FORCE</option>
+          </select>
+          <Button
+            disabled={
+              !sessionId ||
+              speak.isPending ||
+              !["LIVE", "DEGRADED"].includes(shownStatus ?? "")
+            }
+          >
+            Speak
+          </Button>
+        </form>
+        <div className="mt-3 flex items-center gap-3">
+          <Button
+            variant="danger"
+            disabled={!sessionId || interrupt.isPending || !active}
+            onClick={() => interrupt.mutate()}
+          >
+            Interrupt
+          </Button>
+          <p className="text-sm text-slate-500">
+            Current:{" "}
+            {active
+              ? `${active.utteranceId} · priority ${active.priority ?? "—"} · ${active.status}`
+              : "—"}
+          </p>
+        </div>
+        {speak.error && <ErrorNotice error={speak.error} />}{" "}
+        {interrupt.error && <ErrorNotice error={interrupt.error} />}
+      </Card>
+      <Card>
+        <h2 className="font-semibold">Utterance Timeline</h2>
+        {state.timeline.length === 0 ? (
+          <p className="mt-3 text-sm text-slate-500">暂无发言事件</p>
+        ) : (
+          <ol className="mt-3 space-y-2">
+            {state.timeline.map((t) => (
+              <li
+                key={t.utteranceId}
+                className="flex flex-wrap justify-between rounded border border-slate-200 p-2 text-sm"
+              >
+                <span>{t.text ?? t.utteranceId}</span>
+                <span>
+                  {t.status} · {new Date(t.occurredAt).toLocaleTimeString()}
+                </span>
+              </li>
+            ))}
+          </ol>
+        )}
+      </Card>
+      <Card>
+        <h2 className="font-semibold">Runtime Errors</h2>
+        {state.errors.length === 0 ? (
+          <p className="mt-2 text-sm text-slate-500">暂无错误</p>
+        ) : (
+          state.errors.map((e) => (
+            <p
+              key={e.eventId}
+              role="alert"
+              className="mt-2 rounded bg-rose-50 p-2 text-sm text-rose-800"
+            >
+              {typeof e.payload.message === "string"
+                ? e.payload.message
+                : e.eventType}{" "}
+              · {e.traceId}
+            </p>
+          ))
+        )}
+      </Card>
+      <Card>
+        <h2 className="font-semibold">Event Timeline</h2>
+        <div className="mt-2 max-h-64 overflow-y-auto text-sm">
+          {state.events.length === 0
+            ? "暂无事件"
+            : state.events.map(({ name, event }) => (
+                <p
+                  key={event.eventId}
+                  className="border-b border-slate-100 py-1"
+                >
+                  {name} · {new Date(event.occurredAt).toLocaleTimeString()}
+                </p>
+              ))}
+        </div>
+      </Card>
+      {import.meta.env.DEV &&
+        import.meta.env.VITE_ENABLE_DEV_PLATFORM_EVENTS === "true" && (
+          <Card>
+            <h2 className="mb-3 font-semibold">
+              Developer Panel · Mock COMMENT
+            </h2>
+            <form
+              className="flex flex-wrap gap-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (roomId && comment.trim()) dev.mutate();
+              }}
+            >
+              <Input
+                aria-label="Nickname"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                required
+                className="max-w-40"
+              />
+              <Input
+                aria-label="Mock comment"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                required
+                placeholder="有 XL 吗？"
+                className="min-w-48 flex-1"
+              />
+              <Button disabled={!roomId || dev.isPending}>发送</Button>
+            </form>
+            {dev.isSuccess && dev.data && (
+              <p role="status" className="mt-2 text-sm">
+                COMMENT 已接受 · {dev.data.utteranceId} · {dev.data.status}
+                ；等待 SSE 更新
+              </p>
+            )}
+            {dev.error && <ErrorNotice error={dev.error} />}
+          </Card>
+        )}
+    </div>
+  );
 }

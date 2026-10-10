@@ -19,6 +19,28 @@ func FromEnvironment(db DB) (*Service, error) {
 		return nil, errors.New("invalid configuration origin")
 	}
 	s := &Service{DB: db, Vault: Vault{os.Getenv("CONFIG_KEYRING_FILE")}, Origin: origin, Hosts: map[string]bool{"api.deepseek.com": true}, IdentityTokenFile: os.Getenv("CONFIG_IDENTITY_TOKEN_FILE"), WorkerTokenFile: os.Getenv("CONFIG_WORKER_TOKEN_FILE")}
+	s.OperatorFile = os.Getenv("AUTH_OPERATOR_FILE")
+	s.IntegrationEnabled = os.Getenv("SESSION_BINDINGS_ENABLED") == "true"
+	s.RuntimeStatusURL = strings.TrimRight(os.Getenv("AI_RUNTIME_URL"), "/")
+	s.RuntimeControlTokenFile = os.Getenv("RUNTIME_CONTROL_TOKEN_FILE")
+	if s.OperatorFile != "" {
+		if _, e = s.operator(); e != nil {
+			return nil, e
+		}
+	}
+	if s.IntegrationEnabled {
+		if s.OperatorFile == "" || s.RuntimeStatusURL == "" {
+			return nil, errors.New("Session integration requires operator login and Runtime URL")
+		}
+		unique := map[string]bool{}
+		for _, path := range []string{s.IdentityTokenFile, s.WorkerTokenFile, s.RuntimeControlTokenFile} {
+			token, err := ReadServiceToken(path)
+			if err != nil || unique[token] || token == os.Getenv("INTERNAL_API_TOKEN") {
+				return nil, errors.New("Session integration requires distinct private service tokens")
+			}
+			unique[token] = true
+		}
+	}
 	s.Workers, e = loadWorkerRegistry(os.Getenv("GPU_WORKER_REGISTRY_FILE"))
 	if e != nil {
 		return nil, e

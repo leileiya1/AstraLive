@@ -76,6 +76,7 @@ type Fault struct {
 }
 
 func (e *Fault) Error() string                 { return e.Code }
+func (e *Fault) IntegrationCode() string       { return e.Code }
 func fault(status int, code, msg string) error { return &Fault{status, code, msg} }
 
 var ErrNotFound = fault(404, "RESOURCE_NOT_FOUND", "configuration not found")

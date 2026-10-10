@@ -28,9 +28,25 @@ func write(w http.ResponseWriter, r *http.Request, status int, data any, err err
 	if err != nil {
 		f := publicError(err)
 		status = f.Status
-		out["code"] = f.Code
+		code := f.Code
+		details := map[string]any{}
+		if strings.HasPrefix(r.URL.Path, "/api/v1/") {
+			switch code {
+			case "RESOURCE_NOT_FOUND", "INVALID_ARGUMENT", "CONFLICT", "INTERNAL_ERROR":
+			default:
+				details["integrationCode"] = code
+				if status == 401 || status == 403 || status == 422 {
+					code = "INVALID_ARGUMENT"
+				} else if status >= 500 {
+					code = "RUNTIME_UNAVAILABLE"
+				} else {
+					code = "CONFLICT"
+				}
+			}
+		}
+		out["code"] = code
 		out["message"] = f.Message
-		out["details"] = map[string]any{}
+		out["details"] = details
 	} else {
 		out["code"] = "OK"
 		out["message"] = "success"
@@ -272,3 +288,5 @@ func (s *Service) InternalRouter() http.Handler {
 	})
 	return r
 }
+
+func WriteError(w http.ResponseWriter, r *http.Request, err error) { write(w, r, 500, nil, err) }
