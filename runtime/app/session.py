@@ -14,6 +14,7 @@ from .providers import AvatarEngine, GenerationContext, LLMProvider, LLMRequest,
 from .tools import ToolClient
 from .fact_answer import FactAnswerResolver
 from .providers import MediaDeliveryError
+from .interaction_trace import InteractionTrace, retain, traces
 
 
 log = logging.getLogger(__name__)
@@ -35,24 +36,45 @@ def mentioned_sizes(text: str) -> tuple[str, ...]:
 
 def required_product_facts(text: str) -> tuple[str, ...]:
     lower = text.lower()
-    stock = any(word in lower for word in ("库存", "存货", "有货", "现货", "还有吗", "还有没有", "剩几", "剩多少", "stock", "available", "in stock"))
+    stock = any(word in lower for word in ("库存", "存货", "有货", "现货", "还有吗", "还有没有", "剩几", "剩多少", "stock", "in stock"))
     price = any(word in lower for word in ("价格", "价钱", "多少钱", "售价", "卖多少", "price", "cost", "how much"))
-    product = bool(mentioned_sizes(text)) or any(word in lower for word in ("商品", "产品", "材质", "面料", "尺码", "型号", "规格", "尺寸", "product", "material", "size"))
+    product = bool(mentioned_sizes(text)) or any(word in lower for word in ("商品", "产品", "材质", "面料", "尺码", "型号", "规格", "尺寸", "product", "material", "size", "叫什么", "名称", "名字", "可选尺码"))
     return tuple(name for name, needed in (("product", product), ("stock", stock), ("price", price)) if needed)
 
 
+def _safe_cut(text: str, index: int) -> bool:
+    # Keep decimals, latin size labels and numeric units together, including
+    # incomplete streamed units (500毫 + 升, 129. + 90元).
+    left, right = text[index-1:index], text[index:index+1]
+    if left and right and (left.isascii() and left.isalnum() or left in ".%￥¥-+,，") and (right.isascii() and right.isalnum() or right in ".%,，元米克毫升厘米公斤千瓦件码号℃℉度吨秒分小时"):
+        return False
+    if left in "元米克" and right == "/" or left == "/" and right in "件斤份台":
+        return False
+    if right and right in "毫升厘米公斤千瓦":
+        return False
+    if left in "毫厘公千" and right in "升米斤克瓦":
+        return False
+    return True
+
+
 async def sentence_stream(tokens, max_wait: float = 0.25, max_length: int = 120):
-    """Yield sentences while the producer continues streaming tokens."""
-    queue: asyncio.Queue = asyncio.Queue()
+    """Bounded token prefetch, natural punctuation, bounded long sentences.
+
+    Timeout flushes only at punctuation; it never cuts an unfinished price/unit.
+    A pathologically long indivisible number/word fails explicitly at 240 chars.
+    """
+    queue: asyncio.Queue = asyncio.Queue(maxsize=8)
 
     async def produce():
         try:
             async for token in tokens:
-                await queue.put((token, None))
+                for i in range(0, len(token), 64):
+                    await queue.put((token[i:i+64], None))
+        except asyncio.CancelledError:
+            raise
         except Exception as exc:
             await queue.put((None, exc))
-        finally:
-            await queue.put((None, None))
+        await queue.put((None, None))
 
     producer = asyncio.create_task(produce())
     buffer = ""
@@ -61,8 +83,7 @@ async def sentence_stream(tokens, max_wait: float = 0.25, max_length: int = 120)
             try:
                 token, error = await asyncio.wait_for(queue.get(), max_wait if buffer else None)
             except asyncio.TimeoutError:
-                yield buffer.strip()
-                buffer = ""
+                # Prefer whole clauses over arbitrary time based cuts.
                 continue
             if error:
                 raise error
@@ -71,10 +92,18 @@ async def sentence_stream(tokens, max_wait: float = 0.25, max_length: int = 120)
                     yield buffer.strip()
                 return
             buffer += token
-            boundary = any(mark in buffer for mark in "。！？!?") or (len(buffer) >= 20 and any(mark in buffer for mark in ",，"))
-            if boundary or len(buffer) >= max_length:
-                yield buffer.strip()
-                buffer = ""
+            while buffer:
+                punctuation = next((i+1 for i, c in enumerate(buffer) if c in "。！？!?；;" or (i >= 19 and c in "，," and not (i > 0 and buffer[i-1].isdigit() and (i+1 == len(buffer) or buffer[i+1].isdigit())))), None)
+                cut = punctuation
+                if cut is None and len(buffer) >= max_length:
+                    cut = next((i for i in range(max_length, min(len(buffer), 240)) if _safe_cut(buffer, i)), None)
+                if cut is None:
+                    if len(buffer) >= 240:
+                        raise ValueError("Indivisible spoken segment exceeds limit")
+                    break
+                segment, buffer = buffer[:cut].strip(), buffer[cut:]
+                if segment:
+                    yield segment
     finally:
         producer.cancel()
         try:
@@ -235,6 +264,9 @@ class RuntimeSession:
             if should_interrupt:
                 await self._interrupt_locked()
             # The control plane must observe QUEUED before any worker transition.
+            trace = InteractionTrace(item.traceId, self.session_id, item.utteranceId)
+            trace.mark("runtime_utterance_accepted")
+            retain(trace)
             await self.emit("UTTERANCE_QUEUED", item.traceId, item.utteranceId)
             self.sequence += 1
             heapq.heappush(self.speech_queue, (-item.priority, self.sequence, item))
@@ -413,6 +445,10 @@ class RuntimeSession:
 
     async def _process(self, item: Utterance, generation: int) -> None:
         ctx = GenerationContext(generation, item.traceId, self.session_id, item.utteranceId)
+        trace = traces.get((self.session_id, item.utteranceId)) or InteractionTrace(item.traceId, self.session_id, item.utteranceId)
+        setter = getattr(self.media_output, "set_interaction_trace", None)
+        if setter:
+            setter(trace, generation)
         rendering = playing = synthesizing = False
         failure_stage = "GENERATION"
         try:
@@ -425,13 +461,23 @@ class RuntimeSession:
             async def sentences():
                 emitted = False
                 try:
-                    if safe_answer:
-                        yield safe_answer
+                    if safe_answer or fact_context.fallback:
+                        answer = safe_answer or fact_context.fallback
+                        if len(answer) <= 120:
+                            yield answer
+                            return
+                        async def resolved_tokens():
+                            yield answer
+                        async for segment in sentence_stream(resolved_tokens()):
+                            yield segment
                         return
-                    if fact_context.fallback:
-                        yield fact_context.fallback
-                        return
-                    async for sentence in sentence_stream(self.llm.stream(request)):
+                    async def traced_tokens():
+                        trace.mark("llm_started")
+                        async for token in self.llm.stream(request):
+                            if token:
+                                trace.mark("llm_first_token")
+                            yield token
+                    async for sentence in sentence_stream(traced_tokens()):
                         emitted = True
                         yield sentence
                     if not emitted:
@@ -441,9 +487,9 @@ class RuntimeSession:
                 except Exception as exc:
                     if getattr(self.llm, "propagate_failures", False):
                         raise
-                    await self.emit("RUNTIME_WARNING", item.traceId, item.utteranceId, {"code": "LLM_FAILED", "fallback": "input_text", "errorType": type(exc).__name__})
+                    await self.emit("RUNTIME_WARNING", item.traceId, item.utteranceId, {"code": "LLM_FAILED", "fallback": "unavailable_answer", "errorType": type(exc).__name__})
                     if not emitted:
-                        yield "我现在暂时无法回答这个问题。" if required_product_facts(item.text) else item.text
+                        yield "我现在暂时无法回答这个问题，请稍后再问我。"
                     else:
                         raise
 
@@ -451,6 +497,7 @@ class RuntimeSession:
             async def synthesized_audio():
                 nonlocal synthesizing, failure_stage
                 async for sentence in sentences():
+                    trace.mark("first_speakable_segment")
                     if os.getenv("CAPTURE_TTS_TEXT_EVIDENCE") == "1":
                         log.warning("tts_evidence %s", json.dumps({
                             "sessionId": self.session_id, "utteranceId": item.utteranceId,
@@ -462,7 +509,10 @@ class RuntimeSession:
                         await self.emit("UTTERANCE_SYNTHESIZING", item.traceId, item.utteranceId)
                         synthesizing = True
                     failure_stage = "TTS"
+                    trace.mark("tts_started")
                     async for chunk in self.tts_provider.synthesize_stream(sentence, item.voice, ctx):
+                        if chunk.pcm:
+                            trace.mark("tts_first_pcm")
                         yield chunk
             audio_source = synthesized_audio()
             stream_hook = getattr(self.avatar_engine, "stream_audio", None)
@@ -479,6 +529,8 @@ class RuntimeSession:
                 failure_stage = "AVATAR"
                 render_started = time.monotonic()
                 frames = await self.avatar_engine.push_audio(chunk)
+                if frames:
+                    trace.mark("avatar_first_returned_frame", "Avatar API returned frame; synthetic/CPU modes are not GPU generation evidence")
                 if hasattr(self.media_output, "record_render_ms"):
                     self.media_output.record_render_ms((time.monotonic() - render_started) * 1000)
                 if generation != self.generation_id:
@@ -488,10 +540,12 @@ class RuntimeSession:
                     playing = True
                 failure_stage = "MEDIA"
                 await self.media_output.push_audio(chunk)
+                trace.mark("media_first_audio", "media output push returned; not browser/speaker playback")
                 for frame in frames:
                     if frame.generation_id != self.generation_id:
                         break
                     await self.media_output.push_video(frame)
+                    trace.mark("media_first_video", "media output push returned; not browser/platform ingestion")
                 failure_stage = "TTS"
             if generation == self.generation_id:
                 failure_stage = "MEDIA"
@@ -501,6 +555,7 @@ class RuntimeSession:
                     await self.emit("RUNTIME_WARNING", item.traceId, item.utteranceId, warning)
             async with self.lock:
                 if generation == self.generation_id and self.current_utterance is item:
+                    trace.mark("utterance_completed", "media drain completed")
                     await self.emit("UTTERANCE_COMPLETED", item.traceId, item.utteranceId)
                     self.current_utterance = None
         except asyncio.CancelledError:
@@ -518,6 +573,7 @@ class RuntimeSession:
                         await self.emit("RUNTIME_WARNING", item.traceId, item.utteranceId, {"code": "TTS_FAILED", "errorType": type(exc).__name__})
                     elif failure_stage == "AVATAR":
                         await self.emit("RUNTIME_WARNING", item.traceId, item.utteranceId, {"code": "AVATAR_RENDER_FAILED", "errorType": type(exc).__name__})
+                    trace.mark("utterance_failed")
                     await self.emit("UTTERANCE_FAILED", item.traceId, item.utteranceId)
                     self.current_utterance = None
 

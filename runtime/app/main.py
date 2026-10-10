@@ -153,6 +153,13 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
             raise RuntimeFailure("PROVIDER_BINDING_UNAVAILABLE", "Integration disabled", 409)
         return manager.provider_status(sessionId)
 
+    @app.get("/internal/v0.4/sessions/{sessionId}/interaction-traces")
+    async def interaction_traces(sessionId: str):
+        if not bound:
+            raise RuntimeFailure("PROVIDER_BINDING_UNAVAILABLE", "Integration disabled", 409)
+        from .interaction_trace import traces
+        return {"clockDomain": "runtime_monotonic", "traces": [t.summary() for (sid, _), t in traces.items() if sid == sessionId], "browserObservation": "NOT_TESTED", "rtmpAudienceObservation": "NOT_TESTED"}
+
     app.state.manager = manager
     app.state.publisher = publisher
     tts_probe_lock=asyncio.Lock()

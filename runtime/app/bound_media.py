@@ -10,6 +10,16 @@ from .providers import MediaDeliveryError
 
 
 class BoundConsumptionMediaOutput(ConsumptionMediaOutput):
+    def set_interaction_trace(self, trace, generation):
+        self.interaction_trace = (trace, generation)
+
+    def _trace_frame(self, packet, frame, stage):
+        observation = self.__dict__.get('interaction_trace')
+        if (observation and frame.generation_id == observation[1] == self.avatar.generation_id
+                and packet and packet.get('activity') == 'TALKING'):
+            if stage != 'avatar_first_generated_frame' or packet.get('source') == 'GPU_INFERENCE':
+                observation[0].mark(stage, 'Runtime observes TALKING packet ' + packet.get('source','UNKNOWN') + '; not Worker-host generation timestamp or viewer playback')
+
     def _rtmp(self):
         if hasattr(self.output, "video_delivery_position"):
             return self.output
@@ -38,7 +48,9 @@ class BoundConsumptionMediaOutput(ConsumptionMediaOutput):
     async def push_video(self, frame):
         packet = self.metadata.pop(id(frame), None)
         web, rtmp = self._webrtc(), self._rtmp()
+        self._trace_frame(packet, frame, "avatar_first_generated_frame")
         await self.output.push_video(frame)
+        self._trace_frame(packet, frame, "media_first_video")
         # Join means admission to a sink, never acknowledgement of consumption.
         if packet:
             for c in getattr(self.output, "channels", []):

@@ -112,3 +112,22 @@ class BoundMediaTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(self.sink.video_written, 0)
         finally:
             clock.cancel(); await asyncio.gather(clock, return_exceptions=True)
+
+    async def test_trace_excludes_idle_and_stale_generation_and_keeps_credit(self):
+        from app.interaction_trace import InteractionTrace
+        trace = InteractionTrace('t','s','u')
+        self.output.set_interaction_trace(trace,1)
+        frame = VideoFrame(1,0,8,8,bytes(8*8*3))
+        self.output.metadata[id(frame)] = dict(source='GPU_INFERENCE',activity='IDLE',generation_id=42,frame_sequence=0)
+        await self.output.push_video(frame)
+        self.assertNotIn('avatar_first_generated_frame',trace.points)
+        self.assertEqual(self.credits,[])
+        self.sink.video_written=1
+        await asyncio.sleep(.02)
+        await self.enqueue()
+        self.assertIn('avatar_first_generated_frame',trace.points)
+        self.assertIn('media_first_video',trace.points)
+        self.output.set_interaction_trace(trace,2)
+        before=trace.summary()
+        await self.enqueue()
+        self.assertEqual(trace.summary(),before)

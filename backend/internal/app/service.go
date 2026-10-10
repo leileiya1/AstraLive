@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"sync"
 	"time"
 
 	"astralive/backend/generated/dbgen"
@@ -21,6 +22,8 @@ import (
 )
 
 type Service struct {
+	commands    sync.Mutex
+	Interaction *InteractionController
 	Integration SessionIntegration
 	DB          *pgxpool.Pool
 	Q           *dbgen.Queries
@@ -118,8 +121,13 @@ func (s *Service) Start(ctx context.Context, id, trace string) (string, error) {
 	return op.OperationID, e
 }
 func (s *Service) Stop(ctx context.Context, id, trace string) (string, error) {
+	s.commands.Lock()
+	defer s.commands.Unlock()
 	if e := s.transitionSession(ctx, id, "STOPPING"); e != nil {
 		return "", e
+	}
+	if s.Interaction != nil {
+		s.Interaction.Stop(id)
 	}
 	op, e := s.Runtime.StopSession(ctx, id, map[string]any{"commandId": ids.New("cmd"), "traceId": trace})
 	if e != nil {
@@ -129,7 +137,27 @@ func (s *Service) Stop(ctx context.Context, id, trace string) (string, error) {
 	}
 	return op.OperationID, nil
 }
+
+// Interrupt shares the command boundary with automatic admission and Stop.
+func (s *Service) Interrupt(ctx context.Context, id, trace, reason string) (runtime.Operation, error) {
+	s.commands.Lock()
+	defer s.commands.Unlock()
+	if s.Interaction != nil {
+		s.Interaction.Override(id)
+	}
+	return s.Runtime.Interrupt(ctx, id, map[string]any{"commandId": ids.New("cmd"), "traceId": trace, "reason": reason})
+}
+
 func (s *Service) Speak(ctx context.Context, id, text string, priority int32, policy, source, trace string, platform *runtimeapi.PlatformContext) (dbgen.Utterance, error) {
+	s.commands.Lock()
+	defer s.commands.Unlock()
+	if source == "OPERATOR" && s.Interaction != nil {
+		s.Interaction.Override(id)
+	}
+	return s.speak(ctx, id, text, priority, policy, source, trace, platform)
+}
+
+func (s *Service) speak(ctx context.Context, id, text string, priority int32, policy, source, trace string, platform *runtimeapi.PlatformContext) (dbgen.Utterance, error) {
 	se, e := s.Q.GetSession(ctx, id)
 	if e != nil {
 		return dbgen.Utterance{}, e
@@ -301,6 +329,9 @@ func (s *Service) ApplyEvent(ctx context.Context, e Event) (bool, error) {
 		metrics.UtteranceFailedCount.Inc()
 	}
 	if e.EventType == "SESSION_ENDED" || e.EventType == "SESSION_FAILED" {
+		if s.Interaction != nil {
+			s.Interaction.Stop(e.SessionID)
+		}
 		if er := s.release(e.SessionID); er != nil {
 			s.Log.Error("binding cleanup pending", "sessionId", e.SessionID)
 		}
