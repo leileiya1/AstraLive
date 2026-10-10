@@ -7,6 +7,8 @@ const output = process.env.INTERACTION_EVIDENCE ?? `${root}/browser-real.json`;
 if (existsSync(output)) throw Error('Evidence file already exists; choose a new trial filename');
 const port = Number(process.env.INTERACTION_CDP_PORT ?? 26892);
 const sleep = (ms:number) => new Promise(r=>setTimeout(r,ms));
+let randomSeed=Number(process.env.INTERACTION_RANDOM_SEED??20261010)>>>0;
+const seededRandom=()=>{randomSeed=(1664525*randomSeed+1013904223)>>>0;return randomSeed/4294967296};
 const chrome = Bun.spawn(['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '--headless=new', '--no-first-run', '--no-default-browser-check', '--ignore-certificate-errors', '--autoplay-policy=no-user-gesture-required', `--remote-debugging-port=${port}`, `--user-data-dir=${root}/chrome-${process.pid}`, 'about:blank'], {stdout:'ignore',stderr:Bun.file(`${root}/chrome.log`)});
 let ws:WebSocket, sid='', next=1, workerStopped=false;
 async function workerAction(action:'stop'|'start') {
@@ -69,6 +71,7 @@ try {
   await until(`window.__peer?.connectionState==='connected'`,60000);
   await until(`document.querySelector('video')?.videoWidth>0`);
   await evaluate(`(async()=>{const v=document.querySelector('video');v.muted=false;await v.play();const c=new AudioContext();await c.resume();const source=c.createMediaStreamSource(v.srcObject);const analyser=c.createAnalyser();analyser.fftSize=2048;source.connect(analyser);const mute=c.createGain();mute.gain.value=0;analyser.connect(mute).connect(c.destination);const canvas=document.createElement('canvas');canvas.width=v.videoWidth;canvas.height=v.videoHeight;const g=canvas.getContext('2d',{willReadFrequently:true});window.__obs={audio:[],video:[],ctx:c};setInterval(()=>{const a=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(a);const peak=Math.max(...a.map(Math.abs));if(peak>.003&&window.__obs.audio.length<30000)window.__obs.audio.push({at:performance.now(),contextTime:c.currentTime,peak});},10);function frame(now,m){g.drawImage(v,0,0);const pixel=g.getImageData(0,0,canvas.width,24).data;const value=(row,bits)=>{let n=0;for(let b=0;b<bits;b++){const i=((row+4)*canvas.width+b*8+4)*4;if(pixel[i]>pixel[i+1])n+=2**b;}return n};if(window.__obs.video.length<30000)window.__obs.video.push({at:now,displayAt:m.expectedDisplayTime,mediaTime:m.mediaTime,marker:value(0,16),sequence:value(8,24),generation:value(16,16)});v.requestVideoFrameCallback(frame)}v.requestVideoFrameCallback(frame);window.__events=[];window.__sse=new EventSource('/api/v1/live-sessions/${sid}/events');for(const name of ['utterance.completed','utterance.failed','utterance.interrupted','utterance.playing','runtime.warning','session.degraded','session.started','session.ended','session.failed'])window.__sse.addEventListener(name,e=>{const p=JSON.parse(e.data);window.__events.push({name,at:performance.now(),utteranceId:p.utteranceId,code:p.payload?.code})});return c.state})()`);
+  if(process.env.INTERACTION_RECORD==='1')await evaluate(`(()=>{const stream=document.querySelector('video').srcObject;window.__recordChunks=[];window.__recorder=new MediaRecorder(stream,{mimeType:'video/webm;codecs=vp8,opus'});window.__recorder.ondataavailable=e=>{if(e.data.size)window.__recordChunks.push(e.data)};window.__recorder.start(1000);return true})()`);
   result.providers=await api(`/api/v0.4/sessions/${sid}/providers`);if(result.providers.mode!=='REAL')throw Error('Provider bundle is not REAL');
   // No selected speech is admitted while the operator owns interaction.
   await api(`/api/v0.4/interaction/${sid}/mode`,'PUT',{mode:'OPERATOR_OVERRIDE'});
@@ -79,14 +82,20 @@ try {
   if(process.env.INTERACTION_RTMP_OBSERVER==='1') {
     const r=await receiver();result.receiverInitial=r.data.counts;
   }
-  const topics=['price','sizes','stock','size_stock','chat','consultation'];
-  const comments=['价格多少？','这款提供 XL 吗？','商品整体库存有多少？','XL 单码有多少库存？','你好，请说一句欢迎观众的话。','帮我想一句直播开场白。'];
-  const count=Number(process.env.INTERACTION_SAMPLES??20);
+  const topics=process.env.INTERACTION_PATH==='complex'?['complex_price_stock','complex_size_price_stock']:process.env.INTERACTION_PATH==='llm'?['chat','consultation']:['price','sizes','stock','size_stock','chat','consultation'];
+  result.arrivalPolicy=process.env.INTERACTION_RANDOM_ARRIVAL==='1'?{kind:'seeded-uniform-gap-after-previous-completion',seed:Number(process.env.INTERACTION_RANDOM_SEED??20261010),minMs:600,maxMs:2200}:{kind:'fixed-gap-after-completion',gapMs:1800};
+  const comments=process.env.INTERACTION_PATH==='complex'?['价格和整体库存是多少？再给一句搭配建议。','XL有没有，价格和库存是多少？帮我判断值不值得买。']:process.env.INTERACTION_PATH==='llm'?['你好，请说一句欢迎观众的话。','帮我想一句直播开场白。']:['价格多少？','这款提供 XL 吗？','商品整体库存有多少？','XL 单码有多少库存？','你好，请说一句欢迎观众的话。','帮我想一句直播开场白。'];
+  const normalCount=Number(process.env.INTERACTION_SAMPLES??20);
+  const extraCount=Number(process.env.INTERACTION_EXTRA_LLM??0);
+  const extraComments=['价格和整体库存是多少？再给一句搭配建议。','XL有没有，价格和库存是多少？帮我判断值不值得买。'];
+  const topicAt=(i:number)=>i<normalCount?topics[i%topics.length]:['complex_price_stock','complex_size_price_stock'][(i-normalCount)%2];
+  const commentAt=(i:number)=>i<normalCount?comments[i%comments.length]:extraComments[(i-normalCount)%2];
+  const count=normalCount+extraCount;result.samplePlan={normalCount,extraCount};
   for(let i=0;i<count;i++){
     // More than merge window between repeats of the same test viewer/topic.
-    await sleep(1800);const before=await snapshot();const selected=before.data.counters.selected;
-    const attempt:any={index:i+1,topic:topics[i%topics.length],status:'INCOMPLETE'};result.attempts.push(attempt);save();
-    const sent=await evaluate(`(async()=>{const at=performance.now();await window.__api('/api/v0.4/interaction/${sid}/mock','POST',{text:${JSON.stringify(comments[i%comments.length])},users:1});return {at,ackAt:performance.now()}})()`);
+    await sleep(process.env.INTERACTION_RANDOM_ARRIVAL==='1'?600+seededRandom()*1600:1800);const before=await snapshot();const selected=before.data.counters.selected;
+    const attempt:any={index:i+1,topic:topicAt(i),status:'INCOMPLETE'};result.attempts.push(attempt);save();
+    const sent=await evaluate(`(async()=>{const at=performance.now();await window.__api('/api/v0.4/interaction/${sid}/mock','POST',{text:${JSON.stringify(commentAt(i))},users:1});return {at,ackAt:performance.now()}})()`);
     let q:any;for(let j=0;j<200;j++){q=await snapshot();if(q.data.counters.selected>selected&&q.data.utteranceId)break;await sleep(100);}
     if(q.data.counters.selected!==selected+1)throw Error('Comment did not yield exactly one selected task');
     const uid=q.data.utteranceId,traceId=q.data.current.event.traceId;const recv=aligned(q,q.data.observation.receiptAgeMs);const choice=aligned(q,q.data.observation.receiptAgeMs,q.data.observation.receiveToSelectedMs);
@@ -95,11 +104,11 @@ try {
     const obs=await evaluate(`(()=>({audio:window.__obs.audio.filter(x=>x.at>=${sent.at}),video:window.__obs.video.filter(x=>x.marker===${trace.media.speechMarker}&&x.generation===${trace.media.generationId}&&x.at>=${sent.at})}))()`);
     const audio=obs.audio[0],video=obs.video[0];const pcm=trace.points.tts_first_pcm,gpu=trace.points.avatar_first_generated_frame;
     const text=aligned(tq,trace.clockOriginAgeMs,trace.points.first_speakable_segment);
-    const sample:any={index:i+1,topic:topics[i%topics.length],traceId,utteranceId:uid,terminal:terminal.name,selectionMs:q.data.observation.receiveToSelectedMs,receiptAlignmentUncertaintyMs:recv.uncertaintyMs,selectedToSpeakableMs:text.valueMs-choice.valueMs,selectedToSpeakableUncertaintyMs:text.uncertaintyMs+choice.uncertaintyMs,speakableToPCMMS:pcm-trace.points.first_speakable_segment,pcmToGPUFrameMS:gpu-pcm,runtimePoints:trace.points,media:trace.media,firstCorrelatedAudio:audio??null,firstCorrelatedVideo:video??null};
+    const sample:any={clockExchanges:{backend:{start:q.start,end:q.end,receiptAgeMs:q.data.observation.receiptAgeMs,receiveToSelectedMs:q.data.observation.receiveToSelectedMs},runtime:{start:tq.start,end:tq.end,clockOriginAgeMs:trace.clockOriginAgeMs}},index:i+1,topic:topicAt(i),traceId,utteranceId:uid,terminal:terminal.name,selectionMs:q.data.observation.receiveToSelectedMs,receiptAlignmentUncertaintyMs:recv.uncertaintyMs,selectedToSpeakableMs:text.valueMs-choice.valueMs,selectedToSpeakableUncertaintyMs:text.uncertaintyMs+choice.uncertaintyMs,speakableToPCMMS:pcm-trace.points.first_speakable_segment,pcmToGPUFrameMS:gpu-pcm,runtimePoints:trace.points,media:trace.media,firstCorrelatedAudio:audio??null,firstCorrelatedVideo:video??null};
     if(audio&&video){const av=Math.max(audio.at,video.displayAt);sample.receiveToCorrelatedAVMs=av-recv.valueMs;sample.firstAudioVideoDetectionDifferenceMs=video.displayAt-audio.at;sample.gpuToBrowserVideoMs=video.displayAt-aligned(tq,trace.clockOriginAgeMs,gpu).valueMs;sample.gpuToBrowserUncertaintyMs=tq.end-tq.start;}
     else sample.failure='CORRELATED_AV_NOT_OBSERVED';
     if(process.env.INTERACTION_RTMP_OBSERVER==='1') {
-      const rq=await receiver();const rv=rq.data.rows.find((r:any)=>r.kind==='video'&&r.marker===trace.media.speechMarker&&r.generation===trace.media.generationId);
+      const rq=await receiver();sample.clockExchanges.receiver={start:rq.start,end:rq.end,clockOriginAgeMs:rq.data.clockOriginAgeMs};const rv=rq.data.rows.find((r:any)=>r.kind==='video'&&r.marker===trace.media.speechMarker&&r.generation===trace.media.generationId);
       // This test admits one speech at a time. Match nonzero AAC in the decoded
       // media-PTS window of the same marked reply, never arbitrary received bytes.
       const ra=rv&&rq.data.rows.find((r:any)=>r.kind==='audio'&&r.pts>=rv.pts-.08&&r.pts<rv.pts+2);
@@ -141,6 +150,7 @@ try {
     result.faults.force={oldUtterance:old,newUtterance:force.utteranceId,oldTerminal:interrupted.name,newTerminal:done.name,...fence,automaticForce:held.counters.force};
     // Explicit resume is required after an operator command.
     await api(`/api/v0.4/interaction/${sid}/mode`,'PUT',{mode:'IDLE'});
+    if(process.env.INTERACTION_FORCE_ONLY!=='1') {
     const before=await api(`/api/v0.4/sessions/${sid}/providers`);
     await workerAction('stop');
     const fallback=await comment('商品整体库存有多少？');
@@ -153,6 +163,7 @@ try {
     const recoveryTrace=(await traces()).data.traces.find((t:any)=>t.utteranceId===recoveredUID);
     if(fallbackDone.name!=='utterance.completed'||recoveredDone.name!=='utterance.completed'||recovered.workerEpoch===before.workerEpoch||!recoveryTrace.points.avatar_first_generated_frame)throw Error('Real Worker recovery did not complete');
     result.faults.recovery={fallbackTerminal:fallbackDone.name,recoveredTerminal:recoveredDone.name,degradedMode:degraded.mode,recoveredMode:recovered.mode,oldEpoch:before.workerEpoch,newEpoch:recovered.workerEpoch,bindingUnchanged:before.bindingId===recovered.bindingId&&JSON.stringify(before.profiles)===JSON.stringify(recovered.profiles),trace:recoveryTrace};
+    }
     await api(`/api/v0.4/interaction/${sid}/mode`,'PUT',{mode:'OPERATOR_OVERRIDE'});
     await api(`/api/v0.4/interaction/${sid}/replay`,'POST',{rate:20,count:1000});await sleep(1300);
     await api(`/api/v0.4/interaction/${sid}/replay`,'DELETE');await sleep(400);
@@ -162,6 +173,7 @@ try {
     result.faults.sse=await evaluate('window.__events.filter(e=>["session.degraded","session.started","runtime.warning"].includes(e.name))');
     save();
   }
+  if(['1','busy'].includes(process.env.INTERACTION_SCENARIOS??''))result.scenarios=await(await import('./interaction-real-scenarios.ts')).runScenarios({api,snapshot,traces,until,evaluate,sleep,sid,roomId:room.roomId,productId:product.productId,busyOnly:process.env.INTERACTION_SCENARIOS==='busy',progress:(v:any)=>{result.scenarios=v;save()}});
   result.finalSnapshot=(await snapshot()).data;result.afterProviders=await api(`/api/v0.4/sessions/${sid}/providers`);
   result.bundleUnchanged=result.providers.bindingId===result.afterProviders.bindingId&&JSON.stringify(result.providers.profiles)===JSON.stringify(result.afterProviders.profiles);
   if(process.env.INTERACTION_RTMP_OBSERVER==='1')result.receiverFinal=(await receiver()).data.counts;
@@ -173,6 +185,7 @@ try {
   result.failedSamples=result.samples.filter((s:any)=>s.failure||s.terminal!=='utterance.completed').length;
 } catch(e:any) {result.errors.push(e.message);const pendingAttempt=result.attempts.findLast((a:any)=>a.status==='INCOMPLETE');if(pendingAttempt){pendingAttempt.status='FAILED';pendingAttempt.error=e.message;}console.error(e.message);process.exitCode=1;}
 finally {
+  if(process.env.INTERACTION_RECORD==='1'&&ws?.readyState===WebSocket.OPEN){try{const data=await evaluate(`(async()=>{const r=window.__recorder;if(!r)return null;if(r.state!=='inactive'){await new Promise(ok=>{r.onstop=ok;r.stop()})};const b=new Blob(window.__recordChunks,{type:'video/webm'});return await new Promise(ok=>{const f=new FileReader();f.onload=()=>ok(f.result);f.readAsDataURL(b)})})()`);if(data){const path=output+'.webm';writeFileSync(path,Buffer.from(data.split(',')[1],'base64'));result.recording={file:path,scope:'native Chrome decoded MediaStream capture; human review pending'}}}catch(e:any){result.errors.push('Recording: '+e.message)}}
   if(sid&&ws?.readyState===WebSocket.OPEN){try{await api(`/api/v1/live-sessions/${sid}/stop`,'POST',{});result.finalState=await until(`window.__api('/api/v1/live-sessions/${sid}').then(s=>s.status==='ENDED'&&s.status)`,20000);}catch(e:any){result.errors.push('Stop: '+e.message);}}
   if(workerStopped){try{await workerAction('start');result.workerRestored=true;}catch(e:any){result.errors.push('Worker restore failed');}}
   save();ws?.close();chrome.kill();

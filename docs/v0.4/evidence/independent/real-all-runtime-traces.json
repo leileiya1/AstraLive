@@ -1,0 +1,4129 @@
+[
+  {
+    "trial": "browser-final20.json",
+    "clockDomain": "runtime_monotonic",
+    "traces": [],
+    "browserObservation": "NOT_TESTED",
+    "rtmpAudienceObservation": "NOT_TESTED"
+  },
+  {
+    "trial": "browser-measured20.json",
+    "clockDomain": "runtime_monotonic",
+    "traces": [
+      {
+        "traceId": "interaction_2517a398aed18d81f2892d884efea06443ffa74d15e06c168cdc690347c88a5e",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_b9f48d68fd270350f286ed22c9e96553",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 955505.7171699591,
+        "points": {
+          "runtime_utterance_accepted": 0.0019709113985300064,
+          "first_speakable_segment": 7.940769894048572,
+          "tts_started": 8.264390053227544,
+          "tts_first_pcm": 167.30758198536932,
+          "avatar_first_returned_frame": 1276.439047884196,
+          "media_first_audio": 1276.9718628842384,
+          "avatar_first_generated_frame": 1276.9980558659881,
+          "media_first_video": 1277.015439933166,
+          "utterance_completed": 6178.980421973392
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 2,
+          "firstVideoPTSUS": 2480000,
+          "speechOriginSample": 39680
+        }
+      },
+      {
+        "traceId": "interaction_3be6d44f32c0c43ff2ae0835196572e4e44a3f9baf78c589d77bfa07ea987403",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_b4defbb844a74251407d1d511bd08d0a",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 945505.5568839889,
+        "points": {
+          "runtime_utterance_accepted": 0.0017259735614061356,
+          "first_speakable_segment": 7.621915778145194,
+          "tts_started": 8.029545890167356,
+          "tts_first_pcm": 138.382060918957,
+          "avatar_first_returned_frame": 1496.9256068579853,
+          "media_first_audio": 1497.6761869620532,
+          "avatar_first_generated_frame": 1497.7088519372046,
+          "media_first_video": 1497.7326018270105,
+          "utterance_completed": 6335.683932993561
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 4,
+          "firstVideoPTSUS": 9640000,
+          "speechOriginSample": 154240
+        }
+      },
+      {
+        "traceId": "interaction_9f094d8231e70e7355a6723723a7600b633e2052882877b55626ddc8f51d3584",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_edf674a1628944242f6c84c104b6f6fd",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 937505.6679169647,
+        "points": {
+          "runtime_utterance_accepted": 0.0008689239621162415,
+          "first_speakable_segment": 9.793851990252733,
+          "tts_started": 10.322456946596503,
+          "tts_first_pcm": 124.81189100071788,
+          "avatar_first_returned_frame": 1078.3569058403373,
+          "media_first_audio": 1079.0298590436578,
+          "avatar_first_generated_frame": 1079.0621070191264,
+          "media_first_video": 1079.0866860188544,
+          "utterance_completed": 3577.071137027815
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 6,
+          "firstVideoPTSUS": 14320000,
+          "speechOriginSample": 229120
+        }
+      },
+      {
+        "traceId": "interaction_bf55a20f73125f483ca3d1b859fbe9345441604b937fb2c0794a4cb4dbebe67b",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_a825379bbee37dc95ca6c819575444db",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 929506.0924291611,
+        "points": {
+          "runtime_utterance_accepted": 0.0006351619958877563,
+          "first_speakable_segment": 16.18761708959937,
+          "tts_started": 16.981902066618204,
+          "tts_first_pcm": 202.97037600539625,
+          "avatar_first_returned_frame": 1150.6949949543923,
+          "media_first_audio": 1151.4978690538555,
+          "avatar_first_generated_frame": 1151.5319219324738,
+          "media_first_video": 1151.5577910467982,
+          "utterance_completed": 5244.082349119708
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 8,
+          "firstVideoPTSUS": 19760000,
+          "speechOriginSample": 316160
+        }
+      },
+      {
+        "traceId": "interaction_7ace2112caaaa817dc0cfc6f0c3f519cce728969011aad9868630dcc76b71329",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_48d24fe72e49706546e560bdbd4ec09e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 921515.022671083,
+        "points": {
+          "runtime_utterance_accepted": 0.0006300397217273712,
+          "first_speakable_segment": 14.101112959906459,
+          "tts_started": 14.490996953099966,
+          "tts_first_pcm": 124.67127200216055,
+          "avatar_first_returned_frame": 1079.3284620158374,
+          "media_first_audio": 1079.9590749666095,
+          "avatar_first_generated_frame": 1079.9885550513864,
+          "media_first_video": 1080.0127701368183,
+          "utterance_completed": 10027.326917974278
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 10,
+          "firstVideoPTSUS": 24960000,
+          "speechOriginSample": 399360
+        }
+      },
+      {
+        "traceId": "interaction_d8f43cd16a5a72a1685895ceefe7caff667223e026a3effebbbe87418d104084",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_3da9d42cc9baa26839cdca50e24c2b55",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 907505.8655210305,
+        "points": {
+          "runtime_utterance_accepted": 0.0008870847523212433,
+          "llm_started": 1.3362481258809566,
+          "llm_first_token": 2067.3268721438944,
+          "first_speakable_segment": 2139.2789031378925,
+          "tts_started": 2139.9161210283637,
+          "tts_first_pcm": 2199.268843047321,
+          "avatar_first_returned_frame": 3266.3401269819587,
+          "media_first_audio": 3266.987691167742,
+          "avatar_first_generated_frame": 3267.015669029206,
+          "media_first_video": 3267.03955209814,
+          "utterance_completed": 7095.254210056737
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 12,
+          "firstVideoPTSUS": 38400000,
+          "speechOriginSample": 614400
+        }
+      },
+      {
+        "traceId": "interaction_725f323c51512dfbdff79a0108a625e265801d1c2fb81d6a774d3bd10585d68d",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_a58b6a5e5fb0fbd52c591fd9b083674a",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 897506.6630670335,
+        "points": {
+          "runtime_utterance_accepted": 0.0008540228009223938,
+          "llm_started": 1.453470904380083,
+          "llm_first_token": 1129.6264429111034,
+          "first_speakable_segment": 1225.2414089161903,
+          "tts_started": 1226.235305890441,
+          "tts_first_pcm": 1307.8272310085595,
+          "avatar_first_returned_frame": 2470.9802779834718,
+          "media_first_audio": 2471.524257911369,
+          "avatar_first_generated_frame": 2471.545496955514,
+          "media_first_video": 2471.558631863445,
+          "utterance_completed": 5939.587593078613
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 14,
+          "firstVideoPTSUS": 44680000,
+          "speechOriginSample": 714880
+        }
+      },
+      {
+        "traceId": "interaction_6690e53c109ba9c9a6285ffd3db9775f8dc9c7cadfa1cfad152a7f99d18bb744",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_3ed7b6f082b73aac61a49c3d47363471",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 887506.2488589901,
+        "points": {
+          "runtime_utterance_accepted": 0.0008228234946727753,
+          "first_speakable_segment": 8.00874992273748,
+          "tts_started": 8.532769046723843,
+          "tts_first_pcm": 143.98544584400952,
+          "avatar_first_returned_frame": 1257.0222688373178,
+          "media_first_audio": 1257.7708908356726,
+          "avatar_first_generated_frame": 1257.8011648729444,
+          "media_first_video": 1257.8248758800328,
+          "utterance_completed": 5978.139370912686
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 16,
+          "firstVideoPTSUS": 50600000,
+          "speechOriginSample": 809600
+        }
+      },
+      {
+        "traceId": "interaction_a25daaf5b04aba3b3e7ed09ed6eebb6db5d4e6993b48ca534cf7a873e39f97a6",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_2fb23a089d0bc342aaf7a1ef11a888ca",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 877505.957831163,
+        "points": {
+          "runtime_utterance_accepted": 0.00113598071038723,
+          "first_speakable_segment": 6.990387104451656,
+          "tts_started": 7.4894181452691555,
+          "tts_first_pcm": 120.20668410696089,
+          "avatar_first_returned_frame": 1319.278771057725,
+          "media_first_audio": 1319.7957400698215,
+          "avatar_first_generated_frame": 1319.8221500497311,
+          "media_first_video": 1319.8399930261075,
+          "utterance_completed": 4086.9223279878497
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 18,
+          "firstVideoPTSUS": 57760000,
+          "speechOriginSample": 924160
+        }
+      },
+      {
+        "traceId": "interaction_937fcd07e214aa4b83c54a1c8237b75a144bbd7d353703a3362d34a3bb8456fb",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_2f0c372d0609a42e7cffe4aff75d557e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 869507.6082961168,
+        "points": {
+          "runtime_utterance_accepted": 0.0006880145519971848,
+          "first_speakable_segment": 15.911869006231427,
+          "tts_started": 16.508570173755288,
+          "tts_first_pcm": 190.80301211215556,
+          "avatar_first_returned_frame": 1430.3250859957188,
+          "media_first_audio": 1431.2381451018155,
+          "avatar_first_generated_frame": 1431.2682740855962,
+          "media_first_video": 1431.2942950055003,
+          "utterance_completed": 5138.567858142778
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 20,
+          "firstVideoPTSUS": 62800000,
+          "speechOriginSample": 1004800
+        }
+      },
+      {
+        "traceId": "interaction_0414e1cc29403a390e8d40c6c4403253a65f0ee491ce0bf9cf71a9434baef636",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_ca25502a8cebaad98562ef3d0eff07ae",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 861507.1018149611,
+        "points": {
+          "runtime_utterance_accepted": 0.0007420312613248825,
+          "first_speakable_segment": 15.477076871320605,
+          "tts_started": 15.864472836256027,
+          "tts_first_pcm": 127.3917630314827,
+          "avatar_first_returned_frame": 1497.578757815063,
+          "media_first_audio": 1498.115933034569,
+          "avatar_first_generated_frame": 1498.1369858141989,
+          "media_first_video": 1498.1505628675222,
+          "utterance_completed": 10639.528675936162
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 22,
+          "firstVideoPTSUS": 67680000,
+          "speechOriginSample": 1082880
+        }
+      },
+      {
+        "traceId": "interaction_bf55fe35f06d268dc3036b5d4ba29ec5dc0fe7efa953aa7307af9155c6e548fc",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_0d3cefad99891b4d09928e7abe009df2",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 847505.9841808397,
+        "points": {
+          "runtime_utterance_accepted": 0.0006230548024177551,
+          "llm_started": 1.0803279001265764,
+          "llm_first_token": 1629.9624538514763,
+          "first_speakable_segment": 1941.6257559787482,
+          "tts_started": 1942.4413088709116,
+          "tts_first_pcm": 2027.447388973087,
+          "avatar_first_returned_frame": 3025.0551959034055,
+          "media_first_audio": 3025.6132029462606,
+          "avatar_first_generated_frame": 3025.63736285083,
+          "media_first_video": 3025.654881959781,
+          "utterance_completed": 6091.924011940137
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 24,
+          "firstVideoPTSUS": 80440000,
+          "speechOriginSample": 1287040
+        }
+      },
+      {
+        "traceId": "interaction_ff1b4f1783a781ee2c5565521aaf7a241f4a2895952e7797859b7ce2e4f1f91c",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_f5a7eae3c5bac96aabf7d4b89f32d33e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 837506.5485560335,
+        "points": {
+          "runtime_utterance_accepted": 0.0008700881153345108,
+          "llm_started": 1.2792721390724182,
+          "llm_first_token": 1290.8448001835495,
+          "first_speakable_segment": 1575.6262140348554,
+          "tts_started": 1576.3740472029895,
+          "tts_first_pcm": 1671.790610998869,
+          "avatar_first_returned_frame": 2655.2563570439816,
+          "media_first_audio": 2656.2409540638328,
+          "avatar_first_generated_frame": 2656.268780119717,
+          "media_first_video": 2656.284126220271,
+          "utterance_completed": 6338.098044041544
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 26,
+          "firstVideoPTSUS": 87320000,
+          "speechOriginSample": 1397120
+        }
+      },
+      {
+        "traceId": "interaction_f767d5fa5b805b1f249c63de40db0db268d3e9a64fa3e085226cde803df46792",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_80c8a8c9567d7958e455d5cfb394235e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 827504.2440460529,
+        "points": {
+          "runtime_utterance_accepted": 0.0007748603820800781,
+          "first_speakable_segment": 7.385576842352748,
+          "tts_started": 8.11498099938035,
+          "tts_first_pcm": 136.36898598633707,
+          "avatar_first_returned_frame": 1127.7859029360116,
+          "media_first_audio": 1128.4466530196369,
+          "avatar_first_generated_frame": 1128.4679439850152,
+          "media_first_video": 1128.4818639978766,
+          "utterance_completed": 5992.489690892398
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 28,
+          "firstVideoPTSUS": 93040000,
+          "speechOriginSample": 1488640
+        }
+      },
+      {
+        "traceId": "interaction_368749790408fa63f044497bb7b7c1a5f4738c58f9bac5a025e55c3e3104274b",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_dc23743fab939a05072bc245ec39986a",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 819507.9585388303,
+        "points": {
+          "runtime_utterance_accepted": 0.0007029157131910324,
+          "first_speakable_segment": 6.483723875135183,
+          "tts_started": 6.914068944752216,
+          "tts_first_pcm": 129.08797292038798,
+          "avatar_first_returned_frame": 1389.7710249293596,
+          "media_first_audio": 1390.4719629790634,
+          "avatar_first_generated_frame": 1390.5052358750254,
+          "media_first_video": 1390.5304409563541,
+          "utterance_completed": 4097.487817984074
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 30,
+          "firstVideoPTSUS": 98200000,
+          "speechOriginSample": 1571200
+        }
+      },
+      {
+        "traceId": "interaction_d6d9ad380ec18ba3d936141baac07375da4316a6f2238a87289612da8243a67b",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_d71570cb117a77a0a7ebe6614de55bf2",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 813516.2920749281,
+        "points": {
+          "runtime_utterance_accepted": 0.0006230548024177551,
+          "first_speakable_segment": 12.300790986046195,
+          "tts_started": 12.712541967630386,
+          "tts_first_pcm": 197.60438101366162,
+          "avatar_first_returned_frame": 1549.3740381207317,
+          "media_first_audio": 1549.8937990050763,
+          "avatar_first_generated_frame": 1549.9163179192692,
+          "media_first_video": 1549.9308470170945,
+          "utterance_completed": 5226.508462103084
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 32,
+          "firstVideoPTSUS": 101200000,
+          "speechOriginSample": 1619200
+        }
+      },
+      {
+        "traceId": "interaction_4a6554bca26a2f801e190b702e9199cce61b966a3d5c63e1fe9c460fdd00ecf1",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_113aa691a75589e914fbafd741084b35",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 805507.2696181014,
+        "points": {
+          "runtime_utterance_accepted": 0.0006200280040502548,
+          "first_speakable_segment": 13.51287798024714,
+          "tts_started": 13.963381992653012,
+          "tts_first_pcm": 124.84020297415555,
+          "avatar_first_returned_frame": 1582.198749994859,
+          "media_first_audio": 1582.7183150686324,
+          "avatar_first_generated_frame": 1582.739686127752,
+          "media_first_video": 1582.752644084394,
+          "utterance_completed": 10257.18365306966
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 34,
+          "firstVideoPTSUS": 106080000,
+          "speechOriginSample": 1697280
+        }
+      },
+      {
+        "traceId": "interaction_b517751b4a8c036068056717cd8cf08a14c110b958388c010e5120742125e58d",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_2bd4b54ea998237e7b61cd9d27990374",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 791507.475847844,
+        "points": {
+          "runtime_utterance_accepted": 0.0008749775588512421,
+          "llm_started": 1.288881991058588,
+          "llm_first_token": 1287.506315857172,
+          "first_speakable_segment": 1590.4286608565599,
+          "tts_started": 1591.6334048379213,
+          "tts_first_pcm": 1672.694583889097,
+          "avatar_first_returned_frame": 2619.232482975349,
+          "media_first_audio": 2619.9492639862,
+          "avatar_first_generated_frame": 2619.9874298181385,
+          "media_first_video": 2620.01243699342,
+          "utterance_completed": 5819.197186036035
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 36,
+          "firstVideoPTSUS": 118440000,
+          "speechOriginSample": 1895040
+        }
+      },
+      {
+        "traceId": "interaction_2a62d2f7473200bc9633c1de53d2b9f1af2467016aba271d464514bfaf8be4d5",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_0ed50bb9168eacc5df84be00e69c3a63",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 781506.6621571314,
+        "points": {
+          "runtime_utterance_accepted": 0.0009872019290924072,
+          "llm_started": 1.425179187208414,
+          "llm_first_token": 1061.5058350376785,
+          "first_speakable_segment": 1212.2939832042903,
+          "tts_started": 1213.2481790613383,
+          "tts_first_pcm": 1292.9422261659056,
+          "avatar_first_returned_frame": 2317.370530217886,
+          "media_first_audio": 2318.0346561130136,
+          "avatar_first_generated_frame": 2318.0655702017248,
+          "media_first_video": 2318.090205080807,
+          "utterance_completed": 5819.53117903322
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 38,
+          "firstVideoPTSUS": 125400000,
+          "speechOriginSample": 2006400
+        }
+      },
+      {
+        "traceId": "interaction_843bce0fec86439680e1a47bdaf1a2a5f90d475efe026d881584106f58468f6d",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_62e0543d9fdca022c0d110744e7b7b1e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 773506.6622761078,
+        "points": {
+          "runtime_utterance_accepted": 0.0008130446076393127,
+          "first_speakable_segment": 7.095755077898502,
+          "tts_started": 7.392233004793525,
+          "tts_first_pcm": 133.2832002080977,
+          "avatar_first_returned_frame": 1222.31415216811,
+          "media_first_audio": 1222.9663871694356,
+          "avatar_first_generated_frame": 1222.9980360716581,
+          "media_first_video": 1223.0219230987132,
+          "utterance_completed": 6017.507081152871
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 40,
+          "firstVideoPTSUS": 129520000,
+          "speechOriginSample": 2072320
+        }
+      },
+      {
+        "traceId": "interaction_893519ca8d58d1e3e56c227e69f7f2f35c59eff663e2b0ffbb3b338677e98939",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_0bfe28e299a9adc806397eda0b9ac137",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 763507.6124409679,
+        "points": {
+          "runtime_utterance_accepted": 0.000676838681101799,
+          "first_speakable_segment": 7.226099958643317,
+          "tts_started": 7.5757240410894156,
+          "tts_first_pcm": 112.98414506018162,
+          "avatar_first_returned_frame": 1341.4366010110825,
+          "media_first_audio": 1341.9494410045445,
+          "avatar_first_generated_frame": 1341.9724330306053,
+          "media_first_video": 1341.9867309276015,
+          "utterance_completed": 3936.189412837848
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 42,
+          "firstVideoPTSUS": 136600000,
+          "speechOriginSample": 2185600
+        }
+      },
+      {
+        "traceId": "interaction_677a08507bc829ba7ff151404a8cd4487bd72b10474d71ec48a935078036a0f3",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_4630c9b30335724b48173bc9121fe174",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 755506.8288869224,
+        "points": {
+          "runtime_utterance_accepted": 0.00079302117228508,
+          "first_speakable_segment": 12.564775999635458,
+          "tts_started": 13.155728112906218,
+          "tts_first_pcm": 130.80274895764887,
+          "avatar_first_returned_frame": 1244.4554280955344,
+          "media_first_audio": 1244.9306200724095,
+          "avatar_first_generated_frame": 1244.956451933831,
+          "media_first_video": 1244.9701100122184
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 44,
+          "firstVideoPTSUS": 141560000,
+          "speechOriginSample": 2264960
+        }
+      },
+      {
+        "traceId": "trace_cb04fbfc137b1401fd1e241d0239214e",
+        "sessionId": "session_6f37b44d8fdbc1f22bf084bb1dafd4ce",
+        "utteranceId": "utt_c4c24eda88badd7fa3f526cb568a378c",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 754054.2754889466,
+        "points": {
+          "runtime_utterance_accepted": 0.0006398186087608337,
+          "first_speakable_segment": 7.903443882241845,
+          "tts_started": 8.48574098199606,
+          "tts_first_pcm": 140.9638689365238,
+          "avatar_first_returned_frame": 1085.502939997241,
+          "media_first_audio": 1086.0202768817544,
+          "avatar_first_generated_frame": 1086.0433548223227,
+          "media_first_video": 1086.055891821161,
+          "utterance_completed": 5942.077845800668
+        },
+        "media": {
+          "generationId": 2,
+          "speechMarker": 46,
+          "firstVideoPTSUS": 141840000,
+          "speechOriginSample": 2269440
+        }
+      }
+    ],
+    "browserObservation": "NOT_TESTED",
+    "rtmpAudienceObservation": "NOT_TESTED"
+  },
+  {
+    "trial": "browser-scenarios.json",
+    "clockDomain": "runtime_monotonic",
+    "traces": [
+      {
+        "traceId": "interaction_f329257aa43d963a7c8e92cda7079ee18c227613027161506d7753551f7f807a",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_c1f4546ffdff56c89f981a2e58b30e09",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 586628.6102549639,
+        "points": {
+          "runtime_utterance_accepted": 0.0006388872861862183,
+          "first_speakable_segment": 6.171079818159342,
+          "tts_started": 6.515557877719402,
+          "tts_first_pcm": 153.61784701235592,
+          "avatar_first_returned_frame": 1275.1842169091105,
+          "media_first_audio": 1275.6542048882693,
+          "avatar_first_generated_frame": 1275.6768169347197,
+          "media_first_video": 1275.691688992083,
+          "utterance_completed": 6215.180599829182
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 2,
+          "firstVideoPTSUS": 2480000,
+          "speechOriginSample": 39680
+        }
+      },
+      {
+        "traceId": "trace_509dde5635c9758e565482d6ee05f758",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_df1a69e7a0bed1cc3c30521aac7dbba3",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 578252.5542359799,
+        "points": {
+          "runtime_utterance_accepted": 0.0006689224392175674,
+          "first_speakable_segment": 9.513020981103182,
+          "tts_started": 9.898334043100476,
+          "tts_first_pcm": 113.22196200489998,
+          "avatar_first_returned_frame": 1250.404329970479,
+          "media_first_audio": 1251.0171048343182,
+          "avatar_first_generated_frame": 1251.039254013449,
+          "media_first_video": 1251.0534320026636,
+          "utterance_completed": 15183.275394840166
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 4,
+          "firstVideoPTSUS": 7960000,
+          "speechOriginSample": 127360
+        }
+      },
+      {
+        "traceId": "interaction_ee00b932aac21cc1c4afd470594c81e8994735957506101b16a89c94be447076",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_9adccedae7b1a39224d4a3d00dc4a551",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 562630.8794540819,
+        "points": {
+          "runtime_utterance_accepted": 0.0005189795047044754,
+          "first_speakable_segment": 11.3075349945575,
+          "tts_started": 11.704077944159508,
+          "tts_first_pcm": 171.23418091796339,
+          "avatar_first_returned_frame": 1218.9400629140437,
+          "media_first_audio": 1219.4784739986062,
+          "avatar_first_generated_frame": 1219.5036590564996,
+          "media_first_video": 1219.5192880462855,
+          "utterance_completed": 5056.661298964173
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 6,
+          "firstVideoPTSUS": 21720000,
+          "speechOriginSample": 347520
+        }
+      },
+      {
+        "traceId": "interaction_e138cf10bff0e20e29f92f844a84c6b541673a71f51813bbbe041470f539260f",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_cd67270937a38b11b4b140654ce90332",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 554630.3366229404,
+        "points": {
+          "runtime_utterance_accepted": 0.0007988419383764267,
+          "first_speakable_segment": 12.298509012907743,
+          "tts_started": 13.418660033494234,
+          "tts_first_pcm": 154.51465104706585,
+          "avatar_first_returned_frame": 1420.6586289219558,
+          "media_first_audio": 1421.3804709725082,
+          "avatar_first_generated_frame": 1421.4079410303384,
+          "media_first_video": 1421.4300650637597,
+          "utterance_completed": 6447.435719892383
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 8,
+          "firstVideoPTSUS": 26920000,
+          "speechOriginSample": 430720
+        }
+      },
+      {
+        "traceId": "interaction_c5b3bcefdd59ba1432e4d67f4cb1e61acfcdcf469086b6251b42c9f19c88357e",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_76c365a8759541ee37592d8e9355f4d9",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 546639.8008400574,
+        "points": {
+          "runtime_utterance_accepted": 0.0005711335688829422,
+          "first_speakable_segment": 10.503571946173906,
+          "tts_started": 11.032706126570702,
+          "tts_first_pcm": 119.09215012565255,
+          "avatar_first_returned_frame": 1073.7849259749055,
+          "media_first_audio": 1074.2457821033895,
+          "avatar_first_generated_frame": 1074.2656299844384,
+          "media_first_video": 1074.2797299753875,
+          "utterance_completed": 3690.425814129412
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 10,
+          "firstVideoPTSUS": 31920000,
+          "speechOriginSample": 510720
+        }
+      },
+      {
+        "traceId": "interaction_ffca1df61af50493705ca3f4c77ffc2f1e5bd9ced23859c04ffe8e7b47c9f9c4",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_3992384d87eaf6079a7055dff0f60488",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 542631.3881571405,
+        "points": {
+          "runtime_utterance_accepted": 0.0007101334631443024,
+          "first_speakable_segment": 13.937606010586023,
+          "tts_started": 14.449835056439042,
+          "tts_first_pcm": 174.58697711117566,
+          "avatar_first_returned_frame": 1157.7733049634844,
+          "media_first_audio": 1158.4684001281857,
+          "avatar_first_generated_frame": 1158.496739109978,
+          "media_first_video": 1158.5199679248035,
+          "utterance_completed": 4964.448537910357
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 12,
+          "firstVideoPTSUS": 34520000,
+          "speechOriginSample": 552320
+        }
+      },
+      {
+        "traceId": "interaction_915f67d76410cba99153a76c7021846d53fa122e99065cd2e04e93d266579778",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_bf1fd744cdc6a46ffcdf5cf7a0a2479e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 532631.0063570272,
+        "points": {
+          "runtime_utterance_accepted": 0.0008388888090848923,
+          "first_speakable_segment": 6.905249087139964,
+          "tts_started": 7.206314010545611,
+          "tts_first_pcm": 132.20550795085728,
+          "avatar_first_returned_frame": 1226.7694489564747,
+          "media_first_audio": 1227.4425879586488,
+          "avatar_first_generated_frame": 1227.4716799147427,
+          "media_first_video": 1227.4945110548288,
+          "utterance_completed": 6125.237144064158
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 14,
+          "firstVideoPTSUS": 41760000,
+          "speechOriginSample": 668160
+        }
+      },
+      {
+        "traceId": "interaction_e368c034fde01fcc079f4bac45e979b02d921a35b784861c0f7b552f86ee6f2e",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_c9c7ba39699bccd4f03c09124593b43f",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 524629.7904900275,
+        "points": {
+          "runtime_utterance_accepted": 0.0009939540177583694,
+          "first_speakable_segment": 7.787172915413976,
+          "tts_started": 8.11819196678698,
+          "tts_first_pcm": 120.53480790928006,
+          "avatar_first_returned_frame": 1532.732357038185,
+          "media_first_audio": 1533.1909989472479,
+          "avatar_first_generated_frame": 1533.2108559086919,
+          "media_first_video": 1533.224067883566,
+          "utterance_completed": 4507.871916051954
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 16,
+          "firstVideoPTSUS": 46920000,
+          "speechOriginSample": 750720
+        }
+      },
+      {
+        "traceId": "interaction_5dae5ee100de2144e6cd23fb417eb5e86bd0d052b013961a9dcf7abb0426eb94",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_7ef3669c2c7d4a53d5bd0efde9d26d13",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 518639.66506300494,
+        "points": {
+          "runtime_utterance_accepted": 0.0008838251233100891,
+          "first_speakable_segment": 18.69894890114665,
+          "tts_started": 19.283481873571873,
+          "tts_first_pcm": 184.36490301974118,
+          "avatar_first_returned_frame": 1140.2520958799869,
+          "media_first_audio": 1141.0135608166456,
+          "avatar_first_generated_frame": 1141.045806929469,
+          "media_first_video": 1141.0703379660845,
+          "utterance_completed": 5236.326013924554
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 18,
+          "firstVideoPTSUS": 49800000,
+          "speechOriginSample": 796800
+        }
+      },
+      {
+        "traceId": "interaction_075f1c4957a86dd4fb35f55a8194da596af30103a0803cb09792016333651ee0",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_93c56e53bbfc6fc73013743da5c72c08",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 504630.8301889803,
+        "points": {
+          "runtime_utterance_accepted": 0.0005909241735935211,
+          "first_speakable_segment": 11.288693873211741,
+          "tts_started": 12.137810001149774,
+          "tts_first_pcm": 155.3579238243401,
+          "avatar_first_returned_frame": 1312.7780528739095,
+          "media_first_audio": 1313.3981837891042,
+          "avatar_first_generated_frame": 1313.426847802475,
+          "media_first_video": 1313.4510579984635,
+          "utterance_completed": 6244.6705747861415
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 20,
+          "firstVideoPTSUS": 61080000,
+          "speechOriginSample": 977280
+        }
+      },
+      {
+        "traceId": "interaction_f0abb55ab4174c8136b2a4a8185972b0d0f25fa328647be849ad1c6a25984ab4",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_f15a0f552499f9dcf0956f5e06bf5434",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 496629.89389616996,
+        "points": {
+          "runtime_utterance_accepted": 0.001082196831703186,
+          "first_speakable_segment": 12.745267013087869,
+          "tts_started": 13.343075988814235,
+          "tts_first_pcm": 127.22924398258328,
+          "avatar_first_returned_frame": 1069.7428481653333,
+          "media_first_audio": 1070.3861510846764,
+          "avatar_first_generated_frame": 1070.414731046185,
+          "media_first_video": 1070.4380699899048,
+          "utterance_completed": 3645.8074441179633
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 22,
+          "firstVideoPTSUS": 66160000,
+          "speechOriginSample": 1058560
+        }
+      },
+      {
+        "traceId": "interaction_9f6234271f623a12b55b37b5903f982c88e3691e0d557862d035b6c2971019a4",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_9e501e876830436d2fe3b63c08a4c701",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 492630.01785380766,
+        "points": {
+          "runtime_utterance_accepted": 0.000910833477973938,
+          "first_speakable_segment": 18.343386938795447,
+          "tts_started": 18.946969881653786,
+          "tts_first_pcm": 200.14458196237683,
+          "avatar_first_returned_frame": 1226.5817108564079,
+          "media_first_audio": 1227.213499834761,
+          "avatar_first_generated_frame": 1227.2417398635298,
+          "media_first_video": 1227.2649768274277,
+          "utterance_completed": 5165.152979781851
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 24,
+          "firstVideoPTSUS": 68720000,
+          "speechOriginSample": 1099520
+        }
+      },
+      {
+        "traceId": "interaction_f38439381111f3ae5e2adaa6cf48359a18715c3d364fc1e6407b0dee65e5d58f",
+        "sessionId": "session_11cbef0b4323acacd10fa8b749288154",
+        "utteranceId": "utt_7145f5a8a4865339b10119a0059a22ff",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 476630.9912088327,
+        "points": {
+          "runtime_utterance_accepted": 0.0009408686310052872,
+          "first_speakable_segment": 6.970201851800084,
+          "tts_started": 7.3412328492850065,
+          "tts_first_pcm": 132.13425781577826,
+          "avatar_first_returned_frame": 1211.9111239444464,
+          "media_first_audio": 1212.3783498536795,
+          "avatar_first_generated_frame": 1212.3978028539568,
+          "media_first_video": 1212.4114229809493,
+          "utterance_completed": 5925.209157867357
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 26,
+          "firstVideoPTSUS": 81920000,
+          "speechOriginSample": 1310720
+        }
+      }
+    ],
+    "browserObservation": "NOT_TESTED",
+    "rtmpAudienceObservation": "NOT_TESTED"
+  },
+  {
+    "trial": "headless.json",
+    "clockDomain": "runtime_monotonic",
+    "traces": [
+      {
+        "traceId": "interaction_d7335f0619ea0d32c4c3797389214ee6c2b0259146bb4e95372ec8d23c723feb",
+        "sessionId": "session_48d6b03cc167c9d15c81fa02c441a76e",
+        "utteranceId": "utt_ec4216ced5c92e05118a51ac5ee29bcf",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 278982.306629885,
+        "points": {
+          "runtime_utterance_accepted": 0.0006819609552621841,
+          "first_speakable_segment": 10.28740406036377,
+          "tts_started": 10.889612836763263,
+          "tts_first_pcm": 144.9078000150621,
+          "avatar_first_returned_frame": 1191.6755810379982,
+          "media_first_audio": 1192.1908259391785,
+          "avatar_first_generated_frame": 1192.2185928560793,
+          "media_first_video": 1192.2399960458279,
+          "utterance_completed": 6101.6857689246535
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 2,
+          "firstVideoPTSUS": 640000,
+          "speechOriginSample": 10240
+        }
+      },
+      {
+        "traceId": "trace_1de4dc8f6e69df4d721b0899b03390fe",
+        "sessionId": "session_48d6b03cc167c9d15c81fa02c441a76e",
+        "utteranceId": "utt_5f492f65573f9c0aa1b1c9668ed0ca76",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 272651.83267579414,
+        "points": {
+          "runtime_utterance_accepted": 0.0008449424058198929,
+          "first_speakable_segment": 9.62028093636036,
+          "tts_started": 9.921624790877104,
+          "tts_first_pcm": 133.25342489406466,
+          "avatar_first_returned_frame": 1158.8565988931805,
+          "media_first_audio": 1159.3103378545493,
+          "avatar_first_generated_frame": 1159.3350528273731,
+          "media_first_video": 1159.3538757879287,
+          "utterance_completed": 5851.152878953144
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 4,
+          "firstVideoPTSUS": 5520000,
+          "speechOriginSample": 88320
+        }
+      }
+    ],
+    "browserObservation": "NOT_TESTED",
+    "rtmpAudienceObservation": "NOT_TESTED"
+  },
+  {
+    "trial": "browser-optimized-llm20.json",
+    "clockDomain": "runtime_monotonic",
+    "traces": [
+      {
+        "traceId": "interaction_92b9cf8bf1de2dd889e64667eac6277c35be132e347c4c7c7f789842e7ebb095",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_c30296242e07c9d4fd67ebbcd255138f",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 850164.8082470056,
+        "points": {
+          "runtime_utterance_accepted": 0.0007371418178081512,
+          "first_speakable_segment": 8.084740024060011,
+          "tts_started": 9.56556317396462,
+          "tts_first_pcm": 145.09567199274898,
+          "avatar_first_returned_frame": 1444.901674054563,
+          "media_first_audio": 1445.5945931840688,
+          "avatar_first_generated_frame": 1445.6240250729024,
+          "media_first_video": 1445.6483831163496,
+          "utterance_completed": 6334.057858213782
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 2,
+          "firstVideoPTSUS": 1320000,
+          "speechOriginSample": 21120
+        }
+      },
+      {
+        "traceId": "interaction_029d07d94db81976f34e40fc550312c01de7c077cccbc76ec23d2d89512e3f22",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_8bb15ed410da2c375add20500bc04a18",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 840355.928203091,
+        "points": {
+          "runtime_utterance_accepted": 0.0009771902114152908,
+          "llm_started": 1.286200014874339,
+          "llm_first_token": 1704.3261411599815,
+          "first_speakable_segment": 1704.7944231890142,
+          "tts_started": 1705.574580002576,
+          "tts_first_pcm": 1796.49503598921,
+          "avatar_first_returned_frame": 2819.345797179267,
+          "media_first_audio": 2820.0518931262195,
+          "avatar_first_generated_frame": 2820.0849150307477,
+          "media_first_video": 2820.1156991999596,
+          "utterance_completed": 6088.843141216785
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 4,
+          "firstVideoPTSUS": 9560000,
+          "speechOriginSample": 152960
+        }
+      },
+      {
+        "traceId": "interaction_1472b5c684828fc17e4ae1c97b346cf075401eaee5e847e5e5c96df9791652ee",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_e9cf0ddd0b602d5805191f05b7cb38e7",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 833157.4973359238,
+        "points": {
+          "runtime_utterance_accepted": 0.0007818453013896942,
+          "llm_started": 1.0223239660263062,
+          "llm_first_token": 1062.981982016936,
+          "first_speakable_segment": 1063.9147257898003,
+          "tts_started": 1064.7061669733375,
+          "tts_first_pcm": 1145.1224798802286,
+          "avatar_first_returned_frame": 2283.7997279129922,
+          "media_first_audio": 2284.5136339310557,
+          "avatar_first_generated_frame": 2284.541916800663,
+          "media_first_video": 2284.568100934848,
+          "utterance_completed": 5757.446244824678
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 6,
+          "firstVideoPTSUS": 13120000,
+          "speechOriginSample": 209920
+        }
+      },
+      {
+        "traceId": "interaction_8293f0efac0949723636e0a844184c6f1cfbaf5e69074f750d812932bd6d4630",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_86a49088c6824b510082b7bf0c4a6c3e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 825055.9815170709,
+        "points": {
+          "runtime_utterance_accepted": 0.000759027898311615,
+          "llm_started": 1.3142370153218508,
+          "llm_first_token": 1483.0857350025326,
+          "first_speakable_segment": 1757.3777420911938,
+          "tts_started": 1758.2658370956779,
+          "tts_first_pcm": 1840.3663781937212,
+          "avatar_first_returned_frame": 2969.5277709979564,
+          "media_first_audio": 2970.1513731852174,
+          "avatar_first_generated_frame": 2970.17821110785,
+          "media_first_video": 2970.192707143724,
+          "utterance_completed": 5955.761396093294
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 8,
+          "firstVideoPTSUS": 19080000,
+          "speechOriginSample": 305280
+        }
+      },
+      {
+        "traceId": "interaction_b458aba6101bcaa1065826a112aa743547ce3f2c317976bf4b56be1a59074375",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_957a88e5b631b58164ceb9da2a00c96c",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 817257.3743329849,
+        "points": {
+          "runtime_utterance_accepted": 0.0006111804395914078,
+          "llm_started": 0.9793359786272049,
+          "llm_first_token": 855.8222639840096,
+          "first_speakable_segment": 952.1213329862803,
+          "tts_started": 953.1066080089658,
+          "tts_first_pcm": 1032.4251879937947,
+          "avatar_first_returned_frame": 1997.3433720879257,
+          "media_first_audio": 1997.988095972687,
+          "avatar_first_generated_frame": 1998.0206810869277,
+          "media_first_video": 1998.046939028427,
+          "utterance_completed": 5698.201748076826
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 10,
+          "firstVideoPTSUS": 23200000,
+          "speechOriginSample": 371200
+        }
+      },
+      {
+        "traceId": "interaction_6b97d6880e8a03b86482ab948ab01a9a992f1b6b5132339e0b0395d45eae435f",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_294cce833a19c5ac8a8acae3fa4bf13f",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 809355.5523781106,
+        "points": {
+          "runtime_utterance_accepted": 0.0007580965757369995,
+          "llm_started": 1.260404009371996,
+          "llm_first_token": 1266.8097119312733,
+          "first_speakable_segment": 1521.7320760712028,
+          "tts_started": 1522.540673147887,
+          "tts_first_pcm": 1573.8182039931417,
+          "avatar_first_returned_frame": 2594.2381150089204,
+          "media_first_audio": 2594.9753939639777,
+          "avatar_first_generated_frame": 2595.004454953596,
+          "media_first_video": 2595.0291100889444,
+          "utterance_completed": 6331.670927116647
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 12,
+          "firstVideoPTSUS": 29000000,
+          "speechOriginSample": 464000
+        }
+      },
+      {
+        "traceId": "interaction_cde5ef452c53ff1228ffdc798fa92a800acdf3b007eccacc6528ec14b8768a27",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_1c20e87477c78df66a98645b0c878c1a",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 800660.0858240854,
+        "points": {
+          "runtime_utterance_accepted": 0.0006731133908033371,
+          "llm_started": 1.0767520871013403,
+          "llm_first_token": 1017.5903521012515,
+          "first_speakable_segment": 1119.2568121477962,
+          "tts_started": 1120.11573696509,
+          "tts_first_pcm": 1217.4584991298616,
+          "avatar_first_returned_frame": 2161.412235116586,
+          "media_first_audio": 2162.11102809757,
+          "avatar_first_generated_frame": 2162.132821045816,
+          "media_first_video": 2162.1476199943572,
+          "utterance_completed": 5900.156710995361
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 14,
+          "firstVideoPTSUS": 34520000,
+          "speechOriginSample": 552320
+        }
+      },
+      {
+        "traceId": "interaction_c1521992b89fa92b3cbc61a82822787524f7f66ab9d090b1f657bf5c0d28bcd3",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_729e51f9145d4877c701cee4eab1d811",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 792456.7098140251,
+        "points": {
+          "runtime_utterance_accepted": 0.0008868519216775894,
+          "llm_started": 1.2769580353051424,
+          "llm_first_token": 722.8340830188245,
+          "first_speakable_segment": 859.3934660311788,
+          "tts_started": 860.2989718783647,
+          "tts_first_pcm": 954.1350950021297,
+          "avatar_first_returned_frame": 2090.002974960953,
+          "media_first_audio": 2090.626843040809,
+          "avatar_first_generated_frame": 2090.6517789699137,
+          "media_first_video": 2090.667475014925,
+          "utterance_completed": 5147.236661054194
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 16,
+          "firstVideoPTSUS": 39800000,
+          "speechOriginSample": 636800
+        }
+      },
+      {
+        "traceId": "interaction_17bb491fdced79a7139637ae9c6736f91525c3536b8442d21b4b8fbe86592545",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_197807a057207e9ad8fbf944cf89c8dc",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 784966.346035013,
+        "points": {
+          "runtime_utterance_accepted": 0.0006211921572685242,
+          "llm_started": 1.3308431953191757,
+          "llm_first_token": 834.8425109870732,
+          "first_speakable_segment": 977.4826401844621,
+          "tts_started": 978.2865010201931,
+          "tts_first_pcm": 1055.5479680188,
+          "avatar_first_returned_frame": 2017.4355311319232,
+          "media_first_audio": 2017.9364630021155,
+          "avatar_first_generated_frame": 2017.9576070513576,
+          "media_first_video": 2017.9734430275857,
+          "utterance_completed": 5521.931254072115
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 18,
+          "firstVideoPTSUS": 44580000,
+          "speechOriginSample": 713280
+        }
+      },
+      {
+        "traceId": "interaction_d05eaecbda9038bb3a4f942c7488466d2a66a785ccd1b980969b2ea944359d10",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_780a1b627f2f57b4396dec51603ce8c5",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 777155.9233870357,
+        "points": {
+          "runtime_utterance_accepted": 0.0005820766091346741,
+          "llm_started": 1.4810750726610422,
+          "llm_first_token": 1177.1746180020273,
+          "first_speakable_segment": 1469.6477660909295,
+          "tts_started": 1470.4427300021052,
+          "tts_first_pcm": 1521.689496934414,
+          "avatar_first_returned_frame": 2541.590509004891,
+          "media_first_audio": 2542.1463320963085,
+          "avatar_first_generated_frame": 2542.174672940746,
+          "media_first_video": 2542.193837929517,
+          "utterance_completed": 6718.036937061697
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 20,
+          "firstVideoPTSUS": 50180000,
+          "speechOriginSample": 802880
+        }
+      },
+      {
+        "traceId": "interaction_af7bfe93ebd856095d80103fc44910a7ce623817b3f71b52fc07d119053708df",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_3ccae85bca6703c98f3d0a8315d6a3b0",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 769456.6453371663,
+        "points": {
+          "runtime_utterance_accepted": 0.0007972121238708496,
+          "llm_started": 1.2573821004480124,
+          "llm_first_token": 711.0773772001266,
+          "first_speakable_segment": 1070.4528731293976,
+          "tts_started": 1071.2479231879115,
+          "tts_first_pcm": 1121.0633111186326,
+          "avatar_first_returned_frame": 2407.257123151794,
+          "media_first_audio": 2407.980376156047,
+          "avatar_first_generated_frame": 2408.009421080351,
+          "media_first_video": 2408.033419167623,
+          "utterance_completed": 6147.217152174562
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 22,
+          "firstVideoPTSUS": 54740000,
+          "speechOriginSample": 875840
+        }
+      },
+      {
+        "traceId": "interaction_be5619f79f2d4fa48e6407f90f58821f407e77b1c4884c893b49ce6c4c47bf2c",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_0fff355920c8efaef0e9424e5ed7e80f",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 761357.0811611135,
+        "points": {
+          "runtime_utterance_accepted": 0.0006081536412239075,
+          "llm_started": 1.0952882003039122,
+          "llm_first_token": 1400.0460100360215,
+          "first_speakable_segment": 1669.168554013595,
+          "tts_started": 1670.1033681165427,
+          "tts_first_pcm": 1763.0027742125094,
+          "avatar_first_returned_frame": 2713.424339191988,
+          "media_first_audio": 2713.9700981788337,
+          "avatar_first_generated_frame": 2713.9915542211384,
+          "media_first_video": 2714.0065662097186,
+          "utterance_completed": 5490.907010156661
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 24,
+          "firstVideoPTSUS": 60500000,
+          "speechOriginSample": 968000
+        }
+      },
+      {
+        "traceId": "interaction_87da6389d75b8dd374982004b733fa2d99d9f04c75ef706a69ecbda2c5d84bc7",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_84922698fbf52e122f6ac0a2b48c0696",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 753456.4407120924,
+        "points": {
+          "runtime_utterance_accepted": 0.0009511131793260574,
+          "llm_started": 1.298421062529087,
+          "llm_first_token": 897.0990050584078,
+          "first_speakable_segment": 1043.0866261012852,
+          "tts_started": 1043.9409941900522,
+          "tts_first_pcm": 1122.34757700935,
+          "avatar_first_returned_frame": 2126.201936043799,
+          "media_first_audio": 2126.82593613863,
+          "avatar_first_generated_frame": 2126.85687514022,
+          "media_first_video": 2126.8806031439453,
+          "utterance_completed": 5786.906919209287
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 26,
+          "firstVideoPTSUS": 65140000,
+          "speechOriginSample": 1042240
+        }
+      },
+      {
+        "traceId": "interaction_1ec7cd7c53891c1e2ca89efc504dbcbe52661118a3b339850c7fb511fab9360f",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_25950249e8e526aa231008a913512e55",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 745367.013520794,
+        "points": {
+          "runtime_utterance_accepted": 0.0005918554961681366,
+          "llm_started": 0.9410029742866755,
+          "llm_first_token": 1113.9052449725568,
+          "first_speakable_segment": 1250.4301089793444,
+          "tts_started": 1251.2479349970818,
+          "tts_first_pcm": 1327.4153308011591,
+          "avatar_first_returned_frame": 2259.766974952072,
+          "media_first_audio": 2260.4885927867144,
+          "avatar_first_generated_frame": 2260.5204039718956,
+          "media_first_video": 2260.54577389732,
+          "utterance_completed": 5469.0339169465005
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 28,
+          "firstVideoPTSUS": 70740000,
+          "speechOriginSample": 1131840
+        }
+      },
+      {
+        "traceId": "interaction_e520b1310129447153d61ef6b89859faf2d2aaa8e5d380bf462578ed63e9d737",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_91d607fbbbc6a1dfde4ad988c7c0f940",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 738656.5999968443,
+        "points": {
+          "runtime_utterance_accepted": 0.0006528571248054504,
+          "llm_started": 1.1314419098198414,
+          "llm_first_token": 1518.8094999175519,
+          "first_speakable_segment": 1847.8453590068966,
+          "tts_started": 1848.654855042696,
+          "tts_first_pcm": 1928.1345549970865,
+          "avatar_first_returned_frame": 3122.0005620270967,
+          "media_first_audio": 3122.704850975424,
+          "avatar_first_generated_frame": 3122.737016994506,
+          "media_first_video": 3122.769513865933,
+          "utterance_completed": 6949.060526909307
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 30,
+          "firstVideoPTSUS": 75340000,
+          "speechOriginSample": 1205440
+        }
+      },
+      {
+        "traceId": "interaction_673683e9e951458a63ba421a6130d7185ac097444fd7ba049d07655e96ae7ea6",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_ecd61334f7d30a3292243c20eef9499b",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 730556.7934578285,
+        "points": {
+          "runtime_utterance_accepted": 0.0006638001650571823,
+          "llm_started": 1.3157858047634363,
+          "llm_first_token": 1106.009708950296,
+          "first_speakable_segment": 1790.003407979384,
+          "tts_started": 1790.808035992086,
+          "tts_first_pcm": 1865.3891959693283,
+          "avatar_first_returned_frame": 3212.8187108319253,
+          "media_first_audio": 3213.5598028544337,
+          "avatar_first_generated_frame": 3213.5908668860793,
+          "media_first_video": 3213.615591870621,
+          "utterance_completed": 6675.511625828221
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 32,
+          "firstVideoPTSUS": 80420000,
+          "speechOriginSample": 1286720
+        }
+      },
+      {
+        "traceId": "interaction_01bf42ec787fe13d5764f04769fbad27032f7b462600689df3564cf8b1d2128c",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_2424cbacd3c9653c228bbee3f006e3a1",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 722156.0273880605,
+        "points": {
+          "runtime_utterance_accepted": 0.0009450595825910568,
+          "llm_started": 1.3533839955925941,
+          "llm_first_token": 1296.295637032017,
+          "first_speakable_segment": 1297.2240711096674,
+          "tts_started": 1298.076658975333,
+          "tts_first_pcm": 1379.1461461223662,
+          "avatar_first_returned_frame": 2626.1861049570143,
+          "media_first_audio": 2626.754763070494,
+          "avatar_first_generated_frame": 2626.776833087206,
+          "media_first_video": 2626.7918571829796,
+          "utterance_completed": 6863.505091052502
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 34,
+          "firstVideoPTSUS": 85300000,
+          "speechOriginSample": 1364800
+        }
+      },
+      {
+        "traceId": "interaction_d45a3435d5cf4260708001cc2827a1771f5ab70bdafd6fc8f850586a99f3d73c",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_4dc9acbbbb6fab2f49ae96de02b55044",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 713256.240202114,
+        "points": {
+          "runtime_utterance_accepted": 0.0008700881153345108,
+          "llm_started": 1.4506741426885128,
+          "llm_first_token": 1280.8227289933711,
+          "first_speakable_segment": 1281.6646159626544,
+          "tts_started": 1282.953147077933,
+          "tts_first_pcm": 1363.1389359943569,
+          "avatar_first_returned_frame": 2318.283037049696,
+          "media_first_audio": 2319.0289770718664,
+          "avatar_first_generated_frame": 2319.061204092577,
+          "media_first_video": 2319.086499977857,
+          "utterance_completed": 5659.3771579209715
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 36,
+          "firstVideoPTSUS": 91100000,
+          "speechOriginSample": 1457600
+        }
+      },
+      {
+        "traceId": "interaction_a7588fb97c5d74225e18f4f173f771cc5b6a7861abd16cacdfbd3e7f2f8d0efd",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_62337acec33e74931281659959ed9dac",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 705157.1894970257,
+        "points": {
+          "runtime_utterance_accepted": 0.00062515027821064,
+          "llm_started": 1.042569987475872,
+          "llm_first_token": 1510.8492341823876,
+          "first_speakable_segment": 1568.6649230774492,
+          "tts_started": 1571.7131120618433,
+          "tts_first_pcm": 1651.387267978862,
+          "avatar_first_returned_frame": 2872.625087155029,
+          "media_first_audio": 2873.1484941672534,
+          "avatar_first_generated_frame": 2873.1714570894837,
+          "media_first_video": 2873.186079086736,
+          "utterance_completed": 6152.834080159664
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 38,
+          "firstVideoPTSUS": 96740000,
+          "speechOriginSample": 1547840
+        }
+      },
+      {
+        "traceId": "interaction_f5d054d2f9bd75dbbb80cf93e38888a55d7c634314b137352a1fe6501457f2b7",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_5c86f9b4b017b6d52931287b6a8c32e4",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 698056.7943241913,
+        "points": {
+          "runtime_utterance_accepted": 0.000833999365568161,
+          "llm_started": 1.184126129373908,
+          "llm_first_token": 2351.472444133833,
+          "first_speakable_segment": 2352.365376194939,
+          "tts_started": 2353.5305380355567,
+          "tts_first_pcm": 2409.0872472152114,
+          "avatar_first_returned_frame": 3412.4857790302485,
+          "media_first_audio": 3413.219504058361,
+          "avatar_first_generated_frame": 3413.252814207226,
+          "media_first_video": 3413.2785841356963,
+          "utterance_completed": 7815.523611148819
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 40,
+          "firstVideoPTSUS": 101620000,
+          "speechOriginSample": 1625920
+        }
+      },
+      {
+        "traceId": "interaction_66a220c22b5abffa88fdccea55f9c5a7204b43a515ac17ef9c27fd062a4d4565",
+        "sessionId": "session_f60a4b4520f2190e9d7a755b21536b71",
+        "utteranceId": "utt_8bc6352e9dff0c5b4b47d5ab38f55237",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 688057.7547599096,
+        "points": {
+          "runtime_utterance_accepted": 0.000575091689825058,
+          "llm_started": 1.0768261272460222,
+          "llm_first_token": 803.947787033394,
+          "first_speakable_segment": 1067.1290019527078,
+          "tts_started": 1067.9378730710596,
+          "tts_first_pcm": 1142.94054498896,
+          "avatar_first_returned_frame": 2262.36729696393,
+          "media_first_audio": 2262.9282029811293,
+          "avatar_first_generated_frame": 2262.949727009982,
+          "media_first_video": 2262.9645511042327,
+          "utterance_completed": 5898.658493068069
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 42,
+          "firstVideoPTSUS": 107580000,
+          "speechOriginSample": 1721280
+        }
+      }
+    ],
+    "browserObservation": "NOT_TESTED",
+    "rtmpAudienceObservation": "NOT_TESTED"
+  },
+  {
+    "trial": "browser-optimized-mixed26.json",
+    "clockDomain": "runtime_monotonic",
+    "traces": [
+      {
+        "traceId": "interaction_69f0c3867683ff0ea5ffb7e781ca0ab57ee52575b63fbd903f5da1a7561300d5",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_c5c290cdb7da9cd29c684e4da355eba2",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 579989.1748409718,
+        "points": {
+          "runtime_utterance_accepted": 0.0006849877536296844,
+          "first_speakable_segment": 7.882512174546719,
+          "tts_started": 8.315070066601038,
+          "tts_first_pcm": 145.7127840258181,
+          "avatar_first_returned_frame": 1642.778028966859,
+          "media_first_audio": 1643.4598180931062,
+          "avatar_first_generated_frame": 1643.4944330248982,
+          "media_first_video": 1643.5187060851604,
+          "utterance_completed": 6535.630222177133
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 2,
+          "firstVideoPTSUS": 1200000,
+          "speechOriginSample": 19200
+        }
+      },
+      {
+        "traceId": "interaction_f708f2f811f28bbf15700e77479d33b1952319cad9af08a8edcc6387beec097b",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_f5637460a3e4486c16fa0f95a96de7f2",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 569990.7090140041,
+        "points": {
+          "runtime_utterance_accepted": 0.0005818437784910202,
+          "first_speakable_segment": 7.479025982320309,
+          "tts_started": 7.955140899866819,
+          "tts_first_pcm": 146.24359901063144,
+          "avatar_first_returned_frame": 1120.843212818727,
+          "media_first_audio": 1121.7405358329415,
+          "avatar_first_generated_frame": 1121.7735370155424,
+          "media_first_video": 1121.7980198562145,
+          "utterance_completed": 6760.602714959532
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 4,
+          "firstVideoPTSUS": 8000000,
+          "speechOriginSample": 128000
+        }
+      },
+      {
+        "traceId": "interaction_32ec070a8aae12ba693ba2505fb0493cfd0aa7d28590e9d72788af86343a8462",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_4c7c46de37232cbe9f2141fbced4adc2",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 562090.7603648957,
+        "points": {
+          "runtime_utterance_accepted": 0.0006060581654310226,
+          "first_speakable_segment": 11.386916041374207,
+          "tts_started": 11.909907916560769,
+          "tts_first_pcm": 121.61838705651462,
+          "avatar_first_returned_frame": 1412.1019209269434,
+          "media_first_audio": 1412.6490529160947,
+          "avatar_first_generated_frame": 1412.6703310757875,
+          "media_first_video": 1412.6850389875472,
+          "utterance_completed": 3916.375664062798
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 6,
+          "firstVideoPTSUS": 12680000,
+          "speechOriginSample": 202880
+        }
+      },
+      {
+        "traceId": "interaction_58a142f3fa1e285694fab05d84942a340375202fd1df108fff91d2de2a4cea49",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_44588248ac8f6a3dfb015a546f145c2e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 555789.8160601035,
+        "points": {
+          "runtime_utterance_accepted": 0.0008370261639356613,
+          "first_speakable_segment": 13.337486190721393,
+          "tts_started": 13.692086096853018,
+          "tts_first_pcm": 183.6734141688794,
+          "avatar_first_returned_frame": 1144.6586991660297,
+          "media_first_audio": 1145.229552173987,
+          "avatar_first_generated_frame": 1145.251187030226,
+          "media_first_video": 1145.266650011763,
+          "utterance_completed": 5217.77849807404
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 8,
+          "firstVideoPTSUS": 15920000,
+          "speechOriginSample": 254720
+        }
+      },
+      {
+        "traceId": "interaction_b8a20c0a8ccde70a3ed6feb75dd4877c55de0ceed97e18f2994dcb320ad446f9",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_da4c65a028d5058d7275ce4945fb4aa8",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 548790.3263149783,
+        "points": {
+          "runtime_utterance_accepted": 0.0006658956408500671,
+          "first_speakable_segment": 14.20427393168211,
+          "tts_started": 14.745144871994853,
+          "tts_first_pcm": 126.18283601477742,
+          "avatar_first_returned_frame": 1163.3255509659648,
+          "media_first_audio": 1164.0508188866079,
+          "avatar_first_generated_frame": 1164.0827970113605,
+          "media_first_video": 1164.1073068603873,
+          "utterance_completed": 10155.310892965645
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 10,
+          "firstVideoPTSUS": 20200000,
+          "speechOriginSample": 323200
+        }
+      },
+      {
+        "traceId": "interaction_0fd0bc54a8c7354a88bb7dd50207b33c73b4219c7bb555381c27ba4490a9333f",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_22a3bab485a8133e5cc279fa73bc631f",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 536400.0599021092,
+        "points": {
+          "runtime_utterance_accepted": 0.0006149057298898697,
+          "llm_started": 1.287912018597126,
+          "llm_first_token": 2730.844052042812,
+          "first_speakable_segment": 2731.9626049138606,
+          "tts_started": 2732.9173979815096,
+          "tts_first_pcm": 2813.484665006399,
+          "avatar_first_returned_frame": 4040.70293600671,
+          "media_first_audio": 4041.197472019121,
+          "avatar_first_generated_frame": 4041.2181669380516,
+          "media_first_video": 4041.2318541202694,
+          "utterance_completed": 7551.834549056366
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 12,
+          "firstVideoPTSUS": 32480000,
+          "speechOriginSample": 519680
+        }
+      },
+      {
+        "traceId": "interaction_703a2429e2b9fa5c62c7290b9f6563ad56e29746348ff441bf807e554957dbf0",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_f178f8e134e26a745b6fb5c7e9fcefc0",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 526391.2726501003,
+        "points": {
+          "runtime_utterance_accepted": 0.0007171183824539185,
+          "llm_started": 0.8103570435196161,
+          "llm_first_token": 866.688909009099,
+          "first_speakable_segment": 959.7886330448091,
+          "tts_started": 960.6589889153838,
+          "tts_first_pcm": 1037.951644975692,
+          "avatar_first_returned_frame": 2046.8405720312148,
+          "media_first_audio": 2047.5592189468443,
+          "avatar_first_generated_frame": 2047.587949084118,
+          "media_first_video": 2047.6120749954134,
+          "utterance_completed": 5995.908984914422
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 14,
+          "firstVideoPTSUS": 37680000,
+          "speechOriginSample": 602880
+        }
+      },
+      {
+        "traceId": "interaction_5bf0a308ed519f57309d5a8455ba8fc920cf879b56c98c887e4d8d100581a676",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_ad99594878ec703ba52dc1150ce384c5",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 517990.1367269922,
+        "points": {
+          "runtime_utterance_accepted": 0.000616069883108139,
+          "first_speakable_segment": 7.639154093340039,
+          "tts_started": 8.197566028684378,
+          "tts_first_pcm": 138.03048408590257,
+          "avatar_first_returned_frame": 1087.632673094049,
+          "media_first_audio": 1088.1431149318814,
+          "avatar_first_generated_frame": 1088.1639008875936,
+          "media_first_video": 1088.1777999456972,
+          "utterance_completed": 5904.46079405956
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 16,
+          "firstVideoPTSUS": 42120000,
+          "speechOriginSample": 673920
+        }
+      },
+      {
+        "traceId": "interaction_ef4649bb7d13fa7141273413ce37d7225c311acc8a74346f06e8e28373c46b19",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_49893aff2af855b8bc335989d3796e6b",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 509591.5706830565,
+        "points": {
+          "runtime_utterance_accepted": 0.0006670597940683365,
+          "first_speakable_segment": 6.584997987374663,
+          "tts_started": 6.88484706915915,
+          "tts_first_pcm": 121.6825288720429,
+          "avatar_first_returned_frame": 1078.720835968852,
+          "media_first_audio": 1079.2665970511734,
+          "avatar_first_generated_frame": 1079.2941020336002,
+          "media_first_video": 1079.311684006825,
+          "utterance_completed": 3851.799587951973
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 18,
+          "firstVideoPTSUS": 47840000,
+          "speechOriginSample": 765440
+        }
+      },
+      {
+        "traceId": "interaction_62bd353f9b9055e379e3f7e86ff2e6abcdc44c091888b188ff2b31410acd929a",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_1644c4202fa761825b07adc42857642e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 503190.0862620678,
+        "points": {
+          "runtime_utterance_accepted": 0.0009399373084306717,
+          "first_speakable_segment": 13.174365973100066,
+          "tts_started": 13.513752026483417,
+          "tts_first_pcm": 191.1332111340016,
+          "avatar_first_returned_frame": 1143.522409023717,
+          "media_first_audio": 1144.0590810962021,
+          "avatar_first_generated_frame": 1144.090031972155,
+          "media_first_video": 1144.1099981311709,
+          "utterance_completed": 5059.872725978494
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 20,
+          "firstVideoPTSUS": 51480000,
+          "speechOriginSample": 823680
+        }
+      },
+      {
+        "traceId": "interaction_21a2ed1f758a5e9bdb22afbef0c08b494e7fc2fa89d6d34d723dc183ba1ddecd",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_00024653b5944ab2046c10cf85edf1bb",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 497091.89795004204,
+        "points": {
+          "runtime_utterance_accepted": 0.0006810296326875687,
+          "first_speakable_segment": 12.293712003156543,
+          "tts_started": 12.76105991564691,
+          "tts_first_pcm": 117.20216693356633,
+          "avatar_first_returned_frame": 1407.6953229960054,
+          "media_first_audio": 1408.436135854572,
+          "avatar_first_generated_frame": 1408.4685258567333,
+          "media_first_video": 1408.4936929866672,
+          "utterance_completed": 10398.943135049194
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 22,
+          "firstVideoPTSUS": 55360000,
+          "speechOriginSample": 885760
+        }
+      },
+      {
+        "traceId": "interaction_89405153e0f213e8b475d816a68c372a65b27cb604dbf5a0855eae7c1fa1ffb2",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_d47be8d36daaedca81fee54ffa2e882c",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 484789.92781904526,
+        "points": {
+          "runtime_utterance_accepted": 0.0007289927452802658,
+          "llm_started": 1.1940959375351667,
+          "llm_first_token": 992.3279141075909,
+          "first_speakable_segment": 1268.2480360381305,
+          "tts_started": 1269.1337431315333,
+          "tts_first_pcm": 1349.8408810701221,
+          "avatar_first_returned_frame": 2490.1521541178226,
+          "media_first_audio": 2490.883898921311,
+          "avatar_first_generated_frame": 2490.923644043505,
+          "media_first_video": 2490.9500640351325,
+          "utterance_completed": 5749.870592961088
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 24,
+          "firstVideoPTSUS": 65760000,
+          "speechOriginSample": 1052160
+        }
+      },
+      {
+        "traceId": "interaction_57478355dfb6bd178b3a6a5cc0b1cdb0bc74cc7e99fc95293f2b4578db752261",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_4d6abf5f94a0530b2647527a35b3370a",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 476590.131836012,
+        "points": {
+          "runtime_utterance_accepted": 0.0007799826562404633,
+          "llm_started": 1.394722843542695,
+          "llm_first_token": 2458.676064852625,
+          "first_speakable_segment": 2520.937494933605,
+          "tts_started": 2521.9633628148586,
+          "tts_first_pcm": 2629.579749889672,
+          "avatar_first_returned_frame": 3903.113156789914,
+          "media_first_audio": 3903.7513388320804,
+          "avatar_first_generated_frame": 3903.777095954865,
+          "media_first_video": 3903.7940779235214,
+          "utterance_completed": 7417.137069860473
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 26,
+          "firstVideoPTSUS": 72320000,
+          "speechOriginSample": 1157120
+        }
+      },
+      {
+        "traceId": "interaction_76575ae0180f8f807f9101eb28a0e9cc7da6093f2a8f2bf34c2d1047a37928ce",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_7a9c0d844f92ace7b19df776f26f48e2",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 466892.0486709103,
+        "points": {
+          "runtime_utterance_accepted": 0.000674976035952568,
+          "first_speakable_segment": 8.903998881578445,
+          "tts_started": 9.285146836191416,
+          "tts_first_pcm": 148.69503886438906,
+          "avatar_first_returned_frame": 1275.5856218282133,
+          "media_first_audio": 1276.4284908771515,
+          "avatar_first_generated_frame": 1276.4631169848144,
+          "media_first_video": 1276.4887688681483,
+          "utterance_completed": 6130.261645885184
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 28,
+          "firstVideoPTSUS": 76440000,
+          "speechOriginSample": 1223040
+        }
+      },
+      {
+        "traceId": "interaction_e91b05ff5f81350e3ddbd4df499a838978ec9c4865d362091e5d096852672a43",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_a29be29517aa83c85fdd47a81f661fc8",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 459391.5973280091,
+        "points": {
+          "runtime_utterance_accepted": 0.0007699709385633469,
+          "first_speakable_segment": 6.315235979855061,
+          "tts_started": 6.671637063845992,
+          "tts_first_pcm": 116.38236092403531,
+          "avatar_first_returned_frame": 1137.9422710742801,
+          "media_first_audio": 1138.6126358993351,
+          "avatar_first_generated_frame": 1138.6447208933532,
+          "media_first_video": 1138.6713760439306,
+          "utterance_completed": 3785.193115938455
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 30,
+          "firstVideoPTSUS": 81280000,
+          "speechOriginSample": 1300480
+        }
+      },
+      {
+        "traceId": "interaction_fa6316f53ad8b2f3ddcbf6b84e75f299932f94d7c31fa953566e75b2113c008a",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_979f08f15bb550ee530740be78be68e4",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 454499.9648439698,
+        "points": {
+          "runtime_utterance_accepted": 0.0006391201168298721,
+          "first_speakable_segment": 19.028648966923356,
+          "tts_started": 19.626867957413197,
+          "tts_first_pcm": 185.6664561200887,
+          "avatar_first_returned_frame": 1474.8069120105356,
+          "media_first_audio": 1475.616404088214,
+          "avatar_first_generated_frame": 1475.647812942043,
+          "media_first_video": 1475.6719360593706,
+          "utterance_completed": 5517.341660102829
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 32,
+          "firstVideoPTSUS": 83920000,
+          "speechOriginSample": 1342720
+        }
+      },
+      {
+        "traceId": "interaction_82236df195bdb3dae8641490ff251426aa427816c2e132076dca781e4bcfdb7b",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_190f151739e5793d9d8566f902b000d6",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 447291.4791801013,
+        "points": {
+          "runtime_utterance_accepted": 0.0006370246410369873,
+          "first_speakable_segment": 16.320663038641214,
+          "tts_started": 16.83022012002766,
+          "tts_first_pcm": 124.33141097426414,
+          "avatar_first_returned_frame": 1097.8932620491832,
+          "media_first_audio": 1098.4883171040565,
+          "avatar_first_generated_frame": 1098.5126851592213,
+          "media_first_video": 1098.5282741021365,
+          "utterance_completed": 9843.075923155993
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 34,
+          "firstVideoPTSUS": 88040000,
+          "speechOriginSample": 1408640
+        }
+      },
+      {
+        "traceId": "interaction_77d92ba5e1f912636a86f897d34a21f33a3b0004ed1d4cf2cf7c3c3f5277c313",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_9eae5038260a393480bae028e985bbe7",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 435391.694260994,
+        "points": {
+          "runtime_utterance_accepted": 0.0009068753570318222,
+          "llm_started": 1.1911089532077312,
+          "llm_first_token": 1653.496126877144,
+          "first_speakable_segment": 1654.2481069918722,
+          "tts_started": 1655.0069719087332,
+          "tts_first_pcm": 1747.437854995951,
+          "avatar_first_returned_frame": 2795.0188198592514,
+          "media_first_audio": 2795.620733872056,
+          "avatar_first_generated_frame": 2795.653803041205,
+          "media_first_video": 2795.7473169080913,
+          "utterance_completed": 6373.699653893709
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 36,
+          "firstVideoPTSUS": 98840000,
+          "speechOriginSample": 1581440
+        }
+      },
+      {
+        "traceId": "interaction_b631fbce1267fc0ec94e10c012b59b3adc8e1cac86e6706dd23f0603dcd7c482",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_0d358c99b0ade9b54ce5027102837ffe",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 426592.75057306513,
+        "points": {
+          "runtime_utterance_accepted": 0.0008600763976573944,
+          "llm_started": 1.0860760230571032,
+          "llm_first_token": 1934.6541080158204,
+          "first_speakable_segment": 2019.944512983784,
+          "tts_started": 2020.6370789092034,
+          "tts_first_pcm": 2095.2950560022146,
+          "avatar_first_returned_frame": 3100.653539877385,
+          "media_first_audio": 3101.188058964908,
+          "avatar_first_generated_frame": 3101.210684981197,
+          "media_first_video": 3101.2257209513336,
+          "utterance_completed": 6482.004736084491
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 38,
+          "firstVideoPTSUS": 105120000,
+          "speechOriginSample": 1681920
+        }
+      },
+      {
+        "traceId": "interaction_93394e71a65a59a50ff2683dc0f561182ee3d08e0ebae524bf000b58a16ede5a",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_ef818e0e8f6ec10def1bc1dd58cc4cb6",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 418990.9700350836,
+        "points": {
+          "runtime_utterance_accepted": 0.0006931368261575699,
+          "first_speakable_segment": 9.596810210496187,
+          "tts_started": 9.96168702840805,
+          "tts_first_pcm": 143.27048417180777,
+          "avatar_first_returned_frame": 1380.0708430353552,
+          "media_first_audio": 1380.7934280484915,
+          "avatar_first_generated_frame": 1380.8263312093914,
+          "media_first_video": 1380.8511612005532,
+          "utterance_completed": 6066.246383124962
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 40,
+          "firstVideoPTSUS": 108440000,
+          "speechOriginSample": 1735040
+        }
+      },
+      {
+        "traceId": "interaction_bb122bec991c0027517dd34cdf46b8229ed2c74bfc8b4f4f0c26ad777ab2fd9d",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_4e9f758d6952c5a085d065ed6675c362",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 410599.700209219,
+        "points": {
+          "runtime_utterance_accepted": 0.0008451752364635468,
+          "first_speakable_segment": 8.254094049334526,
+          "tts_started": 8.701083017513156,
+          "tts_first_pcm": 114.34566415846348,
+          "avatar_first_returned_frame": 1078.5168251022696,
+          "media_first_audio": 1079.2623821180314,
+          "avatar_first_generated_frame": 1079.2938861995935,
+          "media_first_video": 1079.3183902278543,
+          "utterance_completed": 3558.749906020239
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 42,
+          "firstVideoPTSUS": 113840000,
+          "speechOriginSample": 1821440
+        }
+      },
+      {
+        "traceId": "interaction_f644283b439ffe52a28dffcca9f0aebb13a6078fa898227f420ae981a40da9b0",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_a4efaa15db47ea26432d72a503ac2f8f",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 404790.32681696117,
+        "points": {
+          "runtime_utterance_accepted": 0.0007830094546079636,
+          "llm_started": 13.37675005197525,
+          "llm_first_token": 1066.3666769396514,
+          "first_speakable_segment": 1134.6776271238923,
+          "tts_started": 1135.2800799068063,
+          "tts_first_pcm": 1223.7590909935534,
+          "avatar_first_returned_frame": 2206.861163955182,
+          "media_first_audio": 2207.5061220675707,
+          "avatar_first_generated_frame": 2207.5393579434603,
+          "media_first_video": 2207.5642340350896,
+          "utterance_completed": 8545.96014204435
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 44,
+          "firstVideoPTSUS": 118000000,
+          "speechOriginSample": 1888000
+        }
+      },
+      {
+        "traceId": "interaction_cc69896752ad34fe3ecee7e81d9f2d562b9027a4b0fae80e401ac7eff5b74843",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_c3b486a876c41d5c3963afcdb2a26706",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 395000.777885085,
+        "points": {
+          "runtime_utterance_accepted": 0.0008370261639356613,
+          "llm_started": 23.608224000781775,
+          "llm_first_token": 1606.1714300885797,
+          "first_speakable_segment": 1606.6841760184616,
+          "tts_started": 1607.5054099783301,
+          "tts_first_pcm": 1652.9477811418474,
+          "avatar_first_returned_frame": 3150.686805136502,
+          "media_first_audio": 3151.720321038738,
+          "avatar_first_generated_frame": 3151.751652127132,
+          "media_first_video": 3151.7691609915346,
+          "utterance_completed": 8446.567571954802
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 46,
+          "firstVideoPTSUS": 125520000,
+          "speechOriginSample": 2008320
+        }
+      },
+      {
+        "traceId": "interaction_d78ce7b64ad9bcdd829eb9bfd28f8e1debd07f9a78547a79ec4c80168a71f56f",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_bda16e1ca28a862315f74eb7dfd1b49f",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 384600.54355091415,
+        "points": {
+          "runtime_utterance_accepted": 0.0007129274308681488,
+          "llm_started": 18.05127691477537,
+          "llm_first_token": 3873.4096828848124,
+          "first_speakable_segment": 3874.28850797005,
+          "tts_started": 3875.084355007857,
+          "tts_first_pcm": 3982.964440016076,
+          "avatar_first_returned_frame": 5339.751051971689,
+          "media_first_audio": 5340.382935013622,
+          "avatar_first_generated_frame": 5340.406337985769,
+          "media_first_video": 5340.420576976612,
+          "utterance_completed": 11997.611139900982
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 48,
+          "firstVideoPTSUS": 134880000,
+          "speechOriginSample": 2158080
+        }
+      },
+      {
+        "traceId": "interaction_a07b1185669a37ee122f4da9a09ef8afc2743dcc6f988f1558dd9456bacad518",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_0cda1fe90863e354078916def8802816",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 370890.61521505937,
+        "points": {
+          "runtime_utterance_accepted": 0.0005941838026046753,
+          "llm_started": 16.75158808939159,
+          "llm_first_token": 1253.3526390325278,
+          "first_speakable_segment": 1328.2196121290326,
+          "tts_started": 1328.7592991255224,
+          "tts_first_pcm": 1377.1644569933414,
+          "avatar_first_returned_frame": 2694.3970972206444,
+          "media_first_audio": 2694.877308094874,
+          "avatar_first_generated_frame": 2694.89856204018,
+          "media_first_video": 2694.9134292081,
+          "utterance_completed": 8559.913443168625
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 50,
+          "firstVideoPTSUS": 142840000,
+          "speechOriginSample": 2285440
+        }
+      },
+      {
+        "traceId": "interaction_d8483c637d6db0834c725d3293f19e726e7038a7f32bc65def0233452a742f76",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_be128a96c97fcd23a6666bd09af7194a",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 360790.38307699375,
+        "points": {
+          "runtime_utterance_accepted": 0.00089290551841259,
+          "llm_started": 18.087704898789525,
+          "llm_first_token": 856.344334082678,
+          "first_speakable_segment": 1146.7288839630783,
+          "tts_started": 1147.4539400078356,
+          "tts_first_pcm": 1241.8322190642357,
+          "avatar_first_returned_frame": 2193.412361899391,
+          "media_first_audio": 2194.0771921072155,
+          "avatar_first_generated_frame": 2194.1117730457336,
+          "media_first_video": 2194.136854959652,
+          "utterance_completed": 7937.549822963774
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 52,
+          "firstVideoPTSUS": 149760000,
+          "speechOriginSample": 2396160
+        }
+      },
+      {
+        "traceId": "interaction_378b65371a58bf1af71d6844a48d2942220e20491f85c24e29793262585de441",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_6ce5aed17bc5ee10c873c9e199da244e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 351790.52105592564,
+        "points": {
+          "runtime_utterance_accepted": 0.0006249174475669861,
+          "llm_started": 22.130420897156,
+          "llm_first_token": 958.6848688777536,
+          "first_speakable_segment": 999.9685729853809,
+          "tts_started": 1000.8251408580691,
+          "tts_first_pcm": 1033.1651188898832,
+          "avatar_first_returned_frame": 2361.763237975538,
+          "media_first_audio": 2362.4058009590954,
+          "avatar_first_generated_frame": 2362.4392920173705,
+          "media_first_video": 2362.463866826147,
+          "utterance_completed": 8223.22301287204
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 54,
+          "firstVideoPTSUS": 155880000,
+          "speechOriginSample": 2494080
+        }
+      },
+      {
+        "traceId": "interaction_aaaa7ea49b17e3c41d83e74ddc1c8423939b6d29a177aa0f3792964b66eaa092",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_9e28dcf49ff5217eb94a2f49e92e9d70",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 341290.88087007403,
+        "points": {
+          "runtime_utterance_accepted": 0.0008509960025548935,
+          "first_speakable_segment": 21.21330494992435,
+          "tts_started": 21.753092063590884,
+          "tts_first_pcm": 130.98021387122571,
+          "avatar_first_returned_frame": 1173.975178040564,
+          "media_first_audio": 1174.6504150796682,
+          "avatar_first_generated_frame": 1174.6799759566784,
+          "media_first_video": 1174.7048578690737
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 56,
+          "firstVideoPTSUS": 162280000,
+          "speechOriginSample": 2596480
+        }
+      },
+      {
+        "traceId": "trace_c268fdf9475b11bfb401b778a9236b41",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_b24da71b8e59d2d58ae2b577754577b2",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 339934.1220811475,
+        "points": {
+          "runtime_utterance_accepted": 0.001066131517291069,
+          "first_speakable_segment": 13.33436300046742,
+          "tts_started": 14.215734088793397,
+          "tts_first_pcm": 149.1511210333556,
+          "avatar_first_returned_frame": 1181.247767060995,
+          "media_first_audio": 1181.8747681099921,
+          "avatar_first_generated_frame": 1181.9027541205287,
+          "media_first_video": 1181.9245531223714,
+          "utterance_completed": 5961.983032058924
+        },
+        "media": {
+          "generationId": 2,
+          "speechMarker": 58,
+          "firstVideoPTSUS": 162480000,
+          "speechOriginSample": 2599680
+        }
+      },
+      {
+        "traceId": "trace_cd1f5af5ef44b811ea01b2a929dde908",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_aef2c1e532524247af29ea513f18a85a",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 331454.22272896394,
+        "points": {
+          "runtime_utterance_accepted": 0.000583939254283905,
+          "first_speakable_segment": 8.07520397938788,
+          "tts_started": 8.430213900282979,
+          "tts_first_pcm": 107.10118687711656,
+          "avatar_first_returned_frame": 1089.6411067806184,
+          "media_first_audio": 1090.3157929424196,
+          "avatar_first_generated_frame": 1090.3472348582,
+          "media_first_video": 1090.3709358535707,
+          "utterance_completed": 14324.995671864599
+        },
+        "media": {
+          "generationId": 2,
+          "speechMarker": 60,
+          "firstVideoPTSUS": 168160000,
+          "speechOriginSample": 2690560
+        }
+      },
+      {
+        "traceId": "interaction_6ecf70ca579e8cc3677637a12b2354adf60ecbfbd82061157b1082eb65570a8c",
+        "sessionId": "session_bd3ee772013fa9f992959f779c4e91be",
+        "utteranceId": "utt_86ce533ca2097f3bd380f16f605e7690",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 317102.05912287347,
+        "points": {
+          "runtime_utterance_accepted": 0.0006398186087608337,
+          "first_speakable_segment": 6.448970874771476,
+          "tts_started": 6.899439031258225,
+          "tts_first_pcm": 115.0844949297607,
+          "avatar_first_returned_frame": 1134.380139876157,
+          "media_first_audio": 1135.1051148958504,
+          "avatar_first_generated_frame": 1135.1380839478225,
+          "media_first_video": 1135.162801016122,
+          "utterance_completed": 3688.9639699365944
+        },
+        "media": {
+          "generationId": 2,
+          "speechMarker": 62,
+          "firstVideoPTSUS": 181360000,
+          "speechOriginSample": 2901760
+        }
+      }
+    ],
+    "browserObservation": "NOT_TESTED",
+    "rtmpAudienceObservation": "NOT_TESTED"
+  },
+  {
+    "trial": "browser-pool-complex20.json",
+    "clockDomain": "runtime_monotonic",
+    "traces": [
+      {
+        "traceId": "interaction_cb3599281fb038727a6b9f55e30f86e0ea58aed24dd6e4779b41e6bc76f55476",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_e852fc8b31a20a1106016634dce373f8",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1893416.2967039738,
+        "points": {
+          "runtime_utterance_accepted": 0.0014309771358966827,
+          "first_speakable_segment": 9.593578055500984,
+          "tts_started": 10.42454200796783,
+          "tts_first_pcm": 158.91132387332618,
+          "avatar_first_returned_frame": 1115.5239189974964,
+          "media_first_audio": 1115.9836838487536,
+          "avatar_first_generated_frame": 1116.0100079141557,
+          "media_first_video": 1116.032431833446,
+          "utterance_completed": 5781.386755872518
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 2,
+          "firstVideoPTSUS": 1080000,
+          "speechOriginSample": 17280
+        }
+      },
+      {
+        "traceId": "interaction_ce93341d8f4b5e55fd037afab92039a16f586edb50c81b5ae9be0da781cc8775",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_3672a59fa59f9a4b7c72bb1364abcf24",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1884113.8229030184,
+        "points": {
+          "runtime_utterance_accepted": 0.0010919757187366486,
+          "llm_started": 17.31195207685232,
+          "llm_first_token": 1168.9632760826498,
+          "first_speakable_segment": 1416.220209095627,
+          "tts_started": 1417.2924240119755,
+          "tts_first_pcm": 1509.649442974478,
+          "avatar_first_returned_frame": 2962.3931320384145,
+          "media_first_audio": 2963.1806819234043,
+          "avatar_first_generated_frame": 2963.212405098602,
+          "media_first_video": 2963.2374949287623,
+          "utterance_completed": 8983.319472055882
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 4,
+          "firstVideoPTSUS": 9000000,
+          "speechOriginSample": 144000
+        }
+      },
+      {
+        "traceId": "interaction_dc7b5a9c987cfde86cdf6efb2cd6289b6e65397bb66983454bf46f5ba9831760",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_2258f2559efd74459797f2209958caaa",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1874013.0617548712,
+        "points": {
+          "runtime_utterance_accepted": 0.000910833477973938,
+          "llm_started": 27.091689873486757,
+          "llm_first_token": 1122.952159959823,
+          "first_speakable_segment": 1180.1906758919358,
+          "tts_started": 1180.8563298545778,
+          "tts_first_pcm": 1212.705120909959,
+          "avatar_first_returned_frame": 2297.2768067847937,
+          "media_first_audio": 2297.888984903693,
+          "avatar_first_generated_frame": 2297.911360859871,
+          "media_first_video": 2297.924749786034,
+          "utterance_completed": 8613.137295935303
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 6,
+          "firstVideoPTSUS": 15560000,
+          "speechOriginSample": 248960
+        }
+      },
+      {
+        "traceId": "interaction_e68b46c6dde46c249315cc65d0d76b33ef614b37bf6d94079bfb2a9aceb83865",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_141e0b55a12298df937e88ebd329ebff",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1863024.717819877,
+        "points": {
+          "runtime_utterance_accepted": 0.0006959307938814163,
+          "llm_started": 16.693803016096354,
+          "llm_first_token": 876.1763100046664,
+          "first_speakable_segment": 920.679097995162,
+          "tts_started": 921.3694469071925,
+          "tts_first_pcm": 1018.1852108798921,
+          "avatar_first_returned_frame": 1986.9414658751339,
+          "media_first_audio": 1987.3676230199635,
+          "avatar_first_generated_frame": 1987.3880818486214,
+          "media_first_video": 1987.401549005881,
+          "utterance_completed": 8292.711752001196
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 8,
+          "firstVideoPTSUS": 23520000,
+          "speechOriginSample": 376320
+        }
+      },
+      {
+        "traceId": "interaction_2426b179ea1acab6f8cd2c79874a5582a33b9d359b4567df0e93630670a77489",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_ea6b07a4172651612afdf0edb06e7ead",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1852924.067813903,
+        "points": {
+          "runtime_utterance_accepted": 0.0008898787200450897,
+          "llm_started": 28.47889089025557,
+          "llm_first_token": 1561.3005859777331,
+          "first_speakable_segment": 1561.9905779603869,
+          "tts_started": 1563.406006898731,
+          "tts_first_pcm": 1610.0481988396496,
+          "avatar_first_returned_frame": 2691.864450927824,
+          "media_first_audio": 2692.3903189599514,
+          "avatar_first_generated_frame": 2692.413446959108,
+          "media_first_video": 2692.427618894726,
+          "utterance_completed": 8965.591247892007
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 10,
+          "firstVideoPTSUS": 31440000,
+          "speechOriginSample": 503040
+        }
+      },
+      {
+        "traceId": "interaction_4e17394e41af02225a0e43ddaa27b134e6874a2e43bbc9906acbcde7356fd4b9",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_c814b9e5d407bea1e6e3960161e73f3b",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1841715.5479160137,
+        "points": {
+          "runtime_utterance_accepted": 0.0007660128176212311,
+          "llm_started": 19.844768103212118,
+          "llm_first_token": 1130.9988421853632,
+          "first_speakable_segment": 1221.7836601193994,
+          "tts_started": 1222.6618670392781,
+          "tts_first_pcm": 1311.747953062877,
+          "avatar_first_returned_frame": 2326.760169118643,
+          "media_first_audio": 2327.462711138651,
+          "avatar_first_generated_frame": 2327.4911830667406,
+          "media_first_video": 2327.5142980273813,
+          "utterance_completed": 7998.095668153837
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 12,
+          "firstVideoPTSUS": 39520000,
+          "speechOriginSample": 632320
+        }
+      },
+      {
+        "traceId": "interaction_0f5e58dc1fc51f54fe1496038470943c64a8cbdb3cff15bb8980d279edcebb7a",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_e745c8eb7cb79a6eee134db3dce49c47",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1831315.1337988675,
+        "points": {
+          "runtime_utterance_accepted": 0.0008689239621162415,
+          "llm_started": 29.361943947151303,
+          "llm_first_token": 1122.1596379764378,
+          "first_speakable_segment": 1206.7785828839988,
+          "tts_started": 1207.4147548992187,
+          "tts_first_pcm": 1251.8694950267673,
+          "avatar_first_returned_frame": 2260.5662040878087,
+          "media_first_audio": 2261.1255650408566,
+          "avatar_first_generated_frame": 2261.1524020321667,
+          "media_first_video": 2261.169466888532,
+          "utterance_completed": 8476.698881015182
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 14,
+          "firstVideoPTSUS": 47000000,
+          "speechOriginSample": 752000
+        }
+      },
+      {
+        "traceId": "interaction_38f96a5829e23b925b4865506f7a841dd83fc2fac0b5ef609c90765a8cd37a23",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_91873f975605d7a0eba2a436de3ff0ef",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1820525.6360629573,
+        "points": {
+          "runtime_utterance_accepted": 0.0006319023668766022,
+          "llm_started": 14.93556099012494,
+          "llm_first_token": 1059.696001932025,
+          "first_speakable_segment": 1087.0949088130146,
+          "tts_started": 1087.7748779021204,
+          "tts_first_pcm": 1178.5211679525673,
+          "avatar_first_returned_frame": 2136.0051420051605,
+          "media_first_audio": 2136.50436187163,
+          "avatar_first_generated_frame": 2136.526936898008,
+          "media_first_video": 2136.542493943125,
+          "utterance_completed": 8048.580662813038
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 16,
+          "firstVideoPTSUS": 55000000,
+          "speechOriginSample": 880000
+        }
+      },
+      {
+        "traceId": "interaction_c114cdf7633270fa52365b0d8588b9f6581582567490454d9800de02e9fe322a",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_6a6ba03ec924f39a1401f14a297b9ec3",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1810115.5095659196,
+        "points": {
+          "runtime_utterance_accepted": 0.0006100162863731384,
+          "llm_started": 22.573061054572463,
+          "llm_first_token": 3522.7882999461144,
+          "first_speakable_segment": 3523.695128969848,
+          "tts_started": 3524.740871042013,
+          "tts_first_pcm": 3553.9452019147575,
+          "avatar_first_returned_frame": 4877.887038048357,
+          "media_first_audio": 4878.554048016667,
+          "avatar_first_generated_frame": 4878.586656879634,
+          "media_first_video": 4878.612838918343,
+          "utterance_completed": 10355.917373904958
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 18,
+          "firstVideoPTSUS": 65120000,
+          "speechOriginSample": 1041920
+        }
+      },
+      {
+        "traceId": "interaction_7fceb23a12d3e3075a838ee9a54909e30ce4ee1815f94a11620aa19490190620",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_b216a7419542b2d6cf7f04be34ce9f96",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1797514.220263809,
+        "points": {
+          "runtime_utterance_accepted": 0.0009718351066112518,
+          "llm_started": 20.059772999957204,
+          "llm_first_token": 922.1588408108801,
+          "first_speakable_segment": 1011.0642409417778,
+          "tts_started": 1011.786273913458,
+          "tts_first_pcm": 1100.7001458201557,
+          "avatar_first_returned_frame": 2173.385350033641,
+          "media_first_audio": 2174.078839831054,
+          "avatar_first_generated_frame": 2174.1090938448906,
+          "media_first_video": 2174.132821848616,
+          "utterance_completed": 7637.978884857148
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 20,
+          "firstVideoPTSUS": 72200000,
+          "speechOriginSample": 1155200
+        }
+      },
+      {
+        "traceId": "interaction_8a6d37632ab170c4d826f1e8bb29bf0bcc9acc3d7827b6976ca042cceae7eed9",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_1cc891bfd8f6b88a68487e7f342985dd",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1788915.0978100952,
+        "points": {
+          "runtime_utterance_accepted": 0.0005490146577358246,
+          "llm_started": 19.377709133550525,
+          "llm_first_token": 1015.622896142304,
+          "first_speakable_segment": 1113.0243400111794,
+          "tts_started": 1113.7997601181269,
+          "tts_first_pcm": 1163.9162171632051,
+          "avatar_first_returned_frame": 2487.514828098938,
+          "media_first_audio": 2488.06164204143,
+          "avatar_first_generated_frame": 2488.0870431661606,
+          "media_first_video": 2488.1019750609994,
+          "utterance_completed": 8954.59834113717
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 22,
+          "firstVideoPTSUS": 78000000,
+          "speechOriginSample": 1248000
+        }
+      },
+      {
+        "traceId": "interaction_1f07f4bdf3bbd4b846581a0b5655b2a374a85a084dce44d88be4f5acab4f7e7c",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_b3037e2224df9381f0d53420aaae2807",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1778024.3800450116,
+        "points": {
+          "runtime_utterance_accepted": 0.0007532071322202682,
+          "llm_started": 14.1263531986624,
+          "llm_first_token": 1892.9188780020922,
+          "first_speakable_segment": 2216.411459026858,
+          "tts_started": 2217.8807691670954,
+          "tts_first_pcm": 2325.2336990553886,
+          "avatar_first_returned_frame": 3422.1224300563335,
+          "media_first_audio": 3423.020023154095,
+          "avatar_first_generated_frame": 3423.0536010582,
+          "media_first_video": 3423.080125125125,
+          "utterance_completed": 8988.016830990091
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 24,
+          "firstVideoPTSUS": 87000000,
+          "speechOriginSample": 1392000
+        }
+      },
+      {
+        "traceId": "interaction_af547a218b37b8e8da8f3e4e4c1a820cbf28d0349d651ac3bfe811ccfe94029b",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_0d1f52877d221965e57a8d43819766ed",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1766715.6976950355,
+        "points": {
+          "runtime_utterance_accepted": 0.0005890615284442902,
+          "llm_started": 18.218487035483122,
+          "llm_first_token": 1426.439146976918,
+          "first_speakable_segment": 1501.0418330784887,
+          "tts_started": 1501.7756910528988,
+          "tts_first_pcm": 1532.494098180905,
+          "avatar_first_returned_frame": 2993.3221731334925,
+          "media_first_audio": 2994.1559361759573,
+          "avatar_first_generated_frame": 2994.187297997996,
+          "media_first_video": 2994.2119491752237,
+          "utterance_completed": 9023.54990504682
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 26,
+          "firstVideoPTSUS": 94680000,
+          "speechOriginSample": 1514880
+        }
+      },
+      {
+        "traceId": "interaction_00f68756e499e44e4c6a0f75871b36d4d8645da7f4012d70ce1459f1819ebc2c",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_74c3dccbae244706f529f66d6d71584a",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1755424.34989498,
+        "points": {
+          "runtime_utterance_accepted": 0.0007031485438346863,
+          "llm_started": 18.846355145797133,
+          "llm_first_token": 1265.4967491980642,
+          "first_speakable_segment": 1338.2528009824455,
+          "tts_started": 1338.9854261185974,
+          "tts_first_pcm": 1425.0107570551336,
+          "avatar_first_returned_frame": 2386.311864014715,
+          "media_first_audio": 2387.0667540468276,
+          "avatar_first_generated_frame": 2387.0998970232904,
+          "media_first_video": 2387.1264150366187,
+          "utterance_completed": 9267.341915983707
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 28,
+          "firstVideoPTSUS": 102560000,
+          "speechOriginSample": 1640960
+        }
+      },
+      {
+        "traceId": "interaction_a7923128521ad4161e4a172ac83ba6d72d64402d7ab2c5bfb8aabff20ffc363e",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_fc0e299a81363e35fa8801a8f495a6bc",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1745023.3289480675,
+        "points": {
+          "runtime_utterance_accepted": 0.0009029172360897064,
+          "llm_started": 18.748837988823652,
+          "llm_first_token": 1168.5627528931946,
+          "first_speakable_segment": 1287.2895440086722,
+          "tts_started": 1288.1522551178932,
+          "tts_first_pcm": 1382.5600720010698,
+          "avatar_first_returned_frame": 2396.6688339132816,
+          "media_first_audio": 2397.3863311111927,
+          "avatar_first_generated_frame": 2397.418563021347,
+          "media_first_video": 2397.444772068411,
+          "utterance_completed": 10881.280822912231
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 30,
+          "firstVideoPTSUS": 110160000,
+          "speechOriginSample": 1762560
+        }
+      },
+      {
+        "traceId": "interaction_22600f55287bc26448fe4fef64342b30c2e25208e4db6e35be850d427054a0f1",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_05e6f13d83670adb12361166173622e2",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1733114.7017159965,
+        "points": {
+          "runtime_utterance_accepted": 0.0009480863809585571,
+          "llm_started": 13.45988898538053,
+          "llm_first_token": 3548.769934102893,
+          "first_speakable_segment": 3643.908318132162,
+          "tts_started": 3644.722262164578,
+          "tts_first_pcm": 3744.292177958414,
+          "avatar_first_returned_frame": 4699.9638341367245,
+          "media_first_audio": 4700.504030101001,
+          "avatar_first_generated_frame": 4700.529912952334,
+          "media_first_video": 4700.546624138951,
+          "utterance_completed": 10595.272519160062
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 32,
+          "firstVideoPTSUS": 121560000,
+          "speechOriginSample": 1944960
+        }
+      },
+      {
+        "traceId": "interaction_d8a88006956ae21e84685ba05e8911bcf440a05f609aee03167ae1cfaf32179a",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_64079a18385cb9159ae6138fe798d640",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1720915.0900009554,
+        "points": {
+          "runtime_utterance_accepted": 0.0007008202373981476,
+          "llm_started": 23.476955946534872,
+          "llm_first_token": 1175.1651128288358,
+          "first_speakable_segment": 1240.109208971262,
+          "tts_started": 1241.0460889805108,
+          "tts_first_pcm": 1321.7316828668118,
+          "avatar_first_returned_frame": 2759.0530968736857,
+          "media_first_audio": 2759.6457498148084,
+          "avatar_first_generated_frame": 2759.6758150029927,
+          "media_first_video": 2759.6961178351194,
+          "utterance_completed": 10404.332477832213
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 34,
+          "firstVideoPTSUS": 128680000,
+          "speechOriginSample": 2058880
+        }
+      },
+      {
+        "traceId": "interaction_034713e1d2d7284b5be17835184d302922686bd1d4b024579705a6beb8b688e9",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_f9115777af8df89a59d0a8f0b32b0665",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1708615.0858320761,
+        "points": {
+          "runtime_utterance_accepted": 0.0008600763976573944,
+          "llm_started": 14.723232947289944,
+          "llm_first_token": 2075.908981030807,
+          "first_speakable_segment": 2076.4040639624,
+          "tts_started": 2077.125237090513,
+          "tts_first_pcm": 2172.8124821092933,
+          "avatar_first_returned_frame": 3450.0892080832273,
+          "media_first_audio": 3450.7613531313837,
+          "avatar_first_generated_frame": 3450.7911319378763,
+          "media_first_video": 3450.8158760145307,
+          "utterance_completed": 9178.279201034456
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 36,
+          "firstVideoPTSUS": 138560000,
+          "speechOriginSample": 2216960
+        }
+      },
+      {
+        "traceId": "interaction_648f3d02b0fc7d24a958d407716c183aafe41e479bc372fda66e62cdc3addd34",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_ba0631c7eaace7a216dc5b3eaf1f6039",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1697015.5303969514,
+        "points": {
+          "runtime_utterance_accepted": 0.0006419140845537186,
+          "llm_started": 22.54027989692986,
+          "llm_first_token": 891.4672329556197,
+          "first_speakable_segment": 1003.5042478702962,
+          "tts_started": 1004.3064479250461,
+          "tts_first_pcm": 1035.2144099306315,
+          "avatar_first_returned_frame": 2101.543287979439,
+          "media_first_audio": 2102.1605259738863,
+          "avatar_first_generated_frame": 2102.1822839975357,
+          "media_first_video": 2102.195964893326,
+          "utterance_completed": 9219.375401036814
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 38,
+          "firstVideoPTSUS": 146000000,
+          "speechOriginSample": 2336000
+        }
+      },
+      {
+        "traceId": "interaction_bb95787fc96fc487aa06d7d7c21671c1d52e01114c9dcf2ca84be09d4a3de22c",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_9a65158714e0176b83b7f9d7af640413",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1686814.1481268685,
+        "points": {
+          "runtime_utterance_accepted": 0.0008908100426197052,
+          "llm_started": 18.354813801124692,
+          "llm_first_token": 799.6367288287729,
+          "first_speakable_segment": 1071.5182449202985,
+          "tts_started": 1072.3150609992445,
+          "tts_first_pcm": 1173.5101898666471,
+          "avatar_first_returned_frame": 2407.5379509013146,
+          "media_first_audio": 2408.0933928489685,
+          "avatar_first_generated_frame": 2408.115044934675,
+          "media_first_video": 2408.128577983007,
+          "utterance_completed": 9020.814562914893
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 40,
+          "firstVideoPTSUS": 153560000,
+          "speechOriginSample": 2456960
+        }
+      },
+      {
+        "traceId": "interaction_e94bbdb75d6c3e599bd8c131179203c2056965d41c53ae93261bb9edd600ece6",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "utteranceId": "utt_51e58ce4f3505e3dc6128854e97fc8fb",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1675615.5691829044,
+        "points": {
+          "runtime_utterance_accepted": 0.0007408671081066132,
+          "llm_started": 27.933888835832477,
+          "llm_first_token": 1568.361246958375,
+          "first_speakable_segment": 1627.2842569742352,
+          "tts_started": 1628.0221180059016,
+          "tts_first_pcm": 1658.5416728630662,
+          "avatar_first_returned_frame": 2785.917758010328,
+          "media_first_audio": 2786.790704820305,
+          "avatar_first_generated_frame": 2786.821882938966,
+          "media_first_video": 2786.844788817689,
+          "utterance_completed": 10733.283710898831
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 42,
+          "firstVideoPTSUS": 162240000,
+          "speechOriginSample": 2595840
+        }
+      }
+    ],
+    "browserObservation": "NOT_TESTED",
+    "rtmpAudienceObservation": "NOT_TESTED"
+  },
+  {
+    "trial": "browser-wake-complex20.json",
+    "clockDomain": "runtime_monotonic",
+    "traces": [
+      {
+        "traceId": "interaction_86080f42cb8e84a6e7de3a6597d56865bc31ba25d5c958b25eea6601289a37fa",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_3fa649f2e22131c8371b243c1741858a",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 468284.68626597896,
+        "points": {
+          "runtime_utterance_accepted": 0.0006139744073152542,
+          "first_speakable_segment": 6.883000023663044,
+          "tts_started": 7.80503498390317,
+          "tts_first_pcm": 143.2233729865402,
+          "avatar_first_returned_frame": 1614.5364721305668,
+          "media_first_audio": 1615.11365394108,
+          "avatar_first_generated_frame": 1615.1339041534811,
+          "media_first_video": 1615.1473049540073,
+          "utterance_completed": 6265.521549154073
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 2,
+          "firstVideoPTSUS": 1200000,
+          "speechOriginSample": 19200
+        }
+      },
+      {
+        "traceId": "interaction_d485b6b1c398f46493b2cc09df2375f8ee576e7ee128a9b00e8d4e4340c57ce8",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_053242af780e2fb3022dca0848469de9",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 458501.46490195766,
+        "points": {
+          "runtime_utterance_accepted": 0.0010491348803043365,
+          "llm_started": 11.362402932718396,
+          "llm_first_token": 1525.6336859893054,
+          "first_speakable_segment": 1837.116836104542,
+          "tts_started": 1837.8693091217428,
+          "tts_first_pcm": 1927.682159934193,
+          "avatar_first_returned_frame": 3015.2003651019186,
+          "media_first_audio": 3015.905688982457,
+          "avatar_first_generated_frame": 3015.936396084726,
+          "media_first_video": 3015.9613809082657,
+          "utterance_completed": 9152.848639059812
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 4,
+          "firstVideoPTSUS": 9160000,
+          "speechOriginSample": 146560
+        }
+      },
+      {
+        "traceId": "interaction_b6e9431c9f412c27612c7a34a6ad72485c96f6b0f4a46cb3f59fe6dd1fa8412f",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_2ec1a5d4c960ecb348fd6e3f4b3fdcae",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 448353.808647953,
+        "points": {
+          "runtime_utterance_accepted": 0.0006731133908033371,
+          "llm_started": 24.1407360881567,
+          "llm_first_token": 1276.3263040687889,
+          "first_speakable_segment": 1315.9502451308072,
+          "tts_started": 1316.7171620298177,
+          "tts_first_pcm": 1367.2759651672095,
+          "avatar_first_returned_frame": 2477.577592013404,
+          "media_first_audio": 2478.187448112294,
+          "avatar_first_generated_frame": 2478.2118981238455,
+          "media_first_video": 2478.231435175985,
+          "utterance_completed": 8937.655338086188
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 6,
+          "firstVideoPTSUS": 15960000,
+          "speechOriginSample": 255360
+        }
+      },
+      {
+        "traceId": "interaction_4d2b1bbb6d2f6e315ed33774aa14a5c306ebc105935e9671d726b433b8634957",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_d377c5cb25bd07b08df184d99157cc1c",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 437074.3513070047,
+        "points": {
+          "runtime_utterance_accepted": 0.000742962583899498,
+          "llm_started": 24.08537780866027,
+          "llm_first_token": 1209.5337479840964,
+          "first_speakable_segment": 1876.7115320079029,
+          "tts_started": 1877.9319478198886,
+          "tts_first_pcm": 1965.972037985921,
+          "avatar_first_returned_frame": 3000.7828038651496,
+          "media_first_audio": 3001.3097079936415,
+          "avatar_first_generated_frame": 3001.3336648698896,
+          "media_first_video": 3001.3479879125953,
+          "utterance_completed": 8772.152103949338
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 8,
+          "firstVideoPTSUS": 25000000,
+          "speechOriginSample": 400000
+        }
+      },
+      {
+        "traceId": "interaction_afacc8c2beeb02e725effe72f28f99c03fe325ededc2080ea4755d39c2848df6",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_ca64df18350c85f23138d488341b2a58",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 426485.9027210623,
+        "points": {
+          "runtime_utterance_accepted": 0.0005841720849275589,
+          "llm_started": 24.316494120284915,
+          "llm_first_token": 2065.8056980464607,
+          "first_speakable_segment": 2155.5622771847993,
+          "tts_started": 2156.5748751163483,
+          "tts_first_pcm": 2198.5930032096803,
+          "avatar_first_returned_frame": 3490.254026139155,
+          "media_first_audio": 3491.0754940938205,
+          "avatar_first_generated_frame": 3491.109114140272,
+          "media_first_video": 3491.135671036318,
+          "utterance_completed": 9985.704969149083
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 10,
+          "firstVideoPTSUS": 33080000,
+          "speechOriginSample": 529280
+        }
+      },
+      {
+        "traceId": "interaction_349e812ac8416695cb5cdbae42837ebeb835f1488c784f625377a28a6542a5c8",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_93e39636f1948410d3a5674f86fdc90c",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 414330.4358778987,
+        "points": {
+          "runtime_utterance_accepted": 0.0008048955351114273,
+          "llm_started": 18.008800921961665,
+          "llm_first_token": 1345.2208209782839,
+          "first_speakable_segment": 1410.5755419004709,
+          "tts_started": 1411.6751321125776,
+          "tts_first_pcm": 1505.3750479128212,
+          "avatar_first_returned_frame": 2528.0508720315993,
+          "media_first_audio": 2528.7453320343047,
+          "avatar_first_generated_frame": 2528.7751890718937,
+          "media_first_video": 2528.8004230242223,
+          "utterance_completed": 8469.775896053761
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 12,
+          "firstVideoPTSUS": 41520000,
+          "speechOriginSample": 664320
+        }
+      },
+      {
+        "traceId": "interaction_66624e3b3bfbc7755b8a26af13bb3045bdfe619f2888388e37e47381d218c636",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_21c200102280a0c9af9f60d0babb4c40",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 403413.3050539531,
+        "points": {
+          "runtime_utterance_accepted": 0.0005769543349742889,
+          "llm_started": 23.324745940044522,
+          "llm_first_token": 1238.7706469744444,
+          "first_speakable_segment": 1378.5343179479241,
+          "tts_started": 1379.1478108614683,
+          "tts_first_pcm": 1424.5186978951097,
+          "avatar_first_returned_frame": 2926.020151004195,
+          "media_first_audio": 2926.913358969614,
+          "avatar_first_generated_frame": 2926.9448798149824,
+          "media_first_video": 2926.9709289073944,
+          "utterance_completed": 8836.29782195203
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 14,
+          "firstVideoPTSUS": 49520000,
+          "speechOriginSample": 792320
+        }
+      },
+      {
+        "traceId": "interaction_bf8fb4dd713cb815df3385ab3200825c6e1fd22667b200e9343fdb70dc49a49e",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_6f11071e4918e13c556a3e7776443f46",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 392286.5544690285,
+        "points": {
+          "runtime_utterance_accepted": 0.0008058268576860428,
+          "llm_started": 16.042061848565936,
+          "llm_first_token": 912.5464060343802,
+          "first_speakable_segment": 977.1799820009619,
+          "tts_started": 977.888919878751,
+          "tts_first_pcm": 1084.29044787772,
+          "avatar_first_returned_frame": 2077.6406039949507,
+          "media_first_audio": 2078.151165973395,
+          "avatar_first_generated_frame": 2078.172819921747,
+          "media_first_video": 2078.1881669536233,
+          "utterance_completed": 7852.909893030301
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 16,
+          "firstVideoPTSUS": 57120000,
+          "speechOriginSample": 913920
+        }
+      },
+      {
+        "traceId": "interaction_e960215c3e05b7c6ecd96d75d2dbafdd1760f241a30d6bcc1368e7bdf923d91c",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_93a04d7072e8923ef4ee99b07c9d2750",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 382029.7866840847,
+        "points": {
+          "runtime_utterance_accepted": 0.0008509960025548935,
+          "llm_started": 31.17423108778894,
+          "llm_first_token": 1457.1940570604056,
+          "first_speakable_segment": 1549.3563408963382,
+          "tts_started": 1550.8138299919665,
+          "tts_first_pcm": 1595.8992999512702,
+          "avatar_first_returned_frame": 2912.3400358948857,
+          "media_first_audio": 2913.077883888036,
+          "avatar_first_generated_frame": 2913.1099900696427,
+          "media_first_video": 2913.1375069264323,
+          "utterance_completed": 9608.791728969663
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 18,
+          "firstVideoPTSUS": 65140000,
+          "speechOriginSample": 1042240
+        }
+      },
+      {
+        "traceId": "interaction_c01174841e5f21a2eaa944019d9212317638880d0cb14c25b86da88c62a322da",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_e85ef0686728dd35627a34610bc868c6",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 370147.24967093207,
+        "points": {
+          "runtime_utterance_accepted": 0.0006118789315223694,
+          "llm_started": 17.758793896064162,
+          "llm_first_token": 1126.454846933484,
+          "first_speakable_segment": 1225.5830778740346,
+          "tts_started": 1226.3719530310482,
+          "tts_first_pcm": 1316.3141959812492,
+          "avatar_first_returned_frame": 2278.8250918965787,
+          "media_first_audio": 2279.6358198393136,
+          "avatar_first_generated_frame": 2279.665112029761,
+          "media_first_video": 2279.6848949510604,
+          "utterance_completed": 8048.0057639069855
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 20,
+          "firstVideoPTSUS": 73700000,
+          "speechOriginSample": 1179200
+        }
+      },
+      {
+        "traceId": "interaction_b591e765ad9980473d4038b67434461468d24ab12a3d22c8805955c8e6ddd0b0",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_7eecabafea0ea1705319917ac4d54d61",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 361055.9339381289,
+        "points": {
+          "runtime_utterance_accepted": 0.0009869690984487534,
+          "llm_started": 16.306892037391663,
+          "llm_first_token": 1538.4630211628973,
+          "first_speakable_segment": 1633.1725099589676,
+          "tts_started": 1633.9714010246098,
+          "tts_first_pcm": 1668.3212099596858,
+          "avatar_first_returned_frame": 2715.430138166994,
+          "media_first_audio": 2716.1293011158705,
+          "avatar_first_generated_frame": 2716.1624119617045,
+          "media_first_video": 2716.1895351018757,
+          "utterance_completed": 8260.082902153954
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 22,
+          "firstVideoPTSUS": 80380000,
+          "speechOriginSample": 1286080
+        }
+      },
+      {
+        "traceId": "interaction_ddafdaa725c430f278dd08a5ec8b762522bad18e26847c7d80f689a0c3a07a8f",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_9e3ae2e4de0498df3480c7c17d6afb9e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 350831.4235149883,
+        "points": {
+          "runtime_utterance_accepted": 0.0005741603672504425,
+          "llm_started": 13.233609031885862,
+          "llm_first_token": 1189.0566530637443,
+          "first_speakable_segment": 1268.2924061082304,
+          "tts_started": 1269.0188901033252,
+          "tts_first_pcm": 1358.8985020760447,
+          "avatar_first_returned_frame": 2454.535871045664,
+          "media_first_audio": 2455.2380309905857,
+          "avatar_first_generated_frame": 2455.269776051864,
+          "media_first_video": 2455.2945520263165,
+          "utterance_completed": 8515.513584949076
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 24,
+          "firstVideoPTSUS": 87540000,
+          "speechOriginSample": 1400640
+        }
+      },
+      {
+        "traceId": "interaction_54989b8084d0d0dc5f191a3c335b412500f01983d4d37d7b7b7bcc1775ee195e",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_01c81723f5b83da6451c1bf9eb074352",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 339950.2647588961,
+        "points": {
+          "runtime_utterance_accepted": 0.0006048940122127533,
+          "llm_started": 20.765878027305007,
+          "llm_first_token": 1435.4312499053776,
+          "first_speakable_segment": 1435.7371379155666,
+          "tts_started": 1436.3981150090694,
+          "tts_first_pcm": 1481.7002250347286,
+          "avatar_first_returned_frame": 2948.236026102677,
+          "media_first_audio": 2948.667204938829,
+          "avatar_first_generated_frame": 2948.6885459627956,
+          "media_first_video": 2948.703530943021,
+          "utterance_completed": 9367.526988964528
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 26,
+          "firstVideoPTSUS": 95660000,
+          "speechOriginSample": 1530560
+        }
+      },
+      {
+        "traceId": "interaction_6d8da7d278ae4244039f068e661d0a79850f0f737b321db68061f629bb7c5996",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_e5389cbd28c5805480b216402d5b90f8",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 328342.4362009391,
+        "points": {
+          "runtime_utterance_accepted": 0.0007690396159887314,
+          "llm_started": 21.011705975979567,
+          "llm_first_token": 722.2343529574573,
+          "first_speakable_segment": 805.3007719572634,
+          "tts_started": 806.2367409002036,
+          "tts_first_pcm": 896.0360819473863,
+          "avatar_first_returned_frame": 2115.017085103318,
+          "media_first_audio": 2116.0712470300496,
+          "avatar_first_generated_frame": 2116.1007590126246,
+          "media_first_video": 2116.1213649902493,
+          "utterance_completed": 9031.253267079592
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 28,
+          "firstVideoPTSUS": 103540000,
+          "speechOriginSample": 1656640
+        }
+      },
+      {
+        "traceId": "interaction_ec61efcb9bb9a5c2dd335dfc6f5dfdee61e427cf74f695ee5e0aba4b033dc03f",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_b03b65779a911edd5269896298904dfe",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 318039.57817703485,
+        "points": {
+          "runtime_utterance_accepted": 0.0007720664143562317,
+          "llm_started": 24.08813312649727,
+          "llm_first_token": 1575.0220629852265,
+          "first_speakable_segment": 1575.7164910901338,
+          "tts_started": 1576.4407310634851,
+          "tts_first_pcm": 1629.3016211129725,
+          "avatar_first_returned_frame": 3078.692228998989,
+          "media_first_audio": 3079.3527881614864,
+          "avatar_first_generated_frame": 3079.3774949852377,
+          "media_first_video": 3079.395591048524,
+          "utterance_completed": 10459.214369067922
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 30,
+          "firstVideoPTSUS": 111580000,
+          "speechOriginSample": 1785280
+        }
+      },
+      {
+        "traceId": "interaction_5944e36bb17ae8e6c77dbe066f8c5fffa253d0755883c93ff46e0ab343ce22da",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_4da5070268f8ebfb2c3778d76eb1862a",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 306510.80472697504,
+        "points": {
+          "runtime_utterance_accepted": 0.0005969777703285217,
+          "llm_started": 15.652308939024806,
+          "llm_first_token": 1613.8393429573625,
+          "first_speakable_segment": 1975.0410348642617,
+          "tts_started": 1975.9538869839162,
+          "tts_first_pcm": 2065.527255879715,
+          "avatar_first_returned_frame": 3281.4368109684438,
+          "media_first_audio": 3282.3044618126005,
+          "avatar_first_generated_frame": 3282.340080011636,
+          "media_first_video": 3282.36712096259,
+          "utterance_completed": 9610.696970950812
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 32,
+          "firstVideoPTSUS": 120220000,
+          "speechOriginSample": 1923520
+        }
+      },
+      {
+        "traceId": "interaction_e663ba96f7337bee9eff1344b301c2687a8daca7c61adc463e66f691c92bc49d",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_d1ee97bb77943f933cf6a22ab055fda4",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 295265.4341880698,
+        "points": {
+          "runtime_utterance_accepted": 0.0006409827619791031,
+          "llm_started": 19.703714875504375,
+          "llm_first_token": 1661.533088888973,
+          "first_speakable_segment": 1720.2319169882685,
+          "tts_started": 1721.2857480626553,
+          "tts_first_pcm": 1760.2632839698344,
+          "avatar_first_returned_frame": 2810.3004458826035,
+          "media_first_audio": 2810.886736959219,
+          "avatar_first_generated_frame": 2810.9169139061123,
+          "media_first_video": 2810.936343856156,
+          "utterance_completed": 8807.121482910588
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 34,
+          "firstVideoPTSUS": 128220000,
+          "speechOriginSample": 2051520
+        }
+      },
+      {
+        "traceId": "interaction_f2f5cd03db70d285dfeb77ce476666113828d12614d4d5bec7018bafc1a63565",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_6c0356ea0529320f324f4e827223aa63",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 284444.3749920465,
+        "points": {
+          "runtime_utterance_accepted": 0.0005681067705154419,
+          "llm_started": 12.835642090067267,
+          "llm_first_token": 1175.1573469955474,
+          "first_speakable_segment": 1542.2576400451362,
+          "tts_started": 1543.0137040093541,
+          "tts_first_pcm": 1635.539195034653,
+          "avatar_first_returned_frame": 2652.7162799611688,
+          "media_first_audio": 2653.51046808064,
+          "avatar_first_generated_frame": 2653.5445749759674,
+          "media_first_video": 2653.5682680550963,
+          "utterance_completed": 9388.58906715177
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 36,
+          "firstVideoPTSUS": 136140000,
+          "speechOriginSample": 2178240
+        }
+      },
+      {
+        "traceId": "interaction_804d410474a2286d2b578b7a8f722f78a86b2bdc238576c536dde7e38d59424a",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_c7f3d105391a23e4aae4736dc2836daa",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 272653.78637681715,
+        "points": {
+          "runtime_utterance_accepted": 0.0008270144462585449,
+          "llm_started": 25.62265796586871,
+          "llm_first_token": 705.0789447966963,
+          "first_speakable_segment": 767.3597577959299,
+          "tts_started": 768.3580878656358,
+          "tts_first_pcm": 801.7970998771489,
+          "avatar_first_returned_frame": 1974.7790659312159,
+          "media_first_audio": 1975.323479855433,
+          "avatar_first_generated_frame": 1975.3456998150796,
+          "media_first_video": 1975.3616738598794,
+          "utterance_completed": 7792.792402906343
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 38,
+          "firstVideoPTSUS": 144380000,
+          "speechOriginSample": 2310080
+        }
+      },
+      {
+        "traceId": "interaction_021117a81beaffc8dafb20015a7e0029468d40dc10393b6565d5c52c6721bc85",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_5e53a9bd5b139b949db82374c51d90e5",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 263913.0979790352,
+        "points": {
+          "runtime_utterance_accepted": 0.0008039642125368118,
+          "llm_started": 16.476179007440805,
+          "llm_first_token": 1015.3570028487593,
+          "first_speakable_segment": 1099.2992520332336,
+          "tts_started": 1100.0840179622173,
+          "tts_first_pcm": 1194.254957837984,
+          "avatar_first_returned_frame": 2449.719382915646,
+          "media_first_audio": 2450.515968957916,
+          "avatar_first_generated_frame": 2450.5464879330248,
+          "media_first_video": 2450.5726618226618,
+          "utterance_completed": 8001.108266878873
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 40,
+          "firstVideoPTSUS": 150660000,
+          "speechOriginSample": 2410560
+        }
+      },
+      {
+        "traceId": "interaction_147552a363a1da89344a8c7635bfd77f6037e418e9ed0f14ca109f0d140a7634",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_70e6bafebe139e56a4c4fd13d0592406",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 253702.50735105947,
+        "points": {
+          "runtime_utterance_accepted": 0.0008281785994768143,
+          "llm_started": 29.787381179630756,
+          "llm_first_token": 1532.157249050215,
+          "first_speakable_segment": 1671.8424460850656,
+          "tts_started": 1672.8302109986544,
+          "tts_first_pcm": 1702.3744191974401,
+          "avatar_first_returned_frame": 3156.3131771981716,
+          "media_first_audio": 3157.086185179651,
+          "avatar_first_generated_frame": 3157.117331167683,
+          "media_first_video": 3157.14266221039,
+          "utterance_completed": 9267.995800124481
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 42,
+          "firstVideoPTSUS": 158340000,
+          "speechOriginSample": 2533440
+        }
+      },
+      {
+        "traceId": "interaction_e28db1f54e9fb15654e910e3e3ed31b871f3891cf4c453c6fa24c01ec5fea2ab",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_8aecea53c760ef0ccc73b7b96eb6cce5",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 242253.34609812126,
+        "points": {
+          "runtime_utterance_accepted": 0.0005909241735935211,
+          "first_speakable_segment": 14.054021099582314,
+          "tts_started": 14.626620104536414,
+          "tts_first_pcm": 122.55564890801907,
+          "avatar_first_returned_frame": 1216.1116539500654,
+          "media_first_audio": 1216.7972319293767,
+          "avatar_first_generated_frame": 1216.8271630071104,
+          "media_first_video": 1216.8514700606465
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 44,
+          "firstVideoPTSUS": 165060000,
+          "speechOriginSample": 2640960
+        }
+      },
+      {
+        "traceId": "trace_ac9b62b37b9656b25a2e2b10c09a06cc",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_46becf52929c784ed812058f066592cc",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 240945.23586612195,
+        "points": {
+          "runtime_utterance_accepted": 0.0007611233741044998,
+          "first_speakable_segment": 10.58678119443357,
+          "tts_started": 11.222098022699356,
+          "tts_first_pcm": 156.78935521282256,
+          "avatar_first_returned_frame": 1188.5598150547594,
+          "media_first_audio": 1189.3504192121327,
+          "avatar_first_generated_frame": 1189.3826010636985,
+          "media_first_video": 1189.4070350099355,
+          "utterance_completed": 5885.438050143421
+        },
+        "media": {
+          "generationId": 2,
+          "speechMarker": 46,
+          "firstVideoPTSUS": 165220000,
+          "speechOriginSample": 2643520
+        }
+      },
+      {
+        "traceId": "interaction_76b9f58bdce5f53335468d0d973ec9523bb0b0396992e976fd7d0490f33bbc5f",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_3a6fe7500ef48d0bd8a06c6a7d648ef4",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 232571.13747205585,
+        "points": {
+          "runtime_utterance_accepted": 0.0008218921720981598,
+          "first_speakable_segment": 8.299072971567512,
+          "tts_started": 8.784031961113214,
+          "tts_first_pcm": 119.46523701772094,
+          "avatar_first_returned_frame": 1120.757268043235,
+          "media_first_audio": 1121.2659729644656,
+          "avatar_first_generated_frame": 1121.2885649874806,
+          "media_first_video": 1121.3043199386448,
+          "utterance_completed": 3938.145964872092
+        },
+        "media": {
+          "generationId": 2,
+          "speechMarker": 48,
+          "firstVideoPTSUS": 170820000,
+          "speechOriginSample": 2733120
+        }
+      },
+      {
+        "traceId": "trace_e420d012894d5b9080544461365ba995",
+        "sessionId": "session_d470ebeb33afb3ee1fd08a3ef1d9df51",
+        "utteranceId": "utt_26f1fa34064b2a04044307416e5e3cbc",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 232547.75904514827,
+        "points": {
+          "runtime_utterance_accepted": 0.0007741618901491165,
+          "first_speakable_segment": 3921.516050118953,
+          "tts_started": 3921.8799241352826,
+          "tts_first_pcm": 4029.7743370756507,
+          "avatar_first_returned_frame": 5081.454402999952,
+          "media_first_audio": 5082.222998142242,
+          "avatar_first_generated_frame": 5082.246477017179,
+          "media_first_video": 5082.261573988944,
+          "utterance_completed": 18788.54188718833
+        },
+        "media": {
+          "generationId": 2,
+          "speechMarker": 50,
+          "firstVideoPTSUS": 173620000,
+          "speechOriginSample": 2777920
+        }
+      }
+    ],
+    "browserObservation": "NOT_TESTED",
+    "rtmpAudienceObservation": "NOT_TESTED"
+  },
+  {
+    "trial": "browser-clause-complex20.json",
+    "clockDomain": "runtime_monotonic",
+    "traces": [
+      {
+        "traceId": "interaction_004013f04521621aaff86f97af757517436bff813a9c0cecb14855fcbbe44533",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_d7458a46db70406bf0e068300613bbc7",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 414586.73630608246,
+        "points": {
+          "runtime_utterance_accepted": 0.002259155735373497,
+          "first_speakable_segment": 8.590169018134475,
+          "tts_started": 9.15290112607181,
+          "tts_first_pcm": 147.37163297832012,
+          "avatar_first_returned_frame": 1533.049806021154,
+          "media_first_audio": 1533.7189249694347,
+          "avatar_first_generated_frame": 1533.7522751651704,
+          "media_first_video": 1533.7766911834478,
+          "utterance_completed": 6523.262478178367
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 2,
+          "firstVideoPTSUS": 1200000,
+          "speechOriginSample": 19200
+        }
+      },
+      {
+        "traceId": "interaction_900f44724ba0082d4a0a82fe44633ef5d9ccccfcb5b6c1f30136cfbd45635986",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_563b7b2cdbed6564d9e5db1054065978",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 404552.8794720303,
+        "points": {
+          "runtime_utterance_accepted": 0.0011699739843606949,
+          "llm_started": 15.662969090044498,
+          "llm_first_token": 1902.228282066062,
+          "first_speakable_segment": 1903.0916050542146,
+          "tts_started": 1903.944802004844,
+          "tts_first_pcm": 1992.5852101296186,
+          "avatar_first_returned_frame": 3405.9566140640527,
+          "media_first_audio": 3406.507271109149,
+          "avatar_first_generated_frame": 3406.531214946881,
+          "media_first_video": 3406.5471570938826,
+          "utterance_completed": 9927.14954004623
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 4,
+          "firstVideoPTSUS": 9680000,
+          "speechOriginSample": 154880
+        }
+      },
+      {
+        "traceId": "interaction_9322ce0b52766e5d73faf6f1adae74ace52fef7cf4062f14bcfbe54441877755",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_48514485310107b47c8fde216a1cf8f5",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 393544.6886830032,
+        "points": {
+          "runtime_utterance_accepted": 0.0008440110832452774,
+          "llm_started": 20.186997950077057,
+          "llm_first_token": 977.3750158492476,
+          "first_speakable_segment": 991.4660039357841,
+          "tts_started": 992.2015450429171,
+          "tts_first_pcm": 1025.016029831022,
+          "avatar_first_returned_frame": 2358.979214914143,
+          "media_first_audio": 2359.6337798517197,
+          "avatar_first_generated_frame": 2359.666713979095,
+          "media_first_video": 2359.691401012242,
+          "utterance_completed": 10247.327912831679
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 6,
+          "firstVideoPTSUS": 16360000,
+          "speechOriginSample": 261760
+        }
+      },
+      {
+        "traceId": "interaction_658d505a2d54536beadc984819b59215a2dd195434ed36d0eb928570934d3623",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_b9a65d3fb64e76559419c4dc3685b06f",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 380969.40514515154,
+        "points": {
+          "runtime_utterance_accepted": 0.0005771871656179428,
+          "llm_started": 11.051111156120896,
+          "llm_first_token": 1748.138776049018,
+          "first_speakable_segment": 1751.1525840964168,
+          "tts_started": 1751.9023751374334,
+          "tts_first_pcm": 1844.851948088035,
+          "avatar_first_returned_frame": 2997.124072164297,
+          "media_first_audio": 2997.6607030257583,
+          "avatar_first_generated_frame": 2997.6821711752564,
+          "media_first_video": 2997.696253005415,
+          "utterance_completed": 9080.333359073848
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 8,
+          "firstVideoPTSUS": 26720000,
+          "speechOriginSample": 427520
+        }
+      },
+      {
+        "traceId": "interaction_65001468603dff5576bf03a4d7cf10e4676f1a4983780345b38e6f8568c0ea43",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_f9d3d1accd936548ee1f4cf705b843ad",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 370067.9781329818,
+        "points": {
+          "runtime_utterance_accepted": 0.0005709007382392883,
+          "llm_started": 21.702622063457966,
+          "llm_first_token": 1367.4086420796812,
+          "first_speakable_segment": 1368.1338289752603,
+          "tts_started": 1368.8992550596595,
+          "tts_first_pcm": 1414.6129889413714,
+          "avatar_first_returned_frame": 2529.516788898036,
+          "media_first_audio": 2530.053298920393,
+          "avatar_first_generated_frame": 2530.078623909503,
+          "media_first_video": 2530.0948100630194,
+          "utterance_completed": 8875.23066997528
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 10,
+          "firstVideoPTSUS": 34240000,
+          "speechOriginSample": 547840
+        }
+      },
+      {
+        "traceId": "interaction_804037e3969bb932384061d1316e48617ff25d82ae8a6197696c1a2b498b2dc7",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_2bad933361bfc9b8d7f3c0aa7eae8dd1",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 358946.0999718867,
+        "points": {
+          "runtime_utterance_accepted": 0.0008409842848777771,
+          "llm_started": 19.884577952325344,
+          "llm_first_token": 1022.9833079501987,
+          "first_speakable_segment": 1106.4826280344278,
+          "tts_started": 1107.3858090676367,
+          "tts_first_pcm": 1200.9047348983586,
+          "avatar_first_returned_frame": 2166.0903128795326,
+          "media_first_audio": 2166.52723797597,
+          "avatar_first_generated_frame": 2166.5481189265847,
+          "media_first_video": 2166.5631500072777,
+          "utterance_completed": 8077.074073953554
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 12,
+          "firstVideoPTSUS": 42240000,
+          "speechOriginSample": 675840
+        }
+      },
+      {
+        "traceId": "interaction_5ef7a43a679cbebf07404a261de3a51aa2d0a5e805085f41dfc0e0e4cdabe3d3",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_0a09b09140a1b2580272fc05b293aa85",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 348470.7010849379,
+        "points": {
+          "runtime_utterance_accepted": 0.000667991116642952,
+          "llm_started": 32.45016699656844,
+          "llm_first_token": 1282.3179739061743,
+          "first_speakable_segment": 1307.696282863617,
+          "tts_started": 1308.5774250794202,
+          "tts_first_pcm": 1355.668902862817,
+          "avatar_first_returned_frame": 2371.4408800005913,
+          "media_first_audio": 2371.959035983309,
+          "avatar_first_generated_frame": 2371.981682954356,
+          "media_first_video": 2371.9978749286383,
+          "utterance_completed": 11001.69319100678
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 14,
+          "firstVideoPTSUS": 50200000,
+          "speechOriginSample": 803200
+        }
+      },
+      {
+        "traceId": "interaction_9615c4637dceb095014408b7497496432e698c10d39c5329d18a77f73629050b",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_f39749eaa3e1afbae697aee556422dc5",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 335065.51025109366,
+        "points": {
+          "runtime_utterance_accepted": 0.0008319038897752762,
+          "llm_started": 17.356137046590447,
+          "llm_first_token": 1094.517975114286,
+          "first_speakable_segment": 1168.663667049259,
+          "tts_started": 1169.4688850548118,
+          "tts_first_pcm": 1257.6134020928293,
+          "avatar_first_returned_frame": 2273.489200975746,
+          "media_first_audio": 2274.1349269635975,
+          "avatar_first_generated_frame": 2274.166119052097,
+          "media_first_video": 2274.1900449618697,
+          "utterance_completed": 8567.559731891379
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 16,
+          "firstVideoPTSUS": 60720000,
+          "speechOriginSample": 971520
+        }
+      },
+      {
+        "traceId": "interaction_dc2e63c93d2ba7f9d4f6d8615d77372fbbda578de68247ce06d33b2b941699d2",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_c565641287ef718d5c48c1cfc9e8b71d",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 324180.9785668738,
+        "points": {
+          "runtime_utterance_accepted": 0.0006458722054958344,
+          "llm_started": 31.85975202359259,
+          "llm_first_token": 2974.7070060111582,
+          "first_speakable_segment": 3747.936019906774,
+          "tts_started": 3748.4932818915695,
+          "tts_first_pcm": 3863.139256834984,
+          "avatar_first_returned_frame": 4911.349841859192,
+          "media_first_audio": 4912.072859006003,
+          "avatar_first_generated_frame": 4912.105642957613,
+          "media_first_video": 4912.131024990231,
+          "utterance_completed": 11927.920290036127
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 18,
+          "firstVideoPTSUS": 71520000,
+          "speechOriginSample": 1144320
+        }
+      },
+      {
+        "traceId": "interaction_ae43fa469a2463169a04aecd62f2b80c0c9077a247c66215554f660a4a37f082",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_88c0c0d2d29a90e6dc632d456e185b8b",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 309965.6661108602,
+        "points": {
+          "runtime_utterance_accepted": 0.0008449424058198929,
+          "llm_started": 15.114167938008904,
+          "llm_first_token": 1515.2884488925338,
+          "first_speakable_segment": 1778.0962539836764,
+          "tts_started": 1778.8000120781362,
+          "tts_first_pcm": 1883.3547739777714,
+          "avatar_first_returned_frame": 3021.9772190321237,
+          "media_first_audio": 3022.5207980256528,
+          "avatar_first_generated_frame": 3022.5471139419824,
+          "media_first_video": 3022.5633250083774,
+          "utterance_completed": 8973.944982979447
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 20,
+          "firstVideoPTSUS": 81000000,
+          "speechOriginSample": 1296000
+        }
+      },
+      {
+        "traceId": "interaction_bf36ab38bf5582c2fd6748865fa4af9ac3086dde02a097c21d67f3723964ce10",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_9ec3b194ffbdbe14c1f24da8b28b4caf",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 300015.6727968715,
+        "points": {
+          "runtime_utterance_accepted": 0.0005769543349742889,
+          "llm_started": 19.635892007499933,
+          "llm_first_token": 1294.0725558437407,
+          "first_speakable_segment": 1294.5153298787773,
+          "tts_started": 1295.3251998405904,
+          "tts_first_pcm": 1326.7983538098633,
+          "avatar_first_returned_frame": 2426.3466210104525,
+          "media_first_audio": 2427.004867931828,
+          "avatar_first_generated_frame": 2427.0329049322754,
+          "media_first_video": 2427.051094826311,
+          "utterance_completed": 8357.16443695128
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 22,
+          "firstVideoPTSUS": 87520000,
+          "speechOriginSample": 1400320
+        }
+      },
+      {
+        "traceId": "interaction_52f911cbdd1f93199b66d3e3ada886d3a1ccdfbd7b48b621678be83a3f4d902b",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_95f7244ce306b0c8ec049d8ab28d1a76",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 289686.79990712553,
+        "points": {
+          "runtime_utterance_accepted": 0.0005930196493864059,
+          "llm_started": 15.892573166638613,
+          "llm_first_token": 1200.3759499639273,
+          "first_speakable_segment": 1297.1042699646205,
+          "tts_started": 1297.6209120824933,
+          "tts_first_pcm": 1387.4735401477665,
+          "avatar_first_returned_frame": 2379.272766178474,
+          "media_first_audio": 2379.817493027076,
+          "avatar_first_generated_frame": 2379.841028014198,
+          "media_first_video": 2379.8567801713943,
+          "utterance_completed": 8708.15302617848
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 24,
+          "firstVideoPTSUS": 95080000,
+          "speechOriginSample": 1521280
+        }
+      },
+      {
+        "traceId": "interaction_99d4d4a951f8cca19fb4b00aa38edac2e7d2d04b442d4ba55013f9b67b62dab3",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_3f5ac6d62ba21e4b131acd9566e71382",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 278588.2943861652,
+        "points": {
+          "runtime_utterance_accepted": 0.0005371402949094772,
+          "llm_started": 17.03434600494802,
+          "llm_first_token": 1412.3126331251115,
+          "first_speakable_segment": 1412.9085501190275,
+          "tts_started": 1413.8435199856758,
+          "tts_first_pcm": 1457.7555269934237,
+          "avatar_first_returned_frame": 2931.650396203622,
+          "media_first_audio": 2932.3082421906292,
+          "avatar_first_generated_frame": 2932.3369842022657,
+          "media_first_video": 2932.3617462068796,
+          "utterance_completed": 9598.991929087788
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 26,
+          "firstVideoPTSUS": 103560000,
+          "speechOriginSample": 1656960
+        }
+      },
+      {
+        "traceId": "interaction_f6cfffa23dfdc1d0fee969faebd3431afee63a4e3efd3cd0c391c78a967aa692",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_79c0c09e9336b61acfb6667c23b431b7",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 266676.2591050938,
+        "points": {
+          "runtime_utterance_accepted": 0.0008670613169670105,
+          "llm_started": 18.460961990058422,
+          "llm_first_token": 1019.4009831175208,
+          "first_speakable_segment": 1019.6157849859446,
+          "tts_started": 1020.3881810884923,
+          "tts_first_pcm": 1109.1790930368006,
+          "avatar_first_returned_frame": 2121.8443689867854,
+          "media_first_audio": 2122.5453501101583,
+          "avatar_first_generated_frame": 2122.5758211221546,
+          "media_first_video": 2122.6009449455887,
+          "utterance_completed": 7512.966810027137
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 28,
+          "firstVideoPTSUS": 111920000,
+          "speechOriginSample": 1790720
+        }
+      },
+      {
+        "traceId": "interaction_fce46bc138c47316c13840a8ad91e1641b098ffde7dd621cc09d1469158091ee",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_3d7ae04a29fbaf2e817920a292399245",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 257961.04969992302,
+        "points": {
+          "runtime_utterance_accepted": 0.0005869660526514053,
+          "llm_started": 22.11621101014316,
+          "llm_first_token": 927.8736389242113,
+          "first_speakable_segment": 1329.3283919338137,
+          "tts_started": 1330.0285160075873,
+          "tts_first_pcm": 1375.0440930016339,
+          "avatar_first_returned_frame": 2386.984096840024,
+          "media_first_audio": 2387.7506719436496,
+          "avatar_first_generated_frame": 2387.7833588048816,
+          "media_first_video": 2387.8078679554164,
+          "utterance_completed": 8771.139560965821
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 30,
+          "firstVideoPTSUS": 118080000,
+          "speechOriginSample": 1889280
+        }
+      },
+      {
+        "traceId": "interaction_57f70cb07f58bacf077735f384cccc3e811d9f2eacfa18f5e7adacd08aac0193",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_6da87b29eb936bebd0d8cafb3d8855b4",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 248082.70812407136,
+        "points": {
+          "runtime_utterance_accepted": 0.0005210749804973602,
+          "llm_started": 17.25452416576445,
+          "llm_first_token": 1212.5718430615962,
+          "first_speakable_segment": 1212.8113030921668,
+          "tts_started": 1213.54546607472,
+          "tts_first_pcm": 1304.1863841935992,
+          "avatar_first_returned_frame": 2327.3885450325906,
+          "media_first_audio": 2328.101887134835,
+          "avatar_first_generated_frame": 2328.133829170838,
+          "media_first_video": 2328.1585830263793,
+          "utterance_completed": 8105.429448187351
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 32,
+          "firstVideoPTSUS": 125120000,
+          "speechOriginSample": 2001920
+        }
+      },
+      {
+        "traceId": "interaction_d4f4cf7a1418afeb84179d72bea726c65c2ba730ef40a156c8ed6191e8d2522c",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_a525b20c971a17741cb989e7ef95737e",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 238180.45684089884,
+        "points": {
+          "runtime_utterance_accepted": 0.0009068753570318222,
+          "llm_started": 18.40866100974381,
+          "llm_first_token": 1197.561808861792,
+          "first_speakable_segment": 1303.9120379835367,
+          "tts_started": 1304.6873668208718,
+          "tts_first_pcm": 1349.4896388147026,
+          "avatar_first_returned_frame": 2562.035899842158,
+          "media_first_audio": 2562.58018896915,
+          "avatar_first_generated_frame": 2562.606594990939,
+          "media_first_video": 2562.624047975987,
+          "utterance_completed": 9385.106556816027
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 34,
+          "firstVideoPTSUS": 132280000,
+          "speechOriginSample": 2116480
+        }
+      },
+      {
+        "traceId": "interaction_01166d80472ddd567dc75a38ce9d94b6fc3acdb9fc81f715570cf9a7e51bd196",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_12ccb41b4448b0f0799d592f499fda36",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 226767.0288181398,
+        "points": {
+          "runtime_utterance_accepted": 0.0010880175977945328,
+          "llm_started": 19.325474044308066,
+          "llm_first_token": 1135.6112021021545,
+          "first_speakable_segment": 1209.7976300865412,
+          "tts_started": 1211.0457259695977,
+          "tts_first_pcm": 1303.0341200064868,
+          "avatar_first_returned_frame": 2329.9348319415003,
+          "media_first_audio": 2330.6363220326602,
+          "avatar_first_generated_frame": 2330.670660128817,
+          "media_first_video": 2330.698641948402,
+          "utterance_completed": 7971.58465301618
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 36,
+          "firstVideoPTSUS": 140640000,
+          "speechOriginSample": 2250240
+        }
+      },
+      {
+        "traceId": "interaction_ed5db97a844c1299beb701c37eecc375e2b515c70f694f586af9d9f2a3b688cc",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_f31e34b2c49d165d0a5fa5a6d95d6bdf",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 216414.5411211066,
+        "points": {
+          "runtime_utterance_accepted": 0.0012700911611318588,
+          "llm_started": 18.255968112498522,
+          "llm_first_token": 1570.9137860685587,
+          "first_speakable_segment": 1763.9384169597179,
+          "tts_started": 1764.7363990545273,
+          "tts_first_pcm": 1817.508595995605,
+          "avatar_first_returned_frame": 2956.5347239840776,
+          "media_first_audio": 2957.027936121449,
+          "avatar_first_generated_frame": 2957.0597091224045,
+          "media_first_video": 2957.0813721511513,
+          "utterance_completed": 9906.924769980833
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 38,
+          "firstVideoPTSUS": 148640000,
+          "speechOriginSample": 2378240
+        }
+      },
+      {
+        "traceId": "interaction_09b0320525eceaa2df4e42196eba265577d05c73070a005794959c16cec8f745",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_6b7364c5fe83b5fd361971e45343c155",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 205498.82960389368,
+        "points": {
+          "runtime_utterance_accepted": 0.0007979106158018112,
+          "llm_started": 11.203240836039186,
+          "llm_first_token": 1015.7173417974263,
+          "first_speakable_segment": 1100.1706549432129,
+          "tts_started": 1101.082727778703,
+          "tts_first_pcm": 1190.3839928563684,
+          "avatar_first_returned_frame": 2400.6934438366443,
+          "media_first_audio": 2401.3284449465573,
+          "avatar_first_generated_frame": 2401.3561909087002,
+          "media_first_video": 2401.3828299939632,
+          "utterance_completed": 8732.873470988125
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 40,
+          "firstVideoPTSUS": 156080000,
+          "speechOriginSample": 2497280
+        }
+      },
+      {
+        "traceId": "interaction_0edf84289475bc63b3df2e6527e4e89f82683866f28c501c6ea7aca4bf934b97",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_8c5ee71f317fb4207da3239e7a778c65",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 194605.81312095746,
+        "points": {
+          "runtime_utterance_accepted": 0.0006738118827342987,
+          "llm_started": 27.552668936550617,
+          "llm_first_token": 2123.8868688233197,
+          "first_speakable_segment": 2124.182318802923,
+          "tts_started": 2124.7613669838756,
+          "tts_first_pcm": 2167.7776388823986,
+          "avatar_first_returned_frame": 3252.8686108998954,
+          "media_first_audio": 3253.688605967909,
+          "avatar_first_generated_frame": 3253.716380801052,
+          "media_first_video": 3253.729292890057,
+          "utterance_completed": 10948.82940989919
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 42,
+          "firstVideoPTSUS": 164960000,
+          "speechOriginSample": 2639360
+        }
+      },
+      {
+        "traceId": "interaction_ba26f3ca67a5ae943ce359169eca94c58f662d8b7d60d34893aa856e60188d0f",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_6b1a20209f8ecdcf389bc1cc511fa3eb",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 181432.03612603247,
+        "points": {
+          "runtime_utterance_accepted": 0.0008009374141693115,
+          "first_speakable_segment": 17.426206031814218,
+          "tts_started": 18.018638947978616,
+          "tts_first_pcm": 126.23754306696355,
+          "avatar_first_returned_frame": 1171.7118020169437,
+          "media_first_audio": 1172.564706997946,
+          "avatar_first_generated_frame": 1172.5931789260358,
+          "media_first_video": 1172.607395099476
+        },
+        "media": {
+          "generationId": 1,
+          "speechMarker": 44,
+          "firstVideoPTSUS": 173280000,
+          "speechOriginSample": 2772480
+        }
+      },
+      {
+        "traceId": "trace_6c2bb5320c0fa004fbc35619bc0387da",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_5fe8abfbbcf99e5f91853cf2572a1e6d",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 180035.59654089622,
+        "points": {
+          "runtime_utterance_accepted": 0.0011050142347812653,
+          "first_speakable_segment": 12.516503920778632,
+          "tts_started": 13.760678935796022,
+          "tts_first_pcm": 145.66483697853982,
+          "avatar_first_returned_frame": 1175.7875888142735,
+          "media_first_audio": 1176.3333620037884,
+          "avatar_first_generated_frame": 1176.3603140134364,
+          "media_first_video": 1176.3779139146209,
+          "utterance_completed": 6083.0974788405
+        },
+        "media": {
+          "generationId": 2,
+          "speechMarker": 46,
+          "firstVideoPTSUS": 173480000,
+          "speechOriginSample": 2775680
+        }
+      },
+      {
+        "traceId": "trace_dc803be08dd668a0e47443edfef36f7e",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_525e2986e7603d1ae46d06335ae49160",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 150323.99502000771,
+        "points": {
+          "runtime_utterance_accepted": 0.0005441252142190933,
+          "first_speakable_segment": 6.919274106621742,
+          "tts_started": 7.254970027133822,
+          "tts_first_pcm": 114.63569407351315,
+          "avatar_first_returned_frame": 1123.881960986182,
+          "media_first_audio": 1124.6394880581647,
+          "avatar_first_generated_frame": 1124.6692650020123,
+          "media_first_video": 1124.6944081503898,
+          "utterance_completed": 14467.426103074104
+        },
+        "media": {
+          "generationId": 2,
+          "speechMarker": 48,
+          "firstVideoPTSUS": 200440000,
+          "speechOriginSample": 3207040
+        }
+      },
+      {
+        "traceId": "interaction_b981d3efb50dacf044edcc7fcc58421630869d5b7b6255b7e01d685657bc9e08",
+        "sessionId": "session_dd4c9f6372b83d448cfc8d97fd907ac3",
+        "utteranceId": "utt_8cafd92efb096b856eae08b2a4359a15",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 135779.12387507968,
+        "points": {
+          "runtime_utterance_accepted": 0.006250105798244476,
+          "first_speakable_segment": 15.563241206109524,
+          "tts_started": 15.920346137136221,
+          "tts_first_pcm": 177.08912398666143,
+          "avatar_first_returned_frame": 1190.0542140938342,
+          "media_first_audio": 1190.732995979488,
+          "avatar_first_generated_frame": 1190.762272104621,
+          "media_first_video": 1190.7865509856492,
+          "utterance_completed": 5069.094714010134
+        },
+        "media": {
+          "generationId": 2,
+          "speechMarker": 50,
+          "firstVideoPTSUS": 213760000,
+          "speechOriginSample": 3420160
+        }
+      }
+    ],
+    "browserObservation": "NOT_TESTED",
+    "rtmpAudienceObservation": "NOT_TESTED"
+  }
+]

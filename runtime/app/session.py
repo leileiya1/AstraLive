@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 
 
 SIZE_PATTERN = re.compile(
-    r"(?<![a-z0-9])(?P<letter>xxxl|xxl|xl|s|m|l)(?![a-z0-9])"
+    r"(?<![a-z0-9_-])(?P<letter>[2-5]xl|x{1,4}l|xs|s|m|l)(?![a-z0-9_-])"
     r"|(?<!\d)(?P<number>\d{1,3})\s*(?:码|号)(?!\d)",
     re.IGNORECASE,
 )
@@ -78,6 +78,7 @@ async def sentence_stream(tokens, max_wait: float = 0.25, max_length: int = 120)
 
     producer = asyncio.create_task(produce())
     buffer = ""
+    emitted = False
     try:
         while True:
             try:
@@ -93,7 +94,11 @@ async def sentence_stream(tokens, max_wait: float = 0.25, max_length: int = 120)
                 return
             buffer += token
             while buffer:
-                punctuation = next((i+1 for i, c in enumerate(buffer) if c in "。！？!?；;" or (i >= 19 and c in "，," and not (i > 0 and buffer[i-1].isdigit() and (i+1 == len(buffer) or buffer[i+1].isdigit())))), None)
+                # The first complete Chinese clause can begin TTS before the
+                # rest of a compound answer arrives. Numeric separators remain
+                # protected; later clauses and ASCII commas keep the old bound.
+                clause_min = 19 if emitted else 7
+                punctuation = next((i+1 for i, c in enumerate(buffer) if c in "。！？!?；;" or (((i >= clause_min and c == "，") or (i >= 19 and c == ",")) and not (i > 0 and buffer[i-1].isdigit() and (i+1 == len(buffer) or buffer[i+1].isdigit())))), None)
                 cut = punctuation
                 if cut is None and len(buffer) >= max_length:
                     cut = next((i for i in range(max_length, min(len(buffer), 240)) if _safe_cut(buffer, i)), None)
@@ -103,6 +108,7 @@ async def sentence_stream(tokens, max_wait: float = 0.25, max_length: int = 120)
                     break
                 segment, buffer = buffer[:cut].strip(), buffer[cut:]
                 if segment:
+                    emitted = True
                     yield segment
     finally:
         producer.cancel()

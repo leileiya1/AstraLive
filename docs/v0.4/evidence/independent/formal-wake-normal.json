@@ -1,0 +1,114 @@
+{
+  "checks": [
+    "ownership",
+    "csrf",
+    "unselected_no_utterance",
+    "pinned_binding",
+    "redis_events",
+    "SSE",
+    "restart_at_most_once",
+    "legacy_202_409",
+    "stop_cleanup",
+    "runtime_429_fake_injection"
+  ],
+  "classification": "FORMAL_SESSION_CPU_FAKE_PROVIDERS",
+  "faultPhaseCounters": {
+    "input": 2,
+    "deduplicated": 0,
+    "merged": 0,
+    "selected": 2,
+    "expired": 0,
+    "dropped": 0,
+    "filtered": 0,
+    "delivered": 0,
+    "failed": 2,
+    "peak": 1,
+    "force": 0
+  },
+  "runtime": {
+    "fixture": "CPU_MOCK_NOT_REAL",
+    "leases": 0,
+    "sessions": 0,
+    "traces": [
+      {
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1932.3276670183986,
+        "media": {},
+        "points": {
+          "avatar_first_returned_frame": 128.509083064273,
+          "first_speakable_segment": 44.13883306551725,
+          "media_first_audio": 137.36070797313005,
+          "media_first_video": 137.55970797501504,
+          "runtime_utterance_accepted": 0.0037499703466892242,
+          "tts_first_pcm": 121.0605000378564,
+          "tts_started": 120.77745806891471,
+          "utterance_completed": 137.69691705238074
+        },
+        "sessionId": "session_ff9c912c25834e7baadc2d5d7bd3deae",
+        "traceId": "interaction_7aa5282a397ba25c399dac79818d3f2ddad782f1f5d96e59814028d16227339c",
+        "utteranceId": "utt_1ff640d7077ea2501057ca27ddb18705"
+      },
+      {
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 1236.8968750815839,
+        "media": {},
+        "points": {
+          "avatar_first_returned_frame": 28.569209040142596,
+          "first_speakable_segment": 14.408875023946166,
+          "llm_first_token": 14.277834095992148,
+          "llm_started": 14.043542090803385,
+          "media_first_audio": 34.65575003065169,
+          "media_first_video": 34.895375021733344,
+          "runtime_utterance_accepted": 0.0018749851733446121,
+          "tts_first_pcm": 22.672792081721127,
+          "tts_started": 22.45433407370001,
+          "utterance_completed": 35.11633409652859
+        },
+        "sessionId": "session_ff9c912c25834e7baadc2d5d7bd3deae",
+        "traceId": "interaction_5b169123be02fe6140b214baab29a9d8cd39f79a964a9a4e2afac6983a046366",
+        "utteranceId": "utt_a5033f61158583a0952ecf1a61d32389"
+      },
+      {
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 749.3029169272631,
+        "media": {},
+        "points": {
+          "avatar_first_returned_frame": 28.947875020094216,
+          "first_speakable_segment": 16.16474997717887,
+          "llm_first_token": 15.935666975565255,
+          "llm_started": 15.640583937056363,
+          "media_first_audio": 35.64387501683086,
+          "media_first_video": 35.80691700335592,
+          "runtime_utterance_accepted": 0.0014170072972774506,
+          "tts_first_pcm": 22.592624998651445,
+          "tts_started": 22.1594589529559,
+          "utterance_completed": 35.88170895818621
+        },
+        "sessionId": "session_ff9c912c25834e7baadc2d5d7bd3deae",
+        "traceId": "trace_43d56ab4feab22489bb4d582d8f4e682",
+        "utteranceId": "utt_55a46446817bc6d2e0830f7a3bb648c8"
+      }
+    ]
+  },
+  "selectedCounters": {
+    "input": 11,
+    "deduplicated": 0,
+    "merged": 9,
+    "selected": 2,
+    "expired": 0,
+    "dropped": 0,
+    "filtered": 0,
+    "delivered": 2,
+    "failed": 0,
+    "peak": 1,
+    "force": 0
+  },
+  "selectionLatency": {
+    "samples": 2,
+    "meanMs": 33.1765,
+    "p50Ms": 0.161,
+    "p95Ms": 66.192,
+    "maxMs": 66.192,
+    "boundary": "comment_received → scheduler_selected (Go monotonic; last 256 selected)"
+  }
+}

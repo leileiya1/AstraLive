@@ -52,7 +52,7 @@ export function InteractionPanel({ sessionId, running, speechQueue }: { sessionI
     </dl>
     {data?.current && <p className="mt-3 break-words text-sm">最近选中：{data.current.event.content} · {data.current.topic} · {data.current.audience} 人关注</p>}
     {data?.lastError && <p role="status" className="mt-2 text-sm text-amber-700">{data.lastError}</p>}
-    <p className="mt-3 text-sm text-slate-500">评论接收 → 选中：{data && data.latency.samples >= 20 ? `均值 ${data.latency.meanMs.toFixed(0)}ms · P50 ${data.latency.p50Ms.toFixed(0)}ms · P95 ${data.latency.p95Ms.toFixed(0)}ms` : "样本不足（至少 20 个）"} · n={data?.latency.samples ?? 0}。浏览器/RTMP 完整同步回复延迟尚未测量。</p>
+    <p className="mt-3 text-sm text-slate-500">评论接收 → 选中：{data && data.latency.samples >= 20 ? `均值 ${data.latency.meanMs.toFixed(0)}ms · P50 ${data.latency.p50Ms.toFixed(0)}ms · P95 ${data.latency.p95Ms.toFixed(0)}ms` : "样本不足（至少 20 个）"} · n={data?.latency.samples ?? 0}。此面板不展示浏览器/RTMP 完整同步回复延迟。</p>
     <ul className="mt-3 max-h-40 space-y-1 overflow-auto text-sm">{data?.recent.map(e => <li key={e.eventId} className="break-words">{e.nickname}: {e.content}</li>)}</ul>
     {import.meta.env.DEV && import.meta.env.VITE_ENABLE_DEV_EVENTS === "true" && <div className="mt-4 space-y-2 border-t border-slate-200 pt-3">
       <p className="text-sm font-medium">Mock / Replay（受保护开发接口）</p>

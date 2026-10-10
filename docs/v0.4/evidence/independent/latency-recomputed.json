@@ -1,0 +1,481 @@
+{
+  "sourceSHA256": {
+    "agent-b-real-browser.json": "f3c621cb36a9cd9e603c9d1a7668295e1cf91bdb296d90c1de595f581cc62d80",
+    "agent-b-real-summary.json": "68abce4f7892f7555390dd32a2d146e28f0f53e1356b7d5c64e77a42dd5fa535",
+    "agent-b-real-prior-trials.json": "bbf0a83eb636b424115bd29c40530355821a5135037d0af94727aed8ddb0bfea",
+    "agent-b-real-faults.json": "ba2c6a579ce3968984db1ed4b8a9baa4fd7deac96de2ff1ad94934a34d23b3c4",
+    "agent-b-real-headless.json": "ee97361521c1646056d615eacdff1ff729369bb7d69203d1a8ee349b82d7b747"
+  },
+  "algorithm": "empirical nearest rank: sorted[ceil(n*p)-1]; bounds are quantiles of per-sample lower/upper values",
+  "normalAttempts": [
+    {
+      "index": 1,
+      "topic": "price",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 2,
+      "topic": "sizes",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 3,
+      "topic": "stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 4,
+      "topic": "size_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 5,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 6,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 7,
+      "topic": "price",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 8,
+      "topic": "sizes",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 9,
+      "topic": "stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 10,
+      "topic": "size_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 11,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 12,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 13,
+      "topic": "price",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 14,
+      "topic": "sizes",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 15,
+      "topic": "stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 16,
+      "topic": "size_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 17,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 18,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 19,
+      "topic": "price",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 20,
+      "topic": "sizes",
+      "status": "COMPLETED"
+    }
+  ],
+  "groups": {
+    "all": {
+      "indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "chrome": {
+        "estimate": {
+          "samples": 20,
+          "meanMs": 3246.831799982118,
+          "p50Ms": 2896.5289999284723,
+          "p95Ms": 4176.801000011925,
+          "maxMs": 6668.989999952319
+        },
+        "lower": {
+          "samples": 20,
+          "meanMs": 3015.99929998331,
+          "p50Ms": 2598.9289999046305,
+          "p95Ms": 3924.751000000004,
+          "maxMs": 6364.739999952319
+        },
+        "upper": {
+          "samples": 20,
+          "meanMs": 3477.6642999809255,
+          "p50Ms": 3193.6419999761565,
+          "p95Ms": 4428.851000023846,
+          "maxMs": 6973.239999952319
+        },
+        "p50MsGate": "BLOCKED_CLOCK_BOUND",
+        "p95MsGate": "PASS_WITH_RETAINED_BOUND"
+      },
+      "rtmp": {
+        "estimate": {
+          "samples": 20,
+          "meanMs": 3304.629964734989,
+          "p50Ms": 2974.993473980023,
+          "p95Ms": 4228.90730388074,
+          "maxMs": 6754.44800306164
+        },
+        "lower": {
+          "samples": 20,
+          "meanMs": 3036.4924647349885,
+          "p50Ms": 2625.555151753215,
+          "p95Ms": 3942.207303892661,
+          "maxMs": 6381.648003049719
+        },
+        "upper": {
+          "samples": 20,
+          "meanMs": 3572.7674647349886,
+          "p50Ms": 3248.743473980023,
+          "p95Ms": 4515.607303868819,
+          "maxMs": 7127.2480030735605
+        },
+        "p50MsGate": "BLOCKED_CLOCK_BOUND",
+        "p95MsGate": "PASS_WITH_RETAINED_BOUND"
+      },
+      "decomposition": {
+        "selectionMs": {
+          "samples": 20,
+          "meanMs": 58.95915,
+          "p50Ms": 51.243,
+          "p95Ms": 118.503,
+          "maxMs": 118.569
+        },
+        "selectedToSpeakableMs": {
+          "samples": 20,
+          "meanMs": 1678.4477688249317,
+          "p50Ms": 1202.8228659176966,
+          "p95Ms": 2630.4428969984583,
+          "maxMs": 4966.578265079763
+        },
+        "speakableToPCMMS": {
+          "samples": 20,
+          "meanMs": 111.29355296725407,
+          "p50Ms": 110.24894006550312,
+          "p95Ms": 167.3462779726833,
+          "maxMs": 167.52375196665525
+        },
+        "pcmToGPUFrameMS": {
+          "samples": 20,
+          "meanMs": 1195.026729174424,
+          "p50Ms": 1153.7528929766268,
+          "p95Ms": 1473.0639208573848,
+          "maxMs": 1486.621811054647
+        },
+        "gpuToBrowserVideoMs": {
+          "samples": 20,
+          "meanMs": 170.21959900597267,
+          "p50Ms": 170.92853992208984,
+          "p95Ms": 187.67445712760673,
+          "maxMs": 210.9827880047378
+        }
+      }
+    },
+    "fast": {
+      "indices": [
+        1,
+        2,
+        3,
+        4,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        15,
+        16,
+        19,
+        20
+      ],
+      "chrome": {
+        "estimate": {
+          "samples": 14,
+          "meanMs": 2748.6284285552497,
+          "p50Ms": 2709.7230000357595,
+          "p95Ms": 3238.8889999880776,
+          "maxMs": 3238.8889999880776
+        },
+        "lower": {
+          "samples": 14,
+          "meanMs": 2514.535571420056,
+          "p50Ms": 2433.844000000012,
+          "p95Ms": 2948.1889999999985,
+          "maxMs": 2948.1889999999985
+        },
+        "upper": {
+          "samples": 14,
+          "meanMs": 2982.7212856904434,
+          "p50Ms": 2874.0729999999967,
+          "p95Ms": 3529.5889999761566,
+          "maxMs": 3529.5889999761566
+        },
+        "p50MsGate": "PASS_WITH_RETAINED_BOUND",
+        "p95MsGate": "PASS_WITH_RETAINED_BOUND"
+      },
+      "rtmp": {
+        "estimate": {
+          "samples": 14,
+          "meanMs": 2807.3675417251047,
+          "p50Ms": 2734.354354907897,
+          "p95Ms": 3300.570055206059,
+          "maxMs": 3300.570055206059
+        },
+        "lower": {
+          "samples": 14,
+          "meanMs": 2535.878256017631,
+          "p50Ms": 2459.105566093931,
+          "p95Ms": 2960.820055206059,
+          "maxMs": 2960.820055206059
+        },
+        "upper": {
+          "samples": 14,
+          "meanMs": 3078.8568274325785,
+          "p50Ms": 3000.00556595088,
+          "p95Ms": 3640.320055206059,
+          "maxMs": 3640.320055206059
+        },
+        "p50MsGate": "BLOCKED_CLOCK_BOUND",
+        "p95MsGate": "PASS_WITH_RETAINED_BOUND"
+      },
+      "decomposition": {
+        "selectionMs": {
+          "samples": 14,
+          "meanMs": 52.22642857142857,
+          "p50Ms": 49.738,
+          "p95Ms": 118.569,
+          "maxMs": 118.569
+        },
+        "selectedToSpeakableMs": {
+          "samples": 14,
+          "meanMs": 1176.0152343700672,
+          "p50Ms": 1161.2360258320987,
+          "p95Ms": 1432.1858580985936,
+          "maxMs": 1432.1858580985936
+        },
+        "speakableToPCMMS": {
+          "samples": 14,
+          "meanMs": 128.99272634448218,
+          "p50Ms": 123.61132213845849,
+          "p95Ms": 167.52375196665525,
+          "maxMs": 167.52375196665525
+        },
+        "pcmToGPUFrameMS": {
+          "samples": 14,
+          "meanMs": 1186.884625182886,
+          "p50Ms": 1136.9827040471137,
+          "p95Ms": 1486.621811054647,
+          "maxMs": 1486.621811054647
+        },
+        "gpuToBrowserVideoMs": {
+          "samples": 14,
+          "meanMs": 167.58084264929883,
+          "p50Ms": 168.8410819619894,
+          "p95Ms": 210.9827880047378,
+          "maxMs": 210.9827880047378
+        }
+      }
+    },
+    "llm": {
+      "indices": [
+        5,
+        6,
+        11,
+        12,
+        17,
+        18
+      ],
+      "chrome": {
+        "estimate": {
+          "samples": 6,
+          "meanMs": 4409.306333311477,
+          "p50Ms": 3973.836999940395,
+          "p95Ms": 6668.989999952319,
+          "maxMs": 6668.989999952319
+        },
+        "lower": {
+          "samples": 6,
+          "meanMs": 4186.0813332975695,
+          "p50Ms": 3750.286999928474,
+          "p95Ms": 6364.739999952319,
+          "maxMs": 6364.739999952319
+        },
+        "upper": {
+          "samples": 6,
+          "meanMs": 4632.531333325384,
+          "p50Ms": 4197.386999952316,
+          "p95Ms": 6973.239999952319,
+          "maxMs": 6973.239999952319
+        },
+        "p50MsGate": "FAIL",
+        "p95MsGate": "FAIL"
+      },
+      "rtmp": {
+        "estimate": {
+          "samples": 6,
+          "meanMs": 4464.9089517580505,
+          "p50Ms": 4007.6415678827907,
+          "p95Ms": 6754.44800306164,
+          "maxMs": 6754.44800306164
+        },
+        "lower": {
+          "samples": 6,
+          "meanMs": 4204.59228507549,
+          "p50Ms": 3762.5915678708698,
+          "p95Ms": 6381.648003049719,
+          "maxMs": 6381.648003049719
+        },
+        "upper": {
+          "samples": 6,
+          "meanMs": 4725.2256184406115,
+          "p50Ms": 4252.691567894712,
+          "p95Ms": 7127.2480030735605,
+          "maxMs": 7127.2480030735605
+        },
+        "p50MsGate": "FAIL",
+        "p95MsGate": "FAIL"
+      },
+      "decomposition": {
+        "selectionMs": {
+          "samples": 6,
+          "meanMs": 74.66883333333334,
+          "p50Ms": 51.243,
+          "p95Ms": 118.503,
+          "maxMs": 118.503
+        },
+        "selectedToSpeakableMs": {
+          "samples": 6,
+          "meanMs": 2850.790349219615,
+          "p50Ms": 2366.388192889208,
+          "p95Ms": 4966.578265079763,
+          "maxMs": 4966.578265079763
+        },
+        "speakableToPCMMS": {
+          "samples": 6,
+          "meanMs": 69.99548175372183,
+          "p50Ms": 77.55432394333184,
+          "p95Ms": 79.92635993286967,
+          "maxMs": 79.92635993286967
+        },
+        "pcmToGPUFrameMS": {
+          "samples": 6,
+          "meanMs": 1214.0249718213454,
+          "p50Ms": 1153.7528929766268,
+          "p95Ms": 1473.0639208573848,
+          "maxMs": 1473.0639208573848
+        },
+        "gpuToBrowserVideoMs": {
+          "samples": 6,
+          "meanMs": 176.37669717154495,
+          "p50Ms": 177.22879699096666,
+          "p95Ms": 187.67445712760673,
+          "maxMs": 187.67445712760673
+        }
+      }
+    }
+  },
+  "priorTrials": [
+    {
+      "trial": "browser-real.json",
+      "completedSamples": 2,
+      "requestedSamples": 2,
+      "cause": "INITIAL_TWO_SAMPLE_PREFLIGHT_COMPLETED",
+      "errors": [],
+      "failedSelectionExpectations": 0,
+      "setupFailures": 0
+    },
+    {
+      "trial": "browser-real-20.json",
+      "completedSamples": 5,
+      "requestedSamples": 20,
+      "cause": "FIVE_COMPLETED; DIRECTED_REQUEST_FILTERED; SSH_NETWORK_ALSO_INTERRUPTED",
+      "errors": [
+        "Comment did not yield exactly one selected task"
+      ],
+      "failedSelectionExpectations": 1,
+      "setupFailures": 0
+    },
+    {
+      "trial": "browser-full20.json",
+      "completedSamples": 5,
+      "requestedSamples": 20,
+      "cause": "FIVE_COMPLETED; DIRECTED_REQUEST_FILTERED",
+      "errors": [
+        "Comment did not yield exactly one selected task"
+      ],
+      "failedSelectionExpectations": 1,
+      "setupFailures": 0
+    },
+    {
+      "trial": "browser-fixed20.json",
+      "completedSamples": 0,
+      "requestedSamples": 20,
+      "cause": "HARNESS_REDEPLOY_AND_SSH_SETUP_FAILURE; NO_SESSION_CREATED",
+      "errors": [
+        "TypeError: Failed to fetch\n    at window.__api (<anonymous>:1:60)\n    at <anonymous>:1:8"
+      ],
+      "failedSelectionExpectations": 0,
+      "setupFailures": 1
+    }
+  ],
+  "evidenceLimits": [
+    "Request/response start/end brackets and raw monotonic receipt origins are not retained in committed JSON; offset half-widths can be checked for consistency but not independently recreated.",
+    "Audio association uses first nonzero analyser/decoded PCM after input, without an audio trace marker; previous-speech/random-arrival trials require stronger audio correlation.",
+    "Chrome analyser and expectedDisplayTime are browser observations, not physical speaker or actual display hardware timestamps.",
+    "RTMP is a local decoded receiver, not a live-platform audience.",
+    "Only six LLM samples. These cannot establish the sustained LLM-path distribution; the observed P50/P95 fail even optimistic retained clock bounds.",
+    "Prior trials and fault phases remain separately visible and are not silently pooled with the final patched normal run."
+  ],
+  "strictEndToEndGate": "BLOCKED",
+  "llmObservedGoal": "FAIL"
+}

@@ -7,6 +7,21 @@ from app.providers import GenerationContext
 from app.models import VoiceConfig
 
 class StreamingTests(unittest.IsolatedAsyncioTestCase):
+    async def test_first_complete_chinese_clause_is_incremental(self):
+        rest = asyncio.Event()
+        async def tokens():
+            yield '这款价格是129.90元，'
+            await rest.wait()
+            yield '整体库存27件，搭配牛仔裤。'
+        stream = sentence_stream(tokens())
+        try:
+            first = await asyncio.wait_for(anext(stream), .1)
+            self.assertEqual(first, '这款价格是129.90元，')
+            rest.set()
+            self.assertEqual(''.join([first, *[s async for s in stream]]), '这款价格是129.90元，整体库存27件，搭配牛仔裤。')
+        finally:
+            await stream.aclose()
+
     def test_chinese_size_pronunciation_preserves_units_and_identifiers(self):
         self.assertEqual(spoken_sizes('这款有 XL 尺码，但暂时没有 XL 单独库存数据。'),
                          '这款有 艾克斯艾尔 尺码，但暂时没有 艾克斯艾尔 单独库存数据。')

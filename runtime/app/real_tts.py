@@ -22,7 +22,9 @@ def spoken_sizes(text: str) -> str:
             value = "X" * int(value[0]) + "L"
         return "".join(letters[letter] for letter in value)
     text = re.sub(size + r"(?=\s*(?:尺码|单独库存|单码库存|码|号))", pronounce, text)
-    return re.sub(r"尺码(?:选项)?有[^。；！？\n]*",
+    # Stop at the end of the actual list. Sweeping the rest of a clause also
+    # converted units/model letters in "尺码有 XL，长度 20 M，容量 5 L".
+    return re.sub(r"尺码(?:选项)?有\s*" + size + r"(?:\s*[、,/，]\s*" + size + r")*",
                   lambda m: re.sub(size, pronounce, m.group()), text)
 
 

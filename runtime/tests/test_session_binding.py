@@ -32,7 +32,8 @@ class Client:
         self.released.append(sid)
 
 class TaggedLLM(MockLLMProvider):
-    def __init__(self,key):self.api_key=key
+    def __init__(self,key):self.api_key=key;self.closed=False
+    async def aclose(self):self.closed=True
 
 class BindingTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
@@ -56,11 +57,25 @@ class BindingTests(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn('synthetic-secret',json.dumps(self.manager.provider_status('session_1')))
         self.assertEqual(self.manager.provider_status('session_1')['mode'],'UNAVAILABLE') # Mock must not claim REAL.
         await self.manager.stop_session('session_1','trace_1');self.assertEqual(session.llm.api_key,'');self.assertEqual(self.client.released,['session_1'])
+        self.assertTrue(session.llm.closed)
         self.assertFalse(self.manager.bound);self.assertFalse(self.manager.leases);self.assertFalse(self.manager.monitors)
     async def test_expired_lease_rejected_and_released(self):
         self.client.data=packet(20)
         with self.assertRaisesRegex(RuntimeFailure,'lease'):await self.create()
         self.assertEqual(self.client.released,['session_1']);self.assertFalse(self.manager.sessions)
+    async def test_release_survives_cancelled_connection_cleanup(self):
+        for failed_cleanup in (False,True):
+            with self.subTest(failed_cleanup=failed_cleanup):
+                await self.create()
+                session=self.manager.get_session('session_1')
+                async def cancel_close():raise asyncio.CancelledError
+                session.llm.aclose=cancel_close
+                with self.assertRaises(asyncio.CancelledError):
+                    if failed_cleanup:await self.manager._cleanup_failed_session('session_1')
+                    else:await self.manager.stop_session('session_1','trace_1')
+                self.assertEqual(session.llm.api_key,'')
+                self.assertEqual(self.client.released,['session_1'])
+                self.client.released.clear()
     async def test_lease_watchdog_stops_ready_session_before_expiry(self):
         await self.create();await self.manager._lease('session_1',0)
         self.assertFalse(self.manager.sessions);self.assertEqual(self.client.released,['session_1'])
@@ -133,6 +148,26 @@ class ClientTests(unittest.IsolatedAsyncioTestCase):
                 return httpx.Response(200,json={'code':'OK','data':packet()})
             client=BindingClient('http://127.0.0.1:1234',str(p),httpx.MockTransport(handler));await client.resolve('session_1')
             self.assertEqual(seen[0].headers['Authorization'],'Bearer '+'w'*40);self.assertEqual(seen[0].content,b'')
+    async def test_bound_connection_survives_two_answers_and_closes_at_release(self):
+        class TrackingTransport(httpx.AsyncBaseTransport):
+            closed = 0
+            requests = 0
+            async def handle_async_request(self, request):
+                self.requests += 1
+                return httpx.Response(200, content=b'data: {"choices":[{"delta":{"content":"hello"},"finish_reason":null}]}\n\ndata: {"choices":[{"delta":{},"finish_reason":"stop"}]}\n\ndata: [DONE]\n\n')
+            async def aclose(self):
+                self.closed += 1
+        upstream = TrackingTransport()
+        errors = {}
+        llm = BoundDeepSeek({'model':'deepseek-chat','maxTokens':32},'synthetic-secret',errors)
+        with patch('app.session_binding.FixedDeepSeekTransport',lambda *args:FixedDeepSeekTransport(transport=upstream)):
+            for _ in range(2):
+                self.assertEqual([x async for x in llm.stream(LLMRequest('hello','system','facts'))],['hello'])
+                self.assertEqual(upstream.closed,0,'connection pool closed after each answer')
+            self.assertEqual(upstream.requests,2)
+            await llm.aclose()
+            self.assertEqual(upstream.closed,1)
+
     async def test_upstream_auth_failure_is_static_and_visible(self):
         async def handler(request):return httpx.Response(401,json={'error':'echoed-synthetic-secret'})
         errors={};llm=BoundDeepSeek({'model':'deepseek-flash','maxTokens':32},'synthetic-secret',errors)

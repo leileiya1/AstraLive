@@ -53,6 +53,9 @@ func (c *InteractionController) Ensure(ctx context.Context, scope userconfig.Sco
 		if e.scope != scope {
 			return nil, ErrConflict
 		}
+		if err := c.config.CheckOwner(ctx, scope, "room", e.roomID); err != nil {
+			return nil, err
+		}
 		return e.scheduler, nil
 	}
 	for id, e := range c.entries {
@@ -102,7 +105,7 @@ func (c *InteractionController) Ensure(ctx context.Context, scope userconfig.Sco
 	workerCtx, cancel := context.WithCancel(c.root)
 	c.entries[sid] = &interactionEntry{scheduler: scheduler, cancel: cancel, scope: scope, roomID: se.RoomID, touched: time.Now()}
 	go func() {
-		tick := time.NewTicker(c.settings.Interval)
+		tick := time.NewTicker(c.settings.PollInterval)
 		defer tick.Stop()
 		for {
 			select {
@@ -110,12 +113,19 @@ func (c *InteractionController) Ensure(ctx context.Context, scope userconfig.Sco
 				scheduler.Stop()
 				return
 			case <-tick.C:
-				ctx, done := context.WithTimeout(workerCtx, 8*time.Second)
-				_ = scheduler.Tick(ctx)
-				done()
-				if scheduler.Snapshot().Stopped {
-					return
-				}
+			case <-scheduler.Updates():
+			}
+			// No idle SQL polling. Stop explicitly cancels this worker; a new
+			// candidate still checks live/product/busy before admission.
+			snap := scheduler.Snapshot()
+			if snap.Candidates == 0 && snap.Mode != interaction.CommentInteraction {
+				continue
+			}
+			ctx, done := context.WithTimeout(workerCtx, 8*time.Second)
+			_ = scheduler.Tick(ctx)
+			done()
+			if scheduler.Snapshot().Stopped {
+				return
 			}
 		}
 	}()
@@ -151,12 +161,22 @@ func (d *interactionDispatcher) Dispatch(ctx context.Context, v interaction.Sele
 	// Serialize Stop/operator/Speak admission. Separate schedulers cannot race the busy check.
 	s.commands.Lock()
 	defer s.commands.Unlock()
+	// Tick's selection can wait behind another Session/operator command. TTL
+	// still applies at admission, including SQL/Runtime work after the lock wait.
+	ctx, cancel := context.WithDeadline(ctx, v.Event.ReceivedAt.Add(d.controller.settings.TTL))
+	defer cancel()
+	if err := ctx.Err(); err != nil {
+		return "", err
+	}
 	s.Log.Info("interaction_trace", "traceId", v.Event.TraceID, "sessionId", d.sid, "stage", "comment_received", "clockDomain", "go_monotonic", "elapsedMs", 0)
 	s.Log.Info("interaction_trace", "traceId", v.Event.TraceID, "sessionId", d.sid, "stage", "scheduler_selected", "clockDomain", "go_monotonic", "elapsedMs", float64(v.SelectedAt.Sub(v.Event.ReceivedAt).Microseconds())/1000)
 	if v.Event.SessionID != d.sid || v.Event.InternalRoomID != d.room {
 		return "", ErrConflict
 	}
 	if err := d.controller.config.CheckOwner(ctx, d.scope, "session", d.sid); err != nil {
+		return "", err
+	}
+	if err := d.controller.config.CheckOwner(ctx, d.scope, "room", d.room); err != nil {
 		return "", err
 	}
 	gate, err := d.controller.gate(ctx, d.sid, d.room)
