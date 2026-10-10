@@ -446,45 +446,51 @@ class RuntimeSession:
                         raise
 
             audio_sequence = 0
-            async for sentence in sentences():
-                if generation != self.generation_id:
-                    return
-                if os.getenv("CAPTURE_TTS_TEXT_EVIDENCE") == "1":
-                    log.warning("tts_evidence %s", json.dumps({
-                        "sessionId": self.session_id,
-                        "utteranceId": item.utteranceId,
-                        "generationId": generation,
-                        "text": sentence,
-                    }, ensure_ascii=False))
-                if not synthesizing:
-                    await self.emit("UTTERANCE_SYNTHESIZING", item.traceId, item.utteranceId)
-                    synthesizing = True
-                failure_stage = "TTS"
-                async for chunk in self.tts_provider.synthesize_stream(sentence, item.voice, ctx):
-                    if generation != self.generation_id or chunk.generation_id != generation:
-                        continue
-                    chunk = replace(chunk, sequence=audio_sequence)
-                    audio_sequence += 1
-                    if not rendering:
-                        await self.emit("UTTERANCE_RENDERING", item.traceId, item.utteranceId)
-                        rendering = True
-                    failure_stage = "AVATAR"
-                    render_started = time.monotonic()
-                    frames = await self.avatar_engine.push_audio(chunk)
-                    if hasattr(self.media_output, "record_render_ms"):
-                        self.media_output.record_render_ms((time.monotonic() - render_started) * 1000)
+            async def synthesized_audio():
+                nonlocal synthesizing, failure_stage
+                async for sentence in sentences():
+                    if os.getenv("CAPTURE_TTS_TEXT_EVIDENCE") == "1":
+                        log.warning("tts_evidence %s", json.dumps({
+                            "sessionId": self.session_id, "utteranceId": item.utteranceId,
+                            "generationId": generation, "text": sentence,
+                        }, ensure_ascii=False))
                     if generation != self.generation_id:
                         return
-                    if not playing:
-                        await self.emit("UTTERANCE_PLAYING", item.traceId, item.utteranceId)
-                        playing = True
-                    failure_stage = "MEDIA"
-                    await self.media_output.push_audio(chunk)
-                    for frame in frames:
-                        if frame.generation_id != self.generation_id:
-                            break
-                        await self.media_output.push_video(frame)
+                    if not synthesizing:
+                        await self.emit("UTTERANCE_SYNTHESIZING", item.traceId, item.utteranceId)
+                        synthesizing = True
                     failure_stage = "TTS"
+                    async for chunk in self.tts_provider.synthesize_stream(sentence, item.voice, ctx):
+                        yield chunk
+            audio_source = synthesized_audio()
+            stream_hook = getattr(self.avatar_engine, "stream_audio", None)
+            if stream_hook:
+                audio_source = stream_hook(audio_source, generation)
+            async for chunk in audio_source:
+                if generation != self.generation_id or chunk.generation_id != generation:
+                    continue
+                chunk = replace(chunk, sequence=audio_sequence)
+                audio_sequence += 1
+                if not rendering:
+                    await self.emit("UTTERANCE_RENDERING", item.traceId, item.utteranceId)
+                    rendering = True
+                failure_stage = "AVATAR"
+                render_started = time.monotonic()
+                frames = await self.avatar_engine.push_audio(chunk)
+                if hasattr(self.media_output, "record_render_ms"):
+                    self.media_output.record_render_ms((time.monotonic() - render_started) * 1000)
+                if generation != self.generation_id:
+                    return
+                if not playing:
+                    await self.emit("UTTERANCE_PLAYING", item.traceId, item.utteranceId)
+                    playing = True
+                failure_stage = "MEDIA"
+                await self.media_output.push_audio(chunk)
+                for frame in frames:
+                    if frame.generation_id != self.generation_id:
+                        break
+                    await self.media_output.push_video(frame)
+                failure_stage = "TTS"
             if generation == self.generation_id:
                 failure_stage = "MEDIA"
                 await self.media_output.drain(generation)

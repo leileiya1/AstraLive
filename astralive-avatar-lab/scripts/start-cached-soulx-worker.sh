@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 # Reuse the verified GPU installation. Never install dependencies or download weights.
 set -euo pipefail
+# Product mode is explicit and isolated from historical experiment state.
+if [[ -n "${ASTRALIVE_GPU_CONFIG:-}" ]]; then
+  : "${ASTRALIVE_GPU_CODE_ROOT:?Set the deployed AstraLive code root}"
+  : "${ASTRALIVE_GPU_PYTHON:?Use the existing validated Python executable}"
+  cd "$ASTRALIVE_GPU_CODE_ROOT"
+  exec "$ASTRALIVE_GPU_PYTHON" -m gpu_worker.cli "${1:-start}" --config "$ASTRALIVE_GPU_CONFIG"
+fi
 lab=/root/autodl-tmp/astralive-avatar-lab
 py="$lab/environments/astralive-soulx/bin/python"
 run_dir="${SOULX_FINAL_RUN_DIR:-soulx-cached-deployment}"

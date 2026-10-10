@@ -95,6 +95,7 @@ func serviceToken(path string, next http.Handler) http.Handler {
 func (s *Service) PublicRouter() http.Handler {
 	r := chi.NewRouter()
 	r.Use(s.auth)
+	r.Get("/profiles/{profileId}/worker-status", s.workerStatus)
 	r.Get("/me", func(w http.ResponseWriter, r *http.Request) {
 		write(w, r, 200, map[string]any{"identity": scopeOf(r), "contractVersion": "0.3.0"}, nil)
 	})

@@ -22,6 +22,7 @@ type Service struct {
 	Hosts                              map[string]bool
 	IdentityTokenFile, WorkerTokenFile string
 	Client                             *http.Client
+	Workers                            map[string]WorkerEndpoint
 }
 
 const selectProfiles = `SELECT p.id,p.kind,p.name,p.provider,p.config,p.version,p.enabled,p.is_default,(c.profile_id IS NOT NULL),p.verification,p.error_code,CASE WHEN p.kind='GPU_WORKER' AND (p.health_at IS NULL OR p.health_at < now()-interval '60 seconds') THEN 'UNKNOWN' ELSE p.health END,p.updated_at FROM config_profiles p LEFT JOIN provider_credentials c ON c.tenant_id=p.tenant_id AND c.user_id=p.user_id AND c.profile_id=p.id WHERE p.tenant_id=$1 AND p.user_id=$2`
