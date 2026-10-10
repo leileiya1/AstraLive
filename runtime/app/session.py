@@ -535,17 +535,18 @@ class SessionManager:
         except KeyError:
             raise RuntimeFailure("SESSION_NOT_FOUND", "Session not found", 404) from None
 
-    async def create_session(self, request: CreateSession) -> None:
+    async def create_session(self, request: CreateSession, *, factories=None, max_queue=None) -> None:
         async with self.lock:
             if request.sessionId in self.sessions:
                 raise RuntimeFailure("CONFLICT", "Session already exists", 409)
             if sum(s.state not in {"ENDED", "FAILED"} for s in self.sessions.values()) >= self.settings.max_sessions:
                 raise RuntimeFailure("RUNTIME_OVERLOADED", "Session capacity reached", 429)
-            avatar = self.avatar_factory()
+            llm_factory, tts_factory, avatar_factory, media_factory = factories or (self.llm_factory, self.tts_factory, self.avatar_factory, self.media_factory)
+            avatar = avatar_factory()
             avatar.configure_session(request.config)
-            media = self.media_factory()
+            media = media_factory()
             media.configure_session(request.config)
-            session = RuntimeSession(request, self.llm_factory(), self.tts_factory(), avatar, media, self.publisher, self.settings.max_queue, self.tool_client)
+            session = RuntimeSession(request, llm_factory(), tts_factory(), avatar, media, self.publisher, self.settings.max_queue if max_queue is None else max_queue, self.tool_client)
             session.state = "PREPARING"
             self.sessions[request.sessionId] = session
             task = asyncio.create_task(session.prepare())
