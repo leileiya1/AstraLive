@@ -1,0 +1,6 @@
+--- FAIL: TestAuditSelectionExpiresWhileWaitingForCommandLock (1.92s)
+    --- FAIL: TestAuditSelectionExpiresWhileWaitingForCommandLock/idle_comment_admitted_without_two_second_poll_wait (0.58s)
+        interaction_audit_test.go:104: idle comment waited for 2-second polling cadence despite available speech consumer
+FAIL
+FAIL	astralive/backend/internal/app	2.370s
+FAIL

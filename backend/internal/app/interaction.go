@@ -105,7 +105,7 @@ func (c *InteractionController) Ensure(ctx context.Context, scope userconfig.Sco
 	workerCtx, cancel := context.WithCancel(c.root)
 	c.entries[sid] = &interactionEntry{scheduler: scheduler, cancel: cancel, scope: scope, roomID: se.RoomID, touched: time.Now()}
 	go func() {
-		tick := time.NewTicker(c.settings.Interval)
+		tick := time.NewTicker(c.settings.PollInterval)
 		defer tick.Stop()
 		for {
 			select {
@@ -113,12 +113,19 @@ func (c *InteractionController) Ensure(ctx context.Context, scope userconfig.Sco
 				scheduler.Stop()
 				return
 			case <-tick.C:
-				ctx, done := context.WithTimeout(workerCtx, 8*time.Second)
-				_ = scheduler.Tick(ctx)
-				done()
-				if scheduler.Snapshot().Stopped {
-					return
-				}
+			case <-scheduler.Updates():
+			}
+			// No idle SQL polling. Stop explicitly cancels this worker; a new
+			// candidate still checks live/product/busy before admission.
+			snap := scheduler.Snapshot()
+			if snap.Candidates == 0 && snap.Mode != interaction.CommentInteraction {
+				continue
+			}
+			ctx, done := context.WithTimeout(workerCtx, 8*time.Second)
+			_ = scheduler.Tick(ctx)
+			done()
+			if scheduler.Snapshot().Stopped {
+				return
 			}
 		}
 	}()

@@ -56,3 +56,28 @@ func TestAuditCancelDuringReceiveLockWait(t *testing.T) {
 		t.Fatal("cancelled replay queued a candidate")
 	}
 }
+
+func TestFastPollDoesNotIncreaseAutomaticSpeechFrequency(t *testing.T) {
+	s, now, d, _ := fixture(t)
+	receive(t, s, event("poll-price", "a", "多少钱？"))
+	receive(t, s, event("poll-stock", "b", "整体库存有多少？"))
+	if err := s.Tick(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	for i := 0; i < 19; i++ {
+		*now = now.Add(s.config.PollInterval)
+		if err := s.Tick(context.Background()); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if len(d.items) != 1 {
+		t.Fatal("100ms polling bypassed two-second admission interval", len(d.items))
+	}
+	*now = now.Add(s.config.PollInterval)
+	if err := s.Tick(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	if len(d.items) != 2 || s.Snapshot().Counters.Force != 0 {
+		t.Fatal("reply interval/fence changed")
+	}
+}

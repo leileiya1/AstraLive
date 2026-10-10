@@ -1,106 +1,78 @@
 # AstraLive v0.4 — 独立端到端延迟复核
 
-2026-10-10，审计分支 `audit/v04-interaction-gate`，基线 main `59d96c8818a4512651a2f945ced71278929c9e12`。
+2026-10-11。fetch后的main仍为 `59d96c8818a4512651a2f945ced71278929c9e12`；分支 `audit/v04-interaction-gate`。
 
-**END-TO-END LATENCY: BLOCKED**。总体20样本的 Chrome 估计 P50/P95=2896.53/4176.80ms 复算一致，但P50保留误差范围跨过3秒；原始 clock request/response brackets没有保存，且音频关联不具备独立 trace marker。**已观测 DeepSeek Path: FAIL**：6条样本即使采用乐观时钟下界仍不满足P50≤3s、P95≤5s。二者分别报告，不能把总分位数解释为复杂问答成绩。
+**END-TO-END LATENCY: PASS** — 本轮正常空闲/低负载顺序输入的Fast、简单LLM、商品综合LLM分路径目标，Chrome软件播放观察与本地RTMP解码。此状态不代表正在长时间讲解时、高负载或官方平台观众端的3秒SLA；忙主播与高频等待仍明确未达该目标。
 
-## 原始材料与可复核程度
+## 原始20条的独立复算
 
-输入为 `agent-b-real-browser.json`、`agent-b-real-summary.json`、`agent-b-real-prior-trials.json`、`agent-b-real-faults.json`、`agent-b-real-headless.json`。独立脚本 [revalidate-interaction-latency.py](../../scripts/revalidate-interaction-latency.py) 仅离线读取，全部统计、原文件 SHA256、样本 indices、分解和门槛见 [latency-recomputed.json](evidence/independent/latency-recomputed.json)。
+原Agent B提交JSON及私有browser-fixed20b完全一致；nearest rank复算总体Chrome P50/P95=2896.53/4176.80ms，最大6668.99ms，P50上下界2598.93–3193.64ms，因此原结论只能BLOCKED。Fast14为2709.72/3238.89，真实LLM6为3973.84/6668.99，即使乐观下界仍FAIL。RTMP原始尾部6000行仅能重新匹配最后13条，首7条已滚出；可用旧Runtime/Backend日志不足以重建正常20条完整admission。见 latency-recomputed.json 和 original-evidence-audit.json。没有删除旧慢样本或把6条LLM混成20条复杂咨询。
 
-还核对了 `/tmp/astralive-agent-b-real-private/browser-fixed20b.json`：20条 sample 和20条 attempts 与提交 JSON 完全相同。独立 RTMP 原始 `rtmp-full20.json` 的尾部保留6000行，其中13条样本的首音频/首视频记录均可逐对象匹配；前7条已从有界 deque 中滚出，不能声称全20条均在最终 receiver 原始尾部再次验证。可用 Runtime observed log 及检查的原 GPU-host Backend log 没有这次正常20样本的完整 trace 行；它们不能成为重新构建 Go/Runtime admission 时间的凭据。这些限制与 hashes 明确保留在 [original-evidence-audit.json](evidence/independent/original-evidence-audit.json)。
+## 本轮真实拓扑与改进
 
-脚本独立确认：样本/attempt indices一一对应，20个不同TraceId/UtteranceId，terminal均completed，所有分段有限且非负，Runtime accepted→speakable→PCM→GPU receipt→media push→completed单调；Chrome/RTMP marker与generation吻合，首 Video PTS 与 speechOriginSample 时间轴吻合；所有已存 lower/upper 与 estimate±uncertainty一致。相关数字没有缺失样本被补0，也未删除最大延迟。
+测试只用一次性克隆DB、独立Redis/MediaMTX。Backend与Bound Runtime位于school-linux，GPU位于用户授权的空闲RTX3080，Chrome位于本机；不等同于旧Agent B的Backend跨主机部署。新的改进前后使用相同拓扑。
 
-这证明 retained JSON 的统计和身份/时间轴内部一致；不能独立证明未保留的原始 clock exchange 时刻、每个音频波峰必定来自该 Utterance、每条原始日志或实际扬声器输出。
+1. 解耦轮询和自动口播间隔：轮询100ms，自动口播最小间隔仍2秒；无候选时不做空闲SQL查询。
+2. 新候选与显式resume通过单槽非阻塞信号立即唤醒；仍经过所有busy、owner、product、TTL、receipt检查。Tick入口等待由基线约1–2秒降到即时唤醒组约0.03–0.07ms；历史SelectedAt采用Tick入口now，gate SQL计入后续selected→speakable，并非精确决策完成时间。该stage归属不影响总延迟；不是跨网络到达。
+3. 每Session独享单连接、有界DeepSeek连接池，60秒keepalive，Stop/准备失败/close关闭。回归证明不再逐请求关闭；不宣称上游首token波动全部由TLS引起。
+4. 首个完整中文逗号短分句8字符即可启动TTS；后续分句/ASCII逗号仍保持原规则，数字分隔符、单位、型号、有界queue、取消不变。不是提前播放虚构回应、固定欢迎语或将完整LLM咨询改成Fast Path。
 
-## Clock domain 与观测含义
+所有生产变更先保存失败回归，再局部修复；没有改PCM样本时间轴、PTS、Fence、消费Credit、GPU通信协议或SoulX模型。
 
-| 观测 | Clock / 边界 | 能证明什么 |
-| --- | --- | --- |
-| Go comment_received→selected | 本机 Go monotonic | queue waiting；不是 source平台网络耗时 |
-| Runtime admission→各stage | Runtime monotonic | Runtime内部相对时长；不能直接减 Go wall time |
-| selected→first_speakable | observer把Go receipt age与Runtime clockOriginAge映射到Chrome，保留合计 uncertainty | 跨主机区间估计；dispatch ack不是精确Runtime admission |
-| tts_first_pcm | Runtime收到非空增量PCM | 未证明观众已经听到 |
-| avatar_first_generated_frame | Runtime收到当前 generation 的实际 GPU TALKING packet | 非Worker主机计算起点，非浏览器呈现 |
-| Chrome audio | analyser首次非零波峰，performance.now | 已解码流观察；没有audio trace marker，也不是物理扬声器时刻 |
-| Chrome video | marker、generation与expectedDisplayTime | 浏览器帧呈现估计；不是硬件屏幕回执 |
-| RTMP | receiver_monotonic，decoded H264/AAC | 独立本地接收解码；不是官方直播平台观众播放 |
+## 全部真实批次分路径统计
 
-原始 observer 使用 request/response interval 中点和 half-width 对齐 age；算法没有直接相减不同主机 wall timestamps。统计脚本能检查已保存的区间，但未保存每次 q.start/q.end、原始 age/source receipt，使独立重建全部 offset 不可能。不能将报告过的 uncertainty 当作已独立再测量。
+单位ms。算法为升序 `ceil(n*p)-1`；不插值、不删除max。每条保留原始clock交换start/end/age，用RTT包围区间的中点估计，分别对每个样本lower/upper取分位数；门槛须upper≤目标才能PASS。阶段P50不相加冒充总P50。
 
-Chrome A/V onset 使用 `max(audio.at,video.displayAt)`；video有业务marker，而audio只是input发送之后第一次峰值。最终正常试验在前一语句完成后固定等待，不能用于证明“正在讲话时随机新评论”的可靠音频归属。GPU credit/FFmpeg pipe completion也不是观众音画播放时刻。
+| 批次 / 路径 / 观察端 | n | P50 | P95 | 最大 | P50范围 | P95范围 | 数值门槛 |
+| --- | ---: | ---: | ---: | ---: | --- | --- | --- |
+| Agent C基线（2秒轮询） / all / chrome | 20 | 3209.90 | 4654.59 | 5280.46 | 3199.80–3220.00 | 4644.19–4664.99 | FAIL |
+| Agent C基线（2秒轮询） / all / rtmp | 20 | 3269.23 | 4723.43 | 5334.60 | 3234.68–3303.78 | 4677.58–4769.28 | FAIL |
+| Agent C基线（2秒轮询） / fast / chrome | 14 | 2636.19 | 3635.52 | 3635.52 | 2628.44–2644.57 | 3607.32–3663.72 | PASS |
+| Agent C基线（2秒轮询） / fast / rtmp | 14 | 2704.99 | 3673.53 | 3673.53 | 2647.10–2766.04 | 3613.38–3733.68 | PASS |
+| Agent C基线（2秒轮询） / llm / chrome | 6 | 4469.13 | 5280.46 | 5280.46 | 4458.88–4479.38 | 5269.21–5291.71 | FAIL |
+| Agent C基线（2秒轮询） / llm / rtmp | 6 | 4492.93 | 5334.60 | 5334.60 | 4444.78–4541.08 | 5301.20–5368.00 | FAIL |
+| 100ms轮询，简单LLM20 / all / chrome | 20 | 2726.09 | 3551.83 | 3729.52 | 2716.04–2736.14 | 3526.03–3577.63 | PASS |
+| 100ms轮询，简单LLM20 / llm / chrome | 20 | 2726.09 | 3551.83 | 3729.52 | 2716.04–2736.14 | 3526.03–3577.63 | PASS |
+| 100ms轮询，混合26 / all / chrome | 26 | 1718.13 | 4325.29 | 5660.12 | 1706.63–1729.63 | 4314.89–4335.69 | PASS |
+| 100ms轮询，混合26 / all / rtmp | 26 | 1770.79 | 4382.09 | 5720.29 | 1709.99–1831.59 | 4316.64–4447.54 | PASS |
+| 100ms轮询，混合26 / fast / chrome | 14 | 1404.70 | 1768.60 | 1768.60 | 1393.65–1415.75 | 1757.80–1779.40 | PASS |
+| 100ms轮询，混合26 / fast / rtmp | 14 | 1424.79 | 1791.85 | 1791.85 | 1388.95–1473.69 | 1741.75–1841.95 | PASS |
+| 100ms轮询，混合26 / llm / chrome | 12 | 2979.96 | 5660.12 | 5660.12 | 2972.36–2987.56 | 5627.37–5692.87 | FAIL |
+| 100ms轮询，混合26 / llm / rtmp | 12 | 3019.26 | 5720.29 | 5720.29 | 2974.26–3064.26 | 5649.04–5791.54 | FAIL |
+| 100ms轮询，混合26 / complex / chrome | 6 | 2624.97 | 5660.12 | 5660.12 | 2614.12–2635.82 | 5627.37–5692.87 | FAIL |
+| 100ms轮询，混合26 / complex / rtmp | 6 | 2667.69 | 5720.29 | 5720.29 | 2619.69–2715.69 | 5649.04–5791.54 | FAIL |
+| 连接复用，综合20 / all / chrome | 20 | 2718.54 | 5014.48 | 5138.53 | 2707.69–2729.39 | 5005.68–5023.28 | FAIL |
+| 连接复用，综合20 / llm / chrome | 20 | 2718.54 | 5014.48 | 5138.53 | 2707.69–2729.39 | 5005.68–5023.28 | FAIL |
+| 连接复用，综合20 / complex / chrome | 20 | 2718.54 | 5014.48 | 5138.53 | 2707.69–2729.39 | 5005.68–5023.28 | FAIL |
+| 立即唤醒，综合20 / all / chrome | 20 | 2994.18 | 3572.66 | 3696.23 | 2984.03–3004.33 | 3562.31–3583.01 | BLOCKED |
+| 立即唤醒，综合20 / all / rtmp | 20 | 2972.22 | 3559.69 | 3716.79 | 2927.42–3017.02 | 3513.74–3605.64 | BLOCKED |
+| 立即唤醒，综合20 / llm / chrome | 20 | 2994.18 | 3572.66 | 3696.23 | 2984.03–3004.33 | 3562.31–3583.01 | BLOCKED |
+| 立即唤醒，综合20 / llm / rtmp | 20 | 2972.22 | 3559.69 | 3716.79 | 2927.42–3017.02 | 3513.74–3605.64 | BLOCKED |
+| 立即唤醒，综合20 / complex / chrome | 20 | 2994.18 | 3572.66 | 3696.23 | 2984.03–3004.33 | 3562.31–3583.01 | BLOCKED |
+| 立即唤醒，综合20 / complex / rtmp | 20 | 2972.22 | 3559.69 | 3716.79 | 2927.42–3017.02 | 3513.74–3605.64 | BLOCKED |
+| 首短分句，综合20 / all / chrome | 20 | 2644.14 | 3656.62 | 5141.91 | 2631.46–2656.23 | 3617.47–3695.77 | PASS |
+| 首短分句，综合20 / all / rtmp | 20 | 2692.73 | 3727.61 | 5191.57 | 2622.23–2748.36 | 3642.06–3813.16 | PASS |
+| 首短分句，综合20 / llm / chrome | 20 | 2644.14 | 3656.62 | 5141.91 | 2631.46–2656.23 | 3617.47–3695.77 | PASS |
+| 首短分句，综合20 / llm / rtmp | 20 | 2692.73 | 3727.61 | 5191.57 | 2622.23–2748.36 | 3642.06–3813.16 | PASS |
+| 首短分句，综合20 / complex / chrome | 20 | 2644.14 | 3656.62 | 5141.91 | 2631.46–2656.23 | 3617.47–3695.77 | PASS |
+| 首短分句，综合20 / complex / rtmp | 20 | 2692.73 | 3727.61 | 5191.57 | 2622.23–2748.36 | 3642.06–3813.16 | PASS |
 
-## 分位数与独立计算
+普通LLM20是欢迎语/开场白，商品综合20是价格+库存+搭配建议、XL+价格+库存+购买判断；均逐条有llm_started/llm_first_token，不能将简单欢迎语成绩称为复杂咨询。混合26中的综合6曾出现5660.12ms，上游首token约3873ms；连接复用后的综合20仍有5014.48/5138.53ms。它们完整保留在JSON和表中，各代码阶段分别评价，不合并到最终批次稀释，也不反复重测未修改的同一代码直到PASS。
 
-经验 nearest rank：升序数组位置 `ceil(n*p)-1`。不是插值分位数，不是删掉慢样本后求平均，也没有把阶段P50相加冒充总P50。误差范围是各 sample lower、upper分别排序后的分位数，允许排序变化；不是简单给总P50加一个统一RTT。
+每次修改后进行有界真实复测。最终批次raw JSON、attempts、TraceId/UtteranceId、stage与media marker/epoch/generation/PTS、terminal、误差上下界在real-browser-clause-complex20.json；独立重算见clause-complex-latency.json。原GPU epoch全程未重启。latest recording本地保留，不向Git提交大媒体。
 
-单位毫秒。
+## Clock和观测限制
 
-| 路径 / receiver | n | P50估计 | P95估计 | 最大 | P50上下界 | P95上下界 |
-| --- | ---: | ---: | ---: | ---: | --- | --- |
-| Overall / Chrome | 20 | 2896.53 | 4176.80 | 6668.99 | 2598.93–3193.64 | 3924.75–4428.85 |
-| Fast / Chrome | 14 | 2709.72 | 3238.89 | 3238.89 | 2433.84–2874.07 | 2948.19–3529.59 |
-| DeepSeek / Chrome | 6 | 3973.84 | 6668.99 | 6668.99 | 3750.29–4197.39 | 6364.74–6973.24 |
-| Overall / RTMP | 20 | 2974.99 | 4228.91 | 6754.45 | 2625.56–3248.74 | 3942.21–4515.61 |
-| Fast / RTMP | 14 | 2734.35 | 3300.57 | 3300.57 | 2459.11–3000.01 | 2960.82–3640.32 |
-| DeepSeek / RTMP | 6 | 4007.64 | 6754.45 | 6754.45 | 3762.59–4252.69 | 6381.65–7127.25 |
+Go、Runtime、receiver各自monotonic；Chrome performance.now为映射基准，不能直接相减跨主机wall clock。第一PCM仅证明增量音频，GPU packet仅证明当前业务帧；端到端使用 `max(Chrome analyser音频peak, marker视频expectedDisplayTime)`。Native RTP统计辅助验证解码/播放，无物理扬声器或屏幕硬件回执。
 
-Fast Chrome 的 retained upper 可以满足两项数值目标，但n14、原始clock/audio约束仍在，且不是本轮修复后的新真实测量，不能升级完整验收为PASS。RTMP Fast P50 upper为3000.0057ms，不能通过四舍五入称为≤3000ms。LLM n6的P95采用max，样本不足以估计稳定人口分布；但该批已观测样本的两项目标明确未通过。
+正常样本随机等待600–2200ms后输入，但始终等上一条语音完成；不能叫繁忙期Poisson压力验收。音频使用发送后首个非零peak，没有独立trace编码；视频使用speechMarker+generation。忙场景不能套用此音频关联方式，因此另行记录队列与完成事件。RTMP只验证独立本地解码，不是官方平台观众播放；decoder有界尾部不保证最终尾部仍含每条首帧，per-sample JSON保存实际匹配对象。
 
-完整20条保留如下；详尽ID/边界与每条Runtime points仍在原JSON。
+首个pool-complex20的RTMP观察命令误用了无效flag/错误observer路径：仅Chrome采样，不补造RTMP字段；后续wake/clause组使用有效flag并重新运行正确观察器。
 
-| index | topic / 路径 | Chrome A/V ms |
-| --- | --- | ---: |
-| 1 | price / Fast | 2589.28 |
-| 2 | sizes / Fast | 3238.89 |
-| 3 | stock / Fast | 2709.72 |
-| 4 | size_stock / Fast | 2608.50 |
-| 5 | chat / LLM | 3973.84 |
-| 6 | consultation / LLM | 4059.46 |
-| 7 | price / Fast | 2896.53 |
-| 8 | sizes / Fast | 2993.22 |
-| 9 | stock / Fast | 2925.21 |
-| 10 | size_stock / Fast | 2653.67 |
-| 11 | chat / LLM | 4176.80 |
-| 12 | consultation / LLM | **6668.99** |
-| 13 | price / Fast | 2718.73 |
-| 14 | sizes / Fast | 2755.82 |
-| 15 | stock / Fast | 2601.44 |
-| 16 | size_stock / Fast | 2523.40 |
-| 17 | chat / LLM | 3853.28 |
-| 18 | consultation / LLM | 3723.47 |
-| 19 | price / Fast | 2959.84 |
-| 20 | sizes / Fast | 2306.54 |
+## 失败与仍未达标场景
 
-## 独立阶段分解
+Redis stream设置错误导致首次PREPARING超时；marker未启用导致第二次8个业务任务完成却无法关联；全部原JSON保留。wake-complex20正常20条已全部完成、FORCE与Replay取消通过，但后续busy场景与前一Replay backlog共享候选，最终等待超时。旧候选TTL及SQL完成状态、raw trace保留在real-wake-traces.json；下一轮保持Operator override等待前一backlog自然TTL后，独立测试busy，不清Redis、不改TTL、不移除失败证据。
 
-每格P50/P95 ms，Fast n14、LLM n6。上下文仍包含跨主机观测误差。
+已有长AUTO_SCRIPT讲话时普通评论默认不抢占：真实回复完成等待约17–19秒；高频组选择等待P95约14.25秒。业务正确性/无自动FORCE不等于繁忙期3秒响应。要让长讲解场景也满足同等响应目标，需在下一阶段定义短讲解段、自然语句边界让出与恢复策略；当前没有完整自动场控，本轮不擅自开发它。DeepSeek首token仍有3.5秒以上波动，有限样本达标不构成供应商或持续服务SLA。
 
-| 阶段 | Fast | DeepSeek | 精度 |
-| --- | --- | --- | --- |
-| comment_receive→selected | 49.74 / 118.57 | 51.24 / 118.50 | Go本机；最终正常试验空闲时输入 |
-| selected→first_speakable | 1161.24 / 1432.19 | 2366.39 / 4966.58 | Go/Runtime映射；非精确admission分解 |
-| first_speakable→first_PCM | 123.61 / 167.52 | 77.55 / 79.93 | Runtime本机 |
-| first_PCM→GPU packet | 1136.98 / 1486.62 | 1153.75 / 1473.06 | Runtime观察；包含原样本窗口/调度/收包 |
-| GPU packet→Chrome video | 168.84 / 210.98 | 177.23 / 187.67 | Runtime/Chrome映射；非平台播放 |
-
-复杂咨询主要在 first_speakable 之前增加耗时。其余阶段的 retained 数据不支持“通过删GPU缓冲/固定音画延迟就可达标”的改法。优先降低已知 Go/Tool/Runtime跨主机往返并改善观测，保留 PCM 时间轴、PTS、Fence与消费credit；不能在没有新真实证据时认定优化后的收益。
-
-## 失败样本、先前试验和目标场景
-
-最终正常run20 attempts全部completed、20条都有A/V onset；10人合并preflight是另一个已完成任务，属于正常input30/selection21中的非计时preflight，未冒充第21条计时样本。fault试验中的人工FORCE、interrupt、网络/Worker恢复单独列出，没有当作正常成功样本。
-
-历史 prior trials 保留：2/2 preflight完成；两轮20请求各只完成5条，随后 directed request未选中（其中一次还有SSH中断）；另一轮setup failed，0 Session/0 samples。它们没有从档案删除，也没有与修复后最终run混合求好看的分位数。不能把最终run的0/20失败解释成整轮所有试验0失败。
-
-本轮随机wall load 的 comment→selection P95已达到13–15秒；busy/backlog场景不能套用上表空闲样本的2.9秒总中位数。Fast、LLM、讲话中评论、高频混合与Operator FORCE五类需分别观测。当前READY Worker不存在，因此新真实五类试验BLOCKED；本轮没有购买/租赁/启动/重启GPU或执行hour soak。
-
-## 更严格的下一次测试
-
-1. 在隔离DB/Redis和空闲READY Worker上，用一个observer monotonic clock记录 Adapter ingress和实际Chrome视频/audio onset；尽量同机放置Backend/Runtime/Tool，减少观测与控制RTT。
-2. 保存每个原始clock exchange的send/receive、age、TraceId、UtteranceId；输出各阶段上下界。无raw bracket的estimate只能作为估计。
-3. 加入仅限测试的音频身份/PTS关联或独立loopback测量，不能用前一个讲话的非零峰值代表新回复；保留所有失败、超时与慢样本。
-4. 分层采集足够Fast/LLM样本，以随机到达覆盖已有讲话、高频和FORCE。报告全部输入、selected、failed、expired/dropped、请求数和真实CPU/native/GPU资源；不可只筛选空闲成功任务。
-5. 真正平台观众端与真人中文/唇形另设验收。任何local RTMP decode或Browser analyser都不得重命名为平台观众/扬声器PASS。
-
-数值目标继续使用P50≤3秒、P95≤5秒，本轮没有更改统计口径或媒体协议。
+官方平台观众端、长期高频真实LLM吞吐、多实例和破坏性共享Worker恢复NOT TESTED。真人评审另外记录于human-review.json：用户已确认可用录像及六组试听的读音、音画同步、唇形通过；这不是物理端到端延迟测量。

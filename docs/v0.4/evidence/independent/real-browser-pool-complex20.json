@@ -1,0 +1,1904 @@
+{
+  "classification": "MOCK_COMMENTS_REAL_DEEPSEEK_XIAOYA_SOULX_CHROME",
+  "samples": [
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 13660.899999976158,
+          "end": 13683.100000023842,
+          "receiptAgeMs": 152.632,
+          "receiveToSelectedMs": 77.911
+        },
+        "runtime": {
+          "start": 22666.799999952316,
+          "end": 22680.799999952316,
+          "clockOriginAgeMs": 9058.746560942382
+        }
+      },
+      "index": 1,
+      "topic": "complex_price_stock",
+      "traceId": "interaction_ce93341d8f4b5e55fd037afab92039a16f586edb50c81b5ae9be0da781cc8775",
+      "utteranceId": "utt_3672a59fa59f9a4b7c72bb1364abcf24",
+      "terminal": "utterance.completed",
+      "selectionMs": 77.911,
+      "receiptAlignmentUncertaintyMs": 11.100000023841858,
+      "selectedToSpeakableMs": 1433.9946481055613,
+      "selectedToSpeakableUncertaintyMs": 18.100000023841858,
+      "speakableToPCMMS": 93.42923387885094,
+      "pcmToGPUFrameMS": 1453.5629621241242,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0010919757187366486,
+        "llm_started": 17.31195207685232,
+        "llm_first_token": 1168.9632760826498,
+        "first_speakable_segment": 1416.220209095627,
+        "tts_started": 1417.2924240119755,
+        "tts_first_pcm": 1509.649442974478,
+        "avatar_first_returned_frame": 2962.3931320384145,
+        "media_first_audio": 2963.1806819234043,
+        "avatar_first_generated_frame": 2963.212405098602,
+        "media_first_video": 2963.2374949287623,
+        "utterance_completed": 8983.319472055882
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 4,
+        "firstVideoPTSUS": 9000000,
+        "speechOriginSample": 144000
+      },
+      "firstCorrelatedAudio": {
+        "at": 16798.600000023842,
+        "contextTime": 13.418666666666667,
+        "peak": 0.011719107627868652
+      },
+      "firstCorrelatedVideo": {
+        "at": 16728.6,
+        "displayAt": 16728.6,
+        "mediaTime": 13.484,
+        "marker": 4,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 3279.2320000238415,
+      "firstAudioVideoDetectionDifferenceMs": -70.00000002384331,
+      "gpuToBrowserVideoMs": 150.3341558914617,
+      "gpuToBrowserUncertaintyMs": 14,
+      "receiveToCorrelatedAVLowerMs": 3268.1319999999996,
+      "receiveToCorrelatedAVUpperMs": 3290.3320000476833
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 23761.100000023842,
+          "end": 23779.399999976158,
+          "receiptAgeMs": 138.928,
+          "receiveToSelectedMs": 66.724
+        },
+        "runtime": {
+          "start": 32385,
+          "end": 32401.799999952316,
+          "clockOriginAgeMs": 8676.214325008914
+        }
+      },
+      "index": 2,
+      "topic": "complex_size_price_stock",
+      "traceId": "interaction_dc7b5a9c987cfde86cdf6efb2cd6289b6e65397bb66983454bf46f5ba9831760",
+      "utteranceId": "utt_2258f2559efd74459797f2209958caaa",
+      "terminal": "utterance.completed",
+      "selectionMs": 66.724,
+      "receiptAlignmentUncertaintyMs": 9.149999976158142,
+      "selectedToSpeakableMs": 1199.3303508591816,
+      "selectedToSpeakableUncertaintyMs": 17.549999952316284,
+      "speakableToPCMMS": 32.51444501802325,
+      "pcmToGPUFrameMS": 1085.2062399499118,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.000910833477973938,
+        "llm_started": 27.091689873486757,
+        "llm_first_token": 1122.952159959823,
+        "first_speakable_segment": 1180.1906758919358,
+        "tts_started": 1180.8563298545778,
+        "tts_first_pcm": 1212.705120909959,
+        "avatar_first_returned_frame": 2297.2768067847937,
+        "media_first_audio": 2297.888984903693,
+        "avatar_first_generated_frame": 2297.911360859871,
+        "media_first_video": 2297.924749786034,
+        "utterance_completed": 8613.137295935303
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 6,
+        "firstVideoPTSUS": 15560000,
+        "speechOriginSample": 248960
+      },
+      "firstCorrelatedAudio": {
+        "at": 26219.799999952316,
+        "contextTime": 22.837333333333333,
+        "peak": 0.05090487375855446
+      },
+      "firstCorrelatedVideo": {
+        "at": 26178.3,
+        "displayAt": 26194.9,
+        "mediaTime": 22.956,
+        "marker": 6,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2588.477999952316,
+      "firstAudioVideoDetectionDifferenceMs": -24.89999995231483,
+      "gpuToBrowserVideoMs": 179.80296417288628,
+      "gpuToBrowserUncertaintyMs": 16.799999952316284,
+      "receiveToCorrelatedAVLowerMs": 2579.327999976158,
+      "receiveToCorrelatedAVUpperMs": 2597.6279999284743
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 34774,
+          "end": 34792.799999952316,
+          "receiptAgeMs": 142.354,
+          "receiveToSelectedMs": 56.634
+        },
+        "runtime": {
+          "start": 43074,
+          "end": 43088.299999952316,
+          "clockOriginAgeMs": 8376.268724910915
+        }
+      },
+      "index": 3,
+      "topic": "complex_price_stock",
+      "traceId": "interaction_e68b46c6dde46c249315cc65d0d76b33ef614b37bf6d94079bfb2a9aceb83865",
+      "utteranceId": "utt_141e0b55a12298df937e88ebd329ebff",
+      "terminal": "utterance.completed",
+      "selectionMs": 56.634,
+      "receiptAlignmentUncertaintyMs": 9.399999976158142,
+      "selectedToSpeakableMs": 927.8803730842483,
+      "selectedToSpeakableUncertaintyMs": 16.549999952316284,
+      "speakableToPCMMS": 97.5061128847301,
+      "pcmToGPUFrameMS": 969.2028709687293,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0006959307938814163,
+        "llm_started": 16.693803016096354,
+        "llm_first_token": 876.1763100046664,
+        "first_speakable_segment": 920.679097995162,
+        "tts_started": 921.3694469071925,
+        "tts_first_pcm": 1018.1852108798921,
+        "avatar_first_returned_frame": 1986.9414658751339,
+        "media_first_audio": 1987.3676230199635,
+        "avatar_first_generated_frame": 1987.3880818486214,
+        "media_first_video": 1987.401549005881,
+        "utterance_completed": 8292.711752001196
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 8,
+        "firstVideoPTSUS": 23520000,
+        "speechOriginSample": 376320
+      },
+      "firstCorrelatedAudio": {
+        "at": 36900.39999997616,
+        "contextTime": 33.525333333333336,
+        "peak": 0.01077303383499384
+      },
+      "firstCorrelatedVideo": {
+        "at": 36844.5,
+        "displayAt": 36861.1,
+        "mediaTime": 33.637,
+        "marker": 8,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2259.3539999999994,
+      "firstAudioVideoDetectionDifferenceMs": -39.2999999761596,
+      "gpuToBrowserVideoMs": 168.83064308613393,
+      "gpuToBrowserUncertaintyMs": 14.299999952316284,
+      "receiveToCorrelatedAVLowerMs": 2249.954000023841,
+      "receiveToCorrelatedAVUpperMs": 2268.7539999761575
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 44856.89999997616,
+          "end": 44876.299999952316,
+          "receiptAgeMs": 138.995,
+          "receiveToSelectedMs": 70.862
+        },
+        "runtime": {
+          "start": 53883.699999928474,
+          "end": 53902.199999928474,
+          "clockOriginAgeMs": 9086.957818828523
+        }
+      },
+      "index": 4,
+      "topic": "complex_size_price_stock",
+      "traceId": "interaction_2426b179ea1acab6f8cd2c79874a5582a33b9d359b4567df0e93630670a77489",
+      "utteranceId": "utt_ea6b07a4172651612afdf0edb06e7ead",
+      "terminal": "utterance.completed",
+      "selectionMs": 70.862,
+      "receiptAlignmentUncertaintyMs": 9.699999988079071,
+      "selectedToSpeakableMs": 1569.5157590961026,
+      "selectedToSpeakableUncertaintyMs": 18.94999998807907,
+      "speakableToPCMMS": 48.057620879262686,
+      "pcmToGPUFrameMS": 1082.3652481194586,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0008898787200450897,
+        "llm_started": 28.47889089025557,
+        "llm_first_token": 1561.3005859777331,
+        "first_speakable_segment": 1561.9905779603869,
+        "tts_started": 1563.406006898731,
+        "tts_first_pcm": 1610.0481988396496,
+        "avatar_first_returned_frame": 2691.864450927824,
+        "media_first_audio": 2692.3903189599514,
+        "avatar_first_generated_frame": 2692.413446959108,
+        "media_first_video": 2692.427618894726,
+        "utterance_completed": 8965.591247892007
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 10,
+        "firstVideoPTSUS": 31440000,
+        "speechOriginSample": 503040
+      },
+      "firstCorrelatedAudio": {
+        "at": 47711.5,
+        "contextTime": 44.336,
+        "peak": 0.0367431640625
+      },
+      "firstCorrelatedVideo": {
+        "at": 47660.8,
+        "displayAt": 47677.4,
+        "mediaTime": 44.452,
+        "marker": 10,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2983.8950000357654,
+      "firstAudioVideoDetectionDifferenceMs": -34.099999999998545,
+      "gpuToBrowserVideoMs": 178.99437194094207,
+      "gpuToBrowserUncertaintyMs": 18.5,
+      "receiveToCorrelatedAVLowerMs": 2974.1950000476863,
+      "receiveToCorrelatedAVUpperMs": 2993.5950000238445
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 56097.5,
+          "end": 56138,
+          "receiptAgeMs": 156.211,
+          "receiveToSelectedMs": 26.06
+        },
+        "runtime": {
+          "start": 64116.10000002384,
+          "end": 64131.39999997616,
+          "clockOriginAgeMs": 8109.155149199069
+        }
+      },
+      "index": 5,
+      "topic": "complex_price_stock",
+      "traceId": "interaction_4e17394e41af02225a0e43ddaa27b134e6874a2e43bbc9906acbcde7356fd4b9",
+      "utteranceId": "utt_c814b9e5d407bea1e6e3960161e73f3b",
+      "terminal": "utterance.completed",
+      "selectionMs": 26.06,
+      "receiptAlignmentUncertaintyMs": 20.25,
+      "selectedToSpeakableMs": 1248.7795109203362,
+      "selectedToSpeakableUncertaintyMs": 27.899999976158142,
+      "speakableToPCMMS": 89.96429294347763,
+      "pcmToGPUFrameMS": 1015.7432300038636,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0007660128176212311,
+        "llm_started": 19.844768103212118,
+        "llm_first_token": 1130.9988421853632,
+        "first_speakable_segment": 1221.7836601193994,
+        "tts_started": 1222.6618670392781,
+        "tts_first_pcm": 1311.747953062877,
+        "avatar_first_returned_frame": 2326.760169118643,
+        "media_first_audio": 2327.462711138651,
+        "avatar_first_generated_frame": 2327.4911830667406,
+        "media_first_video": 2327.5142980273813,
+        "utterance_completed": 7998.095668153837
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 12,
+        "firstVideoPTSUS": 39520000,
+        "speechOriginSample": 632320
+      },
+      "firstCorrelatedAudio": {
+        "at": 58537.89999997616,
+        "contextTime": 55.16266666666667,
+        "peak": 0.009643848985433578
+      },
+      "firstCorrelatedVideo": {
+        "at": 58510.3,
+        "displayAt": 58527,
+        "mediaTime": 55.291,
+        "marker": 12,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2576.360999976161,
+      "firstAudioVideoDetectionDifferenceMs": -10.899999976158142,
+      "gpuToBrowserVideoMs": 184.91396613232791,
+      "gpuToBrowserUncertaintyMs": 15.299999952316284,
+      "receiveToCorrelatedAVLowerMs": 2556.110999976161,
+      "receiveToCorrelatedAVUpperMs": 2596.610999976161
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 66466.10000002384,
+          "end": 66484.29999995232,
+          "receiptAgeMs": 144.972,
+          "receiveToSelectedMs": 67.107
+        },
+        "runtime": {
+          "start": 74982.69999992847,
+          "end": 74998.10000002384,
+          "clockOriginAgeMs": 8575.96952887252
+        }
+      },
+      "index": 6,
+      "topic": "complex_size_price_stock",
+      "traceId": "interaction_0f5e58dc1fc51f54fe1496038470943c64a8cbdb3cff15bb8980d279edcebb7a",
+      "utteranceId": "utt_e745c8eb7cb79a6eee134db3dce49c47",
+      "terminal": "utterance.completed",
+      "selectionMs": 67.107,
+      "receiptAlignmentUncertaintyMs": 9.099999964237213,
+      "selectedToSpeakableMs": 1223.8740539995488,
+      "selectedToSpeakableUncertaintyMs": 16.80000001192093,
+      "speakableToPCMMS": 45.0909121427685,
+      "pcmToGPUFrameMS": 1009.2829070053995,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0008689239621162415,
+        "llm_started": 29.361943947151303,
+        "llm_first_token": 1122.1596379764378,
+        "first_speakable_segment": 1206.7785828839988,
+        "tts_started": 1207.4147548992187,
+        "tts_first_pcm": 1251.8694950267673,
+        "avatar_first_returned_frame": 2260.5662040878087,
+        "media_first_audio": 2261.1255650408566,
+        "avatar_first_generated_frame": 2261.1524020321667,
+        "media_first_video": 2261.169466888532,
+        "utterance_completed": 8476.698881015182
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 14,
+        "firstVideoPTSUS": 47000000,
+        "speechOriginSample": 752000
+      },
+      "firstCorrelatedAudio": {
+        "at": 68881.79999995232,
+        "contextTime": 65.49866666666667,
+        "peak": 0.02227851189672947
+      },
+      "firstCorrelatedVideo": {
+        "at": 68843.2,
+        "displayAt": 68843.2,
+        "mediaTime": 65.61,
+        "marker": 14,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2551.5719999642315,
+      "firstAudioVideoDetectionDifferenceMs": -38.599999952319195,
+      "gpuToBrowserVideoMs": 167.61712686419196,
+      "gpuToBrowserUncertaintyMs": 15.400000095367432,
+      "receiveToCorrelatedAVLowerMs": 2542.4719999999943,
+      "receiveToCorrelatedAVUpperMs": 2560.6719999284687
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 77307.89999997616,
+          "end": 77331.39999997616,
+          "receiptAgeMs": 138.469,
+          "receiveToSelectedMs": 17.774
+        },
+        "runtime": {
+          "start": 85302.79999995232,
+          "end": 85319.79999995232,
+          "clockOriginAgeMs": 8107.196099823341
+        }
+      },
+      "index": 7,
+      "topic": "complex_price_stock",
+      "traceId": "interaction_38f96a5829e23b925b4865506f7a841dd83fc2fac0b5ef609c90765a8cd37a23",
+      "utteranceId": "utt_91873f975605d7a0eba2a436de3ff0ef",
+      "terminal": "utterance.completed",
+      "selectionMs": 17.774,
+      "receiptAlignmentUncertaintyMs": 11.75,
+      "selectedToSpeakableMs": 1092.2438089658244,
+      "selectedToSpeakableUncertaintyMs": 20.25,
+      "speakableToPCMMS": 91.42625913955271,
+      "pcmToGPUFrameMS": 958.0057689454406,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0006319023668766022,
+        "llm_started": 14.93556099012494,
+        "llm_first_token": 1059.696001932025,
+        "first_speakable_segment": 1087.0949088130146,
+        "tts_started": 1087.7748779021204,
+        "tts_first_pcm": 1178.5211679525673,
+        "avatar_first_returned_frame": 2136.0051420051605,
+        "media_first_audio": 2136.50436187163,
+        "avatar_first_generated_frame": 2136.526936898008,
+        "media_first_video": 2136.542493943125,
+        "utterance_completed": 8048.580662813038
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 16,
+        "firstVideoPTSUS": 55000000,
+        "speechOriginSample": 880000
+      },
+      "firstCorrelatedAudio": {
+        "at": 79549,
+        "contextTime": 76.16533333333334,
+        "peak": 0.01263466291129589
+      },
+      "firstCorrelatedVideo": {
+        "at": 79526.2,
+        "displayAt": 79526.1,
+        "mediaTime": 76.29,
+        "marker": 16,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2367.819000023839,
+      "firstAudioVideoDetectionDifferenceMs": -22.89999999999418,
+      "gpuToBrowserVideoMs": 185.46916297302232,
+      "gpuToBrowserUncertaintyMs": 17,
+      "receiveToCorrelatedAVLowerMs": 2356.069000023839,
+      "receiveToCorrelatedAVUpperMs": 2379.569000023839
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 87701.79999995232,
+          "end": 87725.60000002384,
+          "receiptAgeMs": 153.128,
+          "receiveToSelectedMs": 36.862
+        },
+        "runtime": {
+          "start": 98056.79999995232,
+          "end": 98072.79999995232,
+          "clockOriginAgeMs": 10450.273788999766
+        }
+      },
+      "index": 8,
+      "topic": "complex_size_price_stock",
+      "traceId": "interaction_c114cdf7633270fa52365b0d8588b9f6581582567490454d9800de02e9fe322a",
+      "utteranceId": "utt_6a6ba03ec924f39a1401f14a297b9ec3",
+      "terminal": "utterance.completed",
+      "selectionMs": 36.862,
+      "receiptAlignmentUncertaintyMs": 11.900000035762787,
+      "selectedToSpeakableMs": 3540.7873399343225,
+      "selectedToSpeakableUncertaintyMs": 19.900000035762787,
+      "speakableToPCMMS": 30.250072944909334,
+      "pcmToGPUFrameMS": 1324.6414549648762,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0006100162863731384,
+        "llm_started": 22.573061054572463,
+        "llm_first_token": 3522.7882999461144,
+        "first_speakable_segment": 3523.695128969848,
+        "tts_started": 3524.740871042013,
+        "tts_first_pcm": 3553.9452019147575,
+        "avatar_first_returned_frame": 4877.887038048357,
+        "media_first_audio": 4878.554048016667,
+        "avatar_first_generated_frame": 4878.586656879634,
+        "media_first_video": 4878.612838918343,
+        "utterance_completed": 10355.917373904958
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 18,
+        "firstVideoPTSUS": 65120000,
+        "speechOriginSample": 1041920
+      },
+      "firstCorrelatedAudio": {
+        "at": 92699.10000002384,
+        "contextTime": 89.312,
+        "peak": 0.05407879874110222
+      },
+      "firstCorrelatedVideo": {
+        "at": 92692.3,
+        "displayAt": 92692.3,
+        "mediaTime": 89.449,
+        "marker": 18,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 5138.52800003576,
+      "firstAudioVideoDetectionDifferenceMs": -6.8000000238389475,
+      "gpuToBrowserVideoMs": 199.18713216781907,
+      "gpuToBrowserUncertaintyMs": 16,
+      "receiveToCorrelatedAVLowerMs": 5126.627999999997,
+      "receiveToCorrelatedAVUpperMs": 5150.428000071523
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 100323.79999995232,
+          "end": 100341.69999992847,
+          "receiptAgeMs": 137.631,
+          "receiveToSelectedMs": 3.12
+        },
+        "runtime": {
+          "start": 107908.19999992847,
+          "end": 107924.89999997616,
+          "clockOriginAgeMs": 7701.881323941052
+        }
+      },
+      "index": 9,
+      "topic": "complex_price_stock",
+      "traceId": "interaction_7fceb23a12d3e3075a838ee9a54909e30ce4ee1815f94a11620aa19490190620",
+      "utteranceId": "utt_b216a7419542b2d6cf7f04be34ce9f96",
+      "terminal": "utterance.completed",
+      "selectionMs": 3.12,
+      "receiptAlignmentUncertaintyMs": 8.949999988079071,
+      "selectedToSpeakableMs": 1027.4939170126454,
+      "selectedToSpeakableUncertaintyMs": 17.30000001192093,
+      "speakableToPCMMS": 89.63590487837791,
+      "pcmToGPUFrameMS": 1073.4089480247349,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0009718351066112518,
+        "llm_started": 20.059772999957204,
+        "llm_first_token": 922.1588408108801,
+        "first_speakable_segment": 1011.0642409417778,
+        "tts_started": 1011.786273913458,
+        "tts_first_pcm": 1100.7001458201557,
+        "avatar_first_returned_frame": 2173.385350033641,
+        "media_first_audio": 2174.078839831054,
+        "avatar_first_generated_frame": 2174.1090938448906,
+        "media_first_video": 2174.132821848616,
+        "utterance_completed": 7637.978884857148
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 20,
+        "firstVideoPTSUS": 72200000,
+        "speechOriginSample": 1155200
+      },
+      "firstCorrelatedAudio": {
+        "at": 102609.60000002384,
+        "contextTime": 99.22133333333333,
+        "peak": 0.010956144891679287
+      },
+      "firstCorrelatedVideo": {
+        "at": 102541.9,
+        "displayAt": 102558.6,
+        "mediaTime": 99.329,
+        "marker": 20,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2414.4810000834404,
+      "firstAudioVideoDetectionDifferenceMs": -51.00000002383604,
+      "gpuToBrowserVideoMs": 169.8222301438509,
+      "gpuToBrowserUncertaintyMs": 16.700000047683716,
+      "receiveToCorrelatedAVLowerMs": 2405.5310000953614,
+      "receiveToCorrelatedAVUpperMs": 2423.4310000715195
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 108831.60000002384,
+          "end": 108851.69999992847,
+          "receiptAgeMs": 141.425,
+          "receiveToSelectedMs": 97.665
+        },
+        "runtime": {
+          "start": 117844.5,
+          "end": 117860.60000002384,
+          "clockOriginAgeMs": 9038.639724021778
+        }
+      },
+      "index": 10,
+      "topic": "complex_size_price_stock",
+      "traceId": "interaction_8a6d37632ab170c4d826f1e8bb29bf0bcc9acc3d7827b6976ca042cceae7eed9",
+      "utteranceId": "utt_1cc891bfd8f6b88a68487e7f342985dd",
+      "terminal": "utterance.completed",
+      "selectionMs": 97.665,
+      "receiptAlignmentUncertaintyMs": 10.049999952316284,
+      "selectedToSpeakableMs": 1129.044616025174,
+      "selectedToSpeakableUncertaintyMs": 18.099999964237213,
+      "speakableToPCMMS": 50.8918771520257,
+      "pcmToGPUFrameMS": 1324.1708260029554,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0005490146577358246,
+        "llm_started": 19.377709133550525,
+        "llm_first_token": 1015.622896142304,
+        "first_speakable_segment": 1113.0243400111794,
+        "tts_started": 1113.7997601181269,
+        "tts_first_pcm": 1163.9162171632051,
+        "avatar_first_returned_frame": 2487.514828098938,
+        "media_first_audio": 2488.06164204143,
+        "avatar_first_generated_frame": 2488.0870431661606,
+        "media_first_video": 2488.1019750609994,
+        "utterance_completed": 8954.59834113717
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 22,
+        "firstVideoPTSUS": 78000000,
+        "speechOriginSample": 1248000
+      },
+      "firstCorrelatedAudio": {
+        "at": 111530.79999995232,
+        "contextTime": 108.144,
+        "peak": 0.03424072265625
+      },
+      "firstCorrelatedVideo": {
+        "at": 111491.5,
+        "displayAt": 111491.5,
+        "mediaTime": 108.249,
+        "marker": 22,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2830.574999976161,
+      "firstAudioVideoDetectionDifferenceMs": -39.299999952316284,
+      "gpuToBrowserVideoMs": 189.502680843696,
+      "gpuToBrowserUncertaintyMs": 16.100000023841858,
+      "receiveToCorrelatedAVLowerMs": 2820.5250000238448,
+      "receiveToCorrelatedAVUpperMs": 2840.6249999284773
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 119749.10000002384,
+          "end": 119770.79999995232,
+          "receiptAgeMs": 145.453,
+          "receiveToSelectedMs": 83.777
+        },
+        "runtime": {
+          "start": 128771.19999992847,
+          "end": 128788.10000002384,
+          "clockOriginAgeMs": 9074.821790214628
+        }
+      },
+      "index": 11,
+      "topic": "complex_price_stock",
+      "traceId": "interaction_1f07f4bdf3bbd4b846581a0b5655b2a374a85a084dce44d88be4f5acab4f7e7c",
+      "utteranceId": "utt_b3037e2224df9381f0d53420aaae2807",
+      "terminal": "utterance.completed",
+      "selectionMs": 83.777,
+      "receiptAlignmentUncertaintyMs": 10.849999964237213,
+      "selectedToSpeakableMs": 2222.9656688003015,
+      "selectedToSpeakableUncertaintyMs": 19.30000001192093,
+      "speakableToPCMMS": 108.82224002853036,
+      "pcmToGPUFrameMS": 1097.8199020028114,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0007532071322202682,
+        "llm_started": 14.1263531986624,
+        "llm_first_token": 1892.9188780020922,
+        "first_speakable_segment": 2216.411459026858,
+        "tts_started": 2217.8807691670954,
+        "tts_first_pcm": 2325.2336990553886,
+        "avatar_first_returned_frame": 3422.1224300563335,
+        "media_first_audio": 3423.020023154095,
+        "avatar_first_generated_frame": 3423.0536010582,
+        "media_first_video": 3423.080125125125,
+        "utterance_completed": 8988.016830990091
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 24,
+        "firstVideoPTSUS": 87000000,
+        "speechOriginSample": 1392000
+      },
+      "firstCorrelatedAudio": {
+        "at": 123359,
+        "contextTime": 119.96266666666666,
+        "peak": 0.01165771484375
+      },
+      "firstCorrelatedVideo": {
+        "at": 123307.7,
+        "displayAt": 123324.4,
+        "mediaTime": 120.089,
+        "marker": 24,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 3744.503000011915,
+      "firstAudioVideoDetectionDifferenceMs": -34.60000000000582,
+      "gpuToBrowserVideoMs": 196.51818918026402,
+      "gpuToBrowserUncertaintyMs": 16.90000009536743,
+      "receiveToCorrelatedAVLowerMs": 3733.653000047678,
+      "receiveToCorrelatedAVUpperMs": 3755.352999976152
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 131086.79999995232,
+          "end": 131104.60000002384,
+          "receiptAgeMs": 140.789,
+          "receiveToSelectedMs": 44.417
+        },
+        "runtime": {
+          "start": 140099.19999992847,
+          "end": 140117,
+          "clockOriginAgeMs": 9093.992073088884
+        }
+      },
+      "index": 12,
+      "topic": "complex_size_price_stock",
+      "traceId": "interaction_af547a218b37b8e8da8f3e4e4c1a820cbf28d0349d651ac3bfe811ccfe94029b",
+      "utteranceId": "utt_0d1f52877d221965e57a8d43819766ed",
+      "terminal": "utterance.completed",
+      "selectionMs": 44.417,
+      "receiptAlignmentUncertaintyMs": 8.900000035762787,
+      "selectedToSpeakableMs": 1515.8217599657655,
+      "selectedToSpeakableUncertaintyMs": 17.800000071525574,
+      "speakableToPCMMS": 31.452265102416277,
+      "pcmToGPUFrameMS": 1461.6931998170912,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0005890615284442902,
+        "llm_started": 18.218487035483122,
+        "llm_first_token": 1426.439146976918,
+        "first_speakable_segment": 1501.0418330784887,
+        "tts_started": 1501.7756910528988,
+        "tts_first_pcm": 1532.494098180905,
+        "avatar_first_returned_frame": 2993.3221731334925,
+        "media_first_audio": 2994.1559361759573,
+        "avatar_first_generated_frame": 2994.187297997996,
+        "media_first_video": 2994.2119491752237,
+        "utterance_completed": 9023.54990504682
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 26,
+        "firstVideoPTSUS": 94680000,
+        "speechOriginSample": 1514880
+      },
+      "firstCorrelatedAudio": {
+        "at": 134229.10000002384,
+        "contextTime": 130.83733333333333,
+        "peak": 0.019073486328125
+      },
+      "firstCorrelatedVideo": {
+        "at": 134207.3,
+        "displayAt": 134207.2,
+        "mediaTime": 130.969,
+        "marker": 26,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 3274.189000035767,
+      "firstAudioVideoDetectionDifferenceMs": -21.900000023830216,
+      "gpuToBrowserVideoMs": 198.90477512666257,
+      "gpuToBrowserUncertaintyMs": 17.800000071525574,
+      "receiveToCorrelatedAVLowerMs": 3265.2890000000043,
+      "receiveToCorrelatedAVUpperMs": 3283.08900007153
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 142356,
+          "end": 142379.89999997616,
+          "receiptAgeMs": 142.689,
+          "receiveToSelectedMs": 71.809
+        },
+        "runtime": {
+          "start": 151593.10000002384,
+          "end": 151611.60000002384,
+          "clockOriginAgeMs": 9295.232754200697
+        }
+      },
+      "index": 13,
+      "topic": "complex_price_stock",
+      "traceId": "interaction_00f68756e499e44e4c6a0f75871b36d4d8645da7f4012d70ce1459f1819ebc2c",
+      "utteranceId": "utt_74c3dccbae244706f529f66d6d71584a",
+      "terminal": "utterance.completed",
+      "selectionMs": 71.809,
+      "receiptAlignmentUncertaintyMs": 11.949999988079071,
+      "selectedToSpeakableMs": 1348.300046817516,
+      "selectedToSpeakableUncertaintyMs": 21.19999998807907,
+      "speakableToPCMMS": 86.7579560726881,
+      "pcmToGPUFrameMS": 962.0891399681568,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0007031485438346863,
+        "llm_started": 18.846355145797133,
+        "llm_first_token": 1265.4967491980642,
+        "first_speakable_segment": 1338.2528009824455,
+        "tts_started": 1338.9854261185974,
+        "tts_first_pcm": 1425.0107570551336,
+        "avatar_first_returned_frame": 2386.311864014715,
+        "media_first_audio": 2387.0667540468276,
+        "avatar_first_generated_frame": 2387.0998970232904,
+        "media_first_video": 2387.1264150366187,
+        "utterance_completed": 9267.341915983707
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 28,
+        "firstVideoPTSUS": 102560000,
+        "speechOriginSample": 1640960
+      },
+      "firstCorrelatedAudio": {
+        "at": 144919.29999995232,
+        "contextTime": 141.52533333333332,
+        "peak": 0.003936767578125
+      },
+      "firstCorrelatedVideo": {
+        "at": 144890.2,
+        "displayAt": 144890.1,
+        "mediaTime": 141.649,
+        "marker": 28,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2694.0389999642503,
+      "firstAudioVideoDetectionDifferenceMs": -29.199999952310463,
+      "gpuToBrowserVideoMs": 195.8828571535705,
+      "gpuToBrowserUncertaintyMs": 18.5,
+      "receiveToCorrelatedAVLowerMs": 2682.088999976171,
+      "receiveToCorrelatedAVUpperMs": 2705.9889999523293
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 152795.60000002384,
+          "end": 152811.10000002384,
+          "receiptAgeMs": 140.812,
+          "receiveToSelectedMs": 35.32
+        },
+        "runtime": {
+          "start": 163646.10000002384,
+          "end": 163661.5,
+          "clockOriginAgeMs": 10947.487914003432
+        }
+      },
+      "index": 14,
+      "topic": "complex_size_price_stock",
+      "traceId": "interaction_a7923128521ad4161e4a172ac83ba6d72d64402d7ab2c5bfb8aabff20ffc363e",
+      "utteranceId": "utt_fc0e299a81363e35fa8801a8f495a6bc",
+      "terminal": "utterance.completed",
+      "selectionMs": 35.32,
+      "receiptAlignmentUncertaintyMs": 7.75,
+      "selectedToSpeakableMs": 1295.7436299933179,
+      "selectedToSpeakableUncertaintyMs": 15.449999988079071,
+      "speakableToPCMMS": 95.27052799239755,
+      "pcmToGPUFrameMS": 1014.8584910202771,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0009029172360897064,
+        "llm_started": 18.748837988823652,
+        "llm_first_token": 1168.5627528931946,
+        "first_speakable_segment": 1287.2895440086722,
+        "tts_started": 1288.1522551178932,
+        "tts_first_pcm": 1382.5600720010698,
+        "avatar_first_returned_frame": 2396.6688339132816,
+        "media_first_audio": 2397.3863311111927,
+        "avatar_first_generated_frame": 2397.418563021347,
+        "media_first_video": 2397.444772068411,
+        "utterance_completed": 10881.280822912231
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 30,
+        "firstVideoPTSUS": 110160000,
+        "speechOriginSample": 1762560
+      },
+      "firstCorrelatedAudio": {
+        "at": 155328.10000002384,
+        "contextTime": 151.936,
+        "peak": 0.022186279296875
+      },
+      "firstCorrelatedVideo": {
+        "at": 155289.8,
+        "displayAt": 155289.7,
+        "mediaTime": 152.049,
+        "marker": 30,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2665.5620000000054,
+      "firstAudioVideoDetectionDifferenceMs": -38.400000023830216,
+      "gpuToBrowserVideoMs": 185.96935097017558,
+      "gpuToBrowserUncertaintyMs": 15.399999976158142,
+      "receiveToCorrelatedAVLowerMs": 2657.8120000000054,
+      "receiveToCorrelatedAVUpperMs": 2673.3120000000054
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 164655.19999992847,
+          "end": 164672.79999995232,
+          "receiptAgeMs": 137.88,
+          "receiveToSelectedMs": 72.971
+        },
+        "runtime": {
+          "start": 175314.19999992847,
+          "end": 175329.60000002384,
+          "clockOriginAgeMs": 10707.803030963987
+        }
+      },
+      "index": 15,
+      "topic": "complex_price_stock",
+      "traceId": "interaction_22600f55287bc26448fe4fef64342b30c2e25208e4db6e35be850d427054a0f1",
+      "utteranceId": "utt_05e6f13d83670adb12361166173622e2",
+      "terminal": "utterance.completed",
+      "selectionMs": 72.971,
+      "receiptAlignmentUncertaintyMs": 8.800000011920929,
+      "selectedToSpeakableMs": 3658.914287203952,
+      "selectedToSpeakableUncertaintyMs": 16.500000059604645,
+      "speakableToPCMMS": 100.38385982625186,
+      "pcmToGPUFrameMS": 956.2377349939197,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0009480863809585571,
+        "llm_started": 13.45988898538053,
+        "llm_first_token": 3548.769934102893,
+        "first_speakable_segment": 3643.908318132162,
+        "tts_started": 3644.722262164578,
+        "tts_first_pcm": 3744.292177958414,
+        "avatar_first_returned_frame": 4699.9638341367245,
+        "media_first_audio": 4700.504030101001,
+        "avatar_first_generated_frame": 4700.529912952334,
+        "media_first_video": 4700.546624138951,
+        "utterance_completed": 10595.272519160062
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 32,
+        "firstVideoPTSUS": 121560000,
+        "speechOriginSample": 1944960
+      },
+      "firstCorrelatedAudio": {
+        "at": 169540.60000002384,
+        "contextTime": 166.14933333333335,
+        "peak": 0.010009765625
+      },
+      "firstCorrelatedVideo": {
+        "at": 169472.5,
+        "displayAt": 169489.2,
+        "mediaTime": 166.249,
+        "marker": 32,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 5014.480000083451,
+      "firstAudioVideoDetectionDifferenceMs": -51.400000023830216,
+      "gpuToBrowserVideoMs": 174.57311803550692,
+      "gpuToBrowserUncertaintyMs": 15.400000095367432,
+      "receiveToCorrelatedAVLowerMs": 5005.68000007153,
+      "receiveToCorrelatedAVUpperMs": 5023.280000095372
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 176916.69999992847,
+          "end": 176937.10000002384,
+          "receiptAgeMs": 140.967,
+          "receiveToSelectedMs": 11.844
+        },
+        "runtime": {
+          "start": 187261,
+          "end": 187276,
+          "clockOriginAgeMs": 10453.730343841016
+        }
+      },
+      "index": 16,
+      "topic": "complex_size_price_stock",
+      "traceId": "interaction_d8a88006956ae21e84685ba05e8911bcf440a05f609aee03167ae1cfaf32179a",
+      "utteranceId": "utt_64079a18385cb9159ae6138fe798d640",
+      "terminal": "utterance.completed",
+      "selectionMs": 11.844,
+      "receiptAlignmentUncertaintyMs": 10.200000047683716,
+      "selectedToSpeakableMs": 1257.1018651540799,
+      "selectedToSpeakableUncertaintyMs": 17.700000047683716,
+      "speakableToPCMMS": 81.62247389554977,
+      "pcmToGPUFrameMS": 1437.944132136181,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0007008202373981476,
+        "llm_started": 23.476955946534872,
+        "llm_first_token": 1175.1651128288358,
+        "first_speakable_segment": 1240.109208971262,
+        "tts_started": 1241.0460889805108,
+        "tts_first_pcm": 1321.7316828668118,
+        "avatar_first_returned_frame": 2759.0530968736857,
+        "media_first_audio": 2759.6457498148084,
+        "avatar_first_generated_frame": 2759.6758150029927,
+        "media_first_video": 2759.6961178351194,
+        "utterance_completed": 10404.332477832213
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 34,
+        "firstVideoPTSUS": 128680000,
+        "speechOriginSample": 2058880
+      },
+      "firstCorrelatedAudio": {
+        "at": 179811.5,
+        "contextTime": 176.416,
+        "peak": 0.07687612622976303
+      },
+      "firstCorrelatedVideo": {
+        "at": 179738.8,
+        "displayAt": 179755.5,
+        "mediaTime": 176.528,
+        "marker": 34,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 3025.567000023846,
+      "firstAudioVideoDetectionDifferenceMs": -56,
+      "gpuToBrowserVideoMs": 181.05452883802354,
+      "gpuToBrowserUncertaintyMs": 15,
+      "receiveToCorrelatedAVLowerMs": 3015.3669999761623,
+      "receiveToCorrelatedAVUpperMs": 3035.7670000715298
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 189221.29999995232,
+          "end": 189289,
+          "receiptAgeMs": 189.789,
+          "receiveToSelectedMs": 7.153
+        },
+        "runtime": {
+          "start": 198390.89999997616,
+          "end": 198406.5,
+          "clockOriginAgeMs": 9282.68726193346
+        }
+      },
+      "index": 17,
+      "topic": "complex_price_stock",
+      "traceId": "interaction_034713e1d2d7284b5be17835184d302922686bd1d4b024579705a6beb8b688e9",
+      "utteranceId": "utt_f9115777af8df89a59d0a8f0b32b0665",
+      "terminal": "utterance.completed",
+      "selectionMs": 7.153,
+      "receiptAlignmentUncertaintyMs": 33.85000002384186,
+      "selectedToSpeakableMs": 2119.9028020408587,
+      "selectedToSpeakableUncertaintyMs": 41.65000003576279,
+      "speakableToPCMMS": 96.40841814689338,
+      "pcmToGPUFrameMS": 1277.978649828583,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0008600763976573944,
+        "llm_started": 14.723232947289944,
+        "llm_first_token": 2075.908981030807,
+        "first_speakable_segment": 2076.4040639624,
+        "tts_started": 2077.125237090513,
+        "tts_first_pcm": 2172.8124821092933,
+        "avatar_first_returned_frame": 3450.0892080832273,
+        "media_first_audio": 3450.7613531313837,
+        "avatar_first_generated_frame": 3450.7911319378763,
+        "media_first_video": 3450.8158760145307,
+        "utterance_completed": 9178.279201034456
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 36,
+        "firstVideoPTSUS": 138560000,
+        "speechOriginSample": 2216960
+      },
+      "firstCorrelatedAudio": {
+        "at": 192809.5,
+        "contextTime": 189.41866666666667,
+        "peak": 0.00952177494764328
+      },
+      "firstCorrelatedVideo": {
+        "at": 192771.6,
+        "displayAt": 192771.6,
+        "mediaTime": 189.543,
+        "marker": 36,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 3744.1390000238316,
+      "firstAudioVideoDetectionDifferenceMs": -37.89999999999418,
+      "gpuToBrowserVideoMs": 204.79613000751124,
+      "gpuToBrowserUncertaintyMs": 15.600000023841858,
+      "receiveToCorrelatedAVLowerMs": 3710.2889999999898,
+      "receiveToCorrelatedAVUpperMs": 3777.9890000476735
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 200736,
+          "end": 200821.60000002384,
+          "receiptAgeMs": 203.728,
+          "receiveToSelectedMs": 90.805
+        },
+        "runtime": {
+          "start": 210031.69999992847,
+          "end": 210049.79999995232,
+          "clockOriginAgeMs": 9326.421395875514
+        }
+      },
+      "index": 18,
+      "topic": "complex_size_price_stock",
+      "traceId": "interaction_648f3d02b0fc7d24a958d407716c183aafe41e479bc372fda66e62cdc3addd34",
+      "utteranceId": "utt_ba0631c7eaace7a216dc5b3eaf1f6039",
+      "terminal": "utterance.completed",
+      "selectionMs": 90.805,
+      "receiptAlignmentUncertaintyMs": 42.80000001192093,
+      "selectedToSpeakableMs": 1051.955851923267,
+      "selectedToSpeakableUncertaintyMs": 51.85000002384186,
+      "speakableToPCMMS": 31.71016206033528,
+      "pcmToGPUFrameMS": 1066.9678740669042,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0006419140845537186,
+        "llm_started": 22.54027989692986,
+        "llm_first_token": 891.4672329556197,
+        "first_speakable_segment": 1003.5042478702962,
+        "tts_started": 1004.3064479250461,
+        "tts_first_pcm": 1035.2144099306315,
+        "avatar_first_returned_frame": 2101.543287979439,
+        "media_first_audio": 2102.1605259738863,
+        "avatar_first_generated_frame": 2102.1822839975357,
+        "media_first_video": 2102.195964893326,
+        "utterance_completed": 9219.375401036814
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 38,
+        "firstVideoPTSUS": 146000000,
+        "speechOriginSample": 2336000
+      },
+      "firstCorrelatedAudio": {
+        "at": 203039.69999992847,
+        "contextTime": 199.648,
+        "peak": 0.051179539412260056
+      },
+      "firstCorrelatedVideo": {
+        "at": 203004.5,
+        "displayAt": 203021.2,
+        "mediaTime": 199.783,
+        "marker": 38,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2464.6279999165563,
+      "firstAudioVideoDetectionDifferenceMs": -18.499999928462785,
+      "gpuToBrowserVideoMs": 204.68911193759413,
+      "gpuToBrowserUncertaintyMs": 18.100000023841858,
+      "receiveToCorrelatedAVLowerMs": 2421.8279999046354,
+      "receiveToCorrelatedAVUpperMs": 2507.427999928477
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 210989.10000002384,
+          "end": 211010.79999995232,
+          "receiptAgeMs": 139.892,
+          "receiveToSelectedMs": 37.211
+        },
+        "runtime": {
+          "start": 220018.5,
+          "end": 220037.89999997616,
+          "clockOriginAgeMs": 9112.38169297576
+        }
+      },
+      "index": 19,
+      "topic": "complex_price_stock",
+      "traceId": "interaction_bb95787fc96fc487aa06d7d7c21671c1d52e01114c9dcf2ca84be09d4a3de22c",
+      "utteranceId": "utt_9a65158714e0176b83b7f9d7af640413",
+      "terminal": "utterance.completed",
+      "selectionMs": 37.211,
+      "receiptAlignmentUncertaintyMs": 10.849999964237213,
+      "selectedToSpeakableMs": 1090.0675519445213,
+      "selectedToSpeakableUncertaintyMs": 20.549999952316284,
+      "speakableToPCMMS": 101.99194494634867,
+      "pcmToGPUFrameMS": 1234.604855068028,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0008908100426197052,
+        "llm_started": 18.354813801124692,
+        "llm_first_token": 799.6367288287729,
+        "first_speakable_segment": 1071.5182449202985,
+        "tts_started": 1072.3150609992445,
+        "tts_first_pcm": 1173.5101898666471,
+        "avatar_first_returned_frame": 2407.5379509013146,
+        "media_first_audio": 2408.0933928489685,
+        "avatar_first_generated_frame": 2408.115044934675,
+        "media_first_video": 2408.128577983007,
+        "utterance_completed": 9020.814562914893
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 40,
+        "firstVideoPTSUS": 153560000,
+        "speechOriginSample": 2456960
+      },
+      "firstCorrelatedAudio": {
+        "at": 213578.60000002384,
+        "contextTime": 210.18666666666667,
+        "peak": 0.021576587110757828
+      },
+      "firstCorrelatedVideo": {
+        "at": 213537.5,
+        "displayAt": 213537.4,
+        "mediaTime": 210.303,
+        "marker": 40,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2718.5420000357553,
+      "firstAudioVideoDetectionDifferenceMs": -41.20000002384768,
+      "gpuToBrowserVideoMs": 213.46664805299952,
+      "gpuToBrowserUncertaintyMs": 19.399999976158142,
+      "receiveToCorrelatedAVLowerMs": 2707.692000071518,
+      "receiveToCorrelatedAVUpperMs": 2729.3919999999925
+    },
+    {
+      "clockExchanges": {
+        "backend": {
+          "start": 222152.29999995232,
+          "end": 222169.5,
+          "receiptAgeMs": 138.086,
+          "receiveToSelectedMs": 75.65
+        },
+        "runtime": {
+          "start": 232914.69999992847,
+          "end": 232932.29999995232,
+          "clockOriginAgeMs": 10807.343845954165
+        }
+      },
+      "index": 20,
+      "topic": "complex_size_price_stock",
+      "traceId": "interaction_e94bbdb75d6c3e599bd8c131179203c2056965d41c53ae93261bb9edd600ece6",
+      "utteranceId": "utt_51e58ce4f3505e3dc6128854e97fc8fb",
+      "terminal": "utterance.completed",
+      "selectionMs": 75.65,
+      "receiptAlignmentUncertaintyMs": 8.600000023841858,
+      "selectedToSpeakableMs": 1644.9764109843236,
+      "selectedToSpeakableUncertaintyMs": 17.400000035762787,
+      "speakableToPCMMS": 31.25741588883102,
+      "pcmToGPUFrameMS": 1128.2802100759,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0007408671081066132,
+        "llm_started": 27.933888835832477,
+        "llm_first_token": 1568.361246958375,
+        "first_speakable_segment": 1627.2842569742352,
+        "tts_started": 1628.0221180059016,
+        "tts_first_pcm": 1658.5416728630662,
+        "avatar_first_returned_frame": 2785.917758010328,
+        "media_first_audio": 2786.790704820305,
+        "avatar_first_generated_frame": 2786.821882938966,
+        "media_first_video": 2786.844788817689,
+        "utterance_completed": 10733.283710898831
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 42,
+        "firstVideoPTSUS": 162240000,
+        "speechOriginSample": 2595840
+      },
+      "firstCorrelatedAudio": {
+        "at": 225121.79999995232,
+        "contextTime": 221.728,
+        "peak": 0.02923673205077648
+      },
+      "firstCorrelatedVideo": {
+        "at": 225103.7,
+        "displayAt": 225103.7,
+        "mediaTime": 221.863,
+        "marker": 42,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 3098.9859999761684,
+      "firstAudioVideoDetectionDifferenceMs": -18.099999952304643,
+      "gpuToBrowserVideoMs": 200.721963074815,
+      "gpuToBrowserUncertaintyMs": 17.600000023841858,
+      "receiveToCorrelatedAVLowerMs": 3090.3859999523265,
+      "receiveToCorrelatedAVUpperMs": 3107.5860000000102
+    }
+  ],
+  "attempts": [
+    {
+      "index": 1,
+      "topic": "complex_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 2,
+      "topic": "complex_size_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 3,
+      "topic": "complex_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 4,
+      "topic": "complex_size_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 5,
+      "topic": "complex_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 6,
+      "topic": "complex_size_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 7,
+      "topic": "complex_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 8,
+      "topic": "complex_size_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 9,
+      "topic": "complex_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 10,
+      "topic": "complex_size_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 11,
+      "topic": "complex_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 12,
+      "topic": "complex_size_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 13,
+      "topic": "complex_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 14,
+      "topic": "complex_size_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 15,
+      "topic": "complex_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 16,
+      "topic": "complex_size_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 17,
+      "topic": "complex_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 18,
+      "topic": "complex_size_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 19,
+      "topic": "complex_price_stock",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 20,
+      "topic": "complex_size_price_stock",
+      "status": "COMPLETED"
+    }
+  ],
+  "errors": [],
+  "clockBoundary": "Chrome performance.now; remote stages aligned by request/response bounds, no cross-host wall subtraction",
+  "audioBoundary": "Chrome decoded stream analyser plus native playout stats; physical speaker NOT TESTED",
+  "roomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+  "productId": "product_fb0c57d2e2ce72e184330059f4e20fbe",
+  "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+  "providers": {
+    "integrationVersion": "0.4.0",
+    "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+    "bindingId": "binding_4609d9894c3b24056d8c06f9737f66ce",
+    "capturedAt": "2026-10-10T16:20:06.186780675Z",
+    "expiresAt": "2026-10-11T16:20:06.170964611Z",
+    "profiles": [
+      {
+        "profileId": "profile_37c63f993473be6ca524324d29a7a47a",
+        "kind": "AVATAR",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:50:55.715129Z"
+      },
+      {
+        "profileId": "profile_a0122229bf182f32d63b18dff9559867",
+        "kind": "GPU_WORKER",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:50:49.337999Z"
+      },
+      {
+        "profileId": "profile_9fe0e4513f7cbcf42a0e8a6a92ff1908",
+        "kind": "LLM",
+        "provider": "deepseek",
+        "version": 3,
+        "updatedAt": "2026-10-10T07:49:40.220324Z"
+      },
+      {
+        "profileId": "profile_3b9456107f4173c62e7d59f788d7df7a",
+        "kind": "TTS",
+        "provider": "xiaoya",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:49:48.234231Z"
+      }
+    ],
+    "mode": "REAL",
+    "errorCode": "",
+    "workerEpoch": "1e3e5e1c78d64637a429e8b7c050c1df"
+  },
+  "operatorHeld": {
+    "selected": 0,
+    "merged": 9,
+    "candidates": 1
+  },
+  "mergedUtterance": "utt_e852fc8b31a20a1106016634dce373f8",
+  "arrivalPolicy": {
+    "kind": "seeded-uniform-gap-after-previous-completion",
+    "seed": 20261010,
+    "minMs": 600,
+    "maxMs": 2200
+  },
+  "samplePlan": {
+    "normalCount": 20,
+    "extraCount": 0
+  },
+  "receiveToCorrelatedAV": {
+    "samples": 20,
+    "meanMs": 3071.746500007153,
+    "p50Ms": 2718.5420000357553,
+    "p95Ms": 5014.480000083451,
+    "maxMs": 5138.52800003576
+  },
+  "receiveToRTMPAV": {
+    "samples": 0,
+    "meanMs": null,
+    "p50Ms": null,
+    "p95Ms": null,
+    "maxMs": null
+  },
+  "failedAttempts": 0,
+  "failureRatio": 0,
+  "finalSnapshot": {
+    "observation": {
+      "clockDomain": "go_monotonic",
+      "receiptAgeMs": 10926.395,
+      "receiveToSelectedMs": 75.65,
+      "receiveToDispatchAckMs": 92.514
+    },
+    "mode": "IDLE",
+    "candidates": 0,
+    "counters": {
+      "input": 30,
+      "deduplicated": 0,
+      "merged": 9,
+      "selected": 21,
+      "expired": 0,
+      "dropped": 0,
+      "filtered": 0,
+      "delivered": 21,
+      "failed": 0,
+      "peak": 1,
+      "force": 0
+    },
+    "recent": [
+      {
+        "eventId": "receipt_ce93341d8f4b5e55fd037afab92039a16f586edb50c81b5ae9be0da781cc8775",
+        "platform": "mock",
+        "sourceEventId": "mock_e9eac652845626e84962ced177bc1994",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "价格和整体库存是多少？再给一句搭配建议。",
+        "receivedAt": "2026-10-11T00:20:19.148690079+08:00",
+        "traceId": "interaction_ce93341d8f4b5e55fd037afab92039a16f586edb50c81b5ae9be0da781cc8775",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_dc7b5a9c987cfde86cdf6efb2cd6289b6e65397bb66983454bf46f5ba9831760",
+        "platform": "mock",
+        "sourceEventId": "mock_657e19ad91a9c1734115bb10ca493055",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "XL有没有，价格和库存是多少？帮我判断值不值得买。",
+        "receivedAt": "2026-10-11T00:20:29.259997152+08:00",
+        "traceId": "interaction_dc7b5a9c987cfde86cdf6efb2cd6289b6e65397bb66983454bf46f5ba9831760",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_e68b46c6dde46c249315cc65d0d76b33ef614b37bf6d94079bfb2a9aceb83865",
+        "platform": "mock",
+        "sourceEventId": "mock_c23e17cde4e1b464f7103456466d2fd2",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "价格和整体库存是多少？再给一句搭配建议。",
+        "receivedAt": "2026-10-11T00:20:40.269280545+08:00",
+        "traceId": "interaction_e68b46c6dde46c249315cc65d0d76b33ef614b37bf6d94079bfb2a9aceb83865",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_2426b179ea1acab6f8cd2c79874a5582a33b9d359b4567df0e93630670a77489",
+        "platform": "mock",
+        "sourceEventId": "mock_456d317ec3960db518a048c273ce84d7",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "XL有没有，价格和库存是多少？帮我判断值不值得买。",
+        "receivedAt": "2026-10-11T00:20:50.355354347+08:00",
+        "traceId": "interaction_2426b179ea1acab6f8cd2c79874a5582a33b9d359b4567df0e93630670a77489",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_4e17394e41af02225a0e43ddaa27b134e6874a2e43bbc9906acbcde7356fd4b9",
+        "platform": "mock",
+        "sourceEventId": "mock_479ea5dc1852e27243b9a57015ad1781",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "价格和整体库存是多少？再给一句搭配建议。",
+        "receivedAt": "2026-10-11T00:21:01.600086991+08:00",
+        "traceId": "interaction_4e17394e41af02225a0e43ddaa27b134e6874a2e43bbc9906acbcde7356fd4b9",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_0f5e58dc1fc51f54fe1496038470943c64a8cbdb3cff15bb8980d279edcebb7a",
+        "platform": "mock",
+        "sourceEventId": "mock_21854113fe7809959f90848dd325c371",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "XL有没有，价格和库存是多少？帮我判断值不值得买。",
+        "receivedAt": "2026-10-11T00:21:11.958873372+08:00",
+        "traceId": "interaction_0f5e58dc1fc51f54fe1496038470943c64a8cbdb3cff15bb8980d279edcebb7a",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_38f96a5829e23b925b4865506f7a841dd83fc2fac0b5ef609c90765a8cd37a23",
+        "platform": "mock",
+        "sourceEventId": "mock_a9a99ce00519aafebb2898efdafffdbe",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "价格和整体库存是多少？再给一句搭配建议。",
+        "receivedAt": "2026-10-11T00:21:22.808481572+08:00",
+        "traceId": "interaction_38f96a5829e23b925b4865506f7a841dd83fc2fac0b5ef609c90765a8cd37a23",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_c114cdf7633270fa52365b0d8588b9f6581582567490454d9800de02e9fe322a",
+        "platform": "mock",
+        "sourceEventId": "mock_c918d37b402eb0d5cb1cbb0647c02800",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "XL有没有，价格和库存是多少？帮我判断值不值得买。",
+        "receivedAt": "2026-10-11T00:21:33.189403683+08:00",
+        "traceId": "interaction_c114cdf7633270fa52365b0d8588b9f6581582567490454d9800de02e9fe322a",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_7fceb23a12d3e3075a838ee9a54909e30ce4ee1815f94a11620aa19490190620",
+        "platform": "mock",
+        "sourceEventId": "mock_3dc46060fcde0534b93094cea2dfe81e",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "价格和整体库存是多少？再给一句搭配建议。",
+        "receivedAt": "2026-10-11T00:21:45.823301305+08:00",
+        "traceId": "interaction_7fceb23a12d3e3075a838ee9a54909e30ce4ee1815f94a11620aa19490190620",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_8a6d37632ab170c4d826f1e8bb29bf0bcc9acc3d7827b6976ca042cceae7eed9",
+        "platform": "mock",
+        "sourceEventId": "mock_d070515f08d2fa12ca5b6d3f0e0b5ce8",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "XL有没有，价格和库存是多少？帮我判断值不值得买。",
+        "receivedAt": "2026-10-11T00:21:54.328903565+08:00",
+        "traceId": "interaction_8a6d37632ab170c4d826f1e8bb29bf0bcc9acc3d7827b6976ca042cceae7eed9",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_1f07f4bdf3bbd4b846581a0b5655b2a374a85a084dce44d88be4f5acab4f7e7c",
+        "platform": "mock",
+        "sourceEventId": "mock_fa9575ffa2137e3b656a8086b5bd20cd",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "价格和整体库存是多少？再给一句搭配建议。",
+        "receivedAt": "2026-10-11T00:22:05.24307769+08:00",
+        "traceId": "interaction_1f07f4bdf3bbd4b846581a0b5655b2a374a85a084dce44d88be4f5acab4f7e7c",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_af547a218b37b8e8da8f3e4e4c1a820cbf28d0349d651ac3bfe811ccfe94029b",
+        "platform": "mock",
+        "sourceEventId": "mock_0216211c42d0675597f4a8e2d1f61a7c",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "XL有没有，价格和库存是多少？帮我判断值不值得买。",
+        "receivedAt": "2026-10-11T00:22:16.581953559+08:00",
+        "traceId": "interaction_af547a218b37b8e8da8f3e4e4c1a820cbf28d0349d651ac3bfe811ccfe94029b",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_00f68756e499e44e4c6a0f75871b36d4d8645da7f4012d70ce1459f1819ebc2c",
+        "platform": "mock",
+        "sourceEventId": "mock_9cb32d3a2bfaa903758d92e362cd6fe8",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "价格和整体库存是多少？再给一句搭配建议。",
+        "receivedAt": "2026-10-11T00:22:27.854320549+08:00",
+        "traceId": "interaction_00f68756e499e44e4c6a0f75871b36d4d8645da7f4012d70ce1459f1819ebc2c",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_a7923128521ad4161e4a172ac83ba6d72d64402d7ab2c5bfb8aabff20ffc363e",
+        "platform": "mock",
+        "sourceEventId": "mock_1989c24bec6c8561d88c2b99543ce030",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "XL有没有，价格和库存是多少？帮我判断值不值得买。",
+        "receivedAt": "2026-10-11T00:22:38.290778297+08:00",
+        "traceId": "interaction_a7923128521ad4161e4a172ac83ba6d72d64402d7ab2c5bfb8aabff20ffc363e",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_22600f55287bc26448fe4fef64342b30c2e25208e4db6e35be850d427054a0f1",
+        "platform": "mock",
+        "sourceEventId": "mock_54e150f9ccac17859581370cd7cb0111",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "价格和整体库存是多少？再给一句搭配建议。",
+        "receivedAt": "2026-10-11T00:22:50.153138049+08:00",
+        "traceId": "interaction_22600f55287bc26448fe4fef64342b30c2e25208e4db6e35be850d427054a0f1",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_d8a88006956ae21e84685ba05e8911bcf440a05f609aee03167ae1cfaf32179a",
+        "platform": "mock",
+        "sourceEventId": "mock_20da25a56960d42bb2f6bf24be4b1807",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "XL有没有，价格和库存是多少？帮我判断值不值得买。",
+        "receivedAt": "2026-10-11T00:23:02.414259168+08:00",
+        "traceId": "interaction_d8a88006956ae21e84685ba05e8911bcf440a05f609aee03167ae1cfaf32179a",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_034713e1d2d7284b5be17835184d302922686bd1d4b024579705a6beb8b688e9",
+        "platform": "mock",
+        "sourceEventId": "mock_05df4f96b1196a4d59476e6c437f7fb9",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "价格和整体库存是多少？再给一句搭配建议。",
+        "receivedAt": "2026-10-11T00:23:14.719143018+08:00",
+        "traceId": "interaction_034713e1d2d7284b5be17835184d302922686bd1d4b024579705a6beb8b688e9",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_648f3d02b0fc7d24a958d407716c183aafe41e479bc372fda66e62cdc3addd34",
+        "platform": "mock",
+        "sourceEventId": "mock_4d472d4317b809d2f07154ad5ed56fd5",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "XL有没有，价格和库存是多少？帮我判断值不值得买。",
+        "receivedAt": "2026-10-11T00:23:26.23559029+08:00",
+        "traceId": "interaction_648f3d02b0fc7d24a958d407716c183aafe41e479bc372fda66e62cdc3addd34",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_bb95787fc96fc487aa06d7d7c21671c1d52e01114c9dcf2ca84be09d4a3de22c",
+        "platform": "mock",
+        "sourceEventId": "mock_8f0166c0ad9c44cf4bd1fb88c0c18353",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "价格和整体库存是多少？再给一句搭配建议。",
+        "receivedAt": "2026-10-11T00:23:36.489153104+08:00",
+        "traceId": "interaction_bb95787fc96fc487aa06d7d7c21671c1d52e01114c9dcf2ca84be09d4a3de22c",
+        "transport": "MOCK_REPLAY"
+      },
+      {
+        "eventId": "receipt_e94bbdb75d6c3e599bd8c131179203c2056965d41c53ae93261bb9edd600ece6",
+        "platform": "mock",
+        "sourceEventId": "mock_afcf5f233c2a7ae5927e26040905e03a",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "XL有没有，价格和库存是多少？帮我判断值不值得买。",
+        "receivedAt": "2026-10-11T00:23:47.650443521+08:00",
+        "traceId": "interaction_e94bbdb75d6c3e599bd8c131179203c2056965d41c53ae93261bb9edd600ece6",
+        "transport": "MOCK_REPLAY"
+      }
+    ],
+    "current": {
+      "estimatedReplyMs": 8000,
+      "event": {
+        "eventId": "receipt_e94bbdb75d6c3e599bd8c131179203c2056965d41c53ae93261bb9edd600ece6",
+        "platform": "mock",
+        "sourceEventId": "mock_afcf5f233c2a7ae5927e26040905e03a",
+        "platformRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "internalRoomId": "room_196bf2c659d58e1d8e5204c5ca705230",
+        "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+        "eventType": "COMMENT",
+        "userExternalId": "mock-viewer-0",
+        "nickname": "模拟观众",
+        "content": "XL有没有，价格和库存是多少？帮我判断值不值得买。",
+        "receivedAt": "2026-10-11T00:23:47.650443521+08:00",
+        "traceId": "interaction_e94bbdb75d6c3e599bd8c131179203c2056965d41c53ae93261bb9edd600ece6",
+        "transport": "MOCK_REPLAY"
+      },
+      "topic": "product:xl有没有，价格和库存是多少？帮我判断值不值得买。",
+      "audience": 1,
+      "priority": 80,
+      "policy": "NONE",
+      "productId": "product_fb0c57d2e2ce72e184330059f4e20fbe",
+      "selectedAt": "2026-10-11T00:23:47.726093757+08:00"
+    },
+    "utteranceId": "utt_51e58ce4f3505e3dc6128854e97fc8fb",
+    "stopped": false,
+    "latency": {
+      "samples": 21,
+      "meanMs": 92.21028571428572,
+      "p50Ms": 66.724,
+      "p95Ms": 97.665,
+      "maxMs": 884.74,
+      "boundary": "comment_received → scheduler_selected (Go monotonic; last 256 selected)"
+    },
+    "adapter": {
+      "state": "STOPPED",
+      "received": 1,
+      "reconnects": 0,
+      "heartbeats": 0
+    },
+    "platform": "mock"
+  },
+  "afterProviders": {
+    "integrationVersion": "0.4.0",
+    "sessionId": "session_e6831110b0241b2113bf1a6ba6707e55",
+    "bindingId": "binding_4609d9894c3b24056d8c06f9737f66ce",
+    "capturedAt": "2026-10-10T16:20:06.186780675Z",
+    "expiresAt": "2026-10-11T16:20:06.170964611Z",
+    "profiles": [
+      {
+        "profileId": "profile_37c63f993473be6ca524324d29a7a47a",
+        "kind": "AVATAR",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:50:55.715129Z"
+      },
+      {
+        "profileId": "profile_a0122229bf182f32d63b18dff9559867",
+        "kind": "GPU_WORKER",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:50:49.337999Z"
+      },
+      {
+        "profileId": "profile_9fe0e4513f7cbcf42a0e8a6a92ff1908",
+        "kind": "LLM",
+        "provider": "deepseek",
+        "version": 3,
+        "updatedAt": "2026-10-10T07:49:40.220324Z"
+      },
+      {
+        "profileId": "profile_3b9456107f4173c62e7d59f788d7df7a",
+        "kind": "TTS",
+        "provider": "xiaoya",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:49:48.234231Z"
+      }
+    ],
+    "mode": "REAL",
+    "errorCode": "",
+    "workerEpoch": "1e3e5e1c78d64637a429e8b7c050c1df"
+  },
+  "bundleUnchanged": true,
+  "nativeStats": [
+    {
+      "type": "media-playout",
+      "kind": "audio",
+      "totalSamplesDuration": 229.68
+    },
+    {
+      "type": "inbound-rtp",
+      "kind": "audio",
+      "packetsReceived": 11489,
+      "packetsLost": 0,
+      "totalAudioEnergy": 4.946533684427944,
+      "estimatedPlayoutTimestamp": 4000638238452,
+      "totalSamplesDuration": 229.6699999999361
+    },
+    {
+      "type": "inbound-rtp",
+      "kind": "video",
+      "framesDecoded": 5741,
+      "framesDropped": 0,
+      "packetsReceived": 31680,
+      "packetsLost": 0,
+      "estimatedPlayoutTimestamp": 4000638238456
+    }
+  ],
+  "browserVersion": "Chrome/154.0.8037.98",
+  "failedSamples": 0,
+  "recording": {
+    "file": "/tmp/astralive-agent-c-real-private/browser-pool-complex20.json.webm",
+    "scope": "native Chrome decoded MediaStream capture; human review pending"
+  },
+  "finalState": "ENDED"
+}

@@ -1,23 +1,23 @@
 # AstraLive v0.4 — 独立互动与媒体复验
 
-基线 `59d96c8818a4512651a2f945ced71278929c9e12`，分支 `audit/v04-interaction-gate`，2026-10-10。
+基线 `59d96c8818a4512651a2f945ced71278929c9e12`，分支 `audit/v04-interaction-gate`，2026-10-11。
 
-**INTERACTION INTEGRATION: BLOCKED** — 独立 formal Go→Bound Runtime 的 CPU 集成与修复后回归 PASS；完整当前真实主播场景尚未独立跑通。**MEDIA REGRESSION: BLOCKED** — CPU 媒体回归 PASS，新增文本转换未做真实 XiaoYa 听感/GPU/Chrome 复验。
+**INTERACTION INTEGRATION: PASS** — 单实例隔离环境，CPU回归及真实 A/B/C/D/E、Replay取消、商品切换、headless RTMP完成。**MEDIA REGRESSION: PASS** — 本轮有界真实音视频/Fence客观回归完成；用户明确确认录像与六组音频的读音、音画同步、自然唇形通过。该结论不覆盖官方平台观众端或一小时稳定性。
 
 ## 新执行的回归
 
-执行环境：macOS 本地 Go/Bun/Python；school-linux 上单独建立 Agent C PostgreSQL16-alpine/Redis7-alpine，仅转发独立26404/26405端口。既有商家 DB/Redis/服务没有清空、删除或改写。所有 inference 为 Fake/CPU，真实外部 Provider 调用数为0。命令原始日志、JSON、SHA256 索引见 [checks.json](evidence/independent/checks.json)。
+执行环境：macOS 本地 Go/Bun/Python；school-linux 上单独建立 Agent C PostgreSQL16-alpine/Redis7-alpine，仅转发独立26404/26405端口。既有商家 DB/Redis/服务没有清空、删除或改写。CPU回归 inference 为 Fake。后续真实运行使用 DeepSeek + 已缓存 XiaoYa + SoulX RTX3080；Backend/Runtime位于school-linux，GPU独立服务器，Chrome位于本机。测试仅使用新克隆的一次性验收DB，不修改克隆源或商家业务行。命令原始日志、JSON、SHA256 索引见 [checks.json](evidence/independent/checks.json)。
 
-Go 命令均在 `backend/` 执行，设置 `CONFIG_TEST_DATABASE_URL` 与 `DATABASE_URL` 指向新建一次性 audit DB，`INTERACTION_TEST_REDIS_URL` 指向新建一次性 Redis，`RUN_INTERACTION_CPU=1`；formal evidence 路径分别指向 independent/formal-final.json、formal-race-final.json。没有默认回退到商家连接。
+Go 命令均在 `backend/` 执行，设置 `CONFIG_TEST_DATABASE_URL` 与 `DATABASE_URL` 指向新建一次性 audit DB，`INTERACTION_TEST_REDIS_URL` 指向新建一次性 Redis，`RUN_INTERACTION_CPU=1`；formal evidence 路径分别指向 independent/formal-wake-normal.json、formal-wake-final.json。没有默认回退到商家连接。
 
 | 实际命令 | PASS | FAIL | SKIP | 证据 |
 | --- | ---: | ---: | ---: | --- |
-| `go test -count=1 -json ./...` | 58顶层 / 87含子测试 | 0 | 1 opt-in | [go-final.jsonl](evidence/independent/go-final.jsonl) |
-| `go test -race -count=1 -json ./...` | 58顶层 / 87含子测试 | 0 | 1 opt-in | [go-race-final.jsonl](evidence/independent/go-race-final.jsonl)；无 race 报告 |
-| `go vet ./...` | exit0 | 0 | 0 | [go-vet.log](evidence/independent/go-vet.log) |
-| `PYTHONPATH=runtime runtime/.venv/bin/python -m unittest discover -s runtime/tests -v` | 145 | 0 | 11；total156 | [runtime-final.log](evidence/independent/runtime-final.log) |
+| `go test -count=1 -json ./...` | 59顶层 / 90含子测试 | 0 | 1 opt-in | [go-wake-final.jsonl](evidence/independent/go-wake-final.jsonl) |
+| `go test -race -count=1 -json ./...` | 59顶层 / 90含子测试 | 0 | 1 opt-in | [go-race-wake-final.jsonl](evidence/independent/go-race-wake-final.jsonl)；无 race 报告 |
+| `go vet ./...` | exit0 | 0 | 0 | [go-vet-wake-final.log](evidence/independent/go-vet-wake-final.log) |
+| `PYTHONPATH=runtime runtime/.venv/bin/python -m unittest discover -s runtime/tests -v` | 148 | 0 | 11；total159 | [runtime-complete-final.log](evidence/independent/runtime-complete-final.log) |
 | `gpu_worker/.venv-tests/bin/python -m unittest discover -s gpu_worker/tests -v` | 21 | 0 | 0 | [worker.log](evidence/independent/worker.log)；CPU simulation/pinned decode |
-| `PYTHONPATH=runtime runtime/.venv/bin/python -m unittest tests.test_contracts tests.test_acceptance_guards tests.test_interaction_observer -v` | 7 | 0 | 0 | [contracts-final.log](evidence/independent/contracts-final.log) |
+| `PYTHONPATH=runtime runtime/.venv/bin/python -m unittest tests.test_contracts tests.test_acceptance_guards tests.test_interaction_observer -v` | 7 | 0 | 0 | [contracts-complete-final.log](evidence/independent/contracts-complete-final.log) |
 | `bun run build`（frontend/） | exit0 | 0 | 0 | [frontend-build.log](evidence/independent/frontend-build.log) |
 | `bun run test`（frontend/） | 40 / 9files | 0 | 0 | [frontend-test.log](evidence/independent/frontend-test.log) |
 | `go run ./cmd/comment-load` | 5场景 | 0 | 0 | [load-offline.json](evidence/independent/load-offline.json) |
@@ -33,7 +33,7 @@ Go 命令均在 `backend/` 执行，设置 `CONFIG_TEST_DATABASE_URL` 与 `DATAB
 
 ## 调度链及并发复核
 
-Formal CPU 通过真实 HTTP create/start→Go Session→immutable binding→Bound Runtime→Redis/SSE→Stop/release。[formal-final.json](evidence/independent/formal-final.json) 正常阶段11条输入、9次合并、2次 Selection、2次成功；未选中时 SQL Utterance=0。已选事实走 Fast Path，聊天走 Fake LLM streaming。故障阶段2次失败为持久 receipt 重投拒绝与注入 Runtime429，0次成功、0次 FORCE；没有混入正常成功率。
+Formal CPU 通过真实 HTTP create/start→Go Session→immutable binding→Bound Runtime→Redis/SSE→Stop/release。[formal-wake-final.json](evidence/independent/formal-wake-final.json) 正常阶段11条输入、9次合并、2次 Selection、2次成功；未选中时 SQL Utterance=0。已选事实走 Fast Path，聊天走 Fake LLM streaming。故障阶段2次失败为持久 receipt 重投拒绝与注入 Runtime429，0次成功、0次 FORCE；没有混入正常成功率。
 
 | 要求 | 独立验证 | 结论 |
 | --- | --- | --- |
@@ -72,12 +72,32 @@ Formal CPU 通过真实 HTTP create/start→Go Session→immutable binding→Bou
 
 现有 BoundConsumptionMediaOutput 使用原 link/epoch、当前 generation 的消费目标；WebRTC receiver consumption 或 RTMP pipe-delivery position 才给 credit，排队不等于消费。headless RTMP 排除无订阅 preview 的 drain，真正 encoder failure 仍失败。现有 FORCE/旧帧/credit/RTMP/WebRTC drain 与 CPU packet decode 回归执行通过，未改媒体路径。Sherpa 取消回归用 Fake native callback，不能证明不调用 callback 的 native hang 可硬终止。
 
-用户明确授权空闲时短测后，只读 SSH 发现 RTX3080 memory1MiB、利用率0%、配置的17088管理端口及17087推理端口都未监听：[gpu-preflight.json](evidence/independent/gpu-preflight.json)。没有 READY Worker 可使用，没有启动或恢复 Worker、实例、模型下载。因此本轮 A=Fast、B=真实 LLM、C=讲话中评论、D=高频混合、E=FORCE 的**新增真实 Chrome/RTMP/GPU**运行全部 BLOCKED；CPU对应验证与历史 A/B JSON复核明确另列。
+用户明确授权空闲时短测后，preflight确认RTX3080空闲、无业务Session，原Worker软件未运行。使用已安装launcher及缓存权重启动软件，doctor校验成功，Worker READY；没有云实例开关机、模型重下、Worker重启或破坏性fault。整个真实测试epoch固定 `1e3e5e1c78d64637a429e8b7c050c1df`。
 
-真人中文 XL/XXL/2XL、129.90元、500毫升、型号、混合语言、长句听感及主观唇形：NOT TESTED。没有平台 credentials/official Adapter，因此平台观众端 RTMP：NOT TESTED。共享 Worker 中断/恢复、长时 GPU soak：未执行。
+| 真实场景 | 结果与原始证据 |
+| --- | --- |
+| A 确定性商品 / B DeepSeek | 基线20/20完成、Chrome/RTMP双关联；其中Fast14/LLM6。优化后的20条全部真实LLM完成；混合26条保留综合咨询慢样本。详见延迟报告，不以总体P50替代LLM |
+| C 已有讲话 | `AUTO_SCRIPT` priority40/NONE 正在PLAYING时输入普通评论，700ms检查仍在讲且selected未增加；原讲解自然完成，再选评论、正常完成。基线约19.36秒/优化后约16.93秒等待至回复完成，自动FORCE=0；这不满足“繁忙时3秒回复”的期望 |
+| D 随机混合输入 | 期望1/s、5/s、20/s指数分布分别8/30/100条，Mock单viewer；独立保存实际时长和指标。HTTP全202，峰值候选3，12次自动完成；9条随机负载候选收尾被丢弃（以原始counter为准），不是全部输入都回答；短场景不是长期多人吞吐。见 real-scenario-summary.json |
+| 多人同问 / burst100 | 单HTTP Mock users=100，99次merge、1次选择；真实回复完成。不是100次网络HTTP峰值压测 |
+| 商品切换 | Operator hold四条候选后切独立Room商品，恢复后清队列并override `PRODUCT_CHANGED_NEW_SESSION_REQUIRED`，没有追加旧商品Utterance；finally还原独立fixture商品 |
+| E Operator FORCE | 原Utterance interrupted、新Utterance completed，generation=2，新generation出现后旧generation视频数0；自动FORCE=0。操作员显式恢复调度，不声称自动续讲 |
+| Replay取消 | 已投递input稳定，取消后不追加事件；结束时过期候选计数保留，不假装全部回复成功 |
+| 无浏览器 RTMP | 新formalSession没有Chrome订阅，真实Fast完成，RTMP audio580/video262、非零audio414/markedVideo260；Legacy LIVE202/Stop后409；ENDED、绑定释放 |
+
+证据为 `real-browser-measured20.json`、`real-browser-scenarios.json`、`real-browser-optimized-llm20.json`、`real-browser-optimized-mixed26.json`、`real-headless.json`、对应raw Runtime/Backend日志、RTMP receiver JSON与epoch过滤Worker telemetry。每次都正常Stop。首轮自定义Redis stream配置错误（PREPARING）、第二轮未开诊断marker（8条已完成但视频无法关联）属于fixture失败，分别保留normal20/final20原始文件，不混成成功延迟样本。
+
+真实负载的1/s、5/s、20/s实际速率受固定随机样本影响分别约2.26/s、5.21/s、14.33/s。总253输入含120去重、111合并、12选择、10丢弃（含商品切换清队列），峰值3、自动FORCE0；商品切换时4条输入合并为1候选再清除。资源JSON记录进程生命期CPU/RSS/HWM，不能伪称各速率全栈瞬时峰值。LLM/TTS实际调用由runtime trace计数，不用Fake delivery代替。
+真实native XiaoYa已生成六组PCM/WAV，覆盖 XL/XXL/2XL、129.90元、500毫升、型号、混合语言与长句；输出非零且格式正确。真实Chrome录像也已生成。用户先确认“整体还是很真实的”，随后明确“录像和六组音频都检查了，读音、音画同步、唇形均通过”，真人门槛 **PASS_BY_USER**。原始答复见 human-review.json，没有以音频存在替代读音正确。没有平台 credentials/official Adapter，因此平台观众端 RTMP：NOT TESTED。共享 Worker 中断/恢复、长时 GPU soak：未执行。
 
 ## 清理与交付边界
 
-Final formal Runtime sessions=0、leases=0，绑定 release/capture deletion 验证通过；四个 Agent C 自建容器与独立端口转发已清理。[cleanup.json](evidence/independent/cleanup.json)。测试种子身份/业务行仅存在于被销毁的测试 DB。没有修改实际商家数据，没有 Flush Redis，没有删除 GPU 权重，没有启动/关停 GPU实例。
+最终SQL/Worker状态和清理结果见 real-final-sql.json、real-worker-final.json、cleanup.json：仅清理Agent C所有的Session、CPU服务/观察器、临时SQL/Redis/MediaMTX容器及转发；GPU Worker保留READY、activeGenerationId为空，不关闭云实例。共享原服务和缓存权重没有改动。
 
-可继续审阅单实例实现与局部修复；不能用本报告替代新的真实播放或持续直播场景验收。
+人工评审材料位于 `runtime/evidence/independent-real/human-review.html`（录像和WAV为本地忽略产物，SHA256见media-manifest.json）。真人评审已确认整体真实感与逐项读音/同步/唇形通过，官方平台观众端仍NOT TESTED。完整媒体与发布门槛不会因单实例客观测试通过而自动关闭。
+
+连接复用后的首轮complex20仅记录Chrome：命令误用了不生效的 `INTERACTION_RTMP=1`，且observer路径错误；保留启动失败日志，不能声称该组RTMP复验。后续wake-complex20使用实际 `INTERACTION_RTMP_OBSERVER=1` 和已部署observer.py，另行保留完整JSON。
+
+最终首短分句组综合20条全完成，Chrome/RTMP分路径与时钟上界均达标；同一Session最终FORCE旧任务interrupted/新任务completed、旧generation视频泄露0，Replay取消后input稳定；前一backlog先在override下自然TTL后，独立忙主播回复完成。原wake组busy阶段超时另列，不把phase失败算成正常20条失败，也不称整个wake试验成功。原始JSON见 real-browser-clause-complex20.json。
+
+已导出的Runtime cache轨迹由real-all-runtime-traces.json保存；最早marker缺失的8条诊断任务未完整保留cache，不参与有效延迟成绩。Worker轨迹由real-worker-trace.jsonl.gz保存；后者是既有Worker日志按本次epoch筛选并重新序列化的JSON行，未伪称完整原始log。SHA和行数见worker-telemetry-manifest.json。各utterance的tts_started是首次合成阶段标记，不能当作每分句native generate总调用数；逐分句计数尚未测量。

@@ -1,0 +1,166 @@
+{
+  "scope": "All retained bounded decoder rows; receiver termination after normal publisher Stop is preserved, not a stream restart fault",
+  "files": {
+    "real-rtmp-normal.json": {
+      "counts": {
+        "audio": 0,
+        "video": 0,
+        "nonzeroAudio": 0,
+        "markedVideo": 0
+      },
+      "errors": [
+        "NO_RTMP_PUBLISHER"
+      ],
+      "pts": {
+        "audio": {
+          "retainedRowsWithPTS": 0,
+          "monotonicNondecreasing": true,
+          "observed": false
+        },
+        "video": {
+          "retainedRowsWithPTS": 0,
+          "monotonicNondecreasing": true,
+          "observed": false
+        }
+      }
+    },
+    "real-rtmp-clause.json": {
+      "counts": {
+        "audio": 13485,
+        "video": 7146,
+        "nonzeroAudio": 6664,
+        "markedVideo": 7112
+      },
+      "errors": [
+        "RECEIVER_ENDED_OSError"
+      ],
+      "pts": {
+        "audio": {
+          "retainedRowsWithPTS": 2854,
+          "monotonicNondecreasing": true,
+          "observed": true
+        },
+        "video": {
+          "retainedRowsWithPTS": 3146,
+          "monotonicNondecreasing": true,
+          "observed": true
+        }
+      }
+    },
+    "real-rtmp-measured.json": {
+      "counts": {
+        "audio": 9941,
+        "video": 5254,
+        "nonzeroAudio": 4189,
+        "markedVideo": 5223
+      },
+      "errors": [
+        "RECEIVER_ENDED_OSError"
+      ],
+      "pts": {
+        "audio": {
+          "retainedRowsWithPTS": 2616,
+          "monotonicNondecreasing": true,
+          "observed": true
+        },
+        "video": {
+          "retainedRowsWithPTS": 3384,
+          "monotonicNondecreasing": true,
+          "observed": true
+        }
+      }
+    },
+    "real-rtmp-wake.json": {
+      "counts": {
+        "audio": 13490,
+        "video": 7151,
+        "nonzeroAudio": 6278,
+        "markedVideo": 7118
+      },
+      "errors": [
+        "RECEIVER_ENDED_OSError"
+      ],
+      "pts": {
+        "audio": {
+          "retainedRowsWithPTS": 2700,
+          "monotonicNondecreasing": true,
+          "observed": true
+        },
+        "video": {
+          "retainedRowsWithPTS": 3300,
+          "monotonicNondecreasing": true,
+          "observed": true
+        }
+      }
+    },
+    "real-rtmp-optimized.json": {
+      "counts": {
+        "audio": 12656,
+        "video": 6708,
+        "nonzeroAudio": 6394,
+        "markedVideo": 6674
+      },
+      "errors": [
+        "RECEIVER_ENDED_OSError"
+      ],
+      "pts": {
+        "audio": {
+          "retainedRowsWithPTS": 2973,
+          "monotonicNondecreasing": true,
+          "observed": true
+        },
+        "video": {
+          "retainedRowsWithPTS": 3027,
+          "monotonicNondecreasing": true,
+          "observed": true
+        }
+      }
+    },
+    "real-rtmp-headless.json": {
+      "counts": {
+        "audio": 580,
+        "video": 262,
+        "nonzeroAudio": 414,
+        "markedVideo": 260
+      },
+      "errors": [
+        "RECEIVER_ENDED_OSError"
+      ],
+      "pts": {
+        "audio": {
+          "retainedRowsWithPTS": 414,
+          "monotonicNondecreasing": true,
+          "observed": true
+        },
+        "video": {
+          "retainedRowsWithPTS": 260,
+          "monotonicNondecreasing": true,
+          "observed": true
+        }
+      }
+    },
+    "real-rtmp-final.json": {
+      "counts": {
+        "audio": 3646,
+        "video": 1905,
+        "nonzeroAudio": 1555,
+        "markedVideo": 0
+      },
+      "errors": [
+        "RECEIVER_ENDED_OSError"
+      ],
+      "pts": {
+        "audio": {
+          "retainedRowsWithPTS": 1555,
+          "monotonicNondecreasing": true,
+          "observed": true
+        },
+        "video": {
+          "retainedRowsWithPTS": 0,
+          "monotonicNondecreasing": true,
+          "observed": false
+        }
+      }
+    }
+  }
+}

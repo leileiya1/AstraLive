@@ -24,17 +24,17 @@ const (
 )
 
 type Config struct {
-	AllowPriorityPreemption                bool
-	Capacity                               int
-	TTL, MergeWindow, UserWindow, Interval time.Duration
-	UserLimit, GlobalLimit, CacheCapacity  int
+	AllowPriorityPreemption                              bool
+	Capacity                                             int
+	TTL, MergeWindow, UserWindow, Interval, PollInterval time.Duration
+	UserLimit, GlobalLimit, CacheCapacity                int
 }
 
 func DefaultConfig() Config {
-	return Config{Capacity: 64, TTL: 20 * time.Second, MergeWindow: 8 * time.Second, UserWindow: 10 * time.Second, Interval: 2 * time.Second, UserLimit: 3, GlobalLimit: 100, CacheCapacity: 4096}
+	return Config{Capacity: 64, TTL: 20 * time.Second, MergeWindow: 8 * time.Second, UserWindow: 10 * time.Second, Interval: 2 * time.Second, PollInterval: 100 * time.Millisecond, UserLimit: 3, GlobalLimit: 100, CacheCapacity: 4096}
 }
 func (c Config) Validate() error {
-	if c.Capacity < 1 || c.Capacity > 1000 || c.TTL <= 0 || c.MergeWindow <= 0 || c.UserWindow <= 0 || c.Interval <= 0 || c.UserLimit < 1 || c.GlobalLimit < 1 || c.CacheCapacity < c.Capacity || c.CacheCapacity > 10000 {
+	if c.Capacity < 1 || c.Capacity > 1000 || c.TTL <= 0 || c.MergeWindow <= 0 || c.UserWindow <= 0 || c.Interval <= 0 || c.PollInterval <= 0 || c.UserLimit < 1 || c.GlobalLimit < 1 || c.CacheCapacity < c.Capacity || c.CacheCapacity > 10000 {
 		return fmt.Errorf("invalid scheduler config")
 	}
 	return nil
@@ -127,6 +127,7 @@ type candidate struct {
 	users     map[string]bool
 }
 type Scheduler struct {
+	updates              chan struct{}
 	dispatchAckMS        float64
 	resumeMode           Mode
 	mu                   sync.Mutex
@@ -162,7 +163,17 @@ func New(c Config, m platform.Mapping, product string, d Dispatcher, g GateFunc,
 	if l == nil {
 		l = &Limiter{}
 	}
-	return &Scheduler{config: c, mapping: m, product: product, now: clock, dispatch: d, gate: g, limiter: l, mode: Idle, seen: map[string]time.Time{}, repeats: map[string]time.Time{}, users: map[string]window{}, served: map[string]time.Time{}}, nil
+	return &Scheduler{updates: make(chan struct{}, 1), config: c, mapping: m, product: product, now: clock, dispatch: d, gate: g, limiter: l, mode: Idle, seen: map[string]time.Time{}, repeats: map[string]time.Time{}, users: map[string]window{}, served: map[string]time.Time{}}, nil
+}
+
+// Updates coalesces receipts/resume signals; Tick still enforces busy, TTL,
+// ownership and the minimum speech interval. Never blocks a platform sink.
+func (s *Scheduler) Updates() <-chan struct{} { return s.updates }
+func (s *Scheduler) notify() {
+	select {
+	case s.updates <- struct{}{}:
+	default:
+	}
 }
 
 var sizeRE = regexp.MustCompile(`(?i)(?:[2-5]xl|x{1,4}l|xs|s|m|l|[0-9]{1,3}\s*(?:码|号))`)
@@ -361,6 +372,7 @@ func (s *Scheduler) Receive(ctx context.Context, e platform.Event) error {
 	}
 	selection := Selection{Event: e, Topic: topic, Audience: 1, Priority: priority, Policy: "NONE", ProductID: s.product, EstimatedReplyMS: estimate(topic)}
 	s.queue = append(s.queue, &candidate{selection, map[string]bool{e.UserExternalID: true}})
+	s.notify()
 	if len(s.queue) > s.counters.Peak {
 		s.counters.Peak = len(s.queue)
 	}
@@ -483,6 +495,7 @@ func (s *Scheduler) SetMode(m Mode) error {
 	defer s.mu.Unlock()
 	if !s.stopped {
 		s.mode = m
+		s.notify()
 	}
 	return nil
 }

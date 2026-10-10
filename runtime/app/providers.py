@@ -1,4 +1,5 @@
 import asyncio
+from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from typing import AsyncIterator, Protocol
 import httpx
@@ -86,12 +87,21 @@ class OpenAICompatibleLLMProvider:
         self.base_url, self.api_key, self.model = base_url.rstrip("/"), api_key, model
         self.max_tokens = max_tokens
         self.transport = transport
+        self.client: httpx.AsyncClient | None = None
+
+    @asynccontextmanager
+    async def _stream_client(self):
+        if self.client is not None:
+            yield self.client
+        else:
+            async with httpx.AsyncClient(timeout=httpx.Timeout(60, connect=10), transport=self.transport, trust_env=False, follow_redirects=False) as client:
+                yield client
 
     async def stream(self, request: LLMRequest) -> AsyncIterator[str]:
         import json
         done = False
         terminal_finish = False
-        async with httpx.AsyncClient(timeout=httpx.Timeout(60, connect=10), transport=self.transport, trust_env=False, follow_redirects=False) as client:
+        async with self._stream_client() as client:
             async with client.stream(
                 "POST", f"{self.base_url}/chat/completions",
                 headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},

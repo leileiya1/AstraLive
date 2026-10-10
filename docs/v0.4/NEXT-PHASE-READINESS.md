@@ -1,51 +1,43 @@
 # AstraLive v0.4 — 下一阶段准备度
 
-独立审查基线：fetch后main `59d96c8818a4512651a2f945ced71278929c9e12`。交付分支：`audit/v04-interaction-gate`。本轮源码审查、失败复现、局部修复、独立SQL/Redis集成、Go/race/vet、Runtime/GPU CPU、前端与Frozen Contract回归均已完成。完整资料见其他三份独立报告及 [checks.json](evidence/independent/checks.json)。
+2026-10-11，fetch后的远程main仍为 `59d96c8818a4512651a2f945ced71278929c9e12`；独立分支 `audit/v04-interaction-gate`。四份报告与 independent/checks.json、原始JSON、回归失败/通过日志一起交付，未修改或合并main。
 
 | 最终门槛 | 状态 | 适用范围 |
 | --- | --- | --- |
-| **ARCHITECTURE REVIEW** | **PASS** | 修复后的单实例、单操作员MVP源码和自动化；无未修复的新P0发现；并非商业可靠性认证 |
-| **INTERACTION INTEGRATION** | **BLOCKED** | formal CPU集成PASS，原20条真实JSON复算；当前真实忙主播/随机到达场景未独立复跑 |
-| **END-TO-END LATENCY** | **BLOCKED** | 总体P50误差上界3193.64ms、clock/audio证据限制；已有LLM六样本子门槛FAIL |
-| **MEDIA REGRESSION** | **BLOCKED** | CPU媒体/PTS/fence/credit回归PASS；当前真实GPU/Chrome/RTMP与新版尺码朗读主观复验未执行 |
-| **NEXT PHASE READY** | **CONDITIONAL** | 可进入受限设计和CPU开发准备；不建议宣布v0.4完整真实验收或商业发布已通过 |
+| **ARCHITECTURE REVIEW** | **PASS** | 修复后单Backend/单Runtime、单操作员MVP；不代表多实例SaaS、exactly-once或商业恢复SLA |
+| **INTERACTION INTEGRATION** | **PASS** | 隔离SQL/Redis CPU集成及真实A/B/C/D/E、商品切换、Replay取消、Stop/release；短场景范围 |
+| **END-TO-END LATENCY** | **PASS** | 正常低负载Fast/简单LLM/商品综合LLM分别统计；最终综合20条Chrome与本地RTMP的P50/P95误差上界均≤3s/5s；不包含繁忙/高负载SLA |
+| **MEDIA REGRESSION** | **PASS** | 客观真实Chrome/RTMP、Generation Fence、headless和CPU媒体回归；用户确认录像及六组音频的读音/同步/唇形通过。最新性能录像另列，官方平台观众端未验 |
+| **NEXT PHASE READY** | **CONDITIONAL** | 可进入受控自动场控设计和第一个官方Adapter隔离实现；不建议宣布自主直播、持续3秒SLA或商业发布完成 |
 
-## 现在可作为基础的能力
+## 已有可靠基础
 
-A提供的 immutable Provider/商品Context、真实Go Session生命周期、owner授权、安全摘要、媒体Fence/PTS/credit；B提供的 trusted Adapter Mapping、Normalize、有限候选、选择与Dispatcher桥、事实Fast Path、LLM/TTS增量背压、trace和手动override/resume。新审查补齐了Room缓存授权、晚TTL、复合问题/2XL、Replay quiescence和尺码朗读误改单位。
+A的immutable Provider/商品Context、授权、正式Go Session、Stop/release、Worker admission、PTS/Fence/Credit；B的可信Mapping、Normalize、有限候选、去重/合并/TTL、Selection/Dispatcher、事实Fast Path、LLM/TTS增量背压与trace都已独立检查和测试。
 
-独立总计：Go58顶层/87含子测试通过、1skip；Runtime145通过/11skip（156 total）；GPU CPU21通过；Contract/guard/marker7通过；前端40通过与build成功。这些是真实执行的自动化，不是真实vendor inference。P0权限失败到修复的证据与最小变更都在分支上可审阅。
+新审查修复Room授权缓存、晚TTL、错误合并/2XL、Replay取消竞态、尺码朗读误改单位、UI口径。后续性能改进解耦100ms轮询与2秒口播间隔、立即唤醒、有界Session连接池及首个完整中文短分句增量朗读；保留原媒体协议和时间轴。
 
-当前GPU服务器只读preflight显示17087/17088未监听，GPU1MiB/0%，不存在可直接短测的READY Worker。虽然用户授权空闲时短测，本轮没有启动、恢复或中断Worker/实例，也没有重新下载模型。新增真实门槛保持BLOCKED，不能引用A/B先前“留下READY”的描述当作现在状态。
+最终完整自动化：Go59顶层/90含子测试通过、1skip；Runtime148通过/11skip（159 total）；GPU CPU21、Frozen Contract/guard/marker7、前端40/9files及build通过。真实DeepSeek/XiaoYa/RTX3080、native Chrome和本地RTMP另有原始JSON；不能用CPU/Fake计数代替真实vendor结果。
 
-## 自动口播场控：有基础，尚不能承诺完整产品
+最终综合20条Chrome P50/P95=2644.14/3656.62ms，上界2656.23/3695.77ms；RTMP=2692.73/3727.61ms，上界2748.36/3813.16ms。5141.91ms最大样本仍保留。此前5660.12、5014.48、5138.53ms慢样本与失败批次均未删除，分阶段报告。有限样本达标不是供应商延迟保证。
 
-可以开始设计受控AUTO_SCRIPT队列、有限文本段、商品快照与模式切换、Operator interrupt后可见恢复操作，并先做CPU/Fake验收。完整自主直播尚缺：脚本进度/断点、被抢占后的续讲策略、当前商品切换事务边界、busy评论公平性/expiry UX、故障/重启对账及长时媒体回归。
+## 自动口播场控：可开始受控开发
 
-PRODUCT_EXPLAINING只是Scheduler模式，不生成脚本、不自动续讲，也不负责长期直播节奏。默认评论不抢占已有讲话，已能避免无限FORCE；其代价是随机wall load已出现6–15秒等待与明显丢弃/合并。不能为了自动场控把这些数值隐藏或强制所有弹幕打断。
+具备基础，可规划有限长度的AUTO_SCRIPT段、商品快照、自然边界让出、Operator抢占后的可见恢复。当前PRODUCT_EXPLAINING依赖已有任务，不生成脚本、不续讲、不管理长期直播节奏。本轮没有开发完整自动场控。
 
-建议把下一阶段限定为设计与一个可独立测试的受控功能；先关闭下面的真实互动/听感门槛，再扩大自动自主行为。本轮没有开发新的自动场控系统。
+长讲解中评论默认不打断，真实等待约17–19秒；高频选择等待P95约14.25秒。这是保持普通弹幕不无限FORCE的代价，不能称繁忙时3秒响应已验收。下一阶段应先定义短段/公平性/TTL展示与恢复策略，再逐功能真实验收。
 
-## 第一个官方平台Adapter：可接入准备，真实上线有条件
+## 第一个官方Adapter：可进入隔离实现，上线仍有门槛
 
-现有统一Adapter/Event/Sink/Capabilities/Mapping足以承接一个官方、已授权的transport。实际选型、官方API权限/协议、Room账号授权、source identity与reconnect/replay语义、token生命周期、敏感内容留存、可靠取消、input限长/速率与队列pressure需先定义和验证。
+统一Adapter/Event/Sink/Capabilities/Mapping足以承接一个官方授权transport。仍需官方API权限、账号/Room授权、source identity、重连/历史重放、token生命周期、限速/限长、敏感评论留存与可靠取消，并验真正平台观众端。当前仅本地RTMP解码，未接入官方平台，不做私有协议逆向。
 
-持久Receipt只保护已保留的automatic trace；没有跨实例调度和完整crash恢复。新Adapter不能默认网络重复、重连历史消息或进程重启都获得永久exactly-once，更不能把多Backend的同一商品/Session忙态当作由本机mutex保证。上线前须做room/session/user映射、断网重放/重复、Stop与取消、expired backlog及真实观众端测试。
+单实例Receipt的RESERVED/ACCEPTED/FAILED不重投；崩溃后的丢失、QUEUED orphan和lost acknowledgement歧义仍需保守对账。不能用无限重试换取重复口播，也不能把本机mutex推广成多Backend协调。
 
-因此：**具备启动官方Adapter设计与隔离CPU实现的条件；不具备宣布第一个真实平台已验收上线的条件。** 不做私有协议逆向或淘宝正式Adapter，不扩大SaaS/计费/多GPU范围。
+## 仍需关闭的产品与运行门槛
 
-## 进入下一版本前的门槛
+- 长时随机多人/真实LLM混合负载，逐速率native RSS/CPU/GPU峰值、每分句TTS调用计数与持续吞吐；本轮仅短时/进程生命期资源快照。
+- crash/orphan对账、输入持久身份/retention；当前自动任务at-most-once可能丢失。
+- 官方平台观众端；本地decoder/FFmpeg credit不能证明平台扬声器播放。
+- native无callback挂起、Session seen_utterances增长、全局命令锁跨Room排队、全新安装/恢复。空DB首轮并发migration失败已保留，初始化隔离schema后回归通过。
+- 长时GPU soak与破坏性Worker恢复本轮未重复执行；共享Worker未重启、中断或换权重。
 
-| 门槛 | 当前证据 | 关闭方法 |
-| --- | --- | --- |
-| 当前真实五场景 | BLOCKED；授权有，但现有Worker未运行 | 另行安排可用空闲READY Worker及隔离业务入口，再做一次有界短测；不干扰共享Session |
-| LLM延迟 | 已有n6 ChromeP50/P95=3973.84/6668.99ms，乐观下界仍FAIL | 降低跨主机控制/Tool往返，严格observer/clock与独立分层随机样本；不得动统计目标或旧PCM/PTS |
-| 中文内容/唇形 | 字符串回归PASS，新TTS文字修复后真实听感未测试 | XL/XXL/2XL、129.90元、500毫升、型号/英单位/长句，真人或指定评审有据记录 |
-| 重启与歧义任务 | SQL receipt at-most-once保护PASS，RESERVED丢失/orphan仍可能 | 定义保守对账、未知结果/操作员恢复策略；避免无限重试和重复口播 |
-| 持续互动与资源 | 短随机wall及虚拟1000-event PASS；全栈长时NOT TESTED | 分别记录真实LLM/TTS请求、native RSS/GPU memory/CPU、expiry/drop、正常Stop与清理 |
-| 平台观众端 | 本地RTMP decode历史证据；官方平台NOT TESTED | 使用官方权限/测试直播间、真正观众端观测，不复用pipe或本地decoder作为观众证明 |
-| 全新环境启动 | 最初Go空DB并发初始化失败；初始化后回归PASS | test runner明确先migrate；另验安装/启动并发/恢复，不把单实例业务测试称为任意Linux安装 |
-
-已知native无callback hang、Session生命周期内的`seen_utterances`增长、DB retention/幂等过期行维护、共享命令锁带来的跨Room延迟，也应纳入生产长时门槛。它们没有被短期稳定或本次PASS掩盖。
-
-建议：完成P0/P1修复审阅后保留本次交付；下一版本开发可有条件开始，当前v0.4完整真实验收与商业发布暂不建议通过。所有Agent C一次性SQL/Redis服务及转发已清理，merchant数据/现有GPU权重与实例未变更。GitHub CLI认证失效时，以独立分支Commit SHA交付，不直接操作main。
+建议进入下一版本的受控开发与隔离官方Adapter阶段，保持上述运行和发布门槛。测试完成后只清理Agent C所有的服务/Session/容器/转发；GPU Worker保留READY，不关闭云实例或删除模型。代码、测试、报告和原始证据以独立分支Commit SHA供审阅；不直接合并main。

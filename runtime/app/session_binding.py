@@ -51,7 +51,7 @@ class BindingClient:
 
 class FixedDeepSeekTransport(httpx.AsyncBaseTransport):
     def __init__(self, temperature=None, transport=None):
-        self.inner = transport or httpx.AsyncHTTPTransport(trust_env=False)
+        self.inner = transport or httpx.AsyncHTTPTransport(trust_env=False, limits=httpx.Limits(max_connections=1, max_keepalive_connections=1, keepalive_expiry=60))
         self.temperature = temperature
 
     async def handle_async_request(self, request):
@@ -75,7 +75,9 @@ class BoundDeepSeek(OpenAICompatibleLLMProvider):
         self.config, self.errors = config, errors
 
     async def stream(self, request):
-        self.transport = FixedDeepSeekTransport(self.config.get("temperature"))
+        if self.client is None:
+            self.transport = FixedDeepSeekTransport(self.config.get("temperature"))
+            self.client = httpx.AsyncClient(timeout=httpx.Timeout(60, connect=10), transport=self.transport, trust_env=False, follow_redirects=False)
         try:
             async for token in super().stream(request):
                 yield token
@@ -86,6 +88,11 @@ class BoundDeepSeek(OpenAICompatibleLLMProvider):
             code = "PROVIDER_AUTH_FAILED" if isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code in {401, 403} else "LLM_FAILED"
             self.errors["errorCode"] = code
             raise RuntimeFailure(code, "Bound LLM request failed", 502) from None
+
+    async def aclose(self):
+        if self.client is not None:
+            client, self.client = self.client, None
+            await client.aclose()
 
 
 class BoundXiaoYa:
@@ -193,23 +200,35 @@ class BoundSessionManager(SessionManager):
 
     async def _cleanup_failed_session(self, sid):
         session = self.sessions.pop(sid, None)
-        if session:
-            tasks={task for task in (session.worker,session.current_task,*session.tasks) if task and task is not asyncio.current_task() and not task.done()}
-            for task in tasks:
-                task.cancel()
-            if tasks:
-                try:
-                    await asyncio.wait_for(asyncio.gather(*tasks,return_exceptions=True),2)
-                except asyncio.TimeoutError:
-                    pass
-            for obj in (session.avatar_engine, session.media_output):
-                try:
-                    await asyncio.wait_for(obj.stop(), 10)
-                except Exception:
-                    pass
+        try:
+            if session:
+                tasks={task for task in (session.worker,session.current_task,*session.tasks) if task and task is not asyncio.current_task() and not task.done()}
+                for task in tasks:
+                    task.cancel()
+                if tasks:
+                    try:
+                        await asyncio.wait_for(asyncio.gather(*tasks,return_exceptions=True),2)
+                    except asyncio.TimeoutError:
+                        pass
+                for obj in (session.avatar_engine, session.media_output):
+                    try:
+                        await asyncio.wait_for(obj.stop(), 10)
+                    except Exception:
+                        pass
+                await self._close_llm(session)
+        finally:
+            await self._release(sid)
+
+    async def _close_llm(self, session):
+        try:
+            close = getattr(session.llm, "aclose", None)
+            if close:
+                await asyncio.wait_for(close(), 2)
+        except Exception:
+            pass
+        finally:
             if hasattr(session.llm, "api_key"):
                 session.llm.api_key = ""
-        await self._release(sid)
 
     async def _release(self, sid):
         if sid in self.releasing:
@@ -267,9 +286,11 @@ class BoundSessionManager(SessionManager):
             if session:
                 await super().stop_session(sid, trace)
         finally:
-            if session and hasattr(session.llm, "api_key"):
-                session.llm.api_key = ""
-            await self._release(sid)
+            try:
+                if session:
+                    await self._close_llm(session)
+            finally:
+                await self._release(sid)
 
     async def _lease(self, sid, delay):
         await asyncio.sleep(delay)

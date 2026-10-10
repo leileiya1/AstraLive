@@ -16,7 +16,7 @@ func FromEnvironment() (Config, error) {
 		}
 		c.AllowPriorityPreemption = v
 	}
-	for key, ptr := range map[string]*time.Duration{"INTERACTION_TTL_MS": &c.TTL, "INTERACTION_MERGE_MS": &c.MergeWindow, "INTERACTION_INTERVAL_MS": &c.Interval, "INTERACTION_USER_WINDOW_MS": &c.UserWindow} {
+	for key, ptr := range map[string]*time.Duration{"INTERACTION_TTL_MS": &c.TTL, "INTERACTION_MERGE_MS": &c.MergeWindow, "INTERACTION_INTERVAL_MS": &c.Interval, "INTERACTION_POLL_MS": &c.PollInterval, "INTERACTION_USER_WINDOW_MS": &c.UserWindow} {
 		if raw := os.Getenv(key); raw != "" {
 			n, err := strconv.Atoi(raw)
 			if err != nil || n < 1 || n > 600000 {
