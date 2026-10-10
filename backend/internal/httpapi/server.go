@@ -136,6 +136,7 @@ func (h *Server) Router() http.Handler {
 		r.Mount("/internal/v0.4", h.Config.SessionInternalRouter())
 		r.Mount("/internal/v0.3", h.Config.InternalRouter())
 	}
+	r.Mount("/api/v0.4/interaction", h.interactionRouter())
 	r.Get("/health/live", func(w http.ResponseWriter, r *http.Request) {
 		_ = json.NewEncoder(w).Encode(map[string]any{"status": "UP"})
 	})

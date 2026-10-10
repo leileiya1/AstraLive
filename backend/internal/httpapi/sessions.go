@@ -161,7 +161,7 @@ func (h *Server) interrupt(w http.ResponseWriter, r *http.Request) {
 		failure(w, r, 409, "SESSION_NOT_RUNNING", "session is not running")
 		return
 	}
-	op, e := h.S.Runtime.Interrupt(r.Context(), id, map[string]any{"commandId": ids.New("cmd"), "traceId": ids.New("trace"), "reason": v.Reason})
+	op, e := h.S.Interrupt(r.Context(), id, ids.New("trace"), v.Reason)
 	if e != nil {
 		runtimeFail(w, r, e)
 		return

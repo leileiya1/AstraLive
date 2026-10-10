@@ -7,6 +7,7 @@ import { Card } from "../../components/ui/card";
 import { Input, Textarea } from "../../components/ui/input";
 import { useLiveSessionEvents } from "../../hooks/useLiveSessionEvents";
 import { useLivePreview } from "../../hooks/useLivePreview";
+import { InteractionPanel } from "./InteractionPanel";
 import { ProviderStatus } from "./ProviderStatus";
 import { useUi } from "../../stores/ui";
 function PreviewError({ error }: { error: unknown }) {
@@ -167,6 +168,7 @@ export function LiveConsole({
         </div>
       </div>
       <ProviderStatus sessionId={sessionId} />
+      <InteractionPanel sessionId={sessionId} running={["LIVE", "DEGRADED"].includes(shownStatus ?? "")} speechQueue={state.timeline.filter(t => !["COMPLETED", "INTERRUPTED", "CANCELLED", "FAILED"].includes(t.status)).length} />
       {[create.error, start.error, stop.error].filter(Boolean).map((e, i) => (
         <ErrorNotice key={i} error={e} />
       ))}

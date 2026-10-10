@@ -2,6 +2,7 @@
 import asyncio
 from pathlib import Path
 import threading
+import concurrent.futures
 from .models import VoiceConfig
 from .providers import AudioChunk, GenerationContext
 
@@ -35,27 +36,47 @@ class SherpaOnnxTTSProvider:
         import numpy as np
 
         loop = asyncio.get_running_loop()
-        queue: asyncio.Queue[AudioChunk | Exception | None] = asyncio.Queue()
+        queue: asyncio.Queue[AudioChunk | Exception | None] = asyncio.Queue(maxsize=8)
         cancelled = threading.Event()
         sequence = 0
+
+        def send(item):
+            if cancelled.is_set():
+                return False
+            future = asyncio.run_coroutine_threadsafe(queue.put(item), loop)
+            while not cancelled.is_set():
+                try:
+                    future.result(timeout=0.05)
+                    return True
+                except concurrent.futures.TimeoutError:
+                    continue
+                except concurrent.futures.CancelledError:
+                    return False
+            future.cancel()
+            return False
 
         def callback(samples, progress):
             nonlocal sequence
             if cancelled.is_set():
                 return 0
-            pcm = (np.clip(samples, -1.0, 1.0) * 32767).astype("<i2").tobytes()
-            if pcm:
-                loop.call_soon_threadsafe(queue.put_nowait, AudioChunk(ctx.generation_id, sequence, pcm, self.sample_rate, 1))
-                sequence += 1
-            return 1
+            # At most 40ms per slot (8 slots = 320ms queued PCM). Only this
+            # native thread blocks; the event loop remains free to consume/cancel.
+            step = max(1, self.sample_rate * 40 // 1000)
+            for offset in range(0, len(samples), step):
+                pcm = (np.clip(samples[offset:offset+step], -1.0, 1.0) * 32767).astype("<i2").tobytes()
+                if pcm:
+                    if not send(AudioChunk(ctx.generation_id, sequence, pcm, self.sample_rate, 1)):
+                        return 0
+                    sequence += 1
+            return 0 if cancelled.is_set() else 1
 
         def generate():
             try:
                 self.engine.generate(text, sid=self.speaker_id, speed=1.0, callback=callback)
             except Exception as exc:
-                loop.call_soon_threadsafe(queue.put_nowait, exc)
+                send(exc)
             finally:
-                loop.call_soon_threadsafe(queue.put_nowait, None)
+                send(None)
 
         worker = asyncio.create_task(asyncio.to_thread(generate))
         try:
@@ -68,4 +89,4 @@ class SherpaOnnxTTSProvider:
                 yield item
         finally:
             cancelled.set()
-            await worker
+            await asyncio.shield(worker)

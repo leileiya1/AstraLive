@@ -15,9 +15,11 @@ import (
 	"astralive/backend/internal/config"
 	"astralive/backend/internal/eventbus"
 	"astralive/backend/internal/httpapi"
+	"astralive/backend/internal/interaction"
 	"astralive/backend/internal/runtime"
 	"astralive/backend/internal/userconfig"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -81,6 +83,13 @@ func main() {
 			}
 		}()
 	}
+	interactionConfig, err := interaction.FromEnvironment()
+	if err != nil {
+		log.Error("invalid interaction configuration")
+		os.Exit(1)
+	}
+	s.Interaction = app.NewInteraction(ctx, s, cfg, interactionConfig)
+	prometheus.MustRegister(prometheus.NewGaugeFunc(prometheus.GaugeOpts{Name: "interaction_candidate_queue_length", Help: "Aggregate bounded candidate count; no identity labels."}, s.Interaction.QueueLength))
 	h := &httpapi.Server{S: s, Redis: rc, Env: c.Env, Token: c.InternalToken, Log: log, Config: cfg}
 	go func() {
 		if err := eventbus.New(rc, s, c.EventStream, log).Run(ctx); err != nil && ctx.Err() == nil {

@@ -1,0 +1,132 @@
+{
+  "scope": "FORMAL_SESSION_CPU_FAKE_PROVIDERS",
+  "fullSynchronizedReply": {
+    "status": "NOT TESTED",
+    "samples": 0,
+    "p50Ms": null,
+    "p95Ms": null,
+    "maxMs": null
+  },
+  "engineeringTarget": {
+    "p50Ms": 3000,
+    "p95Ms": 5000,
+    "status": "BLOCKED",
+    "reason": "No real Chrome/GPU/platform-correlated reply sample; mock scheduling cannot validate target"
+  },
+  "selection": {
+    "samples": 2,
+    "meanMs": 213.5765,
+    "p50Ms": 173.983,
+    "p95Ms": 253.17,
+    "maxMs": 253.17,
+    "boundary": "comment_received → scheduler_selected (Go monotonic; last 256 selected)"
+  },
+  "runtimeLocalDecomposition": [
+    {
+      "traceId": "interaction_13aa5cbbbb9e46e0929582c32dcf787ae2d6be9ad6f659affc4bd4d358c3909d",
+      "clockDomain": "runtime_monotonic",
+      "classification": "MOCK_CPU_NOT_GPU",
+      "route": "DETERMINISTIC_FACT",
+      "durationsMs": {
+        "accepted_to_first_speakable": 38.00533397588879,
+        "first_speakable_to_pcm": 7.860374986194074,
+        "pcm_to_cpu_returned_frame": 8.633124991320074,
+        "cpu_frame_to_media_audio": 8.671040995977819,
+        "cpu_frame_to_media_video": 9.138207999058068
+      }
+    },
+    {
+      "traceId": "interaction_daedf3ed4c15ba1cfca14beb0a305bd8d661d240e2a04f16693ef85933587fd5",
+      "clockDomain": "runtime_monotonic",
+      "classification": "MOCK_CPU_NOT_GPU",
+      "route": "LLM_MOCK",
+      "durationsMs": {
+        "accepted_to_first_speakable": 15.673042042180896,
+        "first_speakable_to_pcm": 6.717707961797714,
+        "pcm_to_cpu_returned_frame": 5.857332958839834,
+        "cpu_frame_to_media_audio": 7.331459084525704,
+        "cpu_frame_to_media_video": 7.505792076699436
+      }
+    }
+  ],
+  "stages": [
+    {
+      "stage": "comment_received",
+      "status": "PASS",
+      "clockDomain": "go_monotonic",
+      "boundary": "local receipt/admission"
+    },
+    {
+      "stage": "scheduler_selected",
+      "status": "PASS",
+      "clockDomain": "go_monotonic",
+      "boundary": "local receipt/admission"
+    },
+    {
+      "stage": "utterance_accepted",
+      "status": "PASS",
+      "clockDomain": "go_monotonic",
+      "boundary": "local receipt/admission"
+    },
+    {
+      "stage": "llm_started",
+      "status": "PASS",
+      "clockDomain": "runtime_monotonic",
+      "boundary": "runtime observation; media push return is not playback"
+    },
+    {
+      "stage": "llm_first_token",
+      "status": "PASS",
+      "clockDomain": "runtime_monotonic",
+      "boundary": "runtime observation; media push return is not playback"
+    },
+    {
+      "stage": "first_speakable_segment",
+      "status": "PASS",
+      "clockDomain": "runtime_monotonic",
+      "boundary": "runtime observation; media push return is not playback"
+    },
+    {
+      "stage": "tts_started",
+      "status": "PASS",
+      "clockDomain": "runtime_monotonic",
+      "boundary": "runtime observation; media push return is not playback"
+    },
+    {
+      "stage": "tts_first_pcm",
+      "status": "PASS",
+      "clockDomain": "runtime_monotonic",
+      "boundary": "runtime observation; media push return is not playback"
+    },
+    {
+      "stage": "avatar_first_generated_frame",
+      "status": "NOT TESTED",
+      "clockDomain": "runtime_monotonic",
+      "boundary": "requires GPU_INFERENCE TALKING packet; CPU frame does not qualify"
+    },
+    {
+      "stage": "media_first_audio",
+      "status": "PASS",
+      "clockDomain": "runtime_monotonic",
+      "boundary": "runtime observation; media push return is not playback"
+    },
+    {
+      "stage": "media_first_video",
+      "status": "PASS",
+      "clockDomain": "runtime_monotonic",
+      "boundary": "runtime observation; media push return is not playback"
+    },
+    {
+      "stage": "browser_first_correlated_av",
+      "status": "NOT TESTED",
+      "clockDomain": "chrome_monotonic",
+      "boundary": "requires real Chrome trace-correlated decoded A/V; speaker output still needs loopback"
+    },
+    {
+      "stage": "rtmp_first_correlated_av",
+      "status": "NOT TESTED",
+      "clockDomain": "external_receiver_monotonic",
+      "boundary": "requires trace-correlated receiver decoded A/V; local pipe write is not live audience"
+    }
+  ]
+}
