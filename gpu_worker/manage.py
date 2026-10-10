@@ -7,6 +7,7 @@ import subprocess
 import sys
 import time
 from .config import Config
+from .cli import supervisor_active
 from .doctor import inspect
 from .probe import probe
 from .supervisor import child_environment
@@ -35,7 +36,7 @@ def operate(a):
         import os
         os.execve(cfg.python, [cfg.python, '-B', '-m', 'gpu_worker.supervisor', '--config', str(config)], env)
     if a.action in {'start', 'restart'}:
-        if a.action == 'start' and (Path(cfg.state_dir)/'control.sock').exists():
+        if a.action == 'start' and supervisor_active(cfg):
             print('ALREADY_RUNNING; inspect status or use restart')
             return 1
         if cli(a.action):

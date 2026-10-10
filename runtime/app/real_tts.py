@@ -3,8 +3,27 @@ import asyncio
 from pathlib import Path
 import threading
 import concurrent.futures
+import re
 from .models import VoiceConfig
 from .providers import AudioChunk, GenerationContext
+
+
+def spoken_sizes(text: str) -> str:
+    """Pronounce size letters which the Chinese lexicon otherwise silently skips.
+
+    Restrict conversion to explicit size labels/lists; do not reinterpret units,
+    product identifiers, or an answer's factual size selection.
+    """
+    letters = {"S": "艾丝", "M": "艾姆", "L": "艾尔", "X": "艾克斯"}
+    size = r"(?<![A-Za-z0-9])(?:[2-5]XL|X{1,4}L|XS|S|M|L)(?![A-Za-z0-9])"
+    def pronounce(match):
+        value = match.group()
+        if value[0].isdigit():
+            value = "X" * int(value[0]) + "L"
+        return "".join(letters[letter] for letter in value)
+    text = re.sub(size + r"(?=\s*(?:尺码|单独库存|单码库存|码|号))", pronounce, text)
+    return re.sub(r"尺码(?:选项)?有[^。；！？\n]*",
+                  lambda m: re.sub(size, pronounce, m.group()), text)
 
 
 class SherpaOnnxTTSProvider:
@@ -72,7 +91,7 @@ class SherpaOnnxTTSProvider:
 
         def generate():
             try:
-                self.engine.generate(text, sid=self.speaker_id, speed=1.0, callback=callback)
+                self.engine.generate(spoken_sizes(text), sid=self.speaker_id, speed=1.0, callback=callback)
             except Exception as exc:
                 send(exc)
             finally:

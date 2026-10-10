@@ -1,5 +1,7 @@
 # Agent B Acceptance v0.4
 
+Historical CPU delivery record. Current real-provider/Chrome/RTMP results and remaining boundaries: [2026-10-10 follow-up](AGENT-B-REAL-ACCEPTANCE.md). Earlier NOT TESTED statements below refer to the initial CPU delivery.
+
 Baseline/main/origin/main was fetched and inspected as `f2f6bdbdc291c2587cdf2eb5b2359b20db2c1696`. The user requested branch-only development; the initially empty worktree was removed before any edits. Branch: `feat/v04-realtime-interaction`, original repository directory. Main is not force-pushed or merged.
 
 ## Status matrix and scope

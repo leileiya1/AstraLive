@@ -82,7 +82,14 @@ type Latency struct {
 	MaxMS    float64 `json:"maxMs"`
 	Boundary string  `json:"boundary"`
 }
+type Observation struct {
+	ClockDomain            string  `json:"clockDomain"`
+	ReceiptAgeMS           float64 `json:"receiptAgeMs"`
+	ReceiveToSelectedMS    float64 `json:"receiveToSelectedMs"`
+	ReceiveToDispatchAckMS float64 `json:"receiveToDispatchAckMs"`
+}
 type Snapshot struct {
+	Observation *Observation     `json:"observation,omitempty"`
 	Mode        Mode             `json:"mode"`
 	Candidates  int              `json:"candidates"`
 	Counters    Counters         `json:"counters"`
@@ -120,6 +127,7 @@ type candidate struct {
 	users     map[string]bool
 }
 type Scheduler struct {
+	dispatchAckMS        float64
 	resumeMode           Mode
 	mu                   sync.Mutex
 	config               Config
@@ -163,7 +171,8 @@ func Topic(text string) (string, bool, bool) {
 	lower := strings.ToLower(text)
 	sizes := sizeRE.FindStringSubmatch(lower)
 	stock := contains(lower, "库存", "有货", "现货", "存货", "剩多少", "剩几", "stock")
-	question := contains(lower, "?", "？", "吗", "么", "多少", "什么", "怎么", "如何", "是否")
+	question := contains(lower, "?", "？", "吗", "么", "多少", "什么", "怎么", "如何", "是否") ||
+		contains(lower, "帮我", "帮我们", "请介绍", "请推荐", "请说", "请讲", "请回答", "请解释", "请比较", "请帮")
 	if len(sizes) > 1 {
 		size := strings.ToUpper(sizes[1])
 		if stock {
@@ -394,6 +403,8 @@ func (s *Scheduler) Tick(ctx context.Context) error {
 	chosen.SelectedAt = now
 	selectionDelay.Observe(now.Sub(chosen.Event.ReceivedAt).Seconds())
 	s.current = &chosen
+	s.utterance = ""
+	s.dispatchAckMS = 0
 	s.lastSelected = now
 	s.counters.Selected++
 	outcomes.WithLabelValues("selected").Inc()
@@ -412,6 +423,7 @@ func (s *Scheduler) Tick(ctx context.Context) error {
 		}
 	}
 	s.utterance = id
+	s.dispatchAckMS = float64(s.now().Sub(chosen.Event.ReceivedAt).Microseconds()) / 1000
 	if err != nil {
 		s.counters.Failed++
 		outcomes.WithLabelValues("failed").Inc()
@@ -467,6 +479,7 @@ func (s *Scheduler) Snapshot() Snapshot {
 	if s.current != nil {
 		c := *s.current
 		v.Current = &c
+		v.Observation = &Observation{ClockDomain: "go_monotonic", ReceiptAgeMS: float64(s.now().Sub(c.Event.ReceivedAt).Microseconds()) / 1000, ReceiveToSelectedMS: float64(c.SelectedAt.Sub(c.Event.ReceivedAt).Microseconds()) / 1000, ReceiveToDispatchAckMS: s.dispatchAckMS}
 	}
 	v.Latency = Stats(s.latencies, "comment_received → scheduler_selected (Go monotonic; last 256 selected)")
 	return v

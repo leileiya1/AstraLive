@@ -58,6 +58,17 @@ func TestDedupMergeAndStockSeparation(t *testing.T) {
 		t.Fatal(v)
 	}
 }
+func TestDirectedRequestSelectedButAmbientStatementFiltered(t *testing.T) {
+	s, _, d, _ := fixture(t)
+	receive(t, s, event("request", "a", "帮我想一句直播开场白。"))
+	receive(t, s, event("ambient", "b", "今天天气晴朗。"))
+	if v := s.Snapshot(); v.Candidates != 1 || v.Counters.Filtered != 1 {
+		t.Fatal(v)
+	}
+	if err := s.Tick(context.Background()); err != nil || len(d.items) != 1 || d.items[0].Event.Content != "帮我想一句直播开场白。" {
+		t.Fatal(err, d.items)
+	}
+}
 func TestTTLRateCapacityAndStop(t *testing.T) {
 	s, now, _, _ := fixture(t)
 	s.config.Capacity = 3
@@ -224,5 +235,19 @@ func TestTwoRoomsShareLimiterWithoutEventMix(t *testing.T) {
 	receive(t, b, e)
 	if a.Snapshot().Candidates != 1 || b.Snapshot().Candidates != 0 || b.Snapshot().Counters.Dropped != 1 {
 		t.Fatal(a.Snapshot(), b.Snapshot())
+	}
+}
+
+func TestObservationUsesLocalClockAndDispatchAcknowledgement(t *testing.T) {
+	s, now, _, _ := fixture(t)
+	receive(t, s, event("clock", "viewer", "价格多少？"))
+	*now = now.Add(250 * time.Millisecond)
+	if err := s.Tick(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	*now = now.Add(time.Second)
+	v := s.Snapshot()
+	if v.Observation == nil || v.Observation.ClockDomain != "go_monotonic" || v.Observation.ReceiveToSelectedMS != 250 || v.Observation.ReceiveToDispatchAckMS != 250 || v.Observation.ReceiptAgeMS != 1250 {
+		t.Fatalf("invalid local observation: %+v", v.Observation)
 	}
 }

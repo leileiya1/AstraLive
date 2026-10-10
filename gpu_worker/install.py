@@ -74,8 +74,8 @@ def install(bundle, root, *, lab_root=None, python=None, mode='gpu', worker_ref=
                     fcntl.flock(active, fcntl.LOCK_EX | fcntl.LOCK_NB)
                 except BlockingIOError:
                     raise ValueError('STOP_WORKER_BEFORE_UPGRADE') from None
-                if (state/'control.sock').exists():
-                    raise ValueError('STOP_WORKER_BEFORE_UPGRADE')
+                # A reboot can leave the socket/READY snapshot behind. The
+                # acquired kernel lock proves no supervisor owns this state.
             # Re-running install does not rotate tokens, change ports, mode or paths.
             if (lab_root and str(Path(lab_root).resolve()) != cfg.lab_root) or (python and str(Path(python).absolute()) != cfg.python):
                 raise ValueError('EXISTING_CONFIGURATION_CONFLICT')

@@ -1,5 +1,7 @@
 # Agent B Handoff v0.4
 
+Historical CPU delivery record. Current real-provider/Chrome/RTMP results and remaining boundaries: [2026-10-10 follow-up](AGENT-B-REAL-ACCEPTANCE.md). Earlier NOT TESTED statements below refer to the initial CPU delivery.
+
 Baseline HEAD: `f2f6bdbdc291c2587cdf2eb5b2359b20db2c1696` (fetch and final recheck). Branch: `feat/v04-realtime-interaction`. User requested original-directory branch development; no separate worktree remains.
 
 Implementation/code-and-test commit SHA: `52ea86631552298a030de7dd56da3a30e7b4b8ab`.
@@ -78,3 +80,49 @@ Real captured DeepSeek+installed XiaoYa+RTX3080 SoulX, genuine Chrome first-corr
 ## Delivery receipt
 
 The branch push succeeded using the existing Git credential channel. Local gh authentication/device-code refresh remained unavailable (EOF), so the already connected GitHub application created the Draft PR; no token was copied into the workspace. All dedicated CPU test PostgreSQL/Redis containers and the SSH forwarding process were removed after successful checks. Existing services/Worker were untouched.
+
+## Real follow-up delivery (2026-10-10)
+
+Current baseline `f62811a4b5a8ed4912ca9a6bb45677848ce9f4da`, branch `fix/v04-real-interaction-acceptance`. User supplied an already-running GPU instance and authorized verification/fixes. The exact implementation commit and PR receipt are added after committing; final response identifies final PR-head SHA, avoiding a document containing its own future hash.
+
+[Real acceptance](AGENT-B-REAL-ACCEPTANCE.md) and evidence/agent-b-real-*.json are authoritative for the new actual DeepSeek/XiaoYa/SoulX/native Chrome/decoded RTMP gates. Normal20-sample Chrome P50/P952.897/4.177s, max6.669s; RTMP2.975/4.229s, max6.754s. Small-sample onset estimates meet the provisional targets, but strict P50≤3s remains BLOCKED by clock-alignment bounds (upper3.194s). Every slow sample/prior failed trial is retained. Physical speaker/human lip-sync and actual authorized platform/viewer acceptance remain NOT TESTED.
+
+New helpers: monotonic snapshot clock exchange; integer-only trace media annotations; opt-in Chrome/RTMP/headless acceptance tools; marker-decoder regression. Scheduler remains at app.InteractionController→trusted shared Service Speak, with no new bypass API. New production fixes are directed-request classification, size-label TTS pronunciation and Worker stale-socket liveness. Frozen contracts, Session FSM and media protocol/algorithm are preserved.
+
+Uncached Go and race:54 top-level PASS,1 skip each; Runtime142 PASS/11 skip; contract/acceptance/marker7 PASS; Worker21 PASS; frontend40 PASS/9 files and build PASS. Re-run1/5/20/s/burst and offline1000-event evidence includes all counters/resources/wall-times. Provider-error, slow native-callback, ownership, receipt restart and refusal cases remain CPU/Fake. Actual Worker disconnection/recovery, operator FORCE/fence, Replay cancellation, formal binding and stop cleanup are real. Existing business DB/Redis/Runtime were not cleared or stopped. Own Sessions ended and captures were deleted; the corrected cached GPU Worker remains READY.
+
+Agent A/Integration Owner must review the minimal liveness/trace changes and actual fence/recovery evidence, measure strict latency on a lower-uncertainty production topology, listen to Chinese size pronunciation/segmentation, and approve human lip-sync. Platform transport needs official authorization. No hour GPU soak, personal-photo/voice, training, cloud lifecycle, billing, unauthorized protocol or new gRPC work was performed.
+
+Follow-up changed files:
+- `backend/internal/interaction/scheduler.go`
+- `backend/internal/interaction/scheduler_test.go`
+- `docs/v0.4/AGENT-B-ACCEPTANCE.md`
+- `docs/v0.4/AGENT-B-HANDOFF.md`
+- `docs/v0.4/AGENT-B-REAL-ACCEPTANCE.md`
+- `docs/v0.4/ANSWER-ROUTER.md`
+- `docs/v0.4/COMMENT-LOAD-TEST.md`
+- `docs/v0.4/COMMENT-SCHEDULER-DESIGN.md`
+- `docs/v0.4/INTERACTION-LATENCY-TRACE.md`
+- `docs/v0.4/STREAMING-BACKPRESSURE.md`
+- `docs/v0.4/evidence/agent-b-followup-load-wall.json`
+- `docs/v0.4/evidence/agent-b-followup-load.json`
+- `docs/v0.4/evidence/agent-b-real-browser.json`
+- `docs/v0.4/evidence/agent-b-real-checks.json`
+- `docs/v0.4/evidence/agent-b-real-faults.json`
+- `docs/v0.4/evidence/agent-b-real-headless.json`
+- `docs/v0.4/evidence/agent-b-real-prior-trials.json`
+- `docs/v0.4/evidence/agent-b-real-summary.json`
+- `gpu_worker/cli.py`
+- `gpu_worker/install.py`
+- `gpu_worker/manage.py`
+- `gpu_worker/tests/test_deployment.py`
+- `runtime/app/bound_media.py`
+- `runtime/app/interaction_trace.py`
+- `runtime/app/real_tts.py`
+- `runtime/tests/test_bound_media.py`
+- `runtime/tests/test_interaction_faults.py`
+- `runtime/tests/test_interaction_streaming.py`
+- `scripts/interaction-browser-acceptance.ts`
+- `scripts/interaction-headless-acceptance.py`
+- `scripts/interaction-rtmp-observer.py`
+- `tests/test_interaction_observer.py`

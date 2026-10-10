@@ -1,0 +1,72 @@
+{
+  "baseline": "f62811a4b5a8ed4912ca9a6bb45677848ce9f4da",
+  "commands": [
+    {
+      "command": "go test -count=1 -json ./...",
+      "passed": 54,
+      "skipped": 1,
+      "failed": 0,
+      "countBoundary": "top-level Go tests; including subtests70 passes"
+    },
+    {
+      "command": "go test -race -count=1 -json ./...",
+      "passed": 54,
+      "skipped": 1,
+      "failed": 0,
+      "countBoundary": "top-level Go tests; no race report"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "PASS"
+    },
+    {
+      "command": "PYTHONPATH=runtime runtime/.venv/bin/python -m unittest discover -s runtime/tests -v",
+      "total": 153,
+      "passed": 142,
+      "skipped": 11,
+      "failed": 0
+    },
+    {
+      "command": "runtime/.venv/bin/python -m unittest tests.test_contracts tests.test_acceptance_guards tests.test_interaction_observer -v",
+      "passed": 7,
+      "skipped": 0,
+      "failed": 0
+    },
+    {
+      "command": "gpu_worker/.venv-tests/bin/python -m unittest discover -s gpu_worker/tests -v",
+      "passed": 21,
+      "skipped": 0,
+      "failed": 0,
+      "boundary": "simulation/CPU recording decode; actual GPU separately in real trial"
+    },
+    {
+      "command": "bun run build",
+      "status": "PASS"
+    },
+    {
+      "command": "bun run test",
+      "passed": 40,
+      "files": 9,
+      "failed": 0
+    },
+    {
+      "command": "go run ./cmd/comment-load",
+      "scenarios": 5,
+      "status": "PASS",
+      "boundary": "offline test-clock/Fake dispatch"
+    },
+    {
+      "command": "go run ./cmd/comment-load -wall",
+      "scenarios": 4,
+      "status": "PASS",
+      "boundary": "wall-clock Mock Replay/Fake dispatch"
+    },
+    {
+      "command": "bun build scripts/interaction-browser-acceptance.ts --target=bun; Python acceptance tools compile; git diff --check",
+      "status": "PASS"
+    }
+  ],
+  "skipBoundary": "Original configuration browser opt-in and11 Runtime real/optional harnesses; separate real Chrome/SoulX acceptance was actually executed, not inferred from skips.",
+  "realTrial": "30 Mock inputs,21 real selected replies including preflight,20 timed normal decoded receiver samples; operator FORCE/actual Worker stop-restart/Replay cancel and separate headless trial.",
+  "sensitiveData": "Private credential files remain outside Git; no API keys, cookies, operator passwords or production comments in evidence."
+}

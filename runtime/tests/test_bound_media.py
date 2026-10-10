@@ -130,4 +130,6 @@ class BoundMediaTests(unittest.IsolatedAsyncioTestCase):
         self.output.set_interaction_trace(trace,2)
         before=trace.summary()
         await self.enqueue()
-        self.assertEqual(trace.summary(),before)
+        after=trace.summary()
+        self.assertEqual(after['points'],before['points'])
+        self.assertEqual(after['media'],before['media'])

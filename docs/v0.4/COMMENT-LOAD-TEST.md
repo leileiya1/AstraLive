@@ -55,3 +55,16 @@ Fixed fixture: `backend/internal/platform/mock/testdata/reconnect-duplicates.jso
 | Concurrent delivery / two Rooms / Operator / FORCE | Go race/unit + existing Runtime generation/media tests | PASS for CPU/Fake; distributed replicas/real GPU NOT TESTED |
 
 No paid Provider/GPU was started. No existing Worker was stopped. Disposable SQL/Redis services contain only synthetic test identities/data and are removed after checks; no production cleanup command is used.
+
+## Follow-up re-run (2026-10-10)
+
+Re-run after directed-request classification change. Actual-wall Mock Replay still uses a Fake dispatcher; it is independent from the real-provider20-comment latency trial. Queue/resource/wall-time details are in [wall evidence](evidence/agent-b-followup-load-wall.json) and [offline1000-event evidence](evidence/agent-b-followup-load.json).
+
+| Wall scenario | Input | Dedup | Merge | Selected | Expired | Dropped | Delivered | Peak queue | Sampled heap peak bytes | Elapsed ms |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| wall_1_per_second | 10 | 0 | 1 | 5 | 0 | 4 | 5 | 4 | 581168 | 10253.24 |
+| wall_5_per_second | 50 | 0 | 36 | 5 | 0 | 9 | 5 | 9 | 727944 | 10284.54 |
+| wall_20_per_second | 200 | 0 | 84 | 6 | 0 | 110 | 6 | 6 | 836712 | 10421.32 |
+| wall_burst_100 | 100 | 0 | 87 | 1 | 0 | 12 | 1 | 6 | 688392 | 251.0 |
+
+These are sampled Go heap values, not full-stack maximum RSS. Pending candidates are counted as dropped on Stop. All cases have automatic FORCE0. The actual-session fault trial additionally cancels a20/s Replay mid-flight with stable input and candidate peak6; it is not a claim that1000 GPU replies were generated.

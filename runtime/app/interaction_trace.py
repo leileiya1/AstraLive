@@ -12,6 +12,7 @@ class InteractionTrace:
         self.clock = clock
         self.origin = clock()
         self.points = {}
+        self.media = {}
 
     def mark(self, stage, boundary='runtime instrumentation'):
         if stage in self.points:
@@ -20,8 +21,18 @@ class InteractionTrace:
         record = dict(self.ids, stage=stage, elapsedMs=self.points[stage], clockDomain='runtime_monotonic', boundary=boundary)
         log.info('interaction_trace %s', json.dumps(record))
 
+    def annotate_media(self, **values):
+        allowed = {'generationId', 'speechMarker', 'firstVideoPTSUS', 'speechOriginSample'}
+        for key, value in values.items():
+            if key in allowed and type(value) is int and 0 <= value < 2**63:
+                self.media.setdefault(key, value)
+
     def summary(self):
-        return dict(self.ids, clockDomain='runtime_monotonic', points=dict(self.points))
+        # Sample on the response clock. An observer's request/response interval
+        # bounds alignment uncertainty; never subtract remote wall timestamps.
+        return dict(self.ids, clockDomain='runtime_monotonic',
+                    clockOriginAgeMs=(self.clock()-self.origin)*1000,
+                    points=dict(self.points), media=dict(self.media))
 
 # bounded, content-free operational trace cache, inspectable via authenticated control API
 traces = OrderedDict()

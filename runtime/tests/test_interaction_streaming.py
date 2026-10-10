@@ -2,11 +2,19 @@ import asyncio
 import threading
 import unittest
 from app.session import sentence_stream
-from app.real_tts import SherpaOnnxTTSProvider
+from app.real_tts import SherpaOnnxTTSProvider, spoken_sizes
 from app.providers import GenerationContext
 from app.models import VoiceConfig
 
 class StreamingTests(unittest.IsolatedAsyncioTestCase):
+    def test_chinese_size_pronunciation_preserves_units_and_identifiers(self):
+        self.assertEqual(spoken_sizes('这款有 XL 尺码，但暂时没有 XL 单独库存数据。'),
+                         '这款有 艾克斯艾尔 尺码，但暂时没有 艾克斯艾尔 单独库存数据。')
+        self.assertEqual(spoken_sizes('提供的尺码有M、L、XL、2XL；容量为500ML。'),
+                         '提供的尺码有艾姆、艾尔、艾克斯艾尔、艾克斯艾克斯艾尔；容量为500ML。')
+        self.assertEqual(spoken_sizes('型号S123，耗时30 S，容量500 ML，长20 M。'),
+                         '型号S123，耗时30 S，容量500 ML，长20 M。')
+
     async def test_numeric_units_and_large_tokens(self):
         async def tokens():
             for part in ['售价是129.', '90元，容量是500', '毫升。', '很长的商品说明'*100]:

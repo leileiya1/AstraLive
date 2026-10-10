@@ -44,3 +44,15 @@ class FaultTests(unittest.IsolatedAsyncioTestCase):
         trace.mark('llm_first_token')
         self.assertAlmostEqual(trace.points['llm_first_token'],200)
         self.assertEqual(trace.summary()['clockDomain'],'runtime_monotonic')
+
+    async def test_trace_clock_exchange_and_metadata_are_bounded_identifiers(self):
+        now=[10.]
+        trace=InteractionTrace('t','s','u',clock=lambda:now[0])
+        trace.annotate_media(generationId=3,speechMarker=9,firstVideoPTSUS=40000,
+                             speechOriginSample=640,comment='secret',token='secret')
+        trace.annotate_media(speechMarker=10,generationId=-1)
+        now[0]=10.5
+        packet=trace.summary()
+        self.assertEqual(packet['clockOriginAgeMs'],500)
+        self.assertEqual(packet['media'],dict(generationId=3,speechMarker=9,
+                         firstVideoPTSUS=40000,speechOriginSample=640))

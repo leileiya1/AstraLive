@@ -18,6 +18,10 @@ class BoundConsumptionMediaOutput(ConsumptionMediaOutput):
         if (observation and frame.generation_id == observation[1] == self.avatar.generation_id
                 and packet and packet.get('activity') == 'TALKING'):
             if stage != 'avatar_first_generated_frame' or packet.get('source') == 'GPU_INFERENCE':
+                pipeline = self.avatar.pipeline
+                observation[0].annotate_media(generationId=frame.generation_id,
+                    speechMarker=packet.get('marker'), firstVideoPTSUS=frame.pts_us,
+                    speechOriginSample=getattr(pipeline, 'origin', None))
                 observation[0].mark(stage, 'Runtime observes TALKING packet ' + packet.get('source','UNKNOWN') + '; not Worker-host generation timestamp or viewer playback')
 
     def _rtmp(self):

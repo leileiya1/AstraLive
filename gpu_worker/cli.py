@@ -1,5 +1,6 @@
 """Fixed lifecycle actions. No arbitrary remote commands, PID signals or cloud APIs."""
 import argparse
+import fcntl
 import json
 import os
 from pathlib import Path
@@ -12,9 +13,21 @@ from .probe import probe
 from .supervisor import child_environment
 
 
+def supervisor_active(cfg):
+    """Kernel lock proves liveness; persisted socket/READY/PID can survive reboot."""
+    state = Path(cfg.state_dir)
+    state.mkdir(parents=True, exist_ok=True, mode=0o700)
+    with (state/'supervisor.lock').open('a') as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return True
+    return False
+
+
 def stop(cfg):
     control = Path(cfg.state_dir) / 'control.sock'
-    if not control.exists():
+    if not supervisor_active(cfg):
         return
     with socket.socket(socket.AF_UNIX) as s:
         s.settimeout(2)

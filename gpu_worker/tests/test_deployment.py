@@ -86,6 +86,29 @@ class DeploymentTests(unittest.TestCase):
         self.assertEqual((self.install_root/'current').resolve().name, manifest['releaseId'])
         self.assertEqual((self.install_root/'config/worker.json').read_bytes(), cfg)
 
+    def test_reboot_stale_socket_does_not_block_start_or_stop(self):
+        self.setup_install()
+        state = self.install_root/'state'
+        state.mkdir(exist_ok=True)
+        with socket.socket(socket.AF_UNIX) as stale:
+            stale.bind(str(state/'control.sock'))
+        (state/'supervisor.json').write_text(json.dumps({'status': 'READY', 'supervisorPid': 99999999}))
+        # No PID signals: a stale socket and old READY snapshot are not liveness.
+        before = (self.install_root/'config/worker.json').read_bytes()
+        install(self.bundle, self.install_root)
+        self.assertEqual((self.install_root/'config/worker.json').read_bytes(), before)
+        stopped = self.command('stop')
+        self.assertEqual(stopped.returncode, 0, stopped.stdout+stopped.stderr)
+        try:
+            started = self.command('start')
+            self.assertEqual(started.returncode, 0, started.stdout+started.stderr)
+            again = self.command('start')
+            self.assertNotEqual(again.returncode, 0)
+            self.assertIn('ALREADY_RUNNING', again.stdout)
+            self.assertTrue(json.loads(self.command('status').stdout)['ready'])
+        finally:
+            self.command('stop')
+
     def test_gpu_preflight_missing_assets_never_starts_worker(self):
         install(self.bundle, self.install_root, python=sys.executable, lab_root=str(self.root/'empty-lab'))
         result = self.command('start')

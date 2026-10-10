@@ -13,3 +13,9 @@ Before edits, regressions showed10000 produced sentence tokens while a consumer 
 Sherpa engine's own native generate may allocate internal output and cannot be force-killed safely by Python. Sentence bounds limit routine input; a native computation that never reaches callbacks remains a provider-level cancellation limitation. No claim of a hard total native RSS limit is made.
 
 No SoulX window, Avatar/Media output order, PCM sample timeline, Video PTS, Worker binary TCP protocol, Generation Fence, FORCE or consumption credit algorithm changes. Bound media adds content-free TALKING/generation-filtered trace observation only. Existing nine Bound media tests, fanout, RTMP and WebRTC backpressure/drain regression tests cover the preserved paths. Real GPU/browser/audio quality comparison is NOT TESTED; sentence-boundary tuning requires later Chinese listening acceptance.
+
+## Actual provider follow-up (2026-10-10)
+
+[Real follow-up](AGENT-B-REAL-ACCEPTANCE.md) exercises the existing bounded path with actual DeepSeek/XiaoYa/SoulX and native Chrome/RTMP, plus one real FORCE/cancellation and Worker degradation/recovery. No buffering/media algorithm changed. Twenty normal correlated samples have zero native Chrome video drops and no stalled/evicted peers; measured peak queues remain20 audio/10 video frames. Seven queued old frames are deliberately discarded in the FORCE trial.
+
+Actual XiaoYa skipped Latin size words. `spoken_sizes` converts only explicit size/list/size-stock labels to Chinese letter pronunciation before native generation; facts and units remain unchanged. CPU tests protect units/identifiers; the follow-up uses the patched real TTS. Human pronunciation/lip-sync listening remains NOT TESTED. Native engine memory and pathological non-callback hangs remain the limitations described above.
