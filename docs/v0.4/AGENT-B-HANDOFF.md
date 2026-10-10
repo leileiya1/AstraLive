@@ -126,3 +126,10 @@ Follow-up changed files:
 - `scripts/interaction-headless-acceptance.py`
 - `scripts/interaction-rtmp-observer.py`
 - `tests/test_interaction_observer.py`
+
+### Follow-up Git receipt
+
+Implementation/tests/evidence commit: `79b63ea5682776218b6ac13970e9f26a67645d2e`.
+PR: [Draft PR #2](https://github.com/leileiya1/AstraLive/pull/2), base `main`, head `fix/v04-real-interaction-acceptance`. The PR has not been merged. Final head includes this documentation-only receipt and is identified in the final response; resolve with `git rev-parse origin/fix/v04-real-interaction-acceptance` after fetch.
+
+All three final real Sessions were ENDED, captures deleted, Runtime activeSessions0. Owned disposable databases, Redis/RTMP containers, Go/Runtime/HTTPS test processes, SSH forwards and Chrome profiles/credential copies were removed. Existing CPU Runtime PID207538 remained alive. The updated cached GPU Worker was left READY in real GPU mode with the recovered epoch, queues0 and lastError null; the already-started cloud instance was not stopped.
