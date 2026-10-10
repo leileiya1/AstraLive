@@ -2,8 +2,8 @@
 
 Baseline HEAD: `f2f6bdbdc291c2587cdf2eb5b2359b20db2c1696` (fetch and final recheck). Branch: `feat/v04-realtime-interaction`. User requested original-directory branch development; no separate worktree remains.
 
-Implementation commit SHA: pending implementation commit.
-Final delivery commit SHA/PR URL: recorded in the final delivery receipt/PR after commit. A tracked document cannot contain its own future Git hash; implementation SHA will be pinned here, final delivery SHA is the PR head/final response. No main merge or force push is authorized/performed.
+Implementation/code-and-test commit SHA: `52ea86631552298a030de7dd56da3a30e7b4b8ab`.
+PR: [Draft PR #1](https://github.com/leileiya1/AstraLive/pull/1). The final delivery SHA (including this receipt-only update) is the PR head and is supplied in the final response; `git rev-parse origin/feat/v04-realtime-interaction` resolves it after fetch. A tracked document cannot contain its own future Git hash. Code/test SHA above is immutable and all subsequent changes are documentation only. No main merge or force push was performed.
 
 ## Modules and integration
 
@@ -74,3 +74,7 @@ Real captured DeepSeek+installed XiaoYa+RTX3080 SoulX, genuine Chrome first-corr
 - `runtime/tests/test_interaction_faults.py`
 - `runtime/tests/test_interaction_streaming.py`
 - `scripts/interaction-test.sh`
+
+## Delivery receipt
+
+The branch push succeeded using the existing Git credential channel. Local gh authentication/device-code refresh remained unavailable (EOF), so the already connected GitHub application created the Draft PR; no token was copied into the workspace. All dedicated CPU test PostgreSQL/Redis containers and the SSH forwarding process were removed after successful checks. Existing services/Worker were untouched.
