@@ -102,7 +102,7 @@ class BoundXiaoYa:
 def bundle_factories(packet, sid, media_factory, errors):
     from gpu_worker.client import resolve_binding
     from gpu_worker.runtime_adapter import RemoteAvatarEngine
-    from gpu_worker.validated.runtime_avatar import ConsumptionMediaOutput
+    from .bound_media import BoundConsumptionMediaOutput
     binding, scope = packet["binding"], packet["scope"]
     profiles = {p["kind"]: p for p in binding["profiles"]}
     if len(profiles) != len(binding["profiles"]) or any(k not in profiles for k in ("LLM", "TTS", "AVATAR", "GPU_WORKER")):
@@ -134,7 +134,7 @@ def bundle_factories(packet, sid, media_factory, errors):
             raise RuntimeError("Provider bundle already assigned")
         pair["avatar"] = StrictSoulX(endpoint, sid, cfg, os.getenv("AVATAR_IMAGE_PATH") or None)
         return pair["avatar"]
-    return (lambda: BoundDeepSeek(llm["config"], key, errors), lambda: BoundXiaoYa(os.environ["TTS_MODEL_DIR"]), avatar_factory, lambda: ConsumptionMediaOutput(media_factory(), pair["avatar"]))
+    return (lambda: BoundDeepSeek(llm["config"], key, errors), lambda: BoundXiaoYa(os.environ["TTS_MODEL_DIR"]), avatar_factory, lambda: BoundConsumptionMediaOutput(media_factory(), pair["avatar"]))
 
 
 class BoundSessionManager(SessionManager):

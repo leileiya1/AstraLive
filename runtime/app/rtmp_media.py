@@ -51,6 +51,7 @@ class FFmpegRTMPMediaOutput:
         self.audio_consumed = 0
         self.video_enqueued = 0
         self.video_consumed = 0
+        self.video_written = 0
         self.audio_enqueued_total = 0
         self.audio_consumed_total = 0
         self.video_enqueued_total = 0
@@ -312,6 +313,7 @@ class FFmpegRTMPMediaOutput:
             next_at += period
             if next_at < time.monotonic() - period:
                 next_at = time.monotonic() + period
+            delivery = None
             try:
                 generation_id, queued = self.video_queue.get_nowait()
                 self.video_queue.task_done()
@@ -319,15 +321,27 @@ class FFmpegRTMPMediaOutput:
                     self._latest_video = queued
                     self.video_consumed += 1
                     self.video_consumed_total += 1
+                    delivery = (generation_id, self.video_consumed)
                 else:
                     self.video_dropped += 1
             except asyncio.QueueEmpty:
                 pass
             try:
-                await self._write_fd(self._video_fd, self._latest_video)
+                fd, failures = self._video_fd, self.write_failures
+                await self._write_fd(fd, self._latest_video)
+                if (delivery and fd is not None and self.running
+                        and self._video_fd == fd and self.write_failures == failures
+                        and delivery[0] == self.generation_id):
+                    self.video_written = delivery[1]
             except asyncio.TimeoutError:
                 self.write_failures += 1
                 await self._abort_process("video_write_timeout")
+
+    def video_delivery_position(self) -> tuple[int, int] | None:
+        """Private sink credit after a complete pipe write, not platform readiness."""
+        if self.running and self._process and self._process.returncode is None:
+            return self.generation_id, self.video_written
+        return None
 
     async def _abort_process(self, reason: str) -> None:
         process = self._process
@@ -359,6 +373,7 @@ class FFmpegRTMPMediaOutput:
         self.generation_id = generation_id
         self.audio_enqueued = self.audio_consumed = 0
         self.video_enqueued = self.video_consumed = 0
+        self.video_written = 0
         self._audio_pending.clear()
         self._latest_video = self._blank_frame()
         for queue, media in ((self.audio_queue, "audio"), (self.video_queue, "video")):

@@ -56,7 +56,7 @@ WEBRTC_ENABLED=true
 # LLM_API_KEY / experimental .private files are NOT required or consumed.
 ```
 
-Retain the original accepted media output configuration. This gate does not automatically change RTMP publishing targets or activate live-platform credentials. SoulX+RTMP timing and recovery through this new path require their own acceptance; prior lab/one-hour evidence is not substituted.
+Retain the original accepted media output configuration. This gate does not automatically change RTMP publishing targets or activate live-platform credentials. New-path headless and dual-output RTMP decoding and short recovery have now been exercised independently; see AGENT-A-ACCEPTANCE.md. Prior lab/one-hour evidence is not substituted, and quantitative speaker-loopback lip-sync/platform ingestion are not claimed.
 
 Production same-origin TLS ingress fragment:
 
@@ -94,3 +94,13 @@ WebRTC requires browser support and permitted network access. In native Chrome a
 ## Isolated deployment findings
 
 The real acceptance used GPU-hosted Go CPU processing, school-linux Runtime/XiaoYa, an existing RTX3080 Worker, independent temporary PostgreSQL/Redis and a loopback HTTPS proxy. Mac/school DNS returned reserved proxy addresses for DeepSeek; the SSRF guard correctly rejected them. Moving the isolated Go CPU fixture to the authorized GPU host restored valid public DNS; no allowlist or TLS check was weakened. Redis uses the frozen dh.runtime.events.v1 name on the independent Redis instance. An initial custom fixture stream was corrected rather than changing Runtime contracts. There is no global production provider/default switch.
+
+## Headless RTMP and recovery operation
+
+An administrator configures the existing protected Runtime sink using RTMP_ENABLED=true and a private RTMP_PUBLISH_URL (or RTMP_URL plus RTMP_STREAM_KEY), keeping MOCK_MEDIA=false. Optional WEBRTC_ENABLED=true permits a preview alongside publishing; an actual browser subscriber is no longer required for a bound SoulX Session to publish. Ordinary users continue creating and controlling Sessions through authenticated Go APIs. Browser clients never receive the publish secret. The isolated gate used a loopback MediaMTX destination, H.264720x1280/25fps and AAC48kHz stereo. Default production destinations are not switched by this change. LIVE_PLATFORM credential/profile consumption is not added by this gate. For real platform deployment, retain [RTMP secret isolation requirements](../../runtime/RTMP-SECRET-SECURITY.md), including process-argument visibility.
+
+The business wrapper grants Worker credit after WebRTC frame consumption or a completed RTMP encoder pipe write, and captures the original link for each credit task. Queue admission, a filler tick and process liveness alone do not grant credit or prove platform acceptance. A headless Session drains its publishing sink; a missing optional preview is not reported as failed playback. FORCE cancels pending credits and retains the existing generation fence. A configured WebRTC receiver keeps the original fanout drain behavior.
+
+For later Worker loss, keep the original binding. The existing bounded reconnect policy allows a candidate within300s/24 attempts; current fallback speech stays Lightweight and visibly DEGRADED. A ready candidate is promoted only at a future speech boundary, using the new Worker Epoch. Exhaustion leaves explicit degradation; Stop and a new Session are required for a new admission rather than an undefined unlimited retry or hot-switch. The real restart in this gate took about98s. RTMP ingest recovery separately uses its existing FFmpeg supervisor/backoff and does not block a connected WebRTC preview. Private sink diagnostics/decoded readback establish recovery; FFmpeg liveness alone does not.
+
+The24h real lease soak is deferred at the user's request. The v0.3 lease limit and60s pre-expiry shutdown remain enforced; no renewal version is invented.
