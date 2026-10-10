@@ -1,0 +1,433 @@
+{"Time":"2026-10-10T22:39:05.939587+08:00","Action":"start","Package":"astralive/backend/cmd/comment-load"}
+{"Time":"2026-10-10T22:39:05.939755+08:00","Action":"output","Package":"astralive/backend/cmd/comment-load","Output":"?   \tastralive/backend/cmd/comment-load\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:05.939787+08:00","Action":"skip","Package":"astralive/backend/cmd/comment-load","Elapsed":0}
+{"Time":"2026-10-10T22:39:05.939784+08:00","Action":"start","Package":"astralive/backend/cmd/config-bootstrap"}
+{"Time":"2026-10-10T22:39:05.939831+08:00","Action":"output","Package":"astralive/backend/cmd/config-bootstrap","Output":"?   \tastralive/backend/cmd/config-bootstrap\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:05.939844+08:00","Action":"skip","Package":"astralive/backend/cmd/config-bootstrap","Elapsed":0}
+{"Time":"2026-10-10T22:39:05.939879+08:00","Action":"start","Package":"astralive/backend/cmd/operator-bootstrap"}
+{"Time":"2026-10-10T22:39:05.939898+08:00","Action":"output","Package":"astralive/backend/cmd/operator-bootstrap","Output":"?   \tastralive/backend/cmd/operator-bootstrap\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:05.939915+08:00","Action":"skip","Package":"astralive/backend/cmd/operator-bootstrap","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.266701+08:00","Action":"start","Package":"astralive/backend/cmd/server"}
+{"Time":"2026-10-10T22:39:06.266735+08:00","Action":"output","Package":"astralive/backend/cmd/server","Output":"?   \tastralive/backend/cmd/server\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:06.266744+08:00","Action":"skip","Package":"astralive/backend/cmd/server","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.266755+08:00","Action":"start","Package":"astralive/backend/db"}
+{"Time":"2026-10-10T22:39:06.266764+08:00","Action":"output","Package":"astralive/backend/db","Output":"?   \tastralive/backend/db\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:06.266769+08:00","Action":"skip","Package":"astralive/backend/db","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.266779+08:00","Action":"start","Package":"astralive/backend/generated/dbgen"}
+{"Time":"2026-10-10T22:39:06.266785+08:00","Action":"output","Package":"astralive/backend/generated/dbgen","Output":"?   \tastralive/backend/generated/dbgen\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:06.266791+08:00","Action":"skip","Package":"astralive/backend/generated/dbgen","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.266795+08:00","Action":"start","Package":"astralive/backend/generated/openapi"}
+{"Time":"2026-10-10T22:39:06.266799+08:00","Action":"output","Package":"astralive/backend/generated/openapi","Output":"?   \tastralive/backend/generated/openapi\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:06.266804+08:00","Action":"skip","Package":"astralive/backend/generated/openapi","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.266809+08:00","Action":"start","Package":"astralive/backend/generated/runtimeapi"}
+{"Time":"2026-10-10T22:39:06.266814+08:00","Action":"output","Package":"astralive/backend/generated/runtimeapi","Output":"?   \tastralive/backend/generated/runtimeapi\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:06.266817+08:00","Action":"skip","Package":"astralive/backend/generated/runtimeapi","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.579495+08:00","Action":"start","Package":"astralive/backend/internal/app"}
+{"Time":"2026-10-10T22:39:06.579561+08:00","Action":"start","Package":"astralive/backend/internal/config"}
+{"Time":"2026-10-10T22:39:06.579601+08:00","Action":"output","Package":"astralive/backend/internal/config","Output":"?   \tastralive/backend/internal/config\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:06.579613+08:00","Action":"skip","Package":"astralive/backend/internal/config","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.579611+08:00","Action":"start","Package":"astralive/backend/internal/eventbus"}
+{"Time":"2026-10-10T22:39:06.579635+08:00","Action":"output","Package":"astralive/backend/internal/eventbus","Output":"?   \tastralive/backend/internal/eventbus\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:06.579644+08:00","Action":"skip","Package":"astralive/backend/internal/eventbus","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.579654+08:00","Action":"start","Package":"astralive/backend/internal/fsm"}
+{"Time":"2026-10-10T22:39:06.723533+08:00","Action":"run","Package":"astralive/backend/internal/fsm","Test":"TestSessionTransitions"}
+{"Time":"2026-10-10T22:39:06.723584+08:00","Action":"output","Package":"astralive/backend/internal/fsm","Test":"TestSessionTransitions","Output":"=== RUN   TestSessionTransitions\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.723613+08:00","Action":"output","Package":"astralive/backend/internal/fsm","Test":"TestSessionTransitions","Output":"--- PASS: TestSessionTransitions (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.723662+08:00","Action":"pass","Package":"astralive/backend/internal/fsm","Test":"TestSessionTransitions","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.723668+08:00","Action":"run","Package":"astralive/backend/internal/fsm","Test":"TestUtteranceTransitions"}
+{"Time":"2026-10-10T22:39:06.723671+08:00","Action":"output","Package":"astralive/backend/internal/fsm","Test":"TestUtteranceTransitions","Output":"=== RUN   TestUtteranceTransitions\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.723675+08:00","Action":"output","Package":"astralive/backend/internal/fsm","Test":"TestUtteranceTransitions","Output":"--- PASS: TestUtteranceTransitions (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.723678+08:00","Action":"pass","Package":"astralive/backend/internal/fsm","Test":"TestUtteranceTransitions","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.72368+08:00","Action":"output","Package":"astralive/backend/internal/fsm","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.723935+08:00","Action":"output","Package":"astralive/backend/internal/fsm","Output":"ok  \tastralive/backend/internal/fsm\t0.144s\n"}
+{"Time":"2026-10-10T22:39:06.723953+08:00","Action":"pass","Package":"astralive/backend/internal/fsm","Elapsed":0.144}
+{"Time":"2026-10-10T22:39:06.824494+08:00","Action":"start","Package":"astralive/backend/internal/httpapi"}
+{"Time":"2026-10-10T22:39:06.824534+08:00","Action":"start","Package":"astralive/backend/internal/ids"}
+{"Time":"2026-10-10T22:39:06.824555+08:00","Action":"output","Package":"astralive/backend/internal/ids","Output":"?   \tastralive/backend/internal/ids\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:06.824566+08:00","Action":"skip","Package":"astralive/backend/internal/ids","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.824572+08:00","Action":"start","Package":"astralive/backend/internal/interaction"}
+{"Time":"2026-10-10T22:39:06.824601+08:00","Action":"start","Package":"astralive/backend/internal/metrics"}
+{"Time":"2026-10-10T22:39:06.824614+08:00","Action":"output","Package":"astralive/backend/internal/metrics","Output":"?   \tastralive/backend/internal/metrics\t[no test files]\n"}
+{"Time":"2026-10-10T22:39:06.824622+08:00","Action":"skip","Package":"astralive/backend/internal/metrics","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.824633+08:00","Action":"start","Package":"astralive/backend/internal/personalconfig"}
+{"Time":"2026-10-10T22:39:06.824657+08:00","Action":"start","Package":"astralive/backend/internal/platform"}
+{"Time":"2026-10-10T22:39:06.824704+08:00","Action":"start","Package":"astralive/backend/internal/platform/mock"}
+{"Time":"2026-10-10T22:39:06.824758+08:00","Action":"start","Package":"astralive/backend/internal/runtime"}
+{"Time":"2026-10-10T22:39:06.824805+08:00","Action":"start","Package":"astralive/backend/internal/sse"}
+{"Time":"2026-10-10T22:39:06.824838+08:00","Action":"start","Package":"astralive/backend/internal/userconfig"}
+{"Time":"2026-10-10T22:39:06.824879+08:00","Action":"start","Package":"astralive/backend/tests"}
+{"Time":"2026-10-10T22:39:06.919892+08:00","Action":"run","Package":"astralive/backend/internal/sse","Test":"TestHub"}
+{"Time":"2026-10-10T22:39:06.920022+08:00","Action":"output","Package":"astralive/backend/internal/sse","Test":"TestHub","Output":"=== RUN   TestHub\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.920072+08:00","Action":"output","Package":"astralive/backend/internal/sse","Test":"TestHub","Output":"--- PASS: TestHub (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.920088+08:00","Action":"pass","Package":"astralive/backend/internal/sse","Test":"TestHub","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.920095+08:00","Action":"output","Package":"astralive/backend/internal/sse","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.920517+08:00","Action":"output","Package":"astralive/backend/internal/sse","Output":"ok  \tastralive/backend/internal/sse\t0.096s\n"}
+{"Time":"2026-10-10T22:39:06.920549+08:00","Action":"pass","Package":"astralive/backend/internal/sse","Elapsed":0.096}
+{"Time":"2026-10-10T22:39:06.923896+08:00","Action":"run","Package":"astralive/backend/internal/platform","Test":"TestNormalize"}
+{"Time":"2026-10-10T22:39:06.923936+08:00","Action":"output","Package":"astralive/backend/internal/platform","Test":"TestNormalize","Output":"=== RUN   TestNormalize\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.923951+08:00","Action":"output","Package":"astralive/backend/internal/platform","Test":"TestNormalize","Output":"--- PASS: TestNormalize (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.923962+08:00","Action":"pass","Package":"astralive/backend/internal/platform","Test":"TestNormalize","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.923968+08:00","Action":"output","Package":"astralive/backend/internal/platform","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.924452+08:00","Action":"output","Package":"astralive/backend/internal/platform","Output":"ok  \tastralive/backend/internal/platform\t0.100s\n"}
+{"Time":"2026-10-10T22:39:06.924522+08:00","Action":"pass","Package":"astralive/backend/internal/platform","Elapsed":0.1}
+{"Time":"2026-10-10T22:39:06.961503+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion"}
+{"Time":"2026-10-10T22:39:06.961569+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion","Output":"=== RUN   TestSharedDTOsAndPublicSecretExclusion\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.966786+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge"}
+{"Time":"2026-10-10T22:39:06.966998+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge","Output":"=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.96702+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/XL_和_XXL_库存多少？"}
+{"Time":"2026-10-10T22:39:06.967027+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/XL_和_XXL_库存多少？","Output":"=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/XL_和_XXL_库存多少？\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967041+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/XL_和_XXL_库存多少？","Output":"--- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/XL_和_XXL_库存多少？ (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967047+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/XL_和_XXL_库存多少？","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.967053+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/2XL_库存多少？"}
+{"Time":"2026-10-10T22:39:06.967057+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/2XL_库存多少？","Output":"=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/2XL_库存多少？\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967072+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/2XL_库存多少？","Output":"--- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/2XL_库存多少？ (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967077+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/2XL_库存多少？","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.967083+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/180码库存多少？"}
+{"Time":"2026-10-10T22:39:06.967087+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/180码库存多少？","Output":"=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/180码库存多少？\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967092+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/180码库存多少？","Output":"--- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/180码库存多少？ (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967097+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/180码库存多少？","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.967101+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品价格和库存多少？"}
+{"Time":"2026-10-10T22:39:06.967111+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品价格和库存多少？","Output":"=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/商品价格和库存多少？\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967116+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品价格和库存多少？","Output":"--- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/商品价格和库存多少？ (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967124+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品价格和库存多少？","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.967129+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品材质和库存多少？"}
+{"Time":"2026-10-10T22:39:06.967133+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品材质和库存多少？","Output":"=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/商品材质和库存多少？\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967137+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品材质和库存多少？","Output":"--- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/商品材质和库存多少？ (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967141+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品材质和库存多少？","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.967146+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/价格多少，怎么搭配？"}
+{"Time":"2026-10-10T22:39:06.967151+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/价格多少，怎么搭配？","Output":"=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/价格多少，怎么搭配？\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967155+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/价格多少，怎么搭配？","Output":"--- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/价格多少，怎么搭配？ (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967164+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/价格多少，怎么搭配？","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.967169+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品名称和价格多少？"}
+{"Time":"2026-10-10T22:39:06.967173+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品名称和价格多少？","Output":"=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/商品名称和价格多少？\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967178+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品名称和价格多少？","Output":"--- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/商品名称和价格多少？ (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967183+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge/商品名称和价格多少？","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.967187+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge","Output":"--- PASS: TestAuditDistinctQuestionIntentsDoNotMerge (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967193+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestAuditDistinctQuestionIntentsDoNotMerge","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.967197+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestAuditCancelDuringReceiveLockWait"}
+{"Time":"2026-10-10T22:39:06.9672+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditCancelDuringReceiveLockWait","Output":"=== RUN   TestAuditCancelDuringReceiveLockWait\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967568+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestAuditCancelDuringReceiveLockWait","Output":"--- PASS: TestAuditCancelDuringReceiveLockWait (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967692+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestAuditCancelDuringReceiveLockWait","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.967697+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestDedupMergeAndStockSeparation"}
+{"Time":"2026-10-10T22:39:06.967702+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestDedupMergeAndStockSeparation","Output":"=== RUN   TestDedupMergeAndStockSeparation\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967708+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestDedupMergeAndStockSeparation","Output":"--- PASS: TestDedupMergeAndStockSeparation (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967713+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestDedupMergeAndStockSeparation","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.967716+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestDirectedRequestSelectedButAmbientStatementFiltered"}
+{"Time":"2026-10-10T22:39:06.967719+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestDirectedRequestSelectedButAmbientStatementFiltered","Output":"=== RUN   TestDirectedRequestSelectedButAmbientStatementFiltered\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967725+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestDirectedRequestSelectedButAmbientStatementFiltered","Output":"--- PASS: TestDirectedRequestSelectedButAmbientStatementFiltered (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.967733+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestDirectedRequestSelectedButAmbientStatementFiltered","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.967737+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestTTLRateCapacityAndStop"}
+{"Time":"2026-10-10T22:39:06.967741+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestTTLRateCapacityAndStop","Output":"=== RUN   TestTTLRateCapacityAndStop\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.968134+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestTTLRateCapacityAndStop","Output":"--- PASS: TestTTLRateCapacityAndStop (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.969006+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestTTLRateCapacityAndStop","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.975323+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestUserLimitAndGlobalLimit"}
+{"Time":"2026-10-10T22:39:06.975329+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestUserLimitAndGlobalLimit","Output":"=== RUN   TestUserLimitAndGlobalLimit\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.970488+08:00","Action":"run","Package":"astralive/backend/internal/platform/mock","Test":"TestAuditReplayStopWaitsForInFlightDelivery"}
+{"Time":"2026-10-10T22:39:06.973997+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/AvatarProfile"}
+{"Time":"2026-10-10T22:39:06.975343+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/AvatarProfile","Output":"=== RUN   TestSharedDTOsAndPublicSecretExclusion/AvatarProfile\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975348+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/AvatarProfile","Output":"--- PASS: TestSharedDTOsAndPublicSecretExclusion/AvatarProfile (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975353+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/AvatarProfile","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.975357+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/VoiceProfile"}
+{"Time":"2026-10-10T22:39:06.97536+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/VoiceProfile","Output":"=== RUN   TestSharedDTOsAndPublicSecretExclusion/VoiceProfile\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975363+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/VoiceProfile","Output":"--- PASS: TestSharedDTOsAndPublicSecretExclusion/VoiceProfile (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975367+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/VoiceProfile","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.97537+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/Job"}
+{"Time":"2026-10-10T22:39:06.975373+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/Job","Output":"=== RUN   TestSharedDTOsAndPublicSecretExclusion/Job\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975358+08:00","Action":"output","Package":"astralive/backend/internal/platform/mock","Test":"TestAuditReplayStopWaitsForInFlightDelivery","Output":"=== RUN   TestAuditReplayStopWaitsForInFlightDelivery\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975358+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestUserLimitAndGlobalLimit","Output":"--- PASS: TestUserLimitAndGlobalLimit (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975427+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestUserLimitAndGlobalLimit","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.975436+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestPriorityFairnessOperatorProductSwitchAndBoundary"}
+{"Time":"2026-10-10T22:39:06.975447+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestPriorityFairnessOperatorProductSwitchAndBoundary","Output":"=== RUN   TestPriorityFairnessOperatorProductSwitchAndBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.97546+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestPriorityFairnessOperatorProductSwitchAndBoundary","Output":"--- PASS: TestPriorityFairnessOperatorProductSwitchAndBoundary (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975467+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestPriorityFairnessOperatorProductSwitchAndBoundary","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.975475+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestFairness"}
+{"Time":"2026-10-10T22:39:06.975483+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestFairness","Output":"=== RUN   TestFairness\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.97549+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestFairness","Output":"--- PASS: TestFairness (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975495+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestFairness","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.975499+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestFailureNoRetryAndSessionIsolation"}
+{"Time":"2026-10-10T22:39:06.975502+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestFailureNoRetryAndSessionIsolation","Output":"=== RUN   TestFailureNoRetryAndSessionIsolation\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975512+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestFailureNoRetryAndSessionIsolation","Output":"--- PASS: TestFailureNoRetryAndSessionIsolation (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975516+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestFailureNoRetryAndSessionIsolation","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.97552+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestConcurrentDeliveryDedup"}
+{"Time":"2026-10-10T22:39:06.975376+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/Job","Output":"--- PASS: TestSharedDTOsAndPublicSecretExclusion/Job (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975553+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/Job","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.975572+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/PersonalBinding"}
+{"Time":"2026-10-10T22:39:06.975524+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestConcurrentDeliveryDedup","Output":"=== RUN   TestConcurrentDeliveryDedup\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975615+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestConcurrentDeliveryDedup","Output":"--- PASS: TestConcurrentDeliveryDedup (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975637+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestConcurrentDeliveryDedup","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.975646+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestOptInControlledPreemption"}
+{"Time":"2026-10-10T22:39:06.975652+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestOptInControlledPreemption","Output":"=== RUN   TestOptInControlledPreemption\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975658+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestOptInControlledPreemption","Output":"--- PASS: TestOptInControlledPreemption (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975663+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestOptInControlledPreemption","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.97567+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestTwoRoomsShareLimiterWithoutEventMix"}
+{"Time":"2026-10-10T22:39:06.975674+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestTwoRoomsShareLimiterWithoutEventMix","Output":"=== RUN   TestTwoRoomsShareLimiterWithoutEventMix\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975691+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestTwoRoomsShareLimiterWithoutEventMix","Output":"--- PASS: TestTwoRoomsShareLimiterWithoutEventMix (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975696+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestTwoRoomsShareLimiterWithoutEventMix","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.9757+08:00","Action":"run","Package":"astralive/backend/internal/interaction","Test":"TestObservationUsesLocalClockAndDispatchAcknowledgement"}
+{"Time":"2026-10-10T22:39:06.975703+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestObservationUsesLocalClockAndDispatchAcknowledgement","Output":"=== RUN   TestObservationUsesLocalClockAndDispatchAcknowledgement\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975715+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Test":"TestObservationUsesLocalClockAndDispatchAcknowledgement","Output":"--- PASS: TestObservationUsesLocalClockAndDispatchAcknowledgement (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975719+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Test":"TestObservationUsesLocalClockAndDispatchAcknowledgement","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.975724+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975584+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/PersonalBinding","Output":"=== RUN   TestSharedDTOsAndPublicSecretExclusion/PersonalBinding\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975749+08:00","Action":"output","Package":"astralive/backend/internal/interaction","Output":"ok  \tastralive/backend/internal/interaction\t0.151s\n"}
+{"Time":"2026-10-10T22:39:06.975759+08:00","Action":"pass","Package":"astralive/backend/internal/interaction","Elapsed":0.151}
+{"Time":"2026-10-10T22:39:06.975755+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/PersonalBinding","Output":"--- PASS: TestSharedDTOsAndPublicSecretExclusion/PersonalBinding (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975773+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/PersonalBinding","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.975781+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/Asset"}
+{"Time":"2026-10-10T22:39:06.975787+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/Asset","Output":"=== RUN   TestSharedDTOsAndPublicSecretExclusion/Asset\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975799+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/Asset","Output":"--- PASS: TestSharedDTOsAndPublicSecretExclusion/Asset (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975804+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion/Asset","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.975809+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion","Output":"--- PASS: TestSharedDTOsAndPublicSecretExclusion (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.975815+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestSharedDTOsAndPublicSecretExclusion","Elapsed":0.01}
+{"Time":"2026-10-10T22:39:06.975823+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases"}
+{"Time":"2026-10-10T22:39:06.975828+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases","Output":"=== RUN   TestUploadAndProviderSchemaNegativeCases\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.976105+08:00","Action":"run","Package":"astralive/backend/internal/runtime","Test":"TestRuntimeClientCreateSessionWithHTTPStub"}
+{"Time":"2026-10-10T22:39:06.976136+08:00","Action":"output","Package":"astralive/backend/internal/runtime","Test":"TestRuntimeClientCreateSessionWithHTTPStub","Output":"=== RUN   TestRuntimeClientCreateSessionWithHTTPStub\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.977566+08:00","Action":"output","Package":"astralive/backend/internal/runtime","Test":"TestRuntimeClientCreateSessionWithHTTPStub","Output":"--- PASS: TestRuntimeClientCreateSessionWithHTTPStub (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.977591+08:00","Action":"pass","Package":"astralive/backend/internal/runtime","Test":"TestRuntimeClientCreateSessionWithHTTPStub","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.977598+08:00","Action":"run","Package":"astralive/backend/internal/runtime","Test":"TestV11RuntimePayloadsAndWebRTC"}
+{"Time":"2026-10-10T22:39:06.977603+08:00","Action":"output","Package":"astralive/backend/internal/runtime","Test":"TestV11RuntimePayloadsAndWebRTC","Output":"=== RUN   TestV11RuntimePayloadsAndWebRTC\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.978469+08:00","Action":"output","Package":"astralive/backend/internal/runtime","Test":"TestV11RuntimePayloadsAndWebRTC","Output":"--- PASS: TestV11RuntimePayloadsAndWebRTC (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.978485+08:00","Action":"pass","Package":"astralive/backend/internal/runtime","Test":"TestV11RuntimePayloadsAndWebRTC","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.97849+08:00","Action":"run","Package":"astralive/backend/internal/runtime","Test":"TestRuntimeErrors"}
+{"Time":"2026-10-10T22:39:06.978495+08:00","Action":"output","Package":"astralive/backend/internal/runtime","Test":"TestRuntimeErrors","Output":"=== RUN   TestRuntimeErrors\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.982696+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestConfigurationBrowserHarness"}
+{"Time":"2026-10-10T22:39:06.982736+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestConfigurationBrowserHarness","Output":"=== RUN   TestConfigurationBrowserHarness\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.982786+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestConfigurationBrowserHarness","Output":"    browser_harness_test.go:23: browser harness opt-in\n"}
+{"Time":"2026-10-10T22:39:06.982811+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestConfigurationBrowserHarness","Output":"--- SKIP: TestConfigurationBrowserHarness (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.982821+08:00","Action":"skip","Package":"astralive/backend/internal/userconfig","Test":"TestConfigurationBrowserHarness","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.982825+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestConfigurationSpecification"}
+{"Time":"2026-10-10T22:39:06.982828+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestConfigurationSpecification","Output":"=== RUN   TestConfigurationSpecification\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984529+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/valid"}
+{"Time":"2026-10-10T22:39:06.984549+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/valid","Output":"=== RUN   TestUploadAndProviderSchemaNegativeCases/valid\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984555+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/valid","Output":"--- PASS: TestUploadAndProviderSchemaNegativeCases/valid (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984565+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/valid","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.984568+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/oversize"}
+{"Time":"2026-10-10T22:39:06.984571+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/oversize","Output":"=== RUN   TestUploadAndProviderSchemaNegativeCases/oversize\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984775+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/oversize","Output":"--- PASS: TestUploadAndProviderSchemaNegativeCases/oversize (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984797+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/oversize","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.984804+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/svg"}
+{"Time":"2026-10-10T22:39:06.984809+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/svg","Output":"=== RUN   TestUploadAndProviderSchemaNegativeCases/svg\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984814+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/svg","Output":"--- PASS: TestUploadAndProviderSchemaNegativeCases/svg (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984818+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/svg","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.984822+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/derivative_injection"}
+{"Time":"2026-10-10T22:39:06.984826+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/derivative_injection","Output":"=== RUN   TestUploadAndProviderSchemaNegativeCases/derivative_injection\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984835+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/derivative_injection","Output":"--- PASS: TestUploadAndProviderSchemaNegativeCases/derivative_injection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984846+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/derivative_injection","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.98485+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/consent_false"}
+{"Time":"2026-10-10T22:39:06.984853+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/consent_false","Output":"=== RUN   TestUploadAndProviderSchemaNegativeCases/consent_false\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984857+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/consent_false","Output":"--- PASS: TestUploadAndProviderSchemaNegativeCases/consent_false (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984861+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/consent_false","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.984865+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/scope_injection"}
+{"Time":"2026-10-10T22:39:06.984869+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/scope_injection","Output":"=== RUN   TestUploadAndProviderSchemaNegativeCases/scope_injection\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984873+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/scope_injection","Output":"--- PASS: TestUploadAndProviderSchemaNegativeCases/scope_injection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984876+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/scope_injection","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.98488+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/path_injection"}
+{"Time":"2026-10-10T22:39:06.984884+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/path_injection","Output":"=== RUN   TestUploadAndProviderSchemaNegativeCases/path_injection\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.98489+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/path_injection","Output":"--- PASS: TestUploadAndProviderSchemaNegativeCases/path_injection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984893+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases/path_injection","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.984897+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases","Output":"--- PASS: TestUploadAndProviderSchemaNegativeCases (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.984901+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestUploadAndProviderSchemaNegativeCases","Elapsed":0.01}
+{"Time":"2026-10-10T22:39:06.984904+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestEveryRouteHasExplicitAuthorizationAndImplementationState"}
+{"Time":"2026-10-10T22:39:06.984908+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestEveryRouteHasExplicitAuthorizationAndImplementationState","Output":"=== RUN   TestEveryRouteHasExplicitAuthorizationAndImplementationState\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.989119+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestConfigurationSpecification","Output":"--- PASS: TestConfigurationSpecification (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.989156+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestConfigurationSpecification","Elapsed":0.01}
+{"Time":"2026-10-10T22:39:06.989163+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestPostgresConfigurationLifecycle"}
+{"Time":"2026-10-10T22:39:06.989167+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestPostgresConfigurationLifecycle","Output":"=== RUN   TestPostgresConfigurationLifecycle\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.994518+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestEveryRouteHasExplicitAuthorizationAndImplementationState","Output":"--- PASS: TestEveryRouteHasExplicitAuthorizationAndImplementationState (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.994533+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestEveryRouteHasExplicitAuthorizationAndImplementationState","Elapsed":0.01}
+{"Time":"2026-10-10T22:39:06.994538+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestProviderCapabilitiesEnforced"}
+{"Time":"2026-10-10T22:39:06.994541+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestProviderCapabilitiesEnforced","Output":"=== RUN   TestProviderCapabilitiesEnforced\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.994585+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestProviderCapabilitiesEnforced","Output":"--- PASS: TestProviderCapabilitiesEnforced (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.994596+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestProviderCapabilitiesEnforced","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.994601+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestSimulationAndMismatchedReadinessCannotPass"}
+{"Time":"2026-10-10T22:39:06.994605+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSimulationAndMismatchedReadinessCannotPass","Output":"=== RUN   TestSimulationAndMismatchedReadinessCannotPass\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.994611+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestSimulationAndMismatchedReadinessCannotPass","Output":"--- PASS: TestSimulationAndMismatchedReadinessCannotPass (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:06.994615+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestSimulationAndMismatchedReadinessCannotPass","Elapsed":0}
+{"Time":"2026-10-10T22:39:06.994618+08:00","Action":"run","Package":"astralive/backend/internal/personalconfig","Test":"TestInternalProcessorDTOsMatchSharedSchema"}
+{"Time":"2026-10-10T22:39:06.994626+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestInternalProcessorDTOsMatchSharedSchema","Output":"=== RUN   TestInternalProcessorDTOsMatchSharedSchema\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.004035+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Test":"TestInternalProcessorDTOsMatchSharedSchema","Output":"--- PASS: TestInternalProcessorDTOsMatchSharedSchema (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.004058+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Test":"TestInternalProcessorDTOsMatchSharedSchema","Elapsed":0.01}
+{"Time":"2026-10-10T22:39:07.004065+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.004855+08:00","Action":"output","Package":"astralive/backend/internal/personalconfig","Output":"ok  \tastralive/backend/internal/personalconfig\t0.180s\n"}
+{"Time":"2026-10-10T22:39:07.004868+08:00","Action":"pass","Package":"astralive/backend/internal/personalconfig","Elapsed":0.18}
+{"Time":"2026-10-10T22:39:07.011779+08:00","Action":"run","Package":"astralive/backend/internal/app","Test":"TestEventValidation"}
+{"Time":"2026-10-10T22:39:07.011812+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestEventValidation","Output":"=== RUN   TestEventValidation\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.01191+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestEventValidation","Output":"--- PASS: TestEventValidation (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.011917+08:00","Action":"pass","Package":"astralive/backend/internal/app","Test":"TestEventValidation","Elapsed":0}
+{"Time":"2026-10-10T22:39:07.011921+08:00","Action":"run","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock"}
+{"Time":"2026-10-10T22:39:07.011924+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock","Output":"=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.022122+08:00","Action":"output","Package":"astralive/backend/internal/platform/mock","Test":"TestAuditReplayStopWaitsForInFlightDelivery","Output":"--- PASS: TestAuditReplayStopWaitsForInFlightDelivery (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.022143+08:00","Action":"pass","Package":"astralive/backend/internal/platform/mock","Test":"TestAuditReplayStopWaitsForInFlightDelivery","Elapsed":0.05}
+{"Time":"2026-10-10T22:39:07.02215+08:00","Action":"run","Package":"astralive/backend/internal/platform/mock","Test":"TestReplayReconnectDuplicateAndStop"}
+{"Time":"2026-10-10T22:39:07.022154+08:00","Action":"output","Package":"astralive/backend/internal/platform/mock","Test":"TestReplayReconnectDuplicateAndStop","Output":"=== RUN   TestReplayReconnectDuplicateAndStop\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.022499+08:00","Action":"output","Package":"astralive/backend/internal/platform/mock","Test":"TestReplayReconnectDuplicateAndStop","Output":"--- PASS: TestReplayReconnectDuplicateAndStop (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.022511+08:00","Action":"pass","Package":"astralive/backend/internal/platform/mock","Test":"TestReplayReconnectDuplicateAndStop","Elapsed":0}
+{"Time":"2026-10-10T22:39:07.022516+08:00","Action":"run","Package":"astralive/backend/internal/platform/mock","Test":"TestCancelAndLimits"}
+{"Time":"2026-10-10T22:39:07.022519+08:00","Action":"output","Package":"astralive/backend/internal/platform/mock","Test":"TestCancelAndLimits","Output":"=== RUN   TestCancelAndLimits\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.022633+08:00","Action":"output","Package":"astralive/backend/internal/platform/mock","Test":"TestCancelAndLimits","Output":"--- PASS: TestCancelAndLimits (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.022641+08:00","Action":"pass","Package":"astralive/backend/internal/platform/mock","Test":"TestCancelAndLimits","Elapsed":0}
+{"Time":"2026-10-10T22:39:07.022645+08:00","Action":"run","Package":"astralive/backend/internal/platform/mock","Test":"TestReplayFixtureThroughScheduler"}
+{"Time":"2026-10-10T22:39:07.022648+08:00","Action":"output","Package":"astralive/backend/internal/platform/mock","Test":"TestReplayFixtureThroughScheduler","Output":"=== RUN   TestReplayFixtureThroughScheduler\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.022847+08:00","Action":"output","Package":"astralive/backend/internal/platform/mock","Test":"TestReplayFixtureThroughScheduler","Output":"--- PASS: TestReplayFixtureThroughScheduler (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.022853+08:00","Action":"pass","Package":"astralive/backend/internal/platform/mock","Test":"TestReplayFixtureThroughScheduler","Elapsed":0}
+{"Time":"2026-10-10T22:39:07.022855+08:00","Action":"output","Package":"astralive/backend/internal/platform/mock","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.023557+08:00","Action":"output","Package":"astralive/backend/internal/platform/mock","Output":"ok  \tastralive/backend/internal/platform/mock\t0.199s\n"}
+{"Time":"2026-10-10T22:39:07.023569+08:00","Action":"pass","Package":"astralive/backend/internal/platform/mock","Elapsed":0.199}
+{"Time":"2026-10-10T22:39:07.03055+08:00","Action":"output","Package":"astralive/backend/internal/runtime","Test":"TestRuntimeErrors","Output":"--- PASS: TestRuntimeErrors (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.030581+08:00","Action":"pass","Package":"astralive/backend/internal/runtime","Test":"TestRuntimeErrors","Elapsed":0.05}
+{"Time":"2026-10-10T22:39:07.03059+08:00","Action":"output","Package":"astralive/backend/internal/runtime","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.031556+08:00","Action":"output","Package":"astralive/backend/internal/runtime","Output":"ok  \tastralive/backend/internal/runtime\t0.207s\n"}
+{"Time":"2026-10-10T22:39:07.031619+08:00","Action":"pass","Package":"astralive/backend/internal/runtime","Elapsed":0.207}
+{"Time":"2026-10-10T22:39:07.170335+08:00","Action":"run","Package":"astralive/backend/tests","Test":"TestEventDedupAndStateUpdateWithPostgres"}
+{"Time":"2026-10-10T22:39:07.17039+08:00","Action":"output","Package":"astralive/backend/tests","Test":"TestEventDedupAndStateUpdateWithPostgres","Output":"=== RUN   TestEventDedupAndStateUpdateWithPostgres\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.210974+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestProductAuthorizationAndPinnedBindings"}
+{"Time":"2026-10-10T22:39:07.211016+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestProductAuthorizationAndPinnedBindings","Output":"=== RUN   TestProductAuthorizationAndPinnedBindings\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.414737+08:00","Action":"output","Package":"astralive/backend/tests","Test":"TestEventDedupAndStateUpdateWithPostgres","Output":"--- PASS: TestEventDedupAndStateUpdateWithPostgres (0.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.414777+08:00","Action":"pass","Package":"astralive/backend/tests","Test":"TestEventDedupAndStateUpdateWithPostgres","Elapsed":0.24}
+{"Time":"2026-10-10T22:39:07.414789+08:00","Action":"output","Package":"astralive/backend/tests","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.415727+08:00","Action":"output","Package":"astralive/backend/tests","Output":"ok  \tastralive/backend/tests\t0.591s\n"}
+{"Time":"2026-10-10T22:39:07.415751+08:00","Action":"pass","Package":"astralive/backend/tests","Elapsed":0.591}
+{"Time":"2026-10-10T22:39:07.563899+08:00","Action":"run","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/RESERVED_restart_no_retry"}
+{"Time":"2026-10-10T22:39:07.563943+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/RESERVED_restart_no_retry","Output":"=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock/RESERVED_restart_no_retry\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.622977+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/RESERVED_restart_no_retry","Output":"--- PASS: TestAuditSelectionExpiresWhileWaitingForCommandLock/RESERVED_restart_no_retry (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.623015+08:00","Action":"pass","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/RESERVED_restart_no_retry","Elapsed":0.06}
+{"Time":"2026-10-10T22:39:07.623023+08:00","Action":"run","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/ACCEPTED_restart_no_retry"}
+{"Time":"2026-10-10T22:39:07.623029+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/ACCEPTED_restart_no_retry","Output":"=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock/ACCEPTED_restart_no_retry\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.668218+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/ACCEPTED_restart_no_retry","Output":"--- PASS: TestAuditSelectionExpiresWhileWaitingForCommandLock/ACCEPTED_restart_no_retry (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.668286+08:00","Action":"pass","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/ACCEPTED_restart_no_retry","Elapsed":0.05}
+{"Time":"2026-10-10T22:39:07.668296+08:00","Action":"run","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/FAILED_restart_no_retry"}
+{"Time":"2026-10-10T22:39:07.668301+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/FAILED_restart_no_retry","Output":"=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock/FAILED_restart_no_retry\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.706802+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/FAILED_restart_no_retry","Output":"--- PASS: TestAuditSelectionExpiresWhileWaitingForCommandLock/FAILED_restart_no_retry (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.70684+08:00","Action":"pass","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/FAILED_restart_no_retry","Elapsed":0.04}
+{"Time":"2026-10-10T22:39:07.706846+08:00","Action":"run","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/runtime_admitted_ack_lost"}
+{"Time":"2026-10-10T22:39:07.706851+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/runtime_admitted_ack_lost","Output":"=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock/runtime_admitted_ack_lost\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.907917+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/runtime_admitted_ack_lost","Output":"--- PASS: TestAuditSelectionExpiresWhileWaitingForCommandLock/runtime_admitted_ack_lost (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.907954+08:00","Action":"pass","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/runtime_admitted_ack_lost","Elapsed":0.2}
+{"Time":"2026-10-10T22:39:07.907963+08:00","Action":"run","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/cached_controller_rechecks_room_ownership"}
+{"Time":"2026-10-10T22:39:07.90797+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/cached_controller_rechecks_room_ownership","Output":"=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock/cached_controller_rechecks_room_ownership\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.95466+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/cached_controller_rechecks_room_ownership","Output":"--- PASS: TestAuditSelectionExpiresWhileWaitingForCommandLock/cached_controller_rechecks_room_ownership (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:07.9547+08:00","Action":"pass","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/cached_controller_rechecks_room_ownership","Elapsed":0.05}
+{"Time":"2026-10-10T22:39:07.954707+08:00","Action":"run","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/stop_wins_before_dispatch"}
+{"Time":"2026-10-10T22:39:07.954711+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/stop_wins_before_dispatch","Output":"=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock/stop_wins_before_dispatch\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:08.070715+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/stop_wins_before_dispatch","Output":"--- PASS: TestAuditSelectionExpiresWhileWaitingForCommandLock/stop_wins_before_dispatch (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:08.070744+08:00","Action":"pass","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock/stop_wins_before_dispatch","Elapsed":0.12}
+{"Time":"2026-10-10T22:39:08.070825+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock","Output":"--- PASS: TestAuditSelectionExpiresWhileWaitingForCommandLock (1.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:08.070837+08:00","Action":"pass","Package":"astralive/backend/internal/app","Test":"TestAuditSelectionExpiresWhileWaitingForCommandLock","Elapsed":1.06}
+{"Time":"2026-10-10T22:39:08.070843+08:00","Action":"run","Package":"astralive/backend/internal/app","Test":"TestStartStopInvalidState"}
+{"Time":"2026-10-10T22:39:08.070847+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestStartStopInvalidState","Output":"=== RUN   TestStartStopInvalidState\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:08.070909+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestStartStopInvalidState","Output":"--- PASS: TestStartStopInvalidState (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:08.070914+08:00","Action":"pass","Package":"astralive/backend/internal/app","Test":"TestStartStopInvalidState","Elapsed":0}
+{"Time":"2026-10-10T22:39:08.070919+08:00","Action":"run","Package":"astralive/backend/internal/app","Test":"TestStartSendsRoomContext"}
+{"Time":"2026-10-10T22:39:08.070922+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestStartSendsRoomContext","Output":"=== RUN   TestStartSendsRoomContext\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:08.071492+08:00","Action":"output","Package":"astralive/backend/internal/app","Test":"TestStartSendsRoomContext","Output":"--- PASS: TestStartSendsRoomContext (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:08.071503+08:00","Action":"pass","Package":"astralive/backend/internal/app","Test":"TestStartSendsRoomContext","Elapsed":0}
+{"Time":"2026-10-10T22:39:08.071507+08:00","Action":"output","Package":"astralive/backend/internal/app","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:08.072231+08:00","Action":"output","Package":"astralive/backend/internal/app","Output":"ok  \tastralive/backend/internal/app\t1.493s\n"}
+{"Time":"2026-10-10T22:39:08.072242+08:00","Action":"pass","Package":"astralive/backend/internal/app","Elapsed":1.4929999999999999}
+{"Time":"2026-10-10T22:39:09.127575+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestPostgresConfigurationLifecycle","Output":"--- PASS: TestPostgresConfigurationLifecycle (2.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.127616+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestPostgresConfigurationLifecycle","Elapsed":2.14}
+{"Time":"2026-10-10T22:39:09.127625+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestLocalProviderProbesScopedAndVersioned"}
+{"Time":"2026-10-10T22:39:09.127629+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestLocalProviderProbesScopedAndVersioned","Output":"=== RUN   TestLocalProviderProbesScopedAndVersioned\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.705125+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestProductAuthorizationAndPinnedBindings","Output":"--- PASS: TestProductAuthorizationAndPinnedBindings (2.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.705185+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestProductAuthorizationAndPinnedBindings","Elapsed":2.49}
+{"Time":"2026-10-10T22:39:09.705199+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestFrozenOpenAPIValidation"}
+{"Time":"2026-10-10T22:39:09.705206+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestFrozenOpenAPIValidation","Output":"=== RUN   TestFrozenOpenAPIValidation\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.713814+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestFrozenOpenAPIValidation","Output":"--- PASS: TestFrozenOpenAPIValidation (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.713862+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestFrozenOpenAPIValidation","Elapsed":0.01}
+{"Time":"2026-10-10T22:39:09.713871+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestInteractionFormalCPU"}
+{"Time":"2026-10-10T22:39:09.713877+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestInteractionFormalCPU","Output":"=== RUN   TestInteractionFormalCPU\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.812787+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestLocalProviderProbesScopedAndVersioned","Output":"--- PASS: TestLocalProviderProbesScopedAndVersioned (0.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.812852+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestLocalProviderProbesScopedAndVersioned","Elapsed":0.69}
+{"Time":"2026-10-10T22:39:09.812872+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestVaultTamperIsolationAndRotation"}
+{"Time":"2026-10-10T22:39:09.812881+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestVaultTamperIsolationAndRotation","Output":"=== RUN   TestVaultTamperIsolationAndRotation\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.814339+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestVaultTamperIsolationAndRotation","Output":"--- PASS: TestVaultTamperIsolationAndRotation (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.81437+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestVaultTamperIsolationAndRotation","Elapsed":0}
+{"Time":"2026-10-10T22:39:09.814384+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestEndpointAndAddressPolicy"}
+{"Time":"2026-10-10T22:39:09.814392+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestEndpointAndAddressPolicy","Output":"=== RUN   TestEndpointAndAddressPolicy\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.815585+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestEndpointAndAddressPolicy","Output":"--- PASS: TestEndpointAndAddressPolicy (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.815605+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestEndpointAndAddressPolicy","Elapsed":0}
+{"Time":"2026-10-10T22:39:09.815616+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestProviderSpecificValidation"}
+{"Time":"2026-10-10T22:39:09.815624+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestProviderSpecificValidation","Output":"=== RUN   TestProviderSpecificValidation\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.815677+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestProviderSpecificValidation","Output":"--- PASS: TestProviderSpecificValidation (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.815688+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestProviderSpecificValidation","Elapsed":0}
+{"Time":"2026-10-10T22:39:09.81571+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestProviderFailuresAreSanitized"}
+{"Time":"2026-10-10T22:39:09.815718+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestProviderFailuresAreSanitized","Output":"=== RUN   TestProviderFailuresAreSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.815875+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestProviderFailuresAreSanitized","Output":"--- PASS: TestProviderFailuresAreSanitized (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.815884+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestProviderFailuresAreSanitized","Elapsed":0}
+{"Time":"2026-10-10T22:39:09.815892+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestNoSessionAndNoServiceTokenFailClosed"}
+{"Time":"2026-10-10T22:39:09.815899+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestNoSessionAndNoServiceTokenFailClosed","Output":"=== RUN   TestNoSessionAndNoServiceTokenFailClosed\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.81601+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestNoSessionAndNoServiceTokenFailClosed","Output":"--- PASS: TestNoSessionAndNoServiceTokenFailClosed (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.816019+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestNoSessionAndNoServiceTokenFailClosed","Elapsed":0}
+{"Time":"2026-10-10T22:39:09.816043+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestMixedDNSAndPinnedDial"}
+{"Time":"2026-10-10T22:39:09.816051+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestMixedDNSAndPinnedDial","Output":"=== RUN   TestMixedDNSAndPinnedDial\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.816059+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestMixedDNSAndPinnedDial","Output":"--- PASS: TestMixedDNSAndPinnedDial (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.816078+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestMixedDNSAndPinnedDial","Elapsed":0}
+{"Time":"2026-10-10T22:39:09.816085+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestRuntimeIntegrationFaultProjection"}
+{"Time":"2026-10-10T22:39:09.816092+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestRuntimeIntegrationFaultProjection","Output":"=== RUN   TestRuntimeIntegrationFaultProjection\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.8177+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestRuntimeIntegrationFaultProjection","Output":"--- PASS: TestRuntimeIntegrationFaultProjection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.817744+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestRuntimeIntegrationFaultProjection","Elapsed":0}
+{"Time":"2026-10-10T22:39:09.817761+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestWorkerProbeProjectionAndPrivateAuth"}
+{"Time":"2026-10-10T22:39:09.817771+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestWorkerProbeProjectionAndPrivateAuth","Output":"=== RUN   TestWorkerProbeProjectionAndPrivateAuth\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.819734+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestWorkerProbeProjectionAndPrivateAuth","Output":"--- PASS: TestWorkerProbeProjectionAndPrivateAuth (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.819776+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestWorkerProbeProjectionAndPrivateAuth","Elapsed":0}
+{"Time":"2026-10-10T22:39:09.819788+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestWorkerStatusScopeAndAuthentication"}
+{"Time":"2026-10-10T22:39:09.819797+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestWorkerStatusScopeAndAuthentication","Output":"=== RUN   TestWorkerStatusScopeAndAuthentication\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.819858+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestWorkerStatusScopeAndAuthentication","Output":"--- PASS: TestWorkerStatusScopeAndAuthentication (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.81987+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestWorkerStatusScopeAndAuthentication","Elapsed":0}
+{"Time":"2026-10-10T22:39:09.819878+08:00","Action":"run","Package":"astralive/backend/internal/userconfig","Test":"TestOwnProfileCannotProbeForeignPhysicalWorker"}
+{"Time":"2026-10-10T22:39:09.819885+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestOwnProfileCannotProbeForeignPhysicalWorker","Output":"=== RUN   TestOwnProfileCannotProbeForeignPhysicalWorker\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.819913+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Test":"TestOwnProfileCannotProbeForeignPhysicalWorker","Output":"--- PASS: TestOwnProfileCannotProbeForeignPhysicalWorker (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.819921+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Test":"TestOwnProfileCannotProbeForeignPhysicalWorker","Elapsed":0}
+{"Time":"2026-10-10T22:39:09.819929+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:09.821922+08:00","Action":"output","Package":"astralive/backend/internal/userconfig","Output":"ok  \tastralive/backend/internal/userconfig\t2.997s\n"}
+{"Time":"2026-10-10T22:39:09.821977+08:00","Action":"pass","Package":"astralive/backend/internal/userconfig","Elapsed":2.997}
+{"Time":"2026-10-10T22:39:14.205685+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestInteractionFormalCPU","Output":"--- PASS: TestInteractionFormalCPU (4.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.205711+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestInteractionFormalCPU","Elapsed":4.49}
+{"Time":"2026-10-10T22:39:14.205718+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting"}
+{"Time":"2026-10-10T22:39:14.205722+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting","Output":"=== RUN   TestWebRTCOfferRouting\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.205726+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/missing"}
+{"Time":"2026-10-10T22:39:14.20573+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/missing","Output":"=== RUN   TestWebRTCOfferRouting/missing\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.206004+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/missing","Output":"--- PASS: TestWebRTCOfferRouting/missing (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.206011+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/missing","Elapsed":0}
+{"Time":"2026-10-10T22:39:14.206014+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/READY"}
+{"Time":"2026-10-10T22:39:14.206017+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/READY","Output":"=== RUN   TestWebRTCOfferRouting/READY\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.20609+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/READY","Output":"--- PASS: TestWebRTCOfferRouting/READY (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.206094+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/READY","Elapsed":0}
+{"Time":"2026-10-10T22:39:14.206097+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/LIVE"}
+{"Time":"2026-10-10T22:39:14.206106+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/LIVE","Output":"=== RUN   TestWebRTCOfferRouting/LIVE\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.206515+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/LIVE","Output":"--- PASS: TestWebRTCOfferRouting/LIVE (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.206526+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/LIVE","Elapsed":0}
+{"Time":"2026-10-10T22:39:14.20653+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/DEGRADED"}
+{"Time":"2026-10-10T22:39:14.206533+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/DEGRADED","Output":"=== RUN   TestWebRTCOfferRouting/DEGRADED\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.207286+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/DEGRADED","Output":"--- PASS: TestWebRTCOfferRouting/DEGRADED (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.207298+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting/DEGRADED","Elapsed":0}
+{"Time":"2026-10-10T22:39:14.207302+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting","Output":"--- PASS: TestWebRTCOfferRouting (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.207307+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestWebRTCOfferRouting","Elapsed":0}
+{"Time":"2026-10-10T22:39:14.20731+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestHeartbeatFrame"}
+{"Time":"2026-10-10T22:39:14.207313+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestHeartbeatFrame","Output":"=== RUN   TestHeartbeatFrame\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.207317+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestHeartbeatFrame","Output":"--- PASS: TestHeartbeatFrame (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.20732+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestHeartbeatFrame","Elapsed":0}
+{"Time":"2026-10-10T22:39:14.207322+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestDevCommentNoRunningSession"}
+{"Time":"2026-10-10T22:39:14.207324+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestDevCommentNoRunningSession","Output":"=== RUN   TestDevCommentNoRunningSession\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.207417+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestDevCommentNoRunningSession","Output":"--- PASS: TestDevCommentNoRunningSession (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.207423+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestDevCommentNoRunningSession","Elapsed":0}
+{"Time":"2026-10-10T22:39:14.207427+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestDevCommentQueuesPlatformUtterance"}
+{"Time":"2026-10-10T22:39:14.20743+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestDevCommentQueuesPlatformUtterance","Output":"=== RUN   TestDevCommentQueuesPlatformUtterance\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.207772+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestDevCommentQueuesPlatformUtterance","Output":"--- PASS: TestDevCommentQueuesPlatformUtterance (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.207779+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestDevCommentQueuesPlatformUtterance","Elapsed":0}
+{"Time":"2026-10-10T22:39:14.207786+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestProductToolAuthorizationAndStock"}
+{"Time":"2026-10-10T22:39:14.207789+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestProductToolAuthorizationAndStock","Output":"=== RUN   TestProductToolAuthorizationAndStock\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.208193+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestProductToolAuthorizationAndStock","Output":"--- PASS: TestProductToolAuthorizationAndStock (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.208199+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestProductToolAuthorizationAndStock","Elapsed":0}
+{"Time":"2026-10-10T22:39:14.208202+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestProductToolAllRoutes"}
+{"Time":"2026-10-10T22:39:14.208205+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestProductToolAllRoutes","Output":"=== RUN   TestProductToolAllRoutes\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.208707+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestProductToolAllRoutes","Output":"--- PASS: TestProductToolAllRoutes (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.208712+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestProductToolAllRoutes","Elapsed":0}
+{"Time":"2026-10-10T22:39:14.208715+08:00","Action":"run","Package":"astralive/backend/internal/httpapi","Test":"TestConfigurationRouteIsAuthenticatedAndSeparate"}
+{"Time":"2026-10-10T22:39:14.208718+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestConfigurationRouteIsAuthenticatedAndSeparate","Output":"=== RUN   TestConfigurationRouteIsAuthenticatedAndSeparate\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.208779+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Test":"TestConfigurationRouteIsAuthenticatedAndSeparate","Output":"--- PASS: TestConfigurationRouteIsAuthenticatedAndSeparate (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.208783+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Test":"TestConfigurationRouteIsAuthenticatedAndSeparate","Elapsed":0}
+{"Time":"2026-10-10T22:39:14.208786+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T22:39:14.209658+08:00","Action":"output","Package":"astralive/backend/internal/httpapi","Output":"ok  \tastralive/backend/internal/httpapi\t7.385s\n"}
+{"Time":"2026-10-10T22:39:14.209667+08:00","Action":"pass","Package":"astralive/backend/internal/httpapi","Elapsed":7.385}

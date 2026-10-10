@@ -1,0 +1,130 @@
+[
+  {
+    "name": "wall_1_per_second",
+    "clock": "real wall-clock Replay; fake speech busy 2s; Stop drops pending candidates",
+    "counters": {
+      "input": 30,
+      "deduplicated": 0,
+      "merged": 14,
+      "selected": 10,
+      "expired": 0,
+      "dropped": 6,
+      "filtered": 0,
+      "delivered": 10,
+      "failed": 0,
+      "peak": 7,
+      "force": 0
+    },
+    "selectionLatency": {
+      "samples": 10,
+      "meanMs": 5132.056699999999,
+      "p50Ms": 3362.107,
+      "p95Ms": 15040.897,
+      "maxMs": 15040.897,
+      "boundary": "comment_received → scheduler_selected (Go monotonic; last 256 selected)"
+    },
+    "sampledPeakHeapBytes": 586632,
+    "heapGrowthBytes": 119152,
+    "wallMs": 20129.277,
+    "arrivalDurationSeconds": 20.12927775,
+    "processCPUSeconds": 0.032066000000000004,
+    "randomArrival": true,
+    "seed": 20261010
+  },
+  {
+    "name": "wall_5_per_second",
+    "clock": "real wall-clock Replay; fake speech busy 2s; Stop drops pending candidates",
+    "counters": {
+      "input": 150,
+      "deduplicated": 0,
+      "merged": 123,
+      "selected": 15,
+      "expired": 4,
+      "dropped": 8,
+      "filtered": 0,
+      "delivered": 15,
+      "failed": 0,
+      "peak": 11,
+      "force": 0
+    },
+    "selectionLatency": {
+      "samples": 15,
+      "meanMs": 6407.626333333333,
+      "p50Ms": 6952.227,
+      "p95Ms": 13112.413,
+      "maxMs": 13112.413,
+      "boundary": "comment_received → scheduler_selected (Go monotonic; last 256 selected)"
+    },
+    "sampledPeakHeapBytes": 830016,
+    "heapGrowthBytes": 324632,
+    "wallMs": 30780.382,
+    "arrivalDurationSeconds": 30.7803825,
+    "processCPUSeconds": 0.07480600000000001,
+    "randomArrival": true,
+    "seed": 20261010
+  },
+  {
+    "name": "wall_20_per_second",
+    "clock": "real wall-clock Replay; fake speech busy 2s; Stop drops pending candidates",
+    "counters": {
+      "input": 600,
+      "deduplicated": 0,
+      "merged": 257,
+      "selected": 15,
+      "expired": 1,
+      "dropped": 327,
+      "filtered": 0,
+      "delivered": 15,
+      "failed": 0,
+      "peak": 8,
+      "force": 0
+    },
+    "selectionLatency": {
+      "samples": 15,
+      "meanMs": 6775.522466666665,
+      "p50Ms": 6147.621,
+      "p95Ms": 13550.9,
+      "maxMs": 13550.9,
+      "boundary": "comment_received → scheduler_selected (Go monotonic; last 256 selected)"
+    },
+    "sampledPeakHeapBytes": 1371248,
+    "heapGrowthBytes": 828072,
+    "wallMs": 30466.49,
+    "arrivalDurationSeconds": 30.466490458,
+    "processCPUSeconds": 0.137804,
+    "randomArrival": true,
+    "seed": 20261010
+  },
+  {
+    "name": "wall_burst_100",
+    "clock": "real wall-clock Replay; fake speech busy 2s; Stop drops pending candidates",
+    "counters": {
+      "input": 100,
+      "deduplicated": 0,
+      "merged": 87,
+      "selected": 1,
+      "expired": 0,
+      "dropped": 12,
+      "filtered": 0,
+      "delivered": 1,
+      "failed": 0,
+      "peak": 6,
+      "force": 0
+    },
+    "selectionLatency": {
+      "samples": 1,
+      "meanMs": 102.025,
+      "p50Ms": 102.025,
+      "p95Ms": 102.025,
+      "maxMs": 102.025,
+      "boundary": "comment_received → scheduler_selected (Go monotonic; last 256 selected)"
+    },
+    "sampledPeakHeapBytes": 685320,
+    "heapGrowthBytes": 178000,
+    "wallMs": 251.335,
+    "arrivalDurationSeconds": 0.251335958,
+    "processCPUSeconds": 0.0010609999999999786,
+    "randomArrival": true,
+    "seed": 20261010
+  }
+]

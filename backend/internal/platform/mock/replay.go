@@ -39,6 +39,7 @@ type Adapter struct {
 	Records       []Record
 	Wait          WaitFunc
 	mu            sync.Mutex
+	delivery      sync.Mutex
 	cancel        context.CancelFunc
 	health        platform.Connection
 	running       bool
@@ -72,11 +73,15 @@ func (a *Adapter) Capabilities() platform.Capabilities {
 func (a *Adapter) Health() platform.Connection { a.mu.Lock(); defer a.mu.Unlock(); return a.health }
 func (a *Adapter) Stop() {
 	a.mu.Lock()
-	defer a.mu.Unlock()
 	a.stopRequested = true
 	if a.cancel != nil {
 		a.cancel()
 	}
+	a.mu.Unlock()
+	// Cancel first, then wait for the in-flight sink call to finish. Stop is a
+	// delivery boundary, not only a request to stop the next timer.
+	a.delivery.Lock()
+	a.delivery.Unlock()
 }
 func (a *Adapter) Start(parent context.Context, sink platform.EventSink) error {
 	a.mu.Lock()
@@ -136,7 +141,13 @@ func (a *Adapter) Start(parent context.Context, sink platform.EventSink) error {
 			return &platform.Error{Class: platform.Invalid}
 		}
 		e := platform.Event{Platform: "mock", PlatformRoomID: a.Mapping.PlatformRoomID, InternalRoomID: a.Mapping.RoomID, SessionID: a.Mapping.SessionID, SourceEventID: r.SourceEventID, EventType: platform.Comment, UserExternalID: r.User, Nickname: "模拟观众", Content: r.Content, Transport: transport, SourceTimestamp: r.SourceTimestamp}
-		if err := sink.Receive(ctx, e); err != nil {
+		a.delivery.Lock()
+		err := ctx.Err()
+		if err == nil {
+			err = sink.Receive(ctx, e)
+		}
+		a.delivery.Unlock()
+		if err != nil {
 			a.mu.Lock()
 			a.health.ErrorClass = string(platform.Classify(err))
 			a.mu.Unlock()

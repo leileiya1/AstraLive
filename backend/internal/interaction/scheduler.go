@@ -165,16 +165,42 @@ func New(c Config, m platform.Mapping, product string, d Dispatcher, g GateFunc,
 	return &Scheduler{config: c, mapping: m, product: product, now: clock, dispatch: d, gate: g, limiter: l, mode: Idle, seen: map[string]time.Time{}, repeats: map[string]time.Time{}, users: map[string]window{}, served: map[string]time.Time{}}, nil
 }
 
-var sizeRE = regexp.MustCompile(`(?i)(?:^|[^a-z0-9])(xxxl|xxl|xl|s|m|l)(?:$|[^a-z0-9])`)
+var sizeRE = regexp.MustCompile(`(?i)(?:[2-5]xl|x{1,4}l|xs|s|m|l|[0-9]{1,3}\s*(?:码|号))`)
+
+// Go regexp has no lookaround. Validate boundaries without consuming them so
+// adjacent labels (XL/XXL) are all recognized; model IDs such as AB-2XL-Pro stay
+// outside size classification. Multiple facts keep the complete question key.
+func sizesIn(text string) []string {
+	var sizes []string
+	seen := map[string]bool{}
+	for _, span := range sizeRE.FindAllStringIndex(text, -1) {
+		word := func(b byte) bool { return b >= 'a' && b <= 'z' || b >= '0' && b <= '9' || b == '-' || b == '_' }
+		if span[0] > 0 && word(text[span[0]-1]) || span[1] < len(text) && word(text[span[1]]) {
+			continue
+		}
+		size := strings.TrimSpace(strings.TrimSuffix(strings.TrimSuffix(strings.ToUpper(text[span[0]:span[1]]), "码"), "号"))
+		if !seen[size] {
+			sizes = append(sizes, size)
+			seen[size] = true
+		}
+	}
+	return sizes
+}
 
 func Topic(text string) (string, bool, bool) {
 	lower := strings.ToLower(text)
-	sizes := sizeRE.FindStringSubmatch(lower)
+	sizes := sizesIn(lower)
 	stock := contains(lower, "库存", "有货", "现货", "存货", "剩多少", "剩几", "stock")
+	price := contains(lower, "价格", "多少钱", "价钱", "售价", "price")
+	name := contains(lower, "名称", "叫什么", "什么商品")
+	details := contains(lower, "材质", "面料", "规格", "尺寸", "型号", "描述", "成分", "洗", "品牌", "适合", "推荐", "怎么", "如何", "区别", "比较", "搭配", "身高", "体重", "和", "以及", "同时", "另外")
 	question := contains(lower, "?", "？", "吗", "么", "多少", "什么", "怎么", "如何", "是否") ||
 		contains(lower, "帮我", "帮我们", "请介绍", "请推荐", "请说", "请讲", "请回答", "请解释", "请比较", "请帮")
-	if len(sizes) > 1 {
-		size := strings.ToUpper(sizes[1])
+	if len(sizes) > 1 || price && (stock || len(sizes) > 0 || name) || name && stock || details && (stock || price || len(sizes) > 0 || name) {
+		return "product:" + strings.TrimSpace(lower), true, question
+	}
+	if len(sizes) == 1 {
+		size := sizes[0]
 		if stock {
 			return "size_stock:" + size, true, true
 		}
@@ -185,10 +211,10 @@ func Topic(text string) (string, bool, bool) {
 	if stock {
 		return "overall_stock", true, true
 	}
-	if contains(lower, "价格", "多少钱", "价钱", "售价", "price") {
+	if price {
 		return "price", true, true
 	}
-	if contains(lower, "名称", "叫什么", "什么商品") {
+	if name {
 		return "name", true, true
 	}
 	if contains(lower, "材质", "规格", "尺寸", "尺码", "商品", "产品") {
@@ -242,6 +268,9 @@ func (s *Scheduler) Receive(ctx context.Context, e platform.Event) error {
 	}
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	if err := ctx.Err(); err != nil {
+		return err
+	}
 	s.counters.Input++
 	outcomes.WithLabelValues("input").Inc()
 	if s.stopped {

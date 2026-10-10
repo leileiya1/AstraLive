@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 
 
 SIZE_PATTERN = re.compile(
-    r"(?<![a-z0-9])(?P<letter>xxxl|xxl|xl|s|m|l)(?![a-z0-9])"
+    r"(?<![a-z0-9_-])(?P<letter>[2-5]xl|x{1,4}l|xs|s|m|l)(?![a-z0-9_-])"
     r"|(?<!\d)(?P<number>\d{1,3})\s*(?:码|号)(?!\d)",
     re.IGNORECASE,
 )

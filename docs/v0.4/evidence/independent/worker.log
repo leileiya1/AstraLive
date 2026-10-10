@@ -1,0 +1,28 @@
+test_cancel_during_readiness_closes_socket_without_orphan_tasks (test_config.CancellationTests.test_cancel_during_readiness_closes_socket_without_orphan_tasks) ... ok
+test_pinned_manifest_and_all_weight_sha256_before_model_import (test_config.Tests.test_pinned_manifest_and_all_weight_sha256_before_model_import) ... ok
+test_rotated_logs_redact_and_are_bounded (test_config.Tests.test_rotated_logs_redact_and_are_bounded) ... ok
+test_secret_permissions_and_registry_binding (test_config.Tests.test_secret_permissions_and_registry_binding) ... ok
+test_validated_algorithm_copies (test_config.Tests.test_validated_algorithm_copies) ... ok
+test_build_release_from_installed_code_retains_sample (test_deployment.DeploymentTests.test_build_release_from_installed_code_retains_sample) ... ok
+test_gpu_preflight_missing_assets_never_starts_worker (test_deployment.DeploymentTests.test_gpu_preflight_missing_assets_never_starts_worker) ... ok
+test_install_preserves_secrets_config_and_rejects_tamper (test_deployment.DeploymentTests.test_install_preserves_secrets_config_and_rejects_tamper) ... ok
+test_one_command_ready_restart_upgrade_and_stop (test_deployment.DeploymentTests.test_one_command_ready_restart_upgrade_and_stop) ... ok
+test_pinned_architecture_gate (test_deployment.DeploymentTests.test_pinned_architecture_gate) ... ok
+test_reboot_stale_socket_does_not_block_start_or_stop (test_deployment.DeploymentTests.test_reboot_stale_socket_does_not_block_start_or_stop) ... ok
+test_both_tracks_underflow_together_and_force_clears_queues (test_media.PairedClockTests.test_both_tracks_underflow_together_and_force_clears_queues) ... ok
+test_first_15_seconds_of_both_recordings_decode_with_contiguous_audio_pts (test_recording.PinnedRecordingTests.test_first_15_seconds_of_both_recordings_decode_with_contiguous_audio_pts) ... ok
+test_auth_epoch_session_and_payload_limits (test_service.ServiceTests.test_auth_epoch_session_and_payload_limits) ... ok
+test_business_session_crash_keeps_live_and_lightweight_audio (test_service.ServiceTests.test_business_session_crash_keeps_live_and_lightweight_audio) ... ok
+test_crash_restart_new_epoch_cache_recovery_and_future_jobs (test_service.ServiceTests.test_crash_restart_new_epoch_cache_recovery_and_future_jobs) ... ok
+test_management_auth_and_graceful_control_stop (test_service.ServiceTests.test_management_auth_and_graceful_control_stop) ... ok
+test_ready_pcm_force_cache_and_resource_snapshot (test_service.ServiceTests.test_ready_pcm_force_cache_and_resource_snapshot) ... ok
+test_withheld_video_credit_keeps_health_responsive_and_force_recovers (test_service.ServiceTests.test_withheld_video_credit_keeps_health_responsive_and_force_recovers) ... ok
+test_duplicate_supervisor_refused_without_stopping_current_worker (test_supervisor.SupervisorTests.test_duplicate_supervisor_refused_without_stopping_current_worker) ... ok
+test_retry_exhaustion_no_cloud_or_infinite_restart (test_supervisor.SupervisorTests.test_retry_exhaustion_no_cloud_or_infinite_restart) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 27.536s
+
+OK
+PINNED_RECORDING_CPU_DECODE browser-native.webm {'audio': 250, 'video': 372}
+PINNED_RECORDING_CPU_DECODE browser-canvas.webm {'audio': 251, 'video': 285}

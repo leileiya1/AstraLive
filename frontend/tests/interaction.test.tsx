@@ -10,7 +10,7 @@ test('labels Mock and does not present partial latency as synchronized playback'
  show();await screen.findByText('CONNECTED')
  expect(screen.getByText(/真实平台尚未接入/)).toBeInTheDocument()
  expect(screen.getByText(/样本不足/)).toBeInTheDocument()
- expect(screen.getByText(/浏览器\/RTMP 完整同步回复延迟尚未测量/)).toBeInTheDocument()
+ expect(screen.getByText(/此面板不展示浏览器\/RTMP 完整同步回复延迟/)).toBeInTheDocument()
  expect(screen.getByText(/<script>alert/)).toBeInTheDocument()
  expect(document.querySelector('script')).toBeNull()
 })

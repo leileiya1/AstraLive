@@ -21,6 +21,7 @@ func runWall(name string, rate, count int) result {
 	var before, mem runtime.MemStats
 	runtime.ReadMemStats(&before)
 	start := time.Now()
+	cpuStart := cpuSeconds()
 	d := &wallDispatch{}
 	cfg := interaction.DefaultConfig()
 	mapping := platform.Mapping{Platform: "mock", PlatformRoomID: "r", RoomID: "r", SessionID: "s"}
@@ -47,7 +48,7 @@ func runWall(name string, rate, count int) result {
 			}
 		}
 	}()
-	adapter := &mockplatform.Adapter{Mapping: mapping, Records: mockplatform.Scenario(rate, count)}
+	adapter := &mockplatform.Adapter{Mapping: mapping, Records: loadRecords(rate, count)}
 	_ = adapter.Start(ctx, s)
 	time.Sleep(250 * time.Millisecond)
 	cancel()
@@ -58,5 +59,5 @@ func runWall(name string, rate, count int) result {
 		peak = mem.HeapAlloc
 	}
 	v := s.Snapshot()
-	return result{name, "real wall-clock Replay; fake speech busy 2s; Stop drops pending candidates", v.Counters, v.Latency, peak, int64(mem.HeapAlloc) - int64(before.HeapAlloc), float64(time.Since(start).Microseconds()) / 1000, time.Since(start).Seconds()}
+	return result{Name: name, Clock: "real wall-clock Replay; fake speech busy 2s; Stop drops pending candidates", Counters: v.Counters, Latency: v.Latency, PeakHeapBytes: peak, HeapGrowthBytes: int64(mem.HeapAlloc) - int64(before.HeapAlloc), WallMS: float64(time.Since(start).Microseconds()) / 1000, VirtualSeconds: time.Since(start).Seconds(), CPUSeconds: cpuSeconds() - cpuStart, RandomArrival: randomArrival, Seed: arrivalSeed}
 }

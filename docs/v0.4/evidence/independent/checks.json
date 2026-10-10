@@ -1,0 +1,106 @@
+{
+  "baseline": "59d96c8818a4512651a2f945ced71278929c9e12",
+  "branch": "audit/v04-interaction-gate",
+  "realExternalProviderInNewTests": false,
+  "newTests": "CPU/Fake providers, real isolated PostgreSQL/Redis and loopback HTTP",
+  "goTest": {
+    "topLevelPassed": 58,
+    "passedIncludingSubtests": 87,
+    "failedTests": [],
+    "failedPackages": [],
+    "skippedTests": [
+      "TestConfigurationBrowserHarness"
+    ]
+  },
+  "goRace": {
+    "topLevelPassed": 58,
+    "passedIncludingSubtests": 87,
+    "failedTests": [],
+    "failedPackages": [],
+    "skippedTests": [
+      "TestConfigurationBrowserHarness"
+    ]
+  },
+  "goVet": "PASS (exit 0)",
+  "runtime": {
+    "total": 156,
+    "passed": 145,
+    "skipped": 11,
+    "failed": 0
+  },
+  "workerCPU": {
+    "total": 21,
+    "passed": 21,
+    "skipped": 0,
+    "failed": 0
+  },
+  "contracts": {
+    "total": 7,
+    "passed": 7,
+    "skipped": 0,
+    "failed": 0
+  },
+  "frontend": {
+    "files": 9,
+    "passed": 40,
+    "failed": 0,
+    "build": "PASS"
+  },
+  "loadCases": {
+    "offline": 5,
+    "randomOffline": 5,
+    "wall": 4,
+    "randomWall": 4
+  },
+  "loadAccounting": "all conservation / selected outcomes / capacity / zero FORCE checks passed",
+  "initialGoRun": "FAIL: fresh DB migrated concurrently across packages; legacy DB integration ran before tables existed. Existing SQL tests initialized the disposable schema; subsequent complete runs passed. This prerequisite is preserved in go-before.jsonl, not hidden.",
+  "unexecuted": "Fresh GPU/Chrome/RTMP; physical listening/lip-sync; real platform audience; destructive Worker recovery; multi-instance; long full-stack load; human Chinese assessment",
+  "artifactSHA256": {
+    "runtime-before.log": "a24564d9a5208b1d8ecef7d04dbfa735fedba801c37dd5c06c45dd708cf2ae1a",
+    "compound-before.log": "20065e786ca8f95334e5e53f43efe5aa9f8c3bc68ec3d6be7a4d7fab907c8e68",
+    "pronunciation-before.log": "85332308bac91db25b8364ede72f95a5a9d366ceda89f3983575ae3108beddd2",
+    "python-regression-after.log": "c48696e549b6ff2bbd15f9f97d669ec4cff743cecfa3fe724f0b978c7aecd2fe",
+    "contracts-final.log": "5bc25cc1fb34cec25798c818f5b5b7b84a4fd3586c2876708eb17c98060bc083",
+    "contracts.log": "fccbafc581a29f9e14febe2e5e4e3132bdd1787a6ecc37c3785902454ca9883d",
+    "formal-after.json": "b2141274cb417983c5d4b95302cd20b9843d16dc21af03a1a2b3aee95f0cb5b4",
+    "original-evidence-audit.json": "e5e5b68f125d484a0e8d1e2722139ae77b7e0fa52585ef588c0f7e8ee1da64ed",
+    "go-vet.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "load-random-wall.json": "0d523c366528b21988a4d67cfc2995c0fdf09b3a653569bc08c1d29edf4ea7fe",
+    "worker.log": "071debcfc6f0519b6cccdf0b065b184b437bebf97dc08f4302d409ad6c8d2377",
+    "formal-race.json": "ad2ce60d0af80d1f35ff9593f09e544f11958b396360a8c3afeb9742d0445819",
+    "gpu-preflight.json": "796245f38e7ea7a9e25688f92fee0f94eb6a1613a459f3c9275382ddb3efd142",
+    "load-random-offline.json": "eb373353128c4605deee7bf7b6b0fd0f2d55c61e13c321abf5768dad4327ef11",
+    "formal-race-final.json": "e07fa2b6eb88cdc2712207a6d6f1edec2d7904555e2674e435e465db1766a747",
+    "go-race-final.jsonl": "48f1644eb6dac377d826af59def42e8609b4d6d35c6e62d5f609354b44c41c24",
+    "latency-recomputed.json": "24d891130d8863a2f0ce0b2b19c95f8c34fd730e9efb089dea2e0c26a47a7718",
+    "cleanup.json": "6e1cace4eb4dff22ed4e0d6e8c690ab8c3c1dfe2dd2a2ba1fbc8e7c04d57304b",
+    "formal-final.json": "841516d6a915ab6f7f4966de3776a9600e7af020b781a3e17e27c01282229622",
+    "load-offline.json": "185138bb7356d6605c403edd43511e264cb1cfcb4b7e1cc73b1ef6f13abdde8f",
+    "regression-after.log": "103b9bf18d76b1738477eb9937747eaba39deb37b83263e779d42d45e24c9c2b",
+    "frontend-test.log": "e4003fba8511bf3bbf48405ec86e67c5b33088fc3d968a9e233ff975d8215777",
+    "replay-before.log": "035bfd42e13f6491c780e928f94261100fdc9222b5e35fea87629067cdde7c2a",
+    "go-race.jsonl": "307e1cdc49cdd1e2412cf00b2b66f7637912f062cb3a8f6aa326c272988227ea",
+    "regression-before.log": "7127ffc33af121395d9ea8a11d98b469b001c5580b4a7e4e255d47f173e2932d",
+    "load-wall.json": "0a556f5a7fedc746618f590f0e219eebdf1c9a018f493225f797260ef39000ad",
+    "go-before.jsonl": "92685c3f0d2ddacb7846f8c0f496e4c95a12d0b420c2fbd994eaf4194099ab8b",
+    "runtime-final.log": "605ca204bbec0939ebfad258087693f1dc86bbe72468c72440184abc0d4666c2",
+    "runtime-after.log": "36ba738b807b91f578f1dd68a130bfb2a3103e7329bf46b194b280f87a1563bf",
+    "go-after.jsonl": "4feecf4459e52aadd0580b4d84908d249f43598b915497ea31c143ee30e33827",
+    "frontend-build.log": "43d0d908ea6a3133e810fee5a0bcd80925ee3a7ad42c31b6e11d160859b2520b",
+    "go-final.jsonl": "e033bc9ba3e983fa9e9ae705bc72e7dc2325fcbb8181aa286e1393775a3c89f6",
+    "ownership-before.log": "d9e17ac0c5f0f2b89452abc56bbfd4913aa7628a39347b8d837c2947e42533f3",
+    "python-regression-before.log": "9d793b2fb8632cdff90f741b834de2641f6e85e4343b7b69b4e8d10577b66ccd"
+  },
+  "finalReview": {
+    "frozenContractGeneratedValidatedMediaDiff": "EMPTY",
+    "gitDiffCheck": "PASS",
+    "frontendAfterScopeWordingFix": "40 PASS / 9 files; build PASS",
+    "syntaxNote": "Build has two third-party Zod pure-annotation warnings; Rollup removes comments, build exit0"
+  },
+  "consoleLogFormatting": {
+    "frontend-test.log": {
+      "originalSHA256": "ce0d1a26a668e38da6daab2683dcf11495ed47a7a1609def5b697f3d73703f6d",
+      "normalization": "Removed extra final blank line only; console test results unchanged"
+    }
+  }
+}
