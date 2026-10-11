@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "v0.5-integration-1",
+  "branch": "exp/v0.5-integration-chaos",
+  "frozenRevision": "v0.5-frozen-1",
+  "frozenSHA256": "969d2e82d41f20084196d68a77bb3d1a6158a596a9ca63d47de9f6c1a78e8360",
+  "mainSHA": "cf6540bdcc788c037929836480812dfaa78362a2",
+  "merges": [
+    {
+      "order": 1,
+      "agent": "A",
+      "branch": "exp/v0.5-pg-durability",
+      "sourceSHA": "a28a4098a9014d9f7577d541048b2e110f1fc325",
+      "implementationSHA": "a2f0be19f1d2fc4c71c8bcefee771b7685b8d6e3",
+      "mergeSHA": "89179c7da25a81dfa91e24bb7a06a8086813e3c9",
+      "postmergeGate": "docs/v0.5/evidence/integration-f/merge-a-1/result.json",
+      "postmergeStatus": "PASS",
+      "conflictFiles": []
+    }
+  ],
+  "pending": [
+    "B",
+    "C",
+    "D"
+  ],
+  "completeIntegration": false,
+  "realInferenceAcceptance": "NOT TESTED"
+}

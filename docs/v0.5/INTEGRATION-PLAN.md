@@ -2,9 +2,11 @@
 
 Original v0.4 baseline `cf6540bdcc788c037929836480812dfaa78362a2`; Phase 2 shared baseline `5a24478126211cbcde5a9565d0c6063748426527`; branch `exp/v0.5-integration-chaos`; worktree `../AstraLive-agent-f`; contract revision `v0.5-frozen-1`.
 
-**Current gate: Phase 2 premerge review held pending a final C implementation pin/public-route gate, A's Worker wire-ID domain fix and D's rebased production wiring. A has delivered the persistence/journal/spool seams and B the install-order fix; C now has active implementation drafts. No implementation branches merged. F independent results and precise remaining gates are in [CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md), [CHAOS-TEST-REPORT](CHAOS-TEST-REPORT.md) and [FINAL-ACCEPTANCE](FINAL-ACCEPTANCE.md). No new real GPU run or independently reviewed real Chrome/RTMP acceptance by F.** [Frozen contract](ARCHITECTURE-CONTRACTS.md) governs interfaces, shared edits, flags and rollback. [Dispatch packet](AGENT-HANDOFF.md) lists owner-specific actions. Unexecuted tests remain NOT TESTED; legacy report PASS applies only to its stated scope.
+**Current gate: sequential integration underway. A final tip a28a409 is normally merged at89179c7, with complete postmerge software/owned-PG/Frontend gate PASS. B follows, then C, then D. A Worker wire-ID fix is independently verified; C final implementation/combined acceptance and D production wiring remain pending.** [Actual merge ledger](evidence/integration-f/merge-ledger.json), [CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md), [CHAOS-TEST-REPORT](CHAOS-TEST-REPORT.md) and [FINAL-ACCEPTANCE](FINAL-ACCEPTANCE.md) distinguish current gates from retained first-review failures. No F real GPU acceptance. [Frozen contract](ARCHITECTURE-CONTRACTS.md) governs interfaces, shared edits, flags and rollback. Unexecuted tests remain NOT TESTED.
 
 ## 1. Delivery sequence and merge ledger
+
+Actual current merges and postmerge proof are in [merge-ledger.json](evidence/integration-f/merge-ledger.json). The following table retains the **initial review pins**, not current implementation or merge state.
 
 | Order | Owner / delivery | Entry gate | PR / implementation SHA / F merge SHA | Current state |
 | --- | --- | --- | --- | --- |
@@ -75,11 +77,13 @@ Rollback follows contract §9; A owns durable sealing/receipt preservation and m
 
 ## 6. Shared edit / CCR ledger
 
-Actual shared implementation edits: NONE at Phase1 or the current blocked Phase2 review. F adds docs/harness/evidence only; frozen contract is unchanged. Reserved ownership is contract §8. Append each actual change here before accepting its PR:
+F's manual edits remain docs/harness/evidence only; A-owned implementation/shared entry edits are now incorporated through the normal A merge. Frozen contract is unchanged. Reserved ownership is contract §8; source/merge SHA and shared reviews are recorded below and in the actual ledger.
 
 | CCR | File / reason | Owner | Dependency SHA | Peer ACK | Implementing SHA | Final merge SHA |
 | --- | --- | --- | --- | --- | --- | --- |
 | none | documentation-only freeze; no shared implementation edits | F | baseline cf6540b | A/B/C/D/E PENDING | freeze commit in handoff | NOT MERGED |
+| A integration | A durability startup/dispatch/idempotency/Runtime hooks in reserved shared files | A; F reviewed/merged | baseline5a24478 | F pinned independent/postmerge gate PASS; C consumes owned seams, D follows | a28a409 |89179c7 |
+| CCR-B-001 | B V2 flag primary plus frozen-name alias; inconsistent values reject startup | B; F acknowledges explicit user decision | B task user confirmation2026-10-11T00:43:32.780Z | user answer “可以就照你说的做” to the exact flag rule; F verified original B task message | dda7936 | pending B merge |
 
 ### Pending A/B/C seam review
 
@@ -93,4 +97,4 @@ Actual shared implementation edits: NONE at Phase1 or the current blocked Phase2
 
 This is a proposed-request ledger, not an amendment of `v0.5-frozen-1` or an implementation merge. Task connector delivery is unavailable; peer ACK remains pending.
 
-A subsequently delivered ee5500b; F independently passed its full Go/race/owned-PG fault/Runtime/contract checks, and C consumed that seam and corrected its flag. B Runtime85bec11/latest evidence dda7936 has the installation-order fix. Latest owner progress and FORCE/bound-output admission review are in CONTINUITY-SEAM-REVIEW; the original table above remains the pinned first-review ledger, not updated delivery or merge acceptance. C's final commit/cross-service gate and D's rebased wiring remain pending; F has made no implementation merge yet.
+A subsequently delivered ee5500b/edd4e1e and then the Worker fix/final evidence tip a28a409. F independently validated the final pin, merged A at89179c7 and passed the complete postmerge gate. B Runtime85bec11/latest evidence dda7936 has the installation-order fix. Latest C owner progress, FORCE and whole-Session product retirement review are in CONTINUITY-SEAM-REVIEW; C final candidate/combined acceptance and D production wiring remain pending.
