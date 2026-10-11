@@ -127,12 +127,16 @@ def analyse_recording(path, ffprobe):
                 p=pixels[4,bit*8+4]
                 if int(p[0])>int(p[1]):marker |=1<<bit
             if marker and marker not in video_onsets:video_onsets[marker]=float(frame.pts*frame.time_base)
-    matched=[{"marker":i+1,"audio_s":at,"video_s":video_onsets[i+1],
-              "drift_ms":(video_onsets[i+1]-at)*1000}
-             for i,at in enumerate(audio_onsets) if i+1 in video_onsets]
+    ordered=sorted(video_onsets.items(),key=lambda item:item[1])
+    paired=len(audio_onsets)==len(ordered)
+    matched=[{"marker":marker,"audio_s":audio_at,"video_s":video_at,
+              "drift_ms":(video_at-audio_at)*1000}
+             for audio_at,(marker,video_at) in zip(audio_onsets,ordered)] if paired else []
     return {"streams":data["streams"],"ptsRegressions":regressions,"duplicatePTS":duplicates,
             "packetPTS":pts,"audioOnsets":audio_onsets,"videoOnsets":video_onsets,"matched":matched,
             "absoluteOnsetDriftMs":percentile([abs(x["drift_ms"]) for x in matched]),
+            "pairingRule":"chronological equal-count onsets within one encoder; pulses carry no unique audio ID",
+            "unpaired":not paired,
             "scope":"decoded synthetic pulse onset, not lip-sync or platform audience"}
 
 

@@ -45,7 +45,12 @@ class BoundConsumptionMediaOutput(ConsumptionMediaOutput):
             chunk = TimedAudioChunk(chunk.generation_id, chunk.sequence, chunk.pcm, chunk.sample_rate,
                 chunk.channels, identity, position.sampleIndex + int(count), position.sampleIndex + int(next_count), position.sampleRate)
             self.timeline_bindings[chunk.generation_id] = (identity, position, origin, next_count)
-        await super().push_audio(chunk)
+        if self.timeline_v2:
+            # Per-range sink observers own V2 consumption evidence. Waiting for
+            # a stalled preview channel here couples the RTMP producer to it.
+            await self.output.push_audio(chunk)
+        else:
+            await super().push_audio(chunk)
 
     def set_interaction_trace(self, trace, generation):
         self.interaction_trace = (trace, generation)
@@ -101,7 +106,7 @@ class BoundConsumptionMediaOutput(ConsumptionMediaOutput):
         await self.output.push_video(frame)
         self._trace_frame(packet, frame, "media_first_video")
         # Join means admission to a sink, never acknowledgement of consumption.
-        if packet:
+        if packet and not self.timeline_v2:
             for c in getattr(self.output, "channels", []):
                 if c.name in {"webrtc", "rtmp"}:
                     await asyncio.wait_for(c.video.join(), 2)
