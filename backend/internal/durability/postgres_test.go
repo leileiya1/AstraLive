@@ -389,7 +389,7 @@ func TestMigrationConcurrentAndReplay(t *testing.T) {
 	wg.Wait()
 	var n int
 	_ = p.QueryRow(ctx, `SELECT count(*) FROM schema_migrations`).Scan(&n)
-	if n != 6 {
+	if n != 7 {
 		t.Fatal(n)
 	}
 }

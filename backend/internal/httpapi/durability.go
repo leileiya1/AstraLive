@@ -113,6 +113,14 @@ func JournalRouter(s *durability.Store, tokenFile string) http.Handler {
 		e := s.Observe(r.Context(), x)
 		reply(w, map[string]bool{"stored": e == nil}, e)
 	})
+	r.Post("/timeline-record", func(w http.ResponseWriter, r *http.Request) {
+		var x durability.TimelineRecord
+		if !read(w, r, &x) {
+			return
+		}
+		result, e := s.RecordTimeline(r.Context(), x)
+		reply(w, result, e)
+	})
 	r.Post("/events", func(w http.ResponseWriter, r *http.Request) {
 		raw, e := io.ReadAll(http.MaxBytesReader(w, r.Body, 1<<20))
 		if e != nil {

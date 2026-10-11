@@ -15,6 +15,8 @@ const LeaseTTL = 10 * time.Second
 type Store struct {
 	DB    *pgxpool.Pool
 	Owner string
+	// Set once during composition, before dispatcher/coordinator goroutines start.
+	TimelineProjection func(context.Context, pgx.Tx, Command, json.RawMessage) error
 }
 type Run struct {
 	TimelineEpoch int64  `json:"timelineEpoch"`
@@ -26,7 +28,7 @@ type Run struct {
 	BarrierSeq    int64  `json:"barrierSeq"`
 }
 
-func New(db *pgxpool.Pool) *Store { return &Store{db, ids.New("owner")} }
+func New(db *pgxpool.Pool) *Store { return &Store{DB: db, Owner: ids.New("owner")} }
 
 // LockAuthority serializes every admission, Stop and recovery on the same SQL row.
 // Trusted scope is derived from BOTH Session and Room ownership and captured binding.
@@ -62,6 +64,9 @@ func (s *Store) InitialRun(ctx context.Context, tx pgx.Tx, sid string) (Run, err
 		return r, e
 	}
 	_, e = tx.Exec(ctx, `INSERT INTO v05_recovery_leases(session_id,tenant_id,user_id,owner_id,lease_token,run_epoch,expires_at) VALUES($1,$2,$3,$4,1,1,clock_timestamp()+interval '10 seconds')`, sid, t, u, s.Owner)
+	if e == nil {
+		_, e = tx.Exec(ctx, `INSERT INTO v05_timeline_epochs(session_id,run_epoch,timeline_epoch,tenant_id,user_id,status,reservation_token,expected_previous_epoch,origin_sample,reason,activated_at) VALUES($1,1,1,$2,$3,'ACTIVE',$4,0,0,'INITIAL_RUN',clock_timestamp())`, sid, t, u, ids.New("epoch"))
+	}
 	return r, e
 }
 func (s *Store) Current(ctx context.Context, tx pgx.Tx, sid string, owned bool) (Run, error) {
@@ -88,6 +93,9 @@ func (s *Store) current(ctx context.Context, tx pgx.Tx, sid string, owned, clean
 
 // Enqueue must be called within the caller's business transaction. An idempotency replay returns the stored envelope.
 func (s *Store) Enqueue(ctx context.Context, tx pgx.Tx, r Run, kind, key, trace, uid string, payload any) (Command, error) {
+	return s.enqueue(ctx, tx, r, kind, key, trace, uid, payload, nil)
+}
+func (s *Store) enqueue(ctx context.Context, tx pgx.Tx, r Run, kind, key, trace, uid string, payload any, metadata *MediaMetadata) (Command, error) {
 	p, e := json.Marshal(payload)
 	if e != nil {
 		return Command{}, e
@@ -112,6 +120,26 @@ func (s *Store) Enqueue(ctx context.Context, tx pgx.Tx, r Run, kind, key, trace,
 		}
 		if utterance.Source == "SYSTEM" {
 			c.Lane = "SYSTEM"
+		}
+	}
+	if metadata == nil && (kind == "SPEAK" || kind == "FORCE_INTERRUPT" || kind == "STOP_SESSION") {
+		var narration string
+		er := tx.QueryRow(ctx, `SELECT narration_id FROM v05_narrations WHERE session_id=$1 AND run_epoch=$2 AND state NOT IN ('STOPPED','FAILED')`, r.SessionID, r.Epoch).Scan(&narration)
+		if er != nil && er != pgx.ErrNoRows {
+			return c, er
+		}
+		if er == nil {
+			if kind == "SPEAK" {
+				return c, ErrConflict
+			} // C must coordinate an active narration admission.
+			c.NarrationID = nullableID(narration)
+		}
+	}
+	if metadata != nil {
+		c.NarrationID, c.SegmentID = nullableID(metadata.NarrationID), nullableID(metadata.SegmentID)
+		c.TimelineEpoch, c.Lane = metadata.TimelineEpoch, metadata.Lane
+		if e = s.checkMediaMetadata(ctx, tx, r, c); e != nil {
+			return c, e
 		}
 	}
 	raw, _ := json.Marshal(c)
@@ -153,6 +181,9 @@ func (s *Store) Seal(ctx context.Context, tx pgx.Tx, r Run) error {
 	}
 	_, e = tx.Exec(ctx, `UPDATE v05_outbox SET delivery_state=CASE WHEN delivery_state='CLAIMED' THEN 'UNKNOWN' ELSE 'CANCELLED' END,last_error_code='RUN_SEALED',updated_at=clock_timestamp()
  WHERE session_id=$1 AND run_epoch=$2 AND command_type<>'STOP_SESSION' AND delivery_state IN ('PENDING','CLAIMED')`, r.SessionID, r.Epoch)
+	if e == nil {
+		e = s.FenceTimeline(ctx, tx, r, "SESSION_STOP", true)
+	}
 	return e
 }
 func (s *Store) Renew(ctx context.Context) error {
@@ -348,6 +379,9 @@ func (s *Store) Barrier(ctx context.Context, tx pgx.Tx, c Command) error {
 	}
 	_, e = tx.Exec(ctx, `UPDATE v05_outbox SET delivery_state=CASE WHEN delivery_state='CLAIMED' AND EXISTS(SELECT 1 FROM v05_inbox i WHERE i.command_id=v05_outbox.command_id AND i.execution_state IN ('STARTED','UNKNOWN')) THEN 'UNKNOWN' ELSE 'CANCELLED' END,last_error_code='CONTROL_BARRIER'
  WHERE session_id=$1 AND run_epoch=$2 AND command_seq<$3 AND command_type<>'STOP_SESSION' AND delivery_state IN ('PENDING','CLAIMED')`, c.SessionID, c.RunEpoch, c.CommandSeq)
+	if e == nil && c.CommandType == "FORCE_INTERRUPT" {
+		e = s.FenceTimeline(ctx, tx, Run{SessionID: c.SessionID, Epoch: c.RunEpoch}, "OPERATOR_FORCE", false)
+	}
 	return e
 }
 

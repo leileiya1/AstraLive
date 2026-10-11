@@ -130,9 +130,78 @@ class DurableTests(unittest.IsolatedAsyncioTestCase):
                 await publisher.publish(event)
             await publisher.close()
 
+    async def test_watch_fences_continuity_before_cancelling_media(self):
+        from unittest.mock import patch
+        for reason in ("CONTROL_BARRIER", "LEASE_LOST"):
+            with self.subTest(reason=reason):
+                observations = []
+                class Continuity:
+                    def fence(self, value):
+                        observations.append(value)
+                class Task:
+                    def cancel(self):
+                        observations.append("cancel")
+                class Session:
+                    continuity = Continuity()
+                    current_task = Task()
+                    generation_id = 1
+                    request = type("Request", (), {"traceId": "trace"})()
+                class Manager:
+                    sessions = {"s": Session()}
+                    async def stop_session(self, sid, trace):
+                        observations.append("cleanup")
+                class LeaseJournal(Journal):
+                    async def grant(self, sid, epoch):
+                        if reason == "LEASE_LOST":
+                            raise JournalError("LEASE_LOST", 409)
+                        return {"barrierSeq": 2}, time.monotonic() + 10
+                commands = DurableCommands(LeaseJournal(), None, Manager())
+                commands.runs["s"] = {"epoch": 1, "deadline": time.monotonic() + 10, "sealed": False, "barrier": 0}
+                async def finish_iteration(_):
+                    raise asyncio.CancelledError()
+                with patch("app.durability_client.asyncio.sleep", finish_iteration):
+                    with self.assertRaises(asyncio.CancelledError):
+                        await commands.watch()
+                await commands.close()
+                self.assertEqual(observations[:2], [reason, "cancel"])
+                self.assertEqual(Manager.sessions["s"].generation_id, 2)
+
     def test_shared_fingerprint_vectors(self):
         root = Path(__file__).resolve().parents[2]
         for v in json.loads((root / "backend/internal/durability/testdata/fingerprint-v05.json").read_text()):
             self.assertEqual(fingerprint(v["command"]), v["fingerprint"])
         with self.assertRaises(ValueError):
             canonical({"float": 1.0})
+
+
+class TimelineAdapterTests(unittest.IsolatedAsyncioTestCase):
+    async def test_dataclass_position_and_durable_ack(self):
+        from dataclasses import dataclass
+        from app.durability_client import PostgresTimelineJournal
+        @dataclass
+        class Position:
+            sessionId: str = "s"
+            runEpoch: int = 1
+            timelineEpoch: int = 1
+            sampleIndex: int = 640
+            sampleRate: int = 16000
+            @property
+            def ptsUs(self):
+                return self.sampleIndex * 1000000 // self.sampleRate
+        class Client:
+            incarnation = "runtime_test"
+            durable = True
+            async def request(self, method, suffix, body):
+                self.body = body
+                self.assertion = (method, suffix)
+                return {"durable": self.durable, "receiptSeq": 4}
+        client = Client()
+        journal = PostgresTimelineJournal(client)
+        result = await journal.record("SEGMENT_COMPLETED", command(), {"finalPosition": Position()})
+        self.assertTrue(result["durable"])
+        self.assertEqual(client.assertion, ("POST", "/timeline-record"))
+        self.assertEqual(client.body["proof"]["finalPosition"]["ptsUs"], 40000)
+        self.assertEqual(client.body["producerIncarnation"], client.incarnation)
+        client.durable = False
+        with self.assertRaises(JournalError):
+            await journal.record("SEGMENT_COMPLETED", command(), {"finalPosition": Position()})

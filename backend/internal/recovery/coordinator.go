@@ -114,6 +114,9 @@ func (c *Coordinator) takeover(ctx context.Context, sid string) error {
 	if e != nil {
 		return e
 	}
+	if e = c.Store.FenceTimeline(ctx, tx, durability.Run{SessionID: sid, Epoch: epoch}, "RUN_RETIRED_UNKNOWN", status == "STOPPING"); e != nil {
+		return e
+	}
 	// STOP is sticky, including expiry while its ACK is missing: cleanup stays STOPPING.
 	if status == "STOPPING" {
 		_, e = tx.Exec(ctx, `UPDATE v05_recovery_leases SET owner_id=$2,lease_token=lease_token+1,expires_at=clock_timestamp()+interval '10 seconds' WHERE session_id=$1`, sid, c.Store.Owner)

@@ -1,6 +1,6 @@
 # v0.5 PostgreSQL Durability & Recovery — Agent A
 
-交付范围：普通 Session / Utterance / Interaction 的持久派发、执行去重、事件接收与保守恢复。默认关闭；可选择完全不连接 Redis 的 PostgreSQL-only 模式。本文的完成证明不包含观众听到声音、Timeline 的所有 sink 播放确认或 Narration 连续恢复。
+交付范围：普通 Session / Utterance / Interaction 的持久派发、执行去重、事件接收与保守恢复，以及增量提供给 C/B 的 Continuity 事务接口。默认关闭；可选择完全不连接 Redis 的 PostgreSQL-only 模式。本文的完成证明不包含观众听到声音、Timeline 的所有 sink 播放确认或 Narration 连续恢复。
 
 ## 基线与共享文件
 
@@ -38,7 +38,7 @@
 | FAILED | 证明未发出的派发耗尽时 outbox FAILED；旧任务失败保留，receipt 不伪造所有 sink 的终结证明 |
 | UNKNOWN | 发送/进程/物理副作用证据不充分；不转换成可自动重播的失败 |
 
-`Observe` 的 completed 仅允许控制命令，表示该控制操作已执行。SPEAK 不允许用这个接口声称 SegmentCompleted。B/C 的提交范围、sink ACK、Narration 续播 ledger 尚未在本分支实现或验收。
+`Observe` 的 completed 仅允许控制命令，表示该控制操作已执行。SPEAK 不允许用这个接口声称 SegmentCompleted。增量 000007 已提供 Timeline ledger、严格 sink proof 校验和 C 同事务 callback；详见 [A-owned 接线契约](../../backend/internal/durability/CONTINUITY-SEAM.md)。B/C 的完整接线与 Narration 连续恢复仍未在本分支验收。
 
 ## 事务、派发与去重
 

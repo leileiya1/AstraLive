@@ -45,7 +45,7 @@ func (s *Store) Accept(ctx context.Context, raw json.RawMessage) (Acceptance, er
 	if e != nil {
 		return Acceptance{}, e
 	}
-	if r.Epoch != c.RunEpoch || c.CommandSeq < r.BarrierSeq || c.TimelineEpoch != 0 && c.TimelineEpoch != r.TimelineEpoch {
+	if r.Epoch != c.RunEpoch || c.CommandSeq < r.BarrierSeq {
 		return Acceptance{}, ErrFence
 	}
 	if r.Status != "ACTIVE" && !(r.Status == "STOPPING" && c.CommandType == "STOP_SESSION") && !(r.Status == "RECOVERY_REQUIRED" && c.CommandType == "BEGIN_RUN") {
@@ -61,6 +61,16 @@ func (s *Store) Accept(ctx context.Context, raw json.RawMessage) (Acceptance, er
 	b, _ := Hash(raw)
 	if a != b {
 		return Acceptance{}, ErrConflict
+	}
+	var priorState string
+	priorErr := tx.QueryRow(ctx, `SELECT execution_state FROM v05_inbox WHERE command_id=$1`, c.CommandID).Scan(&priorState)
+	if priorErr != nil && priorErr != pgx.ErrNoRows {
+		return Acceptance{}, priorErr
+	}
+	if priorErr == pgx.ErrNoRows || priorState == "ACCEPTED" {
+		if e = s.checkCommandEpoch(ctx, tx, r, c); e != nil {
+			return Acceptance{}, e
+		}
 	}
 	if delivery == "CANCELLED" || delivery == "FAILED" {
 		return Acceptance{}, ErrSealed
@@ -98,7 +108,8 @@ func (s *Store) StartAttempt(ctx context.Context, sid, id, incarnation string, t
 	defer tx.Rollback(ctx)
 	var kind, trace string
 	var sequence, epoch int64
-	e = tx.QueryRow(ctx, `SELECT command_type,command_seq,run_epoch,trace_id FROM v05_outbox WHERE command_id=$1 AND session_id=$2`, id, sid).Scan(&kind, &sequence, &epoch, &trace)
+	var envelope []byte
+	e = tx.QueryRow(ctx, `SELECT command_type,command_seq,run_epoch,trace_id,payload_envelope FROM v05_outbox WHERE command_id=$1 AND session_id=$2`, id, sid).Scan(&kind, &sequence, &epoch, &trace, &envelope)
 	if e != nil {
 		return Acceptance{}, e
 	}
@@ -108,6 +119,13 @@ func (s *Store) StartAttempt(ctx context.Context, sid, id, incarnation string, t
 	}
 	if token != r.Token || epoch != r.Epoch {
 		return Acceptance{}, ErrFence
+	}
+	var command Command
+	if e = json.Unmarshal(envelope, &command); e != nil {
+		return Acceptance{}, e
+	}
+	if e = s.checkCommandEpoch(ctx, tx, r, command); e != nil {
+		return Acceptance{}, e
 	}
 	if sequence < r.BarrierSeq {
 		return Acceptance{}, ErrSealed
@@ -328,7 +346,7 @@ func (s *Store) StartMedia(ctx context.Context, sid, id, producer string, floor 
 		return r, 0, ErrSealed
 	}
 	var allowed bool
-	e = tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM v05_inbox WHERE command_id=$1 AND session_id=$2 AND run_epoch=$3 AND command_type='SPEAK' AND execution_state='STARTED' AND generation_id IS NULL AND executor_incarnation=$4 AND execution_lease_token=$5 AND command_seq>=$6)`, id, sid, r.Epoch, producer, r.Token, r.BarrierSeq).Scan(&allowed)
+	e = tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM v05_inbox i JOIN v05_outbox o USING(command_id) WHERE i.command_id=$1 AND i.session_id=$2 AND i.run_epoch=$3 AND i.command_type IN ('SPEAK','COMMIT_SEGMENT') AND i.execution_state='STARTED' AND i.generation_id IS NULL AND i.executor_incarnation=$4 AND i.execution_lease_token=$5 AND i.command_seq>=$6 AND (o.payload_envelope->>'timelineEpoch')::bigint=$7 AND NOT EXISTS(SELECT 1 FROM v05_timeline_epochs te WHERE te.session_id=i.session_id AND te.run_epoch=i.run_epoch AND te.status='PREPARED'))`, id, sid, r.Epoch, producer, r.Token, r.BarrierSeq, r.TimelineEpoch).Scan(&allowed)
 	if e != nil {
 		return r, 0, e
 	}
@@ -343,6 +361,20 @@ func (s *Store) StartMedia(ctx context.Context, sid, id, producer string, floor 
 	_, e = tx.Exec(ctx, `UPDATE v05_inbox SET generation_id=$2,timeline_epoch=$3,last_receipt_seq=last_receipt_seq+1 WHERE command_id=$1`, id, generation, r.TimelineEpoch)
 	if e != nil {
 		return r, 0, e
+	}
+	var kind string
+	e = tx.QueryRow(ctx, `SELECT command_type FROM v05_outbox WHERE command_id=$1`, id).Scan(&kind)
+	if e != nil {
+		return r, 0, e
+	}
+	if kind != "SPEAK" {
+		tag, er := tx.Exec(ctx, `UPDATE v05_segment_attempts SET generation_id=$2,status='STARTED',updated_at=clock_timestamp() WHERE command_id=$1 AND status='PLANNED' AND generation_id IS NULL`, id, generation)
+		if er != nil {
+			return r, 0, er
+		}
+		if tag.RowsAffected() != 1 {
+			return r, 0, ErrFence
+		}
 	}
 	_, e = tx.Exec(ctx, `INSERT INTO v05_receipts(session_id,run_epoch,command_id,receipt_seq,tenant_id,user_id,attempt_id,state,producer_incarnation,evidence_type,evidence_ref,range_sinks,observation_hash)
  SELECT session_id,run_epoch,command_id,last_receipt_seq,tenant_id,user_id,execution_attempt_id,'generating',executor_incarnation,'execution_started',execution_attempt_id,jsonb_build_object('generationId',generation_id,'timelineEpoch',timeline_epoch),request_fingerprint FROM v05_inbox WHERE command_id=$1`, id)
