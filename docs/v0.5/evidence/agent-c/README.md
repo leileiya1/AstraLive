@@ -1,6 +1,12 @@
 # Agent C delivery evidence
 
-**CONDITIONAL implementation, v0.5-frozen-1.** This is a committed Go/PostgreSQL
+**CONDITIONAL implementation, v0.5-frozen-1.** Initial candidate06b182f was
+subsequently found to contain a reproduced lock cycle. The
+[locking follow-up](locking-review/README.md) supersedes its shared Go source/gates
+and adds a fresh native short run with captured launch hashes. Initial source
+hashes in this directory's manifest remain historical06b182f hashes.
+
+This is a committed Go/PostgreSQL
 orchestrator and Python segmented execution candidate, not contract-only ACK,
 main merge, default-enable or complete product acceptance. See
 [implementation and rollback](../../NARRATION-CONTINUITY.md) and

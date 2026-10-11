@@ -312,26 +312,35 @@ func (c *Controller) enqueueSegment(ctx context.Context, tx pgx.Tx, r durability
 	p["maxDurationMs"] = 8000
 	return c.enqueue(ctx, tx, r, d, "COMMIT_SEGMENT", s.ID+":commit", trace, s.ID, s.Lane, p)
 }
+
+// Gate is advisory: an MVCC read must not lock execution authority while a
+// Scheduler consults it. Select rechecks the full authority under SQL locks.
 func (c *Controller) Gate(ctx context.Context, sid string) (bool, bool, error) {
-	tx, e := c.Store.DB.Begin(ctx)
+	var raw []byte
+	var epoch int64
+	var active bool
+	e := c.Store.DB.QueryRow(ctx, `SELECT l.run_epoch,
+ r.status='ACTIVE' AND se.status='LIVE' AND l.expires_at>clock_timestamp(),d.document_json
+ FROM live_sessions se
+ JOIN resource_owners o ON o.kind='session' AND o.resource_id=se.id
+ JOIN resource_owners ro ON ro.kind='room' AND ro.resource_id=se.room_id AND ro.tenant_id=o.tenant_id AND ro.user_id=o.user_id
+ JOIN session_provider_bindings b ON b.session_id=se.id AND b.tenant_id=o.tenant_id AND b.user_id=o.user_id AND b.released_at IS NULL AND b.expires_at>clock_timestamp()
+ JOIN v05_recovery_leases l ON l.session_id=se.id
+ JOIN v05_session_runs r ON r.session_id=l.session_id AND r.run_epoch=l.run_epoch
+ LEFT JOIN LATERAL (SELECT document_json FROM v05_narrations WHERE session_id=se.id AND state NOT IN ('STOPPED','FAILED') ORDER BY updated_at DESC LIMIT 1) d ON true
+ WHERE se.id=$1`, sid).Scan(&epoch, &active, &raw)
 	if e != nil {
 		return true, false, e
 	}
-	defer tx.Rollback(ctx)
-	r, e := c.Store.Current(ctx, tx, sid, false)
-	if e != nil {
-		return true, false, e
-	}
-	d, e := c.load(ctx, tx, sid)
-	if e == pgx.ErrNoRows {
-		// This deployment captures Timeline-bound runs even before a plan starts.
+	if len(raw) == 0 {
 		return true, false, nil
 	}
-	if e != nil {
-		return false, false, e
+	var d Document
+	if e = json.Unmarshal(raw, &d); e != nil {
+		return true, false, e
 	}
 	n := d.Next()
-	return true, r.Epoch == d.RunEpoch && r.Status == "ACTIVE" && d.State == Narrating && n != nil && n.Status == "EXECUTING" && !d.OperatorOverride && !d.StopBarrier && d.Plan.Policy == AtBoundary, nil
+	return true, active && epoch == d.RunEpoch && d.State == Narrating && n != nil && n.Status == "EXECUTING" && !d.OperatorOverride && !d.StopBarrier && d.Plan.Policy == AtBoundary, nil
 }
 func (c *Controller) Select(ctx context.Context, sid string, v interaction.Selection, ttl time.Duration) (string, error) {
 	ctx, cancel := context.WithDeadline(ctx, v.Event.ReceivedAt.Add(ttl))

@@ -134,7 +134,9 @@ func TestPostgresStartAtomicFingerprintProductStop(t *testing.T) {
 	if e != nil || snap.State != narration.Stopping || !snap.StopBarrier || snap.Cursor.NextOrdinal != 0 {
 		t.Fatal("stale price admitted", e, snap.State)
 	}
-	_ = p.QueryRow(ctx, `SELECT count(*) FROM v05_outbox WHERE command_type='STOP_SESSION' AND delivery_state='PENDING' AND payload_envelope->'segmentId'='null'::jsonb AND lane='OPERATOR'`).Scan(&n)
+	if e = p.QueryRow(ctx, `SELECT count(*) FROM v05_outbox WHERE command_type='STOP_SESSION' AND delivery_state='PENDING' AND payload_envelope->'segmentId'='null'::jsonb AND payload_envelope->>'lane'='OPERATOR'`).Scan(&n); e != nil {
+		t.Fatal(e)
+	}
 	if n != 1 {
 		t.Fatal("product change has no durable media stop", n)
 	}
@@ -310,9 +312,10 @@ func TestPostgresFailedForceIdempotencyRollbackAndStop(t *testing.T) {
 			if e != nil {
 				t.Fatal(e)
 			}
-			service := app.New(p, runtime.New("http://127.0.0.1:1"), slog.New(slog.NewTextHandler(io.Discard, nil)))
-			service.Durable = store
-			service.AttachNarration(c)
+			service, scheduler := activeInteraction(t, p, store, c)
+			if e = scheduler.Receive(ctx, pendingComment()); e != nil {
+				t.Fatal(e)
+			}
 			service.Integration = cfg
 			h := (&httpapi.Server{S: service, Config: cfg, Env: "development", Log: service.Log}).Router()
 			call := func(text string) (int, []byte) {
@@ -353,6 +356,7 @@ func TestPostgresFailedForceIdempotencyRollbackAndStop(t *testing.T) {
 				if code, _ = call("改变正文"); code != 409 {
 					t.Fatal("same key changed body", code)
 				}
+				waitInteraction(t, func() bool { return scheduler.Snapshot().Mode == interaction.OperatorOverride })
 				_, e = p.Exec(ctx, `UPDATE v05_recovery_leases SET expires_at=clock_timestamp()-interval '1 second'`)
 				if e != nil {
 					t.Fatal(e)
@@ -374,6 +378,11 @@ func TestPostgresFailedForceIdempotencyRollbackAndStop(t *testing.T) {
 				t.Fatal("non-atomic/duplicate request", force, utterances, want)
 			}
 			if scenario == "rollback" {
+				time.Sleep(50 * time.Millisecond)
+				snap := scheduler.Snapshot()
+				if snap.Stopped || snap.Mode != interaction.ProductExplaining || snap.Candidates != 1 {
+					t.Fatal("public response rollback changed interaction", snap)
+				}
 				d, e := c.Snapshot(ctx, "s")
 				if e != nil || d.State != narration.Planning || d.OperatorOverride {
 					t.Fatal("rollback changed business state", d.State, e)
@@ -669,5 +678,252 @@ func runPython(t *testing.T, phase string) {
 		if e = os.WriteFile(filepath.Join(directory, "sql-proof.json"), sqlProof, 0600); e != nil {
 			t.Fatal(e)
 		}
+	}
+}
+
+func activeInteraction(t *testing.T, p *pgxpool.Pool, store *durability.Store, c *narration.Controller) (*app.Service, *interaction.Scheduler) {
+	t.Helper()
+	root, cancel := context.WithCancel(context.Background())
+	t.Cleanup(cancel)
+	svc := app.New(p, runtime.New("http://127.0.0.1:1"), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	svc.Durable = store
+	svc.AttachNarration(c)
+	cfg := &userconfig.Service{DB: p, IntegrationEnabled: true}
+	settings := interaction.DefaultConfig()
+	settings.PollInterval = 10 * time.Millisecond
+	settings.TTL = time.Minute
+	svc.Interaction = app.NewInteraction(root, svc, cfg, settings)
+	scheduler, e := svc.Interaction.Ensure(root, userconfig.Scope{TenantID: "tenant", UserID: "user"}, "s")
+	if e != nil {
+		t.Fatal(e)
+	}
+	if e = scheduler.SetMode(interaction.ProductExplaining); e != nil {
+		t.Fatal(e)
+	}
+	return svc, scheduler
+}
+func waitInteraction(t *testing.T, predicate func() bool) {
+	t.Helper()
+	deadline := time.Now().Add(2 * time.Second)
+	for time.Now().Before(deadline) {
+		if predicate() {
+			return
+		}
+		time.Sleep(10 * time.Millisecond)
+	}
+	t.Fatal("committed control was not projected to interaction")
+}
+func pendingComment() platform.Event {
+	return platform.Event{Platform: "mock", PlatformRoomID: "room", InternalRoomID: "room", SessionID: "s", EventType: platform.Comment, SourceEventID: "pending", UserExternalID: "viewer", Content: "多少钱？", Transport: "MOCK_REPLAY"}
+}
+func TestPostgresAdvisoryGateNeverWaitsForSessionLock(t *testing.T) {
+	ctx, p, store, c := setup(t)
+	if _, e := c.Start(ctx, "s", "trace", plan()); e != nil {
+		t.Fatal(e)
+	}
+	svc, scheduler := activeInteraction(t, p, store, c)
+	wantActive, wantAllowed, e := c.Gate(ctx, "s")
+	if e != nil {
+		t.Fatal(e)
+	}
+	tx, e := p.Begin(ctx)
+	if e != nil {
+		t.Fatal(e)
+	}
+	defer tx.Rollback(ctx)
+	if _, e = store.Current(ctx, tx, "s", true); e != nil {
+		t.Fatal(e)
+	}
+	bounded, cancel := context.WithTimeout(ctx, 300*time.Millisecond)
+	defer cancel()
+	active, allowed, e := c.Gate(bounded, "s")
+	if e != nil || active != wantActive || allowed != wantAllowed {
+		t.Fatal("Gate locked admission authority", active, allowed, e)
+	}
+	tick := make(chan error, 1)
+	go func() { tick <- scheduler.Tick(bounded) }()
+	select {
+	case e = <-tick:
+		if e != nil {
+			t.Fatal(e)
+		}
+	case <-bounded.Done():
+		t.Fatal("production Gate held SQL authority lock")
+	}
+	if svc.Interaction.Snapshot("s").Stopped {
+		t.Fatal("advisory read cancelled Session")
+	}
+}
+func TestPostgresBorrowedControlRollbackPreservesActiveScheduler(t *testing.T) {
+	for _, kind := range []string{"STOP_SESSION", "FORCE_INTERRUPT"} {
+		t.Run(kind, func(t *testing.T) {
+			ctx, p, store, c := setup(t)
+			input := plan()
+			input.Policy = narration.Never
+			if _, e := c.Start(ctx, "s", "trace", input); e != nil {
+				t.Fatal(e)
+			}
+			svc, scheduler := activeInteraction(t, p, store, c)
+			if e := scheduler.Receive(ctx, pendingComment()); e != nil {
+				t.Fatal(e)
+			}
+			control := func(ctx context.Context) error {
+				if kind == "STOP_SESSION" {
+					_, e := svc.Stop(ctx, "s", "stop")
+					return e
+				}
+				_, e := svc.Interrupt(ctx, "s", "force", "OPERATOR_FORCE")
+				return e
+			}
+			tx, e := p.Begin(ctx)
+			if e != nil {
+				t.Fatal(e)
+			}
+			bounded, cancel := context.WithTimeout(ctx, time.Second)
+			e = control(durability.WithBusinessTx(bounded, tx))
+			cancel()
+			if e != nil {
+				tx.Rollback(ctx)
+				t.Fatal("borrowed control blocked on interaction", e)
+			}
+			snap := scheduler.Snapshot()
+			if snap.Stopped || snap.Mode != interaction.ProductExplaining || snap.Candidates != 1 {
+				tx.Rollback(ctx)
+				t.Fatal("uncommitted control changed memory", snap)
+			}
+			if e = tx.Rollback(ctx); e != nil {
+				t.Fatal(e)
+			}
+			time.Sleep(50 * time.Millisecond)
+			snap = scheduler.Snapshot()
+			if snap.Stopped || snap.Mode != interaction.ProductExplaining || snap.Candidates != 1 {
+				t.Fatal("rollback cancelled interaction", snap)
+			}
+			var state string
+			var controls int
+			if e = p.QueryRow(ctx, `SELECT status FROM live_sessions WHERE id='s'`).Scan(&state); e != nil {
+				t.Fatal(e)
+			}
+			if e = p.QueryRow(ctx, `SELECT count(*) FROM v05_outbox WHERE command_type IN ('STOP_SESSION','FORCE_INTERRUPT')`).Scan(&controls); e != nil {
+				t.Fatal(e)
+			}
+			if state != "LIVE" || controls != 0 {
+				t.Fatal("control did not roll back", state, controls)
+			}
+			tx, e = p.Begin(ctx)
+			if e != nil {
+				t.Fatal(e)
+			}
+			if e = control(durability.WithBusinessTx(ctx, tx)); e != nil {
+				tx.Rollback(ctx)
+				t.Fatal(e)
+			}
+			if snap = scheduler.Snapshot(); snap.Stopped || snap.Mode != interaction.ProductExplaining {
+				tx.Rollback(ctx)
+				t.Fatal("second borrowed control leaked", snap)
+			}
+			if e = tx.Commit(ctx); e != nil {
+				t.Fatal(e)
+			}
+			waitInteraction(t, func() bool {
+				v := scheduler.Snapshot()
+				if kind == "STOP_SESSION" {
+					return v.Stopped
+				}
+				return v.Mode == interaction.OperatorOverride
+			})
+			if kind == "FORCE_INTERRUPT" {
+				if e = scheduler.SetMode(interaction.ProductExplaining); e != nil {
+					t.Fatal(e)
+				}
+				time.Sleep(50 * time.Millisecond)
+				if scheduler.Snapshot().Mode != interaction.ProductExplaining {
+					t.Fatal("historical FORCE reapplied after permitted mode change")
+				}
+			}
+		})
+	}
+}
+func TestPostgresActiveSchedulerProductRetirementAndConcurrentStop(t *testing.T) {
+	for _, change := range []string{"price", "product"} {
+		t.Run(change, func(t *testing.T) {
+			ctx, p, store, c := setup(t)
+			if _, e := c.Start(ctx, "s", "trace", plan()); e != nil {
+				t.Fatal(e)
+			}
+			svc, scheduler := activeInteraction(t, p, store, c)
+			if change == "price" {
+				if _, e := p.Exec(ctx, `UPDATE products SET price=102 WHERE id='p'`); e != nil {
+					t.Fatal(e)
+				}
+			} else {
+				if _, e := p.Exec(ctx, `INSERT INTO products(id,name,description,price,currency,stock) VALUES('b','B','商品B。',199,'CNY',1); INSERT INTO resource_owners VALUES('product','b','tenant','user'); UPDATE live_rooms SET active_product_id='b' WHERE id='room'`); e != nil {
+					t.Fatal(e)
+				}
+			}
+			original := c.RetireCapturedSession
+			entered, release := make(chan struct{}), make(chan struct{})
+			c.RetireCapturedSession = func(ctx context.Context, tx pgx.Tx, r durability.Run) error {
+				close(entered)
+				select {
+				case <-release:
+					return original(ctx, tx, r)
+				case <-ctx.Done():
+					return ctx.Err()
+				}
+			}
+			bounded, cancel := context.WithTimeout(ctx, 2*time.Second)
+			defer cancel()
+			driven := make(chan error, 1)
+			go func() { driven <- c.Drive(bounded, "s") }()
+			select {
+			case <-entered:
+			case <-bounded.Done():
+				t.Fatal("retirement hook not reached")
+			}
+			if e := scheduler.Receive(ctx, pendingComment()); e != nil {
+				t.Fatal(e)
+			}
+			snapshots := make(chan interaction.Snapshot, 1)
+			go func() { snapshots <- scheduler.Snapshot() }()
+			select {
+			case <-snapshots:
+			case <-time.After(300 * time.Millisecond):
+				close(release)
+				t.Fatal("active Scheduler mutex blocked by authority read")
+			}
+			otherRoom := make(chan struct{})
+			go func() { svc.Interaction.Snapshot("other-room"); close(otherRoom) }()
+			select {
+			case <-otherRoom:
+			case <-time.After(300 * time.Millisecond):
+				close(release)
+				t.Fatal("another room blocked")
+			}
+			stopped := make(chan error, 1)
+			go func() { _, e := svc.Stop(bounded, "s", "operator-stop"); stopped <- e }()
+			close(release)
+			if e := <-driven; e != nil {
+				t.Fatal("retirement rolled back", e)
+			}
+			if e := <-stopped; e != nil {
+				t.Fatal("concurrent Stop failed", e)
+			}
+			waitInteraction(t, func() bool { return scheduler.Snapshot().Stopped })
+			var sessionState string
+			var controls, answers int
+			if e := p.QueryRow(ctx, `SELECT status FROM live_sessions WHERE id='s'`).Scan(&sessionState); e != nil {
+				t.Fatal(e)
+			}
+			if e := p.QueryRow(ctx, `SELECT count(*) FROM v05_outbox WHERE command_type='STOP_SESSION' AND payload_envelope->'segmentId'='null'::jsonb AND payload_envelope->>'lane'='OPERATOR'`).Scan(&controls); e != nil {
+				t.Fatal(e)
+			}
+			if e := p.QueryRow(ctx, `SELECT count(*) FROM v05_outbox WHERE command_type IN ('START_AUDIENCE_ANSWER','PREPARE_RESUME_BRIDGE')`).Scan(&answers); e != nil {
+				t.Fatal(e)
+			}
+			if sessionState != "STOPPING" || controls != 1 || answers != 0 {
+				t.Fatal("unsafe concurrent retirement", sessionState, controls, answers)
+			}
+		})
 	}
 }

@@ -170,6 +170,18 @@ func (s *Service) durableControl(ctx context.Context, id, trace, kind, reason st
 		return "", e
 	}
 	if kind == "STOP_SESSION" {
+		if se.Status == "STOPPING" {
+			// Product retirement and a concurrent operator Stop share the same
+			// lifecycle intent. Reuse its immutable envelope/reason.
+			var commandID string
+			er := tx.QueryRow(ctx, `SELECT command_id FROM v05_outbox WHERE session_id=$1 AND run_epoch=$2 AND command_type='STOP_SESSION' AND idempotency_key='stop'`, id, r.Epoch).Scan(&commandID)
+			if er == nil {
+				return commandID, tx.Commit(ctx)
+			}
+			if er != pgx.ErrNoRows {
+				return "", er
+			}
+		}
 		if se.Status != "LIVE" && se.Status != "DEGRADED" && se.Status != "STOPPING" {
 			return "", ErrConflict
 		}
@@ -203,13 +215,9 @@ func (s *Service) durableControl(ctx context.Context, id, trace, kind, reason st
 	if e = tx.Commit(ctx); e != nil {
 		return "", e
 	}
-	if s.Interaction != nil {
-		if kind == "STOP_SESSION" {
-			s.Interaction.Stop(id)
-		} else {
-			s.Interaction.Override(id)
-		}
-	}
+	// A borrowed Commit is deliberately a no-op, not proof of the outer commit.
+	// The Interaction worker projects committed SQL control state; do not
+	// acquire Scheduler/controller locks or cancel memory while holding SQL.
 	return c.CommandID, nil
 }
 func (s *Service) durableStart(ctx context.Context, id, trace string) (string, error) {

@@ -399,7 +399,20 @@ func (s *Scheduler) Tick(ctx context.Context) error {
 	if s.stopped || s.inFlight || s.mode == OperatorOverride || now.Sub(s.lastSelected) < s.config.Interval {
 		return nil
 	}
+	// Gate may read SQL or wait on external work. Never hold the Scheduler
+	// mutex across it: Stop/Snapshot and other rooms must remain responsive.
+	s.mu.Unlock()
 	gate, err := s.gate(ctx)
+	s.mu.Lock()
+	now = s.now()
+	s.prune(now)
+	// Another Tick, Stop, mode change or expiry may have won during the read.
+	if ctx.Err() != nil {
+		return ctx.Err()
+	}
+	if s.stopped || s.inFlight || s.mode == OperatorOverride || now.Sub(s.lastSelected) < s.config.Interval {
+		return nil
+	}
 	if err != nil {
 		s.lastError = "GATE_UNAVAILABLE"
 		return err

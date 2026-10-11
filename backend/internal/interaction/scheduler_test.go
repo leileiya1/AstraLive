@@ -321,3 +321,35 @@ func TestObservationUsesLocalClockAndDispatchAcknowledgement(t *testing.T) {
 		t.Fatalf("invalid local observation: %+v", v.Observation)
 	}
 }
+
+func TestBlockedGateDoesNotBlockStopAndRechecksAfterRead(t *testing.T) {
+	entered, release := make(chan struct{}), make(chan struct{})
+	d := &fakeDispatch{}
+	s, err := New(DefaultConfig(), platform.Mapping{Platform: "mock", PlatformRoomID: "external", RoomID: "room", SessionID: "session"}, "p", d, func(context.Context) (Gate, error) {
+		close(entered)
+		<-release
+		return Gate{Running: true, ProductID: "p"}, nil
+	}, nil, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	receive(t, s, event("blocked", "viewer", "多少钱？"))
+	tick := make(chan error, 1)
+	go func() { tick <- s.Tick(context.Background()) }()
+	<-entered
+	stopped := make(chan struct{})
+	go func() { s.Stop(); close(stopped) }()
+	select {
+	case <-stopped:
+	case <-time.After(time.Second):
+		close(release)
+		t.Fatal("Gate held Scheduler mutex")
+	}
+	close(release)
+	if err = <-tick; err != nil {
+		t.Fatal(err)
+	}
+	if len(d.items) != 0 || !s.Snapshot().Stopped {
+		t.Fatal("stale Gate admitted after Stop")
+	}
+}

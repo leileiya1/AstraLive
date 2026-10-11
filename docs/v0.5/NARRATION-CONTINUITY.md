@@ -63,6 +63,26 @@ The persisted lifecycle command has `segmentId:null`, lane OPERATOR, and the
 existing Session/run STOPPING disposition. Binding/output release still awaits
 normal Runtime cleanup proof. A new product requires a new captured Session;
 no hot product replacement. Without that composed retirement hook Start fails503.
+The initial implementation commit06b182f contained a reproduced SQL/Scheduler
+lock cycle in this retirement hook. The follow-up removes synchronous memory
+Stop/Override from `durableControl`: borrowed Commit is a no-op, and only the
+actual outer commit grants authority to cancel the local queue. The existing
+Interaction worker reads committed control disposition before its idle shortcut,
+outside both mutexes, and projects Stop/Force. It tracks runEpoch/commandSeq so
+an old FORCE is not reapplied after a permitted local mode change. The business
+operator-override barrier remains authoritative for narration; this introduces
+no automatic continuation permission. Durable-mode polling is bounded and legacy
+non-durable mode retains its receipt-driven behavior.
+
+Scheduler evaluates advisory Gate outside its mutex, then rechecks Stop, mode,
+in-flight admission, selection interval and TTL. C Gate is a nonlocking MVCC
+snapshot; Select still validates actual owner/binding/lease/product/revision and
+Stop under the shared SQL authority locks. Product retirement and a concurrent
+operator Stop reuse the first immutable STOP_SESSION envelope rather than
+conflicting on its original reason. See the [locking review evidence](evidence/agent-c/locking-review/README.md)
+for the original failure, populated production-worker rollback/concurrency tests,
+new native short recording and final regression.
+
 Custom authored fact IDs remain the author's responsibility; numeric labels alone
 are not an independently verified product database.
 

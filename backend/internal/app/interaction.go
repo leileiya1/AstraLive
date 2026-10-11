@@ -105,6 +105,7 @@ func (c *InteractionController) Ensure(ctx context.Context, scope userconfig.Sco
 	workerCtx, cancel := context.WithCancel(c.root)
 	c.entries[sid] = &interactionEntry{scheduler: scheduler, cancel: cancel, scope: scope, roomID: se.RoomID, touched: time.Now()}
 	go func() {
+		var applied committedControl
 		tick := time.NewTicker(c.settings.PollInterval)
 		defer tick.Stop()
 		for {
@@ -115,8 +116,19 @@ func (c *InteractionController) Ensure(ctx context.Context, scope userconfig.Sco
 			case <-tick.C:
 			case <-scheduler.Updates():
 			}
-			// No idle SQL polling. Stop explicitly cancels this worker; a new
-			// candidate still checks live/product/busy before admission.
+			if c.service.Durable != nil {
+				bounded, done := context.WithTimeout(workerCtx, 2*time.Second)
+				stopped, err := c.reconcileCommittedControl(bounded, sid, scheduler, &applied)
+				done()
+				if stopped {
+					return
+				}
+				if err != nil {
+					continue
+				} // Do not admit while the projection is unavailable.
+			}
+			// Durable Stop/Force is projected even while idle, after actual outer
+			// commit. Legacy mode retains receipt-driven, idle-free SQL polling.
 			snap := scheduler.Snapshot()
 			if snap.Candidates == 0 && snap.Mode != interaction.CommentInteraction {
 				continue
@@ -131,6 +143,36 @@ func (c *InteractionController) Ensure(ctx context.Context, scope userconfig.Sco
 	}()
 	return scheduler, nil
 }
+
+// Read only committed state, without SQL row or controller/Scheduler locks.
+// A borrowed business Commit cannot cancel an interaction before its owner
+// commits. Existing worker polling eventually projects Stop/Force even idle.
+type committedControl struct{ epoch, seq int64 }
+
+func (c *InteractionController) reconcileCommittedControl(ctx context.Context, sid string, scheduler *interaction.Scheduler, applied *committedControl) (bool, error) {
+	var sessionStatus, runStatus, control string
+	var epoch, seq int64
+	e := c.service.DB.QueryRow(ctx, `SELECT se.status,r.status,COALESCE(o.command_type,''),r.run_epoch,r.control_barrier_seq
+ FROM live_sessions se JOIN v05_recovery_leases l ON l.session_id=se.id
+ JOIN v05_session_runs r ON r.session_id=l.session_id AND r.run_epoch=l.run_epoch
+ LEFT JOIN v05_outbox o ON o.session_id=r.session_id AND o.run_epoch=r.run_epoch AND o.command_seq=r.control_barrier_seq
+ WHERE se.id=$1`, sid).Scan(&sessionStatus, &runStatus, &control, &epoch, &seq)
+	if e != nil {
+		return false, e
+	}
+	if sessionStatus != "LIVE" && sessionStatus != "DEGRADED" || runStatus != "ACTIVE" || control == "STOP_SESSION" {
+		c.Stop(sid)
+		return true, nil
+	}
+	if control == "FORCE_INTERRUPT" && (applied.epoch != epoch || seq > applied.seq) {
+		if e = scheduler.SetMode(interaction.OperatorOverride); e != nil {
+			return false, e
+		}
+	}
+	*applied = committedControl{epoch, seq}
+	return false, nil
+}
+
 func (c *InteractionController) gate(ctx context.Context, sid, roomID string) (interaction.Gate, error) {
 	se, err := c.service.Q.GetSession(ctx, sid)
 	if err != nil {
