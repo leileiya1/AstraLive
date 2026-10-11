@@ -1,5 +1,7 @@
 """V2 local determinism/fault tests. Journal/Worker doubles are not real A/GPU."""
 import asyncio
+import gc
+import weakref
 from dataclasses import replace
 import os
 import unittest
@@ -8,7 +10,7 @@ from types import SimpleNamespace
 
 from app.media_timeline import (MediaTimeline, TimelinePosition, MediaIdentity, Lane,
     BufferPolicy, AudioMasterClock, AdaptiveBuffer, RationalResampler, samples_to_pts,
-    enabled, split_audio, TimedAudioChunk, TimedVideoFrame, SpeculativeMediaBuffer)
+    enabled, split_audio, TimedAudioChunk, TimedVideoFrame, SpeculativeMediaBuffer, FrameDispositions)
 from app.providers import AudioChunk, VideoFrame, MediaDeliveryError
 from app.webrtc_media import _TimelineAudioTrack, _TimelineVideoTrack, WebRTCMediaOutput, _Peer
 from app.rtmp_media import FFmpegRTMPMediaOutput
@@ -44,6 +46,26 @@ def descriptor(count=640):
 
 
 class MappingTests(unittest.TestCase):
+    def test_disposition_requires_same_live_frame_and_does_not_retain_rgb(self):
+        observations = FrameDispositions(limit=3)
+        old = VideoFrame(1, 0, 1, 1, b"123")
+        new = VideoFrame(1, 40000, 1, 1, b"456")
+        observations.record(old, "consumed")
+        # Deterministically inject the state a reused CPython address left behind.
+        observations.entries[id(new)] = observations.entries[id(old)]
+        self.assertIsNone(observations.get(new))
+        old_ref = weakref.ref(old)
+        del old
+        gc.collect()
+        self.assertIsNone(old_ref())
+        self.assertIsNone(observations.get(new))
+        frames = [VideoFrame(1, i * 40000, 1, 1, b"789") for i in range(8)]
+        for frame in frames:
+            observations.record(frame, "dropped")
+        self.assertEqual(len(observations.entries), 3)
+        self.assertIsNone(observations.get(frames[0]))
+        self.assertEqual(observations.get(frames[-1]), "dropped")
+
     def test_audio_video_clock_rates_and_long_fractional_positions(self):
         self.assertEqual(samples_to_pts(640, 16000, 48000), 1920)
         self.assertEqual(samples_to_pts(640, 16000, 90000), 3600)
@@ -230,12 +252,12 @@ class TrackTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(video.queue.qsize(), 1)
             clock.advance(960 * 4, 1600)
             await video.recv()
-            self.assertEqual(video.dispositions[id(early)], "consumed")
+            self.assertEqual(video.dispositions.get(early), "consumed")
             late = VideoFrame(1, 0, 8, 8, bytes(192))
             await video.push(late)
             clock.advance(960 * 12, 5440)
             await video.recv()
-            self.assertEqual(video.dispositions[id(late)], "dropped")
+            self.assertEqual(video.dispositions.get(late), "dropped")
             self.assertEqual(video.consumed, 1)
             self.assertEqual(clock.video_late_drops, 1)
         finally:
@@ -286,7 +308,7 @@ class TrackTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(audio.consumed, 0)
             await video.recv()
             self.assertEqual(video.consumed, 0)
-            self.assertEqual(video.dispositions[id(stale)], "fenced")
+            self.assertEqual(video.dispositions.get(stale), "fenced")
         finally: audio.stop(); video.stop()
 
     async def test_single_sink_block_does_not_stall_other_and_packet_duration_bound(self):

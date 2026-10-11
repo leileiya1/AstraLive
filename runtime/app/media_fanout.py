@@ -7,7 +7,7 @@ from typing import Awaitable, Callable
 
 from .drop_rate import DropRateMonitor
 from .providers import AudioChunk, MediaDeliveryError, MediaOutput, VideoFrame
-from .media_timeline import enabled as timeline_enabled, split_audio
+from .media_timeline import enabled as timeline_enabled, split_audio, FrameDispositions
 
 
 log = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ class _SinkChannel:
     audio_dropped: int = 0
     video_dropped: int = 0
     rates: dict = field(default_factory=lambda: {"audio": DropRateMonitor(), "video": DropRateMonitor()})
-    video_retired: dict = field(default_factory=dict)
+    video_retired: FrameDispositions = field(default_factory=FrameDispositions)
 
 
 class FanoutMediaOutput:
@@ -71,7 +71,7 @@ class FanoutMediaOutput:
         return self.timeline.eligible(getattr(item, "identity", None), item.sourceSample, item.sourceSample)
 
     def video_disposition(self, frame):
-        states = [c.video_retired.get(id(frame)) or getattr(c.output, "video_disposition", lambda f: None)(frame)
+        states = [c.video_retired.get(frame) or getattr(c.output, "video_disposition", lambda f: None)(frame)
                   for c in self.channels if c.running]
         if "consumed" in states:
             return "consumed"
@@ -79,9 +79,7 @@ class FanoutMediaOutput:
 
     def _retire_video(self, channel, frame):
         if self.timeline_v2:
-            channel.video_retired[id(frame)] = "dropped"
-            while len(channel.video_retired) > 128:
-                channel.video_retired.pop(next(iter(channel.video_retired)))
+            channel.video_retired.record(frame, "dropped")
 
     def configure_session(self, config) -> None:
         for channel in self.channels:

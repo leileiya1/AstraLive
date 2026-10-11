@@ -11,7 +11,7 @@ from typing import Awaitable, Callable
 
 from .config import RTMPSettings
 from .providers import AudioChunk, VideoFrame
-from .media_timeline import enabled as timeline_enabled, AudioMasterClock
+from .media_timeline import enabled as timeline_enabled, AudioMasterClock, FrameDispositions
 
 
 log = logging.getLogger(__name__)
@@ -81,7 +81,7 @@ class FFmpegRTMPMediaOutput:
             self._audio_pending = self._timeline_audio.pending
             self.video_queue = asyncio.Queue(math.ceil(self.settings.fps * self.timeline_clock.policy.interruptible_ms / 1000))
             self._video_tick = 0
-            self._video_dispositions = {}
+            self._video_dispositions = FrameDispositions()
             self.video_resolved = 0
             self.audio_retired = 0
 
@@ -110,12 +110,10 @@ class FFmpegRTMPMediaOutput:
                 "cancelledInFlight": self.cancelled_in_flight}
 
     def video_disposition(self, frame):
-        return self._video_dispositions.get(id(frame)) if self.timeline_v2 else None
+        return self._video_dispositions.get(frame) if self.timeline_v2 else None
 
     def _dispose_video(self, frame, state):
-        self._video_dispositions[id(frame)] = state
-        while len(self._video_dispositions) > 128:
-            self._video_dispositions.pop(next(iter(self._video_dispositions)))
+        self._video_dispositions.record(frame, state)
         self.video_resolved += 1
 
     def configure_session(self, config) -> None:
