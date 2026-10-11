@@ -277,6 +277,26 @@ class TrackTests(unittest.IsolatedAsyncioTestCase):
             self.assertLess(audio.padding_samples, 960)
         finally: audio.stop()
 
+    async def test_retained_image_hold_has_new_pts_but_no_new_semantic_progress(self):
+        timeline = MediaTimeline("session", 1, journal=TestJournal())
+        identity = (await timeline.CommitSegment(command(), "attempt", 1, descriptor(), timeline.position(0), 0))["identity"]
+        clock = AudioMasterClock(); clock.timeline = timeline
+        video = _TimelineVideoTrack(clock)
+        video.sink_id = "preview"
+        try:
+            await video.push(TimedVideoFrame(1,0,8,8,bytes([40,120,200])*64,identity,0))
+            clock.advance(1920,640)
+            first = await video.recv()
+            video.clear(2)
+            self.assertIsNone(video.latest)
+            clock.advance(1920)
+            held = await video.recv()
+            self.assertGreater(held.pts, first.pts)
+            self.assertTrue((held.to_ndarray(format="rgb24")[0,0] == [40,120,200]).all())
+            self.assertEqual(video.consumed,0)
+            self.assertEqual(clock.source_sample,640)
+        finally: video.stop()
+
     async def test_queue_bounds_stalled_consumer_and_force_wakes_waiter(self):
         audio = _TimelineAudioTrack(AudioMasterClock(policy=BufferPolicy(committed_ms=20, interruptible_ms=40)))
         try:
@@ -399,6 +419,27 @@ class TrackTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(sink.audio_consumed,0)
         self.assertEqual(sink.cancelled_in_flight,1)
 
+    async def test_rtmp_fence_holds_consumed_image_not_unconfirmed_write(self):
+        timeline = MediaTimeline("session", 1, journal=TestJournal())
+        identity = (await timeline.CommitSegment(command(), "attempt", 1, descriptor(), timeline.position(0), 0))["identity"]
+        with patch.dict(os.environ, {"ASTRALIVE_MEDIA_TIMELINE_V2_ENABLED": "true"}):
+            sink = FFmpegRTMPMediaOutput(RTMPSettings(enabled=True, publish_url="rtmp://localhost/live/fixture", width=8, height=8))
+        sink.bind_timeline(timeline);sink.running=True;sink._video_fd=123
+        held=bytes([20,40,80])*64
+        sink._held_video=held
+        await sink.push_video(TimedVideoFrame(1,0,8,8,bytes([200,100,20])*64,identity,0))
+        sink.timeline_clock.advance(1920,640)
+        started,release=asyncio.Event(),asyncio.Event()
+        async def write(fd,payload):started.set();await release.wait();sink.running=False
+        sink._write_fd=write
+        task=asyncio.create_task(sink._timeline_video_clock())
+        await started.wait()
+        await timeline.BeginEpoch(command("BEGIN_EPOCH",epoch=2,key="begin"),1,2,timeline.position(640),"answer")
+        self.assertEqual(sink._latest_video,held)
+        release.set();await asyncio.wait_for(task,.5)
+        self.assertEqual(sink._held_video,held)
+        self.assertEqual(sink.video_consumed,0)
+
     async def test_all_sink_dropped_worker_frame_never_commits_published_pose_credit(self):
         from unittest.mock import AsyncMock
         credits=[];logs=[]
@@ -421,6 +462,22 @@ class TrackTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(sink.video_consumed,0)
         avatar.running=False
         await asyncio.gather(*tuple(output.acks))
+
+    async def test_bound_ledger_does_not_authorize_native_idle_after_segment(self):
+        from unittest.mock import AsyncMock
+        sink = SimpleNamespace(timeline=object(), video_delivery_position=lambda: (1, 0), drain=AsyncMock())
+        avatar = SimpleNamespace(speaking=False, generation_id=1, _stop_idle=AsyncMock())
+        with patch.dict(os.environ, {"ASTRALIVE_MEDIA_TIMELINE_V2_ENABLED": "true"}):
+            output = BoundConsumptionMediaOutput(sink, avatar)
+        self.assertFalse(output.has_peer())
+        avatar.speaking = True
+        self.assertTrue(output.has_peer())
+        await output.drain(1)
+        avatar._stop_idle.assert_awaited_once()
+        sink.drain.assert_awaited_once_with(1)
+        sink.timeline = None
+        avatar.speaking = False
+        self.assertTrue(output.has_peer())
 
     async def test_bound_v2_does_not_wait_stalled_preview_admission(self):
         from unittest.mock import AsyncMock

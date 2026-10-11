@@ -5,6 +5,7 @@ Worker connection and Chrome peer; fallback is a failing acceptance result.
 """
 import argparse, asyncio, hashlib, json, os, pathlib, shutil, subprocess, time, wave
 from types import SimpleNamespace
+from dataclasses import asdict, is_dataclass
 from unittest.mock import patch
 import av, numpy as np, psutil, uvicorn
 from aiortc import RTCPeerConnection, RTCConfiguration
@@ -14,7 +15,7 @@ from playwright.async_api import async_playwright
 from runtime.app.models import SessionConfig
 from runtime.app.config import RTMPSettings
 from runtime.app.providers import AudioChunk
-from runtime.app.media_timeline import TimedAudioChunk
+from runtime.app.media_timeline import TimedAudioChunk, TimedVideoFrame, MediaTimeline
 from runtime.app.webrtc_media import WebRTCMediaOutput
 from runtime.app.rtmp_media import FFmpegRTMPMediaOutput
 from runtime.app.media_fanout import FanoutMediaOutput
@@ -39,6 +40,14 @@ def audit(path):
             row["last"]=at;row["packets"]+=1
     decode=subprocess.run([shutil.which('ffmpeg'),'-v','error','-xerror','-i',str(path),'-f','null','-'],capture_output=True,timeout=180)
     return {"streams":result,"strictDecodeExit":decode.returncode,"decodeErrors":decode.stderr.decode()[-2000:]}
+
+
+def journal_json(value):
+    if is_dataclass(value):return journal_json(asdict(value))
+    if isinstance(value, dict):
+        return {json.dumps(list(k)) if isinstance(k,tuple) else str(k):journal_json(v) for k,v in value.items()}
+    if isinstance(value,(list,tuple)):return [journal_json(v) for v in value]
+    return value
 
 
 async def run(args):
@@ -68,6 +77,15 @@ async def run(args):
         '-i',settings.target,'-c','copy','-y',str(out/'rtmp.flv'),stdout=asyncio.subprocess.DEVNULL,stderr=asyncio.subprocess.PIPE)
     web=WebRTCMediaOutput();rtmp=FFmpegRTMPMediaOutput(settings)
     fanout=FanoutMediaOutput([('webrtc',web),('rtmp',rtmp)]);media=BoundConsumptionMediaOutput(fanout,avatar)
+    timeline=None;completed_segments=0;boundary_events=0
+    if args.ledger:
+        class TestJournal:
+            async def record(self, operation, command, proof):
+                with (out/'test-journal.jsonl').open('a') as f:
+                    f.write(json.dumps(journal_json({'operation':operation,'command':command,'proof':proof,'testDouble':True}))+'\n')
+                return {'durable':True,'testDouble':True}
+        timeline=MediaTimeline('session_v05_b_soak',1,journal=TestJournal())
+        media.bind_timeline(timeline)
     # Explicit audio ranges survive sink-local drops; no semantic journal claim.
     source_cursor=0
     original=media.push_audio
@@ -117,7 +135,20 @@ async def run(args):
             try:
                 while time.monotonic()-start<args.duration:
                     cycle=len(cycles);cycle_start=time.monotonic();marker_before=avatar.marker
-                    force=cycle%4==2
+                    force=not args.ledger and cycle%4==2
+                    if timeline:
+                        def command(kind, suffix, epoch=None):
+                            return {'commandId':f'fixture-{cycle}-{suffix}','commandType':kind,
+                                    'sessionId':timeline.session_id,'runEpoch':1,'timelineEpoch':epoch or timeline.epoch,
+                                    'segmentId':f'segment-{cycle}','lane':'NARRATION' if timeline.epoch%2 else 'AUDIENCE_ANSWER'}
+                        start_position=timeline.CurrentCommittedPTS(timeline.session_id,1)['committedExclusiveEnd']
+                        receipt=await timeline.CommitSegment(command('COMMIT_SEGMENT','commit'),f'attempt-{cycle}',generation,
+                            {'sampleCount':len(pcm)//2,'utteranceId':f'utterance-{cycle}',
+                             'contentHash':'sha256:'+hashlib.sha256(pcm).hexdigest(),'finalMarker':True,
+                             'requiredSinks':[p.peer_id for p in web.peers]+[f'rtmp:{rtmp.connection_incarnation}'],
+                             'videoTiming':{'fps':25}},start_position,timeline.revision)
+                        media.bind_attempt(receipt['identity'],start_position)
+                        await timeline.SuspendAtBoundary(command('SUSPEND_AT_BOUNDARY','suspend'),f'segment-{cycle}',timeline.revision)
                     async def source():
                         for seq,offset in enumerate(range(0,len(pcm),640)):
                             yield AudioChunk(generation,seq,pcm[offset:offset+640],16000,1)
@@ -135,6 +166,22 @@ async def run(args):
                     else:
                         await asyncio.wait_for(task,len(pcm)/32000+30)
                         await media.drain(generation)
+                    if timeline:
+                        final_position=timeline.position(start_position.sampleIndex+len(pcm)//2)
+                        proof=await timeline.SegmentCompleted(receipt['identity'],final_position,
+                            {'fixtureOnly':True,'snapshot':timeline.CurrentCommittedPTS(timeline.session_id,1)})
+                        completed_segments+=1;boundary_events+=proof['event']=='BOUNDARY_SUSPENDED'
+                        await timeline.InvalidateAfter(command('INVALIDATE_AFTER','invalidate'),final_position,'fixture natural boundary',timeline.revision)
+                        await timeline.BeginEpoch(command('BEGIN_EPOCH','begin',timeline.epoch+1),timeline.epoch,timeline.epoch+1,
+                                                  final_position,'fixture natural answer/resume')
+                        generation+=1;await avatar.interrupt(generation);await media.interrupt(generation)
+                        pixels=np.frombuffer(avatar.last_frame['rgb'],dtype=np.uint8).reshape(512,512,3).copy()
+                        pixels[:8,:96]=[220,40,40]  # Unique old-epoch marker4095, not a Worker packet.
+                        stale=TimedVideoFrame(generation,0,512,512,pixels.tobytes(),receipt['identity'],start_position.sampleIndex,16000)
+                        await fanout.push_video(stale)
+                        emit('epoch-injections.jsonl',{'oldTimelineEpoch':receipt['identity'].timelineEpoch,
+                            'newTimelineEpoch':timeline.epoch,'envelopeGenerationId':generation,'marker':4095,
+                            'scope':'fixture old identity/new envelope; no native credit or fabricated inference'})
                     row={'cycle':cycle,'elapsedSeconds':time.monotonic()-start,'wallSeconds':time.monotonic()-cycle_start,
                          'force':force,'generationId':generation,'markerBefore':marker_before,'degraded':avatar.degraded}
                     cycles.append(row);emit('cycles.jsonl',row)
@@ -163,6 +210,8 @@ async def run(args):
                 'normalStop':normal,'recording':await asyncio.to_thread(audit,out/'rtmp.flv'),
                 'recordingSHA256':hashlib.sha256((out/'rtmp.flv').read_bytes()).hexdigest(),
                 'waveSHA256':hashlib.sha256(args.wave.read_bytes()).hexdigest(),'rssPeakBytes':max(s['rssBytes'] for s in samples),
+                'journalMode':'TEST_DOUBLE' if timeline else 'NONE','completedSegments':completed_segments,'boundaryEvents':boundary_events,
+                'staleEpochMarkerObserved':any(v['marker']==4095 for v in chrome['video']),
                 'scope':'one Worker/Chrome session; prerecorded incremental PCM, real SoulX, local RTMP; no A/C business or physical audience'}
         (out/'summary.json').write_text(json.dumps(result,indent=2));print(json.dumps(result),flush=True)
         if not normal or not gpu or fallback:raise RuntimeError('REAL_GPU_ACCEPTANCE_FAILED')
@@ -180,4 +229,7 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--output',type=pathlib.Path,required=True)
     p.add_argument('--token-file',type=pathlib.Path,required=True);p.add_argument('--port',type=int,default=18087)
     p.add_argument('--wave',type=pathlib.Path,required=True);p.add_argument('--duration',type=int,default=1800)
-    p.add_argument('--v2',action='store_true');asyncio.run(run(p.parse_args()))
+    p.add_argument('--v2',action='store_true');p.add_argument('--ledger',action='store_true')
+    args=p.parse_args()
+    if args.ledger and not args.v2:p.error('--ledger requires --v2; its journal is a test double')
+    asyncio.run(run(args))

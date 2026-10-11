@@ -423,6 +423,7 @@ class _TimelineVideoTrack(_VideoTrack):
         self.tick = 0
         self.dispositions = FrameDispositions()
         self.resolved = 0
+        self.held_rgb = None
 
     async def push(self, frame, is_active=lambda: True, stale_window=2., poll_interval=.02):
         sample = getattr(frame, "sourceSample", frame.pts_us * self.clock.source_rate // 1000000)
@@ -437,6 +438,10 @@ class _TimelineVideoTrack(_VideoTrack):
         self.resolved += 1
 
     def clear(self, generation_id=None):
+        if self.clock.timeline is not None and self.latest is not None:
+            # A retained-prefix image may be held as transport comfort. It
+            # carries no new identity/progress/credit into the next epoch.
+            self.held_rgb = (self.latest.width, self.latest.height, self.latest.rgb)
         super().clear(generation_id)
         self.dispositions.clear()
         self.resolved = 0
@@ -487,6 +492,9 @@ class _TimelineVideoTrack(_VideoTrack):
             self.clock.video_holds += 1
         if self.latest:
             pixels = np.frombuffer(self.latest.rgb, dtype=np.uint8).reshape(self.latest.height, self.latest.width, 3)
+        elif self.held_rgb:
+            width, height, rgb = self.held_rgb
+            pixels = np.frombuffer(rgb, dtype=np.uint8).reshape(height, width, 3)
         else:
             pixels = np.zeros((256, 256, 3), dtype=np.uint8)
         frame = av.VideoFrame.from_ndarray(pixels, format="rgb24")
