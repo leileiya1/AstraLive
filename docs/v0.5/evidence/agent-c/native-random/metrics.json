@@ -1,0 +1,77 @@
+{
+  "source": "/tmp/astralive-v05-c-soak-random-final/media.json",
+  "sourceSha256": "5578ed6fabece9664f995f80ca7d0f47c23d1b63308d644a88232ed35e93c1d1",
+  "metrics": {
+    "clockDomain": "Chrome performance.now",
+    "scope": "synthetic pulse proxy and unique decoded video; not physical audibility, semantic relevance, human quality or busy SLA",
+    "audioPairing": "chronological, requires equal counts plus unique complete video coverage; pulses have no unique audio ID",
+    "selectedComments": 5,
+    "markedSegments": 209,
+    "decodedSegments": 209,
+    "audioPulseCount": 209,
+    "audioCoverageComplete": true,
+    "pairs": [
+      {
+        "sourceId": "receipt_3184a1f544b49d13ab48ea7d40ab895e92b78b1ab408769e05a603678a422886",
+        "answerSegmentId": "answer_159017d9a878b0caefb3a8af8094977b",
+        "answerMarker": 5,
+        "commentBrowserAt": 10955.799999952316,
+        "comment_to_answer_audio_ms": 3300.5,
+        "comment_to_answer_video_ms": 3276.899999976158
+      },
+      {
+        "sourceId": "receipt_392971c31adfc56718146a9dcc6a1a1d96c952398db50468219e42358d27be95",
+        "answerSegmentId": "answer_aa271b1fd0a235e63c5cf6d41a3a7b1e",
+        "answerMarker": 114,
+        "commentBrowserAt": 350219.59999990463,
+        "comment_to_answer_audio_ms": 3276.5,
+        "comment_to_answer_video_ms": 3263.5
+      },
+      {
+        "sourceId": "receipt_c74431c4894315c7981379dae04f5ddd5e6f46b79d43d22d984ef61f73b13218",
+        "answerSegmentId": "answer_f8caefa398c71bae771658a67799e6ff",
+        "answerMarker": 118,
+        "commentBrowserAt": 362891.09999990463,
+        "comment_to_answer_audio_ms": 3263.9000000953674,
+        "comment_to_answer_video_ms": 3275.0
+      },
+      {
+        "sourceId": "receipt_f0a048d608b31e668096a4ba531e43932e3e82f92452ff1497db80fc650ddfbc",
+        "answerSegmentId": "answer_ae459579f8e262d8a89da9c3a62cd9f1",
+        "answerMarker": 157,
+        "commentBrowserAt": 484332.09999990463,
+        "comment_to_answer_audio_ms": 3284.2000000476837,
+        "comment_to_answer_video_ms": 3279.7000000476837
+      },
+      {
+        "sourceId": "receipt_a27dd18cdc9744a063a0f91bc20fca2f8ea447347ce1a453de135898a9c71b64",
+        "answerSegmentId": "answer_875ecf604ffbd82e5318a232f0941f23",
+        "answerMarker": 160,
+        "commentBrowserAt": 493922.2999999523,
+        "comment_to_answer_audio_ms": 3294.2999999523163,
+        "comment_to_answer_video_ms": 3288.899999976158
+      }
+    ],
+    "comment_to_answer_audio_ms": {
+      "n": 5,
+      "missing": 0,
+      "p50": 3284.2000000476837,
+      "p95": 3300.5,
+      "max": 3300.5
+    },
+    "comment_to_answer_video_ms": {
+      "n": 5,
+      "missing": 0,
+      "p50": 3276.899999976158,
+      "p95": 3288.899999976158,
+      "max": 3288.899999976158
+    },
+    "notCollected": [
+      "comment_to_interrupt_decision_ms",
+      "interrupt_to_narration_stop_ms",
+      "answer_end_to_resume_audio_ms",
+      "process_resource_timeseries",
+      "real_GPU_stale_epoch_frames_dropped"
+    ]
+  }
+}

@@ -142,6 +142,9 @@ func (h *Server) Router() http.Handler {
 		r.Mount("/internal/v0.3", h.Config.InternalRouter())
 	}
 	r.Mount("/api/v0.4/interaction", h.interactionRouter())
+	if h.S != nil && h.S.Narration != nil {
+		r.Mount("/api/v0.5/narration", h.narrationRouter())
+	}
 	r.Get("/health/live", func(w http.ResponseWriter, r *http.Request) {
 		_ = json.NewEncoder(w).Encode(map[string]any{"status": "UP"})
 	})
@@ -173,7 +176,7 @@ func (h *Server) Router() http.Handler {
 		r.Get("/live-sessions/{sessionId}", h.getSession)
 		r.Post("/live-sessions/{sessionId}/start", h.idem(h.startSession))
 		r.Post("/live-sessions/{sessionId}/stop", h.idem(h.stopSession))
-		r.Post("/live-sessions/{sessionId}/utterances", h.idem(h.createUtterance))
+		r.Post("/live-sessions/{sessionId}/utterances", h.narrationAdmission(h.idem(h.createUtterance)))
 		r.Post("/live-sessions/{sessionId}/webrtc/offer", h.webrtcOffer)
 		r.Post("/live-sessions/{sessionId}/interrupt", h.interrupt)
 		r.Get("/live-sessions/{sessionId}/events", h.events)
