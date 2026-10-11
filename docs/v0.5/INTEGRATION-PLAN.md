@@ -80,3 +80,13 @@ Actual shared implementation edits: NONE at Phase1 or the current blocked Phase2
 | CCR | File / reason | Owner | Dependency SHA | Peer ACK | Implementing SHA | Final merge SHA |
 | --- | --- | --- | --- | --- | --- | --- |
 | none | documentation-only freeze; no shared implementation edits | F | baseline cf6540b | A/B/C/D/E PENDING | freeze commit in handoff | NOT MERGED |
+
+### Pending A/B/C seam review
+
+[CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md) records A's proposed six-table/journal increment and the unresolved B pre-install proof ordering. Neither unprovided DDL/DTOs nor shared implementation diffs are approved as a whole. C may continue its own FSM and deterministic SQL/CPU integration; real-media gates remain pending.
+
+| Proposed CCR | Scope / reason | Owners / dependency | Status |
+| --- | --- | --- | --- |
+| CCR-BC-001 | B private full-segment staging would return Credit before actual sink consumption; current Credit also updates native published-pose history | B+C and Worker/TCP reviewer; B Runtime cf43e2d, docs-only f769e3b | PROPOSED / NOT APPROVED; concrete credit/history preservation or protocol proposal required; any frozen semantic amendment needs user confirmation |
+
+This is a proposed-request ledger, not an amendment of `v0.5-frozen-1` or an implementation merge. Task connector delivery is unavailable; peer ACK remains pending.

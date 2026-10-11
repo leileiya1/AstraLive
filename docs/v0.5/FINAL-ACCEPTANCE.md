@@ -2,6 +2,8 @@
 
 **Overall: FAIL for complete A+B+C+D integration; implementation merges held.** This is the current premerge decision, not a declaration that the original multi-stage task is complete. Frozen contract `v0.5-frozen-1` is unchanged. [Risk/action list](PREMERGE-RISKS.md), [test report](CHAOS-TEST-REPORT.md), [raw seam result](evidence/integration-f/seam-1/result.json).
 
+Subsequent implementation progress and pending CCR decisions are in [CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md). C has started an uncommitted FSM/plan after consuming A/B dependencies, and A has an uncommitted persistence draft. The pinned delivery/test ledger below is the original reproducible review, not a claim that those newer worktrees still have zero changes. No new final C/A increment has been independently accepted or merged; strict GPU precommit READY/credit/history remains unresolved.
+
 ## Actual branch/merge ledger
 
 | Order | Branch | Reviewed source SHA | Merge SHA / status |

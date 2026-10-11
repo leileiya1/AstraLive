@@ -4,6 +4,8 @@ Review baseline `5a24478126211cbcde5a9565d0c6063748426527`; frozen revision `v0.
 
 User subsequently confirmed C's latest commit is `5a24478`, a clean worktree with no additional changes. This is the shared documentation baseline, not a Narration implementation. Earlier requests for a missing C SHA are resolved by that confirmation; no further missing-SHA assumption is needed.
 
+That statement records the pinned initial review. C has since resumed uncommitted implementation and consumed A/B dependencies; A has started its persistence increment. See [CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md) for current draft observations, installation-order review and proposed CCR-BC-001. These drafts have no final accepted delivery pin and do not retroactively change the preserved test results below.
+
 ## Pinned deliveries and ownership
 
 | Agent | Reviewed branch / full SHA | Delivery and file scope | Gate |
