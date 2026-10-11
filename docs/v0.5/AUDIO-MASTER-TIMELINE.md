@@ -99,7 +99,7 @@ This pair does not demonstrate universal improvement: V2 has higher short-run fi
 
 `timeline_gpu_audit.py` correlates the first500ms known PCM against decoded16k AAC in a ±2s search around each native speech marker, identifying source sample zero. It records every expected/observed/verified marker and all signed drift values; uncovered or unverified markers remain gaps. It measures the correspondence of source PCM and instrumented image onset, not facial lip quality. Chrome's nearest threshold onset pairing is heuristic and recorded separately; RTC estimatedPlayoutTimestamp compares receiver statistics, not matched content or physical speaker audibility. Neither substitutes for real audience or official-platform receipts.
 
-Both continuous runs finished and passed their stated media checks, each using one uninterrupted Worker connection and Chrome peer. They are two independent30min runs, not one60min acceptance. The second run pins final runtime source `e2a8fa20a804fb03500ef29d751ed98a48f21f78`; later changes are offline audit/documentation/evidence only.
+Both continuous runs finished and passed their stated media checks, each using one uninterrupted Worker connection and Chrome peer. They are two independent30min runs, not one60min acceptance. The second run pins final runtime source `e2a8fa20a804fb03500ef29d751ed98a48f21f78`; subsequent review053e557 identified a control-ordering correction: local blocked installation now precedes COMMIT_INSTALLED journalling. That increment has separate tests; the historical GPU recordings are not a long-run test of this changed ordering.
 
 | Metric | V2 clock soak, 3dff41e | Ledger-bound soak, e2a8fa2 |
 | --- | --- | --- |
@@ -150,3 +150,10 @@ PYTHONPATH=runtime:. python runtime/tests/timeline_gpu_audit.py --directory /tmp
 ```
 
 Output directories are unique; preserve FLV, raw JSON, driver logs and hashes. Reset/restart the owned Runtime with both flags false (or unset); this restores original paths, buffers and clocks. Do not toggle the flag on a running sink. Finish or explicitly fence the active attempt through C first; transmitted audio cannot be recalled. Close owned test clients, receiver processes and SSH tunnel after tests; leave the user's isolated Worker READY and idle for reuse. To roll back its lifecycle, use `/root/autodl-tmp/astralive-v05-b-worker/bin/astralive-worker stop`; retain verified weights/environment for cached restart. Never shut down the user's GPU instance, rotate shared credentials or merge A/C/F branches as rollback.
+
+
+## Post-acceptance F review: local installation order
+
+F review053e557 and C requested an existing-contract correction. CommitSegment now installs its local immutable ledger entry while blocked BEFORE journalling COMMIT_INSTALLED. Durable installed ACK and final fence validation are required before advancing committedExclusiveEnd/revision or opening eligibility. ACK loss, cancellation, or Stop during the installed ACK retains the entry as blocked/UNKNOWN with the previous public cursor; retry cannot manufacture a committed receipt. Missing authoritative lease/authority validation remains an A adapter failure, not a B in-memory fallback. The frozen API and default-off media paths are unchanged. [C handoff](B-C-MEDIA-SEAM.md) includes the exact sequence and A's canonical receipt adapter.
+
+Targeted ordering regressions31 passed; full Runtime179 passed/11 skipped/40 subtests passed. The final full Runtime result is stored separately in [install-order-runtime.log](evidence/agent-b/install-order-runtime.log). No additional30min GPU run was performed for this control-only increment, and the prior long recordings retain their original source hashes. No strict precommit SoulX READY or early-Credit semantics are accepted by this correction.
