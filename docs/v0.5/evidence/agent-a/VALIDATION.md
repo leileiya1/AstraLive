@@ -86,3 +86,23 @@ b0c993132c0eccf987ab5c2c23c1bbec76e2e0327bf293ba2eabd7afcb9acc6c  worker-domain-
 6e8d0f1609f8fd834fe75816b4161a03367c85dd95a2dd5c141512586d2911f2  worker-domain-faults.log
 b99d4cb4a6fb1d7e3c6edcb7bb358b30927f69b3d16364e4b7c109c5c72e15e6  worker-domain-runtime.log
 ```
+
+F's original immutable-source diagnostic was also reproduced by A after the source commit, using unchanged B pin dda7936 and corrected A pin `a2f0be19f1d2fc4c71c8bcefee771b7685b8d6e3`:
+
+```sh
+/Users/sapiece/innovationProject/AstraLive/runtime/.venv/bin/python \
+  /Users/sapiece/innovationProject/AstraLive-agent-f/integration/v0.5/worker_id_probe.py \
+  --repo /Users/sapiece/innovationProject/AstraLive-agent-f \
+  --a a2f0be19f1d2fc4c71c8bcefee771b7685b8d6e3 \
+  --b dda7936faba56efe01659b6393a4d32a93322508 \
+  --output /tmp/astralive-agent-a-worker-domain-probe.json
+```
+
+Exit0 / PASS:2^53−1,2^53 and2^63−1 accepted by actual B identity and A disk staging;2^63 rejected by B. [Diagnostic JSON with pinned imported-source hashes](worker-domain-f-probe.json). This execution is an A reproduction of F's CPU serializer probe, not F's independent approval and not HTTP/PG/GPU acceptance; the separate PG tests above provide the database evidence.
+
+```text
+9afcb2e032599d7e71e37d404605bd304939479e2f93a77115b80b92f11a029c  F worker_id_probe.py
+9b022dc9520acab97d4f2ff40509d8e97a0dd2789d3b3e06910aa14471d7e8b0  worker-domain-f-probe.json
+```
+
+The following evidence-only commit adds this reproducible result; production source is identical to a2f0be1. The owned manual PG cluster is stopped and the workspace is clean before handoff.
