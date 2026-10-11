@@ -190,3 +190,26 @@ func (h *HTTP) Health(ctx context.Context) (Health, error) {
 	e := h.call(ctx, "GET", "/internal/v1/health", nil, &v)
 	return v, e
 }
+
+// v0.5 remains separate from the frozen v1 interface and DTOs.
+func (h *HTTP) Deliver(ctx context.Context, id string, envelope json.RawMessage) error {
+	var receipt struct {
+		Accepted    bool   `json:"accepted"`
+		OperationID string `json:"operationId"`
+	}
+	err := h.call(ctx, "POST", "/internal/v0.5/sessions/"+url.PathEscape(id)+"/commands", envelope, &receipt)
+	if err == nil && (!receipt.Accepted || receipt.OperationID == "") {
+		return errors.New("invalid durable acceptance")
+	}
+	return err
+}
+func (h *HTTP) Reconcile(ctx context.Context, id, commandID string) (json.RawMessage, error) {
+	var raw json.RawMessage
+	err := h.call(ctx, "GET", "/internal/v0.5/sessions/"+url.PathEscape(id)+"/commands/"+url.PathEscape(commandID)+"/receipt", nil, &raw)
+	return raw, err
+}
+
+// EmergencyStop returns a non-durable error even when the local fence was applied.
+func (h *HTTP) EmergencyStop(ctx context.Context, id string) error {
+	return h.call(ctx, "POST", "/internal/v0.5/sessions/"+url.PathEscape(id)+"/emergency-stop", map[string]any{}, nil)
+}
