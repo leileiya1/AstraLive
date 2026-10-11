@@ -1,0 +1,123 @@
+{
+  "verifiedAtUTC": "2026-10-11T07:21:37.351676+00:00",
+  "environment": {
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "python": "3.12.13",
+    "go": "go version go1.27.2 darwin/arm64",
+    "postgres": "postgres (PostgreSQL) 17.11 (Homebrew)"
+  },
+  "sourceManifest": "premerge-manifest.json",
+  "frozenContractSHA256": "969d2e82d41f20084196d68a77bb3d1a6158a596a9ca63d47de9f6c1a78e8360",
+  "invariants": {
+    "frozenContractIdenticalAcrossAllPins": true,
+    "CEqualsBaseline": true,
+    "contractsFrontendWorkerNoDeltaInABD": true,
+    "FProductionFilesUntouched": true,
+    "gofmtPythonSyntaxDiffAndDocLinks": "PASS"
+  },
+  "checks": [
+    {
+      "name": "A independent PG/fault/full Go/race/durable Python/contracts",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "a-independent-faults.log"
+    },
+    {
+      "name": "B independent Runtime",
+      "exitCode": 0,
+      "result": "PASS",
+      "total": 187,
+      "passed": 176,
+      "skipped": 11,
+      "log": "b-independent-runtime.log"
+    },
+    {
+      "name": "D independent Go/race TCP+UDS macOS",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "d-independent-go-race.log"
+    },
+    {
+      "name": "D independent Python listener",
+      "exitCode": 0,
+      "result": "PASS",
+      "total": 10,
+      "passed": 9,
+      "skipped": 1,
+      "log": "d-independent-python.log"
+    },
+    {
+      "name": "A+B text merge preview only",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "a-b-merge-tree.log"
+    },
+    {
+      "name": "D pending wiring patch on A snapshot",
+      "exitCode": 1,
+      "result": "FAIL",
+      "log": "d-wiring-on-a-check.log"
+    },
+    {
+      "name": "actual A Go+Python+PG and B Timeline negative seam",
+      "exitCode": 1,
+      "result": "FAIL",
+      "log": "seam-1-driver.log",
+      "resultFile": "seam-1/result.json"
+    }
+  ],
+  "artifacts": {
+    "a-b-merge-tree.log": {
+      "bytes": 41,
+      "sha256": "783028ce61a7ce6ecc9b2062cd808f5c770e2ad8375233a6fa2b380f407f3f17"
+    },
+    "a-independent-faults.log": {
+      "bytes": 4460,
+      "sha256": "892ae5a2cc561f8a9ea34f2b8606ec1cfd0e895b694e39f5759a0c9d3de3da0d"
+    },
+    "b-independent-runtime.log": {
+      "bytes": 443250,
+      "sha256": "8ce2ae3410de0e9f8a6c0c750f666d053505c65759d88f0cca7bb515523d5025"
+    },
+    "d-independent-go-race.log": {
+      "bytes": 5701,
+      "sha256": "ff53a14b3d98a128bc305c8060665a20f855819192c2301e0184ce29a02bfb17"
+    },
+    "d-independent-python.log": {
+      "bytes": 1603,
+      "sha256": "cf8ea3e749d803f24e739e69e315884a11877e1b72a80bcafff34fdf2c69b221"
+    },
+    "d-wiring-on-a-check.log": {
+      "bytes": 107,
+      "sha256": "dc9f17f9796dfe56ad1130fcbd55a3798c2378d93c7dc16c34970dcedf3784d0"
+    },
+    "premerge-manifest.json": {
+      "bytes": 642,
+      "sha256": "5efdcf65c7a6ce09929ee16595b208454df9da2e2603348950e2f6233889402d"
+    },
+    "seam-1/go-journal.log": {
+      "bytes": 14,
+      "sha256": "8d8aac722c1ee9d99a82800136ca4370c518924d620607fe4d06a82595025ae0"
+    },
+    "seam-1/python-runtime.log": {
+      "bytes": 3377,
+      "sha256": "7c4c98e375b6b2635806f3ded042edee0e369b8afbb93587f4ec57efc7152183"
+    },
+    "seam-1/result.json": {
+      "bytes": 1899,
+      "sha256": "0773eb60669c46ea104043e2fe1f28d2df7795bcf94c4c46dcbe9cf5ed28536d"
+    },
+    "seam-1-driver.log": {
+      "bytes": 1899,
+      "sha256": "0773eb60669c46ea104043e2fe1f28d2df7795bcf94c4c46dcbe9cf5ed28536d"
+    }
+  },
+  "limits": [
+    "No implementation merge",
+    "No C implementation",
+    "CPU fixtures cannot pass audible speech or natural continuity",
+    "No new GPU/Chrome/RTMP or frontend build",
+    "Not a combined candidate release gate"
+  ]
+}
