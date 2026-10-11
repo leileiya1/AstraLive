@@ -147,6 +147,8 @@ class RuntimeSession:
     tool_client: ToolClient | None = None
     state: str = "CREATED"
     generation_id: int = 1
+    durability_guard: object = None
+    durable_media_attempts: int = 0
     speech_queue: list[tuple[int, int, Utterance]] = field(default_factory=list)
     current_utterance: Utterance | None = None
     tasks: set[asyncio.Task] = field(default_factory=set)
@@ -432,6 +434,20 @@ class RuntimeSession:
                         continue
                     _, _, item = heapq.heappop(self.speech_queue)
                     self.current_utterance = item
+                    if hasattr(self.publisher, "begin_media"):
+                        if self.durability_guard:
+                            self.durability_guard()
+                        floor = 0 if self.durable_media_attempts == 0 and self.generation_id == 1 else self.generation_id
+                        assigned = await self.publisher.begin_media(self.session_id, item, floor)
+                        self.durable_media_attempts += 1
+                        # Interrupt fences can advance the volatile counter beyond the durable high watermark.
+                        # Bind the allocation only after ensuring it is newer than the currently installed fence.
+                        if assigned < self.generation_id or assigned == self.generation_id and self.durable_media_attempts > 1:
+                            raise RuntimeFailure("LEASE_LOST", "Generation fence requires reconciliation", 409)
+                        if assigned > self.generation_id:
+                            await self.avatar_engine.interrupt(assigned)
+                            await self.media_output.interrupt(assigned)
+                        self.generation_id = assigned
                     generation = self.generation_id
                     self.current_task = asyncio.create_task(self._process(item, generation))
                     task = self.current_task
@@ -458,6 +474,8 @@ class RuntimeSession:
         rendering = playing = synthesizing = False
         failure_stage = "GENERATION"
         try:
+            if self.durability_guard:
+                self.durability_guard()
             await self.emit("UTTERANCE_GENERATING", item.traceId, item.utteranceId)
             fact_context = await self._fact_context(item)
             safe_answer = FactAnswerResolver().resolve(
@@ -515,6 +533,8 @@ class RuntimeSession:
                         await self.emit("UTTERANCE_SYNTHESIZING", item.traceId, item.utteranceId)
                         synthesizing = True
                     failure_stage = "TTS"
+                    if self.durability_guard:
+                        self.durability_guard()
                     trace.mark("tts_started")
                     async for chunk in self.tts_provider.synthesize_stream(sentence, item.voice, ctx):
                         if chunk.pcm:
@@ -534,6 +554,8 @@ class RuntimeSession:
                     rendering = True
                 failure_stage = "AVATAR"
                 render_started = time.monotonic()
+                if self.durability_guard:
+                    self.durability_guard()
                 frames = await self.avatar_engine.push_audio(chunk)
                 if frames:
                     trace.mark("avatar_first_returned_frame", "Avatar API returned frame; synthetic/CPU modes are not GPU generation evidence")
@@ -545,11 +567,15 @@ class RuntimeSession:
                     await self.emit("UTTERANCE_PLAYING", item.traceId, item.utteranceId)
                     playing = True
                 failure_stage = "MEDIA"
+                if self.durability_guard:
+                    self.durability_guard()
                 await self.media_output.push_audio(chunk)
                 trace.mark("media_first_audio", "media output push returned; not browser/speaker playback")
                 for frame in frames:
                     if frame.generation_id != self.generation_id:
                         break
+                    if self.durability_guard:
+                        self.durability_guard()
                     await self.media_output.push_video(frame)
                     trace.mark("media_first_video", "media output push returned; not browser/platform ingestion")
                 failure_stage = "TTS"

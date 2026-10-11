@@ -3,9 +3,14 @@ package config
 import (
 	"fmt"
 	"os"
+	"strconv"
 )
 
-type Config struct{ Env, Addr, DatabaseURL, RedisURL, EventStream, RuntimeURL, InternalToken, LogLevel, MinioEndpoint, MinioAccessKey, MinioSecretKey, OTELEndpoint string }
+type Config struct {
+	DurabilityEnabled                                                                                                                               bool
+	EventMode, JournalTokenFile                                                                                                                     string
+	Env, Addr, DatabaseURL, RedisURL, EventStream, RuntimeURL, InternalToken, LogLevel, MinioEndpoint, MinioAccessKey, MinioSecretKey, OTELEndpoint string
+}
 
 func get(k, fallback string) string {
 	if v := os.Getenv(k); v != "" {
@@ -14,7 +19,21 @@ func get(k, fallback string) string {
 	return fallback
 }
 func Load() (Config, error) {
-	c := Config{get("APP_ENV", "development"), get("HTTP_ADDR", ":8080"), os.Getenv("DATABASE_URL"), get("REDIS_URL", "redis://localhost:6379"), get("REDIS_RUNTIME_EVENT_STREAM", "dh.runtime.events.v1"), get("AI_RUNTIME_URL", "http://localhost:8000"), os.Getenv("INTERNAL_API_TOKEN"), get("LOG_LEVEL", "info"), os.Getenv("MINIO_ENDPOINT"), os.Getenv("MINIO_ACCESS_KEY"), os.Getenv("MINIO_SECRET_KEY"), os.Getenv("OTEL_EXPORTER_OTLP_ENDPOINT")}
+	enabled, e := strconv.ParseBool(get("ASTRALIVE_DURABILITY_ENABLED", "false"))
+	if e != nil {
+		return Config{}, fmt.Errorf("invalid durability flag")
+	}
+	mode := get("ASTRALIVE_EVENT_MODE", "legacy_redis")
+	if mode != "legacy_redis" && mode != "postgres_only" {
+		return Config{}, fmt.Errorf("invalid event mode")
+	}
+	if mode == "postgres_only" && !enabled {
+		return Config{}, fmt.Errorf("postgres_only requires durability")
+	}
+	c := Config{enabled, mode, os.Getenv("RUNTIME_JOURNAL_TOKEN_FILE"), get("APP_ENV", "development"), get("HTTP_ADDR", ":8080"), os.Getenv("DATABASE_URL"), get("REDIS_URL", "redis://localhost:6379"), get("REDIS_RUNTIME_EVENT_STREAM", "dh.runtime.events.v1"), get("AI_RUNTIME_URL", "http://localhost:8000"), os.Getenv("INTERNAL_API_TOKEN"), get("LOG_LEVEL", "info"), os.Getenv("MINIO_ENDPOINT"), os.Getenv("MINIO_ACCESS_KEY"), os.Getenv("MINIO_SECRET_KEY"), os.Getenv("OTEL_EXPORTER_OTLP_ENDPOINT")}
+	if enabled && c.JournalTokenFile == "" {
+		return c, fmt.Errorf("RUNTIME_JOURNAL_TOKEN_FILE is required")
+	}
 	if c.DatabaseURL == "" {
 		return c, fmt.Errorf("DATABASE_URL is required")
 	}
