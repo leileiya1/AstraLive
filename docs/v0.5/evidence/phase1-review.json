@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "phase1-review-1",
+  "recordedAt": "2026-10-11T00:26:53.157934+00:00",
+  "baselineCommit": "cf6540bdcc788c037929836480812dfaa78362a2",
+  "contractCommit": "227decdb4b5d3ecc58302db7f6f19008e3a647ca",
+  "contractRevision": "v0.5-frozen-1",
+  "branch": "exp/v0.5-integration-chaos",
+  "scope": "documentation freeze and existing frozen-contract validation only",
+  "checks": [
+    {
+      "name": "frozen-v1.1",
+      "command": "uv run --no-project --with 'jsonschema>=4,<5' --with 'PyYAML>=6,<7' --with openapi-spec-validator python contracts/validate_v1_1.py",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "frozen-v1.1.log",
+      "sha256": "4e5357fefe95733a695daff8958191fa69d817d692bbb1702f7363107d8a503a"
+    },
+    {
+      "name": "documentation-structure-and-links",
+      "result": "PASS",
+      "limitations": "presence/links/fences review only; no implemented v0.5 schema or runtime semantic test"
+    },
+    {
+      "name": "git-diff-check",
+      "command": "git diff --check",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "baseline-implementation-preservation",
+      "command": "git diff --quiet cf6540bdcc788c037929836480812dfaa78362a2 -- contracts backend runtime gpu_worker frontend tests scripts integration",
+      "exitCode": 0,
+      "result": "PASS"
+    }
+  ],
+  "environmentNotes": [
+    "Existing runtime/.venv missing openapi_spec_validator; root .venv missing jsonschema. Validation ran in isolated uv environment without altering project dependency files."
+  ],
+  "sourceSha256": {
+    "backend/internal/app/service.go": "04fe11407008cc40be6034c725e5ba2eaf475754f688c69f749bf60c7d47f1e8",
+    "backend/internal/app/interaction.go": "216e7f23a874e4b83e970a452f5e8a7fdb6f0087743452b48399319084b7c319",
+    "backend/internal/interaction/scheduler.go": "8c3d403fcb5960fc9fafa3301fd5ef120c426f63fdd991ac5fb8e4ed9febe41b",
+    "backend/internal/runtime/client.go": "8811b56529218a5b5fb77f18a444d4a6f1324dcdb0088569190e6a4561d8d1fe",
+    "backend/internal/httpapi/server.go": "4dc5f1d7fa3d0cf320f56a7656819e9ea870443193c4a8ece6c54e846abb0846",
+    "backend/cmd/server/main.go": "b570f15f487e88c3fc4ead6ba27a275dc62c8ea81380976eda52edb8c26f8611",
+    "backend/db/migrate.go": "e45772d5d338e7b41f8c8e9149d8bee83d23ebebb4cfdbb38102d71dc8289867",
+    "backend/internal/eventbus/consumer.go": "2d340ae3dbb534a16ae92ffed87caf2a4bebd69aa965d4d7a8c11fe6f3fa1c54",
+    "runtime/app/models.py": "db539830e84cc905028eae18d4659ddc6dd4e20d34f88e4458ff7e28c095f197",
+    "runtime/app/main.py": "58c28b8495fccd472802744421834269215928424c8c2d2dfc22657c34ff5e72",
+    "runtime/app/session.py": "a80e7c1333c684686e838741e2377a6a73bfa2d1cc1448c68cbe04701bda22ce",
+    "runtime/app/events.py": "f28f5b3457e42a7c4789a9a6258882547a0cb711058fb8857ee41c51e4b148e7",
+    "runtime/app/webrtc_media.py": "546a18b84a6b2f001fe1844321ebd0cae7e34c1d69d54ca23a2a727071240137",
+    "runtime/app/rtmp_media.py": "afab2d7d79263ba9d25307ff4858797010b356f0230b9e67b09d2ffc4c54e201",
+    "runtime/app/media_fanout.py": "38c304e582bb59ec741ffd55e1f508c46becba7640ad21a33b756c54903e1ed2",
+    "runtime/app/bound_media.py": "664939f0bddc7395187f1d690783dfd1d905fe0be9b36539e250eb5d5348294b",
+    "runtime/app/session_binding.py": "102b01d65e87ee3d7ac14ced076331479360bf89a29804d8f3b9ec972be0e374",
+    "gpu_worker/client.py": "ab7c918869bf280f4286671c5daf7be61e8cd7ebf9d2eee72e8928a06866a099",
+    "gpu_worker/service.py": "be33549ed1ac9181261a639ab340f3cd5a703956f8be39a3bee8da3be90b2b80",
+    "gpu_worker/runtime_adapter.py": "3fd0d8d68adfef493d801628da7f76ab9564c038999a1f5fb39dbb08d23f5a34",
+    "gpu_worker/validated/wire.py": "2547791fc3a420824c3bdace9f7353effe24330e52493c7734557dbf646736b2",
+    "gpu_worker/validated/runtime_avatar.py": "b69e875cd453d30a5c6f82f8648db9884501cac57981980461543c9a671a191a",
+    "gpu_worker/validated/prefetch.py": "c99f51230b2945b5f9a47f35e23a56fd5acf3e2237b6610f2274ba7fa6448efd",
+    "contracts/CONTRACTS.md": "3264f22b5a2ed7dfa3ae4d3339ec104b9f12cda5f3aaefa33d48da5bb049f75b",
+    "contracts/SECURITY-BOUNDARY.md": "14fa63fb4190b266a15627e47a134f2cd77e25ca6b9ede50630380b1bcc61a03",
+    "docs/v0.4/AUTHORIZATION-BOUNDARY.md": "f2af6d148f6aade8622e1968ae9800f83700e416c9fa7c0a4c88c065e752a77f",
+    "docs/v0.4/NEXT-PHASE-READINESS.md": "097cf246b34f757aef908514b5c38abcc798febeb4022823bdfc4fc1217c4aea",
+    "docs/v0.4/INDEPENDENT-ARCHITECTURE-REVIEW.md": "77c319bbfcacbeae67c4a6b1dfb8e54c2a75c10706b03fbb9be68232dcdcc477",
+    "docs/v0.4/INTERACTION-REVALIDATION.md": "0267425c02352c92bc6a4cbdffd2822d851fa6acaca1c9a5957a92999b2f3b24",
+    "docs/v0.4/LATENCY-REVALIDATION.md": "02b8d97e2b0b47fbeff483035f186922d624b100408239b9a5898d5f0cdf4b55",
+    "backend/db/migrations/000001_init.sql": "f39efce5acdf9c39f0b91a1dac4e99131348bc474ff99653083ccdafbc80597b",
+    "backend/db/migrations/000002_live_room_active_product.sql": "a3de02fc9c767e380626c6f892ed6ab381b55b502bf25a472b4eb2b29bc56e30",
+    "backend/db/migrations/000003_user_configuration.sql": "60bbe82d59abf5df2decb01b9725109960cf18ff5b14af9cb54bad7a438d8af3",
+    "backend/db/migrations/000004_session_integration.sql": "3a3db0853c318bac95dee5379ea9e409bfea4ba812aaa2087b7045cdd2407ef1",
+    "backend/db/migrations/000005_interaction_receipts.sql": "b40a4aae20ba9bfc1f16ff3f0ee56d19c564e753c23d5ff5d875acef16dd3872"
+  },
+  "documentSha256": {
+    "docs/v0.5/INTEGRATION-PLAN.md": "408aa0d641b51a6ad52687f0d2aac3736434dbfe104f54afb315de4c06747d0f",
+    "docs/v0.5/ARCHITECTURE-CONTRACTS.md": "969d2e82d41f20084196d68a77bb3d1a6158a596a9ca63d47de9f6c1a78e8360",
+    "docs/v0.5/AGENT-HANDOFF.md": "6aa05038f20119b0a93cc128da90b2553890ccb69fa2839fafcada059c11536f"
+  },
+  "agentDelivery": {
+    "localPacket": "AGENT-HANDOFF.md",
+    "liveChannelsAvailable": [
+      "F"
+    ],
+    "liveDelivery": "PENDING",
+    "peerACK": "PENDING"
+  },
+  "implementationMerges": [],
+  "defaultEnable": {
+    "postgres_only": "NO - NOT TESTED",
+    "media_timeline": "NO - NOT TESTED",
+    "continuity": "NO - NOT TESTED",
+    "uds": "NO - NOT TESTED",
+    "quic": "NO - NOT TESTED"
+  },
+  "notTestedThisPhase": [
+    "full Go/race/Python/frontend suite",
+    "DB migrations and recovery",
+    "auth/ownership runtime integration",
+    "new harness/fixtures",
+    "crash injection",
+    "real Chrome/RTMP/GPU",
+    "Golden Tests 1-5",
+    "Windows/UDS/QUIC/Redis-off modes"
+  ]
+}
