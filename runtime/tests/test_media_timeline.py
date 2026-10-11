@@ -377,23 +377,25 @@ class TrackTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(sink.audio_consumed,0)
         self.assertEqual(sink.cancelled_in_flight,1)
 
-    async def test_dropped_active_worker_frame_releases_credit_without_consumption_claim(self):
+    async def test_all_sink_dropped_worker_frame_never_commits_published_pose_credit(self):
+        from unittest.mock import AsyncMock
         credits=[];logs=[]
         async def consumed(packet): credits.append(packet["frame_sequence"])
         with patch.dict(os.environ, {"ASTRALIVE_MEDIA_TIMELINE_V2_ENABLED": "true"}):
             sink = FFmpegRTMPMediaOutput(RTMPSettings(enabled=True, publish_url="rtmp://localhost/live/fixture", width=8, height=8))
             sink.running=True; sink._process=SimpleNamespace(returncode=None)
             avatar=SimpleNamespace(running=True,generation_id=1,link=SimpleNamespace(consumed=consumed),cached_idle=None,
-                                   pipeline=None,log=lambda event,**kw: logs.append(event))
+                                   pipeline=SimpleNamespace(degrade=AsyncMock()),log=lambda event,**kw: logs.append(event))
             output=BoundConsumptionMediaOutput(sink,avatar)
         frame=VideoFrame(1,0,8,8,bytes(192))
         output.metadata[id(frame)]={"source":"GPU_INFERENCE","generation_id":42,"frame_sequence":0,"activity":"TALKING"}
         await output.push_video(frame)
         sink._dispose_video(frame,"dropped")
         await asyncio.sleep(.02)
-        self.assertEqual(credits,[0])
-        self.assertIn("FrameRetiredForCredit",logs)
+        self.assertEqual(credits,[])
+        self.assertIn("FrameDiscardedWithoutCredit",logs)
         self.assertNotIn("FrameActuallyConsumed",logs)
+        avatar.pipeline.degrade.assert_awaited_once()
         self.assertEqual(sink.video_consumed,0)
         avatar.running=False
         await asyncio.gather(*tuple(output.acks))

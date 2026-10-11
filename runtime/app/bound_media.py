@@ -137,20 +137,28 @@ class BoundConsumptionMediaOutput(ConsumptionMediaOutput):
                 rtmp_consumed = bool(current and current[0] == generation and current[1] >= target)
                 retired = False
                 if v2:
-                    # Aggregate counters cannot identify a frame when late video
-                    # is dropped. Releasing flow credit for an active retired
-                    # packet never creates a sink-consumed/completion receipt.
+                    # Credit also commits native published-pose history. A
+                    # discarded frame cannot be ACKed merely to free a slot.
                     web_state = getattr(web, "video_disposition", lambda f: None)(frame) if web else None
                     rtmp_state = getattr(rtmp, "video_disposition", lambda f: None)(frame) if rtmp else None
                     web_consumed, rtmp_consumed = web_state == "consumed", rtmp_state == "consumed"
                     fanout_state = getattr(self.output, "video_disposition", lambda f: None)(frame)
-                    retired = web_state == "dropped" or rtmp_state == "dropped" or fanout_state == "dropped"
+                    candidates = ([web_state] if targets else []) + ([rtmp_state] if target is not None else [])
+                    retired = bool(candidates and all(s == "dropped" for s in candidates)) or fanout_state == "dropped"
                     identity = getattr(frame, "identity", None)
                     timeline = getattr(self.output, "timeline", None) or getattr(
                         getattr(rtmp, "timeline_clock", None), "timeline", None)
                     if timeline and identity and not timeline.eligible(identity, frame.sourceSample, frame.sourceSample):
                         return
-                if web_consumed or rtmp_consumed or retired:
+                if retired and not (web_consumed or rtmp_consumed):
+                    self.avatar.log("FrameDiscardedWithoutCredit", source=packet["source"],
+                                    job_id=packet["generation_id"], frame_sequence=packet["frame_sequence"],
+                                    evidenceType="discarded")
+                    self.avatar.degraded = True
+                    if self.avatar.pipeline:
+                        await self.avatar.pipeline.degrade("unconsumed video discarded", stage="media_all_sink_drop")
+                    return
+                if web_consumed or rtmp_consumed:
                     try:
                         await link.consumed(packet)
                     except WorkerUnavailable:
@@ -164,13 +172,11 @@ class BoundConsumptionMediaOutput(ConsumptionMediaOutput):
                             (packet["generation_id"], packet["frame_sequence"]) >
                             (cached["generation_id"], cached["frame_sequence"])):
                         self.avatar.cached_idle = packet
-                    self.avatar.log("FrameRetiredForCredit" if retired and not (web_consumed or rtmp_consumed)
-                                    else "FrameActuallyConsumed", pts_us=frame.pts_us,
+                    self.avatar.log("FrameActuallyConsumed", pts_us=frame.pts_us,
                                     source=packet["source"], job_id=packet["generation_id"],
                                     frame_sequence=packet["frame_sequence"],
-                                    sink="webrtc" if web_consumed else "rtmp" if rtmp_consumed else "discard",
-                                    **({"evidenceType": "discarded" if retired and not (web_consumed or rtmp_consumed)
-                                        else "sink_consumed"} if v2 else {}))
+                                    sink="webrtc" if web_consumed else "rtmp",
+                                    **({"evidenceType": "sink_consumed"} if v2 else {}))
                     return
                 if not current and not any(p in web.peers and
                         p.connection.connectionState not in {"failed", "closed", "disconnected"}
