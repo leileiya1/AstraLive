@@ -1,6 +1,10 @@
 # v0.5 F chaos and integration-gate report
 
-Status: **PARTIAL SEQUENTIAL INTEGRATION — A+B merged; both postmerge software gates PASS**. Initial failures below remain historical pinned evidence. Current [merge ledger](evidence/integration-f/merge-ledger.json) and [CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md) govern remaining gates. Revision `v0.5-frozen-1`; baseline `5a24478`. Review environment macOS arm64, Go1.27.2, Python3.12.13, PostgreSQL17.11. New runs use immutable source/actual merge archives and disposable owned PG; owner worktrees and historical artifacts are preserved.
+Status: **PARTIAL SEQUENTIAL INTEGRATION — A+B+C merged; all three postmerge software gates PASS**. Initial failures below remain historical pinned evidence. Current [merge ledger](evidence/integration-f/merge-ledger.json) and [CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md) govern remaining gates. Revision `v0.5-frozen-1`; baseline `5a24478`. Review environment macOS arm64, Go1.27.2, Python3.12.13, PostgreSQL17.11. New runs use immutable source/actual merge archives and disposable owned PG; owner worktrees and historical artifacts are preserved.
+
+## C actual merge gate
+
+Final ea0d48e/sourcebf66c18 merged normally as6095989; five documented shared conflicts resolved using proven identical A+B dependency source, exact final-owner blob results. [Conflict provenance](evidence/integration-f/c-conflict-resolution-1.json). F actual-merge archive [complete gate](evidence/integration-f/merge-c-1/result.json) PASS: full Go/race/owned-PG faults/migrations/HTTP auth/ownership/interaction/contract including cross-language narration/crash fixtures; Runtime210 total199 pass11 skips; frontend40/40/build. The old06b lock defect is independently reproduced FAIL and same F real-SQL/race oracle PASS atbf66; A scoped ACK obtained. C native ten-minute/five-question fixture is now running on6095989. D's original production patch context remains [FAIL on actual core](evidence/integration-f/d-wiring-on-core-1/result.json), not applied; owner rebase/review pending.
 
 ## F native output regression and C candidate gate
 

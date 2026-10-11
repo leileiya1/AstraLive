@@ -32,10 +32,28 @@
         "status": "CONDITIONAL",
         "scope": "real local sinks, synthetic source, short regression; reconnect UNKNOWN tail retained"
       }
+    },
+    {
+      "order": 3,
+      "agent": "C",
+      "branch": "exp/v0.5-narration-continuity",
+      "source": "ea0d48e2ebddb8e07dc4f3ea8082fc4f40c306d1",
+      "implementation": "bf66c18b3f77b71646e04e74f5e40b8d7200be32",
+      "merge": "6095989da99af3e1c458ed92db2f0bb6dcec4769",
+      "postmergeGate": "merge-c-1/result.json",
+      "postmergeStatus": "PASS",
+      "conflictFiles": [
+        "backend/cmd/server/main.go",
+        "backend/internal/app/durability.go",
+        "backend/internal/app/interaction.go",
+        "backend/internal/app/service.go",
+        "runtime/app/main.py"
+      ],
+      "conflictProvenance": "c-conflict-resolution-1.json",
+      "nativeSoak": "RUNNING"
     }
   ],
   "pending": [
-    "C",
     "D"
   ],
   "completeIntegration": false,
@@ -46,6 +64,8 @@
     "gate": "HOLD_LOCK_ORDER_OWNER_FIX",
     "premergeGate": "c-delivery-premerge-1/result.json",
     "runtimeEnvironmentCorrected": "c-runtime-env-corrected-1/result.json",
-    "nativeShort": "c-native-short-premerge-1/result.json"
+    "nativeShort": "c-native-short-premerge-1/result.json",
+    "supersededBy": "ea0d48e2ebddb8e07dc4f3ea8082fc4f40c306d1",
+    "historical": true
   }
 }
