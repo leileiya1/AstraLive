@@ -14,6 +14,8 @@ import numpy as np
 from aiortc import MediaStreamTrack, RTCPeerConnection, RTCSessionDescription
 from .models import SessionConfig
 from .providers import AudioChunk, VideoFrame, MediaDeliveryError
+from .media_timeline import (enabled as timeline_enabled, AudioMasterClock,
+                             RationalResampler, AdaptiveBuffer, samples_to_pts, TimedAudioChunk)
 
 log = logging.getLogger(__name__)
 
@@ -291,6 +293,212 @@ class _VideoTrack(MediaStreamTrack):
         return frame
 
 
+class _TimelineAudioTrack(_AudioTrack):
+    """V2 only: bounded PCM framing and per-peer audio-master progress."""
+    def __init__(self, clock):
+        super().__init__(clock.policy.interruptible_ms, clock.policy.interruptible_ms)
+        self.clock = clock
+        self.adaptive = AdaptiveBuffer(clock.policy)
+        self.resampler = RationalResampler(self.sample_rate)
+        self.source_cursor = clock.source_sample
+        self.resample_origin = self.source_cursor
+        self.pending_start = self.source_cursor
+        self.pending_identity = None
+        self.padding_samples = 0
+        self.push_lock = asyncio.Lock()
+
+    def clear(self, generation_id=None):
+        super().clear(generation_id)
+        self.resampler = RationalResampler(self.sample_rate)
+        self.resample_origin = self.source_cursor
+        self.pending_start = self.source_cursor
+        self.pending_identity = None
+
+    async def push(self, chunk, is_active=lambda: True, stale_window=2., poll_interval=.02):
+        async with self.push_lock:
+            if chunk.generation_id != self.generation_id or not is_active():
+                return
+            if chunk.channels != 1 or len(chunk.pcm) % 2 or chunk.sample_rate <= 0:
+                raise ValueError("invalid mono PCM")
+            identity = getattr(chunk, "identity", None)
+            if self.clock.timeline and (identity is None or not self.clock.accepts(chunk, chunk.startSample, chunk.endSample)):
+                return
+            if identity != self.pending_identity and self.pending:
+                await self.flush(is_active, stale_window, poll_interval)
+            if identity != self.pending_identity:
+                self.resampler = RationalResampler(self.sample_rate)
+                self.resample_origin = self.source_cursor
+            if isinstance(chunk, TimedAudioChunk):
+                if chunk.timelineRate != self.clock.source_rate:
+                    raise ValueError("timeline sample rate mismatch")
+                if chunk.startSample != self.source_cursor:
+                    if self.pending or chunk.startSample < self.source_cursor:
+                        raise ValueError("audio overlap/discontinuity")
+                    self.source_cursor = chunk.startSample
+                    self.resample_origin = self.source_cursor
+                    self.resampler = RationalResampler(self.sample_rate)
+                expected = len(chunk.pcm) // 2 * chunk.timelineRate // chunk.sample_rate
+                if abs(chunk.endSample - chunk.startSample - expected) > 1:
+                    raise ValueError("PCM range mismatch")
+            self.pending_identity = identity
+            self.adaptive.observe(time.monotonic(), len(chunk.pcm) / 2 * 1000 / chunk.sample_rate)
+            # Split BEFORE conversion so no second unbounded PCM buffer exists.
+            part_bytes = max(2, chunk.sample_rate // 50 * 2)
+            for offset in range(0, len(chunk.pcm), part_bytes):
+                if chunk.generation_id != self.generation_id or not is_active():
+                    return
+                pcm = self.resampler.convert(chunk.pcm[offset:offset + part_bytes], chunk.sample_rate)
+                if not self.pending:
+                    self.pending_start = self.source_cursor
+                self.pending.extend(pcm)
+                self.source_cursor = self.resample_origin + self.resampler.output_count * self.clock.source_rate // self.sample_rate
+                while len(self.pending) >= self.frame_samples * 2:
+                    end = self.pending_start + self.frame_samples * self.clock.source_rate // self.sample_rate
+                    # The physical cap is interruptible_ms; the target adapts.
+                    waited_at = time.monotonic()
+                    while self.queue.qsize() * 20 >= self.adaptive.target_ms:
+                        if not is_active() or chunk.generation_id != self.generation_id:
+                            return
+                        if time.monotonic() - (self.last_recv_monotonic or waited_at) > stale_window:
+                            raise MediaDeliveryError("WebRTC audio master stalled")
+                        await asyncio.sleep(poll_interval)
+                    item = (chunk.generation_id, bytes(self.pending[:self.frame_samples * 2]),
+                            self.pending_start, end, identity)
+                    if not await self._put(item, chunk.generation_id, is_active, stale_window, poll_interval):
+                        return
+                    del self.pending[:self.frame_samples * 2]
+                    self.pending_start = end
+            # Exact range endpoints override packet-grid rounding.
+            if isinstance(chunk, TimedAudioChunk):
+                self.source_cursor = chunk.endSample
+
+    async def flush(self, is_active=lambda: True, stale_window=2., poll_interval=.02):
+        if self.pending:
+            count = len(self.pending) // 2
+            item = (self.generation_id, bytes(self.pending).ljust(self.frame_samples * 2, b"\0"),
+                    self.pending_start, self.source_cursor, self.pending_identity)
+            if await self._put(item, self.generation_id, is_active, stale_window, poll_interval):
+                self.padding_samples += self.frame_samples - count
+                self.pending.clear()
+
+    async def recv(self):
+        if self.readyState != "live":
+            from aiortc.mediastreams import MediaStreamError
+            raise MediaStreamError
+        now = time.monotonic()
+        self.next_at = self.next_at or now
+        await asyncio.sleep(max(0, self.next_at - now))
+        self.next_at = max(self.next_at + .02, time.monotonic())
+        pcm = bytes(self.frame_samples * 2)
+        end = None
+        while not self.queue.empty():
+            generation, payload, start, source_end, identity = self.queue.get_nowait()
+            if generation != self.generation_id or (self.clock.timeline and
+                    not self.clock.timeline.eligible(identity, start, source_end)):
+                self.frames_dropped += 1
+                continue
+            pcm, end = payload, source_end
+            self.consumed += 1
+            self.total_consumed += 1
+            self.last_recv_monotonic = time.monotonic()
+            self.first_recv_monotonic = self.first_recv_monotonic or self.last_recv_monotonic
+            self.last_recv_at = datetime.now(timezone.utc).isoformat()
+            if self.clock.timeline:
+                self.clock.timeline.observe_sink_progress(identity, self.sink_id, "audio", start, source_end)
+            break
+        frame = av.AudioFrame(format="s16", layout="mono", samples=self.frame_samples)
+        frame.planes[0].update(pcm)
+        frame.sample_rate = self.sample_rate
+        frame.pts = self.clock.output_samples
+        frame.time_base = Fraction(1, self.sample_rate)
+        self.clock.advance(self.frame_samples, end)
+        self.pts = self.clock.output_samples
+        return frame
+
+
+class _TimelineVideoTrack(_VideoTrack):
+    def __init__(self, clock, fps=25):
+        super().__init__(fps, clock.policy.interruptible_ms, clock.policy.interruptible_ms)
+        self.clock = clock
+        self.tick = 0
+        self.dispositions = {}
+        self.resolved = 0
+
+    async def push(self, frame, is_active=lambda: True, stale_window=2., poll_interval=.02):
+        sample = getattr(frame, "sourceSample", frame.pts_us * self.clock.source_rate // 1000000)
+        if not self.clock.accepts(frame, sample, sample):
+            self.frames_dropped += 1
+            self.disposition(frame, "fenced")
+            return
+        await super().push(frame, is_active, stale_window, poll_interval)
+
+    def disposition(self, frame, state):
+        self.dispositions[id(frame)] = state
+        while len(self.dispositions) > 128:
+            self.dispositions.pop(next(iter(self.dispositions)))
+        self.resolved += 1
+
+    def clear(self, generation_id=None):
+        super().clear(generation_id)
+        self.dispositions.clear()
+        self.resolved = 0
+
+    async def recv(self):
+        if self.readyState != "live":
+            from aiortc.mediastreams import MediaStreamError
+            raise MediaStreamError
+        await self.clock.wait_video_tick(self.tick, self.fps, lambda: self.readyState == "live")
+        if self.readyState != "live":
+            from aiortc.mediastreams import MediaStreamError
+            raise MediaStreamError
+        # Do not burst old video after receiver stalls.
+        self.tick = max(self.tick, self.clock.output_samples * self.fps // self.clock.output_rate - 1)
+        while not self.queue.empty():
+            source = self.queue._queue[0]
+            sample = getattr(source, "sourceSample", source.pts_us * self.clock.source_rate // 1000000)
+            end = sample + self.clock.source_rate // self.fps
+            if self.clock.timeline and getattr(source, "identity", None):
+                commit = self.clock.timeline.commits.get(source.identity.segmentId)
+                if commit:
+                    end = min(end, commit.end)
+            if source.generation_id != self.generation_id or not self.clock.accepts(source, sample, end):
+                self.queue.get_nowait()
+                self.frames_dropped += 1
+                self.disposition(source, "fenced")
+                continue
+            action = self.clock.video_action(sample)
+            if action == "wait":
+                break
+            self.queue.get_nowait()
+            if action == "drop":
+                self.frames_dropped += 1
+                self.clock.video_late_drops += 1
+                self.disposition(source, "dropped")
+                continue
+            self.latest = source
+            self.consumed += 1
+            self.total_consumed += 1
+            self.last_recv_monotonic = time.monotonic()
+            self.first_recv_monotonic = self.first_recv_monotonic or self.last_recv_monotonic
+            self.last_recv_at = datetime.now(timezone.utc).isoformat()
+            self.disposition(source, "consumed")
+            if self.clock.timeline:
+                self.clock.timeline.observe_sink_progress(source.identity, self.sink_id, "video", sample, end)
+            break
+        else:
+            self.clock.video_holds += 1
+        if self.latest:
+            pixels = np.frombuffer(self.latest.rgb, dtype=np.uint8).reshape(self.latest.height, self.latest.width, 3)
+        else:
+            pixels = np.zeros((256, 256, 3), dtype=np.uint8)
+        frame = av.VideoFrame.from_ndarray(pixels, format="rgb24")
+        frame.pts = self.tick * 90000 // self.fps
+        frame.time_base = Fraction(1, 90000)
+        self.tick += 1
+        self.pts = self.tick * 90000 // self.fps
+        return frame
+
+
 @dataclass(eq=False)
 class _Peer:
     peer_id: str
@@ -301,6 +509,9 @@ class _Peer:
 
 class WebRTCMediaOutput:
     def __init__(self, fps: int = 25):
+        self.timeline_v2 = timeline_enabled()
+        self.timeline = None
+        self.standalone_audio_samples = Fraction(0)
         self.fps = int(os.getenv("TARGET_FPS", str(fps)))
         self.video_buffer_ms = int(os.getenv("TARGET_VIDEO_BUFFER_MS", "400"))
         self.audio_buffer_ms = int(os.getenv("TARGET_AUDIO_BUFFER_MS", "400"))
@@ -324,13 +535,36 @@ class WebRTCMediaOutput:
     def record_render_ms(self, render_ms: float) -> None:
         self.render_ms = round(render_ms, 3)
 
+    def bind_timeline(self, timeline):
+        if not self.timeline_v2 or self.running:
+            raise ValueError("bind V2 timeline before output start")
+        self.timeline = timeline
+        def fence():
+            for peer in tuple(self.peers):
+                peer.audio.clear()
+                peer.video.clear()
+        timeline.sink_fences.append(fence)
+        timeline.sink_observers.append(lambda: {"sink": "webrtc", "peers": [
+            {"sinkId": peer.peer_id, **peer.audio.clock.snapshot()} for peer in self.peers]})
+
+    def video_disposition(self, frame):
+        states = [p.video.dispositions.get(id(frame)) for p in self.peers
+                  if isinstance(p.video, _TimelineVideoTrack)]
+        if "consumed" in states:
+            return "consumed"
+        return "dropped" if states and all(s == "dropped" for s in states) else None
+
     def pop_warnings(self) -> list[dict]:
         warnings, self.warnings = self.warnings, []
         return warnings
 
     def _diagnostic(self, peer: _Peer) -> dict:
         elapsed = max(0.001, time.monotonic() - (peer.video.first_recv_monotonic or time.monotonic()))
-        return {"peerId": peer.peer_id, "connectionState": peer.connection.connectionState,
+        return {**({"mediaTimeline": peer.audio.clock.snapshot(),
+                    "adaptiveTargetMs": peer.audio.adaptive.target_ms,
+                    "pendingSamples": len(peer.audio.pending) // 2}
+                   if isinstance(peer.audio, _TimelineAudioTrack) else {}),
+                "peerId": peer.peer_id, "connectionState": peer.connection.connectionState,
                 "iceConnectionState": peer.connection.iceConnectionState,
                 "audioQueueSize": peer.audio.queue.qsize(), "videoQueueSize": peer.video.queue.qsize(),
                 "audioQueueMax": peer.audio.queue.maxsize, "videoQueueMax": peer.video.queue.maxsize,
@@ -391,10 +625,23 @@ class WebRTCMediaOutput:
         if not self.running:
             raise RuntimeError("Media output is not running")
         peer_connection = RTCPeerConnection()
-        audio = _AudioTrack(self.audio_buffer_ms, self.max_audio_buffer_ms)
-        video = _VideoTrack(self.fps, self.video_buffer_ms, self.max_video_buffer_ms)
+        if self.timeline_v2:
+            clock = AudioMasterClock()
+            clock.timeline = self.timeline
+            if self.timeline:
+                clock.source_rate = self.timeline.sample_rate
+                clock.policy = self.timeline.policy
+                clock.source_sample = self.timeline.committed_end
+            else:
+                clock.source_sample = int(self.standalone_audio_samples)
+            audio = _TimelineAudioTrack(clock)
+            video = _TimelineVideoTrack(clock, self.fps)
+        else:
+            audio = _AudioTrack(self.audio_buffer_ms, self.max_audio_buffer_ms)
+            video = _VideoTrack(self.fps, self.video_buffer_ms, self.max_video_buffer_ms)
         audio.generation_id = video.generation_id = self.generation_id
         peer = _Peer("peer_" + uuid4().hex, peer_connection, audio, video)
+        audio.sink_id = video.sink_id = peer.peer_id
         self.peers.add(peer)
         peer_connection.addTrack(audio)
         peer_connection.addTrack(video)
@@ -437,6 +684,10 @@ class WebRTCMediaOutput:
     async def push_audio(self, chunk: AudioChunk) -> None:
         if not self.running or chunk.generation_id != self.generation_id:
             return
+        if self.timeline_v2 and self.timeline is None:
+            if chunk.channels != 1 or len(chunk.pcm) % 2 or chunk.sample_rate <= 0:
+                raise ValueError("invalid mono PCM")
+            self.standalone_audio_samples += Fraction(len(chunk.pcm) // 2 * 16000, chunk.sample_rate)
         peers = tuple(self.peers)
 
         async def push(peer: _Peer) -> None:
@@ -492,7 +743,7 @@ class WebRTCMediaOutput:
         deadline = started + self.drain_timeout
         while generation_id == self.generation_id and self.running:
             pending = [peer for peer, (audio, video) in targets.items() if peer in self.peers and
-                       (peer.audio.consumed < audio or peer.video.consumed < video)]
+                       (peer.audio.consumed < audio or getattr(peer.video, "resolved", peer.video.consumed) < video)]
             if not pending:
                 if any(peer in self.peers for peer in targets):
                     log.warning("webrtc_media_metrics %s", json.dumps({
@@ -505,7 +756,7 @@ class WebRTCMediaOutput:
             for peer in pending:
                 audio, video = targets[peer]
                 stalled_audio = peer.audio.consumed < audio and now - (peer.audio.last_recv_monotonic or started) >= self.stale_window
-                stalled_video = peer.video.consumed < video and now - (peer.video.last_recv_monotonic or started) >= self.stale_window
+                stalled_video = getattr(peer.video, "resolved", peer.video.consumed) < video and now - (peer.video.last_recv_monotonic or started) >= self.stale_window
                 if peer.connection.connectionState in {"failed", "disconnected", "closed"} or stalled_audio or stalled_video:
                     await self._evict(peer, "drain_stalled")
             if time.monotonic() >= deadline:
