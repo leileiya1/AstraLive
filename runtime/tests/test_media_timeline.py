@@ -398,5 +398,25 @@ class TrackTests(unittest.IsolatedAsyncioTestCase):
         avatar.running=False
         await asyncio.gather(*tuple(output.acks))
 
+    async def test_bound_v2_does_not_wait_stalled_preview_admission(self):
+        from unittest.mock import AsyncMock
+        queued = asyncio.Queue(); queued.put_nowait(object())
+        peer = SimpleNamespace(connection=SimpleNamespace(connectionState="connected"),
+                               video=SimpleNamespace(enqueued=0, consumed=0, generation_id=1))
+        web = SimpleNamespace(peers=[peer])
+        channel = SimpleNamespace(name="webrtc", output=web, audio=queued, video=queued)
+        fanout = SimpleNamespace(channels=[channel], push_audio=AsyncMock(), push_video=AsyncMock())
+        avatar = SimpleNamespace(running=True, generation_id=1, pipeline=object(), cached_idle=None,
+                                 link=object(), log=lambda *a,**k: None)
+        with patch.dict(os.environ, {"ASTRALIVE_MEDIA_TIMELINE_V2_ENABLED": "true"}):
+            output = BoundConsumptionMediaOutput(fanout, avatar)
+        await asyncio.wait_for(output.push_audio(AudioChunk(1,0,bytes(640))), .1)
+        frame=VideoFrame(1,0,8,8,bytes(192))
+        output.metadata[id(frame)]={"source":"GPU_INFERENCE","generation_id":42,"frame_sequence":0,"activity":"TALKING"}
+        await asyncio.wait_for(output.push_video(frame), .1)
+        avatar.running=False
+        await asyncio.gather(*tuple(output.acks))
+        fanout.push_audio.assert_awaited_once();fanout.push_video.assert_awaited_once()
+
 
 if __name__ == "__main__": unittest.main()
