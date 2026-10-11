@@ -50,7 +50,12 @@
         "runtime/app/main.py"
       ],
       "conflictProvenance": "c-conflict-resolution-1.json",
-      "nativeSoak": "RUNNING"
+      "nativeSoak": {
+        "gate": "merge-c-native-soak-1/result.json",
+        "audit": "merge-c-native-soak-1/audit.json",
+        "status": "PASS_SCOPED_FIXTURE",
+        "realInference": "NOT TESTED"
+      }
     }
   ],
   "pending": [
@@ -67,5 +72,13 @@
     "nativeShort": "c-native-short-premerge-1/result.json",
     "supersededBy": "ea0d48e2ebddb8e07dc4f3ea8082fc4f40c306d1",
     "historical": true
-  }
+  },
+  "deferred": [
+    {
+      "agent": "D",
+      "source": "1a1bce2a1cb3f933be607998576bd64558bb11be",
+      "reason": "production wiring not delivered; old patch context fails actual core; requires owner rebase/auth review",
+      "evidence": "d-wiring-on-core-1/result.json"
+    }
+  ]
 }

@@ -2,7 +2,7 @@
 
 Original v0.4 baseline `cf6540bdcc788c037929836480812dfaa78362a2`; Phase 2 shared baseline `5a24478126211cbcde5a9565d0c6063748426527`; branch `exp/v0.5-integration-chaos`; worktree `../AstraLive-agent-f`; contract revision `v0.5-frozen-1`.
 
-**Current gate: A→B→C normally merged at89179c7,10b74ca,6095989; each complete postmerge Go/race/owned-PG/Runtime/contract/frontend gate PASS. C old locking defect reproduced and fixed with same-oracle independent PASS; five conflicts resolved from verified equivalent dependency base. Final merged-source ten-minute/five-question native synthetic fixture is running. D production wiring remains deferred: its patch still fails on current core.** [Actual ledger](evidence/integration-f/merge-ledger.json), [review](CONTINUITY-SEAM-REVIEW.md), [report](CHAOS-TEST-REPORT.md), [acceptance](FINAL-ACCEPTANCE.md). Frozen bytes unchanged; all experimental defaults off. No real-GPU acceptance.
+**Current gate: A→B→C normally merged at89179c7,10b74ca,6095989; each complete postmerge Go/race/owned-PG/Runtime/contract/frontend gate PASS. C old locking defect reproduced and fixed with same-oracle independent PASS; five conflicts resolved from verified equivalent dependency base. Final merged-source native synthetic fixture PASS659.662s, five questions,209 commits/836 required receipts and200 authored facts; human/provider Golden acceptance still NOT TESTED. D production wiring remains deferred: its patch still fails on current core.** [Actual ledger](evidence/integration-f/merge-ledger.json), [review](CONTINUITY-SEAM-REVIEW.md), [report](CHAOS-TEST-REPORT.md), [acceptance](FINAL-ACCEPTANCE.md). Frozen bytes unchanged; all experimental defaults off. No real-GPU acceptance.
 
 ## 1. Delivery sequence and merge ledger
 
