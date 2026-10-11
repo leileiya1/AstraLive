@@ -321,13 +321,15 @@ class MediaTimeline:
             self._command(command, expectedRevision)
             if fence != self.fence_revision:
                 raise ValueError("RUN_SEALED")
-            # Block eligibility until the installed proof is durable.
+            # Install while fenced: COMMIT_INSTALLED must describe an entry
+            # already present locally, rather than a future installation intent.
+            # Public cursor/revision and eligibility wait for the durable ACK.
             self.blocked = True
+            self.commits[identity.segmentId] = proposed
             try:
                 await self._record("COMMIT_INSTALLED", command, {"commit": proposed})
                 if fence != self.fence_revision or self.sealed:
                     raise ValueError("RUN_SEALED")
-                self.commits[identity.segmentId] = proposed
                 self.committed_end = proposed.end
                 self.revision += 1
                 self.blocked = False

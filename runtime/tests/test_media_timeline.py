@@ -24,10 +24,11 @@ class TestJournal:
     def __init__(self):
         self.operations = []
         self.pause = None
+        self.pause_operation = None
         self.fail = None
     async def record(self, operation, command, proof):
         self.operations.append((operation, command, proof))
-        if self.pause:
+        if self.pause and (self.pause_operation is None or operation == self.pause_operation):
             await self.pause.wait()
         if operation == self.fail:
             raise ConnectionError("injected journal ACK loss")
@@ -181,12 +182,74 @@ class TimelineControlTests(unittest.IsolatedAsyncioTestCase):
         self.journal.pause.set()
         with self.assertRaisesRegex(ValueError, "RUN_SEALED"): await task
         self.assertEqual(self.timeline.committed_end, 0)
+        self.assertNotIn("s1", self.timeline.commits)
+
+    async def test_installed_proof_observes_fenced_entry_before_public_cursor(self):
+        self.journal.pause = asyncio.Event()
+        self.journal.pause_operation = "COMMIT_INSTALLED"
+        task = asyncio.create_task(self.commit())
+        await asyncio.sleep(0)
+        try:
+            self.assertEqual([op for op, _, _ in self.journal.operations],
+                             ["COMMIT_INTENT", "COMMIT_INSTALLED"])
+            proposed = self.journal.operations[-1][2]["commit"]
+            self.assertIs(self.timeline.commits["s1"], proposed)
+            self.assertTrue(self.timeline.blocked)
+            self.assertFalse(self.timeline.eligible(proposed.identity, 0, 640))
+            snapshot = self.timeline.CurrentCommittedPTS("session", 1)
+            self.assertEqual(snapshot["committedExclusiveEnd"].sampleIndex, 0)
+            self.assertEqual(snapshot["revision"], 0)
+        finally:
+            self.journal.pause.set()
+        receipt = await task
+        self.assertFalse(self.timeline.blocked)
+        self.assertTrue(self.timeline.eligible(receipt["identity"], 0, 640))
+        self.assertEqual(self.timeline.committed_end, 640)
+        self.assertEqual(self.timeline.revision, 1)
+
+    async def test_stop_during_installed_ack_keeps_entry_ineligible(self):
+        self.journal.pause = asyncio.Event()
+        self.journal.pause_operation = "COMMIT_INSTALLED"
+        task = asyncio.create_task(self.commit())
+        await asyncio.sleep(0)
+        identity = self.timeline.commits["s1"].identity
+        self.timeline.fence_now()
+        self.journal.pause.set()
+        with self.assertRaisesRegex(ValueError, "RUN_SEALED"):
+            await task
+        self.assertTrue(self.timeline.blocked)
+        self.assertFalse(self.timeline.eligible(identity, 0, 640))
+        self.assertEqual(self.timeline.committed_end, 0)
+        self.assertEqual(self.timeline.revision, 0)
+        self.assertNotIn("c1", self.timeline.receipts)
+
+    async def test_cancel_during_installed_ack_requires_reconciliation(self):
+        self.journal.pause = asyncio.Event()
+        self.journal.pause_operation = "COMMIT_INSTALLED"
+        task = asyncio.create_task(self.commit())
+        await asyncio.sleep(0)
+        identity = self.timeline.commits["s1"].identity
+        task.cancel()
+        with self.assertRaises(asyncio.CancelledError):
+            await task
+        self.assertTrue(self.timeline.blocked)
+        self.assertFalse(self.timeline.eligible(identity, 0, 640))
+        self.assertEqual(self.timeline.committed_end, 0)
+        self.assertEqual(self.timeline.revision, 0)
+        with self.assertRaisesRegex(ValueError, "RECOVERY_UNKNOWN"):
+            await self.commit()
 
     async def test_ack_loss_blocks_publication_and_invalid_cut_rejected(self):
         self.journal.fail = "COMMIT_INSTALLED"
         with self.assertRaises(ConnectionError): await self.commit()
         self.assertTrue(self.timeline.blocked)
         self.assertEqual(self.timeline.committed_end, 0)
+        identity = self.timeline.commits["s1"].identity
+        self.assertFalse(self.timeline.eligible(identity, 0, 640))
+        self.assertEqual(self.timeline.revision, 0)
+        self.assertNotIn("c1", self.timeline.receipts)
+        with self.assertRaisesRegex(ValueError, "RECOVERY_UNKNOWN"):
+            await self.commit()
         self.journal.fail = None
         self.timeline = MediaTimeline("session", 1, journal=self.journal)
         await self.commit()

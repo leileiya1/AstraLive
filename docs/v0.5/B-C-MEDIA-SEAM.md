@@ -1,6 +1,6 @@
 # Agent B → C media integration handoff
 
-Runtime pin: `cf43e2d3dd6a9223648eaced2526d13e0ccbf8e1`, pushed to `exp/v0.5-media-timeline`, based on `5a24478`. Final actual GPU-tested runtime file hashes are in [source.json](evidence/agent-b/real-gpu/ledger-soak-1/source.json), clean tested source `e2a8fa2`. This document adds no signature, enum, protocol or runtime change. C can introduce A then B into its own integration branch; B does not merge other branches or main.
+Historical media-acceptance pin: `cf43e2d3dd6a9223648eaced2526d13e0ccbf8e1`, pushed to `exp/v0.5-media-timeline`, based on `5a24478`. Final actual GPU-tested runtime file hashes are in [source.json](evidence/agent-b/real-gpu/ledger-soak-1/source.json), clean tested source `e2a8fa2`. The initial handoff was docs-only. The subsequent B increment corrects local commit installation order under F review053e557; public signatures, enums and GPU protocol remain unchanged. Pin that increment for C integration, not the older pre-review ordering. C can introduce A then B into its own integration branch; B does not merge other branches or main.
 
 `runtime/app/session.py`, `runtime/app/providers.py` and all `gpu_worker/**` are unchanged from B's baseline. Session orchestration remains C-owned. B's owned implementation files are media_timeline.py, media_fanout.py, bound_media.py, webrtc_media.py and rtmp_media.py. Frozen revision is `v0.5-frozen-1`; answer lane is `AUDIENCE_ANSWER`.
 
@@ -25,7 +25,7 @@ The constructor starts at timelineEpoch1/sample0/revision0. It has no durable re
 
 `TimelineJournal.record(operation, command, proof)` is the existing dependency seam and must return `{"durable": True}` only after authoritative transaction success. A/C validates complete frozen command envelope, authentication/ownership, lease, CAS, command sequence, reservation, TTL, immutable binding and persistent dedup. B's minimal local checks are not those authority checks. Serialize dataclasses/enums recursively; TimelinePosition's computed ptsUs must be included explicitly on a frozen wire DTO because dataclasses.asdict does not include properties. Do not change public signatures to carry a private adapter's arguments.
 
-Operations currently sent to this journal: COMMIT_INTENT, COMMIT_INSTALLED, SUSPEND_REQUESTED, INVALIDATE_AFTER, BEGIN_EPOCH_PREPARED, BEGIN_EPOCH_ACTIVE and SEGMENT_COMPLETED. Map internal observation names into A's approved transactions/events; they are not additional public commandType values. COMMIT_INSTALLED durability ACK precedes local eligibility installation; missing ACK leaves media blocked and requires reconciliation. BEGIN_EPOCH_PREPARED must validate C/A's existing reservation, and BEGIN_EPOCH_ACTIVE must perform the activation CAS after B's fence. B never allocates a reservation.
+Operations currently sent to this journal: COMMIT_INTENT, COMMIT_INSTALLED, SUSPEND_REQUESTED, INVALIDATE_AFTER, BEGIN_EPOCH_PREPARED, BEGIN_EPOCH_ACTIVE and SEGMENT_COMPLETED. Map internal observation names into A's approved transactions/events; they are not additional public commandType values. After COMMIT_INTENT durability ACK, B sets blocked=true and installs the local immutable entry BEFORE recording COMMIT_INSTALLED. Only its durable ACK and final fence validation advance the public committed cursor/revision and permit eligibility. Missing/failed/cancelled ACK or Stop during it leaves the installed entry blocked and requires reconciliation; it cannot replay as a committed success. A must validate current lease/authority at the durable installed ACK. This is the frozen-contract ordering correction requested in F review053e557, not a schema/signature revision. BEGIN_EPOCH_PREPARED must validate C/A's existing reservation, and BEGIN_EPOCH_ACTIVE must perform the activation CAS after B's fence. B never allocates a reservation.
 
 ## Generated → ready → commit: explicit integration gap
 
@@ -98,3 +98,27 @@ InvalidateAfter accepts the committed end for natural cuts. It fences sinks and 
 ## Acceptance and remaining work
 
 B runtime unit checks176 passed/11 skipped; real final ledger run1806.81s,222 natural boundaries,222/222 waveform matches, zero stale marker in Chrome/RTMP, no backward/duplicate PTS. [Detailed comparisons, regressions, failures and rollback](AUDIO-MASTER-TIMELINE.md) remain authoritative. Default remains OFF. Neither these tests nor this integration sketch proves SQL lease authority, strict precommit complete video READY, FORCE partial semantics, product switching, crash continuity, live LLM/TTS, physical speaker or official-platform audience completion.
+
+## A/C receipt adapter alignment and EOF
+
+A selected the canonical private transport shape below; C's grouped audio/video objects may remain internal but must be expanded on the wire. This does not replace a frozen public method or establish F acceptance of A's implementation.
+
+```python
+# Build only after actual terminal contiguous observations, from the SAME commit.
+# evidenceRef must resolve to the durable proof/trace, not an invented success label.
+commit = timeline.commits[identity.segmentId]
+sink_receipts = [
+    {"sinkId": sink, "media": kind, "startSample": commit.start,
+     "endSample": commit.consumed[(sink, kind)], "finalMarker": True,
+     "identity": identity, "evidenceType": "sink_consumed",
+     "evidenceRef": actual_terminal_evidence_ref(sink, kind)}
+    for sink in commit.descriptor["requiredSinks"]
+    for kind in ("audio", "video")
+]
+# Production serializer maps identity dataclass; A verifies every end==commit.end,
+# finalMarker against immutable ready descriptor and the full required sink set.
+```
+
+At source16k/25fps, a ready artifact has ceil(sampleCount/640) video frames whose source positions are commit.start+frameIndex*640. The last start must be strictly before commit.end. WebRTC/RTMP clamp that frame's consumed exclusive end to commit.end. Do not add an extra video frame at or beyond the endpoint; PCM flush may pad transport samples, but must not advance semantic source samples. The GPU media fixture already verified222 non-frame-aligned109369-sample paragraphs with exact terminal ends. A/C Lightweight replay needs its own labelled checks; its per-attempt engine/artifact staging is not native GPU proof.
+
+The post-review control increment has separate unit/runtime evidence in install-order-tests.log and install-order-runtime.log. Historical GPU recordings retain their original code hashes: their30min duration must not be retroactively attributed to the changed commit-control ordering. Full strict-GPU READY and CCR-BC-001 remain unresolved; no precommit early-Credit helper was added.
