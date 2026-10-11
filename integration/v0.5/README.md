@@ -43,3 +43,14 @@ go -C backend test -race -count=1 -v ./internal/interaction
 ```
 
 These tests do not validate C's production dispatcher, flag wiring, SQL cursor, media readiness or naturalness. The reviewed C Runtime flag differed from the frozen canonical name and requires an owner correction; race PASS does not pass that separate compatibility gate.
+## Pinned module and postmerge gate
+
+`module_gate.py` archives the supplied immutable source or actual F merge commit, runs A's owned temporary PostgreSQL/full Go/race/process-fault/migration/auth/interaction/contract gate and complete Runtime discovery, and records exact commands, exit codes, durations, environment and SHA256 logs. It never starts real providers/GPU. The optional frontend argument runs tests/build using installed dependencies only after confirming the donor and archived `bun.lock` match. Source archives and the owned PG cluster are disposable; owner worktrees are not changed.
+
+```sh
+python integration/v0.5/module_gate.py --repo "$PWD" --source <commit-sha> \
+  --output <new-evidence-directory> --python <runtime-python> --pg-bin <postgres-bin> \
+  --frontend-modules <matching-frontend-node_modules>
+```
+
+Omit `--frontend-modules` for a premerge module check only; the result marks frontend NOT TESTED. Each postmerge gate must include it. A PASS covers the executed software/SQL fixtures only; opt-in media skips and real GPU/Chrome/RTMP/naturalness/host acceptance remain separate gates. Never reclassify an independent source-pin run as a test of an actual merge commit.
