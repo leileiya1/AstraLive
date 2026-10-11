@@ -25,7 +25,7 @@ def main():
     out.mkdir(parents=True, exist_ok=False)
     report = {"source": source, "scope": "owned PostgreSQL/CPU process/Go/Python software regression; no real inference or audience acceptance", "checks": []}
     env = {key: os.environ[key] for key in ("PATH", "HOME", "TMPDIR", "LANG") if key in os.environ}
-    env.update(DURABILITY_PG_BIN=args.pg_bin, DURABILITY_TEST_PYTHON=args.python)
+    env.update(DURABILITY_PG_BIN=args.pg_bin, DURABILITY_TEST_PYTHON=args.python, NARRATION_TEST_PYTHON=args.python)
     with tempfile.TemporaryDirectory(prefix="astralive-f-module-") as temp:
         root = Path(temp).resolve()
         archive = subprocess.Popen(["git", "-C", str(args.repo), "archive", source], stdout=subprocess.PIPE)

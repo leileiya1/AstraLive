@@ -26,7 +26,12 @@
       "postmergeGate": "merge-b-1/result.json",
       "postmergeStatus": "PASS",
       "conflictFiles": [],
-      "mediaGate": "PENDING"
+      "mediaGate": {
+        "steady": "merge-b-media-steady-1/audit.json",
+        "faults": "merge-b-media-faults-1/audit.json",
+        "status": "CONDITIONAL",
+        "scope": "real local sinks, synthetic source, short regression; reconnect UNKNOWN tail retained"
+      }
     }
   ],
   "pending": [
@@ -34,5 +39,13 @@
     "D"
   ],
   "completeIntegration": false,
-  "realInferenceAcceptance": "NOT TESTED"
+  "realInferenceAcceptance": "NOT TESTED",
+  "cCandidate": {
+    "source": "06b182f840e0dc110a150a687e7ce016744edb3b",
+    "merged": false,
+    "gate": "HOLD_LOCK_ORDER_OWNER_FIX",
+    "premergeGate": "c-delivery-premerge-1/result.json",
+    "runtimeEnvironmentCorrected": "c-runtime-env-corrected-1/result.json",
+    "nativeShort": "c-native-short-premerge-1/result.json"
+  }
 }

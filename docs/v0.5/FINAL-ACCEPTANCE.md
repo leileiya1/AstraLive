@@ -1,72 +1,49 @@
 # v0.5 F acceptance decision — partial sequential integration
 
-**Overall: complete A+B+C+D acceptance remains incomplete; A merged with postmerge software/SQL gate PASS.** This is a progress decision, not final release approval. Frozen contract `v0.5-frozen-1` is unchanged. [Actual merge ledger](evidence/integration-f/merge-ledger.json), [test report](CHAOS-TEST-REPORT.md), [current reviews](CONTINUITY-SEAM-REVIEW.md). Historical first-review risks/failures remain preserved in PREMERGE-RISKS and their pinned artifacts.
+**A+B are normally merged and pass complete postmerge software/owned-PG/frontend regression. C06b182f is delivered but its merge gate is held on a concrete lock-order/outer-commit defect and five shared-file conflicts. D remains deferred with production wiring pending.** Frozen `v0.5-frozen-1` bytes unchanged; no main merge, deployment or default-enable. [Actual ledger](evidence/integration-f/merge-ledger.json), [test report](CHAOS-TEST-REPORT.md), [owner seam review](CONTINUITY-SEAM-REVIEW.md).
 
-Current A tip a28a409 includes the six-table journal, persistent proof spool and independently verified typed Worker wire-domain fix. F normally merged it at89179c7 and reran all Go/race/owned-PG/process-fault/contract and Runtime checks, frontend40/40 and build on that actual merge commit: PASS. Runtime160 pass/11 skip; durable Python12/12. No conflict file was manually resolved. B dda7936 is next; C is actively implementing after consuming A/B but has no final accepted implementation pin; D production wiring remains pending. Strict SoulX full precommit READY/credit/history remains unavailable under the current contract.
+## Branch and test ledger
 
-Retained standalone gates: C Scheduler draft selection/legacy race PASS; B install-order code at09f06f2 Runtime179 pass/11 skip, latest dda7936 source identical. F verified the user-approved B flag alias (CCR-B-001). C corrected its canonical flag/source overflow and has a source-reviewed whole-Session product retirement hook; final pinned joint acceptance is pending. Standalone/owner fixture results do not prove natural narration or actual audience hearing.
-
-Experimental defaults remain off. No deployment or main merge has occurred; frontend and frozen/Worker protocol source remain unchanged. Each next branch requires its own postmerge gate before progressing.
-
-## Actual branch/merge ledger
-
-| Order | Branch | Reviewed source SHA | Merge SHA / status |
+| Order | Source branch / tip | Actual F merge | F validation |
 | --- | --- | --- | --- |
-| A | exp/v0.5-pg-durability | a28a4098a9014d9f7577d541048b2e110f1fc325 |89179c7da25a81dfa91e24bb7a06a8086813e3c9; postmerge gate PASS |
-| B | exp/v0.5-media-timeline | dda7936faba56efe01659b6393a4d32a93322508 | NONE; next in order, standalone review/tests passed |
-| C | exp/v0.5-narration-continuity | final implementation pin pending | NONE; owner implementation/testing in progress, dependency-only commits are not delivery |
-| D | exp/v0.5-local-ipc |1a1bce2a1cb3f933be607998576bd64558bb11be | NONE; standalone validated, shared patch context conflict, deferred |
+| A | exp/v0.5-pg-durability / a28a4098a9014d9f7577d541048b2e110f1fc325 |89179c7da25a81dfa91e24bb7a06a8086813e3c9 | full Go/race/owned-PG faults/contract; Runtime171 total160 pass11 skips; frontend40/40/build PASS |
+| B | exp/v0.5-media-timeline / dda7936faba56efe01659b6393a4d32a93322508 |10b74ca3c8a52c34f39ad152633b5784a7f94a2b | repeat A gates; Runtime202 total191 pass11 skips; frontend40/40/build PASS; real native short output regression executed separately |
+| C | exp/v0.5-narration-continuity /06b182f840e0dc110a150a687e7ce016744edb3b | NOT MERGED | real SQL/Go/race cross-language premerge checks and native short PASS; corrected Runtime210 total199 pass11 skips PASS; initial jsonschema environment failure retained; owner lock-order fix pending |
+| D | exp/v0.5-local-ipc /1a1bce2a1cb3f933be607998576bd64558bb11be | NOT MERGED | standalone macOS TCP/UDS/auth/restart/race PASS; production patch fails A context and requires final A+C rebase/review |
 
-No PR URLs supplied. A was merged normally with branch history; no main merge/reset/force push. Actual conflicts resolved: NONE. D's old patch failure at `backend/cmd/server/main.go` remains an unapplied proposal. F's manual edits are only integration harness/review/evidence; owner implementation is incorporated by normal merges. Order remains A→B→C→D.
+No PR URLs supplied. A and B normal merges have no conflict files. C preview conflicts: backend/cmd/server/main.go, backend/internal/app/durability.go, backend/internal/app/interaction.go, backend/internal/app/service.go, runtime/app/main.py. They have not been blindly selected or applied. F edits integration harness/docs/evidence only. A owns additive SQL and recovery, B Timeline/sinks, C FSM/orchestration, D local transport; shared changes and dependencies are recorded in the seam review. Order remains A→B→C→D.
 
-## Per-feature decisions
+## Feature decisions and flags
 
-| Feature | Decision | Evidence / limit | Default enable |
-| --- | --- | --- | --- |
-| PostgreSQL durability / PG-only | CONDITIONAL | A actual merge software/real-PG/CPU process and frontend PASS; full C media recovery not yet accepted | NO |
-| Audio-master MediaTimeline | CONDITIONAL | B standalone179 Runtime tests passed and install-order fix reviewed; historical real-GPU media uses test-double journal; actual joint merge pending | NO |
-| Narration Continuity | NOT TESTED by F as a final merged candidate | C active draft/owner fixture tests; final commit and independent naturalness/inference acceptance pending | NO |
-| Local IPC UDS | CONDITIONAL | D actual macOS standalone TCP/UDS/auth/restart/race passes; Backend/probe entry patch needs rebase, core integration untested; Windows runtime untested | NO, keep TCP |
-| Remote QUIC | NOT TESTED | outside this A–D phase and optional; not a Continuity release blocker | NO, keep TCP |
-
-Complete accepted “讲解→回答→自然续讲”: **NOT YET**. C reports five-question10-minute synthetic-inference/native-Chrome/local-RTMP fixture runs; final source/evidence and F independent joint review are pending. Naturalness, real TTS/SoulX and long randomized Golden acceptance remain NOT TESTED by F. Automatic fact coverage is not human semantic-quality proof.
-
-Redis fault recovery: **scoped A PostgreSQL-only startup and Backend/Runtime restart validated with Redis unreachable/invalid; integrated Narration recovery and killing an active Redis service NOT TESTED**. Unknown playback is kept conservative by A; no audible exactly-once claim.
-
-A/V environment/metrics: **F did not run real GPU/Chrome/RTMP this phase; no new A/V metrics**. B's archived ledger soak is independent media evidence with a test-double journal, not completed SQL or narration acceptance. Linux/remote GPU/Windows/full-host UDS modes remain NOT TESTED by F.
-
-## Compatibility and feature flags
-
-This checklist records current source invariants and executed scope. A postmerge frontend40/40/build and software/SQL regressions pass. Full joint flag-off real live acceptance remains pending.
-
-| Existing behavior | Evidence / remaining gate |
-| --- | --- |
-| v1.1 platform/Runtime contract | `contracts/**` unchanged in A/B/D; A frozen v1.1 validator PASS; old event schemas preserved |
-| ordinary Speak/Utterance and interaction | A full Go/race with real SQL and ordinary CPU Runtime tests PASS; B legacy Runtime suite PASS; combined live regression pending |
-| authentication / ownership | A real SQL HTTP/config security regressions PASS; D actual local Runtime token/auth checks PASS; combined core binding/UDS wiring pending |
-| SoulX TCP binary protocol | no `gpu_worker/**` implementation delta in A/B/D; no new real GPU transport run by F |
-| WebRTC / RTMP | B CPU sink/drain regression PASS; real Chrome/RTMP and combined output NOT TESTED by F |
-| frontend | source untouched; A actual merge frontend40/40 and build PASS with matching installed lockfile |
-
-Frozen names and rollout defaults are preserved below; these are recommended settings, not a claim that every pending implementation consumes them.
-
-| Setting | Keep default | Current implementation / limitation |
+| Feature | Decision / evidence boundary | Default |
 | --- | --- | --- |
-| `ASTRALIVE_DURABILITY_ENABLED` | `false` | A ordinary durable mode independently tested |
-| `ASTRALIVE_EVENT_MODE` | `legacy_redis` | `postgres_only` requires durability and valid PG/journal; A postmerge scoped CPU/SQL tests pass |
-| `ASTRALIVE_MEDIA_TIMELINE_ENABLED` | `false` | B user-approved V2 primary/frozen-name alias; conflicting explicit values reject startup |
-| `ASTRALIVE_CONTINUITY_ENABLED` | `false` | C final joint acceptance pending; requires durability+Timeline+authorized binding, no QUIC dependency |
-| `ASTRALIVE_LOCAL_TRANSPORT` / `ASTRALIVE_LOCAL_FALLBACK` | `tcp` / `disabled` | D standalone UDS tested; production entry patch pending |
-| `ASTRALIVE_WORKER_TRANSPORT` / `ASTRALIVE_WORKER_FALLBACK` | `tcp` / `disabled` | QUIC not included in current phase |
+| PostgreSQL durability / PostgreSQL-only | CONDITIONAL: merged SQL/CPU-process startup, restart/duplicate/old-epoch/outage/ownership gates PASS; complete production live/recovery matrix pending | durability=false; event_mode=legacy_redis |
+| MediaTimeline | CONDITIONAL: merged software regressions and synthetic source native Chrome/local RTMP short tests; no integrated final-source real-GPU acceptance | ASTRALIVE_MEDIA_TIMELINE_ENABLED=false; approved V2 primary/alias conflict rules retained |
+| Narration Continuity | FAIL merge gate on current06b182f locking/commit-order risk; software/native short functional path otherwise demonstrated with synthetic inference; superseding owner fix required | ASTRALIVE_CONTINUITY_ENABLED=false |
+| UDS local IPC | CONDITIONAL standalone; NOT TESTED as production-wired integrated feature | ASTRALIVE_LOCAL_TRANSPORT=tcp; fallback=disabled |
+| QUIC | NOT TESTED; outside A–D and optional, never Continuity release blocker | worker transport=tcp; fallback=disabled |
 
-## Remaining P0/P1 and release recommendation
+Complete accepted “讲解→回答→自然续讲”: **NO**. F final-pinned premerge short fixture executes Go/PG/Python/Timeline with real native Chrome/local RTMP; deterministic language, synthetic pulse TTS and Lightweight2D cannot establish human naturalness, real speech or SoulX. C retained seeded660.69s/five-question native fixture has209 media markers but lacks exact native-launch hashes and a full long SQL export. It is useful scoped evidence, not a final merged-source Golden PASS. F final merged ten-minute run awaits the corrected C pin. StrictSoulX complete-media READY staging is unavailable and fails closed before TTS/commit; CCR-BC-001 remains NOT APPROVED. Unknown-tail reconciliation/continuation API/UI and complete product retirement→cleanup/rebind acceptance are delivery gaps.
 
-Current core blockers: C final committed candidate and actual combined regression gate pending; strict SoulX precommit READY/credit/history remains unavailable. A's missing tables/journal and Worker ID mismatch are resolved and independently verified at its merged pin. P1: final pinned public FORCE, cursor/media recovery, Stop/product-switch lifecycle tests; D production wiring/rebase; full joint flag-off live regression and Golden/host matrix gaps. Earlier malformed C product Stop is replaced in its latest source-reviewed App hook, but final tests must prove Runtime cleanup/binding release as well as SQL STOPPING.
+Redis failure validation: **scoped PASS** for A actual PostgreSQL-only startup/command/event path and Backend/Runtime restart with Redis unreachable/invalid, plus owned PostgreSQL stop/start; duplicate Outbox/Inbox and UNKNOWN conservative retirement tested. Killing an active Redis instance, complete integrated live Narration recovery, real Worker disconnect/reconnect remain NOT TESTED by F. No exactly-once audible speech claim.
 
-**Do not enter full integrated real-GPU acceptance yet.** Continue B then C gates, obtain a verified strict-ready native staging path under the frozen protocol or an explicitly approved amendment, and accept the actual public-route/SQL/Timeline/Narration scenarios. D follows reviewed production wiring and must not block the core. Historical B isolated GPU results remain scoped to their own source/journal fixture, not the final integration.
+## Actual media measurements
 
-Rollback: no deployment occurred. If rolling back experimental live runs, first stop/seal/fence admission, retain receipts/UNKNOWN tails and release captured bindings; preserve additive SQL and spool evidence. Restore frozen defaults, working legacy Redis and original TCP before starting fresh compatible Sessions; never replay ambiguous media. For an integration-source rollback, revert the selected normal merge with `git revert -m 1 <merge-sha>` (A89179c7) after reviewing downstream dependencies. No force reset/main push or database down migration is authorized. Do not delete Redis/TCP or deployed evidence tables.
+Environment macOS arm64, Python3.12.13, Chrome154.0.8037.98 headless native, aiortc1.15.0/PyAV17.1.0, localhost FFmpeg RTMP, synthetic440Hz pulses/RGB markers, no LLM/TTS/GPU. Sources and recordings are hashed in [steady audit](evidence/integration-f/merge-b-media-steady-1/audit.json) and [fault audit](evidence/integration-f/merge-b-media-faults-1/audit.json). Chrome performance.now, Runtime monotonic and each encoder FLV PTS are separate domains; AudioContext detection does not prove physical playout.
 
-## Current integration follow-up
+| V2 short trial | Chrome onset drift P50/P95/max ms | RTMP decoded onset drift P50/P95/max ms | Boundary |
+| --- | --- | --- | --- |
+| steady20 markers |35/112/122.1 |5/16/16 | all20 ordinal pairs; normal Stop, no drain failure or RTMP PTS regressions/duplicates |
+| faults20 markers, peer/encoder reconnect |21.4/86.6/118.6 | before reconnect29/40/40 (n15); after24/35/35 (n3) | independent connection/encoder domains; two RTMP markers not observed across reconnect, tail UNKNOWN |
 
-A89179c7 and B10b74ca normal sequential merges both pass F complete postmerge software/PG/frontend gates; [ledger](evidence/integration-f/merge-ledger.json). A Worker wire integer-domain mismatch is fixed. C final06b182f is delivered and awaits five owner-resolved shared-file conflicts and pinned F gates. C default StrictSoulX complete-media staging is unavailable and fails closed; operator UNKNOWN-tail reconciliation/continuation and full cleanup/rebinding acceptance remain delivery gaps. Historical C native synthetic runs cannot replace final merged-source verification or real-provider/human acceptance. D production wiring remains pending. Keep all experimental defaults off; no main merge or deployment occurred.
+Steady legacy Chrome has21 audio pulses vs20 videos, so its correlation n0 remains unavailable; no browser A/B improvement claim. Fault generation-stale marker4000 was not observed, but this is a generation injection rather than proof of all run/timeline/Worker epoch fences. Injected delays cause recorded drops and unknown reconnect tails; no silent replay. Short synthetic onsets are not lip-sync, busy comment SLA or user experience improvement. Windows, Linux/remote GPU, physical audibility, browser device switches,30–60-minute live load and human visual quality remain NOT TESTED.
+
+## Compatibility / remaining P0 and P1
+
+Frozen contracts/platform events, frontend and SoulX Worker protocol source unchanged. Actual A+B Go/race/SQL auth/ownership and legacy interaction/Runtime tests, v1.1 validator and frontend40/40/build pass. All experimental flags default off; full default-mode native providers/live topology acceptance remains pending. D maintains distinct Go→Python transport from Python→GPU TCP/optional QUIC. A Worker63-bit ID mismatch is resolved; old negative probe remains historical evidence.
+
+P0 integration hold: C Scheduler mutex→Session row lock versus product retirement Session row lock→Scheduler mutex, with Stop/Override before real outer commit. C/A owners are fixing and must provide concurrent realScheduler/product/price/Stop and borrowed-rollback tests, then F independently verifies. P1: unavailable strict native complete staging, operator UNKNOWN reconciliation/continuation, full cleanup/rebind and public FORCE/native-provider gate, D production wiring/auth probes, actual-GPU/human and host matrix.
+
+**Do not default-enable any experimental feature or enter full integrated SoulX acceptance yet.** Correct C locking, rerun actual merge gates and obtain an executable strict staging provider under the frozen protocol before paid/real-provider acceptance. D can follow independently and must not block A+B+C core. Do not delete Redis/TCP.
+
+Rollback: no deployment occurred. For experiments first stop/seal/fence new admission, retain durable receipts/UNKNOWN tails and clean captured bindings. Restore frozen flags, legacy Redis and TCP before fresh compatible Sessions; never replay ambiguous media. Source rollback uses reviewed `git revert -m 1 <merge-sha>` in reverse dependency order (B10b74ca then A89179c7). Preserve additive SQL/spools/evidence; no down migration, force reset or main push.
