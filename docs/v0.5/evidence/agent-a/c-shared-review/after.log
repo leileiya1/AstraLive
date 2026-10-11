@@ -1,0 +1,7 @@
+sourceCommit=bf66c18b3f77b71646e04e74f5e40b8d7200be32
+fixtureSHA256=ed7aa2326a07e85a298337b96c0814cd3d94b33854f169076ee64924f7908f55
+=== RUN   TestAReviewBorrowedRetirementSchedulerLock
+    a_review_borrowed_stop_test.go:153: hook=8.337625ms gateError=<nil> SQLSession=LIVE schedulerStopped=false blockedOtherRoom=false
+--- PASS: TestAReviewBorrowedRetirementSchedulerLock (0.09s)
+PASS
+ok  	astralive/backend/internal/app	1.592s

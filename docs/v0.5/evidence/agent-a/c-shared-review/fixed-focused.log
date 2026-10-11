@@ -1,0 +1,31 @@
+=== RUN   TestPostgresStartAtomicFingerprintProductStop
+--- PASS: TestPostgresStartAtomicFingerprintProductStop (0.10s)
+=== RUN   TestPostgresFailedForceIdempotencyRollbackAndStop
+=== RUN   TestPostgresFailedForceIdempotencyRollbackAndStop/idempotent
+=== RUN   TestPostgresFailedForceIdempotencyRollbackAndStop/rollback
+2026/10/12 00:21:34 ERROR database operation failed requestId=req_5ee14f889d1063400fb90569759dd26c error="ERROR: fixture response rollback (SQLSTATE 23514)"
+=== RUN   TestPostgresFailedForceIdempotencyRollbackAndStop/stop
+--- PASS: TestPostgresFailedForceIdempotencyRollbackAndStop (0.44s)
+    --- PASS: TestPostgresFailedForceIdempotencyRollbackAndStop/idempotent (0.19s)
+    --- PASS: TestPostgresFailedForceIdempotencyRollbackAndStop/rollback (0.15s)
+    --- PASS: TestPostgresFailedForceIdempotencyRollbackAndStop/stop (0.10s)
+=== RUN   TestPostgresAdvisoryGateNeverWaitsForSessionLock
+--- PASS: TestPostgresAdvisoryGateNeverWaitsForSessionLock (0.08s)
+=== RUN   TestPostgresBorrowedControlRollbackPreservesActiveScheduler
+=== RUN   TestPostgresBorrowedControlRollbackPreservesActiveScheduler/STOP_SESSION
+=== RUN   TestPostgresBorrowedControlRollbackPreservesActiveScheduler/FORCE_INTERRUPT
+--- PASS: TestPostgresBorrowedControlRollbackPreservesActiveScheduler (0.37s)
+    --- PASS: TestPostgresBorrowedControlRollbackPreservesActiveScheduler/STOP_SESSION (0.16s)
+    --- PASS: TestPostgresBorrowedControlRollbackPreservesActiveScheduler/FORCE_INTERRUPT (0.21s)
+=== RUN   TestPostgresActiveSchedulerProductRetirementAndConcurrentStop
+=== RUN   TestPostgresActiveSchedulerProductRetirementAndConcurrentStop/price
+=== RUN   TestPostgresActiveSchedulerProductRetirementAndConcurrentStop/product
+--- PASS: TestPostgresActiveSchedulerProductRetirementAndConcurrentStop (0.27s)
+    --- PASS: TestPostgresActiveSchedulerProductRetirementAndConcurrentStop/price (0.17s)
+    --- PASS: TestPostgresActiveSchedulerProductRetirementAndConcurrentStop/product (0.10s)
+PASS
+ok  	astralive/backend/internal/narration	2.686s
+=== RUN   TestBlockedGateDoesNotBlockStopAndRechecksAfterRead
+--- PASS: TestBlockedGateDoesNotBlockStopAndRechecksAfterRead (0.00s)
+PASS
+ok  	astralive/backend/internal/interaction	1.408s

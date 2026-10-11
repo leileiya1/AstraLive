@@ -1,0 +1,11 @@
+sourceCommit=06b182f840e0dc110a150a687e7ce016744edb3b
+fixtureSHA256=ed7aa2326a07e85a298337b96c0814cd3d94b33854f169076ee64924f7908f55
+=== RUN   TestAReviewBorrowedRetirementSchedulerLock
+    a_review_borrowed_stop_test.go:153: hook=801.24625ms gateError=timeout: context deadline exceeded SQLSession=LIVE schedulerStopped=true blockedOtherRoom=true
+    a_review_borrowed_stop_test.go:155: retirement waits on Scheduler.mu while its Gate waits on our SQL Session lock
+    a_review_borrowed_stop_test.go:158: borrowed transaction rollback left live SQL Session with stopped in-memory Scheduler
+    a_review_borrowed_stop_test.go:161: InteractionController.mu held across wait blocks another room
+--- FAIL: TestAReviewBorrowedRetirementSchedulerLock (0.91s)
+FAIL
+FAIL	astralive/backend/internal/app	1.417s
+FAIL

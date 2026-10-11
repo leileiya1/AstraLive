@@ -106,3 +106,22 @@ Exit0 / PASS:2^53−1,2^53 and2^63−1 accepted by actual B identity and A disk 
 ```
 
 The following evidence-only commit adds this reproducible result; production source is identical to a2f0be1. The owned manual PG cluster is stopped and the workspace is clean before handoff.
+
+## Read-only review of C shared transaction/locking integration — 2026-10-12
+
+A independently reproduced a SQL/Scheduler lock cycle and premature in-memory
+Stop after borrowed Commit on C `06b182f`: exit1, ~801ms hook wait, SQL rollback
+left LIVE while Scheduler was stopped, and another room's snapshot was blocked.
+The identical fixture on C `bf66c18` passed, exit0, ~8ms, with LIVE/active Scheduler
+after rollback and no cross-room block. Six additional real-PG/race top-level
+tests on the fixed immutable archive passed, including populated production
+workers, Stop/FORCE commit versus rollback, response-write rollback and concurrent
+price/product retirement versus manual Stop.
+
+[Pinned source, exact commands, before/after logs and reproducible diagnostic](c-shared-review/README.md).
+A's scoped shared-hook ACK was sent to C/F. The correction lives in C's branch;
+this review commit changes only A evidence and does not merge implementation.
+A core persistence/migrations remain identical in the reviewed C snapshot.
+F's overall release acceptance, C native/long-run evidence and UNKNOWN-tail API
+limitations retain their own boundaries. The owned PostgreSQL cluster is stopped
+after review; shared services and other agents' source remain unchanged.
