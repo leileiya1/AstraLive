@@ -1,0 +1,304 @@
+{
+  "expectedSpeechMarkers": 15,
+  "rtmpObservedSpeechMarkers": 15,
+  "rtmpStaleEpochMarkerFrames": 0,
+  "rtmpVerifiedWaveformPairs": 15,
+  "rtmpPairs": [
+    {
+      "marker": 1,
+      "audioStartSeconds": 2.8413125,
+      "videoStartSeconds": 2.861,
+      "audioMinusVideoMs": -19.687500000000302,
+      "waveformCorrelation": 0.9831132275009893,
+      "verified": true
+    },
+    {
+      "marker": 2,
+      "audioStartSeconds": 10.9613125,
+      "videoStartSeconds": 10.981,
+      "audioMinusVideoMs": -19.687499999999858,
+      "waveformCorrelation": 0.9831100281621391,
+      "verified": true
+    },
+    {
+      "marker": 3,
+      "audioStartSeconds": 19.0413125,
+      "videoStartSeconds": 19.061,
+      "audioMinusVideoMs": -19.687499999999858,
+      "waveformCorrelation": 0.983057175431858,
+      "verified": true
+    },
+    {
+      "marker": 4,
+      "audioStartSeconds": 27.2013125,
+      "videoStartSeconds": 27.221,
+      "audioMinusVideoMs": -19.687499999999858,
+      "waveformCorrelation": 0.9830094964167633,
+      "verified": true
+    },
+    {
+      "marker": 5,
+      "audioStartSeconds": 35.3013125,
+      "videoStartSeconds": 35.301,
+      "audioMinusVideoMs": 0.3124999999997158,
+      "waveformCorrelation": 0.9831505783813861,
+      "verified": true
+    },
+    {
+      "marker": 6,
+      "audioStartSeconds": 43.3613125,
+      "videoStartSeconds": 43.381,
+      "audioMinusVideoMs": -19.68750000000341,
+      "waveformCorrelation": 0.9831494465829976,
+      "verified": true
+    },
+    {
+      "marker": 7,
+      "audioStartSeconds": 51.4813125,
+      "videoStartSeconds": 51.501,
+      "audioMinusVideoMs": -19.687499999996305,
+      "waveformCorrelation": 0.9831743977367838,
+      "verified": true
+    },
+    {
+      "marker": 8,
+      "audioStartSeconds": 59.5813125,
+      "videoStartSeconds": 59.581,
+      "audioMinusVideoMs": 0.3124999999997158,
+      "waveformCorrelation": 0.9830612071875022,
+      "verified": true
+    },
+    {
+      "marker": 9,
+      "audioStartSeconds": 67.6613125,
+      "videoStartSeconds": 67.661,
+      "audioMinusVideoMs": 0.31249999999261036,
+      "waveformCorrelation": 0.9831854486681587,
+      "verified": true
+    },
+    {
+      "marker": 10,
+      "audioStartSeconds": 75.7213125,
+      "videoStartSeconds": 75.741,
+      "audioMinusVideoMs": -19.68750000000341,
+      "waveformCorrelation": 0.9829022684130884,
+      "verified": true
+    },
+    {
+      "marker": 11,
+      "audioStartSeconds": 83.8413125,
+      "videoStartSeconds": 83.861,
+      "audioMinusVideoMs": -19.68750000000341,
+      "waveformCorrelation": 0.9830766082862233,
+      "verified": true
+    },
+    {
+      "marker": 12,
+      "audioStartSeconds": 91.9213125,
+      "videoStartSeconds": 91.941,
+      "audioMinusVideoMs": -19.68750000000341,
+      "waveformCorrelation": 0.983105101671203,
+      "verified": true
+    },
+    {
+      "marker": 13,
+      "audioStartSeconds": 100.0013125,
+      "videoStartSeconds": 100.021,
+      "audioMinusVideoMs": -19.68750000000341,
+      "waveformCorrelation": 0.983057175431858,
+      "verified": true
+    },
+    {
+      "marker": 14,
+      "audioStartSeconds": 108.1413125,
+      "videoStartSeconds": 108.141,
+      "audioMinusVideoMs": 0.31249999999261036,
+      "waveformCorrelation": 0.9829602132140595,
+      "verified": true
+    },
+    {
+      "marker": 15,
+      "audioStartSeconds": 116.2213125,
+      "videoStartSeconds": 116.221,
+      "audioMinusVideoMs": 0.31249999999261036,
+      "waveformCorrelation": 0.9830612071875022,
+      "verified": true
+    }
+  ],
+  "rtmpContentOnsetDriftMs": {
+    "n": 15,
+    "p50": 19.687499999999858,
+    "p95": 19.68750000000341,
+    "max": 19.68750000000341
+  },
+  "rtmpUnverifiedMarkers": [],
+  "chromeHeuristicOnsetDriftMs": {
+    "n": 15,
+    "p50": 13.5625,
+    "p95": 98.83749997615814,
+    "max": 98.83749997615814
+  },
+  "chromeHeuristicPairs": [
+    {
+      "marker": 1,
+      "audioAt": 2463.2999999523163,
+      "videoAt": 2294.899999976158,
+      "sourceOffsetAdjustedMs": 98.83749997615814
+    },
+    {
+      "marker": 2,
+      "audioAt": 10503.599999904633,
+      "videoAt": 10418.099999904633,
+      "sourceOffsetAdjustedMs": 15.9375
+    },
+    {
+      "marker": 3,
+      "audioAt": 18598.399999976158,
+      "videoAt": 18514.099999904633,
+      "sourceOffsetAdjustedMs": 14.737500071525574
+    },
+    {
+      "marker": 4,
+      "audioAt": 26757.099999904633,
+      "videoAt": 26693.099999904633,
+      "sourceOffsetAdjustedMs": -5.5625
+    },
+    {
+      "marker": 5,
+      "audioAt": 34837.699999928474,
+      "videoAt": 34775,
+      "sourceOffsetAdjustedMs": -6.862500071525574
+    },
+    {
+      "marker": 6,
+      "audioAt": 42917.199999928474,
+      "videoAt": 42860.39999997616,
+      "sourceOffsetAdjustedMs": -12.762500047683716
+    },
+    {
+      "marker": 7,
+      "audioAt": 51018,
+      "videoAt": 50974.59999990463,
+      "sourceOffsetAdjustedMs": -26.16249990463257
+    },
+    {
+      "marker": 8,
+      "audioAt": 59117.89999997616,
+      "videoAt": 59057,
+      "sourceOffsetAdjustedMs": -8.662500023841858
+    },
+    {
+      "marker": 9,
+      "audioAt": 67197.89999997616,
+      "videoAt": 67141.89999997616,
+      "sourceOffsetAdjustedMs": -13.5625
+    },
+    {
+      "marker": 10,
+      "audioAt": 75277.79999995232,
+      "videoAt": 75218.79999995232,
+      "sourceOffsetAdjustedMs": -10.5625
+    },
+    {
+      "marker": 11,
+      "audioAt": 83384,
+      "videoAt": 83341.5,
+      "sourceOffsetAdjustedMs": -27.0625
+    },
+    {
+      "marker": 12,
+      "audioAt": 91479.39999997616,
+      "videoAt": 91406.19999992847,
+      "sourceOffsetAdjustedMs": 3.637500047683716
+    },
+    {
+      "marker": 13,
+      "audioAt": 99557.69999992847,
+      "videoAt": 99501,
+      "sourceOffsetAdjustedMs": -12.862500071525574
+    },
+    {
+      "marker": 14,
+      "audioAt": 107703.5,
+      "videoAt": 107673,
+      "sourceOffsetAdjustedMs": -39.0625
+    },
+    {
+      "marker": 15,
+      "audioAt": 115758,
+      "videoAt": 115705.89999997616,
+      "sourceOffsetAdjustedMs": -17.462499976158142
+    }
+  ],
+  "sourceThresholdOffsetMs": 69.5625,
+  "firstPCMToFirstGPUFrameMs": {
+    "n": 15,
+    "p50": 886.6035409737378,
+    "p95": 965.3669169638306,
+    "max": 965.3669169638306
+  },
+  "firstGPUPairs": [
+    {
+      "marker": 1,
+      "firstGpuMs": 877.4980830494314
+    },
+    {
+      "marker": 2,
+      "firstGpuMs": 915.7476250547916
+    },
+    {
+      "marker": 3,
+      "firstGpuMs": 882.2948329616338
+    },
+    {
+      "marker": 4,
+      "firstGpuMs": 965.3669169638306
+    },
+    {
+      "marker": 5,
+      "firstGpuMs": 893.9637499861419
+    },
+    {
+      "marker": 6,
+      "firstGpuMs": 881.0945840086788
+    },
+    {
+      "marker": 7,
+      "firstGpuMs": 910.9380409354344
+    },
+    {
+      "marker": 8,
+      "firstGpuMs": 890.8241250319406
+    },
+    {
+      "marker": 9,
+      "firstGpuMs": 882.4736248934641
+    },
+    {
+      "marker": 10,
+      "firstGpuMs": 884.4965419266373
+    },
+    {
+      "marker": 11,
+      "firstGpuMs": 906.7290419479832
+    },
+    {
+      "marker": 12,
+      "firstGpuMs": 886.6035409737378
+    },
+    {
+      "marker": 13,
+      "firstGpuMs": 880.4094169754535
+    },
+    {
+      "marker": 14,
+      "firstGpuMs": 936.9402909651399
+    },
+    {
+      "marker": 15,
+      "firstGpuMs": 881.9267919752747
+    }
+  ],
+  "waveSHA256": "a6e327e14f46d094191916c34e169dffda4ff3d33b5f1f12126a152dd26a2d2d",
+  "scope": "500ms known PCM/AAC waveform alignment +/-2s; Chrome nearest threshold onset is heuristic; neither is lip-quality or physical-audibility proof"
+}

@@ -38,11 +38,12 @@ def audit(directory, source_wave):
         if e['event'] == 'FrameEnqueued' and e.get('activity') == 'TALKING' and e.get('source') == 'GPU_INFERENCE' and pending:
             first_gpu.append((e['monotonic_s'] - origin) * 1000); pending = False
             first_pcm.append({'marker': e['marker'], 'firstGpuMs': first_gpu[-1]})
-    markers = {}
+    markers = {}; stale_epoch_frames = 0
     with av.open(str(directory/'rtmp.flv')) as container:
         for frame in container.decode(video=0):
             pixels = frame.to_ndarray(format='rgb24')
             marker = sum(1 << b for b in range(12) if pixels[4, b*8+4, 0] > pixels[4, b*8+4, 1])
+            stale_epoch_frames += marker == 4095
             if marker in jobs and marker not in markers:
                 markers[marker] = float(frame.pts * frame.time_base)
     with wave.open(str(source_wave)) as source:
@@ -83,6 +84,7 @@ def audit(directory, source_wave):
                              'sourceOffsetAdjustedMs': audio['at']-video['at']-threshold_offset_ms})
     verified = [p for p in pairs if p['verified']]
     result = {'expectedSpeechMarkers': len(jobs), 'rtmpObservedSpeechMarkers': len(markers),
+              'rtmpStaleEpochMarkerFrames': stale_epoch_frames,
               'rtmpVerifiedWaveformPairs': len(verified), 'rtmpPairs': pairs,
               'rtmpContentOnsetDriftMs': percentile([abs(p['audioMinusVideoMs']) for p in verified]),
               'rtmpUnverifiedMarkers': sorted(set(jobs)-{p['marker'] for p in verified}),
