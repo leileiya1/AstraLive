@@ -73,10 +73,23 @@ class BoundConsumptionMediaOutput(ConsumptionMediaOutput):
                      if c.name == "rtmp"), None)
 
     def has_peer(self):
+        if (self.timeline_v2 and self._bound_timeline() is not None
+                and not getattr(self.avatar, "speaking", False)):
+            # This internal hook is used by the validated native idle loop;
+            # an attached ledger requires explicit committed SYSTEM media.
+            return False
         sink = self._rtmp()
         return super().has_peer() or bool(sink and sink.video_delivery_position() is not None)
 
+    def _bound_timeline(self):
+        return getattr(self.output, "timeline", None) or getattr(
+            getattr(self._rtmp(), "timeline_clock", None), "timeline", None)
+
     async def drain(self, generation):
+        if self.timeline_v2 and self._bound_timeline() is not None:
+            # A committed paragraph cannot authorize a subsequent native idle
+            # job. Sinks maintain transport silence/held images independently.
+            await self.avatar._stop_idle()
         web, rtmp = self._webrtc(), self._rtmp()
         # An enabled preview with no subscriber is optional for headless RTMP.
         # Drain the publishing sink alone, so an absent preview cannot produce

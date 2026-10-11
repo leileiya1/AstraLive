@@ -69,6 +69,7 @@ class FFmpegRTMPMediaOutput:
         self.timeline_in_flight = {}
         self.cancelled_in_flight = 0
         if self.timeline_v2:
+            self._held_video = self._latest_video
             # Lazy import keeps the flag-off RTMP dependency surface unchanged.
             from .webrtc_media import _TimelineAudioTrack
             self.timeline_clock = AudioMasterClock(self.settings.audio_sample_rate)
@@ -94,7 +95,8 @@ class FFmpegRTMPMediaOutput:
         self._timeline_audio.clock = self.timeline_clock
         def fence():
             self._timeline_audio.pending.clear()
-            self._latest_video = self._blank_frame()
+            # Retain only the last already-consumed image, not queued media.
+            self._latest_video = self._held_video
             for queue in (self.audio_queue, self.video_queue):
                 while not queue.empty():
                     queue.get_nowait()
@@ -489,7 +491,10 @@ class FFmpegRTMPMediaOutput:
             self.video_resolved = 0
             self.audio_retired = 0
         self._audio_pending.clear()
-        self._latest_video = self._blank_frame()
+        if self.timeline_v2 and self.timeline_clock.timeline is not None:
+            self._latest_video = self._held_video
+        else:
+            self._latest_video = self._blank_frame()
         for queue, media in ((self.audio_queue, "audio"), (self.video_queue, "video")):
             while not queue.empty():
                 queue.get_nowait()
@@ -585,13 +590,15 @@ class FFmpegRTMPMediaOutput:
                 self.timeline_in_flight["video"] = {"identity": getattr(selected[0], "identity", None),
                     "startSample": selected[1], "endSample": selected[2]}
             try:
-                await self._write_fd(fd, self._latest_video)
+                written_image = self._latest_video
+                await self._write_fd(fd, written_image)
                 if (selected and fd is not None and fd == self._video_fd and self.running and
                         failures == self.write_failures and incarnation == self.connection_incarnation and
                         selected[0].generation_id == self.generation_id and clock.accepts(selected[0], selected[1], selected[2])):
                     self.video_consumed += 1
                     self.video_consumed_total += 1
                     self.video_written = self.video_consumed
+                    self._held_video = written_image
                     self._dispose_video(selected[0], "consumed")
                     if clock.timeline:
                         clock.timeline.observe_sink_progress(selected[0].identity, f"rtmp:{incarnation}", "video", selected[1], selected[2])
