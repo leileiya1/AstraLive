@@ -54,3 +54,5 @@ python integration/v0.5/module_gate.py --repo "$PWD" --source <commit-sha> \
 ```
 
 Omit `--frontend-modules` for a premerge module check only; the result marks frontend NOT TESTED. Each postmerge gate must include it. A PASS covers the executed software/SQL fixtures only; opt-in media skips and real GPU/Chrome/RTMP/naturalness/host acceptance remain separate gates. Never reclassify an independent source-pin run as a test of an actual merge commit.
+
+F's evidence-directory `.gitattributes` preserves exact captured raw log bytes and recorded SHA256, including native tool trailing whitespace/blank lines. Source/docs whitespace validation stays enabled. This F-owned evidence-only rule depends on the postmerge runner and changes no test result or historical log.
