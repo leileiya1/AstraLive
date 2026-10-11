@@ -140,7 +140,8 @@ async def run(args):
                         def command(kind, suffix, epoch=None):
                             return {'commandId':f'fixture-{cycle}-{suffix}','commandType':kind,
                                     'sessionId':timeline.session_id,'runEpoch':1,'timelineEpoch':epoch or timeline.epoch,
-                                    'segmentId':f'segment-{cycle}','lane':'NARRATION' if timeline.epoch%2 else 'AUDIENCE_ANSWER'}
+                                    'segmentId':f'segment-{cycle}',
+                                    'lane':('NARRATION','AUDIENCE_ANSWER','RESUME_BRIDGE')[((epoch or timeline.epoch)-1)%3]}
                         start_position=timeline.CurrentCommittedPTS(timeline.session_id,1)['committedExclusiveEnd']
                         receipt=await timeline.CommitSegment(command('COMMIT_SEGMENT','commit'),f'attempt-{cycle}',generation,
                             {'sampleCount':len(pcm)//2,'utteranceId':f'utterance-{cycle}',
@@ -174,7 +175,7 @@ async def run(args):
                         await timeline.InvalidateAfter(command('INVALIDATE_AFTER','invalidate'),final_position,'fixture natural boundary',timeline.revision)
                         await timeline.BeginEpoch(command('BEGIN_EPOCH','begin',timeline.epoch+1),timeline.epoch,timeline.epoch+1,
                                                   final_position,'fixture natural answer/resume')
-                        generation+=1;await avatar.interrupt(generation);await media.interrupt(generation)
+                        generation+=7;await avatar.interrupt(generation);await media.interrupt(generation)
                         pixels=np.frombuffer(avatar.last_frame['rgb'],dtype=np.uint8).reshape(512,512,3).copy()
                         pixels[:8,:96]=[220,40,40]  # Unique old-epoch marker4095, not a Worker packet.
                         stale=TimedVideoFrame(generation,0,512,512,pixels.tobytes(),receipt['identity'],start_position.sampleIndex,16000)
