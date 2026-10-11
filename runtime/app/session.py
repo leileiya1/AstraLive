@@ -158,6 +158,7 @@ class RuntimeSession:
     worker: asyncio.Task | None = None
     current_task: asyncio.Task | None = None
     seen_utterances: dict[str, Utterance] = field(default_factory=dict)
+    continuity: object | None = None
 
     @property
     def session_id(self) -> str:
@@ -260,6 +261,11 @@ class RuntimeSession:
         async with self.lock:
             if self.state != "LIVE":
                 raise RuntimeFailure("SESSION_NOT_RUNNING", "Session is not live", 409)
+            if self.continuity is not None:
+                if item.interruptPolicy != InterruptPolicy.FORCE:
+                    raise RuntimeFailure("CONFLICT", "Active narration requires a boundary turn or operator FORCE", 409)
+                self.continuity.fence("OPERATOR_FORCE")
+                raise RuntimeFailure("DEPENDENCY_UNAVAILABLE", "Operator speech requires a new Session after narration fencing", 503)
             old = self.seen_utterances.get(item.utteranceId)
             if old:
                 if old != item:
@@ -336,6 +342,8 @@ class RuntimeSession:
             raise RuntimeFailure("WEBRTC_FAILED", "WebRTC negotiation failed", 500) from exc
 
     async def _interrupt_locked(self) -> Utterance | None:
+        if self.continuity is not None:
+            self.continuity.fence("OPERATOR_INTERRUPT")
         old = self.current_utterance
         self.generation_id += 1
         if self.current_task:
@@ -348,6 +356,10 @@ class RuntimeSession:
         return old
 
     async def stop(self, trace: str) -> None:
+        if self.continuity is not None:
+            # The sink publication barrier is immediate, before lock/native
+            # cleanup waits. SQL Stop tombstone is owned by the Go command path.
+            self.continuity.fence("SESSION_STOP")
         try:
             await asyncio.wait_for(self.lock.acquire(), 2)
         except asyncio.TimeoutError:

@@ -1,0 +1,490 @@
+{
+  "contractRevision": "v0.5-frozen-1",
+  "contractBaseline": "5a24478126211cbcde5a9565d0c6063748426527",
+  "branch": "exp/v0.5-narration-continuity",
+  "dependencyParent": "abb7d26472daccecabdcd302eece8bf34061931c",
+  "implementationCommit": "commit containing this manifest",
+  "dependencyMapping": [
+    {
+      "localCommit": "523972aa2476ec0fd022b4c74722636b23955dba",
+      "subject": "feat(durability): journal commands and events in PostgreSQL with conservative recovery",
+      "sourceCandidates": [
+        {
+          "role": "A",
+          "originalCommit": "e5f14a14a04fdd4968af3c8dc3530bb22202e8b6"
+        }
+      ]
+    },
+    {
+      "localCommit": "33d2f40e563c9408ab490aabce32aa0cf0704896",
+      "subject": "feat(media): add opt-in audio-master timeline with frozen boundary seams",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "9b55b1672c03ec4aaaf584efb1f2114ebe958d6f"
+        }
+      ]
+    },
+    {
+      "localCommit": "6c442170fdabea27d9889ebcff7bffac2b62c16f",
+      "subject": "fix(media): isolate V2 credit admission and retain full A/B evidence",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "21e0a37b0bf954787be9ffe01f28342c0cac7721"
+        }
+      ]
+    },
+    {
+      "localCommit": "6c39d3feaa3e118f9c92905c4f736dd125f32ae3",
+      "subject": "fix(media): preserve native pose history when all sinks discard video",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "738f15292f226716336549270f5ceeb26d633467"
+        }
+      ]
+    },
+    {
+      "localCommit": "fde86f077c4ef0b021f57f4e4e732d0306b0a2e5",
+      "subject": "fix(media): fence consumption receipts against reused frame IDs",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "b19e5376e3059be1e43b7c27a12722c54a313c53"
+        }
+      ]
+    },
+    {
+      "localCommit": "2a3494819211607c2a1f25ad65c79fb404a061d4",
+      "subject": "test(media): audit real GPU recordings against source PCM waveform",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "3dff41e77d65ee4aa3100bbc1f5dc71f5bd1fc8c"
+        }
+      ]
+    },
+    {
+      "localCommit": "28e8968a77d49442358b255cb11edadc9dd46770",
+      "subject": "fix(media): keep ledger boundaries free of uncommitted native idle jobs",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "6e5b38ae68eec4f37ca927a19a41ce9a35a6ba2a"
+        }
+      ]
+    },
+    {
+      "localCommit": "c6987e0c891e8b4dd2c5c62897d2e6d7c3c1fcf3",
+      "subject": "test(media): separate epoch and generation domains in GPU ledger fixture",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "e2a8fa20a804fb03500ef29d751ed98a48f21f78"
+        }
+      ]
+    },
+    {
+      "localCommit": "7924f7f74c303fada428885bf01a1ca915aecf64",
+      "subject": "Document final media timeline GPU soak and archive reproducible evidence",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "cf43e2d3dd6a9223648eaced2526d13e0ccbf8e1"
+        }
+      ]
+    },
+    {
+      "localCommit": "c7165efe0635332667c723d63ca04781ceed429f",
+      "subject": "docs(media): hand off C wiring and explicit continuity integration gaps",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "f769e3b929b0e8acab87c14c09184a822759475b"
+        }
+      ]
+    },
+    {
+      "localCommit": "6e4c4a56935c3a1a9820fa5ad14863c0b4d540ba",
+      "subject": "fix(media): install fenced ledger entry before durable installed proof",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "85bec11b1d53f89681319c7ff2e3c0b6a7b472ac"
+        }
+      ]
+    },
+    {
+      "localCommit": "2e256847f376c1cd77049a14eb0ed545f853423b",
+      "subject": "test(media): include installed-proof ordering regression evidence",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "09f06f288026fe902ff262e85a1c5a8f29dcf4ca"
+        }
+      ]
+    },
+    {
+      "localCommit": "46db2d7ac37416e4d0a59e6e692a6a7949bbdae6",
+      "subject": "feat(durability): add atomic continuity timeline journal seam",
+      "sourceCandidates": [
+        {
+          "role": "A",
+          "originalCommit": "ee5500b132302dbdd365b401d705e4fc47b75b12"
+        }
+      ]
+    },
+    {
+      "localCommit": "747c13681a24bd079abe116b53724b69a95442c2",
+      "subject": "fix(durability): persist timeline observations and seal recovery work",
+      "sourceCandidates": [
+        {
+          "role": "A",
+          "originalCommit": "edd4e1ed2dae2056d69e899991ed877fc3811f77"
+        }
+      ]
+    },
+    {
+      "localCommit": "8e08f3d0388c07ff1ccaf4579af4606462ca438b",
+      "subject": "fix(durability): preserve frozen Worker wire integer domain",
+      "sourceCandidates": [
+        {
+          "role": "A",
+          "originalCommit": "a2f0be19f1d2fc4c71c8bcefee771b7685b8d6e3"
+        }
+      ]
+    },
+    {
+      "localCommit": "e8d2bc43e328067b17d950e5151c58b69cdd8051",
+      "subject": "docs(durability): archive corrected Worker domain probe",
+      "sourceCandidates": [
+        {
+          "role": "A",
+          "originalCommit": "a28a4098a9014d9f7577d541048b2e110f1fc325"
+        }
+      ]
+    },
+    {
+      "localCommit": "abb7d26472daccecabdcd302eece8bf34061931c",
+      "subject": "test(media): retain content audit logs referenced by evidence manifest",
+      "sourceCandidates": [
+        {
+          "role": "B",
+          "originalCommit": "dda7936faba56efe01659b6393a4d32a93322508"
+        }
+      ]
+    }
+  ],
+  "deliverySourceSha256": {
+    "backend/cmd/server/main.go": "01e939d5fbd5edb19dcd7f19533deacebcc29070db42328dbe1e2dba8e073ee2",
+    "backend/internal/app/durability.go": "a9a5a6838428100b6f18476e0d16641b1bd4527641392f42d7697f9c8909937c",
+    "backend/internal/app/interaction.go": "ab40334dc6f73247c5f69cbca8e8783beeb72ff4ae40d5a2f4c5e9431a2ace11",
+    "backend/internal/app/service.go": "ad3a10338dfa71399d4e402b2882a008d75f8a5ce8c97c047723b6070d371d18",
+    "backend/internal/httpapi/server.go": "72cec0844b1bafbfc40f618ae2c8ed2d6c0fc29d87ce2dc83fead5b7a2720865",
+    "backend/internal/interaction/scheduler.go": "a9340a61fca5406881b04c7a443c955c052220903c24a7c4ee712e17edb774bb",
+    "backend/internal/interaction/scheduler_test.go": "ec40595ddad0574779a8aba050f70bb3cc888a9969e34b199350f854892dbb26",
+    "runtime/app/main.py": "b8022a4a600cd4031c2b6ee68e158768ffed72ab71ad464989c59c2c0cdd941e",
+    "runtime/app/session.py": "c437eb41a87dd320f4d20b35eb9ea62ed03f9104392bebb6fb86ae3f7936e578",
+    "backend/internal/httpapi/narration.go": "cd303ce76fc44ddea33e799d3c17a15c5089457c5f663b86243deed1352032e1",
+    "backend/internal/narration/config_test.go": "e688a00c93e363600ee5afbe1cda2d5ddc6b1745e755febeaa331dfb8c985b28",
+    "backend/internal/narration/controller.go": "20ac8a148ffe9e8ba38ab0c6b241b1eac5c65cbde3a5e025d9b249c2786779a1",
+    "backend/internal/narration/model.go": "2960fbacb61259c2cb5e9945114cad0d67c37710dc8f394760edff6a5a1397ee",
+    "backend/internal/narration/model_test.go": "9af57d0f3d6f1458c39b0076939831c286658fdaa7ec42e5d6082559269e712e",
+    "backend/internal/narration/postgres_test.go": "1b3c884e93261d642681ff6c749e42016215670f52d2c8c4d4c4bb39b100e269",
+    "runtime/app/narration.py": "7770e4b97a10a6a8bb2a91c4ca4fd02ba3a6ff52857e24d3c91eeabc426babb7",
+    "runtime/app/narration_segments.py": "98a8bdf3cb99acd5d6920eab6e4defd49420b0414f70a916d361da3b50489af5",
+    "runtime/tests/narration_metrics.py": "afa9cea8b180f119c11a96d9a7827094d6d1919913cb38e13b9aff4780eea12b",
+    "runtime/tests/narration_pg_fixture.py": "96e0c74b6ba23317912e890650a7a95100f2ac11b65e0ea37e1a8caef2c37dc4",
+    "runtime/tests/narration_real_sinks.py": "a8d37c0b3164ff12c3ee9373588dce3d5c9401d5aaeaf88fe2ac2fc9d065d1bd",
+    "runtime/tests/test_narration_segments.py": "4da014669c8473fefacbb70e401b65a4840516eb8b2c3818b6131853acd113ca"
+  },
+  "sourceWindow": "Final Go/race and contract gates cover delivery source. Runtime source unchanged since 210-test regression. Native long run predates final App retirement hook, deterministic generic-answer hardening and final A Worker-domain pin; exercised price/stock normal path is unchanged. Native short covers final A pin but predates App retirement hook. No exact launch source-hash manifest was captured for native runs; delivery hashes do not retroactively claim it.",
+  "runs": [
+    {
+      "id": "go-race",
+      "exitCode": 0,
+      "command": "cd backend; DURABILITY_TEST_DATABASE_URL=<owned-pg-dsn> NARRATION_TEST_PYTHON=<dependency-python> DURABILITY_TEST_PYTHON=<dependency-python> go test -race -count=1 -timeout=5m ./...",
+      "log": "delivery-go-race.log"
+    },
+    {
+      "id": "runtime",
+      "exitCode": 0,
+      "command": "PYTHONPATH=.:runtime <dependency-python> -m unittest discover -s runtime/tests",
+      "tests": 210,
+      "skips": 11,
+      "log": "runtime-regression.log.gz"
+    },
+    {
+      "id": "contract",
+      "exitCode": 0,
+      "command": "<dependency-python> contracts/validate_v1_1.py",
+      "log": "delivery-contract.log"
+    },
+    {
+      "id": "native-short",
+      "exitCode": 0,
+      "test": "TestPostgresNativeChromeRTMPContinuity",
+      "durationSeconds": 69.19,
+      "mediaCommits": 21,
+      "questions": 1,
+      "requiredFacts": 20,
+      "log": "native-short/run.log"
+    },
+    {
+      "id": "native-random",
+      "exitCode": 0,
+      "test": "TestPostgresTenMinuteFiveQuestions",
+      "durationSeconds": 660.69,
+      "mediaCommits": 209,
+      "questions": 5,
+      "requiredFacts": 200,
+      "randomSeed": 20261011,
+      "injectionOrdinals": [
+        4,
+        111,
+        113,
+        150,
+        151
+      ],
+      "log": "native-random/run.log.gz",
+      "individualSqlProofExportRetained": false
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "delivery-go-race.log",
+      "sha256": "5f85c3f5d8574b474b3f281612329bdd77a401a96d63b5644fe6a4a93c6eb55e",
+      "bytes": 1326,
+      "originalSha256": "5f85c3f5d8574b474b3f281612329bdd77a401a96d63b5644fe6a4a93c6eb55e",
+      "originalBytes": 1326,
+      "originalPath": "/tmp/astralive-v05-c-delivery-go-race.log",
+      "compression": null
+    },
+    {
+      "path": "delivery-contract.log",
+      "sha256": "4e5357fefe95733a695daff8958191fa69d817d692bbb1702f7363107d8a503a",
+      "bytes": 776,
+      "originalSha256": "4e5357fefe95733a695daff8958191fa69d817d692bbb1702f7363107d8a503a",
+      "originalBytes": 776,
+      "originalPath": "/tmp/astralive-v05-c-delivery-contract.log",
+      "compression": null
+    },
+    {
+      "path": "runtime-regression.log.gz",
+      "sha256": "0c8258abf4a8e904924da1b510dd64da3df4f380e183dc5f48398e81b1bd7f06",
+      "bytes": 18142,
+      "originalSha256": "0ac1ceddace902ed90944a314e2e5eafbee8cbdd333da49bc4f737c0b7beb15f",
+      "originalBytes": 419491,
+      "originalPath": "/tmp/astralive-v05-c-final-all-runtime.log",
+      "compression": "gzip"
+    },
+    {
+      "path": "product-retirement.log",
+      "sha256": "0dc63200d9b2173c31430c9f0299bab72bd6ebfe072e99d57aa20937ac17d2ff",
+      "bytes": 7456,
+      "originalSha256": "0dc63200d9b2173c31430c9f0299bab72bd6ebfe072e99d57aa20937ac17d2ff",
+      "originalBytes": 7456,
+      "originalPath": "/tmp/astralive-v05-c-product-retirement.log",
+      "compression": null
+    },
+    {
+      "path": "crash-expiry.log",
+      "sha256": "eba2425f1a926ef69ddc2907e754e4651f2b27464ecdf02cfe0866dd56a24e50",
+      "bytes": 2336,
+      "originalSha256": "eba2425f1a926ef69ddc2907e754e4651f2b27464ecdf02cfe0866dd56a24e50",
+      "originalBytes": 2336,
+      "originalPath": "/tmp/astralive-v05-c-final-crash-expiry2.log",
+      "compression": null
+    },
+    {
+      "path": "public-force.log",
+      "sha256": "8b48ec26c98c7dcc2122323bf581e1c55938ebd535efa8b0d58d9aaa9ae62c9f",
+      "bytes": 2049,
+      "originalSha256": "8b48ec26c98c7dcc2122323bf581e1c55938ebd535efa8b0d58d9aaa9ae62c9f",
+      "originalBytes": 2049,
+      "originalPath": "/tmp/astralive-v05-c-public-force.log",
+      "compression": null
+    },
+    {
+      "path": "execution.log",
+      "sha256": "f97c61e4757845f9ef1d4e5a9bac77cb31edf4de5cf5da27d69879080d49c798",
+      "bytes": 3105,
+      "originalSha256": "f97c61e4757845f9ef1d4e5a9bac77cb31edf4de5cf5da27d69879080d49c798",
+      "originalBytes": 3105,
+      "originalPath": "/tmp/astralive-v05-c-final-execution.log",
+      "compression": null
+    },
+    {
+      "path": "native-short/run.log",
+      "sha256": "1fa96d66415646860b3148accaa29cc80794678fc017d944e476c4efd19c891b",
+      "bytes": 27237,
+      "originalSha256": "1fa96d66415646860b3148accaa29cc80794678fc017d944e476c4efd19c891b",
+      "originalBytes": 27237,
+      "originalPath": "/tmp/astralive-v05-c-native-final2.log",
+      "compression": null
+    },
+    {
+      "path": "native-random/run.log.gz",
+      "sha256": "a100cbdeac23497ed352062dce3650be0746521c160bbd4ba156653650017a06",
+      "bytes": 13323,
+      "originalSha256": "309b8ad2f6ff744d68fa5bd3cb5fe7be335c26ef639583ea0e2d6cf9490b78db",
+      "originalBytes": 269617,
+      "originalPath": "/tmp/astralive-v05-c-soak-random-final.log",
+      "compression": "gzip"
+    },
+    {
+      "path": "prior-fixed-long.log.gz",
+      "sha256": "ee07f2cf59e4ce39923d1d643375393359844b8c5da607e5aa241dda18623002",
+      "bytes": 13154,
+      "originalSha256": "91e08b493a1439e2e71ade3049ab871441d013574ed9786e84a3241a99b54a98",
+      "originalBytes": 269415,
+      "originalPath": "/tmp/astralive-v05-c-soak-unique.log",
+      "compression": "gzip"
+    },
+    {
+      "path": "failures/burst-2.log",
+      "sha256": "57bdfadfb681ce869b790b313ef98e8ac76814aaec7cc615b7cfac2036ebf594",
+      "bytes": 5520,
+      "originalSha256": "57bdfadfb681ce869b790b313ef98e8ac76814aaec7cc615b7cfac2036ebf594",
+      "originalBytes": 5520,
+      "originalPath": "/tmp/astralive-v05-c-real-media2.log",
+      "compression": null
+    },
+    {
+      "path": "failures/burst-3.log",
+      "sha256": "08808ad9cf6dab6b8f6e1ce33786c1fb7bd38fec8724bd5e49d9582f7363c766",
+      "bytes": 5888,
+      "originalSha256": "08808ad9cf6dab6b8f6e1ce33786c1fb7bd38fec8724bd5e49d9582f7363c766",
+      "originalBytes": 5888,
+      "originalPath": "/tmp/astralive-v05-c-real-media3.log",
+      "compression": null
+    },
+    {
+      "path": "failures/early-soak.log",
+      "sha256": "f347ee77f6d6f21a465142b69668e3740e3ccc3ddc120ad4663efbe04166938a",
+      "bytes": 39766,
+      "originalSha256": "f347ee77f6d6f21a465142b69668e3740e3ccc3ddc120ad4663efbe04166938a",
+      "originalBytes": 39766,
+      "originalPath": "/tmp/astralive-v05-c-soak.log",
+      "compression": null
+    },
+    {
+      "path": "failures/go-default-timeout.log",
+      "sha256": "8d01d3c8adf60da27c06b32f33aa4d7b1e24f0920200b95672eee3434c6edbd4",
+      "bytes": 14917,
+      "originalSha256": "8d01d3c8adf60da27c06b32f33aa4d7b1e24f0920200b95672eee3434c6edbd4",
+      "originalBytes": 14917,
+      "originalPath": "/tmp/astralive-v05-c-soak-random.log",
+      "compression": null
+    },
+    {
+      "path": "failures/sql-export-column.log",
+      "sha256": "ad428bd0821f776d4aadbc8db5d5f235b7b86d7896700301fe22e9538f367c88",
+      "bytes": 27330,
+      "originalSha256": "ad428bd0821f776d4aadbc8db5d5f235b7b86d7896700301fe22e9538f367c88",
+      "originalBytes": 27330,
+      "originalPath": "/tmp/astralive-v05-c-native-final.log",
+      "compression": null
+    },
+    {
+      "path": "failures/runtime-path.log.gz",
+      "sha256": "f4afe0bd656c3f107ee717c051a6a11304c2a75e4465c99ea1d4fa6f7968dd4b",
+      "bytes": 19225,
+      "originalSha256": "8ba5401e080c3f8a35a6bdf2586a9bc40372859ce986d4ad7775b26a943758d0",
+      "originalBytes": 416297,
+      "originalPath": "/tmp/astralive-v05-c-final-runtime.log",
+      "compression": "gzip"
+    },
+    {
+      "path": "failures/validator-environment.log",
+      "sha256": "87406e9e07c6bf0e257d610528dbdb5f6a310968768f8480c6735300a926fc64",
+      "bytes": 203,
+      "originalSha256": "87406e9e07c6bf0e257d610528dbdb5f6a310968768f8480c6735300a926fc64",
+      "originalBytes": 203,
+      "originalPath": "/tmp/astralive-v05-c-contract.log",
+      "compression": null
+    },
+    {
+      "path": "native-short/media.json.gz",
+      "sha256": "1cf36f2091fda266f2a59fd5273c22e4350d4fda9a5e1af63dbab7576fc29aed",
+      "bytes": 24208,
+      "originalSha256": "0cee7cd3a368a2883cd07d318a238b42c376f0639c28ef572eb13acd4dd8325e",
+      "originalBytes": 179374,
+      "originalPath": "/tmp/astralive-v05-c-native-final2/media.json",
+      "compression": "gzip"
+    },
+    {
+      "path": "native-short/continuity.flv",
+      "sha256": "d8411feec207722e76dbf371e502cd06e94dd5b8f63ae9c99c5a15233c420e89",
+      "bytes": 345722,
+      "originalSha256": "d8411feec207722e76dbf371e502cd06e94dd5b8f63ae9c99c5a15233c420e89",
+      "originalBytes": 345722,
+      "originalPath": "/tmp/astralive-v05-c-native-final2/continuity.flv",
+      "compression": null
+    },
+    {
+      "path": "native-short/receiver.log",
+      "sha256": "1bf67233c788113ef16264986445fae148568b729692467e533a3ade72af5e72",
+      "bytes": 68,
+      "originalSha256": "1bf67233c788113ef16264986445fae148568b729692467e533a3ade72af5e72",
+      "originalBytes": 68,
+      "originalPath": "/tmp/astralive-v05-c-native-final2/receiver.log",
+      "compression": null
+    },
+    {
+      "path": "native-random/media.json.gz",
+      "sha256": "db6e2f66639d38dbb9348fa11e65536cd65f6aba696976f9052f7da8db5f3f34",
+      "bytes": 190649,
+      "originalSha256": "5578ed6fabece9664f995f80ca7d0f47c23d1b63308d644a88232ed35e93c1d1",
+      "originalBytes": 1762441,
+      "originalPath": "/tmp/astralive-v05-c-soak-random-final/media.json",
+      "compression": "gzip"
+    },
+    {
+      "path": "native-random/continuity.flv",
+      "sha256": "544653c4cee77efa5e29a5cfc1ec65dea3fa73ec4025d01db12c8803928ce01d",
+      "bytes": 3381644,
+      "originalSha256": "544653c4cee77efa5e29a5cfc1ec65dea3fa73ec4025d01db12c8803928ce01d",
+      "originalBytes": 3381644,
+      "originalPath": "/tmp/astralive-v05-c-soak-random-final/continuity.flv",
+      "compression": null
+    },
+    {
+      "path": "native-random/receiver.log",
+      "sha256": "41b3f89e44a6fed39cb3fc3eb960f90829c76c3dddb83f9b379b18cc0e3d80b3",
+      "bytes": 68,
+      "originalSha256": "41b3f89e44a6fed39cb3fc3eb960f90829c76c3dddb83f9b379b18cc0e3d80b3",
+      "originalBytes": 68,
+      "originalPath": "/tmp/astralive-v05-c-soak-random-final/receiver.log",
+      "compression": null
+    },
+    {
+      "path": "native-short/sql-proof.json.gz",
+      "sha256": "844b4299e7d838e49a609d2d9b9f80460e56faa17f64b5427c06fb971805c8ec",
+      "bytes": 8543,
+      "originalSha256": "15aa4408e62d494783450b9f178f08dc256bc53392c3ebfc6b82796bfc1a089e",
+      "originalBytes": 85505,
+      "originalPath": "/tmp/astralive-v05-c-native-final2/sql-proof.json",
+      "compression": "gzip"
+    },
+    {
+      "path": "native-random/metrics.json",
+      "sha256": "e77377d3d3dcc73ee84e69b7775d375e66763601121ef88e14a85e33faec9a08",
+      "bytes": 3023,
+      "originalSha256": "e77377d3d3dcc73ee84e69b7775d375e66763601121ef88e14a85e33faec9a08",
+      "originalBytes": 3023,
+      "originalPath": "/tmp/astralive-v05-c-soak-random-final/metrics.json",
+      "compression": null
+    },
+    {
+      "path": "native-short/receipt-audit.json",
+      "sha256": "5a0086b4e0c87e5ac87659da82b3cffe027b7cd9a513daf6e5bcacd4d3fdf663",
+      "bytes": 818,
+      "derivedFrom": "native-short/sql-proof.json.gz"
+    }
+  ],
+  "retainedAudit": "native-short/receipt-audit.json",
+  "audienceAudible": false,
+  "acceptance": "CONDITIONAL software/CPU/native-sink integration; default bound SoulX staging unsupported, unknown-tail recovery requires operator reconciliation, human quality and real-provider/busy SLA not accepted"
+}

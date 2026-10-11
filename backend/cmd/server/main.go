@@ -17,6 +17,7 @@ import (
 	"astralive/backend/internal/eventbus"
 	"astralive/backend/internal/httpapi"
 	"astralive/backend/internal/interaction"
+	"astralive/backend/internal/narration"
 	"astralive/backend/internal/recovery"
 	"astralive/backend/internal/runtime"
 	"astralive/backend/internal/userconfig"
@@ -29,6 +30,16 @@ func main() {
 	c, e := config.Load()
 	if e != nil {
 		panic(e)
+	}
+	continuity, e := narration.Enabled()
+	if e != nil {
+		panic(e)
+	}
+	if continuity && !c.DurabilityEnabled {
+		panic("continuity requires PostgreSQL durability")
+	}
+	if continuity && os.Getenv("ASTRALIVE_MEDIA_TIMELINE_ENABLED") != "true" && os.Getenv("ASTRALIVE_MEDIA_TIMELINE_ENABLED") != "1" {
+		panic("continuity requires ASTRALIVE_MEDIA_TIMELINE_ENABLED")
 	}
 	level := slog.LevelInfo
 	if c.LogLevel == "debug" {
@@ -112,6 +123,10 @@ func main() {
 			os.Exit(1)
 		}
 		s.Durable = durability.New(pool)
+		if continuity {
+			s.AttachNarration(narration.New(s.Durable))
+			go s.Narration.Run(ctx)
+		}
 		dispatcher := &durability.Dispatcher{Store: s.Durable, Remote: rt, Log: log}
 		go dispatcher.Run(ctx)
 		go (&recovery.Coordinator{Store: s.Durable, Dispatcher: dispatcher, Log: log}).Run(ctx)

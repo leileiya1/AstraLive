@@ -42,6 +42,16 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
     if durable_flag not in {"true", "false", "1", "0"}:
         raise RuntimeError("Invalid durability flag")
     durable_enabled = durable_flag in {"true", "1"}
+    from .narration_segments import enabled as continuity_enabled
+    continuity = continuity_enabled()
+    if continuity and not durable_enabled:
+        raise RuntimeError("Narration Continuity requires durability")
+    if continuity and not bound:
+        raise RuntimeError("Narration Continuity requires authenticated Session binding")
+    if continuity:
+        from .media_timeline import enabled as timeline_enabled
+        if not timeline_enabled():
+            raise RuntimeError("Narration Continuity requires MediaTimeline")
     event_mode = os.getenv("ASTRALIVE_EVENT_MODE", "legacy_redis")
     if event_mode not in {"legacy_redis", "postgres_only"} or event_mode == "postgres_only" and not durable_enabled:
         raise RuntimeError("Invalid durability/event mode")
@@ -125,7 +135,11 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
         factories = (llm_factory, tts_factory, avatar_factory, media_factory)
     manager = (BoundSessionManager if bound else SessionManager)(settings, publisher, *factories)
     if durable_enabled:
-        durable_commands = DurableCommands(journal, publisher, manager)
+        if continuity:
+            from .narration import NarrationCommands
+            durable_commands = NarrationCommands(journal, publisher, manager)
+        else:
+            durable_commands = DurableCommands(journal, publisher, manager)
     if bound:
         control_token=service_token(os.environ["RUNTIME_CONTROL_TOKEN_FILE"])
         if control_token == service_token(os.environ["CONFIG_WORKER_TOKEN_FILE"]) or control_token == settings.tool_token:
@@ -231,6 +245,8 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
                 run["sealed"] = True
             session = manager.sessions.get(sessionId)
             if session:
+                if session.continuity is not None:
+                    session.continuity.fence("EMERGENCY_STOP")
                 session.generation_id += 1
                 if session.current_task:
                     session.current_task.cancel()

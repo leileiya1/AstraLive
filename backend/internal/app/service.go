@@ -15,6 +15,7 @@ import (
 	"astralive/backend/internal/fsm"
 	"astralive/backend/internal/ids"
 	"astralive/backend/internal/metrics"
+	"astralive/backend/internal/narration"
 	"astralive/backend/internal/runtime"
 	"astralive/backend/internal/sse"
 	"github.com/jackc/pgx/v5"
@@ -25,6 +26,7 @@ import (
 type Service struct {
 	commands     sync.Mutex
 	Durable      *durability.Store
+	Narration    *narration.Controller
 	sessionLocks sync.Map
 	Interaction  *InteractionController
 	Integration  SessionIntegration
@@ -164,6 +166,14 @@ func (s *Service) Interrupt(ctx context.Context, id, trace, reason string) (runt
 func (s *Service) Speak(ctx context.Context, id, text string, priority int32, policy, source, trace string, platform *runtimeapi.PlatformContext) (dbgen.Utterance, error) {
 	unlock := s.lockCommands(id)
 	defer unlock()
+	if s.Narration != nil {
+		// Timeline binding lasts for the captured run, including before the first
+		// narration command and after finish. There is no approved legacy handoff.
+		if policy == "FORCE" {
+			return s.failedNarrationForce(ctx, id, text, priority, source, trace)
+		}
+		return dbgen.Utterance{}, ErrConflict
+	}
 	if source == "OPERATOR" && s.Interaction != nil {
 		s.Interaction.Override(id)
 	}

@@ -3,6 +3,7 @@ package interaction
 import (
 	"astralive/backend/internal/platform"
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"sync"
@@ -56,6 +57,75 @@ func TestDedupMergeAndStockSeparation(t *testing.T) {
 	v := s.Snapshot()
 	if v.Candidates != 3 || v.Counters.Deduplicated != 2 || v.Counters.Merged != 1 {
 		t.Fatal(v)
+	}
+}
+
+func TestMergedSourceOverflowIsDroppedAndStatusKeepsMapping(t *testing.T) {
+	s, _, d, _ := fixture(t)
+	s.config.GlobalLimit = 1000
+	for i := 0; i < 129; i++ {
+		receive(t, s, event(fmt.Sprint(i), fmt.Sprint("user", i), "多少钱？"))
+	}
+	v := s.Snapshot()
+	if v.Counters.Merged != 127 || v.Counters.Dropped != 1 {
+		t.Fatal("unrepresented comment counted as merged", v.Counters)
+	}
+	if e := s.Tick(context.Background()); e != nil {
+		t.Fatal(e)
+	}
+	if len(d.items) != 1 || len(d.items[0].SourceIDs) != 128 {
+		t.Fatal("missing bounded durable source mapping")
+	}
+	raw, e := json.Marshal(d.items[0])
+	if e != nil {
+		t.Fatal(e)
+	}
+	var fields map[string]json.RawMessage
+	if e = json.Unmarshal(raw, &fields); e != nil {
+		t.Fatal(e)
+	}
+	var ids []string
+	if e = json.Unmarshal(fields["sourceIds"], &ids); e != nil || len(ids) != 128 {
+		t.Fatal("status JSON omits source IDs", e)
+	}
+	// sourceIds is an additive internal interaction selection/status field;
+	// the normalized platform event and retained legacy policy stay unchanged.
+	if string(fields["policy"]) != `"NONE"` || len(fields["event"]) == 0 {
+		t.Fatal("legacy selection JSON changed", string(raw))
+	}
+}
+
+func TestContinuityQueuesDuringAnswerAndExpiresBeforeResume(t *testing.T) {
+	s, now, d, gate := fixture(t)
+	gate.Busy = true
+	gate.CurrentSource = "AUTO_SCRIPT"
+	gate.ContinuityActive = true
+	receive(t, s, event("one", "a", "多少钱？"))
+	if e := s.Tick(context.Background()); e != nil {
+		t.Fatal(e)
+	}
+	if len(d.items) != 0 {
+		t.Fatal("recursively interrupted answer")
+	}
+	gate.ContinuityMaySuspend = true
+	if e := s.Tick(context.Background()); e != nil {
+		t.Fatal(e)
+	}
+	if len(d.items) != 1 || d.items[0].Policy != "AT_BOUNDARY" || len(d.items[0].SourceIDs) != 1 {
+		t.Fatal(d.items)
+	}
+	gate.ContinuityMaySuspend = false
+	receive(t, s, event("two", "b", "商品库存有多少？"))
+	*now = now.Add(DefaultConfig().TTL + time.Second)
+	if e := s.Tick(context.Background()); e != nil {
+		t.Fatal(e)
+	}
+	gate.ContinuityMaySuspend = true
+	if e := s.Tick(context.Background()); e != nil {
+		t.Fatal(e)
+	}
+	if len(d.items) != 1 {
+		t.Fatal("expired question dispatched")
 	}
 }
 func TestDirectedRequestSelectedButAmbientStatementFiltered(t *testing.T) {

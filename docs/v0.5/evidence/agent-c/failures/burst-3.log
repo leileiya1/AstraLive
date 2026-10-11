@@ -1,0 +1,63 @@
+=== RUN   TestPostgresNativeChromeRTMPContinuity
+    postgres_test.go:332: Python/PG seam failed: exit status 1
+        webrtc_media_metrics {"generationId": 2, "peers": [{"mediaTimeline": {"sourceSample": 144000, "sourceRate": 48000, "outputSamples": 137280, "outputRate": 48000, "audioUnderruns": 16, "lateVideoDrops": 8, "videoHolds": 6, "evidenceType": "sink_consumed", "audienceAudible": false}, "adaptiveTargetMs": 341, "pendingSamples": 0, "peerId": "peer_1556be267da248b5a2339e414eb56608", "connectionState": "connected", "iceConnectionState": "completed", "audioQueueSize": 0, "videoQueueSize": 0, "audioQueueMax": 40, "videoQueueMax": 20, "audioQueueMs": 0, "videoQueueMs": 0.0, "audioPeakQueueFrames": 20, "audioPeakQueueMs": 400, "videoPeakQueueFrames": 20, "videoPeakQueueMs": 800.0, "targetFps": 25, "consumerFps": 25.22, "renderMs": 0.0, "lastAudioRecvAt": "2026-10-11T11:07:23.401882+00:00", "lastVideoRecvAt": "2026-10-11T11:07:23.482116+00:00", "audioFramesEnqueued": 127, "audioFramesConsumed": 127, "videoFramesEnqueued": 74, "videoFramesConsumed": 66, "audioFramesEnqueuedTotal": 127, "audioFramesConsumedTotal": 127, "videoFramesEnqueuedTotal": 74, "videoFramesConsumedTotal": 66, "framesDropped": 8, "backpressureEvents": 46, "backpressureWaitMs": 1829.0, "peerStallEvents": 0, "peerEvictions": 0, "generationId": 2}]}
+        narration_checkpoint_unproven {"sessionId": "s", "segmentId": "segment_ebf9074bbe943d359a1e85f5c75c2c50", "runEpoch": 1, "timelineEpoch": 1, "requiredEnd": 144000, "sinkWatermarks": {"rtmp:1/audio": 21120, "peer_1556be267da248b5a2339e414eb56608/audio": 960, "peer_1556be267da248b5a2339e414eb56608/video": 1920, "rtmp:1/video": 5760}, "audienceAudible": false}
+        ERROR:    Traceback (most recent call last):
+          File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 205, in run
+            return runner.run(main)
+                   ~~~~~~~~~~^^^^^^
+          File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+            return self._loop.run_until_complete(task)
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+          File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+            return future.result()
+                   ~~~~~~~~~~~~~^^
+          File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/narration_pg_fixture.py", line 77, in main
+            s.continuity.task.result()
+            ~~~~~~~~~~~~~~~~~~~~~~~~^^
+          File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/narration_segments.py", line 197, in _execute_guarded
+            await self._execute(command, attempt)
+          File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/narration_segments.py", line 270, in _execute
+            raise ValueError("RECOVERY_UNKNOWN: required sink tail unproven")
+        ValueError: RECOVERY_UNKNOWN: required sink tail unproven
+        
+        During handling of the above exception, another exception occurred:
+        
+        Traceback (most recent call last):
+          File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/starlette/routing.py", line 661, in lifespan
+            await receive()
+          File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/fastapi/telemetry/_runtime.py", line 214, in wrapped_receive
+            message = await receive()
+                      ^^^^^^^^^^^^^^^
+          File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/uvicorn/lifespan/on.py", line 137, in receive
+            return await self.receive_queue.get()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/queues.py", line 186, in get
+            await getter
+        asyncio.exceptions.CancelledError
+        
+        Traceback (most recent call last):
+          File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/narration_pg_fixture.py", line 86, in <module>
+            if __name__=="__main__":asyncio.run(main())
+                                    ~~~~~~~~~~~^^^^^^^^
+          File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 205, in run
+            return runner.run(main)
+                   ~~~~~~~~~~^^^^^^
+          File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+            return self._loop.run_until_complete(task)
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+          File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+            return future.result()
+                   ~~~~~~~~~~~~~^^
+          File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/narration_pg_fixture.py", line 77, in main
+            s.continuity.task.result()
+            ~~~~~~~~~~~~~~~~~~~~~~~~^^
+          File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/narration_segments.py", line 197, in _execute_guarded
+            await self._execute(command, attempt)
+          File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/narration_segments.py", line 270, in _execute
+            raise ValueError("RECOVERY_UNKNOWN: required sink tail unproven")
+        ValueError: RECOVERY_UNKNOWN: required sink tail unproven
+--- FAIL: TestPostgresNativeChromeRTMPContinuity (5.28s)
+FAIL
+FAIL	astralive/backend/internal/narration	5.605s
+FAIL

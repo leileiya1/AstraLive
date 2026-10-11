@@ -141,6 +141,18 @@ func (c *InteractionController) gate(ctx context.Context, sid, roomID string) (i
 		return interaction.Gate{}, err
 	}
 	gate := interaction.Gate{Running: se.RoomID == roomID && (se.Status == "LIVE" || se.Status == "DEGRADED"), ProductID: ro.ActiveProductID.String}
+	if c.service.Narration != nil {
+		active, maySuspend, e := c.service.Narration.Gate(ctx, sid)
+		if e != nil {
+			return gate, e
+		}
+		gate.ContinuityActive, gate.ContinuityMaySuspend = active, maySuspend
+		if active {
+			gate.Busy = true
+			gate.CurrentSource = "AUTO_SCRIPT"
+			return gate, nil
+		}
+	}
 	err = c.service.DB.QueryRow(ctx, `SELECT id,source,priority FROM utterances WHERE session_id=$1 AND status NOT IN ('COMPLETED','INTERRUPTED','FAILED','CANCELLED') ORDER BY created_at LIMIT 1`, sid).Scan(&gate.CurrentUtteranceID, &gate.CurrentSource, &gate.CurrentPriority)
 	if errors.Is(err, pgx.ErrNoRows) {
 		err = nil
@@ -183,7 +195,16 @@ func (d *interactionDispatcher) Dispatch(ctx context.Context, v interaction.Sele
 	if err != nil {
 		return "", err
 	}
-	if d.controller.Snapshot(d.sid).Mode == interaction.OperatorOverride || !gate.Running || (gate.Busy && !(v.Policy == "INTERRUPT_LOWER_PRIORITY" && gate.CurrentSource == "AUTO_SCRIPT" && v.Priority > gate.CurrentPriority)) || gate.ProductID != v.ProductID {
+	if d.controller.Snapshot(d.sid).Mode == interaction.OperatorOverride || !gate.Running || gate.ProductID != v.ProductID {
+		return "", ErrConflict
+	}
+	if gate.ContinuityActive {
+		if !gate.ContinuityMaySuspend || v.Policy != "AT_BOUNDARY" {
+			return "", ErrConflict
+		}
+		return s.Narration.Select(ctx, d.sid, v, d.controller.settings.TTL)
+	}
+	if gate.Busy && !(v.Policy == "INTERRUPT_LOWER_PRIORITY" && gate.CurrentSource == "AUTO_SCRIPT" && v.Priority > gate.CurrentPriority) {
 		return "", ErrConflict
 	}
 	if s.Durable != nil {

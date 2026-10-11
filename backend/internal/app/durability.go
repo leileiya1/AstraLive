@@ -6,11 +6,22 @@ import (
 	"astralive/backend/internal/durability"
 	"astralive/backend/internal/ids"
 	"astralive/backend/internal/metrics"
+	"astralive/backend/internal/narration"
 	"astralive/backend/internal/userconfig"
 	"context"
 	"github.com/jackc/pgx/v5"
 	"time"
 )
+
+// AttachNarration shares App's existing durable whole-Session Stop transaction.
+// A narration cannot be admitted without this captured-lifecycle safety hook.
+func (s *Service) AttachNarration(c *narration.Controller) {
+	s.Narration = c
+	c.RetireCapturedSession = func(ctx context.Context, tx pgx.Tx, run durability.Run) error {
+		_, e := s.durableControl(durability.WithBusinessTx(ctx, tx), run.SessionID, ids.New("trace"), "STOP_SESSION", "PRODUCT_VERSION_CHANGED")
+		return e
+	}
+}
 
 func (s *Service) durableSpeak(ctx context.Context, id, text string, priority int32, policy, source, trace string, platform *runtimeapi.PlatformContext, interaction bool) (dbgen.Utterance, error) {
 	tx, e := durability.BeginBusiness(ctx, s.DB)
@@ -29,6 +40,13 @@ func (s *Service) durableSpeak(ctx context.Context, id, text string, priority in
 	}
 	if r.Status != "ACTIVE" || se.Status != "LIVE" && se.Status != "DEGRADED" {
 		return dbgen.Utterance{}, ErrConflict
+	}
+	forceBarrier := false
+	if s.Narration != nil {
+		forceBarrier, e = s.Narration.AdmitOrdinary(ctx, tx, r, policy)
+		if e != nil {
+			return dbgen.Utterance{}, e
+		}
 	}
 	if interaction {
 		var old string
@@ -65,6 +83,11 @@ func (s *Service) durableSpeak(ctx context.Context, id, text string, priority in
 	if e != nil {
 		return u, e
 	}
+	if forceBarrier {
+		if e = s.Durable.Barrier(ctx, tx, c); e != nil {
+			return u, e
+		}
+	}
 	if interaction {
 		_, e = tx.Exec(ctx, `INSERT INTO interaction_receipts(session_id,trace_id,status,utterance_id) VALUES($1,$2,'RESERVED',$3)`, id, trace, u.ID)
 		if e != nil {
@@ -79,6 +102,52 @@ func (s *Service) durableSpeak(ctx context.Context, id, text string, priority in
 		metrics.UtteranceCount.Inc()
 	}
 	return u, e
+}
+
+// FORCE on a bound output cancels automatic continuation, but cannot feed
+// untimed legacy media to that output. The existing FAILED result and control
+// command share the public idempotency transaction; no SPEAK is enqueued.
+func (s *Service) failedNarrationForce(ctx context.Context, id, text string, priority int32, source, trace string) (dbgen.Utterance, error) {
+	tx, e := durability.BeginBusiness(ctx, s.DB)
+	if e != nil {
+		return dbgen.Utterance{}, e
+	}
+	defer tx.Rollback(ctx)
+	run, e := s.Durable.Current(ctx, tx, id, false)
+	if e != nil {
+		return dbgen.Utterance{}, e
+	}
+	q := s.Q.WithTx(tx)
+	session, e := q.GetSession(ctx, id)
+	if e != nil {
+		return dbgen.Utterance{}, e
+	}
+	if run.Status != "ACTIVE" || session.Status != "LIVE" && session.Status != "DEGRADED" {
+		return dbgen.Utterance{}, ErrConflict
+	}
+	u, e := q.CreateUtterance(ctx, dbgen.CreateUtteranceParams{ID: ids.New("utt"), SessionID: id, Text: text, Priority: priority, InterruptPolicy: "FORCE", Source: source, TraceID: trace})
+	if e != nil {
+		return u, e
+	}
+	_, e = tx.Exec(ctx, `UPDATE utterances SET status='FAILED',failure_code='DEPENDENCY_UNAVAILABLE',completed_at=clock_timestamp(),updated_at=clock_timestamp() WHERE id=$1`, u.ID)
+	if e != nil {
+		return u, e
+	}
+	command, e := s.Durable.Enqueue(ctx, tx, run, "FORCE_INTERRUPT", u.ID+":unsupported-force", trace, "", map[string]any{"reason": "OPERATOR_FORCE"})
+	if e != nil {
+		return u, e
+	}
+	if e = s.Durable.Barrier(ctx, tx, command); e != nil {
+		return u, e
+	}
+	if e = s.Narration.Control(ctx, tx, run, "FORCE_INTERRUPT"); e != nil {
+		return u, e
+	}
+	u, e = q.GetUtterance(ctx, u.ID)
+	if e != nil {
+		return u, e
+	}
+	return u, tx.Commit(ctx)
 }
 func (s *Service) durableControl(ctx context.Context, id, trace, kind, reason string) (string, error) {
 	tx, e := durability.BeginBusiness(ctx, s.DB)
@@ -125,6 +194,11 @@ func (s *Service) durableControl(ctx context.Context, id, trace, kind, reason st
 	}
 	if e = s.Durable.Barrier(ctx, tx, c); e != nil {
 		return "", e
+	}
+	if s.Narration != nil {
+		if e = s.Narration.Control(ctx, tx, r, kind); e != nil {
+			return "", e
+		}
 	}
 	if e = tx.Commit(ctx); e != nil {
 		return "", e
@@ -191,7 +265,7 @@ func (s *Service) durableStart(ctx context.Context, id, trace string) (string, e
 	if tag.RowsAffected() != 1 {
 		return "", ErrConflict
 	}
-	c, e := s.Durable.Enqueue(ctx, tx, r, "BEGIN_RUN", "initial", trace, "", map[string]any{"expectedPreviousEpoch": 0, "createSession": req})
+	c, e := s.Durable.Enqueue(ctx, tx, r, "BEGIN_RUN", "initial", trace, "", map[string]any{"expectedPreviousEpoch": 0, "createSession": req, "featureFlags": map[string]any{"contractRevision": "v0.5-frozen-1", "continuityEnabled": s.Narration != nil, "durabilityEnabled": true}})
 	if e != nil {
 		return "", e
 	}
