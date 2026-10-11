@@ -123,7 +123,7 @@ func (s *Store) RecordTimelineTx(ctx context.Context, tx pgx.Tx, x TimelineRecor
 	if e != nil {
 		return nil, e
 	}
-	observationHash, e := EventHash(raw)
+	observationHash, e := TimelineHash(raw)
 	if e != nil {
 		return nil, e
 	}
@@ -182,7 +182,7 @@ func (s *Store) RecordTimelineTx(ctx context.Context, tx pgx.Tx, x TimelineRecor
 		if json.Unmarshal(x.Proof, &p) != nil || json.Unmarshal(p.Descriptor, &d) != nil || p.AttemptID == "" || p.GenerationID < 1 || !d.Final || d.Count < 1 || d.Hash == "" || d.UtteranceID == "" || d.TextHash == "" || d.FactVersion == "" || (d.WorkerEpoch == nil) != (d.WorkerGenerationID == nil) {
 			return nil, ErrConflict
 		}
-		if d.WorkerEpoch != nil && (*d.WorkerEpoch == "" || *d.WorkerGenerationID < 1 || *d.WorkerGenerationID > MaxEpoch) {
+		if d.WorkerEpoch != nil && (*d.WorkerEpoch == "" || *d.WorkerGenerationID < 1) {
 			return nil, ErrConflict
 		}
 		var required []string

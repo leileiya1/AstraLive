@@ -11,7 +11,29 @@ MAX_INTEGER = 9007199254740991
 
 
 def canonical(value) -> bytes:
-    def check(item):
+    return _canonical(value, worker_proof=False)
+
+
+def timeline_canonical(value) -> bytes:
+    """Exact Worker BIGINT only in typed proof carriers; command stays unchanged."""
+    return _canonical(value, worker_proof=True)
+
+
+def _worker_path(path):
+    return (path in {("proof", "identity", "workerGenerationId"),
+                     ("proof", "descriptor", "workerGenerationId"),
+                     ("proof", "commit", "identity", "workerGenerationId"),
+                     ("proof", "commit", "descriptor", "workerGenerationId")}
+            or (len(path) == 5 and path[:2] == ("proof", "sinkReceipts")
+                and type(path[2]) is int and path[3:] == ("identity", "workerGenerationId")))
+
+
+def _canonical(value, worker_proof):
+    def check(item, path=()):
+        if worker_proof and _worker_path(path) and item is not None:
+            if type(item) is not int or not 0 < item < 2**63:
+                raise ValueError("invalid Worker wire integer")
+            return
         if isinstance(item, float):
             raise ValueError("fractional/nonfinite JSON forbidden")
         if isinstance(item, int) and not isinstance(item, bool) and abs(item) > MAX_INTEGER:
@@ -20,10 +42,10 @@ def canonical(value) -> bytes:
             for key, val in item.items():
                 if not isinstance(key, str):
                     raise ValueError("invalid JSON key")
-                check(val)
+                check(val, path + (key,))
         elif isinstance(item, list):
-            for val in item:
-                check(val)
+            for index, val in enumerate(item):
+                check(val, path + (index,))
     check(value)
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode("utf-8")
 

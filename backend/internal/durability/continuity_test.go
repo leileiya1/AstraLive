@@ -10,6 +10,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"io"
 	"log/slog"
+	"strconv"
 	"sync"
 	"testing"
 )
@@ -71,6 +72,12 @@ func record(t *testing.T, ctx context.Context, s *durability.Store, c durability
 	return out
 }
 func TestContinuityProofAndCursorAtomic(t *testing.T) {
+	t.Run("no-worker", func(t *testing.T) { testContinuityProofAndCursor(t, nil) })
+	for _, worker := range []int64{9007199254740991, 9007199254740992, 9223372036854775807} {
+		t.Run("worker-"+strconv.FormatInt(worker, 10), func(t *testing.T) { testContinuityProofAndCursor(t, &worker) })
+	}
+}
+func testContinuityProofAndCursor(t *testing.T, worker *int64) {
 	ctx, p, s := pg(t)
 	r := seedNarration(t, ctx, p, s)
 	c := mediaCommand(t, ctx, p, s, r, "seg1", "a1", 0)
@@ -80,8 +87,60 @@ func TestContinuityProofAndCursorAtomic(t *testing.T) {
 		t.Fatal(e)
 	}
 	descriptor := map[string]any{"sampleCount": 640, "contentHash": "fixture-pcm-hash", "finalMarker": true, "requiredSinks": []string{"preview"}, "utteranceId": "useg1", "textHash": "text1", "factVersion": "facts1"}
-	record(t, ctx, s, c, "SEGMENT_READY", map[string]any{"attemptId": "a1", "generationId": generation, "descriptor": descriptor})
-	identity := durability.TimelineIdentity{SessionID: "s", RunEpoch: 1, TimelineEpoch: 1, GenerationID: generation, SegmentID: "seg1", UtteranceID: "useg1", Lane: "NARRATION"}
+	var workerEpoch *string
+	if worker != nil {
+		epoch := "worker_fixture"
+		workerEpoch = &epoch
+		descriptor["workerEpoch"] = workerEpoch
+		descriptor["workerGenerationId"] = worker
+	}
+	if worker != nil {
+		for _, kind := range []string{"missing-epoch", "missing-id", "empty-epoch", "bool", "string", "zero", "overflow", "business-overflow"} {
+			broken := map[string]any{}
+			for k, v := range descriptor {
+				broken[k] = v
+			}
+			businessGeneration := generation
+			switch kind {
+			case "missing-epoch":
+				delete(broken, "workerEpoch")
+			case "missing-id":
+				delete(broken, "workerGenerationId")
+			case "empty-epoch":
+				broken["workerEpoch"] = ""
+			case "bool":
+				broken["workerGenerationId"] = true
+			case "string":
+				broken["workerGenerationId"] = "9223372036854775807"
+			case "zero":
+				broken["workerGenerationId"] = 0
+			case "overflow":
+				broken["workerGenerationId"] = uint64(1) << 63
+			case "business-overflow":
+				businessGeneration = 9007199254740992
+			}
+			bad, _ := json.Marshal(map[string]any{"attemptId": "a1", "generationId": businessGeneration, "descriptor": broken})
+			if _, err := s.RecordTimeline(ctx, durability.TimelineRecord{Command: c, Producer: "runtime", Operation: "SEGMENT_READY", Proof: bad}); !errors.Is(err, durability.ErrConflict) {
+				t.Fatalf("invalid Worker %s accepted: %v", kind, err)
+			}
+		}
+	}
+	ready := map[string]any{"attemptId": "a1", "generationId": generation, "descriptor": descriptor}
+	firstReady := record(t, ctx, s, c, "SEGMENT_READY", ready)
+	if retry := record(t, ctx, s, c, "SEGMENT_READY", ready); !equalJSONTest(firstReady, retry) {
+		t.Fatal("READY replay changed")
+	}
+	if worker != nil {
+		var stored int64
+		var encoded string
+		if e = p.QueryRow(ctx, `SELECT worker_generation_id,descriptor_json->>'workerGenerationId' FROM v05_segment_attempts WHERE attempt_id='a1'`).Scan(&stored, &encoded); e != nil {
+			t.Fatal(e)
+		}
+		if stored != *worker || encoded != strconv.FormatInt(*worker, 10) {
+			t.Fatalf("Worker ID rounded: %d %s", stored, encoded)
+		}
+	}
+	identity := durability.TimelineIdentity{SessionID: "s", RunEpoch: 1, TimelineEpoch: 1, GenerationID: generation, SegmentID: "seg1", UtteranceID: "useg1", Lane: "NARRATION", WorkerEpoch: workerEpoch, WorkerGenerationID: worker}
 	commit := map[string]any{"identity": identity, "attemptId": "a1", "descriptor": descriptor, "start": 0, "end": 640, "command": c, "consumed": map[string]any{}, "completed": false, "completion_proof": nil}
 	intent := record(t, ctx, s, c, "COMMIT_INTENT", map[string]any{"commit": commit, "revision": 0})
 	var state string
@@ -178,6 +237,15 @@ func TestContinuityProofAndCursorAtomic(t *testing.T) {
 	again, e := s.RecordTimeline(ctx, request)
 	if e != nil || !equalJSONTest(first, again) || calls != 1 {
 		t.Fatalf("replayed cursor: %s %s %d %v", first, again, calls, e)
+	}
+	if worker != nil {
+		var identityID, receiptID string
+		if e = p.QueryRow(ctx, `SELECT identity_json->>'workerGenerationId',sink_receipts->0->'identity'->>'workerGenerationId' FROM v05_timeline_commits WHERE command_id=$1`, c.CommandID).Scan(&identityID, &receiptID); e != nil {
+			t.Fatal(e)
+		}
+		if identityID != strconv.FormatInt(*worker, 10) || receiptID != identityID {
+			t.Fatalf("Worker receipt roundtrip: %s %s", identityID, receiptID)
+		}
 	}
 	proof["sinkReceipts"] = receipts[:1]
 	request.Proof, _ = json.Marshal(proof)
@@ -467,5 +535,27 @@ func TestTerminalSessionSealsContinuity(t *testing.T) {
 	}
 	if !barrier || status != "SEALED" {
 		t.Fatalf("terminal Session left media active: %t %s", barrier, status)
+	}
+}
+
+func TestWorkerWireSQLDomain(t *testing.T) {
+	ctx, p, s := pg(t)
+	r := seedNarration(t, ctx, p, s)
+	mediaCommand(t, ctx, p, s, r, "seg1", "a1", 0)
+	for _, value := range []string{"0", "-1", "9223372036854775808"} {
+		if _, e := p.Exec(ctx, `UPDATE v05_segment_attempts SET worker_epoch='worker',worker_generation_id=$1::numeric::bigint,worker_ref_json=jsonb_build_object('workerGenerationId',$1::numeric) WHERE attempt_id='a1'`, value); e == nil {
+			t.Fatalf("SQL accepted invalid Worker ID %s", value)
+		}
+	}
+	if _, e := p.Exec(ctx, `UPDATE v05_segment_attempts SET worker_epoch='worker',worker_generation_id=9223372036854775807,worker_ref_json='{"workerEpoch":"worker","workerGenerationId":9223372036854775807}' WHERE attempt_id='a1'`); e != nil {
+		t.Fatal(e)
+	}
+	var worker int64
+	var encoded string
+	if e := p.QueryRow(ctx, `SELECT worker_generation_id,worker_ref_json->>'workerGenerationId' FROM v05_segment_attempts WHERE attempt_id='a1'`).Scan(&worker, &encoded); e != nil {
+		t.Fatal(e)
+	}
+	if worker != 9223372036854775807 || encoded != "9223372036854775807" {
+		t.Fatal("SQL Worker ID lost precision")
 	}
 }

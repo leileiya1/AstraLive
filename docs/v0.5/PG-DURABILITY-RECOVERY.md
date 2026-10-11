@@ -38,7 +38,7 @@
 | FAILED | 证明未发出的派发耗尽时 outbox FAILED；旧任务失败保留，receipt 不伪造所有 sink 的终结证明 |
 | UNKNOWN | 发送/进程/物理副作用证据不充分；不转换成可自动重播的失败 |
 
-`Observe` 的 completed 仅允许控制命令，表示该控制操作已执行。SPEAK 不允许用这个接口声称 SegmentCompleted。增量 000007 已提供 Timeline ledger、严格 sink proof 校验和 C 同事务 callback；详见 [A-owned 接线契约](../../backend/internal/durability/CONTINUITY-SEAM.md)。B/C 的完整接线与 Narration 连续恢复仍未在本分支验收。
+`Observe` 的 completed 仅允许控制命令，表示该控制操作已执行。SPEAK 不允许用这个接口声称 SegmentCompleted。增量 000007 已提供 Timeline ledger、严格 sink proof 校验和 C 同事务 callback；000008 与字段限定的 proof canonicalization 保留独立 Worker wire ID 的正 63 位整数域，业务 ID 上限不变；详见 [A-owned 接线契约](../../backend/internal/durability/CONTINUITY-SEAM.md)。B/C 的完整接线与 Narration 连续恢复仍未在本分支验收。
 
 ## 事务、派发与去重
 
