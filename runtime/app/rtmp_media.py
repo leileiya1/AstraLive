@@ -1,6 +1,7 @@
 """Headless FFmpeg RTMP sink with continuous audio/video clocks."""
 import asyncio
 from collections import deque
+from dataclasses import asdict
 import logging
 import math
 import os
@@ -10,6 +11,7 @@ from typing import Awaitable, Callable
 
 from .config import RTMPSettings
 from .providers import AudioChunk, VideoFrame
+from .media_timeline import enabled as timeline_enabled, AudioMasterClock
 
 
 log = logging.getLogger(__name__)
@@ -20,6 +22,7 @@ class FFmpegRTMPMediaOutput:
     audio_frame_ms = 20
 
     def __init__(self, settings: RTMPSettings | None = None) -> None:
+        self.timeline_v2 = timeline_enabled()
         self.settings = settings or RTMPSettings.from_env()
         if not self.settings.enabled:
             raise ValueError("FFmpegRTMPMediaOutput requires RTMP_ENABLED=true")
@@ -61,6 +64,59 @@ class FFmpegRTMPMediaOutput:
         self.write_failures = 0
         self.started_monotonic: float | None = None
         self.last_process_started_monotonic: float | None = None
+        self.connection_incarnation = 0
+        self.timeline_clock = None
+        self.timeline_in_flight = {}
+        self.cancelled_in_flight = 0
+        if self.timeline_v2:
+            # Lazy import keeps the flag-off RTMP dependency surface unchanged.
+            from .webrtc_media import _TimelineAudioTrack
+            self.timeline_clock = AudioMasterClock(self.settings.audio_sample_rate)
+            self._timeline_audio = _TimelineAudioTrack(self.timeline_clock)
+            self._timeline_audio.sample_rate = self.settings.audio_sample_rate
+            self._timeline_audio.frame_samples = self.settings.audio_sample_rate // 50
+            from .media_timeline import RationalResampler
+            self._timeline_audio.resampler = RationalResampler(self.settings.audio_sample_rate)
+            self.audio_queue = self._timeline_audio.queue
+            self._audio_pending = self._timeline_audio.pending
+            self.video_queue = asyncio.Queue(math.ceil(self.settings.fps * self.timeline_clock.policy.interruptible_ms / 1000))
+            self._video_tick = 0
+            self._video_dispositions = {}
+            self.video_resolved = 0
+            self.audio_retired = 0
+
+    def bind_timeline(self, timeline):
+        if not self.timeline_v2 or self.running:
+            raise ValueError("bind V2 timeline before output start")
+        self.timeline_clock.timeline = timeline
+        self.timeline_clock.source_rate = timeline.sample_rate
+        self.timeline_clock.policy = timeline.policy
+        self._timeline_audio.clock = self.timeline_clock
+        def fence():
+            self._timeline_audio.pending.clear()
+            self._latest_video = self._blank_frame()
+            for queue in (self.audio_queue, self.video_queue):
+                while not queue.empty():
+                    queue.get_nowait()
+                    queue.task_done()
+        timeline.sink_fences.append(fence)
+        timeline.sink_observers.append(self.timeline_progress)
+
+    def timeline_progress(self):
+        return {"sink": f"rtmp:{self.connection_incarnation}",
+                "clock": self.timeline_clock.snapshot(),
+                "inFlight": {media: {**item, "identity": asdict(item["identity"]) if item["identity"] else None}
+                             for media, item in self.timeline_in_flight.items()},
+                "cancelledInFlight": self.cancelled_in_flight}
+
+    def video_disposition(self, frame):
+        return self._video_dispositions.get(id(frame)) if self.timeline_v2 else None
+
+    def _dispose_video(self, frame, state):
+        self._video_dispositions[id(frame)] = state
+        while len(self._video_dispositions) > 128:
+            self._video_dispositions.pop(next(iter(self._video_dispositions)))
+        self.video_resolved += 1
 
     def configure_session(self, config) -> None:
         # RTMP owns its output dimensions and clock; Session config is input metadata.
@@ -71,6 +127,8 @@ class FFmpegRTMPMediaOutput:
 
     def _warn(self, warning: dict) -> None:
         self.warnings.append(warning)
+        if self.timeline_v2:
+            del self.warnings[:-256]
         log.warning("rtmp_output_warning %s", warning)
         if self.warning_handler:
             asyncio.create_task(self.warning_handler(warning))
@@ -146,6 +204,27 @@ class FFmpegRTMPMediaOutput:
             self._video_fd = video_write
             self._audio_fd = audio_write
             self.process_starts += 1
+            self.connection_incarnation += 1
+            if self.timeline_v2:
+                # New FFmpeg is a new mux clock domain. Never report reset as
+                # surviving-connection PTS continuity or replay the old tail.
+                self.timeline_clock.output_samples = 0
+                self._video_tick = 0
+                if self.process_starts > 1:
+                    self._latest_video = self._blank_frame()
+                    for queue in (self.audio_queue, self.video_queue):
+                        while not queue.empty():
+                            item = queue.get_nowait()
+                            queue.task_done()
+                            if queue is self.audio_queue:
+                                self.audio_retired += 1
+                                self.audio_dropped += 1
+                            else:
+                                self._dispose_video(item[2], "dropped")
+                                self.video_dropped += 1
+                    self._timeline_audio.pending.clear()
+                    self._warn({"code": "MEDIA_TIMELINE_DISCONTINUITY", "sink": "rtmp",
+                                "connectionIncarnation": self.connection_incarnation, "tailState": "unknown"})
             self.last_process_started_monotonic = time.monotonic()
             self._stderr_task = asyncio.create_task(self._read_stderr(process), name="rtmp-ffmpeg-stderr")
 
@@ -226,6 +305,11 @@ class FFmpegRTMPMediaOutput:
     async def push_audio(self, chunk: AudioChunk) -> None:
         if not self.running or chunk.generation_id != self.generation_id:
             return
+        if self.timeline_v2:
+            await self._timeline_audio.push(chunk, lambda: self.running and chunk.generation_id == self.generation_id)
+            self.audio_enqueued = self._timeline_audio.enqueued
+            self.audio_enqueued_total = self._timeline_audio.total_enqueued
+            return
         if chunk.channels != 1:
             raise ValueError("RTMP audio input requires mono PCM")
         pcm = self._resample_mono(chunk.pcm, chunk.sample_rate, self.settings.audio_sample_rate)
@@ -250,7 +334,10 @@ class FFmpegRTMPMediaOutput:
             return
         self.video_enqueued += 1
         self.video_enqueued_total += 1
-        await self.video_queue.put((frame.generation_id, payload))
+        await self.video_queue.put((frame.generation_id, payload, frame) if self.timeline_v2 else (frame.generation_id, payload))
+        if frame.generation_id != self.generation_id:
+            # Dequeue also rechecks the fence; no old generation pipe handoff.
+            return
 
     async def _wait_writable(self, fd: int) -> None:
         loop = asyncio.get_running_loop()
@@ -276,6 +363,9 @@ class FFmpegRTMPMediaOutput:
                 return
 
     async def _audio_clock(self) -> None:
+        if self.timeline_v2:
+            await self._timeline_audio_clock()
+            return
         samples = self.settings.audio_sample_rate * self.audio_frame_ms // 1000
         silence = bytes(samples * 2)
         period = self.audio_frame_ms / 1000
@@ -305,6 +395,9 @@ class FFmpegRTMPMediaOutput:
                 await self._abort_process("audio_write_timeout")
 
     async def _video_clock(self) -> None:
+        if self.timeline_v2:
+            await self._timeline_video_clock()
+            return
         period = 1 / self.settings.fps
         next_at = time.monotonic()
         while self.running:
@@ -352,6 +445,19 @@ class FFmpegRTMPMediaOutput:
     async def drain(self, generation_id: int) -> None:
         if generation_id != self.generation_id:
             return
+        if self.timeline_v2:
+            await self._timeline_audio.flush(lambda: self.running and generation_id == self.generation_id)
+            self.audio_enqueued = self._timeline_audio.enqueued
+            self.audio_enqueued_total = self._timeline_audio.total_enqueued
+            target_audio, target_video = self.audio_enqueued, self.video_enqueued
+            deadline = time.monotonic() + 20
+            while generation_id == self.generation_id and self.running:
+                if self.audio_consumed + self.audio_retired >= target_audio and self.video_resolved >= target_video:
+                    return
+                if time.monotonic() >= deadline:
+                    raise TimeoutError("RTMP V2 sink drain timed out")
+                await asyncio.sleep(.02)
+            return
         if self._audio_pending:
             frame_bytes = self.settings.audio_sample_rate * self.audio_frame_ms // 1000 * 2
             self.audio_enqueued += 1
@@ -374,6 +480,16 @@ class FFmpegRTMPMediaOutput:
         self.audio_enqueued = self.audio_consumed = 0
         self.video_enqueued = self.video_consumed = 0
         self.video_written = 0
+        if self.timeline_v2:
+            self._timeline_audio.generation_id = generation_id
+            self._timeline_audio.enqueued = self._timeline_audio.consumed = 0
+            from .media_timeline import RationalResampler
+            self._timeline_audio.resampler = RationalResampler(self.settings.audio_sample_rate)
+            self._timeline_audio.resample_origin = self._timeline_audio.source_cursor
+            self._timeline_audio.pending_identity = None
+            self._video_dispositions.clear()
+            self.video_resolved = 0
+            self.audio_retired = 0
         self._audio_pending.clear()
         self._latest_video = self._blank_frame()
         for queue, media in ((self.audio_queue, "audio"), (self.video_queue, "video")):
@@ -384,6 +500,109 @@ class FFmpegRTMPMediaOutput:
                     self.audio_dropped += 1
                 else:
                     self.video_dropped += 1
+
+    async def _timeline_audio_clock(self):
+        samples = self.settings.audio_sample_rate // 50
+        next_at = time.monotonic()
+        while self.running:
+            await asyncio.sleep(max(0, next_at - time.monotonic()))
+            next_at = max(next_at + .02, time.monotonic())
+            payload, metadata = bytes(samples * 2), None
+            if self._audio_fd is not None:
+                while not self.audio_queue.empty():
+                    generation, queued, start, end, identity = self.audio_queue.get_nowait()
+                    self.audio_queue.task_done()
+                    timeline = self.timeline_clock.timeline
+                    if generation != self.generation_id or (timeline and not timeline.eligible(identity, start, end)):
+                        self.audio_dropped += 1
+                        continue
+                    payload, metadata = queued, (generation, start, end, identity)
+                    break
+            fd, failures, incarnation = self._audio_fd, self.write_failures, self.connection_incarnation
+            if metadata:
+                self.timeline_in_flight["audio"] = {"identity": metadata[3], "startSample": metadata[1], "endSample": metadata[2]}
+            try:
+                await self._write_fd(fd, payload)
+                if (fd is not None and fd == self._audio_fd and failures == self.write_failures and
+                        incarnation == self.connection_incarnation and self.running):
+                    valid = metadata and metadata[0] == self.generation_id and (
+                        self.timeline_clock.timeline is None or self.timeline_clock.timeline.eligible(
+                            metadata[3], metadata[1], metadata[2]))
+                    if metadata and not valid:
+                        self.cancelled_in_flight += 1
+                    self.timeline_clock.advance(samples, metadata[2] if valid else None)
+                    if valid:
+                        self.audio_consumed += 1
+                        self.audio_consumed_total += 1
+                        self._timeline_audio.last_recv_monotonic = time.monotonic()
+                        timeline = self.timeline_clock.timeline
+                        if timeline:
+                            timeline.observe_sink_progress(metadata[3], f"rtmp:{incarnation}", "audio", metadata[1], metadata[2])
+            except asyncio.TimeoutError:
+                self.write_failures += 1
+                await self._abort_process("audio_write_timeout")
+            finally:
+                self.timeline_in_flight.pop("audio", None)
+
+    async def _timeline_video_clock(self):
+        clock = self.timeline_clock
+        while self.running:
+            incarnation = self.connection_incarnation
+            await clock.wait_video_tick(self._video_tick, self.settings.fps,
+                                        lambda: self.running and incarnation == self.connection_incarnation)
+            if not self.running:
+                return
+            if incarnation != self.connection_incarnation:
+                continue
+            selected = None
+            while not self.video_queue.empty():
+                generation, payload, frame = self.video_queue._queue[0]
+                sample = getattr(frame, "sourceSample", frame.pts_us * clock.source_rate // 1000000)
+                end = sample + clock.source_rate // self.settings.fps
+                if clock.timeline and getattr(frame, "identity", None):
+                    commit = clock.timeline.commits.get(frame.identity.segmentId)
+                    if commit:
+                        end = min(end, commit.end)
+                if generation != self.generation_id or not clock.accepts(frame, sample, end):
+                    self.video_queue.get_nowait(); self.video_queue.task_done()
+                    self.video_dropped += 1
+                    self._dispose_video(frame, "fenced")
+                    continue
+                action = clock.video_action(sample)
+                if action == "wait":
+                    break
+                self.video_queue.get_nowait(); self.video_queue.task_done()
+                if action == "drop":
+                    self.video_dropped += 1
+                    clock.video_late_drops += 1
+                    self._dispose_video(frame, "dropped")
+                    continue
+                self._latest_video = payload
+                selected = (frame, sample, end)
+                break
+            if selected is None:
+                clock.video_holds += 1
+            fd, failures = self._video_fd, self.write_failures
+            if selected:
+                self.timeline_in_flight["video"] = {"identity": getattr(selected[0], "identity", None),
+                    "startSample": selected[1], "endSample": selected[2]}
+            try:
+                await self._write_fd(fd, self._latest_video)
+                if (selected and fd is not None and fd == self._video_fd and self.running and
+                        failures == self.write_failures and incarnation == self.connection_incarnation and
+                        selected[0].generation_id == self.generation_id and clock.accepts(selected[0], selected[1], selected[2])):
+                    self.video_consumed += 1
+                    self.video_consumed_total += 1
+                    self.video_written = self.video_consumed
+                    self._dispose_video(selected[0], "consumed")
+                    if clock.timeline:
+                        clock.timeline.observe_sink_progress(selected[0].identity, f"rtmp:{incarnation}", "video", selected[1], selected[2])
+            except asyncio.TimeoutError:
+                self.write_failures += 1
+                await self._abort_process("video_write_timeout")
+            finally:
+                self.timeline_in_flight.pop("video", None)
+            self._video_tick += 1
 
     async def _close_input_fds(self) -> None:
         async with self._process_lock:
@@ -437,6 +656,13 @@ class FFmpegRTMPMediaOutput:
     def diagnostics(self) -> dict:
         process = self._process
         return {
+            **({"mediaTimeline": self.timeline_clock.snapshot(),
+                "adaptiveTargetMs": self._timeline_audio.adaptive.target_ms,
+                "pendingSamples": len(self._audio_pending) // 2,
+                "inFlight": self.timeline_progress()["inFlight"],
+                "cancelledInFlight": self.cancelled_in_flight,
+                "connectionIncarnation": self.connection_incarnation}
+               if self.timeline_v2 else {}),
             "enabled": self.settings.enabled,
             "running": self.running,
             "connected": None,  # Process liveness does not prove platform acceptance.
