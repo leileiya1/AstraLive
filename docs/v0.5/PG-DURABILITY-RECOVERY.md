@@ -54,7 +54,7 @@ Runtime 必须先持久 Accept，再持久 StartAttempt，才进行外部副作�
 
 ## 事件可靠性与安全
 
-Python publisher 在私有持久目录中使用 SQLite WAL + synchronous FULL，只承担待送事件 journal。publish 返回前已落盘；稳定 eventId/hash/producerSeq 支持重启重送。Go 成功提交 PostgreSQL event 后才 ACK，Python 删除 raw pending body，保留 identity/hash 元数据防止同 id 改体或再次提交。ACK 丢失重送仍是幂等。冲突保留为 CONFLICT；未确认事件不淘汰；pending 上限10000，满时 fail closed。重试指数退避封顶30秒，没有仅内存重试队列。
+Python publisher 在私有持久目录中使用 SQLite WAL + synchronous FULL，只承担待送事件 journal。publish 返回前已落盘；稳定 eventId/hash/producerSeq 支持重启重送。Go 成功提交 PostgreSQL event 后才 ACK，Python 删除 raw pending body，保留 identity/hash 元数据防止同 id 改体或再次提交。ACK 丢失重送仍是幂等。冲突保留为 CONFLICT；未确认事件不淘汰；pending 上限10000，满时 fail closed。重试指数退避封顶30秒，没有仅内存重试队列。增量 TimelineJournal 同样在 POST 前将 proof 写入该磁盘 journal；重送只提交观察，不解除 B 的 blocked 状态、不重生成媒体，也不根据本地旧 ACK 绕过当前 Go fencing。
 
 Go event ingest 通过独立机器角色鉴权，不接受浏览器 cookie，也不接受调用者自报 tenant/user；scope 来自已持久命令、Session 与 Room owner。token 文件必须私有、角色不同。Python HTTP 禁代理、禁重定向、不自动重试 POST；Go→Runtime 保留现有 TokenTransport。日志不输出 token 或原始业务文本。
 

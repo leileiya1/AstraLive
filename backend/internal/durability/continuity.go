@@ -212,7 +212,7 @@ func (s *Store) ConfigureTimelineOutput(ctx context.Context, tx pgx.Tx, r Run, r
 // FenceTimeline preserves known completions/cursors and makes ambiguous media non-replayable.
 // Caller holds the Session lock; C's document keys are the acknowledged Document seam.
 func (s *Store) FenceTimeline(ctx context.Context, tx pgx.Tx, r Run, reason string, stop bool) error {
-	_, e := tx.Exec(ctx, `UPDATE v05_timeline_epochs SET status='SEALED',sealed_at=clock_timestamp() WHERE session_id=$1 AND run_epoch=$2 AND (status='PREPARED' OR $3)`, r.SessionID, r.Epoch, stop || reason == "RUN_RETIRED_UNKNOWN")
+	_, e := tx.Exec(ctx, `UPDATE v05_timeline_epochs SET status='SEALED',sealed_at=clock_timestamp() WHERE session_id=$1 AND run_epoch=$2 AND (status='PREPARED' OR $3)`, r.SessionID, r.Epoch, stop || reason == "RUN_RETIRED_UNKNOWN" || reason == "RECONCILIATION_BUDGET_EXHAUSTED")
 	if e != nil {
 		return e
 	}

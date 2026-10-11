@@ -227,7 +227,7 @@ class PostgresTimelineJournal:
     """B's TimelineJournal protocol backed by A's authenticated PostgreSQL transaction.
 
     Identity/range and C cursor validation happen on Go. This adapter never fabricates
-    sink receipts, hydrates a volatile timeline, retries an ambiguous POST, or asserts
+    sink receipts, hydrates a volatile timeline, replays media, or asserts
     viewer audibility. C registers the Go projection before using completion.
     """
     def __init__(self, client):
@@ -248,7 +248,10 @@ class PostgresTimelineJournal:
             if isinstance(value, (list, tuple)):
                 return [encode(item) for item in value]
             return value
-        result = await self.client.request("POST", "/timeline-record", {
+        spool = getattr(self.client, "timeline_spool", None)
+        if spool is None:
+            raise JournalError("DEPENDENCY_UNAVAILABLE")
+        result = await spool.record_timeline({
             "operation": operation, "command": encode(command), "proof": encode(proof),
             "producerIncarnation": self.client.incarnation,
         })

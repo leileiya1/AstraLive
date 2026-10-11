@@ -143,6 +143,11 @@ func (c *Coordinator) takeover(ctx context.Context, sid string) error {
 		if e != nil {
 			return e
 		}
+		// A cancellation-only replacement run has no active media epoch.
+		_, e = tx.Exec(ctx, `INSERT INTO v05_timeline_epochs(session_id,run_epoch,timeline_epoch,tenant_id,user_id,status,reservation_token,expected_previous_epoch,origin_sample,reason) VALUES($1,$2,1,$3,$4,'SEALED',$5,0,0,'RECOVERY_FENCE_ONLY')`, sid, epoch+1, t, u, ids.New("epoch"))
+		if e != nil {
+			return e
+		}
 		_, e = tx.Exec(ctx, `UPDATE v05_recovery_leases SET run_epoch=$2,owner_id=$3,lease_token=$4,expires_at=clock_timestamp()+interval '10 seconds',renewed_at=clock_timestamp() WHERE session_id=$1`, sid, epoch+1, c.Store.Owner, token+1)
 		if e != nil {
 			return e
@@ -194,6 +199,9 @@ func (c *Coordinator) SealTerminal(ctx context.Context) error {
 		return e
 	}
 	for _, x := range list {
+		if e = c.Store.FenceTimeline(ctx, tx, durability.Run{SessionID: x.sid, Epoch: x.epoch}, "TERMINAL_SESSION", true); e != nil {
+			return e
+		}
 		_, e = tx.Exec(ctx, `UPDATE v05_session_runs SET status='SEALED',sealed_at=clock_timestamp() WHERE session_id=$1 AND run_epoch=$2`, x.sid, x.epoch)
 		if e != nil {
 			return e

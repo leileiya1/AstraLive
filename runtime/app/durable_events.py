@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 import sqlite3
 import time
-from .durability_client import JournalError
+from .durability_client import JournalError, canonical
 
 
 class DurableEventPublisher:
@@ -40,7 +40,11 @@ class DurableEventPublisher:
           CREATE TABLE IF NOT EXISTS sequence(id INTEGER PRIMARY KEY CHECK(id=1), value INTEGER NOT NULL);
           INSERT OR IGNORE INTO sequence VALUES(1,0);
         """)
+        # Upgrade pre-Continuity journals in place; legacy packets retain their route.
+        if "endpoint" not in {row[1] for row in self.db.execute("PRAGMA table_info(pending)")}:
+            self.db.execute("ALTER TABLE pending ADD COLUMN endpoint TEXT NOT NULL DEFAULT '/events'")
         self.db.commit()
+        self.journal.timeline_spool = self
         self.max_pending = max_pending
         self.bindings = {}
         self.utterances = {}
@@ -111,26 +115,78 @@ class DurableEventPublisher:
         self.media_bindings[command["commandId"]] = {"generationId": result["generationId"], "timelineEpoch": result["run"]["timelineEpoch"]}
         return result["generationId"]
 
+    def stage_timeline(self, value):
+        """Fsync the immutable observation before HTTP. This never dispatches media."""
+        try:
+            core = {key: value[key] for key in ("operation", "command", "proof")}
+            raw_core = canonical(core)
+            event_id = "timeline_" + hashlib.sha256(canonical({"commandId": value["command"]["commandId"], "operation": value["operation"]})).hexdigest()
+            digest = hashlib.sha256(raw_core).hexdigest()
+        except (KeyError, ValueError, TypeError):
+            raise JournalError("COMMAND_CONFLICT", 409) from None
+        old = self.db.execute("SELECT legacy_hash,metadata FROM identities WHERE event_id=?", (event_id,)).fetchone()
+        if old and old[0] != digest:
+            raise JournalError("COMMAND_CONFLICT", 409)
+        row = self.db.execute("SELECT envelope,disposition FROM pending WHERE event_id=?", (event_id,)).fetchone()
+        if row:
+            if row[1] != "PENDING":
+                raise JournalError("RECOVERY_UNKNOWN", 409)
+            return event_id, json.loads(row[0])
+        if self.db.execute("SELECT count(*) FROM pending").fetchone()[0] >= self.max_pending:
+            raise JournalError()
+        packet = dict(core, producerIncarnation=value["producerIncarnation"])
+        # A restarted sender preserves the executor incarnation that produced this proof.
+        if old:
+            packet["producerIncarnation"] = json.loads(old[1])["producerIncarnation"]
+        metadata = {"endpoint": "/timeline-record", "producerIncarnation": packet["producerIncarnation"]}
+        with self.db:
+            self.db.execute("INSERT OR IGNORE INTO identities(event_id,legacy_hash,metadata) VALUES(?,?,?)", (event_id, digest, json.dumps(metadata)))
+            self.db.execute("UPDATE identities SET acked=0 WHERE event_id=?", (event_id,))
+            self.db.execute("INSERT INTO pending(event_id,envelope,endpoint) VALUES(?,?,'/timeline-record')", (event_id, canonical(packet).decode("utf-8")))
+        # Never return a cached ACK: every explicit record still checks current Go authority.
+        return event_id, packet
+
+    def _failed(self, event_id, attempts, exc):
+        disposition = "CONFLICT" if exc.code == "COMMAND_CONFLICT" else "PENDING"
+        if exc.code in {"LEASE_LOST", "RUN_SEALED", "STALE_RUN_EPOCH"}:
+            disposition = "FENCED"
+        with self.db:
+            self.db.execute("UPDATE pending SET attempts=attempts+1,next_at=?,disposition=? WHERE event_id=?", (time.time() + min(30, .25 * 2 ** min(attempts, 7)), disposition, event_id))
+
+    async def _deliver(self, event_id, endpoint, packet, attempts):
+        try:
+            result = await self.journal.request("POST", endpoint, packet)
+            if endpoint == "/timeline-record" and (not isinstance(result, dict) or result.get("durable") is not True):
+                raise JournalError("RECOVERY_UNKNOWN", 409)
+        except JournalError as exc:
+            self._failed(event_id, attempts, exc)
+            raise
+        with self.db:
+            self.db.execute("DELETE FROM pending WHERE event_id=?", (event_id,))
+            self.db.execute("UPDATE identities SET acked=1 WHERE event_id=?", (event_id,))
+        return result
+
+    async def record_timeline(self, value):
+        event_id, packet = self.stage_timeline(value)
+        row = self.db.execute("SELECT attempts FROM pending WHERE event_id=?", (event_id,)).fetchone()
+        try:
+            return await self._deliver(event_id, "/timeline-record", packet, row[0])
+        finally:
+            self.wake.set()
+
     def start(self):
         if self.task is None:
             self.task = asyncio.create_task(self.run(), name="durable-event-spool")
 
     async def flush_once(self):
-        row = self.db.execute("SELECT event_id,envelope,attempts FROM pending WHERE disposition='PENDING' AND next_at<=? ORDER BY rowid LIMIT 1", (time.time(),)).fetchone()
+        row = self.db.execute("SELECT event_id,envelope,attempts,endpoint FROM pending WHERE disposition='PENDING' AND next_at<=? ORDER BY rowid LIMIT 1", (time.time(),)).fetchone()
         if not row:
             return False
-        eid, raw, attempts = row
+        event_id, raw, attempts, endpoint = row
         try:
-            await self.journal.request("POST", "/events", json.loads(raw))
-        except JournalError as exc:
-            # Conflicts are retained for audit/manual disposition, never silently discarded.
-            disposition = "CONFLICT" if exc.code == "COMMAND_CONFLICT" else "PENDING"
-            with self.db:
-                self.db.execute("UPDATE pending SET attempts=attempts+1,next_at=?,disposition=? WHERE event_id=?", (time.time() + min(30, .25 * 2 ** min(attempts, 7)), disposition, eid))
+            await self._deliver(event_id, endpoint, json.loads(raw), attempts)
+        except JournalError:
             return False
-        with self.db:
-            self.db.execute("DELETE FROM pending WHERE event_id=?", (eid,))
-            self.db.execute("UPDATE identities SET acked=1 WHERE event_id=?", (eid,))
         return True
 
     async def run(self):
@@ -147,4 +203,6 @@ class DurableEventPublisher:
         if self.task:
             self.task.cancel()
             await asyncio.gather(self.task, return_exceptions=True)
+        if getattr(self.journal, "timeline_spool", None) is self:
+            del self.journal.timeline_spool
         self.db.close()
