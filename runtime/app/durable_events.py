@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 import sqlite3
 import time
-from .durability_client import JournalError, canonical
+from .durability_client import JournalError, canonical, timeline_canonical
 
 
 class DurableEventPublisher:
@@ -119,7 +119,7 @@ class DurableEventPublisher:
         """Fsync the immutable observation before HTTP. This never dispatches media."""
         try:
             core = {key: value[key] for key in ("operation", "command", "proof")}
-            raw_core = canonical(core)
+            raw_core = timeline_canonical(core)
             event_id = "timeline_" + hashlib.sha256(canonical({"commandId": value["command"]["commandId"], "operation": value["operation"]})).hexdigest()
             digest = hashlib.sha256(raw_core).hexdigest()
         except (KeyError, ValueError, TypeError):
@@ -142,7 +142,7 @@ class DurableEventPublisher:
         with self.db:
             self.db.execute("INSERT OR IGNORE INTO identities(event_id,legacy_hash,metadata) VALUES(?,?,?)", (event_id, digest, json.dumps(metadata)))
             self.db.execute("UPDATE identities SET acked=0 WHERE event_id=?", (event_id,))
-            self.db.execute("INSERT INTO pending(event_id,envelope,endpoint) VALUES(?,?,'/timeline-record')", (event_id, canonical(packet).decode("utf-8")))
+            self.db.execute("INSERT INTO pending(event_id,envelope,endpoint) VALUES(?,?,'/timeline-record')", (event_id, timeline_canonical(packet).decode("utf-8")))
         # Never return a cached ACK: every explicit record still checks current Go authority.
         return event_id, packet
 

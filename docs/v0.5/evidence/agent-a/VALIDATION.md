@@ -63,3 +63,26 @@ d77149e7de2184732204c240c0d07f5ffde2a161c3ff8c016737fba58fde6e16  continuity-run
 ```
 
 The final fault script removed its own temporary cluster. The separately owned manual PG cluster is stopped before final handoff. Shared services and the read-only Runtime virtualenv are unchanged.
+
+## Frozen Worker wire identifier correction — 2026-10-11 11:47 UTC
+
+F's `18e4ba4` review correctly found that edd4e1e rejected valid Worker IDs above the business safe-JSON maximum. This increment fixes that existing-contract incompatibility. It does not amend the frozen field to a string, change the Worker allocator/credit, expand business integer domains, or modify 000001–000007. The SQL change is additive 000008; the typed proof serializer/hash is field-aware.
+
+1. `DURABILITY_TEST_PYTHON=/Users/sapiece/innovationProject/AstraLive/runtime/.venv/bin/python backend/scripts/test-durability-faults.sh` — exit0 on corrected production source: real-PG full Go, full Go race, process SIGKILL/ACK-loss/Redis-off scenarios, owned PG restart, 12 Python durability tests and frozen validator. [Log](worker-domain-faults.log).
+2. `DURABILITY_TEST_DATABASE_URL=postgres://sapiece@127.0.0.1:55435/astralive_a?sslmode=disable go -C backend test -race ./internal/durability -run 'Test(TimelineWorker|WorkerWire|Continuity|Migration)' -count=1 -v` — exit0; five named top-level tests, including four full proof/cursor atomic subcases: no Worker, `2^53−1`, `2^53`, `2^63−1`. The final targeted rerun adds paired Worker epoch/ID, empty epoch, bool/string/zero/overflow and business-overflow assertions after the full regression; production source was unchanged. [Log](worker-domain-go.log).
+3. `PYTHONPATH=runtime /Users/sapiece/innovationProject/AstraLive/runtime/.venv/bin/python -m unittest discover -s runtime/tests -p test_durability.py -v` — exit0,12 tests. [Log](worker-domain-python.log). Both languages check the same canonical UTF-8 bytes and SHA-256 vectors in `backend/internal/durability/testdata/worker-proof-v05.json`. Exact pending JSON preserves signed BIGINT values and the original producer. Changed Worker proof conflicts rather than replacing its identity.
+4. `PYTHONPATH=runtime:. /Users/sapiece/innovationProject/AstraLive/runtime/.venv/bin/python -m unittest discover -s runtime/tests -v` — exit0, **171 tests run,11 skipped**,9.019 seconds,160 executed tests passed. [Full log](worker-domain-runtime.log).
+5. `go -C backend vet ./...`, sqlc v1.30.0 regeneration and `git diff --check` — exit0. No generated DTO/model or frozen public contract delta.
+
+The PG fixture validates READY→intent→installed→completed, C callback/next-Outbox rollback, original proof replay, canonical producer/identity hashing, exact Worker `BIGINT` and JSONB readback, full required audio/video receipts, FORCE and Stop fences at all three Worker boundaries. SQL rejects0,−1 and2^63; its paired-null constraint remains in effect. Go/Python reject wrong proof carrier, duplicate Go JSON keys, bool/string/float/exponent/overflow IDs and business generation overflow. Optional absent/null Worker mappings retain their original representation. Generic command canonicalization and legacy event hashing retain their old behavior.
+
+These are logical persistence/serializer and synthetic server-sink proofs, **not a new real Worker/GPU or audibility PASS**. C's independent Chrome/local-RTMP and five-process-crash reports remain C-owned evidence, not executions on this A branch. F's independent acceptance of the corrected pin is still its own gate. Rollback retains 000008 and journal history, disables Continuity, stops active Sessions and performs the existing isolated deployment checks; do not rewrite published migrations or reinterpret existing IDs.
+
+Log SHA-256:
+
+```text
+f63cf2b51f4e508cc469549474b7411d336c6e576d0897aa0bae984f3261bfa0  worker-domain-go.log
+b0c993132c0eccf987ab5c2c23c1bbec76e2e0327bf293ba2eabd7afcb9acc6c  worker-domain-python.log
+6e8d0f1609f8fd834fe75816b4161a03367c85dd95a2dd5c141512586d2911f2  worker-domain-faults.log
+b99d4cb4a6fb1d7e3c6edcb7bb358b30927f69b3d16364e4b7c109c5c72e15e6  worker-domain-runtime.log
+```

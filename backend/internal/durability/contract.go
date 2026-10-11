@@ -41,13 +41,44 @@ type Command struct {
 // Unlike encoding/json's default encoder, Unicode and HTML characters remain unescaped.
 func Canonical(raw []byte) ([]byte, error) { return canonical(raw, true) }
 func canonical(raw []byte, strict bool) ([]byte, error) {
+	return canonicalDomain(raw, strict, false)
+}
+
+// TimelineCanonical permits the frozen Worker wire integer only in typed proof
+// carriers. Command/payload and every other integer keep the business JSON bound.
+func TimelineCanonical(raw []byte) ([]byte, error) { return canonicalDomain(raw, true, true) }
+func timelineWorkerPath(path []any) bool {
+	if len(path) == 3 && path[0] == "proof" && (path[1] == "identity" || path[1] == "descriptor") && path[2] == "workerGenerationId" {
+		return true
+	}
+	if len(path) == 4 && path[0] == "proof" && path[1] == "commit" && (path[2] == "identity" || path[2] == "descriptor") && path[3] == "workerGenerationId" {
+		return true
+	}
+	if len(path) == 5 && path[0] == "proof" && path[1] == "sinkReceipts" && path[3] == "identity" && path[4] == "workerGenerationId" {
+		_, index := path[2].(int)
+		return index
+	}
+	return false
+}
+func canonicalDomain(raw []byte, strict, workerProof bool) ([]byte, error) {
 	d := json.NewDecoder(bytes.NewReader(raw))
 	d.UseNumber()
-	var parse func() (any, error)
-	parse = func() (any, error) {
+	var parse func([]any) (any, error)
+	parse = func(path []any) (any, error) {
 		t, e := d.Token()
 		if e != nil {
 			return nil, e
+		}
+		if workerProof && timelineWorkerPath(path) && t != nil {
+			number, ok := t.(json.Number)
+			if !ok {
+				return nil, ErrConflict
+			}
+			n, err := strconv.ParseInt(string(number), 10, 64)
+			if err != nil || n < 1 {
+				return nil, ErrConflict
+			}
+			return json.Number(strconv.FormatInt(n, 10)), nil
 		}
 		switch v := t.(type) {
 		case json.Delim:
@@ -65,7 +96,7 @@ func canonical(raw []byte, strict bool) ([]byte, error) {
 					if _, ok = m[s]; ok {
 						return nil, ErrConflict
 					}
-					m[s], e = parse()
+					m[s], e = parse(append(path, s))
 					if e != nil {
 						return nil, e
 					}
@@ -76,7 +107,7 @@ func canonical(raw []byte, strict bool) ([]byte, error) {
 			if v == '[' {
 				a := []any{}
 				for d.More() {
-					x, e := parse()
+					x, e := parse(append(path, len(a)))
 					if e != nil {
 						return nil, e
 					}
@@ -99,7 +130,7 @@ func canonical(raw []byte, strict bool) ([]byte, error) {
 			return v, nil
 		}
 	}
-	v, e := parse()
+	v, e := parse(nil)
 	if e != nil {
 		return nil, e
 	}
@@ -218,4 +249,13 @@ func EventHash(raw []byte) (string, error) {
 	}
 	h := sha256.Sum256(b)
 	return "sha256:" + hex.EncodeToString(h[:]), nil
+}
+
+func TimelineHash(raw []byte) (string, error) {
+	b, e := TimelineCanonical(raw)
+	if e != nil {
+		return "", e
+	}
+	hash := sha256.Sum256(b)
+	return "sha256:" + hex.EncodeToString(hash[:]), nil
 }

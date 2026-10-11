@@ -310,3 +310,40 @@ asyncio.run(PostgresTimelineJournal(client).record('COMMIT_INSTALLED', {'command
             self.assertTrue(await p.flush_once())
             self.assertEqual(client.events, [{}])
             await p.close()
+
+    async def test_worker_wire_shared_canonical_and_exact_spool(self):
+        import copy
+        import hashlib
+        from app.durability_client import timeline_canonical
+        vectors = json.loads((Path(__file__).resolve().parents[2] / "backend/internal/durability/testdata/worker-proof-v05.json").read_text())
+        for vector in vectors:
+            with self.subTest(vector=vector["name"]), tempfile.TemporaryDirectory() as directory:
+                packet = vector["packet"]
+                encoded = timeline_canonical(packet)
+                self.assertEqual(encoded.decode(), vector["canonical"])
+                self.assertEqual("sha256:" + hashlib.sha256(encoded).hexdigest(), vector["hash"])
+                publisher = DurableEventPublisher(Journal(), directory)
+                identity, staged = publisher.stage_timeline(packet)
+                raw = publisher.db.execute("SELECT envelope FROM pending WHERE event_id=?", (identity,)).fetchone()[0]
+                self.assertEqual(raw, vector["canonical"])
+                self.assertEqual(json.loads(raw), packet)
+                retry = copy.deepcopy(packet)
+                retry["producerIncarnation"] = "restarted_sender"
+                self.assertEqual(publisher.stage_timeline(retry), (identity, staged))
+                retry["proof"]["identity"]["workerGenerationId"] = 2 if packet["proof"]["identity"]["workerGenerationId"] != 2 else 3
+                with self.assertRaises(JournalError):
+                    publisher.stage_timeline(retry)
+                await publisher.close()
+        for value in (0, -1, True, "9007199254740992", float(2**53), 2**63):
+            with self.subTest(invalid=value), self.assertRaises(ValueError):
+                timeline_canonical({"proof": {"identity": {"workerGenerationId": value}}})
+        for packet in (
+            {"command": {"payload": {"workerGenerationId": 2**53}}},
+            {"proof": {"identity": {"generationId": 2**53}}},
+            {"proof": {"workerGenerationId": 2**53}},
+            {"proof": {"sinkReceipts": {"0": {"identity": {"workerGenerationId": 2**53}}}}},
+        ):
+            with self.subTest(business_or_wrong_path=packet), self.assertRaises(ValueError):
+                timeline_canonical(packet)
+        with self.assertRaises(ValueError):
+            canonical({"workerGenerationId": 2**53})

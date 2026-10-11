@@ -34,6 +34,20 @@ Obtain `Store.Current` in the admission transaction, write C's CAS and use `Enqu
 
 `ConfigureTimelineOutput` captures a nonempty, unique required sink set and fixed sample rate before the first commit. Repeated identical configuration succeeds; changing the required set after work begins fails. Optional `nil` is normalized to an empty array. A command payload contains `leaseToken`, `expectedTimelineRevision` and C's `expectedNarrationRevision`. B's older `expectedRevision` alias is accepted only when it equals the canonical timeline revision. Never use the narration revision as the timeline revision.
 
+## Worker wire identifier domain correction
+
+F's `18e4ba4` review identifies a serializer boundary bug in input pin edd4e1e: it applied the business safe-JSON bound to the distinct Worker wire generation. The owner correction preserves the frozen numeric field, wire allocator, Worker credit semantics and all published migrations. Additive `000008_worker_wire_identifier_domain.sql` checks positive Worker BIGINT and nonempty incarnation; the existing paired-null constraint still applies. BIGINT's upper bound is `2^63−1`.
+
+Go `TimelineCanonical` / `TimelineHash` and Python `timeline_canonical` accept a numeric `1..2^63−1` Worker ID only at these record paths:
+
+- `proof.identity.workerGenerationId` and `proof.descriptor.workerGenerationId`;
+- `proof.commit.identity.workerGenerationId` and `proof.commit.descriptor.workerGenerationId`;
+- `proof.sinkReceipts[array index].identity.workerGenerationId`.
+
+Every other integer, including the complete `command` and its payload, retains the original safe-JSON range. No global field-name exemption is applied. Wrong carrier shapes, bool, string, zero, negative, fractional/exponent notation and overflow Worker values are rejected. Optional Worker null remains representable; the typed READY/commit validators require the Worker epoch and generation to be present or absent as a pair. A bound Worker epoch must be nonempty. This correction does not change business runEpoch/timelineEpoch/generationId authority, command fingerprints or legacy event hashing.
+
+Shared byte/hash vectors live in `testdata/worker-proof-v05.json`. Real PG tests exercise complete READY→intent→installed→completed, duplicate proofs, atomic cursor rollback and JSON/BIGINT round trips for `2^53−1`, `2^53`, `2^63−1` and no Worker. These are synthetic proof fixtures, not a GPU run. The private Go/Python path must retain exact integer decoding; do not decode a Worker wire ID through a JavaScript Number or convert the frozen field to a string.
+
 ## Authenticated TimelineJournal
 
 POST `/internal/v0.5/durability/timeline-record` uses the existing private `RUNTIME_JOURNAL_TOKEN_FILE` role, separate from public and Runtime control credentials. It accepts:

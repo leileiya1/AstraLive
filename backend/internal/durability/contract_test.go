@@ -52,3 +52,45 @@ func TestSharedGoldenVectors(t *testing.T) {
 		}
 	}
 }
+
+func TestTimelineWorkerWireCanonical(t *testing.T) {
+	raw, e := os.ReadFile("testdata/worker-proof-v05.json")
+	if e != nil {
+		t.Fatal(e)
+	}
+	var vectors []struct {
+		Name            string
+		Packet          json.RawMessage
+		Canonical, Hash string
+	}
+	if e = json.Unmarshal(raw, &vectors); e != nil {
+		t.Fatal(e)
+	}
+	for _, v := range vectors {
+		encoded, err := TimelineCanonical(v.Packet)
+		hash, hashErr := TimelineHash(v.Packet)
+		if err != nil || hashErr != nil || string(encoded) != v.Canonical || hash != v.Hash {
+			t.Fatalf("%s: %s %s %v %v", v.Name, encoded, hash, err, hashErr)
+		}
+	}
+	for _, value := range []string{"0", "-1", "true", "\"9007199254740992\"", "9007199254740992.0", "1e3", "9223372036854775808"} {
+		raw := []byte(`{"proof":{"identity":{"workerGenerationId":` + value + `}}}`)
+		if _, e := TimelineCanonical(raw); e == nil {
+			t.Fatalf("invalid Worker accepted: %s", raw)
+		}
+	}
+	for _, raw := range []string{
+		`{"proof":{"identity":{"generationId":9007199254740992}}}`,
+		`{"command":{"payload":{"workerGenerationId":9007199254740992}}}`,
+		`{"proof":{"workerGenerationId":9007199254740992}}`,
+		`{"proof":{"sinkReceipts":{"0":{"identity":{"workerGenerationId":9007199254740992}}}}}`,
+		`{"proof":{"identity":{"workerGenerationId":1,"workerGenerationId":2}}}`,
+	} {
+		if _, e := TimelineCanonical([]byte(raw)); e == nil {
+			t.Fatalf("relaxed business/path/duplicate check: %s", raw)
+		}
+	}
+	if _, e := Canonical([]byte(`{"workerGenerationId":9007199254740992}`)); e == nil {
+		t.Fatal("command canonical domain changed")
+	}
+}
