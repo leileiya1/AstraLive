@@ -13,11 +13,33 @@ from fractions import Fraction
 import os
 import hashlib
 import json
+import weakref
 from typing import Protocol
 
 from .providers import AudioChunk, VideoFrame
 
 MAX_EPOCH = 9007199254740991
+
+
+class FrameDispositions:
+    """Bounded observations without retaining RGB or trusting reused object IDs."""
+    def __init__(self, limit=128):
+        self.limit = limit
+        self.entries = {}
+
+    def record(self, frame, state):
+        key = id(frame)
+        self.entries.pop(key, None)
+        self.entries[key] = (weakref.ref(frame), state)
+        while len(self.entries) > self.limit:
+            self.entries.pop(next(iter(self.entries)))
+
+    def get(self, frame):
+        entry = self.entries.get(id(frame))
+        return entry[1] if entry and entry[0]() is frame else None
+
+    def clear(self):
+        self.entries.clear()
 
 
 def positive(value: int) -> int:

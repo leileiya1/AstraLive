@@ -15,7 +15,7 @@ from aiortc import MediaStreamTrack, RTCPeerConnection, RTCSessionDescription
 from .models import SessionConfig
 from .providers import AudioChunk, VideoFrame, MediaDeliveryError
 from .media_timeline import (enabled as timeline_enabled, AudioMasterClock,
-                             RationalResampler, AdaptiveBuffer, samples_to_pts, TimedAudioChunk)
+                             RationalResampler, AdaptiveBuffer, samples_to_pts, TimedAudioChunk, FrameDispositions)
 
 log = logging.getLogger(__name__)
 
@@ -421,7 +421,7 @@ class _TimelineVideoTrack(_VideoTrack):
         super().__init__(fps, clock.policy.interruptible_ms, clock.policy.interruptible_ms)
         self.clock = clock
         self.tick = 0
-        self.dispositions = {}
+        self.dispositions = FrameDispositions()
         self.resolved = 0
 
     async def push(self, frame, is_active=lambda: True, stale_window=2., poll_interval=.02):
@@ -433,9 +433,7 @@ class _TimelineVideoTrack(_VideoTrack):
         await super().push(frame, is_active, stale_window, poll_interval)
 
     def disposition(self, frame, state):
-        self.dispositions[id(frame)] = state
-        while len(self.dispositions) > 128:
-            self.dispositions.pop(next(iter(self.dispositions)))
+        self.dispositions.record(frame, state)
         self.resolved += 1
 
     def clear(self, generation_id=None):
@@ -548,7 +546,7 @@ class WebRTCMediaOutput:
             {"sinkId": peer.peer_id, **peer.audio.clock.snapshot()} for peer in self.peers]})
 
     def video_disposition(self, frame):
-        states = [p.video.dispositions.get(id(frame)) for p in self.peers
+        states = [p.video.dispositions.get(frame) for p in self.peers
                   if isinstance(p.video, _TimelineVideoTrack)]
         if "consumed" in states:
             return "consumed"
