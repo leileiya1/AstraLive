@@ -1,0 +1,38 @@
+{
+  "a": "a2f0be19f1d2fc4c71c8bcefee771b7685b8d6e3",
+  "b": "dda7936faba56efe01659b6393a4d32a93322508",
+  "scope": "CPU B identity/A SQLite proof staging; diagnostic payload, no HTTP/PG dispatch/GPU",
+  "sources": {
+    "media_timeline.py": "30dc1bf1c7241ad83121c44993d35ebe953007bd9e0791e1d36bf37f8b301647",
+    "providers.py": "01e37ed53e0dc86a94b6923ec420aa9b3d4e8f71e76817436d91792636c55ff0",
+    "models.py": "db539830e84cc905028eae18d4659ddc6dd4e20d34f88e4458ff7e28c095f197",
+    "durability_client.py": "f72d0d48bda3dc007f9ebc16baddfb853002ba6f34b84b42f6dc557abd868e4b",
+    "durable_events.py": "8e668c745cb5c8f08d46830bf32dd8ff6c6c725b444b8cb610ebf6073cb65f38"
+  },
+  "cases": [
+    {
+      "workerGenerationId": 9007199254740991,
+      "frozenWireValid": true,
+      "bIdentityAccepted": true,
+      "aSpoolAccepted": true
+    },
+    {
+      "workerGenerationId": 9007199254740992,
+      "frozenWireValid": true,
+      "bIdentityAccepted": true,
+      "aSpoolAccepted": true
+    },
+    {
+      "workerGenerationId": 9223372036854775807,
+      "frozenWireValid": true,
+      "bIdentityAccepted": true,
+      "aSpoolAccepted": true
+    },
+    {
+      "workerGenerationId": 9223372036854775808,
+      "frozenWireValid": false,
+      "bIdentityAccepted": false
+    }
+  ],
+  "status": "PASS"
+}

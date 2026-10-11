@@ -13,7 +13,16 @@ import (
 var migrations embed.FS
 
 func Migrate(ctx context.Context, p *pgxpool.Pool) error {
-	_, e := p.Exec(ctx, "CREATE TABLE IF NOT EXISTS schema_migrations (name text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())")
+	conn, err := p.Acquire(ctx)
+	if err != nil {
+		return err
+	}
+	defer conn.Release()
+	if _, err = conn.Exec(ctx, "SELECT pg_advisory_lock(51005001)"); err != nil {
+		return err
+	}
+	defer conn.Exec(context.Background(), "SELECT pg_advisory_unlock(51005001)")
+	_, e := conn.Exec(ctx, "CREATE TABLE IF NOT EXISTS schema_migrations (name text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())")
 	if e != nil {
 		return e
 	}
@@ -28,7 +37,7 @@ func Migrate(ctx context.Context, p *pgxpool.Pool) error {
 		}
 		name := f.Name()
 		var exists bool
-		e = p.QueryRow(ctx, "SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE name=$1)", name).Scan(&exists)
+		e = conn.QueryRow(ctx, "SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE name=$1)", name).Scan(&exists)
 		if e != nil {
 			return e
 		}
@@ -39,7 +48,7 @@ func Migrate(ctx context.Context, p *pgxpool.Pool) error {
 		if e != nil {
 			return e
 		}
-		tx, e := p.Begin(ctx)
+		tx, e := conn.Begin(ctx)
 		if e != nil {
 			return e
 		}

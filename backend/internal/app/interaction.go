@@ -159,8 +159,8 @@ type interactionDispatcher struct {
 func (d *interactionDispatcher) Dispatch(ctx context.Context, v interaction.Selection) (string, error) {
 	s := d.controller.service
 	// Serialize Stop/operator/Speak admission. Separate schedulers cannot race the busy check.
-	s.commands.Lock()
-	defer s.commands.Unlock()
+	unlock := s.lockCommands(d.sid)
+	defer unlock()
 	// Tick's selection can wait behind another Session/operator command. TTL
 	// still applies at admission, including SQL/Runtime work after the lock wait.
 	ctx, cancel := context.WithDeadline(ctx, v.Event.ReceivedAt.Add(d.controller.settings.TTL))
@@ -185,6 +185,13 @@ func (d *interactionDispatcher) Dispatch(ctx context.Context, v interaction.Sele
 	}
 	if d.controller.Snapshot(d.sid).Mode == interaction.OperatorOverride || !gate.Running || (gate.Busy && !(v.Policy == "INTERRUPT_LOWER_PRIORITY" && gate.CurrentSource == "AUTO_SCRIPT" && v.Priority > gate.CurrentPriority)) || gate.ProductID != v.ProductID {
 		return "", ErrConflict
+	}
+	if s.Durable != nil {
+		platformContext := &runtimeapi.PlatformContext{EventType: runtimeapi.COMMENT}
+		platformContext.User.ExternalId = v.Event.UserExternalID
+		platformContext.User.Nickname = v.Event.Nickname
+		u, err := s.durableSpeak(ctx, d.sid, v.Event.Content, int32(v.Priority), v.Policy, "PLATFORM_EVENT", v.Event.TraceID, platformContext, true)
+		return u.ID, err
 	}
 	tag, err := s.DB.Exec(ctx, `INSERT INTO interaction_receipts(session_id,trace_id,status) VALUES($1,$2,'RESERVED') ON CONFLICT DO NOTHING`, d.sid, v.Event.TraceID)
 	if err != nil {

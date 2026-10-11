@@ -38,6 +38,29 @@ class JsonFormatter(logging.Formatter):
 def create_app(settings: Settings | None = None, publisher=None, factories=None) -> FastAPI:
     settings = settings or Settings.from_env()
     bound = binding_enabled()
+    durable_flag = os.getenv("ASTRALIVE_DURABILITY_ENABLED", "false").lower()
+    if durable_flag not in {"true", "false", "1", "0"}:
+        raise RuntimeError("Invalid durability flag")
+    durable_enabled = durable_flag in {"true", "1"}
+    event_mode = os.getenv("ASTRALIVE_EVENT_MODE", "legacy_redis")
+    if event_mode not in {"legacy_redis", "postgres_only"} or event_mode == "postgres_only" and not durable_enabled:
+        raise RuntimeError("Invalid durability/event mode")
+    journal = durable_commands = None
+    if durable_enabled:
+        from .durability_client import DurabilityClient, DurableCommands, JournalError
+        from .durable_events import DurableEventPublisher
+        journal = DurabilityClient()
+        journal_token = service_token(os.environ["RUNTIME_JOURNAL_TOKEN_FILE"])
+        control_token = service_token(os.environ["RUNTIME_CONTROL_TOKEN_FILE"])
+        for token_file in ("RUNTIME_CONTROL_TOKEN_FILE", "CONFIG_WORKER_TOKEN_FILE", "CONFIG_IDENTITY_TOKEN_FILE"):
+            if os.getenv(token_file) and journal_token == service_token(os.environ[token_file]):
+                raise RuntimeError("Journal token must be a distinct role")
+        if journal_token == settings.tool_token:
+            raise RuntimeError("Journal token must differ from Tool token")
+        if publisher is not None:
+            raise RuntimeError("Durability cannot use an injected memory publisher")
+        # CONFIG_BACKEND_URL is the existing authenticated Backend location. Spool config is A-local; no transport flag renaming.
+        publisher = DurableEventPublisher(journal, os.environ["RUNTIME_EVENT_SPOOL_DIR"])
     if os.getenv("APP_ENV") == "production" and not bound:
         raise RuntimeError("Production Runtime requires Session bindings")
     def require_bundle():
@@ -101,6 +124,8 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
             )
         factories = (llm_factory, tts_factory, avatar_factory, media_factory)
     manager = (BoundSessionManager if bound else SessionManager)(settings, publisher, *factories)
+    if durable_enabled:
+        durable_commands = DurableCommands(journal, publisher, manager)
     if bound:
         control_token=service_token(os.environ["RUNTIME_CONTROL_TOKEN_FILE"])
         if control_token == service_token(os.environ["CONFIG_WORKER_TOKEN_FILE"]) or control_token == settings.tool_token:
@@ -122,6 +147,9 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         diagnostic_task = None
+        if durable_enabled:
+            publisher.start()
+            durable_commands.start_supervisor()
         if float(os.getenv("RUNTIME_MEDIA_METRICS_INTERVAL_SECONDS", os.getenv("ACCEPTANCE_MEDIA_METRICS_INTERVAL_SECONDS", "0"))) > 0:
             diagnostic_task = asyncio.create_task(acceptance_diagnostics(), name="acceptance-media-metrics")
         try:
@@ -130,14 +158,18 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
             if diagnostic_task:
                 diagnostic_task.cancel()
                 await asyncio.gather(diagnostic_task, return_exceptions=True)
+            if durable_commands:
+                await durable_commands.close()
             await manager.close()
             if hasattr(publisher, "close"):
                 await publisher.close()
+            if journal:
+                await journal.close()
 
     app = FastAPI(title="AstraLive AI Runtime", version="0.1.0", lifespan=lifespan)
     @app.middleware("http")
     async def trusted_control(request: Request, call_next):
-        if bound:
+        if bound or durable_enabled:
             try:
                 expected = "Bearer " + service_token(os.environ["RUNTIME_CONTROL_TOKEN_FILE"])
                 authorized = hmac.compare_digest(request.headers.get("Authorization", ""), expected)
@@ -163,6 +195,55 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
     app.state.manager = manager
     app.state.publisher = publisher
     tts_probe_lock=asyncio.Lock()
+    if durable_enabled:
+        @app.exception_handler(JournalError)
+        async def journal_error(request: Request, exc: JournalError):
+            return JSONResponse(status_code=exc.status, content={"code": exc.code, "message": "Journal unavailable or command fenced"})
+
+        @app.post("/internal/v0.5/sessions/{sessionId}/commands", status_code=202)
+        async def durable_command(sessionId: str, request: Request):
+            def unique_pairs(pairs):
+                result = {}
+                for key, val in pairs:
+                    if key in result:
+                        raise ValueError("duplicate JSON key")
+                    result[key] = val
+                return result
+            try:
+                raw = await request.body()
+                if len(raw) > 1 << 20:
+                    raise ValueError("oversized command")
+                command = json.loads(raw, object_pairs_hook=unique_pairs)
+                if command.get("sessionId") != sessionId:
+                    raise ValueError("Session mismatch")
+                return await durable_commands.execute(command)
+            except (ValueError, KeyError, TypeError):
+                raise RuntimeFailure("INVALID_ARGUMENT", "Invalid durable command", 422) from None
+
+        @app.get("/internal/v0.5/sessions/{sessionId}/commands/{commandId}/receipt")
+        async def durable_receipt(sessionId: str, commandId: str):
+            return await durable_commands.receipt(sessionId, commandId)
+
+        @app.post("/internal/v0.5/sessions/{sessionId}/emergency-stop")
+        async def emergency_stop(sessionId: str):
+            run = durable_commands.runs.get(sessionId)
+            if run:
+                run["sealed"] = True
+            session = manager.sessions.get(sessionId)
+            if session:
+                session.generation_id += 1
+                if session.current_task:
+                    session.current_task.cancel()
+                task = asyncio.create_task(manager.stop_session(sessionId, session.request.traceId))
+                durable_commands.tasks.add(task)
+                task.add_done_callback(durable_commands.tasks.discard)
+            return JSONResponse(status_code=503, content={"code": "RECOVERY_UNKNOWN", "durable": False, "publicationFenced": True})
+
+        @app.middleware("http")
+        async def block_legacy_mutations(request: Request, call_next):
+            if request.method == "POST" and request.url.path.startswith("/internal/v1/") and not request.url.path.endswith("/webrtc/offer"):
+                return JSONResponse(status_code=409, content={"code": "CONFLICT", "details": {"integrationCode": "DURABLE_COMMAND_REQUIRED"}})
+            return await call_next(request)
 
     @app.post("/internal/v0.4/provider-probes/tts")
     async def probe_tts(body: TTSProbe):
@@ -251,7 +332,7 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
             outputs.append("webrtc")
         if settings.rtmp.enabled:
             outputs.append("rtmp")
-        return {"status": "UP", "runtimeVersion": "0.1.0", "gpu": {"available": gpu_available}, "activeSessions": sum(s.state not in {"ENDED", "FAILED"} for s in manager.sessions.values()), "providers": {"llm": "session-binding" if bound else "mock" if settings.mock_llm else "openai-compatible", "tts": "session-binding" if bound else "mock" if settings.mock_tts else "sherpa-onnx", "avatar": "session-binding" if bound else "mock" if settings.mock_avatar else "lightweight-2d", "media": "+".join(outputs), "events": "redis" if settings.redis_url else "memory"}}
+        return {"status": "UP", "runtimeVersion": "0.1.0", "gpu": {"available": gpu_available}, "activeSessions": sum(s.state not in {"ENDED", "FAILED"} for s in manager.sessions.values()), "providers": {"llm": "session-binding" if bound else "mock" if settings.mock_llm else "openai-compatible", "tts": "session-binding" if bound else "mock" if settings.mock_tts else "sherpa-onnx", "avatar": "session-binding" if bound else "mock" if settings.mock_avatar else "lightweight-2d", "media": "+".join(outputs), "events": "postgres_journal" if durable_enabled else "redis" if settings.redis_url else "memory"}}
 
     return app
 

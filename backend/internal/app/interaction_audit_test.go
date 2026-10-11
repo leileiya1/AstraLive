@@ -92,8 +92,9 @@ func TestAuditSelectionExpiresWhileWaitingForCommandLock(t *testing.T) {
 		defer func() {
 			cc.Stop(se.ID)
 			requests.Store(0)
-			_, _ = pool.Exec(ctx, `DELETE FROM utterances WHERE session_id=$1`, se.ID)
+			// Receipts reference utterances; remove them first after cancelling the controller.
 			_, _ = pool.Exec(ctx, `DELETE FROM interaction_receipts WHERE session_id=$1`, se.ID)
+			_, _ = pool.Exec(ctx, `DELETE FROM utterances WHERE session_id=$1`, se.ID)
 		}()
 		if err = idle.Receive(ctx, platform.Event{Platform: "mock", PlatformRoomID: ro.ID, InternalRoomID: ro.ID, SessionID: se.ID, SourceEventID: "idle-latency", EventType: platform.Comment, UserExternalID: "idle-viewer", Content: "多少钱？", Transport: "MOCK_REPLAY"}); err != nil {
 			t.Fatal(err)
