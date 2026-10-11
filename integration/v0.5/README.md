@@ -27,3 +27,19 @@ git archive e5f14a14a04fdd4968af3c8dc3530bb22202e8b6 \
 ```
 
 Do not run old scripts that write historical docs/v0.4 outputs without redirecting/isolating their evidence. No branch merge occurs in this harness. More Golden fixtures/faults/Chrome/RTMP measurements are pending C and actual integration; unexecuted cases are NOT TESTED.
+
+## Retained C Scheduler draft review
+
+`fixtures/scheduler_review/scheduler_review_test.go` adds CPU-only boundary/deferred-expiry/legacy-busy/operator/product checks alongside the original Scheduler tests. The preserved draft patch and source hash are in `docs/v0.5/evidence/integration-f/scheduler-review-1/`. This patch is reviewed evidence, not an F edit to C-owned production source. Reproduce in a disposable archive, not an owner worktree:
+
+```sh
+mkdir /tmp/new-unique-c-scheduler
+git archive 7924f7f74c303fada428885bf01a1ca915aecf64 backend | tar -x -C /tmp/new-unique-c-scheduler
+cd /tmp/new-unique-c-scheduler
+git apply /path/to/AstraLive-agent-f/docs/v0.5/evidence/integration-f/scheduler-review-1/scheduler.patch
+cp /path/to/AstraLive-agent-f/integration/v0.5/fixtures/scheduler_review/scheduler_review_test.go \
+  backend/internal/interaction/f_scheduler_review_test.go
+go -C backend test -race -count=1 -v ./internal/interaction
+```
+
+These tests do not validate C's production dispatcher, flag wiring, SQL cursor, media readiness or naturalness. The reviewed C Runtime flag differed from the frozen canonical name and requires an owner correction; race PASS does not pass that separate compatibility gate.

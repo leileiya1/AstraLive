@@ -55,3 +55,9 @@ The harness retires owned Go/Python processes and stops its own cluster in final
 | frontend test/build and complete joint flag-off live regression | NOT EXECUTED this premerge stop; no frontend/production files changed in F |
 
 B archive contains independently reported real-GPU clock/ledger media evidence; its journal was TEST_DOUBLE. It remains inspectable on B, is not overwritten or promoted to F's integrated Golden result. No new AV latency/drift metrics were measured by F, and no busy P50≤5s/P95≤8s claim is made.
+
+## Follow-up source reviews (original evidence above retained)
+
+- C's uncommitted Scheduler gate was tested in an isolated dependency archive at7924f7f with the exact retained patch and F probes: full interaction package `go test -race -count=1 -v` PASS, exit0. Proves boundary selection, answer deferral+TTL, legacy busy gate, operator and product-switch precedence; no production C dispatcher/SQL/media acceptance. [Patch/hash/result/log](evidence/integration-f/scheduler-review-1/result.json). C's draft Runtime used a different flag; frozen canonical `ASTRALIVE_CONTINUITY_ENABLED` correction remains required in this reviewed draft.
+- B fixed installed-proof ordering in85bec11. F independently tested09f06f2 Runtime:190 total,179 passed,11 skipped, exit0. [Result/log hash](evidence/integration-f/b-postinstall-1/result.json), [log](evidence/integration-f/b-postinstall-1/runtime.log). Latest evidence-only dda7936 has identical Runtime/Worker source; no repeat run or GPU PASS inferred.
+- [CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md) records scoped ACKs and CCR-BC-001 NOT APPROVED: early staging Credit updates native published-pose history. No frozen amendment, implementation merge or new Golden/media measurement occurred.

@@ -88,5 +88,6 @@ Actual shared implementation edits: NONE at Phase1 or the current blocked Phase2
 | Proposed CCR | Scope / reason | Owners / dependency | Status |
 | --- | --- | --- | --- |
 | CCR-BC-001 | B private full-segment staging would return Credit before actual sink consumption; current Credit also updates native published-pose history | B+C and Worker/TCP reviewer; B Runtime cf43e2d, docs-only f769e3b | PROPOSED / NOT APPROVED; concrete credit/history preservation or protocol proposal required; any frozen semantic amendment needs user confirmation |
+| CCR-C-001 | C staged Session/API/startup/interaction hooks; precise Scheduler gate diff now reviewed | C after A/B; dependency-only C HEAD7924f7f plus retained uncommitted patch/hash | minimal Scheduler scope/selection ACK; isolated legacy+F CPU probes/race PASS; complete production routing pending. Correct canonical Continuity flag and merged-source overflow mapping before final acceptance |
 
 This is a proposed-request ledger, not an amendment of `v0.5-frozen-1` or an implementation merge. Task connector delivery is unavailable; peer ACK remains pending.

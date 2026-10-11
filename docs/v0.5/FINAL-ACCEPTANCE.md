@@ -4,6 +4,8 @@
 
 Subsequent implementation progress and pending CCR decisions are in [CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md). C has started an uncommitted FSM/plan after consuming A/B dependencies, and A has an uncommitted persistence draft. The pinned delivery/test ledger below is the original reproducible review, not a claim that those newer worktrees still have zero changes. No new final C/A increment has been independently accepted or merged; strict GPU precommit READY/credit/history remains unresolved.
 
+Follow-up standalone gates: F's C Scheduler draft selection/legacy tests pass race; its canonical flag correction and source-overflow mapping remain owner actions. B Runtime85bec11 corrects installation order; F tested09f06f2 (179 pass/11 skip); latest docs/log pin dda7936 has identical Runtime source. These scoped ACKs do not pass A journal integration, completed C delivery or strict GPU READY. Full-core decision remains FAIL/premerge held.
+
 ## Actual branch/merge ledger
 
 | Order | Branch | Reviewed source SHA | Merge SHA / status |
