@@ -103,7 +103,7 @@ func TestPostgresOnlyServerStartup(t *testing.T) {
 		rt.Client.Transport = userconfig.TokenTransport{Path: controlFile, Base: &http.Transport{Proxy: nil}}
 		eventually(t, 5*time.Second, func() bool { _, e := rt.Health(ctx); return e == nil })
 		run(t, ctx, p, store, "s")
-		_, e = p.Exec(ctx, `DELETE FROM v05_recovery_leases;DELETE FROM v05_session_runs;UPDATE live_sessions SET status='CREATED' WHERE id='s';UPDATE session_provider_bindings SET room_snapshot='{"roomId":"room","systemPrompt":"prompt"}' WHERE session_id='s'`)
+		_, e = p.Exec(ctx, `DELETE FROM v05_timeline_epochs;DELETE FROM v05_recovery_leases;DELETE FROM v05_session_runs;UPDATE live_sessions SET status='CREATED' WHERE id='s';UPDATE session_provider_bindings SET room_snapshot='{"roomId":"room","systemPrompt":"prompt"}' WHERE session_id='s'`)
 		if e != nil {
 			t.Fatal(e)
 		}

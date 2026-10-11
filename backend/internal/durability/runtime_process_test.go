@@ -49,7 +49,7 @@ func TestRuntimeProcessCrashRedisOff(t *testing.T) {
 	}
 	ctx, p, s := pg(t)
 	run(t, ctx, p, s, "s")
-	_, e := p.Exec(ctx, `DELETE FROM v05_recovery_leases;DELETE FROM v05_session_runs;UPDATE live_sessions SET status='CREATED' WHERE id='s'`)
+	_, e := p.Exec(ctx, `DELETE FROM v05_timeline_epochs;DELETE FROM v05_recovery_leases;DELETE FROM v05_session_runs;UPDATE live_sessions SET status='CREATED' WHERE id='s'`)
 	if e != nil {
 		t.Fatal(e)
 	}

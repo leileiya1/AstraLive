@@ -107,6 +107,9 @@ class DurableCommands:
                         run["barrier_pending"] = True
                         session = self.manager.sessions.get(sid)
                         if session:
+                            continuity = getattr(session, "continuity", None)
+                            if continuity is not None:
+                                continuity.fence("CONTROL_BARRIER")
                             session.generation_id += 1
                             if session.current_task:
                                 session.current_task.cancel()
@@ -119,6 +122,9 @@ class DurableCommands:
                     session = self.manager.sessions.get(sid)
                     if session:
                         # Fence publication immediately, cleanup independently of the journal outage.
+                        continuity = getattr(session, "continuity", None)
+                        if continuity is not None:
+                            continuity.fence("LEASE_LOST")
                         session.generation_id += 1
                         if session.current_task:
                             session.current_task.cancel()
@@ -215,3 +221,37 @@ class DurableCommands:
             await asyncio.gather(self.supervisor, return_exceptions=True)
         if self.tasks:
             await asyncio.gather(*self.tasks, return_exceptions=True)
+
+
+class PostgresTimelineJournal:
+    """B's TimelineJournal protocol backed by A's authenticated PostgreSQL transaction.
+
+    Identity/range and C cursor validation happen on Go. This adapter never fabricates
+    sink receipts, hydrates a volatile timeline, retries an ambiguous POST, or asserts
+    viewer audibility. C registers the Go projection before using completion.
+    """
+    def __init__(self, client):
+        self.client = client
+
+    async def record(self, operation, command, proof):
+        from dataclasses import fields, is_dataclass
+        def encode(value):
+            if is_dataclass(value):
+                result = {field.name: encode(getattr(value, field.name)) for field in fields(value)}
+                if all(hasattr(value, attr) for attr in ("sampleIndex", "sampleRate", "ptsUs")):
+                    result["ptsUs"] = value.ptsUs
+                return result
+            if isinstance(value, dict):
+                if any(not isinstance(key, str) for key in value):
+                    raise JournalError("COMMAND_CONFLICT", 409)
+                return {key: encode(item) for key, item in value.items()}
+            if isinstance(value, (list, tuple)):
+                return [encode(item) for item in value]
+            return value
+        result = await self.client.request("POST", "/timeline-record", {
+            "operation": operation, "command": encode(command), "proof": encode(proof),
+            "producerIncarnation": self.client.incarnation,
+        })
+        if result.get("durable") is not True:
+            raise JournalError("RECOVERY_UNKNOWN", 409)
+        return result
