@@ -109,8 +109,8 @@ func TestBoundedUnsentRetryDeadLetter(t *testing.T) {
 }
 func TestUnknownProbeBudgetAndNoReplay(t *testing.T) {
 	ctx, p, s := pg(t)
-	r := run(t, ctx, p, s, "s")
-	cmd := enqueue(t, ctx, p, s, r, "unknown")
+	r := seedNarration(t, ctx, p, s)
+	cmd := mediaCommand(t, ctx, p, s, r, "seg1", "unknown", 0)
 	remote := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { http.Error(w, "missing history", 404) }))
 	defer remote.Close()
 	_, e := p.Exec(ctx, `UPDATE v05_outbox SET delivery_state='UNKNOWN',unknown_since=clock_timestamp()-interval '31 seconds' WHERE command_id=$1`, cmd.CommandID)
@@ -130,5 +130,12 @@ func TestUnknownProbeBudgetAndNoReplay(t *testing.T) {
 	_ = p.QueryRow(ctx, `SELECT delivery_state FROM v05_outbox`).Scan(&state)
 	if state != "UNKNOWN" {
 		t.Fatal("missing receipt triggered replay", state)
+	}
+	var narrationState, epochState, attemptState string
+	if e = p.QueryRow(ctx, `SELECT n.state,te.status,a.status FROM v05_narrations n JOIN v05_timeline_epochs te USING(session_id,run_epoch) JOIN v05_segment_attempts a USING(session_id,run_epoch) WHERE n.narration_id='n'`).Scan(&narrationState, &epochState, &attemptState); e != nil {
+		t.Fatal(e)
+	}
+	if narrationState != "RECOVERY_REQUIRED" || epochState != "SEALED" || attemptState != "CANCELLED" {
+		t.Fatalf("unknown budget did not fence timeline: %s %s %s", narrationState, epochState, attemptState)
 	}
 }

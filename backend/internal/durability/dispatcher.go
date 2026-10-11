@@ -168,6 +168,9 @@ func (d *Dispatcher) ReconcileUnknown(ctx context.Context) error {
 			if err == nil && r.Epoch == x.epoch && r.Status == "ACTIVE" {
 				_, err = tx.Exec(ctx, `UPDATE v05_session_runs SET status='RECOVERY_REQUIRED' WHERE session_id=$1 AND run_epoch=$2`, x.sid, x.epoch)
 				if err == nil {
+					err = d.Store.FenceTimeline(ctx, tx, r, "RECONCILIATION_BUDGET_EXHAUSTED", false)
+				}
+				if err == nil {
 					_, err = tx.Exec(ctx, `INSERT INTO v05_recovery_audit(session_id,run_epoch,action,reason_code) VALUES($1,$2,'MANUAL_REVIEW','RECONCILIATION_BUDGET_EXHAUSTED')`, x.sid, x.epoch)
 				}
 			}

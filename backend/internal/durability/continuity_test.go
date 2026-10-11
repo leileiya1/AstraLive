@@ -2,11 +2,15 @@ package durability_test
 
 import (
 	"astralive/backend/internal/durability"
+	"astralive/backend/internal/recovery"
 	"context"
 	"encoding/json"
 	"errors"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"io"
+	"log/slog"
+	"sync"
 	"testing"
 )
 
@@ -200,6 +204,24 @@ func TestContinuityProofAndCursorAtomic(t *testing.T) {
 	if er != nil {
 		t.Fatal(er)
 	}
+	control, er := s.Enqueue(ctx, tx, r, "FORCE_INTERRUPT", "force", "trace", "", map[string]any{})
+	if er != nil {
+		t.Fatal(er)
+	}
+	if er = s.Barrier(ctx, tx, control); er != nil {
+		t.Fatal(er)
+	}
+	if er = tx.Commit(ctx); er != nil {
+		t.Fatal(er)
+	}
+	request.Proof = raw
+	if _, er = s.RecordTimeline(ctx, request); !errors.Is(er, durability.ErrFence) {
+		t.Fatalf("old durable ACK bypassed FORCE barrier: %v", er)
+	}
+	tx, er = p.Begin(ctx)
+	if er != nil {
+		t.Fatal(er)
+	}
 	if er = s.Seal(ctx, tx, r); er != nil {
 		t.Fatal(er)
 	}
@@ -350,5 +372,100 @@ func TestNarrationAdmissionTransactionAndIdempotency(t *testing.T) {
 	_, e = s.EnqueueNarration(ctx, tx, r, "COMMIT_SEGMENT", "logical1", "trace", "", map[string]any{"attemptId": "a1", "utteranceId": "changed", "leaseToken": 1}, durability.MediaMetadata{NarrationID: "n", SegmentID: "seg1", TimelineEpoch: 1, Lane: "NARRATION"})
 	if !errors.Is(e, durability.ErrConflict) {
 		t.Fatalf("semantic metadata conflict: %v", e)
+	}
+}
+
+func TestPreparedEpochConcurrentStop(t *testing.T) {
+	ctx, p, s := pg(t)
+	r := seedNarration(t, ctx, p, s)
+	tx, e := p.Begin(ctx)
+	if e != nil {
+		t.Fatal(e)
+	}
+	defer tx.Rollback(ctx)
+	reservation, e := s.ReserveTimelineEpoch(ctx, tx, r, 1, 0, "answer")
+	if e != nil {
+		t.Fatal(e)
+	}
+	origin := durability.TimelinePosition{SessionID: "s", RunEpoch: 1, TimelineEpoch: 1, SampleIndex: 0, SampleRate: 16000}
+	payload := map[string]any{"leaseToken": r.Token, "expectedTimelineRevision": 0, "expectedPreviousEpoch": 1, "newEpoch": 2, "reservationToken": reservation.ReservationToken, "originPosition": origin, "reason": "answer"}
+	c, e := s.EnqueueNarration(ctx, tx, r, "BEGIN_EPOCH", "epoch2", "trace", "", payload, durability.MediaMetadata{NarrationID: "n", TimelineEpoch: 2, Lane: "NARRATION"})
+	if e != nil {
+		t.Fatal(e)
+	}
+	if e = tx.Commit(ctx); e != nil {
+		t.Fatal(e)
+	}
+	acceptStart(t, ctx, s, c, r.Token)
+	proof := map[string]any{"expectedPreviousEpoch": 1, "newEpoch": 2, "originPosition": origin, "reason": "answer"}
+	record(t, ctx, s, c, "BEGIN_EPOCH_PREPARED", proof)
+	raw, _ := json.Marshal(proof)
+	gate := make(chan struct{})
+	var group sync.WaitGroup
+	group.Add(2)
+	go func() {
+		defer group.Done()
+		<-gate
+		tx, err := p.Begin(ctx)
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		defer tx.Rollback(ctx)
+		run, err := s.Current(ctx, tx, "s", false)
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		if err = s.Seal(ctx, tx, run); err != nil {
+			t.Error(err)
+			return
+		}
+		if err = tx.Commit(ctx); err != nil {
+			t.Error(err)
+		}
+	}()
+	go func() {
+		defer group.Done()
+		<-gate
+		_, err := s.RecordTimeline(ctx, durability.TimelineRecord{Command: c, Producer: "runtime", Operation: "BEGIN_EPOCH_ACTIVE", Proof: raw})
+		if err != nil && !errors.Is(err, durability.ErrFence) && !errors.Is(err, durability.ErrSealed) {
+			t.Error(err)
+		}
+	}()
+	close(gate)
+	group.Wait()
+	var barrier bool
+	var active int
+	if e = p.QueryRow(ctx, `SELECT stop_barrier FROM v05_narrations WHERE narration_id='n'`).Scan(&barrier); e != nil {
+		t.Fatal(e)
+	}
+	if e = p.QueryRow(ctx, `SELECT count(*) FROM v05_timeline_epochs WHERE status<>'SEALED'`).Scan(&active); e != nil {
+		t.Fatal(e)
+	}
+	if !barrier || active != 0 {
+		t.Fatalf("activation resurrected Stop: barrier=%t epochs=%d", barrier, active)
+	}
+	if _, e = s.RecordTimeline(ctx, durability.TimelineRecord{Command: c, Producer: "runtime", Operation: "BEGIN_EPOCH_ACTIVE", Proof: raw}); !errors.Is(e, durability.ErrFence) {
+		t.Fatalf("late activation after Stop: %v", e)
+	}
+}
+func TestTerminalSessionSealsContinuity(t *testing.T) {
+	ctx, p, s := pg(t)
+	seedNarration(t, ctx, p, s)
+	if _, e := p.Exec(ctx, `UPDATE live_sessions SET status='ENDED' WHERE id='s'`); e != nil {
+		t.Fatal(e)
+	}
+	coordinator := recovery.Coordinator{Store: s, Log: slog.New(slog.NewTextHandler(io.Discard, nil))}
+	if e := coordinator.SealTerminal(ctx); e != nil {
+		t.Fatal(e)
+	}
+	var barrier bool
+	var status string
+	if e := p.QueryRow(ctx, `SELECT n.stop_barrier,te.status FROM v05_narrations n JOIN v05_timeline_epochs te USING(session_id,run_epoch) WHERE n.narration_id='n'`).Scan(&barrier, &status); e != nil {
+		t.Fatal(e)
+	}
+	if !barrier || status != "SEALED" {
+		t.Fatalf("terminal Session left media active: %t %s", barrier, status)
 	}
 }

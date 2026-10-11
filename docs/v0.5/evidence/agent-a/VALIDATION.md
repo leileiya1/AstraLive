@@ -35,3 +35,31 @@ cd7f4e11ab61fd32375793d2b36394e7f3af4ce529d82cdb657488e256d873be  runtime-unitte
 ```
 
 The fault script cleaned its temporary clusters on exit. The separate Agent A manual test cluster is stopped before delivery; Homebrew's default PostgreSQL service was never enabled. Existing services and shared Runtime virtualenv contents were not changed.
+
+## Continuity seam increment — 2026-10-11 11:05 UTC
+
+Minimal source input pin: `ee5500b132302dbdd365b401d705e4fc47b75b12`, parent `e5f14a14a04fdd4968af3c8dc3530bb22202e8b6`. The supplemental source/evidence commit extends this pin with disk-persistent Timeline observations and additional recovery fences. This section supersedes the earlier “Timeline ledger outside acceptance” wording only for A's repository/HTTP transaction and synthetic proof fixtures; it does not accept B/C production media or continuity recovery. The branch remains independent and main is not merged.
+
+1. `DURABILITY_TEST_PYTHON=/Users/sapiece/innovationProject/AstraLive/runtime/.venv/bin/python backend/scripts/test-durability-faults.sh` — exit 0 on final supplemental production source. Real PG full Go and full race suites, actual CPU Runtime/Go SIGKILL scenarios, independent owned PG stop/start, 11 Python durability tests and frozen v1.1 validator pass. [Final log](continuity-faults.log). Migration-related process fixture cleanup deletes epoch rows before run rows; no production FK was weakened.
+2. `DURABILITY_TEST_DATABASE_URL=postgres://sapiece@127.0.0.1:55435/astralive_a?sslmode=disable go -C backend test -race ./internal/durability -run 'Test(Continuity|PreparedEpoch|NarrationAdmission|UnknownProbe|TerminalSession|RecoveryStop|StopConcurrent)' -count=1 -v` — exit 0; **9 named tests** passed. This final targeted run includes the additional old durable ACK versus FORCE-barrier assertion. [Assertions](continuity-seam.log).
+3. `PYTHONPATH=runtime:. /Users/sapiece/innovationProject/AstraLive/runtime/.venv/bin/python -m unittest discover -s runtime/tests -v` — exit 0; **170 tests run, 11 skipped**, 9.119 seconds, 159 executed tests passed. [Full log and skips](continuity-runtime.log). Opt-in real services remain NOT TESTED.
+4. `go -C backend vet ./...` and `git diff --check` — exit 0. sqlc regenerated using pinned v1.30.0 after 000007; frozen public OpenAPI/generated DTOs are unchanged. No published migration is rewritten by the supplemental commit.
+
+Additional observed boundaries:
+
+- C admission plan, Segment, InteractionTurn, cursor CAS, Outbox and attempt roll back together or commit together. The 006→007 upgrade preserves an old completed Utterance and run sample cursor. Text/product/plan mutation and overlapping intervals are rejected. Composite C transitions may increment revision multiple times inside one CAS; A does not impose a new narration FSM.
+- Intent creates PENDING_INSTALL with unchanged cursor. Installed proof advances timeline cursor/revision. Every required sink needs contiguous audio and video over the full interval, matching immutable identity and paired Worker mapping. Missing video, gaps and mismatched generation fail. C callback failure rolls back proof, receipt, cursor and next-command Outbox; duplicate immutable proof does not call it again. These are synthetic server-sink receipts, not device observations.
+- Prepared epoch is not media authority. Token guessing, future media admission and stale reservation fail. Concurrent Stop and activation leave a sticky Stop barrier and all epochs SEALED; late activation/proof cannot mutate them. Terminal Session and UNKNOWN-budget recovery also fence narration/attempts/epochs. An already durable ACK cannot bypass a new FORCE barrier.
+- The Timeline sender subprocess is actually SIGKILLed while entering its HTTP test double, after FULL SQLite WAL commit. A new sender recovers the original packet/incarnation and sends only the observation. Separate tests cover ACK loss, changed-proof conflict, old local spool migration, shared pending capacity, explicit fresh-Go checks and retained FENCED audit records. HTTP and sink responses in these Python tests are declared test doubles.
+- Background observation ACK never unblocks B, re-executes media or hydrates a volatile Timeline. Missing disk spool fails closed. A process that dies after output but before forming/journaling proof still leaves UNKNOWN; persistent-volume loss, whole-machine power loss, real Worker READY staging/credit, actual sink playback and audibility remain NOT TESTED.
+- C reported a real-PG/Python/B synthetic workflow separately. It is cross-agent feedback, not a test executed or accepted in this A branch. B/C/F must retain their own integration evidence.
+
+Supplemental log SHA-256:
+
+```text
+858fa8ad6df21bd91c2daa5eeb31051dfe702b7df749cb8beb17e2baef3c4687  continuity-faults.log
+dc46296b41963c0eac0d3fbc97be4f6b13afc296e4014de510ac3621e549fce8  continuity-seam.log
+d77149e7de2184732204c240c0d07f5ffde2a161c3ff8c016737fba58fde6e16  continuity-runtime.log
+```
+
+The final fault script removed its own temporary cluster. The separately owned manual PG cluster is stopped before final handoff. Shared services and the read-only Runtime virtualenv are unchanged.

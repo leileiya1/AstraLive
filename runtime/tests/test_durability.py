@@ -197,11 +197,116 @@ class TimelineAdapterTests(unittest.IsolatedAsyncioTestCase):
                 return {"durable": self.durable, "receiptSeq": 4}
         client = Client()
         journal = PostgresTimelineJournal(client)
-        result = await journal.record("SEGMENT_COMPLETED", command(), {"finalPosition": Position()})
-        self.assertTrue(result["durable"])
-        self.assertEqual(client.assertion, ("POST", "/timeline-record"))
-        self.assertEqual(client.body["proof"]["finalPosition"]["ptsUs"], 40000)
-        self.assertEqual(client.body["producerIncarnation"], client.incarnation)
-        client.durable = False
         with self.assertRaises(JournalError):
             await journal.record("SEGMENT_COMPLETED", command(), {"finalPosition": Position()})
+        with tempfile.TemporaryDirectory() as directory:
+            publisher = DurableEventPublisher(client, directory)
+            result = await journal.record("SEGMENT_COMPLETED", command(), {"finalPosition": Position()})
+            self.assertTrue(result["durable"])
+            self.assertEqual(client.assertion, ("POST", "/timeline-record"))
+            self.assertEqual(client.body["proof"]["finalPosition"]["ptsUs"], 40000)
+            self.assertEqual(client.body["producerIncarnation"], client.incarnation)
+            client.durable = False
+            with self.assertRaises(JournalError):
+                await journal.record("SEGMENT_COMPLETED", command(), {"finalPosition": Position()})
+            self.assertEqual(publisher.db.execute("SELECT count(*) FROM pending").fetchone()[0], 1)
+            await publisher.close()
+
+    async def test_timeline_ack_loss_restart_and_fenced_audit(self):
+        from app.durability_client import PostgresTimelineJournal
+        class Client:
+            incarnation = "original_runtime"
+            fail_ack = True
+            fenced = False
+            observations = []
+            async def request(self, method, suffix, body):
+                self.observations.append((suffix, body))
+                if self.fenced:
+                    raise JournalError("LEASE_LOST", 409)
+                if self.fail_ack:
+                    # Server may have committed; sender still cannot expose eligibility.
+                    raise JournalError()
+                return {"durable": True, "receiptSeq": 4}
+        client = Client()
+        with tempfile.TemporaryDirectory() as directory:
+            p = DurableEventPublisher(client, directory)
+            journal = PostgresTimelineJournal(client)
+            with self.assertRaises(JournalError):
+                await journal.record("COMMIT_INSTALLED", command(), {"commit": "fixture"})
+            self.assertEqual(p.db.execute("SELECT count(*) FROM pending").fetchone()[0], 1)
+            with self.assertRaises(JournalError) as conflict:
+                await journal.record("COMMIT_INSTALLED", command(), {"commit": "changed"})
+            self.assertEqual(conflict.exception.code, "COMMAND_CONFLICT")
+            await p.close()
+            client.incarnation = "restarted_runtime"
+            client.fail_ack = False
+            p = DurableEventPublisher(client, directory)
+            p.db.execute("UPDATE pending SET next_at=0")
+            p.db.commit()
+            self.assertTrue(await p.flush_once())
+            self.assertEqual(client.observations[-1][1]["producerIncarnation"], "original_runtime")
+            self.assertEqual(client.observations[-1][0], "/timeline-record")
+            self.assertEqual(p.db.execute("SELECT count(*) FROM pending").fetchone()[0], 0)
+            # Do not reuse a cached ACK after Stop/lease loss: recheck Go authority.
+            client.fenced = True
+            with self.assertRaises(JournalError):
+                await journal.record("COMMIT_INSTALLED", command(), {"commit": "fixture"})
+            self.assertEqual(p.db.execute("SELECT disposition FROM pending").fetchone()[0], "FENCED")
+            self.assertFalse(await p.flush_once())
+            # ACKed identity metadata carries no raw command/proof body.
+            metadata = p.db.execute("SELECT metadata FROM identities").fetchone()[0]
+            self.assertNotIn("fixture", metadata)
+            await p.close()
+
+    async def test_timeline_disk_journal_before_sigkill(self):
+        import os
+        import subprocess
+        import sys
+        from app.durability_client import PostgresTimelineJournal
+        class Client:
+            incarnation = "restarted_sender"
+            async def request(self, method, suffix, body):
+                self.packet = body
+                return {"durable": True}
+        with tempfile.TemporaryDirectory() as directory:
+            code = """
+import asyncio, os, signal, sys
+from app.durable_events import DurableEventPublisher
+from app.durability_client import PostgresTimelineJournal
+class Client:
+    incarnation = 'killed_executor'
+    async def request(self, method, suffix, body):
+        os.kill(os.getpid(), signal.SIGKILL)
+client = Client()
+publisher = DurableEventPublisher(client, sys.argv[1])
+asyncio.run(PostgresTimelineJournal(client).record('COMMIT_INSTALLED', {'commandId':'killed'}, {'commit':'bounded-proof'}))
+"""
+            process = subprocess.run([sys.executable, "-c", code, directory], env=os.environ.copy(), capture_output=True, timeout=10)
+            self.assertEqual(process.returncode, -9, process.stderr.decode())
+            client = Client()
+            p = DurableEventPublisher(client, directory)
+            self.assertEqual(p.db.execute("SELECT count(*) FROM pending").fetchone()[0], 1)
+            self.assertTrue(await p.flush_once())
+            self.assertEqual(client.packet["producerIncarnation"], "killed_executor")
+            self.assertEqual(client.packet["proof"], {"commit": "bounded-proof"})
+            await p.close()
+
+    async def test_upgrade_legacy_spool_route_and_capacity(self):
+        import sqlite3
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "events.sqlite3"
+            connection = sqlite3.connect(path)
+            connection.execute("CREATE TABLE pending(event_id TEXT PRIMARY KEY,envelope TEXT NOT NULL,attempts INTEGER NOT NULL DEFAULT 0,next_at REAL NOT NULL DEFAULT 0,disposition TEXT NOT NULL DEFAULT 'PENDING')")
+            connection.execute("INSERT INTO pending(event_id,envelope) VALUES('legacy','{}')")
+            connection.commit()
+            connection.close()
+            path.chmod(0o600)
+            client = Journal()
+            p = DurableEventPublisher(client, directory, max_pending=1)
+            self.assertEqual(p.db.execute("SELECT endpoint FROM pending").fetchone()[0], "/events")
+            with self.assertRaises(JournalError):
+                p.stage_timeline({"operation":"COMMIT_INTENT", "command":command(), "proof":{}, "producerIncarnation":client.incarnation})
+            self.assertEqual(p.db.execute("SELECT count(*) FROM pending").fetchone()[0], 1)
+            self.assertTrue(await p.flush_once())
+            self.assertEqual(client.events, [{}])
+            await p.close()
