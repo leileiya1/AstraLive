@@ -2,7 +2,7 @@
 
 Original v0.4 baseline `cf6540bdcc788c037929836480812dfaa78362a2`; Phase 2 shared baseline `5a24478126211cbcde5a9565d0c6063748426527`; branch `exp/v0.5-integration-chaos`; worktree `../AstraLive-agent-f`; contract revision `v0.5-frozen-1`.
 
-**Current gate: sequential integration underway. A final tip a28a409 is normally merged at89179c7, with complete postmerge software/owned-PG/Frontend gate PASS. B follows, then C, then D. A Worker wire-ID fix is independently verified; C final implementation/combined acceptance and D production wiring remain pending.** [Actual merge ledger](evidence/integration-f/merge-ledger.json), [CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md), [CHAOS-TEST-REPORT](CHAOS-TEST-REPORT.md) and [FINAL-ACCEPTANCE](FINAL-ACCEPTANCE.md) distinguish current gates from retained first-review failures. No F real GPU acceptance. [Frozen contract](ARCHITECTURE-CONTRACTS.md) governs interfaces, shared edits, flags and rollback. Unexecuted tests remain NOT TESTED.
+**Current gate: A and B normally merged in sequence at89179c7 and10b74ca, both complete postmerge software/owned-PG/Frontend gates PASS. C delivered06b182f; merge preview has five shared-file conflicts requiring owner resolution. D standalone delivery remains pending production wiring.** [Actual merge ledger](evidence/integration-f/merge-ledger.json), [seam review](CONTINUITY-SEAM-REVIEW.md), [chaos report](CHAOS-TEST-REPORT.md) and [acceptance](FINAL-ACCEPTANCE.md) separate current results from retained historical failures. Frozen contract bytes remain unchanged; all experimental defaults remain off. Native Chrome/local RTMP regression on A+B is next; no F real-GPU acceptance.
 
 ## 1. Delivery sequence and merge ledger
 

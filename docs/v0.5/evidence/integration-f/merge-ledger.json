@@ -15,10 +15,21 @@
       "postmergeGate": "docs/v0.5/evidence/integration-f/merge-a-1/result.json",
       "postmergeStatus": "PASS",
       "conflictFiles": []
+    },
+    {
+      "order": 2,
+      "agent": "B",
+      "branch": "exp/v0.5-media-timeline",
+      "source": "dda7936faba56efe01659b6393a4d32a93322508",
+      "implementation": "85bec11",
+      "merge": "10b74ca3c8a52c34f39ad152633b5784a7f94a2b",
+      "postmergeGate": "merge-b-1/result.json",
+      "postmergeStatus": "PASS",
+      "conflictFiles": [],
+      "mediaGate": "PENDING"
     }
   ],
   "pending": [
-    "B",
     "C",
     "D"
   ],

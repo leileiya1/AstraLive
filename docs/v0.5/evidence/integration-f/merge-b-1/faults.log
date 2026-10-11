@@ -1,0 +1,84 @@
+?   	astralive/backend/cmd/comment-load	[no test files]
+?   	astralive/backend/cmd/config-bootstrap	[no test files]
+?   	astralive/backend/cmd/operator-bootstrap	[no test files]
+?   	astralive/backend/cmd/server	[no test files]
+?   	astralive/backend/db	[no test files]
+?   	astralive/backend/generated/dbgen	[no test files]
+?   	astralive/backend/generated/openapi	[no test files]
+?   	astralive/backend/generated/runtimeapi	[no test files]
+ok  	astralive/backend/internal/app	0.973s
+ok  	astralive/backend/internal/config	0.295s
+ok  	astralive/backend/internal/durability	12.170s
+?   	astralive/backend/internal/eventbus	[no test files]
+ok  	astralive/backend/internal/fsm	0.328s
+ok  	astralive/backend/internal/httpapi	0.873s
+?   	astralive/backend/internal/ids	[no test files]
+ok  	astralive/backend/internal/interaction	0.356s
+?   	astralive/backend/internal/metrics	[no test files]
+ok  	astralive/backend/internal/personalconfig	0.460s
+ok  	astralive/backend/internal/platform	0.298s
+ok  	astralive/backend/internal/platform/mock	0.418s
+?   	astralive/backend/internal/recovery	[no test files]
+ok  	astralive/backend/internal/runtime	0.462s
+ok  	astralive/backend/internal/sse	0.296s
+ok  	astralive/backend/internal/userconfig	0.454s
+ok  	astralive/backend/tests	0.386s
+?   	astralive/backend/cmd/comment-load	[no test files]
+?   	astralive/backend/cmd/config-bootstrap	[no test files]
+?   	astralive/backend/cmd/operator-bootstrap	[no test files]
+?   	astralive/backend/cmd/server	[no test files]
+?   	astralive/backend/db	[no test files]
+?   	astralive/backend/generated/dbgen	[no test files]
+?   	astralive/backend/generated/openapi	[no test files]
+?   	astralive/backend/generated/runtimeapi	[no test files]
+ok  	astralive/backend/internal/app	1.927s
+ok  	astralive/backend/internal/config	1.371s
+ok  	astralive/backend/internal/durability	14.662s
+?   	astralive/backend/internal/eventbus	[no test files]
+ok  	astralive/backend/internal/fsm	1.331s
+ok  	astralive/backend/internal/httpapi	5.867s
+?   	astralive/backend/internal/ids	[no test files]
+ok  	astralive/backend/internal/interaction	1.410s
+?   	astralive/backend/internal/metrics	[no test files]
+ok  	astralive/backend/internal/personalconfig	1.954s
+ok  	astralive/backend/internal/platform	1.737s
+ok  	astralive/backend/internal/platform/mock	1.502s
+?   	astralive/backend/internal/recovery	[no test files]
+ok  	astralive/backend/internal/runtime	1.459s
+ok  	astralive/backend/internal/sse	1.338s
+ok  	astralive/backend/internal/userconfig	1.576s
+ok  	astralive/backend/tests	1.436s
+=== RUN   TestOwnedPostgresOutage
+    pg_outage_test.go:55: owned PostgreSQL fast stop/restart: failed closed during outage, durable acceptance restored without duplicate command
+--- PASS: TestOwnedPostgresOutage (0.85s)
+PASS
+ok  	astralive/backend/internal/durability	1.042s
+test_duplicate_durable_accept_never_reexecutes (test_durability.DurableTests.test_duplicate_durable_accept_never_reexecutes) ... ok
+test_duplicate_spool_identity_and_body_conflict (test_durability.DurableTests.test_duplicate_spool_identity_and_body_conflict) ... ok
+test_journal_failure_prevents_effect_and_stale_lease (test_durability.DurableTests.test_journal_failure_prevents_effect_and_stale_lease) ... ok
+test_shared_fingerprint_vectors (test_durability.DurableTests.test_shared_fingerprint_vectors) ... ok
+test_spool_bound_and_identity_mapping (test_durability.DurableTests.test_spool_bound_and_identity_mapping) ... ok
+test_spool_survives_restart_and_backend_outage (test_durability.DurableTests.test_spool_survives_restart_and_backend_outage) ... ok
+test_watch_fences_continuity_before_cancelling_media (test_durability.DurableTests.test_watch_fences_continuity_before_cancelling_media) ... ok
+test_dataclass_position_and_durable_ack (test_durability.TimelineAdapterTests.test_dataclass_position_and_durable_ack) ... ok
+test_timeline_ack_loss_restart_and_fenced_audit (test_durability.TimelineAdapterTests.test_timeline_ack_loss_restart_and_fenced_audit) ... ok
+test_timeline_disk_journal_before_sigkill (test_durability.TimelineAdapterTests.test_timeline_disk_journal_before_sigkill) ... ok
+test_upgrade_legacy_spool_route_and_capacity (test_durability.TimelineAdapterTests.test_upgrade_legacy_spool_route_and_capacity) ... ok
+test_worker_wire_shared_canonical_and_exact_spool (test_durability.TimelineAdapterTests.test_worker_wire_shared_canonical_and_exact_spool) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.127s
+
+OK
+PASS control-api.openapi.yaml: OpenAPI 3.0.3, unique component symbols
+PASS runtime-api.openapi.yaml: OpenAPI 3.0.3, unique component symbols
+PASS platform-event: JSON Schema and example
+PASS runtime-event: JSON Schema and example
+PASS speech-plan: JSON Schema and example
+PASS control-api.openapi.yaml: webrtc-offer-v1.1 -> WebRTCOffer
+PASS control-api.openapi.yaml: webrtc-public-answer-v1.1 -> WebRTCAnswerResponse
+PASS runtime-api.openapi.yaml: runtime-create-session-v1.1 -> CreateRuntimeSessionRequest
+PASS runtime-api.openapi.yaml: runtime-comment-utterance-v1.1 -> RuntimeUtteranceRequest
+PASS runtime-api.openapi.yaml: webrtc-offer-v1.1 -> WebRTCOffer
+PASS runtime-api.openapi.yaml: webrtc-runtime-answer-v1.1 -> WebRTCAnswer
+PASS v1.1 route and required-field gates
