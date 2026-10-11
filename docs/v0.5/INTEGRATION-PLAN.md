@@ -92,3 +92,5 @@ Actual shared implementation edits: NONE at Phase1 or the current blocked Phase2
 | CCR-C-002 | requested `ASTRALIVE_NARRATION_CONTINUITY_ENABLED` alias | C config in both services | NOT APPROVED; canonical `ASTRALIVE_CONTINUITY_ENABLED` only; explicitly reject known unsupported alternate setting, document and test operator behavior |
 
 This is a proposed-request ledger, not an amendment of `v0.5-frozen-1` or an implementation merge. Task connector delivery is unavailable; peer ACK remains pending.
+
+A subsequently delivered ee5500b; F independently passed its full Go/race/owned-PG fault/Runtime/contract checks, and C consumed that seam and corrected its flag. B Runtime85bec11/latest evidence dda7936 has the installation-order fix. Latest owner progress and FORCE/bound-output admission review are in CONTINUITY-SEAM-REVIEW; the original table above remains the pinned first-review ledger, not updated delivery or merge acceptance. C's final commit/cross-service gate and D's rebased wiring remain pending; F has made no implementation merge yet.

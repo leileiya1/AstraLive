@@ -6,6 +6,8 @@ Subsequent implementation progress and pending CCR decisions are in [CONTINUITY-
 
 Follow-up standalone gates: F's C Scheduler draft selection/legacy tests pass race; its canonical flag correction and source-overflow mapping remain owner actions. B Runtime85bec11 corrects installation order; F tested09f06f2 (179 pass/11 skip); latest docs/log pin dda7936 has identical Runtime source. These scoped ACKs do not pass A journal integration, completed C delivery or strict GPU READY. Full-core decision remains FAIL/premerge held.
 
+A then delivered ee5500b with the six-table/journal increment; F full Go/race/owned-PG faults/frozen validator/durable Python8 and full A Runtime (156 pass/11 skip) independently passed. C consumed that seam and corrected the canonical flag; final committed C integration and bound-output FORCE behavior still require validation. The original missing-table/adapter finding applies to the old pinned source, not ee5500b. Full-core/default-enable decision remains unchanged pending the real combined gate.
+
 ## Actual branch/merge ledger
 
 | Order | Branch | Reviewed source SHA | Merge SHA / status |
