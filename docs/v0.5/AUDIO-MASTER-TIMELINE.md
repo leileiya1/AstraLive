@@ -70,7 +70,7 @@ Fault fixture includes 4 FORCE generations, old-generation marker4000 injection 
 
 Initial existing media tests35 passed4 skipped3 subtests. Existing opt-in WebRTC4 passed; Python3.14 aiortc teardown warning retained. Runtime final176 passed11 skipped40 subtests. New timeline28 passed, including mapping/44.1k cumulative rounding, stale epoch dequeue/in-flight injection, idempotency/CAS/ACK-loss fences, bounded PCM/speculation, underrun, late drops, reconnect clock wait and attempt retirement. Focused final regression43 passed. Frozen v1.1 contract validation passed. Relevant Worker CPU tests16 passed; broad Worker attempt16 failed9 passed because missing historical fixtures/assets and initially missing Torch, retained as nonacceptance evidence.
 
-All7 fixed official files, total8162010707 bytes, are verified on Mac and GPU under user's explicit download instruction. Mac backup: `/Users/sapiece/Library/Caches/AstraLive/v05-agent-b/official-weights`; GPU lab: `/root/autodl-tmp/astralive-avatar-lab`. This later user authorization supersedes INTEGRATION-PLAN §2's no-weight-download gate for B's isolated test instance; it does not approve model/version/protocol changes. Base Python3.12.3/Torch2.8.0+cu128/CUDA12.8/ABItrue and FlashAttention2.8.3 are verified. Official Hugging Face download from Mac and its official CDN redirect on GPU are used because the GPU instance cannot reach huggingface.co; pinned Python dependencies use TUNA PyPI transport with unchanged constraints. Source import preflight passed; its TORCH_CUDA_ARCH_LIST warning is retained. GPU preflight and paired short real-GPU runs are complete below; continuous30–60min acceptance is evaluated separately. Product switching/busy-interaction P95 and golden C/A durability remain untested. Default stays OFF; no broad release or end-to-end continuity PASS is claimed.
+All7 fixed official files, total8162010707 bytes, are verified on Mac and GPU under user's explicit download instruction. Mac backup: `/Users/sapiece/Library/Caches/AstraLive/v05-agent-b/official-weights`; GPU lab: `/root/autodl-tmp/astralive-avatar-lab`. This later user authorization supersedes INTEGRATION-PLAN §2's no-weight-download gate for B's isolated test instance; it does not approve model/version/protocol changes. Base Python3.12.3/Torch2.8.0+cu128/CUDA12.8/ABItrue and FlashAttention2.8.3 are verified. Official Hugging Face download from Mac and its official CDN redirect on GPU are used because the GPU instance cannot reach huggingface.co; pinned Python dependencies use TUNA PyPI transport with unchanged constraints. Source import preflight passed; its TORCH_CUDA_ARCH_LIST warning is retained. GPU preflight, paired short A/B and two independent continuous30min real-GPU runs are complete below; their different source/scope pins are retained. Product switching/busy-interaction P95 and golden C/A durability remain untested. Default stays OFF; no broad release or end-to-end continuity PASS is claimed.
 
 ## Real GPU short A/B and continuous soak
 
@@ -88,7 +88,10 @@ Evidence: [real-gpu](evidence/agent-b/real-gpu). Baseline clean source `738f152`
 | RTMP verified content onset P50/P95/max ms |19.63 /39.63 /39.63|19.69 /59.69 /59.69|
 | RTMP waveform verified / expected speech markers |17 /18|18 /18|
 | First PCM→first GPU frame P50/P95/max ms |924.46 /1208.29 /1208.29|914.71 /1437.36 /1437.36|
+| Driver CPU seconds over sampled120s |38.93|37.24|
 | Driver peak RSS bytes |204357632|200933376|
+| WebRTC audio/video queue peaks ms |220 /200|160 /200|
+| Video fence retirements / enqueued |11 /2623 (0.42%)|13 /2620 (0.50%)|
 | Audio/video backward or duplicate packet PTS |0 /0|0 /0|
 | Full strict FFmpeg decode / normal Stop |exit0 /true|exit0 /true|
 
@@ -96,7 +99,37 @@ This pair does not demonstrate universal improvement: V2 has higher short-run fi
 
 `timeline_gpu_audit.py` correlates the first500ms known PCM against decoded16k AAC in a ±2s search around each native speech marker, identifying source sample zero. It records every expected/observed/verified marker and all signed drift values; uncovered or unverified markers remain gaps. It measures the correspondence of source PCM and instrumented image onset, not facial lip quality. Chrome's nearest threshold onset pairing is heuristic and recorded separately; RTC estimatedPlayoutTimestamp compares receiver statistics, not matched content or physical speaker audibility. Neither substitutes for real audience or official-platform receipts.
 
-Continuous V2 clock soak is in progress for1800s at candidate3dff41e. The subsequent ledger-bound idle/hold seam requires its own short/continuous real-GPU fixture and is not retroactively attributed to the3dff41e run; no long-run PASS is claimed until its final recording audit, resource/credit/fence checks and normal Stop finish. Retries and short runs cannot be added to its duration.
+Both continuous runs finished and passed their stated media checks, each using one uninterrupted Worker connection and Chrome peer. They are two independent30min runs, not one60min acceptance. The second run pins final runtime source `e2a8fa20a804fb03500ef29d751ed98a48f21f78`; later changes are offline audit/documentation/evidence only.
+
+| Metric | V2 clock soak, 3dff41e | Ledger-bound soak, e2a8fa2 |
+| --- | --- | --- |
+| Continuous seconds |1807.83|1806.81|
+| Speech cycles / FORCE / completed semantic segments |260 /65 /not bound|222 /0 /222|
+| GPU frames / fallback |36885 /0|37962 /0|
+| Chrome RTC estimated drift P50/P95/max ms |4 /11 /49|6 /13 /48|
+| Chrome heuristic onset P50/P95/max ms |24.96 /71.66 /99.94|14.76 /36.06 /89.64|
+| RTMP verified content drift P50/P95/max ms |19.69 /59.69 /59.69|19.69 /19.69 /39.69|
+| RTMP waveform coverage |257 /260|222 /222|
+| First PCM→GPU frame P50/P95/max ms |924.85 /1458.95 /1529.41|890.89 /963.40 /1143.28|
+| WebRTC audio/video queue peaks ms |160 /200|160 /160|
+| Sampled RTMP audio/video peaks ms |160 /160|160 /160|
+| Late video drops / peer stalls / evictions |0 /0 /0|0 /0 /0|
+| Driver CPU seconds, sampled1800s |579.16|584.28|
+| Driver RSS first/peak/last bytes |163151872 /226230272 /225984512|133120000 /218054656 /217923584|
+| Worker RSS first/peak/last bytes |3226804224 /3292798976 /3292786688|3236179968 /3299151872 /3237265408|
+| Worker sampled CPU seconds |1515.42|1335.50|
+| Worker audio queue samples / video frames peak |16960 /24|16960 /24|
+| GPU reserved / device-used peak bytes |5731516416 /6038749184|5731516416 /6038749184|
+| RTMP video/audio packets |45242 /84829|45215 /84779|
+| Backward or duplicate PTS / strict decode / normal Stop |0 /exit0 /true|0 /exit0 /true|
+
+The clock soak retains three unverified waveform markers48/120/432. Its verified percentiles meet the proposed150ms gate, but the coverage gap prevents a universal content-sync PASS. There is no confirmed severe persistent mismatch in the observed evidence. Driver RSS grows during both runs; these measurements do not establish leak-free operation. Different FORCE and silence patterns explain different workloads, so the two long-run resource totals are not a paired A/B improvement claim.
+
+The final ledger fixture rotates NARRATION → AUDIENCE_ANSWER → RESUME_BRIDGE, keeps runEpoch1, advances timelineEpoch1–222, and independently advances business generation1–1548 by7. Native job IDs and Worker epoch remain separate. It completes222 Suspend/Invalidate/BeginEpoch boundaries through B's frozen methods, deliberately crosses the128-entry ledger cap, and injects222 old-epoch frames using the current envelope generation. Neither Chrome nor RTMP sees stale marker4095. All four required server sink ranges end at actual PCM source samples:222×109369=24279918, with no accumulated EOF padding drift. At the final WebRTC snapshot75924 audio and37962 video frames are enqueued and consumed, with0 unexpected drops. The script's journal is a TEST_DOUBLE: this is B seam/consumption evidence, not SQL durability, real audience interruption, product switching, or A/C golden continuity acceptance.
+
+[Complete ledger receipts and scope](evidence/agent-b/real-gpu/ledger-soak-1/receipt-audit.json), [recording packet checks](evidence/agent-b/real-gpu/ledger-soak-1/summary.json), [content coverage](evidence/agent-b/real-gpu/ledger-soak-1/content-audit.json), and [resource samples](evidence/agent-b/real-gpu/ledger-soak-1/resources.json) are archived with raw compressed logs. Start/middle/end MP4 excerpts are review aids. Complete recordings, including the invalid trial, persist outside Git under `/Users/sapiece/Library/Caches/AstraLive/v05-agent-b/runs/`; each recording.json stores size, SHA256 and absolute path. They are not replaced by excerpts.
+
+After normal Stop, the isolated Worker remains READY/UP with activeGenerationId=null, zero queued media, the same Worker epoch and process5213. Test clients and owned forwarding are closed; the paid cloud instance is left running under the user's control. No GPU protocol, validated source or shared service was changed.
 
 ## Run and rollback
 
@@ -104,6 +137,16 @@ Continuous V2 clock soak is in progress for1800s at candidate3dff41e. The subseq
 PYTHONPATH=runtime:. python -m pytest runtime/tests/test_media_timeline.py
 PYTHONPATH=runtime:. python runtime/tests/timeline_media_benchmark.py --output /tmp/unique-ab-dir
 PYTHONPATH=runtime:. python runtime/tests/timeline_media_benchmark.py --output /tmp/unique-fault-dir --faults
+# Requires the pinned real Worker, private token file, SSH forwarding and installed Chrome.
+PYTHONPATH=runtime:. python runtime/tests/timeline_gpu_soak.py --output /tmp/unique-gpu-run \
+  --token-file /path/to/private-worker-token --port 18087 --wave /path/to/short_10s_16k_mono.wav \
+  --duration 1800 --v2 --ledger
+PYTHONPATH=runtime:. python runtime/tests/timeline_gpu_audit.py --directory /tmp/unique-gpu-run \
+  --wave /path/to/short_10s_16k_mono.wav
+# On the user's GPU host; reuses verified models/environment, no new download:
+/root/autodl-tmp/astralive-v05-b-worker/bin/astralive-worker status
+/root/autodl-tmp/astralive-v05-b-worker/bin/astralive-worker start
+/root/autodl-tmp/astralive-v05-b-worker/bin/astralive-worker probe
 ```
 
 Output directories are unique; preserve FLV, raw JSON, driver logs and hashes. Reset/restart the owned Runtime with both flags false (or unset); this restores original paths, buffers and clocks. Do not toggle the flag on a running sink. Finish or explicitly fence the active attempt through C first; transmitted audio cannot be recalled. Close owned test clients, receiver processes and SSH tunnel after tests; leave the user's isolated Worker READY and idle for reuse. To roll back its lifecycle, use `/root/autodl-tmp/astralive-v05-b-worker/bin/astralive-worker stop`; retain verified weights/environment for cached restart. Never shut down the user's GPU instance, rotate shared credentials or merge A/C/F branches as rollback.

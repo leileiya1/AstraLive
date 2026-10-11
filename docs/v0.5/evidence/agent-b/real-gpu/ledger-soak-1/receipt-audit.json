@@ -1,0 +1,35 @@
+{
+  "journalMode": "TEST_DOUBLE",
+  "operations": {
+    "COMMIT_INTENT": 222,
+    "COMMIT_INSTALLED": 222,
+    "SUSPEND_REQUESTED": 222,
+    "SEGMENT_COMPLETED": 222,
+    "INVALIDATE_AFTER": 222,
+    "BEGIN_EPOCH_PREPARED": 222,
+    "BEGIN_EPOCH_ACTIVE": 222
+  },
+  "completedSegments": 222,
+  "allFourRequiredSinkEndsMatchActualSourcePCM": true,
+  "invalidSegmentIndices": [],
+  "finalSourceSample": 24279918,
+  "lanes": {
+    "NARRATION": 74,
+    "AUDIENCE_ANSWER": 74,
+    "RESUME_BRIDGE": 74
+  },
+  "runEpochs": [
+    1
+  ],
+  "timelineEpochRange": [
+    1,
+    222
+  ],
+  "businessGenerationRange": [
+    1,
+    1548
+  ],
+  "maxRetainedLedgerEntries": 128,
+  "staleInjections": 222,
+  "scope": "B control/media seam and actual server sink consumption only; journal is not durable A/C authority"
+}
