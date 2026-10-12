@@ -1,8 +1,8 @@
 # Local Runtime IPC — Agent D
 
-Status: **CONDITIONAL, independent D implementation tested; shared wiring NOT APPLIED / NOT MERGED**. ACK `v0.5-frozen-1` §§7.1/8/9. Defaults remain TCP and disabled fallback. No schema, Session, database, Redis, Worker, WebRTC/RTMP timeline, installer or GPU changes.
+Status: **CONDITIONAL, production wiring applied on D over verified F A+B+C core; final F merge and independent replay pending**. ACK `v0.5-frozen-1` §§7.1/8/9. Defaults remain TCP and disabled fallback. No schema, Session, database, Redis, Worker, WebRTC/RTMP timeline, installer or GPU changes.
 
-Baseline: `cf6540bdcc788c037929836480812dfaa78362a2`. Starting HEAD: `5a24478126211cbcde5a9565d0c6063748426527` (two F documentation commits over baseline). Existing `runtime.Client`, `client.go`, `app.main`, TokenTransport and v1.1 schemas remain untouched. No claim of Host/product-wide v0.5 acceptance.
+Original standalone phase baseline: `cf6540bdcc788c037929836480812dfaa78362a2`. Starting HEAD: `5a24478126211cbcde5a9565d0c6063748426527` (two F documentation commits over baseline). Current production wiring depends on F `48eb038` (A+B+C core `6095989`), normally merged as `b6f65bd`; C Timeline parser `43a4140` cherry-picked as `bc46a20`. Existing `runtime.Client`, `client.go`, `app.main`, TokenTransport and v1.1 schemas remain untouched. No claim of Host/product-wide v0.5 acceptance.
 
 ## Configuration and implementation
 
@@ -20,23 +20,17 @@ These are F's frozen names, rather than the suggested unapproved `ASTRALIVE_RUNT
 
 The Python entry point `PYTHONPATH=runtime python -m app.local_listener` runs the **existing** ASGI application in a separate Runtime process. Uvicorn accepts a pre-bound socket (`Server.run(sockets=[sock])`); this gives the wrapper control over socket permissions/cleanup rather than permitting Uvicorn to unlink an unchecked path. The current tested Uvicorn version is0.54.0. Its signal re-raise is suppressed after orderly ASGI shutdown so the wrapper can unlink its own socket before exit. See [Uvicorn settings](https://www.uvicorn.org/settings/) for the upstream UDS/fd APIs. Windows TCP does not import `fcntl` or construct an AF_UNIX socket; the event loop is explicitly asyncio.
 
-## Shared wiring gate
+## Production wiring review
 
-F's §8 requires A→C→D shared-file sequencing. Therefore shared entry points have **not** been edited concurrently. `runtime/tests/local_ipc/shared-wiring.patch` is a concrete, gofmt-clean integration proposal, compiled/tested in a disposable source copy. It covers:
+Actual shared entrypoints now use local IPC source, replacing the prior patch-only delivery:
 
-- `backend/cmd/server/main.go`: validated local client, token/dialer composition, effective transport logging.
-- `runtime/app/production_launcher.py`: retain original exec/18000 command with default flags; use private listener in opt-in mode while retaining the publisher lock/preflight.
-- `backend/internal/userconfig/{service,environment,session_binding,provider_probe}.go` and a new helper: capture the protected UDS transport for provider-status/TTS probe calls as well as Session commands. Otherwise those secondary calls would still attempt TCP. Default TCP preserves their original transport construction.
+- Backend main captures `NewLocal`, keeps the existing `TokenTransport` outside the dialer, and preserves A PostgreSQL-only/journal/dispatcher/recovery and C AttachNarration startup. C's approved `narration.TimelineEnabled()` parses both primary and alias consistently.
+- Protected provider-status and TTS probes use the same captured transport as commands. Auth/error projection, token reread, redirect rejection, timeouts and public owner checks remain unchanged. Worker and Python→Go journal channels remain independent.
+- Production launcher preserves the exact original TCP/18000 exec when flags are off; opt-in mode retains the publisher lock/preflight and runs the private listener. The existing launcher remains Linux-specific.
 
-**CCR-D-01 (shared wiring) pending A/C/F/auth-owner review and F merge.** These extra protected probe/auth files are outside D's exclusive primary directory; they are only in the patch. No peer ACK is inferred. `docs/v0.5/ARCHITECTURE-CONTRACTS.md` and `INTEGRATION-PLAN.md` are unchanged. F must record the dependency SHA, peer ACK and merge SHA before applying/rebasing the proposal. The ordinary `cmd/server` in this branch alone still uses its original TCP client; the tested standalone factory/listener are ready for that integration. Do not advertise the Backend feature flag as wired until the patch is incorporated.
+**CCR-D-01 scoped reviews:** C ACKed startup/config at production source `3a571fb`; A token/probe/Dispatcher review requested, not yet inferred. F owns final merge. The frozen contract and migrations have no edits. Reason/dependency/file ledger and new gate evidence are in [production-wiring/README.md](evidence/local-ipc/production-wiring/README.md). `runtime/tests/local_ipc/shared-wiring.patch` is retained as a historical proposal; it must not be applied over this already-wired source.
 
-For inspection in a disposable checkout after the shared-file sequence:
-
-```sh
-git apply --check runtime/tests/local_ipc/shared-wiring.patch
-git apply runtime/tests/local_ipc/shared-wiring.patch
-go -C backend test ./...
-```
+The new integration test runs the actual Backend executable, real temporary PostgreSQL and Python `app.local_listener` with the existing CPU fault provider fixture, separately on TCP and UDS. It covers public authenticated Start/Speak/Stop, idempotency and Backend restart. Protocol-fixture tests cover protected TTS/status helpers and token rotation/cancellation. Launcher bootstrap unit tests stub preflight and runners and do not establish real Linux production launcher success.
 
 A new Host environment example is at `runtime/tests/local_ipc/single-host.env.example`. Runtime invocation (with the existing private tokens/provider configuration already supplied):
 
@@ -82,7 +76,7 @@ Pools use protected baseline `http.Transport{Proxy:nil}` defaults on both transp
 
 CPU is process CPU seconds, not normalized percentage: Runtime before/after per cell; Go Getrusage at completion including startup/sampler. RSS/FD peaks are sampled about every5ms and can miss short peaks; Go also records OS MaxRSS. Linux restricts parent access to Go `/proc/<pid>/fd`; Go samples `/proc/self/fd`, and the report records external access denial. Mac FD sampling uses psutil. Small cells, background host work, no randomized repeated trials/confidence intervals, error-route-only processing and instrumentation limit any inference about production latency.
 
-## Evidence and observed results
+## Historical standalone evidence and observed results
 
 Evidence is under `docs/v0.5/evidence/local-ipc/`: initial pre-adapter macOS baseline `macos-http-baseline.json`; final comparable `darwin-{baseline,tcp,uds}.json`, `linux-{http-baseline,tcp,uds}.json`; raw samples, per-cell CPU/RSS/FD/connection reuse and source SHA256/flags/software metadata are included. The generated tables below use **final TCP vs UDS** files; baseline remains separately inspectable. Each final file contains2000 samples (cold plus nine warm cells).
 
@@ -132,7 +126,7 @@ Cold kernel connect P50: TCP **52.0µs**, UDS **4.9µs**; this excludes UDS path
 
 Cold kernel connect is shorter on UDS in these runs, but warm-control results are mixed. Several UDS cells are slower, and tail latency does not consistently improve. The retained app/residual breakdown shows that ASGI processing, serialization, scheduling and host load dominate many cells. This is one200-sample run per cell, not a confidence-bounded transport speedup. No evidence supports a tens-fold improvement in full Speak or user-visible LLM/TTS/GPU latency; TCP remains the default.
 
-## Acceptance matrix and limits
+## Historical standalone acceptance matrix and limits
 
 | Gate | macOS arm64 | Linux amd64 | Evidence |
 | --- | --- | --- | --- |
@@ -149,7 +143,7 @@ Cold kernel connect is shorter on UDS in these runs, but warm-control results ar
 
 Windows uses the TCP branch without UDS/fcntl. **No Windows machine was available**, so no Windows PASS is claimed. Existing Go/Python token readers rely on POSIX mode bits; their behavior against Windows NTFS ACLs is an explicit auth-owner/F validation gap, not waived or weakened by this transport. Production RTMP launcher is already Linux-specific (`fcntl`/systemd); Windows uses the new standalone listener, subject to that auth gate.
 
-Local Go full suite (`go -C backend test ./...`) passed; Python Runtime/binding regression41 tests passed; v1.1 contract validation passed. Go race tests with actual subprocesses passed on both platforms. Python security suite10 tests:9 passed, foreign-UID test skipped on each. Staged shared patch in a disposable copy passed full Backend Go suite; shared source files in this branch remain unchanged. Windows compilation passed without executing the binaries. Exact logs accompany these claims; real provider/media/continuity and official-platform acceptance are not inferred.
+Local Go full suite (`go -C backend test ./...`) passed; Python Runtime/binding regression41 tests passed; v1.1 contract validation passed. Go race tests with actual subprocesses passed on both platforms. Python security suite10 tests:9 passed, foreign-UID test skipped on each. The original staged shared patch in a disposable copy passed its baseline Go suite; current shared source is actually wired over F core and has separate production-wiring evidence. Windows compilation passed without executing the binaries. Exact logs accompany these claims; real provider/media/continuity and official-platform acceptance are not inferred.
 
 ## Rollback and handoff
 
@@ -158,4 +152,4 @@ Local Go full suite (`go -C backend test ./...`) passed; Python Runtime/binding 
 3. Start the original TCP Runtime entry (or default production launcher) and Backend. Confirm authenticated health, ordinary command semantics and no remaining owned output. Defaults return `runtime.New(base)` and the production patch selects the **original exec command**. No migrations or provider/media changes need undoing.
 4. Preserve evidence/lock records; only remove a stopped socket after ownership/type/inode verification. Do not indiscriminately remove a socket/lock or switch an in-flight client to another endpoint.
 
-D ACKs the frozen TCP/UDS/auth/fallback contract and leaves defaults off. F handoff: review CCR-D-01 and staged patch after A/C, record peer ACKs/merge SHA, run integrated Host gates and Windows auth/loopback tests. Implementation commit is reported in Agent D's delivery message and Git history; this document deliberately contains no self-referential commit SHA. No PR merge/push or shared service reconfiguration was performed.
+D ACKs the frozen TCP/UDS/auth/fallback contract and leaves defaults off. F handoff: review the actual CCR-D-01 source over A/B/C, record A/C scoped ACKs and merge SHA, independently replay the integrated software gates, and retain Linux production/Windows auth-loopback as NOT TESTED until run. Implementation commit is reported in Agent D's delivery message and Git history; this document deliberately contains no self-referential commit SHA. No PR merge/push or shared service reconfiguration was performed.
