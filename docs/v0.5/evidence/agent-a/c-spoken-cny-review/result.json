@@ -1,0 +1,88 @@
+{
+  "source": "99382b1fcaed3eb7e8ec8383016400241f2edf7c",
+  "scope": "isolated real PostgreSQL C policy/race plus CPU Runtime staging fixtures; no authenticated A journal/native GPU/browser/audibility claim",
+  "checks": [
+    {
+      "name": "pg-start-fixed-socket",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-a-cny-review-99382b1-s0bzg3k6/pg",
+        "-l",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-a-cny-review-99382b1-s0bzg3k6/postgres.log",
+        "start"
+      ],
+      "exitCode": 0,
+      "seconds": 0.125
+    },
+    {
+      "name": "pg-createdb",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/createdb",
+        "-h",
+        "127.0.0.1",
+        "-p",
+        "59014",
+        "cny_review"
+      ],
+      "exitCode": 0,
+      "seconds": 0.065
+    },
+    {
+      "name": "go-race-policy",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-timeout=90s",
+        "-v",
+        "./internal/narration",
+        "-run",
+        "TestCapturedStagingSpokenCNYPreservesAmountAndFactID|TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy|Test.*Staging"
+      ],
+      "exitCode": 0,
+      "seconds": 4.701
+    },
+    {
+      "name": "python-staging",
+      "command": [
+        "/private/tmp/astralive-f-media-venv-1/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_staging_runtime.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "seconds": 0.258
+    },
+    {
+      "name": "pg-stop",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-a-cny-review-99382b1-s0bzg3k6/pg",
+        "-m",
+        "fast",
+        "stop"
+      ],
+      "exitCode": 0,
+      "seconds": 0.211
+    }
+  ],
+  "firstInfrastructureAttempt": "PostgreSQL UNIX socket path too long; unchanged archived source, TCP-only owned PG retry",
+  "logs": {
+    "pg-start.log": "072bdd374cf4acca521b5f507cda71baccaba16e1ebc37c9bcecf8f3f5f1fd02",
+    "python-staging.log": "8ab4aa07847b55a828ff09c0b91c05ed50476a90d5ceb486d0d0232fd1f15f1c",
+    "go-race-policy.log": "50bd204c8a8291b7e1e672f13198fd99faf2cea870cec91e86623efc1a8834ce",
+    "pg-init.log": "239d2150d06c0ad4e0e4cf2a767de0b89d22f9ba35b83a152ab6fda0e2fd63d9",
+    "pg-stop.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "postgres.log": "4c8e46d10b07287eb606fc58789200abf0adeff8baba909bfaf5e93210f42815",
+    "pg-start-fixed-socket.log": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "pg-createdb.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "source": "99382b1fcaed3eb7e8ec8383016400241f2edf7c",
+  "scope": "isolated real PostgreSQL C policy/race plus CPU Runtime staging fixtures; no authenticated A journal/native GPU/browser/audibility claim",
+  "checks": [
+    {
+      "name": "pg-init",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/initdb",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-a-cny-review-99382b1-s0bzg3k6/pg",
+        "-A",
+        "trust",
+        "--no-locale",
+        "-E",
+        "UTF8"
+      ],
+      "exitCode": 0,
+      "seconds": 0.39
+    },
+    {
+      "name": "pg-start",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-a-cny-review-99382b1-s0bzg3k6/pg",
+        "-l",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-a-cny-review-99382b1-s0bzg3k6/postgres.log",
+        "start"
+      ],
+      "exitCode": 1,
+      "seconds": 0.122
+    }
+  ],
+  "logs": {
+    "pg-start.log": "072bdd374cf4acca521b5f507cda71baccaba16e1ebc37c9bcecf8f3f5f1fd02",
+    "pg-init.log": "239d2150d06c0ad4e0e4cf2a767de0b89d22f9ba35b83a152ab6fda0e2fd63d9",
+    "postgres.log": "97a4121189eff1313ed1d524ae968ad33a0554e596eef53fedd8c7093649b825"
+  }
+}

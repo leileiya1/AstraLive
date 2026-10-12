@@ -1,0 +1,52 @@
+=== RUN   TestCapturedStagingSpokenCNYPreservesAmountAndFactID
+--- PASS: TestCapturedStagingSpokenCNYPreservesAmountAndFactID (0.00s)
+=== RUN   TestStagingCaptureFrozenProfiles
+=== RUN   TestStagingCaptureFrozenProfiles/false
+=== RUN   TestStagingCaptureFrozenProfiles/true
+=== RUN   TestStagingCaptureFrozenProfiles/1staging-short-1
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-segment-8s-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-short-gpu1g-1
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-segment-8s-gpu1g-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-short-gpu1g-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-segment-8s-gpu1g-1
+=== RUN   TestStagingCaptureFrozenProfiles/oops
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-segment-8s-1
+=== RUN   TestStagingCaptureFrozenProfiles/trueunknown
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-short-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+--- PASS: TestStagingCaptureFrozenProfiles (0.01s)
+    --- PASS: TestStagingCaptureFrozenProfiles/false (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/true (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/1staging-short-1 (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-segment-8s-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-short-gpu1g-1 (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-segment-8s-gpu1g-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-short-gpu1g-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-segment-8s-gpu1g-1 (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/oops (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-segment-8s-1 (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/trueunknown (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-short-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (0.00s)
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/success
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/amount-forgery
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/fact-forgery
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/currency-change
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/flags-off
+--- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy (0.44s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/success (0.11s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/amount-forgery (0.08s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/fact-forgery (0.08s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/currency-change (0.08s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/flags-off (0.09s)
+=== RUN   TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata
+=== RUN   TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-1capture
+=== RUN   TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-1restart-mismatch
+=== RUN   TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-gpu1g-1capture
+=== RUN   TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-gpu1g-1restart-mismatch
+--- PASS: TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata (0.28s)
+    --- PASS: TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-1capture (0.08s)
+    --- PASS: TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-1restart-mismatch (0.06s)
+    --- PASS: TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-gpu1g-1capture (0.07s)
+    --- PASS: TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-gpu1g-1restart-mismatch (0.07s)
+PASS
+ok  	astralive/backend/internal/narration	2.771s

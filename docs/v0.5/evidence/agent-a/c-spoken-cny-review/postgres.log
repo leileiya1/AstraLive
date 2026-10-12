@@ -1,0 +1,17 @@
+2026-10-12 21:04:33.297 CST [14292] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-12 21:04:33.298 CST [14292] LOG:  listening on IPv4 address "127.0.0.1", port 59014
+2026-10-12 21:04:33.298 CST [14292] LOG:  Unix-domain socket path "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-a-cny-review-99382b1-s0bzg3k6/pg/.s.PGSQL.59014" is too long (maximum 103 bytes)
+2026-10-12 21:04:33.298 CST [14292] WARNING:  could not create Unix-domain socket in directory "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-a-cny-review-99382b1-s0bzg3k6/pg"
+2026-10-12 21:04:33.298 CST [14292] FATAL:  could not create any Unix-domain sockets
+2026-10-12 21:04:33.298 CST [14292] LOG:  database system is shut down
+2026-10-12 21:04:59.080 CST [14348] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-12 21:04:59.081 CST [14348] LOG:  listening on IPv4 address "127.0.0.1", port 59014
+2026-10-12 21:04:59.084 CST [14351] LOG:  database system was shut down at 2026-10-12 21:04:33 CST
+2026-10-12 21:04:59.086 CST [14348] LOG:  database system is ready to accept connections
+2026-10-12 21:05:04.201 CST [14348] LOG:  received fast shutdown request
+2026-10-12 21:05:04.201 CST [14348] LOG:  aborting any active transactions
+2026-10-12 21:05:04.202 CST [14348] LOG:  background worker "logical replication launcher" (PID 14354) exited with exit code 1
+2026-10-12 21:05:04.202 CST [14349] LOG:  shutting down
+2026-10-12 21:05:04.202 CST [14349] LOG:  checkpoint starting: shutdown immediate
+2026-10-12 21:05:04.329 CST [14349] LOG:  checkpoint complete: wrote 1699 buffers (10.4%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.039 s, sync=0.046 s, total=0.128 s; sync files=1914, longest=0.001 s, average=0.001 s; distance=18007 kB, estimate=18007 kB; lsn=0/26B0748, redo lsn=0/26B0748
+2026-10-12 21:05:04.331 CST [14348] LOG:  database system is shut down
