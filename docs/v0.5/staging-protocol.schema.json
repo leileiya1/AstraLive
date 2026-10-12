@@ -90,7 +90,9 @@
             {
               "enum": [
                 "staging-short-1",
-                "staging-segment-8s-1"
+                "staging-segment-8s-1",
+                "staging-short-gpu1g-1",
+                "staging-segment-8s-gpu1g-1"
               ]
             },
             {
@@ -376,6 +378,118 @@
             },
             "gpu_incremental_allocated_bytes": {
               "const": 536870912
+            },
+            "audio_queue_samples": {
+              "const": 32000
+            },
+            "native_queue_frames": {
+              "const": 24
+            },
+            "network_window_frames": {
+              "const": 4
+            },
+            "lease_ms_max": {
+              "const": 60000
+            }
+          },
+          "required": [
+            "limits_revision",
+            "max_source_samples",
+            "worker_rgb_bytes",
+            "worker_pose_bytes",
+            "runtime_artifact_bytes",
+            "runtime_transient_bytes",
+            "worker_attempt_bytes",
+            "gpu_incremental_allocated_bytes",
+            "audio_queue_samples",
+            "native_queue_frames",
+            "network_window_frames",
+            "lease_ms_max"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "limits_revision": {
+              "const": "staging-short-gpu1g-1"
+            },
+            "max_source_samples": {
+              "const": 30720
+            },
+            "worker_rgb_bytes": {
+              "const": 50331648
+            },
+            "worker_pose_bytes": {
+              "const": 8388608
+            },
+            "runtime_artifact_bytes": {
+              "const": 100663296
+            },
+            "runtime_transient_bytes": {
+              "const": 25165824
+            },
+            "worker_attempt_bytes": {
+              "const": 268435456
+            },
+            "gpu_incremental_allocated_bytes": {
+              "const": 1073741824
+            },
+            "audio_queue_samples": {
+              "const": 32000
+            },
+            "native_queue_frames": {
+              "const": 24
+            },
+            "network_window_frames": {
+              "const": 4
+            },
+            "lease_ms_max": {
+              "const": 60000
+            }
+          },
+          "required": [
+            "limits_revision",
+            "max_source_samples",
+            "worker_rgb_bytes",
+            "worker_pose_bytes",
+            "runtime_artifact_bytes",
+            "runtime_transient_bytes",
+            "worker_attempt_bytes",
+            "gpu_incremental_allocated_bytes",
+            "audio_queue_samples",
+            "native_queue_frames",
+            "network_window_frames",
+            "lease_ms_max"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "limits_revision": {
+              "const": "staging-segment-8s-gpu1g-1"
+            },
+            "max_source_samples": {
+              "const": 128000
+            },
+            "worker_rgb_bytes": {
+              "const": 167772160
+            },
+            "worker_pose_bytes": {
+              "const": 8388608
+            },
+            "runtime_artifact_bytes": {
+              "const": 201326592
+            },
+            "runtime_transient_bytes": {
+              "const": 25165824
+            },
+            "worker_attempt_bytes": {
+              "const": 536870912
+            },
+            "gpu_incremental_allocated_bytes": {
+              "const": 1073741824
             },
             "audio_queue_samples": {
               "const": 32000
@@ -1118,7 +1232,9 @@
         "limits_revision": {
           "enum": [
             "staging-short-1",
-            "staging-segment-8s-1"
+            "staging-segment-8s-1",
+            "staging-short-gpu1g-1",
+            "staging-segment-8s-gpu1g-1"
           ]
         }
       },
@@ -2487,7 +2603,9 @@
         "requested_limits_revision": {
           "enum": [
             "staging-short-1",
-            "staging-segment-8s-1"
+            "staging-segment-8s-1",
+            "staging-short-gpu1g-1",
+            "staging-segment-8s-gpu1g-1"
           ]
         }
       },
