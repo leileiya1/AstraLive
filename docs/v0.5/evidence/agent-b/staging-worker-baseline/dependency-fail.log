@@ -1,0 +1,19 @@
+test_service (unittest.loader._FailedTest.test_service) ... ERROR
+
+======================================================================
+ERROR: test_service (unittest.loader._FailedTest.test_service)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_service
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-b/gpu_worker/tests/test_service.py", line 16, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
