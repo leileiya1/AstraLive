@@ -11,11 +11,16 @@ import socketserver
 import urllib.request
 
 
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ready-file", type=Path, required=True)
     args = parser.parse_args()
-    client = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    client = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect())
 
     class Relay(socketserver.BaseRequestHandler):
         def handle(self):
@@ -26,7 +31,9 @@ def main():
                     headers={"Content-Type": "application/dns-message", "Accept": "application/dns-message"})
                 with client.open(request, timeout=8) as response:
                     actual = response.read(65536)
-                    if response.status != 200 or len(actual) < 12 or len(actual) > 65535 or actual[:2] != wire[:2]:
+                    if (response.status != 200 or response.geturl() != "https://cloudflare-dns.com/dns-query"
+                            or response.headers.get_content_type() != "application/dns-message"
+                            or len(actual) < 12 or len(actual) > 65535 or actual[:2] != wire[:2]):
                         raise ValueError("invalid real DNS response")
                 socket.sendto(actual, self.client_address)
             except Exception:
