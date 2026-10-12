@@ -52,7 +52,12 @@ func TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy(t *testing.T) {
 			if e != nil {
 				t.Fatal(e)
 			}
-			if _, e = p.Exec(ctx, `UPDATE v05_session_runs SET timeline_epoch=2 WHERE session_id='s'`); e != nil {
+			if _, e = p.Exec(ctx, `UPDATE v05_timeline_epochs SET status='SEALED',sealed_at=clock_timestamp() WHERE session_id='s' AND timeline_epoch=1; INSERT INTO v05_timeline_epochs(session_id,run_epoch,timeline_epoch,tenant_id,user_id,status,reservation_token,expected_previous_epoch,origin_sample,reason,activated_at) SELECT session_id,run_epoch,2,tenant_id,user_id,'ACTIVE','policy-fixture-price-epoch2',1,0,'policy-fixture',clock_timestamp() FROM v05_session_runs WHERE session_id='s'; UPDATE v05_session_runs SET current_timeline_epoch=2 WHERE session_id='s'`); e != nil {
+				t.Fatal(e)
+			}
+			// Explicit fixture assumption: earlier control/media admissions resolved.
+			// This is policy-state setup, not an A execution or sink receipt.
+			if _, e = p.Exec(ctx, `UPDATE v05_outbox SET delivery_state='ACKED' WHERE session_id='s'`); e != nil {
 				t.Fatal(e)
 			}
 			if e = c.Drive(ctx, "s"); e != nil {
