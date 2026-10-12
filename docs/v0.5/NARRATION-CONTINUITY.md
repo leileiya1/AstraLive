@@ -252,3 +252,42 @@ existing durability/binding configuration; C owns no down migration. To return
 all the way to v0.4, follow A/B's sealed-run rollback instructions rather than
 toggling flags on an active bound output. Default-off ordinary regression and
 new clean RuntimeSession tests pass; same-output unbinding remains unsupported.
+
+
+## Post-integration lifecycle correction (2026-10-12)
+
+F verified A+B+C at48eb038 before this incremental correction. C's Go Timeline
+prerequisite helper43a4140 mirrors user-approved CCR-B-001 primary/alias parsing;
+D owns the production main.go call-site in3a571fb. No frozen contract is edited.
+
+Lifecycle source565993e, followed by context-retention correctionb028f5a, makes
+Continuity Stop fail closed when native cleanup is uncertain. The Runtime stays
+STOPPING, retains its Session/physical Worker reservation, emits no false ENDED
+and submits no completed control receipt. On binding DELETE failure, keep the
+reservation and Session context until acknowledgement; ordinary flags-off paths
+retain their prior behavior. This is not automatic cleanup-command replay.
+
+Go FinalizeStop requires authenticated SESSION_ENDED, the existing completed
+STOP_SESSION control_cleanup receipt and confirmed SQL binding release in the
+same event transaction. Early events remain pending and cannot seal the run or
+mark narration STOPPED before proof. Tests process real SQL events concurrently
+with deliberately delayed authenticated DELETE and receipt HTTP calls.
+
+The real PG/HTTP lifecycle tests use actual NarrationCommands, SegmentExecutor,
+B MediaTimeline, BoundSessionManager, A journal and Binding DELETE/SQL Release.
+Captured binding GET packets and native providers/sinks are explicitly fixtures;
+fresh Session SQL capture is a test fixture. This proves control/state integration,
+not encrypted production provider resolution, Chrome/RTMP, GPU or spoken quality.
+
+Shared edits are runtime/app/session.py (native Stop orchestration),
+runtime/app/session_binding.py (binding lifetime), and backend/internal/app/service.go
+(one transactional C Stop-finalization hook). F authorized these C lifecycle
+seams; A independently reviews SQL/event ordering. A migrations/journal, B sinks,
+Worker protocol and D entry wiring are unchanged. F is final merge owner.
+
+Remaining P1: failed STARTED controls require reviewed cleanup finalization;
+Runtime restart does not prove old sink cleanup; A's thirty-event-retry budget
+may exhaust during prolonged missing proof. Operator UNKNOWN continuation has
+no mutation endpoint yet; see [concrete proposal](NARRATION-RECOVERY-PROPOSAL.md).
+All experimental defaults remain off. Existing long/native evidence predates
+these lifecycle changes and is not reassigned to their source SHA.

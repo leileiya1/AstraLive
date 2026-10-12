@@ -1,0 +1,38 @@
+test_continuity_cleanup_failure_retains_binding_and_blocks_worker_reuse (test_narration_lifecycle.ContinuityLifecycleTests.test_continuity_cleanup_failure_retains_binding_and_blocks_worker_reuse) ... stop_cleanup_failed sessionId=session_1 component=media errorType=ConnectionError
+FAIL
+test_continuity_release_failure_retains_worker_reservation (test_narration_lifecycle.ContinuityLifecycleTests.test_continuity_release_failure_retains_worker_reservation) ... FAIL
+
+======================================================================
+FAIL: test_continuity_cleanup_failure_retains_binding_and_blocks_worker_reuse (test_narration_lifecycle.ContinuityLifecycleTests.test_continuity_cleanup_failure_retains_binding_and_blocks_worker_reuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_narration_lifecycle.py", line 21, in test_continuity_cleanup_failure_retains_binding_and_blocks_worker_reuse
+    with self.assertRaises(RuntimeFailure):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeFailure not raised
+
+======================================================================
+FAIL: test_continuity_release_failure_retains_worker_reservation (test_narration_lifecycle.ContinuityLifecycleTests.test_continuity_release_failure_retains_worker_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_narration_lifecycle.py", line 43, in test_continuity_release_failure_retains_worker_reservation
+    with self.assertRaises(RuntimeFailure):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeFailure not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.029s
+
+FAILED (failures=2)
