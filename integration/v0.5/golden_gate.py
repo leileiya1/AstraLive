@@ -72,7 +72,7 @@ def main():
               "profile": args.profile, "status": "RUNNING", "checks": []}
     env = {key: os.environ[key] for key in ("PATH", "HOME", "TMPDIR", "LANG") if key in os.environ}
     env.update(ASTRALIVE_GOLDEN_LLM_KEY_FILE=str(args.key_file),
-               ASTRALIVE_REAL_GOLDEN="true",
+               ASTRALIVE_GOLDEN_REAL="true",
                ASTRALIVE_GOLDEN_SOURCE_SHA=source,
                ASTRALIVE_GOLDEN_PLAN_FILE=str(args.plan_file.absolute()),
                ASTRALIVE_GOLDEN_TTS_MODEL_DIR=str(args.tts_model_dir.absolute()),
