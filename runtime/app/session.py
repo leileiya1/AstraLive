@@ -357,12 +357,27 @@ class RuntimeSession:
 
     async def stop(self, trace: str) -> None:
         if self.continuity is not None:
+            # Serialize repeat control cleanup, while retaining the immediate
+            # publication fence even when another Stop is still cleaning up.
+            self.continuity.fence("SESSION_STOP")
+            if not hasattr(self, "continuity_stop_lock"):
+                self.continuity_stop_lock = asyncio.Lock()
+            async with self.continuity_stop_lock:
+                await self._stop(trace)
+        else:
+            await self._stop(trace)
+
+    async def _stop(self, trace: str) -> None:
+        strict_cleanup = self.continuity is not None
+        cleanup_failed = False
+        if self.continuity is not None:
             # The sink publication barrier is immediate, before lock/native
             # cleanup waits. SQL Stop tombstone is owned by the Go command path.
             self.continuity.fence("SESSION_STOP")
         try:
             await asyncio.wait_for(self.lock.acquire(), 2)
         except asyncio.TimeoutError:
+            cleanup_failed = True
             log.warning("stop_initial_lock_timeout sessionId=%s", self.session_id)
             self.state = "STOPPING"
             if self.current_task:
@@ -377,12 +392,13 @@ class RuntimeSession:
                 task.cancel()
         else:
             try:
-                if self.state in {"STOPPING", "ENDED"}:
+                if self.state == "ENDED" or self.state == "STOPPING" and not strict_cleanup:
                     return
                 self.state = "STOPPING"
                 try:
                     await asyncio.wait_for(self._interrupt_locked(), 2)
                 except Exception as exc:
+                    cleanup_failed = True
                     log.warning("stop_interrupt_failed sessionId=%s errorType=%s", self.session_id, type(exc).__name__)
                 queued = [entry[2] for entry in self.speech_queue]
                 self.speech_queue.clear()
@@ -398,11 +414,13 @@ class RuntimeSession:
             try:
                 await asyncio.wait_for(asyncio.gather(worker, return_exceptions=True), 2)
             except asyncio.TimeoutError:
+                cleanup_failed = True
                 log.warning("stop_worker_timeout sessionId=%s", self.session_id)
         if prepare_tasks:
             try:
                 await asyncio.wait_for(asyncio.gather(*prepare_tasks, return_exceptions=True), 2)
             except asyncio.TimeoutError:
+                cleanup_failed = True
                 log.warning("stop_prepare_timeout sessionId=%s", self.session_id)
         try:
             await asyncio.wait_for(self.emit("SESSION_STOPPING", trace), 2)
@@ -420,11 +438,19 @@ class RuntimeSession:
             try:
                 await asyncio.wait_for(cleanup(), timeout)
             except Exception as exc:
+                cleanup_failed = True
                 log.warning("stop_cleanup_failed sessionId=%s component=%s errorType=%s", self.session_id, name, type(exc).__name__)
+        if strict_cleanup and cleanup_failed:
+            # Never emit ENDED or release an immutable binding while native
+            # cleanup is uncertain. The started control remains UNKNOWN until
+            # explicit finalization; this does not retry speech or generation.
+            raise RuntimeFailure("DEPENDENCY_UNAVAILABLE", "Session cleanup remains pending", 503)
         try:
             await asyncio.wait_for(self.lock.acquire(), 2)
         except asyncio.TimeoutError:
             log.warning("stop_final_lock_timeout sessionId=%s", self.session_id)
+            if strict_cleanup:
+                raise RuntimeFailure("DEPENDENCY_UNAVAILABLE", "Session cleanup remains pending", 503)
             self.state = "ENDED"
         else:
             try:

@@ -384,6 +384,11 @@ func (s *Service) applyEventTx(ctx context.Context, tx pgx.Tx, e Event) (bool, e
 			}
 		}
 	}
+	if s.Durable != nil && s.Narration != nil && e.EventType == "SESSION_ENDED" {
+		if err := s.Narration.FinalizeStop(ctx, tx, e.SessionID); err != nil {
+			return false, err
+		}
+	}
 	return true, nil
 }
 func (s *Service) afterEvent(ctx context.Context, e Event) error {
