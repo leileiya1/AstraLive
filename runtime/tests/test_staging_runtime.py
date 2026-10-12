@@ -2,6 +2,7 @@
 import asyncio
 import copy
 import hashlib
+import importlib.util
 import os
 from pathlib import Path
 from types import SimpleNamespace
@@ -48,12 +49,15 @@ class CaptureTests(unittest.TestCase):
         crc=0
         for offset in range(4,24,4):crc^=(code>>offset)&15
         self.assertEqual(crc,code&15)
-        import importlib.util
+        with self.assertRaises(ValueError):overlay(original,0,0)
+
+    @unittest.skipUnless(importlib.util.find_spec("av") is not None and importlib.util.find_spec("numpy") is not None,"F observer decoder dependencies unavailable; NOT TESTED")
+    def test_f_offline_decoder_matches_exact_runtime_barcode(self):
         import numpy as np
+        output=overlay(bytes((17,18,19))*(512*512),4095,199)
         spec=importlib.util.spec_from_file_location("f_observer_audit",Path(__file__).resolve().parents[2]/"integration/v0.5/observer_audit.py")
         audit=importlib.util.module_from_spec(spec);spec.loader.exec_module(audit)
         self.assertEqual(audit.barcode(np.frombuffer(output,dtype=np.uint8).reshape(512,512,3)),(4095,199))
-        with self.assertRaises(ValueError):overlay(original,0,0)
 
 
 class ClientTests(unittest.IsolatedAsyncioTestCase):
@@ -116,6 +120,7 @@ class ClientTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(StagingFailure):client.check(stage)
 
 
+@unittest.skipUnless(importlib.util.find_spec("av") is not None and importlib.util.find_spec("numpy") is not None,"software real CPU decode dependencies unavailable; NOT TESTED")
 class ArtifactTests(unittest.IsolatedAsyncioTestCase):
     def request(self,max_ms=1920):
         return SegmentExecutionRequest(text="欢迎。",textHash="sha256:"+"a"*64,factIds=[],factVersion="v",productId="p",productSnapshotHash="h",utteranceId="u",attemptId="business-attempt",voice=VoiceConfig(voiceId="v"),requiredSinks=["sink"],expectedNarrationRevision=1,expectedTimelineRevision=0,leaseToken=1,maxDurationMs=max_ms,beatId="beat")

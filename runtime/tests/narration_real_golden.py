@@ -12,11 +12,19 @@ from pathlib import Path
 import time
 
 import httpx
-from playwright.async_api import async_playwright
 
 
 class GoldenFailure(Exception):
     pass
+
+
+def require_observable_state(snapshot):
+    # Natural FINISHED is a terminal narration plan while the Session remains
+    # live for explicit normal Stop; distinguish it from operator/failure Stop.
+    if snapshot["state"] == "STOPPED" and snapshot.get("reason") == "FINISHED":
+        return
+    if snapshot["state"] in {"RECOVERY_REQUIRED", "FAILED", "STOPPING", "STOPPED"}:
+        raise GoldenFailure("Narration stopped or requires recovery")
 
 
 def private(path):
@@ -47,6 +55,7 @@ def sink_ids(logfile,sid):
 
 
 async def main(args):
+    from playwright.async_api import async_playwright
     out=Path(args.output);out.mkdir(parents=True,exist_ok=False)
     fixture=json.loads(Path(args.fixture).read_text())
     report={"scope":"REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
@@ -138,8 +147,7 @@ async def main(args):
                         report["events"].append({"kind":"COMMENT_INJECTED","question":questions[next_question],"elapsedSeconds":elapsed,
                             "browserAt":await page.evaluate("performance.now()"),"response":answer});next_question+=1
                     snapshot=await api("GET",f"/api/v0.5/narration/{session}/")
-                    if snapshot["state"] in {"RECOVERY_REQUIRED","FAILED","STOPPING","STOPPED"}:
-                        raise GoldenFailure("Narration stopped or requires recovery")
+                    require_observable_state(snapshot)
                     if snapshot["reason"]=="FINISHED":
                         if args.mode=="ten-minute" and elapsed<args.seconds:
                             raise GoldenFailure("Authored plan finished early: fixture duration insufficient")

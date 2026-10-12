@@ -15,8 +15,12 @@ from types import SimpleNamespace
 from pathlib import Path
 import unittest
 
-import av
-import numpy as np
+try:
+    import av
+    import numpy as np
+    MEDIA_AVAILABLE=True
+except ImportError:
+    MEDIA_AVAILABLE=False
 from gpu_worker import staging_contract as c
 from gpu_worker.tests.test_staging_contract import message
 from app.soulx_staging import StagingAvatarEngine
@@ -152,6 +156,7 @@ class SinkDouble:
     async def drain(self,generation):pass
 
 
+@unittest.skipUnless(MEDIA_AVAILABLE,"software H264/Timeline media dependencies unavailable; NOT TESTED")
 class LocalTCPTests(unittest.IsolatedAsyncioTestCase):
     async def run_segment(self,wire):
         server=await asyncio.start_server(wire.handler,"127.0.0.1",0)
