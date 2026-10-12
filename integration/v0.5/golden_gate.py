@@ -34,6 +34,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--python", required=True)
     parser.add_argument("--pg-bin", type=Path, required=True)
+    parser.add_argument("--local-transport", choices=("tcp", "uds"), default="tcp")
     parser.add_argument("--mode", choices=("short", "ten-minute", "soak", "faults"), required=True)
     parser.add_argument("--key-file", type=private_file, required=True)
     parser.add_argument("--tts-model-dir", type=Path, required=True)
@@ -45,7 +46,7 @@ def main():
     parser.add_argument("--worker-ref", default="soulx-lite-01")
     parser.add_argument("--avatar-ref", default="official-girl")
     parser.add_argument("--asset-sha256", required=True)
-    parser.add_argument("--profile", choices=("staging-short-1", "staging-segment-8s-1"), default="staging-segment-8s-1")
+    parser.add_argument("--profile", choices=("staging-short-1", "staging-segment-8s-1", "staging-short-gpu1g-1", "staging-segment-8s-gpu1g-1"), default="staging-segment-8s-1")
     parser.add_argument("--short-gpu-gate-sha256", help="operator-pinned short real GPU evidence digest for 8s profile")
     parser.add_argument("--seed", type=int, default=5012)
     args = parser.parse_args()
@@ -57,7 +58,7 @@ def main():
         parser.error("cached TTS model directory missing")
     if not args.plan_file.is_file():
         parser.error("authored Golden product/plan/question file missing")
-    if args.profile == "staging-segment-8s-1":
+    if args.profile in ("staging-segment-8s-1", "staging-segment-8s-gpu1g-1"):
         import re
         if args.short_gpu_gate_sha256 is None or not re.fullmatch(r"sha256:[0-9a-f]{64}", args.short_gpu_gate_sha256):
             parser.error("8s profile requires pinned short real GPU gate sha256")
@@ -69,10 +70,11 @@ def main():
     report = {"source": source, "mode": args.mode, "requestedSeconds": seconds, "seed": args.seed,
               "scope": "real Go production HTTP components/owned PostgreSQL/production Python Runtime/DeepSeek/XiaoYa/SoulX/native Chrome/local RTMP; fixture audience comment replay",
               "audienceAudible": False, "humanNaturalness": "REQUIRES_SEPARATE_REVIEW",
-              "profile": args.profile, "status": "RUNNING", "checks": []}
+              "profile": args.profile, "localTransport": args.local_transport, "status": "RUNNING", "checks": []}
     env = {key: os.environ[key] for key in ("PATH", "HOME", "TMPDIR", "LANG") if key in os.environ}
     env.update(ASTRALIVE_GOLDEN_LLM_KEY_FILE=str(args.key_file),
                ASTRALIVE_GOLDEN_REAL="true",
+               ASTRALIVE_GOLDEN_LOCAL_TRANSPORT=args.local_transport,
                ASTRALIVE_GOLDEN_SOURCE_SHA=source,
                ASTRALIVE_GOLDEN_PLAN_FILE=str(args.plan_file.absolute()),
                ASTRALIVE_GOLDEN_TTS_MODEL_DIR=str(args.tts_model_dir.absolute()),
