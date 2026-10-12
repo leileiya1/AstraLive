@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import signal
 import socket
+import struct
 import threading
 import time
 import uuid
@@ -16,7 +17,7 @@ from .model import ResidentModel
 from .resources import GPUResources
 from .telemetry import Metrics, atomic_json
 from .validated.adapter import AudioChunk
-from .validated.wire import send, receive
+from .validated.wire import send, receive, read_exact, MAX_HEADER, MAX_PAYLOAD
 
 
 class Worker:
@@ -32,6 +33,12 @@ class Worker:
         self.connection = None
         self.listener = None
         self.resources = GPUResources(cfg.mode)
+        switch = os.getenv('ASTRALIVE_WORKER_STAGING_ENABLED')
+        if switch is not None and switch.lower() not in {'true', 'false', '1', '0'}:
+            raise ValueError('invalid staging switch')
+        self.staging_enabled = cfg.staging_enabled if switch is None else switch.lower() in {'true', '1'}
+        self.staging_unknown = False
+        self.staging_terminals = {}
 
     def status(self):
         return dict(self.metrics.snapshot(self.adapter, self.active, self.model.gpu if self.ready else None), **self.resources.snapshot(), processPid=os.getpid())
@@ -52,7 +59,25 @@ class Worker:
         sock.settimeout(5)
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 65536)
-        h, payload = receive(sock)
+        # Preserve legacy JSON parsing; only 1.2 gets strict raw duplicate-key,
+        # UTF-8 and integer validation before information can be discarded.
+        header_size, payload_size = struct.unpack('!II', read_exact(sock, 8))
+        if header_size > MAX_HEADER or payload_size > MAX_PAYLOAD:
+            raise ValueError('oversize packet')
+        raw_header = read_exact(sock, header_size)
+        h, payload = json.loads(raw_header), read_exact(sock, payload_size)
+        if not isinstance(h, dict):
+            raise ValueError('invalid header')
+        if isinstance(h, dict) and h.get('internal_version') == '1.2':
+            from .staging_contract import decode_header, validate_message
+            from .staging_service import StagingConnection
+            h = decode_header(raw_header)
+            validate_message(h, payload)
+            if (not self.staging_enabled or not IDENTIFIER.fullmatch(h['session_id']) or
+                    not hmac.compare_digest(h['token'], secret(self.cfg.token_file))):
+                self.metrics.event('AuthenticationRejected')
+                return
+            return StagingConnection(self, sock, h).run()
         session = h.get('session_id', '')
         if (h.get('type') != 'Auth' or h.get('protocol_version') != 1 or h.get('internal_version') != '1.1'
                 or not isinstance(session, str) or not IDENTIFIER.fullmatch(session)
@@ -139,6 +164,8 @@ class Worker:
                         raise ValueError('unauthorized avatar')
                     reply(dict(type='AvatarPrepared', cache_id=self.model.cache_id))
                 elif kind == 'BeginGeneration':
+                    if getattr(self, 'staging_unknown', False):
+                        raise ValueError('staging UNKNOWN requires Worker retirement')
                     gid = h['generation_id']
                     if type(gid) is not int or not 0 <= gid < 2**63 or gid <= self.highest_generation or h['cache_id'] != self.model.cache_id:
                         raise ValueError('generation/cache mismatch')

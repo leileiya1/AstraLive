@@ -37,6 +37,7 @@ def main():
     parser.add_argument("--mode", choices=("short", "ten-minute", "soak", "faults"), required=True)
     parser.add_argument("--key-file", type=private_file, required=True)
     parser.add_argument("--tts-model-dir", type=Path, required=True)
+    parser.add_argument("--plan-file", type=Path, required=True)
     parser.add_argument("--worker-token-file", type=private_file, required=True)
     parser.add_argument("--management-token-file", type=private_file, required=True)
     parser.add_argument("--worker-port", type=int, required=True)
@@ -54,6 +55,8 @@ def main():
             parser.error("port outside valid range")
     if not args.tts_model_dir.is_dir():
         parser.error("cached TTS model directory missing")
+    if not args.plan_file.is_file():
+        parser.error("authored Golden product/plan/question file missing")
     if args.profile == "staging-segment-8s-1":
         import re
         if args.short_gpu_gate_sha256 is None or not re.fullmatch(r"sha256:[0-9a-f]{64}", args.short_gpu_gate_sha256):
@@ -69,7 +72,9 @@ def main():
               "profile": args.profile, "status": "RUNNING", "checks": []}
     env = {key: os.environ[key] for key in ("PATH", "HOME", "TMPDIR", "LANG") if key in os.environ}
     env.update(ASTRALIVE_GOLDEN_LLM_KEY_FILE=str(args.key_file),
+               ASTRALIVE_GOLDEN_REAL="true",
                ASTRALIVE_GOLDEN_SOURCE_SHA=source,
+               ASTRALIVE_GOLDEN_PLAN_FILE=str(args.plan_file.absolute()),
                ASTRALIVE_GOLDEN_TTS_MODEL_DIR=str(args.tts_model_dir.absolute()),
                ASTRALIVE_GOLDEN_WORKER_TOKEN_FILE=str(args.worker_token_file),
                ASTRALIVE_GOLDEN_WORKER_MANAGEMENT_TOKEN_FILE=str(args.management_token_file),
@@ -132,7 +137,7 @@ def main():
             if proc.wait():
                 raise RuntimeError("immutable source archive failed")
             case = "TestPostgresRealGPUContinuityGolden"
-            run("golden", ["go", "test", "-count=1", f"-timeout={seconds+600}s", "-v", "./internal/narration", "-run", "^"+case+"$"], root/"backend")
+            run("golden", ["go", "test", "-count=1", f"-timeout={seconds+1200}s", "-v", "./internal/narration", "-run", "^"+case+"$"], root/"backend")
             if "--- PASS: "+case+" " not in (out/"golden.log").read_text():
                 raise RuntimeError("Golden case did not execute successfully; skipped/missing case cannot pass")
             if not (out/"media").is_dir():

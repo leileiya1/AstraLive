@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "staging-worker-baseline-1",
+  "sourceSHA": "d69166461af5cd9f7b75179754ea4c086435e251",
+  "branch": "exp/v0.5-staging-worker",
+  "scope": "CPU simulation control and historical offline evidence, not fresh GPU/Chrome/RTMP",
+  "environment": {
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.13",
+    "torch": "2.8.0 CPU macOS",
+    "av": "17.1.0",
+    "numpy": "2.5.3",
+    "venv": "/private/tmp/astralive-b-staging-venv"
+  },
+  "tests": [
+    {
+      "command": "PYTHONPATH=runtime:. <venv>/bin/python -m unittest gpu_worker.tests.test_service -v",
+      "exitCode": 0,
+      "count": 6,
+      "durationSeconds": 10.037
+    },
+    {
+      "command": "PYTHONPATH=runtime:. <venv>/bin/python gpu_worker/tests/run_legacy_regression.py",
+      "exitCode": 0,
+      "count": 36,
+      "durationSeconds": 0.838
+    }
+  ],
+  "adverseResultsRetained": [
+    "dependency-fail.log: isolated env initially missing Pillow",
+    "historical-fixture-fail.log: worktree absent four ignored historical fixtures; copied exact original repo bytes, manifest retained"
+  ],
+  "productionChanges": false,
+  "artifacts": [
+    {
+      "file": "worker-legacy.log",
+      "sha256": "a59a4730e3d80e94b2e2e7fa23adbea90ff121abee483f76ea3386ae9c4b97ed",
+      "bytes": 1757
+    },
+    {
+      "file": "original-lab.log",
+      "sha256": "5544d662df3dbbb30edb0700fdeba5f345f5adab3f317ef5fa31c50d8eb0cd7c",
+      "bytes": 5012
+    },
+    {
+      "file": "dependency-fail.log",
+      "sha256": "24e223b94d3694552f127cb45cfa44ab56aae158c395d5784dd7c09fecbca248",
+      "bytes": 882
+    },
+    {
+      "file": "historical-fixture-fail.log",
+      "sha256": "20eb71498d514229c5ebef70e309fb233ca828973f01beb809eff5b5e91613bf",
+      "bytes": 11839
+    },
+    {
+      "file": "historical-fixtures.json",
+      "sha256": "5b86626947f516adb045c6eb495eee440499bf3f8cd57275d217af0a039205f0",
+      "bytes": 1613
+    }
+  ]
+}

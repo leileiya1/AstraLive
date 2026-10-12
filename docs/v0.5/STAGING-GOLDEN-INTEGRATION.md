@@ -33,3 +33,9 @@ Short-profile cap1.92s and explicit max8s profile require actual TTS count inclu
 GPU SSH and deployments are performed only by F. Existing model/environment caches are reused. No dependency reinstall/model download, public inference port, paid new instance, default provider switch or unsolicited main deployment. Endpoint tunnel/authentication/file permissions and exact installed release are verified before each new run. Old compatibility release/config is preserved for rollback.
 
 Current CPU provider preflight is real: DeepSeek streaming request and XiaoYa native speech both executed successfully. GPU compatibility Ready from the prior direct smoke is not a staging or integrated Golden PASS. All subsequent results stay RUNNING/NOT TESTED until an actual fixed-source command finishes and artifacts are checked. Failures stay in separate run directories; durations from retries are never accumulated into a successful continuous run.
+
+## 2026-10-12 implementation checkpoint
+
+B and C subagent turns stopped on a usage limit. F preserved their incomplete changes separately as B `28ab56d` and C `51d9a15` (WIP). After resume, the original owners continue implementation/review; F retains merge ownership. B checkpoint passed the independent full module software gate, but B subsequently found a cross-connection UNKNOWN reset (P0). Deployment is blocked until its sticky-retirement correction and reproducer pass. These software results do not establish GPU or real business acceptance.
+
+F uses `ASTRALIVE_GOLDEN_REAL=true` for the real gate. A fixed authored catalog and separate short fixture are being prepared with actual CPU TTS duration checks. All experiments remain opt-in.
