@@ -1,0 +1,54 @@
+{
+  "source": "b028f5aeec0b929a9779f5f50def8cebce25c98a",
+  "delivery": "4d5a0f8f27d1407d422e6b0d9865c9de7152e8a7",
+  "results": [
+    {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-v",
+        "./internal/narration",
+        "-run",
+        "^TestPostgresCapturedRetirementNativeCleanupAndFreshSession$"
+      ],
+      "exitCode": 0,
+      "log": "postgres.log",
+      "logSHA256": "c78016449c858858905e80bacaa5a23f1c7519d3488934ddbd3da13cb95466db"
+    },
+    {
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive/runtime/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_narration_lifecycle.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "log": "python.log",
+      "logSHA256": "5c192ab8449ba7f2e8f82bc07f88d2384b75fd9c8808a33f7ea4812008f345b7"
+    },
+    {
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive/runtime/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_a_context_review.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "log": "context.log",
+      "logSHA256": "876846945cf1891a08c27d67a0fc4025a45f717e2c352d3c5999b6862cda9121"
+    }
+  ],
+  "overlaySHA256": "fe32704240f18012fe96139d7e86444935790c7656a3576db0937e75a1e6b35f"
+}
