@@ -20,6 +20,7 @@ type Service struct {
 	IntegrationEnabled                 bool
 	RuntimeStatusURL                   string
 	RuntimeControlTokenFile            string
+	RuntimeTransport                   http.RoundTripper
 	DB                                 DB
 	Vault                              Vault
 	Origin                             string

@@ -20,10 +20,17 @@ def main():
         os.close(fd)
         return 1
     os.environ["MAX_SESSIONS"] = "1"
-    os.set_inheritable(fd, True)
-    os.execv(sys.executable, [sys.executable, '-m', 'uvicorn', 'app.main:app',
-                             '--host', '127.0.0.1', '--port', '18000',
-                             '--timeout-graceful-shutdown', '25'])
+    if os.getenv("ASTRALIVE_LOCAL_TRANSPORT", "tcp") == "tcp" and os.getenv("ASTRALIVE_LOCAL_FALLBACK", "disabled") == "disabled":
+        os.set_inheritable(fd, True)
+        os.execv(sys.executable, [sys.executable, '-m', 'uvicorn', 'app.main:app',
+                                 '--host', '127.0.0.1', '--port', '18000',
+                                 '--timeout-graceful-shutdown', '25'])
+    from .local_listener import run
+    try:
+        run(default_tcp_url='http://127.0.0.1:18000')
+    finally:
+        os.close(fd)
+
 
 
 if __name__ == '__main__':

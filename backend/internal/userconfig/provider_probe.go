@@ -75,7 +75,10 @@ func (s *Service) probeTTS(ctx context.Context, p Profile) error {
 		return fault(503, "PROVIDER_TEST_FAILED", "TTS probe unavailable")
 	}
 	request.Header.Set("Content-Type", "application/json")
-	client := &http.Client{Timeout: 20 * time.Second, Transport: TokenTransport{Path: s.RuntimeControlTokenFile, Base: &http.Transport{Proxy: nil}}, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
+	client, setupErr := s.localRuntimeHTTP(20 * time.Second)
+	if setupErr != nil {
+		return fault(503, "PROVIDER_TEST_FAILED", "Runtime transport unavailable")
+	}
 	defer client.CloseIdleConnections()
 	response, e := client.Do(request)
 	if e != nil {
