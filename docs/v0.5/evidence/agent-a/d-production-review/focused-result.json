@@ -1,0 +1,17 @@
+{
+  "source": "3a571fb3247a70e86ac6f6a6a19a765c16f58a36",
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-v",
+    "./internal/durability",
+    "./internal/runtime",
+    "./internal/userconfig",
+    "-run",
+    "Test(LocalIPCProductionServerStartup|ActualRuntimeLocalLifecycle|UDSSafetyAndHTTPParity|CapturedLocalProviderTransport|LegacyClientUnchanged)$"
+  ],
+  "exitCode": 0,
+  "logSHA256": "dc06cd4bd2278f831673461a2b1f059f295d362fba11e923cf6b4d7618c45b88"
+}
