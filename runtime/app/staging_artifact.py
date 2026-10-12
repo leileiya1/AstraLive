@@ -60,7 +60,7 @@ async def stage_gpu(session, request, command, context, guard, journal):
             if len(frames) != 1 or frames[0].width != 512 or frames[0].height != 512:
                 raise ValueError("INCOMPLETE_READY_ARTIFACT: H264 decode sequence")
             rgb = frames[0].to_ndarray(format="rgb24").tobytes()
-            emitted = observer.frame(observation, header, rgb)
+            emitted = observer.frame(observation, header, rgb, payload)
             del rgb
             video.append(VideoFrame(context.generation_id, header["pts_us"], 512, 512, emitted))
             decoded_hash.update(emitted)

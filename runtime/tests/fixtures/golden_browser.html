@@ -79,7 +79,7 @@ async function goldenFinish() {
     if(row.type==='inbound-rtp')inbound.push({...row});
   if(recorder && recorder.state!=='inactive')await new Promise(resolve=>{recorder.onstop=resolve;recorder.stop()});
   await recordingChain;
-  const result={clockDomain:'chrome_performance_ms',startedAt:begun,endedAt:performance.now(),
+  const result={clockDomain:'chrome_performance_ms',timeOrigin:performance.timeOrigin,startedAt:begun,endedAt:performance.now(),
     audioSampleRate:ac?.sampleRate??null,video:rows,audioEnergy:audioRows,inbound,
     recordedBytes,recordingChunks:recordingSequence,recordingStartedAt,chunkEvents,audienceAudible:false,
     correlatedAV:'NOT_ANALYSED: requires actual staged speech/frame reference matching'};

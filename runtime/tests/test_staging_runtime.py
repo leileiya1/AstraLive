@@ -171,6 +171,8 @@ class ArtifactTests(unittest.IsolatedAsyncioTestCase):
             ref=json.loads(next(Path(directory).glob("attempt-*/reference.json")).read_text())
             self.assertNotEqual(ref["frames"][0]["decodedRGBHash"],ref["frames"][0]["emittedRGBHash"])
             self.assertEqual(ref["frames"][0]["nativeRGBHash"],c.bytes_digest(raw))
+            self.assertEqual(ref["frames"][0]["payloadBytes"],len(payload))
+            self.assertEqual(ref["frames"][0]["payloadSHA256"],c.bytes_digest(payload))
             self.assertEqual(len(artifact.audio),2)
 
     async def test_oversized_real_shape_tts_rejects_before_stage_begin(self):

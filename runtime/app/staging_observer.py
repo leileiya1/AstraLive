@@ -62,12 +62,15 @@ class StagingObserver:
             "speechPCMHash": "sha256:" + hashlib.sha256(pcm).hexdigest(), "frames": [],
             "scope": "TEST_ONLY_REAL_GPU_OUTPUT_INSTRUMENTATION", "audienceAudible": False}
 
-    def frame(self, observation, header, rgb):
+    def frame(self, observation, header, rgb, payload):
         if observation is None:
             return rgb
+        payload_hash="sha256:"+hashlib.sha256(payload).hexdigest()
+        if header.get("payload_sha256",payload_hash)!=payload_hash:raise ValueError("observer packet integrity mismatch")
         sequence = header["frame_sequence"]
         emitted = overlay(rgb, observation["ordinal"], sequence)
         observation["frames"].append({"sequence": sequence, "ptsUs": header["pts_us"],
+            "payloadBytes":len(payload), "payloadSHA256":payload_hash,
             "nativeRGBHash": header["native_rgb_sha256"],
             "decodedRGBHash": "sha256:" + hashlib.sha256(rgb).hexdigest(),
             "emittedRGBHash": "sha256:" + hashlib.sha256(emitted).hexdigest()})
