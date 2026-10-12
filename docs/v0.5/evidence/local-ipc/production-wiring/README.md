@@ -1,6 +1,6 @@
 # D production wiring review (2026-10-12)
 
-Dependency F `48eb0387f4e0f7db08ca8b64d3ae02c2207a9f57` (A+B+C core `6095989`), normally merged into D as `b6f65bd`. C's approved Timeline flag parser source `43a41403a887ef31f7b3ecf165a9aff7302bb5d8` was cherry-picked as `bc46a20`. Frozen contracts and migrations unchanged. F is final merge owner; A auth and C startup scoped review requested, not inferred.
+Dependency F `48eb0387f4e0f7db08ca8b64d3ae02c2207a9f57` (A+B+C core `6095989`), normally merged into D as `b6f65bd`. C's approved Timeline flag parser source `43a41403a887ef31f7b3ecf165a9aff7302bb5d8` was cherry-picked as `bc46a20`. Frozen contracts and migrations unchanged. F is final merge owner; C startup/config and A auth/Dispatcher scoped ACKs are recorded below.
 
 Shared-file changes are now actual source rather than an unapplied patch:
 
@@ -26,3 +26,7 @@ PYTHONPATH=runtime /absolute/path/to/runtime/python -m unittest discover -s runt
 ```
 
 `manifest.json` records immutable source SHA, all exact log hashes, source file hashes, command scopes and remaining tests. Initial logs are retained with their source-mutation note; final logs are a fresh fixed-source run. This does not claim live media or audience acceptance.
+
+## Scoped owner ACKs
+
+C ACKed exact production `3a571fb` startup/config: approved Timeline helper, continuity prerequisite and original AttachNarration worker wiring retained. A finalized scoped ACK `3a571fb` / evidence delivery `1a73eff`; its independent immutable archive ran full real-PG Go/race/outage/durable12/validator and a second focused verbose race gate for both TCP/UDS production Backend public Start/Speak/Stop, Backend restart/idempotency, actual Python listener auth/lifecycle, socket safety, redirects/cancellation and protected helpers—all exit 0. A reviewed `ecc43dd` as unsupported-platform test guards only, with unchanged production source. A-owned evidence commit: `6ca40cba5fd0d384ce753370dabdc8c6ca2f9867` (`docs/v0.5/evidence/agent-a/d-production-review/`). No owner ACK elevates Linux/Windows/GPU/real providers/SLA or substitutes F independent integration acceptance.
