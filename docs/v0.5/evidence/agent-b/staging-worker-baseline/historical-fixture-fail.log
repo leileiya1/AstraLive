@@ -1,0 +1,102 @@
+test_bounded_audio_backpressure_unblocks_on_cancel (test_adapter.AdapterTests.test_bounded_audio_backpressure_unblocks_on_cancel) ... ok
+test_cancel_inflight_and_begin_new_before_kernel_finishes (test_adapter.AdapterTests.test_cancel_inflight_and_begin_new_before_kernel_finishes) ... ok
+test_generation_reuse_is_rejected (test_adapter.AdapterTests.test_generation_reuse_is_rejected) ... ok
+test_invalid_pcm_gap_and_duplicate (test_adapter.AdapterTests.test_invalid_pcm_gap_and_duplicate) ... ok
+test_sample_index_pts_partial_and_empty_eof (test_adapter.AdapterTests.test_sample_index_pts_partial_and_empty_eof) ... ok
+test_consumer_credits_are_in_order_and_old_job_is_ignored (test_async_link.Tests.test_consumer_credits_are_in_order_and_old_job_is_ignored) ... ok
+test_health_snapshot_reserves_inflight_audio (test_async_link.Tests.test_health_snapshot_reserves_inflight_audio) ... ok
+test_zero_credit_recovers_when_gpu_drain_is_reported (test_async_link.Tests.test_zero_credit_recovers_when_gpu_drain_is_reported) ... ok
+test_20ms_first_chunk_does_not_deadlock (test_prefetch.Tests.test_20ms_first_chunk_does_not_deadlock) ... ok
+test_force_while_first_frame_waits (test_prefetch.Tests.test_force_while_first_frame_waits) ... ok
+test_multiple_sentences_share_one_contiguous_job (test_prefetch.Tests.test_multiple_sentences_share_one_contiguous_job) ... ok
+test_short_eof_flushes_without_960ms_audio (test_prefetch.Tests.test_short_eof_flushes_without_960ms_audio) ... ok
+test_source_failure_is_not_masked (test_prefetch.Tests.test_source_failure_is_not_masked) ... ok
+test_worker_failure_preserves_all_audio_before_and_after_first_frame (test_prefetch.Tests.test_worker_failure_preserves_all_audio_before_and_after_first_frame) ... ok
+test_generation_and_format_changes_rejected (test_resample.Tests.test_generation_and_format_changes_rejected) ... ok
+test_incremental_matches_whole_resampling_and_sample_clock (test_resample.Tests.test_incremental_matches_whole_resampling_and_sample_clock) ... ok
+test_cancelled_audio_sender_does_not_trigger_fallback (test_degradation_regression.OwnershipTests.test_cancelled_audio_sender_does_not_trigger_fallback) ... ok
+test_old_speech_cleanup_preserves_new_generation_owner (test_degradation_regression.OwnershipTests.test_old_speech_cleanup_preserves_new_generation_owner) ... Executing <Task finished name='Task-1006' coro=<OwnershipTests.test_old_speech_cleanup_preserves_new_generation_owner() done, defined at /Users/sapiece/innovationProject/AstraLive-agent-b/astralive-avatar-lab/streaming/test_degradation_regression.py:43> result=None created at /Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:100> took 1.550 seconds
+ok
+test_aged_input_horizon_with_recent_video_progress_is_not_stalled (test_degradation_regression.Tests.test_aged_input_horizon_with_recent_video_progress_is_not_stalled) ... ok
+test_begin_waits_for_cancel_acknowledgment (test_degradation_regression.Tests.test_begin_waits_for_cancel_acknowledgment) ... ok
+test_degradation_reason_is_journaled (test_degradation_regression.Tests.test_degradation_reason_is_journaled) ... ok
+test_degraded_pipeline_never_opens_real_gpu_job (test_degradation_regression.Tests.test_degraded_pipeline_never_opens_real_gpu_job) ... ok
+test_real_no_video_progress_still_times_out (test_degradation_regression.Tests.test_real_no_video_progress_still_times_out) ... ok
+test_source_not_ready_is_not_misclassified (test_degradation_regression.Tests.test_source_not_ready_is_not_misclassified) ... ok
+test_audio_context_clock_deficit_independently_observed (test_final_regression.BrowserClock.test_audio_context_clock_deficit_independently_observed) ... ERROR
+test_browser_native_playout_available_independently (test_final_regression.BrowserClock.test_browser_native_playout_available_independently) ... ERROR
+test_original_582ms_audio_pts_gap_explains_increment (test_final_regression.BrowserClock.test_original_582ms_audio_pts_gap_explains_increment) ... ERROR
+test_sample_to_25fps_pts_and_reference_mapping (test_final_regression.BrowserClock.test_sample_to_25fps_pts_and_reference_mapping) ... ok
+test_suspend_calibration_keeps_native_recording_continuous (test_final_regression.BrowserClock.test_suspend_calibration_keeps_native_recording_continuous) ... ERROR
+test_audio_does_not_run_ahead_of_missing_video (test_paired_rtmp.Tests.test_audio_does_not_run_ahead_of_missing_video) ... ok
+test_force_discards_both_queues_and_keeps_idle_image (test_paired_rtmp.Tests.test_force_discards_both_queues_and_keeps_idle_image) ... ok
+test_shared_output_quantum_stays_exact_after_write_delay (test_paired_rtmp.Tests.test_shared_output_quantum_stays_exact_after_write_delay) ... ok
+test_video_does_not_run_ahead_of_audio_on_underflow (test_paired_rtmp.Tests.test_video_does_not_run_ahead_of_audio_on_underflow) ... ok
+test_audio_callback_coalescing_is_explicit_and_bounded (test_sync_cadence.Tests.test_audio_callback_coalescing_is_explicit_and_bounded) ... ok
+test_independent_consumption_cadence_does_not_invent_offset (test_sync_cadence.Tests.test_independent_consumption_cadence_does_not_invent_offset) ... ok
+test_real_600ms_audio_delay_remains_detectable_with_pacing_correction (test_sync_cadence.Tests.test_real_600ms_audio_delay_remains_detectable_with_pacing_correction) ... ok
+
+======================================================================
+ERROR: test_audio_context_clock_deficit_independently_observed (test_final_regression.BrowserClock.test_audio_context_clock_deficit_independently_observed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-b/astralive-avatar-lab/streaming/test_final_regression.py", line 10, in test_audio_context_clock_deficit_independently_observed
+    p=ROOT.parent/'public-dual-one-hour-20261009/browser-events.jsonl';r=[json.loads(x) for x in p.read_text().splitlines()];a=[x for x in r if x['event']=='AudioContextProbe' and 200<x['browserMonotonic']<203];self.assertEqual(len(a),3);deficit=a[-1]['browserMonotonic']-a[0]['browserMonotonic']-(a[-1]['contextTime']-a[0]['contextTime']);self.assertGreater(deficit,.57);self.assertLess(deficit,.60);self.assertTrue(all(x['contextState']=='running' for x in a))
+                                                                                                 ^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/sapiece/innovationProject/AstraLive-agent-b/astralive-avatar-lab/streaming/integration/public-dual-one-hour-20261009/browser-events.jsonl'
+
+======================================================================
+ERROR: test_browser_native_playout_available_independently (test_final_regression.BrowserClock.test_browser_native_playout_available_independently)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-b/astralive-avatar-lab/streaming/test_final_regression.py", line 14, in test_browser_native_playout_available_independently
+    rows=json.loads((ROOT/'cpu-clock/stats.json').read_text());pairs=[]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/sapiece/innovationProject/AstraLive-agent-b/astralive-avatar-lab/streaming/integration/soulx-final-one-hour/cpu-clock/stats.json'
+
+======================================================================
+ERROR: test_original_582ms_audio_pts_gap_explains_increment (test_final_regression.BrowserClock.test_original_582ms_audio_pts_gap_explains_increment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-b/astralive-avatar-lab/streaming/test_final_regression.py", line 7, in test_original_582ms_audio_pts_gap_explains_increment
+    r=json.loads((ROOT/'original-packet-audit.json').read_text());gap=sum(x['gap_s'] for x in r['audio_pts_gaps']);w={x['source_sample']:x for x in r['original_target_windows']};increment=w[40000]['audio_recording_s']-w[32000]['audio_recording_s']-.5
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/sapiece/innovationProject/AstraLive-agent-b/astralive-avatar-lab/streaming/integration/soulx-final-one-hour/original-packet-audit.json'
+
+======================================================================
+ERROR: test_suspend_calibration_keeps_native_recording_continuous (test_final_regression.BrowserClock.test_suspend_calibration_keeps_native_recording_continuous)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-b/astralive-avatar-lab/streaming/test_final_regression.py", line 12, in test_suspend_calibration_keeps_native_recording_continuous
+    p=ROOT/'cpu-clock';d=json.loads((p/'analysis.json').read_text());self.assertTrue(any(x['gap_s']>.5 for x in d['D_canvas_context']['audio_pts_gaps']));self.assertFalse(any(x['gap_s']>.02 for x in d['A_native']['audio_pts_gaps']));self.assertFalse(any(x['gap_s']>.02 for x in d['B_canvas_native']['audio_pts_gaps']))
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/sapiece/innovationProject/AstraLive-agent-b/astralive-avatar-lab/streaming/integration/soulx-final-one-hour/cpu-clock/analysis.json'
+
+----------------------------------------------------------------------
+Ran 36 tests in 4.101s
+
+FAILED (errors=4)

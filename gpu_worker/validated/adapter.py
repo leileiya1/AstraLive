@@ -49,6 +49,13 @@ class StreamingAdapter:
         self.error = None
         self.committed = collections.deque(maxlen=9)
         self.inference_started = threading.Event()
+        # Opt-in staging observes these signals; legacy media/credit is unchanged.
+        # Only the inference thread sets/clears busy and emits final after EOF.
+        self.native_busy_generation = None
+        self.native_final_generation = None
+        self.native_final_frames = 0
+        self.native_cpu_peak_bytes = 0
+        self.native_elapsed_us = 0
         self.thread = threading.Thread(target=self._run, daemon=True)
         self.thread.start()
 
@@ -153,12 +160,22 @@ class StreamingAdapter:
         if self.thread.is_alive():
             raise RuntimeError('GPU thread did not reach safe boundary')
 
+    def native_status(self, generation_id):
+        with self.cv:
+            return dict(safe=self.native_busy_generation != generation_id and not self.error,
+                        final=self.native_final_generation == generation_id,
+                        frames=self.native_final_frames if self.native_final_generation == generation_id else 0,
+                        cpu_peak_bytes=self.native_cpu_peak_bytes,
+                        inference_elapsed_us=self.native_elapsed_us)
+
     def _run(self):
         import torch
         try:
             current = None
             while True:
                 with self.cv:
+                    self.native_busy_generation = None
+                    self.cv.notify_all()
                     while not self.audio and not self.closed:
                         self.cv.wait(.05)
                     if self.closed:
@@ -167,6 +184,7 @@ class StreamingAdapter:
                     self.cv.notify_all()
                     if c.generation_id != self.active:
                         continue
+                    self.native_busy_generation = c.generation_id
                     if current != c.generation_id:
                         current = c.generation_id
                         pending = np.empty(0, dtype=np.float32)
@@ -174,6 +192,8 @@ class StreamingAdapter:
                         emitted = 0
                         origin = self.first_sample
                         committed = list(self.committed)
+                        self.native_cpu_peak_bytes = 0
+                        self.native_elapsed_us = 0
                     else:
                         committed = None
                 # Only GPU thread mutates model state. Restore from last PUBLISHED pose.
@@ -201,10 +221,18 @@ class StreamingAdapter:
                     self.log('GPUInferenceStart', current, output_frame_start=emitted)
                     self.inference_started.set()
                     t = time.monotonic()
+                    native_t = time.monotonic_ns()
                     output = self.inference(self.p, emb)[9:]
                     torch.cuda.synchronize()
+                    with self.cv:
+                        self.native_elapsed_us += (time.monotonic_ns() - native_t) // 1000
                     self.log('GPUOutput', current, output_frame_start=emitted,
                              elapsed_ms=(time.monotonic()-t)*1000, generated_frames=len(output))
+                    # Account the existing CPU readback/cast peak without retaining
+                    # another tensor or changing the native model invocation.
+                    with self.cv:
+                        self.native_cpu_peak_bytes = max(self.native_cpu_peak_bytes,
+                            output.numel() * output.element_size() + output.numel() + history.nbytes + pending.nbytes)
                     frames = output.cpu().numpy().astype(np.uint8)
                     valid_frames = (valid_samples * self.FPS + self.SR-1)//self.SR
                     with self.cv:
@@ -224,6 +252,12 @@ class StreamingAdapter:
                             self.log('FrameQueued', current, frame_sequence=emitted-1,
                                      pts_us=packet['pts_us'], video_queue_ms=len(self.video)*40)
                             self.cv.notify_all()
+                with self.cv:
+                    if c.final_chunk and current == self.active and not len(pending):
+                        self.native_final_generation = current
+                        self.native_final_frames = emitted
+                    self.native_busy_generation = None
+                    self.cv.notify_all()
         except Exception:
             import traceback
             with self.cv:
