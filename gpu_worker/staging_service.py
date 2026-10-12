@@ -68,7 +68,8 @@ class StagingConnection:
                     self.queued_video -= 1
                     self.wire_bytes -= len(payload)
                 self.done.set()
-                self.worker.staging_unknown = bool(self.stage)
+                if self.stage:
+                    self.worker.staging_unknown = True
                 raise ContractError('bounded writer queue exhausted')
 
     def writer(self):
@@ -97,7 +98,8 @@ class StagingConnection:
                         self.cv.notify_all()
                     self.outbound.task_done()
         except Exception:
-            self.worker.staging_unknown = bool(self.stage)
+            if self.stage:
+                self.worker.staging_unknown = True
             self.done.set()
             try:
                 self.sock.shutdown(2)
