@@ -56,6 +56,9 @@ class Config:
     minimum_free_disk_bytes: int = 1024 * 1024 * 1024
     log_bytes: int = 10 * 1024 * 1024
     log_backups: int = 5
+    staging_enabled: bool = False
+    staging_profile: str = 'staging-short-1'
+    staging_short_gate_sha256: str | None = None
 
     @classmethod
     def load(cls, path):
@@ -70,6 +73,15 @@ class Config:
         return cfg
 
     def validate(self):
+        if type(self.staging_enabled) is not bool:
+            raise ValueError('invalid staging switch')
+        if self.staging_profile not in {'staging-short-1', 'staging-segment-8s-1'}:
+            raise ValueError('invalid staging profile')
+        if self.staging_profile == 'staging-short-1':
+            if self.staging_short_gate_sha256 is not None:
+                raise ValueError('short staging gate must be absent')
+        elif self.mode == 'simulation' or not isinstance(self.staging_short_gate_sha256, str) or re.fullmatch(r'sha256:[a-f0-9]{64}', self.staging_short_gate_sha256) is None:
+            raise ValueError('long staging requires a real short GPU evidence gate')
         if not IDENTIFIER.fullmatch(self.worker_ref) or not IDENTIFIER.fullmatch(self.avatar_ref):
             raise ValueError('invalid logical reference')
         if self.model_revision != REVISION or self.mode not in {'gpu', 'simulation'}:

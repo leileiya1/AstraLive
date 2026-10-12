@@ -1,0 +1,23 @@
+test_unstarted_connection_queue_overflow_keeps_prior_unknown (gpu_worker.tests.test_staging_review.StickyUnknownTests.test_unstarted_connection_queue_overflow_keeps_prior_unknown) ... FAIL
+test_unstarted_connection_writer_failure_keeps_prior_unknown (gpu_worker.tests.test_staging_review.StickyUnknownTests.test_unstarted_connection_writer_failure_keeps_prior_unknown) ... FAIL
+
+======================================================================
+FAIL: test_unstarted_connection_queue_overflow_keeps_prior_unknown (gpu_worker.tests.test_staging_review.StickyUnknownTests.test_unstarted_connection_queue_overflow_keeps_prior_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-b/gpu_worker/tests/test_staging_review.py", line 44, in test_unstarted_connection_queue_overflow_keeps_prior_unknown
+    self.assertTrue(worker.staging_unknown,'capacity failure must not clear an older UNKNOWN')
+AssertionError: False is not true : capacity failure must not clear an older UNKNOWN
+
+======================================================================
+FAIL: test_unstarted_connection_writer_failure_keeps_prior_unknown (gpu_worker.tests.test_staging_review.StickyUnknownTests.test_unstarted_connection_writer_failure_keeps_prior_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-b/gpu_worker/tests/test_staging_review.py", line 36, in test_unstarted_connection_writer_failure_keeps_prior_unknown
+    self.assertTrue(worker.staging_unknown,'writer must not clear an older incarnation UNKNOWN')
+AssertionError: False is not true : writer must not clear an older incarnation UNKNOWN
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)

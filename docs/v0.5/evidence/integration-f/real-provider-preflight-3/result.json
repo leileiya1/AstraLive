@@ -1,0 +1,62 @@
+{
+  "scope": "REAL_LLM_REAL_CPU_TTS_PREFLIGHT_ONLY",
+  "gpu": "NOT_TESTED",
+  "llm": {
+    "endpoint": "https://api.deepseek.com",
+    "model": "deepseek-flash",
+    "privateCredentialFile": true,
+    "status": "PASS",
+    "characters": 12,
+    "responseSHA256": "bcb93bd004225f8e9ba389e7aacf9e0d26078cfa2acf3f2cd433ee0c787573f9",
+    "seconds": 1.118,
+    "propagateFailures": true
+  },
+  "tts": {
+    "provider": "xiaoya",
+    "mock": false,
+    "modelSHA256": "c8882021fe2da5440870c4d18a45ffd8036ee3219660b0eef8a1f57cc3f0c166",
+    "status": "PASS",
+    "samples": [
+      {
+        "text": "欢迎。",
+        "sampleRate": 16000,
+        "originalSamples": 14777,
+        "padSamples": 583,
+        "sourceSamples": 15360,
+        "paddedDurationMs": 960,
+        "fitsShortProfile": true,
+        "fitsSegment8Profile": true,
+        "pcmSHA256": "a3332e07d00276f15b66914f8614ac17ecd4ec68559e9b9d933275b723c6085e",
+        "wav": "tts-0.wav",
+        "seconds": 0.134
+      },
+      {
+        "text": "售价九十九元。",
+        "sampleRate": 16000,
+        "originalSamples": 29440,
+        "padSamples": 0,
+        "sourceSamples": 29440,
+        "paddedDurationMs": 1840,
+        "fitsShortProfile": true,
+        "fitsSegment8Profile": true,
+        "pcmSHA256": "0ceffc9bb0081b65213c9792b93bf7150da84ad3f4dc7af80a3d40fa42ccc7c0",
+        "wav": "tts-1.wav",
+        "seconds": 0.086
+      },
+      {
+        "text": "这个水箱容量是五升，适合日常使用。",
+        "sampleRate": 16000,
+        "originalSamples": 58610,
+        "padSamples": 270,
+        "sourceSamples": 58880,
+        "paddedDurationMs": 3680,
+        "fitsShortProfile": false,
+        "fitsSegment8Profile": true,
+        "pcmSHA256": "b33aeaf93f40a2a7e638b6fe74424b46d6804477a17599dcfa196bd65db9f6f6",
+        "wav": "tts-2.wav",
+        "seconds": 0.169
+      }
+    ]
+  },
+  "status": "PASS"
+}
