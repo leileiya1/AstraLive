@@ -77,6 +77,11 @@ async def main(args):
         try:
             await api("POST","/api/v0.4/auth/login",{"username":args.username,"password":private(args.password_file)})
             profiles={}
+            # The production provider-probe cooldown is shared across profiles.
+            # Space distinct real probes without retrying failed mutations.
+            preflight_origin=time.monotonic();last_probe_start=None
+            report["preflightProbeTiming"]={"clock":"Python time.monotonic",
+                "minimumStartSpacingSeconds":5.1,"attempts":[]}
             for kind,provider,config in [
                 ("LLM","deepseek",{"model":"deepseek-flash","maxTokens":256}),
                 ("TTS","xiaoya",{"voiceId":"xiao_ya","speed":1,"modelRef":"xiaoya-default"}),
@@ -87,7 +92,22 @@ async def main(args):
                 if kind=="LLM":payload["secret"]=private(args.llm_key_file)
                 profile=await api("POST","/api/v0.3/config/profiles",payload)
                 payload.pop("secret",None)
-                profile=await api("POST","/api/v0.3/config/profiles/"+profile["profileId"]+"/test",{"expectedVersion":profile["version"]})
+                wait_started=time.monotonic()
+                if last_probe_start is not None:
+                    while time.monotonic()<last_probe_start+5.1:
+                        await asyncio.sleep(last_probe_start+5.1-time.monotonic())
+                probe_start=time.monotonic()
+                timing={"kind":kind,"startedSeconds":probe_start-preflight_origin,
+                    "spacingFromPreviousSeconds":None if last_probe_start is None else probe_start-last_probe_start,
+                    "cooldownWaitSeconds":probe_start-wait_started,"status":"STARTED"}
+                report["preflightProbeTiming"]["attempts"].append(timing)
+                last_probe_start=probe_start
+                try:
+                    profile=await api("POST","/api/v0.3/config/profiles/"+profile["profileId"]+"/test",{"expectedVersion":profile["version"]})
+                except Exception:
+                    timing.update(status="FAILED",durationSeconds=time.monotonic()-probe_start)
+                    raise
+                timing.update(status="PASSED",durationSeconds=time.monotonic()-probe_start)
                 profile=await api("POST","/api/v0.3/config/profiles/"+profile["profileId"]+"/default",{"expectedVersion":profile["version"]})
                 profiles[kind]=profile
             avatar=await api("POST","/api/v1/avatars",{"name":"Golden SoulX avatar","engine":"SOULX"})
