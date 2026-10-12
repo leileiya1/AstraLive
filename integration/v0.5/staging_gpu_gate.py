@@ -8,12 +8,14 @@ import hashlib
 import json
 from pathlib import Path
 import struct
+import sys
 import time
 import uuid
 import wave
 
 import av
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from gpu_worker import staging_contract as contract
 from gpu_worker.config import secret
 
