@@ -1,0 +1,136 @@
+{
+  "source": "bf66c18b3f77b71646e04e74f5e40b8d7200be32",
+  "mode": "control",
+  "scope": "real owned SQL/production Scheduler/App retirement hook; rollback and lock-order oracle; no provider/sinks",
+  "audienceAudible": false,
+  "realGPU": "NOT TESTED",
+  "humanNaturalness": "NOT TESTED",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "python-dependencies",
+      "command": [
+        "/private/tmp/astralive-f-media-venv-1/bin/python",
+        "-c",
+        "import importlib.metadata as m; print(chr(10).join(sorted(d.metadata['Name']+'=='+d.version for d in m.distributions())))"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.071,
+      "log": "python-dependencies.log",
+      "sha256": "ddc2b21f09bd9f52a36ec9aa0da44743f11bb0b172389de92f8fdfac7efead60",
+      "bytes": 966
+    },
+    {
+      "name": "pg-init",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/initdb",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-narration-pg-uqx975n3",
+        "-A",
+        "trust",
+        "--no-locale",
+        "-E",
+        "UTF8"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.466,
+      "log": "pg-init.log",
+      "sha256": "fa87097c61b4982fdaecb7ca18cf8d612a2cc04538c8335c8076fa92928d0bd7",
+      "bytes": 985
+    },
+    {
+      "name": "pg-start",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-narration-pg-uqx975n3",
+        "-l",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-narration-pg-uqx975n3/postgres.log",
+        "start"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.124,
+      "log": "pg-start.log",
+      "sha256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+      "bytes": 52
+    },
+    {
+      "name": "pg-database",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/createdb",
+        "-h",
+        "127.0.0.1",
+        "-p",
+        "50864",
+        "astralive_narration"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.06,
+      "log": "pg-database.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "control",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-timeout=30s",
+        "-v",
+        "./internal/app",
+        "-run",
+        "^TestFReviewBorrowedRetirementSchedulerLock$"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 2.853,
+      "log": "control.log",
+      "sha256": "8ff533aff64f79a9de94cd4fed7bc1ef72abf161d0fd2965801aa5a4f70e754a",
+      "bytes": 297
+    }
+  ],
+  "environment": {
+    "go": "go version go1.27.2 darwin/arm64",
+    "/private/tmp/astralive-f-media-venv-1/bin/python": "Python 3.12.13",
+    "/opt/homebrew/opt/postgresql@17/bin/postgres": "postgres (PostgreSQL) 17.11 (Homebrew)",
+    "ffmpeg": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "overlay": {
+    "name": "borrowed_stop_test.go",
+    "sha256": "26fc74995c689f3ded78aaf9d5a31bf287f21b0929583195cf6e6e2d7624faa3"
+  },
+  "ownedPGCleanup": "PASS",
+  "artifacts": [
+    {
+      "path": "control.log",
+      "sha256": "8ff533aff64f79a9de94cd4fed7bc1ef72abf161d0fd2965801aa5a4f70e754a",
+      "bytes": 297
+    },
+    {
+      "path": "pg-database.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "pg-init.log",
+      "sha256": "fa87097c61b4982fdaecb7ca18cf8d612a2cc04538c8335c8076fa92928d0bd7",
+      "bytes": 985
+    },
+    {
+      "path": "pg-start.log",
+      "sha256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+      "bytes": 52
+    },
+    {
+      "path": "pg-stop.log",
+      "sha256": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+      "bytes": 56
+    },
+    {
+      "path": "python-dependencies.log",
+      "sha256": "ddc2b21f09bd9f52a36ec9aa0da44743f11bb0b172389de92f8fdfac7efead60",
+      "bytes": 966
+    }
+  ]
+}

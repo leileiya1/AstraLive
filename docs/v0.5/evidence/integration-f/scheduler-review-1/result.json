@@ -1,0 +1,13 @@
+{
+  "scope": "isolated uncommitted C Scheduler diff + retained legacy tests + F CPU gate probes; no production Backend/SQL/media or merged acceptance",
+  "CDependencyHead": "7924f7f74c303fada428885bf01a1ca915aecf64",
+  "schedulerSHA256": "145d778ed764d8c20ab2edd04da8788c2eb12ab7ce00bec6cf113908ba587b42",
+  "sourceChangedWhileRunning": false,
+  "fixtureSHA256": "b7e26b71e7b0c4735dbdee29cc8473a84b19fb7022d7f9b7d0b04d1523a78dee",
+  "command": "go -C <isolated-C>/backend test -race -count=1 -v ./internal/interaction",
+  "exitCode": 0,
+  "result": "PASS",
+  "frozenFlag": "ASTRALIVE_CONTINUITY_ENABLED",
+  "CFlagObserved": "ASTRALIVE_NARRATION_CONTINUITY_ENABLED",
+  "flagCompatibility": "FAIL; owner must correct before integration"
+}

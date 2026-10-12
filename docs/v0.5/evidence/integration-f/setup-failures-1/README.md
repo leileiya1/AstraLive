@@ -1,0 +1,3 @@
+# F environment setup failures
+
+The first media launch used the short-lived uv overlay executable after uv had removed it; exit127 before any trial. Switched to a dedicated F-owned venv; no shared environment was edited. The first corrected Runtime archive driver used system Python whose tarfile lacked `filter`; setup failed before tests. Reran that driver using Python3.12 with a new output directory. The first full C gate lacks jsonschema in the F venv, producing three import errors; raw failed gate is retained in c-delivery-premerge-1. Installing the existing personal-avatar declared dependency fixes only environment, not source. Corrected Runtime run is recorded separately.

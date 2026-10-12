@@ -1,25 +1,27 @@
 # AstraLive v0.5 Integration Plan
 
-Baseline `cf6540bdcc788c037929836480812dfaa78362a2`; branch `exp/v0.5-integration-chaos`; worktree `../AstraLive-agent-f`; contract revision `v0.5-frozen-1`.
+Original v0.4 baseline `cf6540bdcc788c037929836480812dfaa78362a2`; Phase 2 shared baseline `5a24478126211cbcde5a9565d0c6063748426527`; branch `exp/v0.5-integration-chaos`; worktree `../AstraLive-agent-f`; contract revision `v0.5-frozen-1`.
 
-**Current gate: Phase 1 freeze only. No implementation branches merged, no chaos injection or new real media/GPU runs. Integration PAUSED waiting for A/B/C implementation results and acknowledgements.** [Frozen contract](ARCHITECTURE-CONTRACTS.md) governs interfaces, shared edits, flags and rollback. [Dispatch packet](AGENT-HANDOFF.md) lists owner-specific actions. Unexecuted tests remain NOT TESTED; legacy report PASS applies only to its stated scope.
+**Current gate: A→B→C normally merged at89179c7,10b74ca,6095989; each complete postmerge Go/race/owned-PG/Runtime/contract/frontend gate PASS. C old locking defect reproduced and fixed with same-oracle independent PASS; five conflicts resolved from verified equivalent dependency base. Final merged-source native synthetic fixture PASS659.662s, five questions,209 commits/836 required receipts and200 authored facts; human/provider Golden acceptance still NOT TESTED. D production wiring remains deferred: its patch still fails on current core.** [Actual ledger](evidence/integration-f/merge-ledger.json), [review](CONTINUITY-SEAM-REVIEW.md), [report](CHAOS-TEST-REPORT.md), [acceptance](FINAL-ACCEPTANCE.md). Frozen bytes unchanged; all experimental defaults off. No real-GPU acceptance.
 
 ## 1. Delivery sequence and merge ledger
+
+Actual current merges and postmerge proof are in [merge-ledger.json](evidence/integration-f/merge-ledger.json). The following table retains the **initial review pins**, not current implementation or merge state.
 
 | Order | Owner / delivery | Entry gate | PR / implementation SHA / F merge SHA | Current state |
 | --- | --- | --- | --- | --- |
 | 0 | F contract freeze | baseline/source review, no implementation edits | local freeze commit recorded in AGENT-HANDOFF; no PR yet | contract frozen, peer ACK pending |
-| 1 | A PostgreSQL durability | ACK, migrations/repos/journal/lease/barriers/Redis-off, rollback | PENDING / PENDING / NOT MERGED | WAITING |
-| 2 | B Audio-master Timeline | A gate PASS; B/C seam ACK, sink/clock regression evidence | PENDING / PENDING / NOT MERGED | WAITING |
-| 3 | C Narration continuity | A+B accepted seams; deterministic plan/cursor/priority/race evidence | PENDING / PENDING / NOT MERGED | WAITING |
-| 4 | D Go→Python local IPC | transport/auth composition ACK, Linux UDS/TCP comparison | PENDING / PENDING / NOT MERGED | independent implementation, later integration |
+| 1 | A PostgreSQL durability | ordinary isolated Go/PG/Runtime checks pass; B/C journal/schema still absent | no PR supplied / e5f14a14a04fdd4968af3c8dc3530bb22202e8b6 / NOT MERGED | reviewed; core merge gate held |
+| 2 | B Audio-master Timeline | standalone media tests pass; real TimelineJournal adapter missing | no PR supplied / cf43e2d3dd6a9223648eaced2526d13e0ccbf8e1 / NOT MERGED | reviewed; core merge gate held |
+| 3 | C Narration continuity | implementation required; current C is documentation baseline | no PR / 5a24478126211cbcde5a9565d0c6063748426527 / NOT MERGED | NOT IMPLEMENTED; user confirmed |
+| 4 | D Go→Python local IPC | actual macOS independent TCP/UDS/race passes; shared patch fails on A main.go | no PR supplied / 1a1bce2a1cb3f933be607998576bd64558bb11be / NOT MERGED | deferred until core stable and wiring rebased |
 | 5 | E Python→GPU QUIC | optional, separate capability/TLS/credit/fence/fallback proof | PENDING / PENDING / NOT MERGED | optional; NEVER C release blocker |
 
 F freeze commit must be ancestor/cherry-picked reference of implementation results, or an explicit mapping must prove equivalent contract revision. Pin supplied commits before testing; no floating branch acceptance. Before each merge, record source SHA, dependencies, shared-file CCR approvals, exact commands and artifact hashes. Each implementation PR merges independently after its gate, not a five-branch combined merge. Conflicts return to owners with file/semantic explanation. F never accepts unreviewed automatic conflict resolution.
 
 ## 2. Phase 2 harness work, before implementation merges
 
-The following are planned interfaces for F's new `integration/v0.5/` and `scripts/v0.5/`; no skeleton is implemented in Phase1. Baseline capability discovery must explicitly label narration/epochs/Redis-off/UDS/QUIC UNSUPPORTED/NOT TESTED, while ordinary Speak/interaction and media measurement can run. An unsupported old API is not a successful chaos test. Preserve all legacy tests and evidence.
+The following remain the planned full harness interfaces. Phase2 now includes `integration/v0.5/premerge_probe.py` and a F-owned Go fixture to expose missing real SQL/journal seams; it does not replace the full deterministic narration/Chrome/RTMP Golden harness. Phase1 created no skeleton. Baseline capability discovery must explicitly label narration/epochs/Redis-off/UDS/QUIC UNSUPPORTED/NOT TESTED, while ordinary Speak/interaction and media measurement can run. An unsupported old API is not a successful chaos test. Preserve all legacy tests and evidence.
 
 | Harness | Determinism / required oracle | Baseline path |
 | --- | --- | --- |
@@ -51,7 +53,7 @@ Record command exit status, duration, environment, raw log/hash, passed/failed/s
 | media | B WebRTC drain/fanout/RTMP/bound-media/generation regressions; E unchanged TCP protocol/credit tests; then required scoped real media regression |
 | diff/ownership | `git diff --check`; owned/shared file ledger, no deleted regression/history/secret payload; pinned validated provenance preserved |
 
-Phase1 only checks document/source invariants and frozen-contract validation, not this entire runtime/release matrix. Full Go/race/frontend/DB/media runs are deferred until the harness and an implementation candidate exist.
+Phase 1 checked document/source invariants and frozen-contract validation. Phase 2 independently ran A full Go/race/DB, B Runtime and D transport checks plus a failing cross-service seam probe. The complete matrix on an actually merged candidate, including frontend and real media, remains pending; independent source snapshots cannot pass that gate.
 
 ## 4. Golden gates and measurement rules
 
@@ -69,14 +71,30 @@ Capture decision and audio boundaries within their true clock domains; cross-hos
 
 ## 5. Decision documents and rollback ownership
 
-`CHAOS-TEST-REPORT.md` and `FINAL-ACCEPTANCE.md` are later-phase deliverables, deliberately not fabricated at freeze. They must include run manifest, environment and raw evidence index, faults/windows/outcomes, actual PR/source/merge SHAs, compatibility checklist, flag matrix, rollback command/evidence, and per-feature PASS/CONDITIONAL/FAIL/NOT TESTED. Report full untested mode matrix. Baseline archived evidence cannot pass a new v0.5 gate.
+`CHAOS-TEST-REPORT.md` and `FINAL-ACCEPTANCE.md` now record the failed premerge core gate and explicit NOT TESTED Golden/host cases; they are not a final successful release report. They must include run manifest, environment and raw evidence index, faults/windows/outcomes, actual PR/source/merge SHAs, compatibility checklist, flag matrix, rollback command/evidence, and per-feature PASS/CONDITIONAL/FAIL/NOT TESTED. Report full untested mode matrix. Baseline archived evidence cannot pass a new v0.5 gate.
 
-Rollback follows contract §9; A owns durable sealing/receipt preservation and migration compatibility; B output fence/clean clocks; C narration UNKNOWN cursor disposition; D TCP restoration; E TCP/Lightweight safe boundary; F records evidence and decision. Any unknown tail prevents automatic replay during either recovery or rollback. Today all five new features are NOT TESTED; leave durability/MediaTimeline/Continuity disabled and local/remote transports TCP. Phase1 is complete only after the freeze commit, document verification, local dispatch packet and explicit pause are recorded.
+Rollback follows contract §9; A owns durable sealing/receipt preservation and migration compatibility; B output fence/clean clocks; C narration UNKNOWN cursor disposition; D TCP restoration; E TCP/Lightweight safe boundary; F records evidence and decision. Any unknown tail prevents automatic replay during either recovery or rollback. Current per-feature decisions and tested scope are in FINAL-ACCEPTANCE: no new feature may be enabled by default; leave durability/MediaTimeline/Continuity disabled and local/remote transports TCP. No implementation deployment occurred in this review.
 
 ## 6. Shared edit / CCR ledger
 
-Actual shared edits: NONE at Phase1. Reserved ownership is contract §8. Append each actual change here before accepting its PR:
+F's manual edits remain docs/harness/evidence only; A-owned implementation/shared entry edits are now incorporated through the normal A merge. Frozen contract is unchanged. Reserved ownership is contract §8; source/merge SHA and shared reviews are recorded below and in the actual ledger.
 
 | CCR | File / reason | Owner | Dependency SHA | Peer ACK | Implementing SHA | Final merge SHA |
 | --- | --- | --- | --- | --- | --- | --- |
 | none | documentation-only freeze; no shared implementation edits | F | baseline cf6540b | A/B/C/D/E PENDING | freeze commit in handoff | NOT MERGED |
+| A integration | A durability startup/dispatch/idempotency/Runtime hooks in reserved shared files | A; F reviewed/merged | baseline5a24478 | F pinned independent/postmerge gate PASS; C consumes owned seams, D follows | a28a409 |89179c7 |
+| CCR-B-001 | B V2 flag primary plus frozen-name alias; inconsistent values reject startup | B; F acknowledges explicit user decision | B task user confirmation2026-10-11T00:43:32.780Z | user answer “可以就照你说的做” to the exact flag rule; F verified original B task message | dda7936 | pending B merge |
+
+### Pending A/B/C seam review
+
+[CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md) records A's proposed six-table/journal increment and the unresolved B pre-install proof ordering. Neither unprovided DDL/DTOs nor shared implementation diffs are approved as a whole. C may continue its own FSM and deterministic SQL/CPU integration; real-media gates remain pending.
+
+| Proposed CCR | Scope / reason | Owners / dependency | Status |
+| --- | --- | --- | --- |
+| CCR-BC-001 | B private full-segment staging would return Credit before actual sink consumption; current Credit also updates native published-pose history | B+C and Worker/TCP reviewer; B Runtime cf43e2d, docs-only f769e3b | PROPOSED / NOT APPROVED; concrete credit/history preservation or protocol proposal required; any frozen semantic amendment needs user confirmation |
+| CCR-C-001 | C staged Session/API/startup/interaction hooks; precise Scheduler gate diff now reviewed | C after A/B; dependency-only C HEAD7924f7f plus retained uncommitted patch/hash | minimal Scheduler scope/selection ACK; isolated legacy+F CPU probes/race PASS; complete production routing pending. Correct canonical Continuity flag and merged-source overflow mapping before final acceptance |
+| CCR-C-002 | requested `ASTRALIVE_NARRATION_CONTINUITY_ENABLED` alias | C config in both services | NOT APPROVED; canonical `ASTRALIVE_CONTINUITY_ENABLED` only; explicitly reject known unsupported alternate setting, document and test operator behavior |
+
+This is a proposed-request ledger, not an amendment of `v0.5-frozen-1` or an implementation merge. Task connector delivery is unavailable; peer ACK remains pending.
+
+A subsequently delivered ee5500b/edd4e1e and then the Worker fix/final evidence tip a28a409. F independently validated the final pin, merged A at89179c7 and passed the complete postmerge gate. B Runtime85bec11/latest evidence dda7936 has the installation-order fix. Latest C owner progress, FORCE and whole-Session product retirement review are in CONTINUITY-SEAM-REVIEW; C final candidate/combined acceptance and D production wiring remain pending.

@@ -1,0 +1,151 @@
+{
+  "source": "06b182f840e0dc110a150a687e7ce016744edb3b",
+  "mode": "short",
+  "scope": "owned PostgreSQL/Go HTTP journal/production Scheduler/Python Timeline/native Chrome/local RTMP; deterministic language/synthetic TTS/Lightweight2D",
+  "audienceAudible": false,
+  "realGPU": "NOT TESTED",
+  "humanNaturalness": "NOT TESTED",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "python-dependencies",
+      "command": [
+        "/private/tmp/astralive-f-media-venv-1/bin/python",
+        "-c",
+        "import importlib.metadata as m; print(chr(10).join(sorted(d.metadata['Name']+'=='+d.version for d in m.distributions())))"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.059,
+      "log": "python-dependencies.log",
+      "sha256": "6aecedbf636d62814335ffc65ebf39f958a161a87972104872e42ec0564561fa",
+      "bytes": 634
+    },
+    {
+      "name": "pg-init",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/initdb",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-narration-pg-sqxh3lld",
+        "-A",
+        "trust",
+        "--no-locale",
+        "-E",
+        "UTF8"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.549,
+      "log": "pg-init.log",
+      "sha256": "f3c971f61fa1fd73f65c6c0eb60f8fe758335db300d045e816638e5e989ca528",
+      "bytes": 985
+    },
+    {
+      "name": "pg-start",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-narration-pg-sqxh3lld",
+        "-l",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-narration-pg-sqxh3lld/postgres.log",
+        "start"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.143,
+      "log": "pg-start.log",
+      "sha256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+      "bytes": 52
+    },
+    {
+      "name": "pg-database",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/createdb",
+        "-h",
+        "127.0.0.1",
+        "-p",
+        "62992",
+        "astralive_narration"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.084,
+      "log": "pg-database.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "native",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=5m",
+        "-v",
+        "./internal/narration",
+        "-run",
+        "^TestPostgresNativeChromeRTMPContinuity$"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 71.381,
+      "log": "native.log",
+      "sha256": "22a86d17a5179648684cf3e2072815265cb960720aa27da96498865ffe7e3cf5",
+      "bytes": 27238
+    }
+  ],
+  "environment": {
+    "go": "go version go1.27.2 darwin/arm64",
+    "/private/tmp/astralive-f-media-venv-1/bin/python": "Python 3.12.13",
+    "/opt/homebrew/opt/postgresql@17/bin/postgres": "postgres (PostgreSQL) 17.11 (Homebrew)",
+    "ffmpeg": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "ownedPGCleanup": "PASS",
+  "artifacts": [
+    {
+      "path": "media/continuity.flv",
+      "sha256": "3e7daa6f0c8d78e71b4c73d5c314a5624cc982a536c028bd439173ccbe73ea81",
+      "bytes": 346577
+    },
+    {
+      "path": "media/media.json",
+      "sha256": "a7d236473b1b00e8caabca342ee0ccda17a9aa1d9ed90be95cfa6dfac89d6693",
+      "bytes": 179810
+    },
+    {
+      "path": "media/receiver.log",
+      "sha256": "920ea6f54edf0c5c47760f15cc6b62e4a6cde37fd8240e8d1dbdb283dff59ca5",
+      "bytes": 68
+    },
+    {
+      "path": "media/sql-proof.json",
+      "sha256": "4b2502417e2788f113790e5be3eb5053107ae361fc43e08229528c81bdb29aec",
+      "bytes": 85503
+    },
+    {
+      "path": "native.log",
+      "sha256": "22a86d17a5179648684cf3e2072815265cb960720aa27da96498865ffe7e3cf5",
+      "bytes": 27238
+    },
+    {
+      "path": "pg-database.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "pg-init.log",
+      "sha256": "f3c971f61fa1fd73f65c6c0eb60f8fe758335db300d045e816638e5e989ca528",
+      "bytes": 985
+    },
+    {
+      "path": "pg-start.log",
+      "sha256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+      "bytes": 52
+    },
+    {
+      "path": "pg-stop.log",
+      "sha256": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+      "bytes": 56
+    },
+    {
+      "path": "python-dependencies.log",
+      "sha256": "6aecedbf636d62814335ffc65ebf39f958a161a87972104872e42ec0564561fa",
+      "bytes": 634
+    }
+  ]
+}
