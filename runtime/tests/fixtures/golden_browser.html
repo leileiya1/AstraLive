@@ -1,0 +1,75 @@
+<!doctype html><meta charset="utf-8"><title>AstraLive real-provider Golden observer</title>
+<video id="video" autoplay playsinline></video>
+<script>
+let pc, ac, recorder, recordingChain=Promise.resolve(), rows=[], audioRows=[], begun=0, stream, recordedBytes=0, recordingSequence=0;
+async function goldenStart(sessionId) {
+  begun=performance.now(); pc=new RTCPeerConnection({iceServers:[]});
+  pc.addTransceiver('audio',{direction:'recvonly'}); pc.addTransceiver('video',{direction:'recvonly'});
+  stream=new MediaStream(); const video=document.getElementById('video'); video.muted=true;
+  const canvas=document.createElement('canvas'); canvas.width=8; canvas.height=8;
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  let audioStarted=false, recording=false;
+  pc.ontrack=async ({track}) => {
+    stream.addTrack(track); video.srcObject=stream; await video.play().catch(()=>{});
+    if (track.kind==='audio' && !audioStarted) {
+      audioStarted=true; ac=new AudioContext({sampleRate:48000}); await ac.resume();
+      const source=ac.createMediaStreamSource(new MediaStream([track]));
+      const analyser=ac.createAnalyser(); analyser.fftSize=2048; source.connect(analyser); analyser.connect(ac.destination);
+      const data=new Float32Array(analyser.fftSize);
+      let previous=0;
+      function observeAudio() {
+        analyser.getFloatTimeDomainData(data); let energy=0;
+        for (const x of data) energy+=x*x;
+        const rms=Math.sqrt(energy/data.length), now=performance.now();
+        if (now-previous>=20) {
+          const output=ac.getOutputTimestamp();
+          audioRows.push({at:now,rms,contextTime:ac.currentTime,outputContextTime:output.contextTime,outputPerformanceTime:output.performanceTime}); previous=now;
+        }
+        if (pc.connectionState!=='closed') requestAnimationFrame(observeAudio);
+      }
+      observeAudio();
+    }
+    if (!recording && stream.getAudioTracks().length && stream.getVideoTracks().length) {
+      recording=true; recorder=new MediaRecorder(stream,{mimeType:'video/webm;codecs=vp8,opus'});
+      recorder.ondataavailable=e=>{
+        if(!e.data.size)return;
+        const sequence=recordingSequence++;recordedBytes+=e.data.size;
+        recordingChain=recordingChain.then(()=>new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.readAsDataURL(e.data)}))
+          .then(base64=>window.__goldenRecording(sequence,base64));
+      };recorder.start(1000);
+    }
+  };
+  function frame(now, meta) {
+    if (video.readyState>=2) {
+      ctx.drawImage(video,0,0,8,8);const pixels=ctx.getImageData(0,0,8,8).data;let luma=[];
+      for(let i=0;i<pixels.length;i+=4)luma.push(Math.round(.299*pixels[i]+.587*pixels[i+1]+.114*pixels[i+2]));
+      rows.push({at:now,mediaTime:meta.mediaTime,presentationTime:meta.presentationTime,
+        expectedDisplayTime:meta.expectedDisplayTime,presentedFrames:meta.presentedFrames,
+        luma,audioContextTime:ac?.currentTime??null});
+    }
+    if(pc.connectionState!=='closed') video.requestVideoFrameCallback(frame);
+  }
+  video.requestVideoFrameCallback(frame);
+  await pc.setLocalDescription(await pc.createOffer());
+  await new Promise((resolve,reject)=>{
+    if(pc.iceGatheringState==='complete')return resolve();
+    const timer=setTimeout(()=>reject(new Error('ICE gathering timed out')),10000);
+    pc.addEventListener('icegatheringstatechange',()=>{if(pc.iceGatheringState==='complete'){clearTimeout(timer);resolve()}},{once:false});
+  });
+  const response=await fetch('/api/v1/live-sessions/'+sessionId+'/webrtc/offer',{
+    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'offer',sdp:pc.localDescription.sdp})});
+  const packet=await response.json();if(!response.ok)throw new Error('WebRTC public offer failed');
+  await pc.setRemoteDescription(packet.data);
+}
+async function goldenFinish() {
+  let inbound=[];for(const row of (await pc.getStats()).values())
+    if(row.type==='inbound-rtp')inbound.push({...row});
+  if(recorder && recorder.state!=='inactive')await new Promise(resolve=>{recorder.onstop=resolve;recorder.stop()});
+  await recordingChain;
+  const result={clockDomain:'chrome_performance_ms',startedAt:begun,endedAt:performance.now(),
+    audioSampleRate:ac?.sampleRate??null,video:rows,audioEnergy:audioRows,inbound,
+    recordedBytes,recordingChunks:recordingSequence,audienceAudible:false,
+    correlatedAV:'NOT_ANALYSED: requires actual staged speech/frame reference matching'};
+  pc.close(); if(ac)await ac.close();return result;
+}
+</script>
