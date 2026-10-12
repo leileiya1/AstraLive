@@ -1,0 +1,47 @@
+{
+  "sourceSHA": "466a1ff15720d880dd52bf31215c194925ec8790",
+  "scope": "real GPU generated staging / prerecorded actual TTS speech / no sinks; direct trusted lease DTO fixture, no Go SQL or business command acceptance",
+  "profile": "staging-short-1",
+  "inputWavSHA256": "366f848f9de19eb04fbd79ec0e13a342acdd6082b4d79c7f3f42ebe04313d458",
+  "originalSamples": 29440,
+  "padSamples": 0,
+  "status": "FAIL",
+  "attempts": [],
+  "ready": {
+    "type": "GPU_WORKER_READY",
+    "status": "GPU_WORKER_READY",
+    "contract_revision": "staging-contract-1",
+    "internal_version": "1.2",
+    "session_id": "f-real-stage-c6841acdb16b4a29a6d91ae2a8831e8d",
+    "worker_epoch": "0932406118b54287b176cb9818c21537",
+    "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+    "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+    "model_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+    "model_load_count": 1,
+    "codec": "h264",
+    "av_version": "17.1.0",
+    "torch_version": "2.8.0+cu128",
+    "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2",
+    "simulation": false,
+    "selected_capabilities": [
+      "immutable_segment_staging_v1"
+    ],
+    "highest_generation_id": 0,
+    "selected_limits": {
+      "limits_revision": "staging-short-1",
+      "max_source_samples": 30720,
+      "worker_rgb_bytes": 50331648,
+      "worker_pose_bytes": 8388608,
+      "runtime_artifact_bytes": 100663296,
+      "runtime_transient_bytes": 25165824,
+      "worker_attempt_bytes": 268435456,
+      "gpu_incremental_allocated_bytes": 536870912,
+      "audio_queue_samples": 32000,
+      "native_queue_frames": 24,
+      "network_window_frames": 4,
+      "lease_ms_max": 60000
+    },
+    "profile_gate_ref": null
+  },
+  "errorType": "ValueError"
+}

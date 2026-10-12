@@ -1,0 +1,16 @@
+...............E
+======================================================================
+ERROR: test_staging_profile_extension (unittest.loader._FailedTest.test_staging_profile_extension)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_staging_profile_extension
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'gpu_worker.tests.test_staging_profile_extension'
+
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.006s
+
+FAILED (errors=1)

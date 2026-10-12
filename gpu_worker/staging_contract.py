@@ -42,6 +42,12 @@ SOURCE_FORMAT = obj({"sample_rate": const(16000), "channels": const(1), "pcm_for
 PROFILES = {}
 for name, samples, rgb, artifact, host in (("staging-short-1", 30720, 48, 96, 256), ("staging-segment-8s-1", 128000, 160, 192, 512)):
     PROFILES[name] = {"limits_revision": name, "max_source_samples": samples, "worker_rgb_bytes": rgb*1048576, "worker_pose_bytes": 8*1048576, "runtime_artifact_bytes": artifact*1048576, "runtime_transient_bytes": 24*1048576, "worker_attempt_bytes": host*1048576, "gpu_incremental_allocated_bytes": 512*1048576, "audio_queue_samples": 32000, "native_queue_frames": 24, "network_window_frames": 4, "lease_ms_max": 60000}
+# CCR-BC-003 explicitly negotiated capabilities; original dictionaries unchanged.
+SHORT_PROFILES = frozenset(("staging-short-1", "staging-short-gpu1g-1"))
+LONG_PROFILES = frozenset(("staging-segment-8s-1", "staging-segment-8s-gpu1g-1"))
+GPU_ONLY_PROFILES = frozenset(("staging-short-gpu1g-1", "staging-segment-8s-gpu1g-1"))
+for new_name, original_name in (("staging-short-gpu1g-1", "staging-short-1"), ("staging-segment-8s-gpu1g-1", "staging-segment-8s-1")):
+    PROFILES[new_name] = {**PROFILES[original_name], "limits_revision": new_name, "gpu_incremental_allocated_bytes": 1073741824}
 LIMITS = {"oneOf": [obj({k: const(v) for k, v in value.items()}) for value in PROFILES.values()]}
 PROVENANCE = obj({"workerRef": ID, "workerEpoch": ID, "model_source_revision": ID, "weights_manifest_sha256": HASH, "avatar_sha256": HASH, "input_asset_sha256": HASH, "cache_id": ID, "preprocessing_version": ID, "capability": const(CAPABILITY), "source": enum("GPU_INFERENCE", "CPU_SIMULATION")})
 RESOURCES = obj({k: nullable(integer()) if k.startswith("gpu_") else integer() for k in ("worker_rgb_peak_bytes", "worker_attempt_peak_bytes", "gpu_baseline_allocated_bytes", "gpu_incremental_allocated_peak_bytes", "gpu_incremental_reserved_peak_bytes", "inference_elapsed_us")})
@@ -158,7 +164,7 @@ def validate_identity(identity):
 
 def profile(revision, *, short_gpu_gate=False):
     if revision not in PROFILES:raise ContractError("unknown profile")
-    if revision=="staging-segment-8s-1" and not short_gpu_gate:raise ContractError("8s requires explicit short realGPU gate")
+    if revision in LONG_PROFILES and not short_gpu_gate:raise ContractError("8s requires explicit short realGPU gate")
     return copy.deepcopy(PROFILES[revision])
 
 def stage_begin_fingerprint(header):
@@ -183,14 +189,14 @@ def validate_capture(settings):
         if revision is not None or gate is not None:raise ContractError("disabled capture must be null")
     else:
         if revision not in PROFILES:raise ContractError("invalid captured profile")
-        if revision=="staging-short-1" and gate is not None:raise ContractError("short gate must be null")
-        if revision=="staging-segment-8s-1":_validate(gate,HASH)
+        if revision in SHORT_PROFILES and gate is not None:raise ContractError("short gate must be null")
+        if revision in LONG_PROFILES:_validate(gate,HASH)
     return settings
 
 def validate_negotiation(auth,ready):
     validate_message(auth);validate_message(ready)
     if auth["session_id"]!=ready["session_id"] or auth["requested_limits_revision"]!=ready["selected_limits"]["limits_revision"]:raise ContractError("negotiation profile/session mismatch")
-    if ready["selected_limits"]["limits_revision"]=="staging-short-1":
+    if ready["selected_limits"]["limits_revision"] in SHORT_PROFILES:
         if ready["profile_gate_ref"] is not None:raise ContractError("short profile gate must be null")
     elif ready["profile_gate_ref"] is None:raise ContractError("8s requires operator-pinned shortGPU evidence")
     return ready
@@ -212,7 +218,7 @@ def validate_message(header,payload=b""):
     if name in ("Auth","GPU_WORKER_READY","StageHealth","StageHealthAck"):
         if payload or len(canonical_bytes(header))>16384:raise ContractError("invalid negotiation framing")
         if name=="GPU_WORKER_READY":
-            if (header["profile_gate_ref"] is None)!=(header["selected_limits"]["limits_revision"]=="staging-short-1"):raise ContractError("profile/gate mismatch")
+            if (header["profile_gate_ref"] is None)!=(header["selected_limits"]["limits_revision"] in SHORT_PROFILES):raise ContractError("profile/gate mismatch")
             if header["simulation"] and header["selected_limits"]["limits_revision"]!="staging-short-1":raise ContractError("simulation cannot authorize 8s profile")
         return header
     identity=validate_identity(header["identity"])
@@ -236,6 +242,7 @@ def validate_message(header,payload=b""):
             if d["identity"]!=identity or d["frame_count"]!=d["source_samples"]//640 or d["last_sequence"]!=d["frame_count"]-1 or d["last_pts_us"]!=(d["frame_count"]-1)*40000 or descriptor_hash(d)!=header["descriptor_sha256"]:raise ContractError("descriptor integrity failure")
             if d["provenance"]["workerRef"]!=identity["workerRef"] or d["provenance"]["workerEpoch"]!=identity["workerEpoch"]:raise ContractError("provenance identity mismatch")
             resources=d["resources"]
+            if d["provenance"]["source"]=="CPU_SIMULATION" and limits["limits_revision"] in GPU_ONLY_PROFILES:raise ContractError("simulation cannot use GPU1G capability")
             gpu_keys=[k for k in resources if k.startswith("gpu_")]
             if d["provenance"]["source"]=="GPU_INFERENCE" and any(resources[k] is None for k in gpu_keys):raise ContractError("real GPU metrics required")
             if d["provenance"]["source"]=="CPU_SIMULATION" and any(resources[k] is not None for k in gpu_keys):raise ContractError("simulation GPU metrics must be null")

@@ -1,0 +1,27 @@
+{
+  "revision": "staging-contract-1+ccr-bc-003",
+  "status": "FROZEN_FOR_IMPLEMENTATION",
+  "sourceSHA": "e99283349ce47ed5cb91ad91997930133b0b727d",
+  "contractMergeSHA": "9ee4eb382befa5c46756af50039331fa7206e2a9",
+  "approval": "2026-10-12 explicit user approval: add explicitly selected 1GiB profiles, preserve original profiles",
+  "originalFreeze": "staging-freeze-1.json",
+  "originalContractSHA256": "969d2e82d41f20084196d68a77bb3d1a6158a596a9ca63d47de9f6c1a78e8360",
+  "ownerACKs": {
+    "A": "exact author pin,23 Python and5 actualGo canonical vectors",
+    "B": "exact e992 independently archived23 tests+schema/old-profile comparison",
+    "C": "exact e992 independently archived23 tests; corrected initial15-only count preserved",
+    "F": "exact e992 independently archived23 tests+schema/old-profile comparison"
+  },
+  "profilesAdded": [
+    "staging-short-gpu1g-1",
+    "staging-segment-8s-gpu1g-1"
+  ],
+  "oldProfilesUnchanged": true,
+  "remainingBoundsUnchanged": true,
+  "nativeGPU1GiBAcceptance": "NOT TESTED",
+  "files": {
+    "gpu_worker/staging_contract.py": "1e3d05781dba6b7aeda965cb6fe62f517a458f285bb644e11402bfde52fd63da",
+    "docs/v0.5/staging-protocol.schema.json": "1593cac602e81804479a072556ec184f1f5a9efdf2c3185274ab5d8942f6ddc5",
+    "docs/v0.5/staging-canonical-vectors.json": "d898fada9f5c3099754e086194127c6f2b526c5dd69a849814d4464c659a6e66"
+  }
+}

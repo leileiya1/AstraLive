@@ -1,0 +1,36 @@
+{
+  "source_commit": "1d3891692d85d051ea24d6c1a09010e9dc25c003",
+  "scope": "CPU simulation and actual loopback TCP; NOT real GPU/Chrome/RTMP acceptance",
+  "commands": [
+    "/private/tmp/astralive-b-staging-venv/bin/python -m unittest gpu_worker.tests.test_staging_contract gpu_worker.tests.test_staging_diagnostics gpu_worker.tests.test_staging_service gpu_worker.tests.test_staging_review -v",
+    "/private/tmp/astralive-b-staging-venv/bin/python gpu_worker/tests/run_legacy_regression.py",
+    "PYTHONPATH=runtime /private/tmp/astralive-b-staging-venv/bin/python -m unittest discover -s runtime/tests -p 'test*timeline*.py'"
+  ],
+  "results": [
+    {
+      "file": "full.log",
+      "sha256": "0c923fc12493ef9ffbea03d42f5de2ebcfca3cec2f64006c5dcec847a4a10448",
+      "status": "PASS",
+      "tests": 41
+    },
+    {
+      "file": "legacy.log",
+      "sha256": "02f34a57c9754b6bac0d0090bae669649d7e577e39922c4956cb350d48d11ff0",
+      "status": "PASS",
+      "tests": 36
+    },
+    {
+      "file": "timeline.log",
+      "sha256": "211f93197507024beb2266e1e6c7c02d9d727cc0514a16deaa5c0b5330e1ac87",
+      "status": "PASS",
+      "tests": 34
+    }
+  ],
+  "tests_added_after_source_pin": [
+    "test_cancel_does_not_report_safe_while_inference_callback_is_running",
+    "test_unknown_survives_fresh_stage_connection_and_legacy_begin",
+    "test_cancel_before_begin_is_idempotent_and_late_begin_is_retired"
+  ],
+  "production_limits_changed": false,
+  "real_gpu_short_gate": "FAIL retained by F; diagnosis pending"
+}

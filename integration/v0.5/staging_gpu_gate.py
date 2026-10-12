@@ -8,12 +8,14 @@ import hashlib
 import json
 from pathlib import Path
 import struct
+import sys
 import time
 import uuid
 import wave
 
 import av
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from gpu_worker import staging_contract as contract
 from gpu_worker.config import secret
 
@@ -36,7 +38,7 @@ async def main_async(args):
     controls = {}
     attempts = {}
     receiver = None
-    limits = contract.profile(args.profile, short_gpu_gate=args.profile!="staging-short-1")
+    limits = contract.profile(args.profile, short_gpu_gate=args.profile in ("staging-segment-8s-1", "staging-segment-8s-gpu1g-1"))
     if len(pcm)//2 > limits["max_source_samples"]:
         raise ValueError("source speech exceeds explicitly chosen profile")
 
@@ -98,7 +100,9 @@ async def main_async(args):
         while True:
             h=await asyncio.wait_for(attempt["queue"].get(),15)
             if isinstance(h,Exception):raise h
-            if h["type"]=="StageError":raise ValueError("Worker rejected stage: "+h["code"])
+            if h["type"]=="StageError":
+                result.setdefault("workerErrors", []).append(h)
+                raise ValueError("Worker rejected stage: "+h["code"])
             if h["type"]==name:return h
             if h["type"] not in ("StageAudioAccepted","StageReceivedAck","StageRenewAck"):
                 raise ValueError("unexpected Worker reply: "+h["type"])
@@ -213,7 +217,7 @@ def main():
     p.add_argument("--port",type=int,required=True);p.add_argument("--token-file",required=True)
     p.add_argument("--worker-ref",default="soulx-lite-01");p.add_argument("--source",required=True)
     p.add_argument("--wav",type=Path,required=True);p.add_argument("--output",type=Path,required=True)
-    p.add_argument("--profile",choices=("staging-short-1","staging-segment-8s-1"),default="staging-short-1")
+    p.add_argument("--profile",choices=("staging-short-1","staging-segment-8s-1","staging-short-gpu1g-1","staging-segment-8s-gpu1g-1"),default="staging-short-1")
     asyncio.run(main_async(p.parse_args()))
 
 
