@@ -1,0 +1,23 @@
+test_full_actual_cpu_h264_decode_padding_and_overlay_hash_domains (test_staging_runtime.ArtifactTests.test_full_actual_cpu_h264_decode_padding_and_overlay_hash_domains) ... ok
+test_oversized_real_shape_tts_rejects_before_stage_begin (test_staging_runtime.ArtifactTests.test_oversized_real_shape_tts_rejects_before_stage_begin) ... ok
+test_barcode_crc_and_no_pixels_outside_band_changed (test_staging_runtime.CaptureTests.test_barcode_crc_and_no_pixels_outside_band_changed) ... ok
+test_disabled_old_capture_and_enabled_exact_only (test_staging_runtime.CaptureTests.test_disabled_old_capture_and_enabled_exact_only) ... ok
+test_expired_and_failed_stage_never_arm (test_staging_runtime.ClientTests.test_expired_and_failed_stage_never_arm) ... ok
+test_fresh_sql_barrier_token_and_no_lease_inheritance (test_staging_runtime.ClientTests.test_fresh_sql_barrier_token_and_no_lease_inheritance) ... ok
+test_pose_exchange_uses_nested_ack_id_and_exact_commit (test_staging_runtime.ClientTests.test_pose_exchange_uses_nested_ack_id_and_exact_commit) ... ok
+test_release_exact_retry_unknown_not_reusable (test_staging_runtime.ClientTests.test_release_exact_retry_unknown_not_reusable) ... ok
+test_async_fresh_renewal_during_slow_production (test_staging_tcp.LocalTCPTests.test_async_fresh_renewal_during_slow_production) ... ok
+test_commit_rejection_never_hands_to_sink_and_unknown (test_staging_tcp.LocalTCPTests.test_commit_rejection_never_hands_to_sink_and_unknown) ... ok
+test_complete_actual_tcp_and_b_sidecar_order (test_staging_tcp.LocalTCPTests.test_complete_actual_tcp_and_b_sidecar_order) ... ok
+test_duplicate_produced_after_release_no_rehydration_or_new_effect (test_staging_tcp.LocalTCPTests.test_duplicate_produced_after_release_no_rehydration_or_new_effect) ... ok
+test_force_fence_after_arm_before_first_sink (test_staging_tcp.LocalTCPTests.test_force_fence_after_arm_before_first_sink) ... ok
+test_posthandoff_failure_fences_b_queues_before_blocked_native_cleanup (test_staging_tcp.LocalTCPTests.test_posthandoff_failure_fences_b_queues_before_blocked_native_cleanup) ... ok
+test_simulation_negotiation_rejected_before_any_begin (test_staging_tcp.LocalTCPTests.test_simulation_negotiation_rejected_before_any_begin) ... ok
+test_all_required_minimum_never_rounds_partial_frame_up (test_staging_timeline.StagingTimelineTests.test_all_required_minimum_never_rounds_partial_frame_up) ... ok
+test_fence_rejects_pose_and_keeps_original_commit_shape (test_staging_timeline.StagingTimelineTests.test_fence_rejects_pose_and_keeps_original_commit_shape) ... ok
+test_gap_foreign_incarnation_and_uninstalled_metadata_reject (test_staging_timeline.StagingTimelineTests.test_gap_foreign_incarnation_and_uninstalled_metadata_reject) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 1.636s
+
+OK
