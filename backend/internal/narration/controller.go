@@ -35,7 +35,8 @@ func Enabled() (bool, error) {
 }
 
 type Controller struct {
-	Store *durability.Store
+	Store           *durability.Store
+	StagingSettings StagingSettings
 	// Composed by App: conservatively retire the entire captured Session on
 	// either product identity or fact version invalidation, in THIS transaction.
 	RetireCapturedSession func(context.Context, pgx.Tx, durability.Run) error
@@ -344,6 +345,26 @@ func (c *Controller) enqueueSegment(ctx context.Context, tx pgx.Tx, r durability
 	p["attemptId"] = stable("attempt", s.ID+fmt.Sprint(r.Epoch))
 	p["requiredSinks"] = d.Plan.RequiredSinks
 	p["maxDurationMs"] = 8000
+	if c.StagingSettings.Enabled {
+		if c.StagingSettings.LimitsRevision != nil && *c.StagingSettings.LimitsRevision == "staging-short-1" {
+			p["maxDurationMs"] = 1920
+		}
+		beat := s.BeatID
+		if beat == "" && d.Resume != nil {
+			beat = d.Resume.NextBeatID
+		}
+		if beat == "" {
+			return durability.Command{}, ErrConflict
+		}
+		p["beatId"] = beat
+		p["interactionTurnId"] = nil
+		if s.Lane != "NARRATION" {
+			if d.Turn == nil {
+				return durability.Command{}, ErrConflict
+			}
+			p["interactionTurnId"] = d.Turn.ID
+		}
+	}
 	return c.enqueue(ctx, tx, r, d, "COMMIT_SEGMENT", s.ID+":commit", trace, s.ID, s.Lane, p)
 }
 

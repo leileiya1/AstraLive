@@ -40,8 +40,8 @@ import (
 // runs production Go components in the test process, not cmd/server. F owns
 // source pinning, isolated PostgreSQL, cloud lifecycle and independent audit.
 func TestPostgresRealGPUContinuityGolden(t *testing.T) {
-	if os.Getenv("ASTRALIVE_REAL_GOLDEN") != "true" {
-		t.Skip("ASTRALIVE_REAL_GOLDEN=true and explicit real-provider inputs required")
+	if os.Getenv("ASTRALIVE_GOLDEN_REAL") != "true" {
+		t.Skip("ASTRALIVE_GOLDEN_REAL=true and explicit real-provider inputs required")
 	}
 	required := func(name string) string {
 		t.Helper()
@@ -65,7 +65,7 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	}
 	python := required("DURABILITY_TEST_PYTHON")
 	keyFile, modelDir := required("ASTRALIVE_GOLDEN_LLM_KEY_FILE"), required("ASTRALIVE_GOLDEN_TTS_MODEL_DIR")
-	inferenceToken, managementToken := required("ASTRALIVE_GOLDEN_WORKER_TOKEN_FILE"), required("ASTRALIVE_GOLDEN_MANAGEMENT_TOKEN_FILE")
+	inferenceToken, managementToken := required("ASTRALIVE_GOLDEN_WORKER_TOKEN_FILE"), required("ASTRALIVE_GOLDEN_WORKER_MANAGEMENT_TOKEN_FILE")
 	workerRef, avatarRef, assetSHA := required("ASTRALIVE_GOLDEN_WORKER_REF"), required("ASTRALIVE_GOLDEN_AVATAR_REF"), required("ASTRALIVE_GOLDEN_ASSET_SHA256")
 	fixture := required("ASTRALIVE_GOLDEN_PLAN_FILE")
 	profile := required("ASTRALIVE_GOLDEN_PROFILE")
@@ -172,6 +172,14 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	log := slog.New(slog.NewJSONHandler(logFile, nil))
 	service := app.New(pool, rt, log)
 	service.Durable = durability.New(pool)
+	stageSettings := narration.StagingSettings{Enabled: true, LimitsRevision: &profile}
+	if gate := os.Getenv("ASTRALIVE_GOLDEN_SHORT_GPU_GATE_SHA256"); gate != "" {
+		stageSettings.ShortGateSHA256 = &gate
+	}
+	if err = stageSettings.Validate(); err != nil {
+		t.Fatal(err)
+	}
+	service.StagingSettings = stageSettings
 	service.AttachNarration(narration.New(service.Durable))
 	// Staging capture settings are composed here after the exact production
 	// helper is frozen. Without that implementation this real gate fails closed.

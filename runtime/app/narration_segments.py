@@ -60,6 +60,8 @@ class SegmentExecutionRequest(BaseModel):
     expectedTimelineRevision: StrictInt
     leaseToken: StrictInt
     maxDurationMs: StrictInt = Field(default=8000, ge=1, le=8000)
+    beatId: str | None = None
+    interactionTurnId: str | None = None
 
 
 @dataclass(frozen=True)

@@ -24,17 +24,18 @@ import (
 )
 
 type Service struct {
-	commands     sync.Mutex
-	Durable      *durability.Store
-	Narration    *narration.Controller
-	sessionLocks sync.Map
-	Interaction  *InteractionController
-	Integration  SessionIntegration
-	DB           *pgxpool.Pool
-	Q            *dbgen.Queries
-	Runtime      runtime.Client
-	Hub          *sse.Hub
-	Log          *slog.Logger
+	commands        sync.Mutex
+	Durable         *durability.Store
+	Narration       *narration.Controller
+	StagingSettings narration.StagingSettings
+	sessionLocks    sync.Map
+	Interaction     *InteractionController
+	Integration     SessionIntegration
+	DB              *pgxpool.Pool
+	Q               *dbgen.Queries
+	Runtime         runtime.Client
+	Hub             *sse.Hub
+	Log             *slog.Logger
 }
 
 func New(db *pgxpool.Pool, rt runtime.Client, log *slog.Logger) *Service {

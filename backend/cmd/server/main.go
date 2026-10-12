@@ -45,6 +45,13 @@ func main() {
 	if continuity && !timeline {
 		panic("continuity requires MediaTimeline")
 	}
+	staging, e := narration.StagingFromEnvironment()
+	if e != nil {
+		panic(e)
+	}
+	if staging.Enabled && !continuity {
+		panic("SoulX staging requires Continuity")
+	}
 	level := slog.LevelInfo
 	if c.LogLevel == "debug" {
 		level = slog.LevelDebug
@@ -94,6 +101,7 @@ func main() {
 		rt.Client.CheckRedirect = func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }
 	}
 	s := app.New(pool, rt, log)
+	s.StagingSettings = staging
 	cfg, e := userconfig.FromEnvironment(pool)
 	if e != nil {
 		log.Error("configuration setup failed", "reason", e.Error())

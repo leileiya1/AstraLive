@@ -106,7 +106,7 @@ class BoundXiaoYa:
             yield chunk
 
 
-def bundle_factories(packet, sid, media_factory, errors):
+def bundle_factories(packet, sid, media_factory, errors, staging=None):
     from gpu_worker.client import resolve_binding
     from gpu_worker.runtime_adapter import RemoteAvatarEngine
     from .bound_media import BoundConsumptionMediaOutput
@@ -126,6 +126,12 @@ def bundle_factories(packet, sid, media_factory, errors):
     endpoint = resolve_binding(binding, os.environ["GPU_WORKER_INFERENCE_REGISTRY_FILE"], scope)
     endpoint["allowSimulation"] = False
     cfg = SimpleNamespace(state_dir=os.environ["SESSION_PROVIDER_STATE_DIR"], worker_ref=profiles["GPU_WORKER"]["config"]["workerRef"], startup_timeout_s=300, log_bytes=10*1024*1024, log_backups=5)
+
+    if staging is not None and staging.enabled:
+        from .soulx_staging import StagingAvatarEngine
+        return (lambda: BoundDeepSeek(llm["config"], key, errors),
+                lambda: BoundXiaoYa(os.environ["TTS_MODEL_DIR"]),
+                lambda: StagingAvatarEngine(endpoint,sid,cfg.worker_ref,staging),media_factory)
 
     class StrictSoulX(RemoteAvatarEngine):
         async def prepare(self, config):
@@ -154,6 +160,8 @@ class BoundSessionManager(SessionManager):
         self.releasing, self.release_pending = set(), set()
         self.release_requires_ack = set()
         self.cleanups=set()
+        from .staging_settings import StagingSettings
+        self.staging_settings=StagingSettings()
 
     async def create_session(self, request, **kwargs):
         async with self.admission:
@@ -171,7 +179,15 @@ class BoundSessionManager(SessionManager):
                 if any(v["workerRef"] == worker for v in self.bound.values()):
                     raise RuntimeFailure("RUNTIME_OVERLOADED", "Selected Worker already assigned", 429)
                 errors = {"errorCode": ""}
-                factories = self.bundle_builder(packet, request.sessionId, self.media_factory, errors)
+                commands=getattr(self.publisher,"run_commands",{})
+                begin=commands.get((request.sessionId,"BEGIN_RUN"))
+                flags=begin.get("payload",{}).get("featureFlags",{}) if begin else {}
+                self.staging_settings.check_capture(flags)
+                if self.staging_settings.enabled:
+                    if not begin or self.bundle_builder is not bundle_factories:
+                        raise RuntimeFailure("DEPENDENCY_UNAVAILABLE","Authenticated staging capture required",503)
+                    factories=bundle_factories(packet,request.sessionId,self.media_factory,errors,self.staging_settings)
+                else:factories = self.bundle_builder(packet, request.sessionId, self.media_factory, errors)
                 self.bound[request.sessionId] = {"integrationVersion": "0.4.0", "sessionId": request.sessionId, "bindingId": binding["bindingId"], "capturedAt": packet["capturedAt"], "expiresAt": binding["expiresAt"], "profiles": [{k: p[k] for k in ("profileId", "kind", "provider", "version", "updatedAt")} for p in binding["profiles"] if p["kind"] != "LIVE_PLATFORM"], "errors": errors, "workerRef": worker, "deadline": asyncio.get_running_loop().time()+ttl}
                 await super().create_session(request, factories=factories, max_queue=binding["settings"]["policy"]["maxQueue"])
                 self.leases[request.sessionId] = asyncio.create_task(self._lease(request.sessionId, ttl-60))

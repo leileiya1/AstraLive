@@ -17,6 +17,7 @@ import (
 // A narration cannot be admitted without this captured-lifecycle safety hook.
 func (s *Service) AttachNarration(c *narration.Controller) {
 	s.Narration = c
+	c.StagingSettings = s.StagingSettings
 	c.RetireCapturedSession = func(ctx context.Context, tx pgx.Tx, run durability.Run) error {
 		_, e := s.durableControl(durability.WithBusinessTx(ctx, tx), run.SessionID, ids.New("trace"), "STOP_SESSION", "PRODUCT_VERSION_CHANGED")
 		return e
@@ -273,7 +274,12 @@ func (s *Service) durableStart(ctx context.Context, id, trace string) (string, e
 	if tag.RowsAffected() != 1 {
 		return "", ErrConflict
 	}
-	c, e := s.Durable.Enqueue(ctx, tx, r, "BEGIN_RUN", "initial", trace, "", map[string]any{"expectedPreviousEpoch": 0, "createSession": req, "featureFlags": map[string]any{"contractRevision": "v0.5-frozen-1", "continuityEnabled": s.Narration != nil, "durabilityEnabled": true}})
+	if e = s.StagingSettings.Validate(); e != nil {
+		return "", e
+	}
+	flags := s.StagingSettings.Capture()
+	flags["contractRevision"], flags["continuityEnabled"], flags["durabilityEnabled"] = "v0.5-frozen-1", s.Narration != nil, true
+	c, e := s.Durable.Enqueue(ctx, tx, r, "BEGIN_RUN", "initial", trace, "", map[string]any{"expectedPreviousEpoch": 0, "createSession": req, "featureFlags": flags})
 	if e != nil {
 		return "", e
 	}
