@@ -61,7 +61,7 @@ async def main(args):
     report={"scope":"REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
         "commentTransport":"MOCK_REPLAY_ONLY", "humanNaturalness":"NOT_TESTED",
         "audienceAudible":False,"correlatedAV":"NOT_ANALYSED",
-        "mode":args.mode,"seed":args.seed,"fixture":fixture.get("name"),"events":[]}
+        "localTransport":args.local_transport,"mode":args.mode,"seed":args.seed,"fixture":fixture.get("name"),"events":[]}
     session=None;browser=None;page=None;normal_stop=False;recording_file=None
     async with httpx.AsyncClient(base_url=args.backend,verify=False,trust_env=False,timeout=30) as client:
         async def api(method,path,payload=None,key=None):
@@ -198,6 +198,7 @@ if __name__=="__main__":
     parser=argparse.ArgumentParser()
     for name in ["backend","username","password-file","llm-key-file","worker-ref","avatar-ref","fixture","runtime-log","output"]:
         parser.add_argument("--"+name,required=True)
+    parser.add_argument("--local-transport",choices=["tcp","uds"],default="tcp")
     parser.add_argument("--mode",choices=["short","ten-minute","soak"],default="short")
     parser.add_argument("--seconds",type=int,default=600);parser.add_argument("--seed",type=int,default=20261012)
     asyncio.run(main(parser.parse_args()))
