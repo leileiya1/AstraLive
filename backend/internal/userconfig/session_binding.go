@@ -313,7 +313,11 @@ func (s *Service) SessionPublicRouter() http.Handler {
 		ctx, cancel := context.WithTimeout(r.Context(), 3*time.Second)
 		defer cancel()
 		req, _ := http.NewRequestWithContext(ctx, "GET", s.RuntimeStatusURL+"/internal/v0.4/sessions/"+url.PathEscape(id)+"/providers", nil)
-		client := &http.Client{Timeout: 3 * time.Second, Transport: TokenTransport{Path: s.RuntimeControlTokenFile, Base: &http.Transport{Proxy: nil}}, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
+		client, setupErr := s.localRuntimeHTTP(3 * time.Second)
+		if setupErr != nil {
+			write(w, r, 503, nil, fault(503, "PROVIDER_UNAVAILABLE", "Runtime transport unavailable"))
+			return
+		}
 		defer client.CloseIdleConnections()
 		response, er := client.Do(req)
 		valid := false

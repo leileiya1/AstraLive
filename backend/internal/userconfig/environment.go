@@ -41,6 +41,11 @@ func FromEnvironment(db DB) (*Service, error) {
 			unique[token] = true
 		}
 	}
+	if s.IntegrationEnabled {
+		if e = s.captureLocalRuntimeTransport(); e != nil {
+			return nil, e
+		}
+	}
 	s.Workers, e = loadWorkerRegistry(os.Getenv("GPU_WORKER_REGISTRY_FILE"))
 	if e != nil {
 		return nil, e

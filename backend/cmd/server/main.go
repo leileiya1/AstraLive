@@ -38,8 +38,12 @@ func main() {
 	if continuity && !c.DurabilityEnabled {
 		panic("continuity requires PostgreSQL durability")
 	}
-	if continuity && os.Getenv("ASTRALIVE_MEDIA_TIMELINE_ENABLED") != "true" && os.Getenv("ASTRALIVE_MEDIA_TIMELINE_ENABLED") != "1" {
-		panic("continuity requires ASTRALIVE_MEDIA_TIMELINE_ENABLED")
+	timeline, e := narration.TimelineEnabled()
+	if e != nil {
+		panic(e)
+	}
+	if continuity && !timeline {
+		panic("continuity requires MediaTimeline")
 	}
 	level := slog.LevelInfo
 	if c.LogLevel == "debug" {
@@ -69,7 +73,26 @@ func main() {
 		rc = redis.NewClient(opts)
 		defer rc.Close()
 	}
-	rt := runtime.New(c.RuntimeURL)
+	localOptions, e := config.LocalTransportFromEnv()
+	if e != nil {
+		log.Error("local transport configuration invalid", "error", e)
+		os.Exit(1)
+	}
+	rt, e := runtime.NewLocal(c.RuntimeURL, localOptions)
+	if e != nil {
+		log.Error("local transport setup failed", "error", e)
+		os.Exit(1)
+	}
+	log.Info("Runtime control transport configured", "transport", localOptions.Mode, "fallback", localOptions.Fallback)
+	if localOptions.Mode == "uds" || localOptions.Fallback == "tcp" {
+		path := os.Getenv("RUNTIME_CONTROL_TOKEN_FILE")
+		if _, e := userconfig.ReadServiceToken(path); e != nil {
+			log.Error("local transport requires private Runtime control token")
+			os.Exit(1)
+		}
+		rt.Client.Transport = userconfig.TokenTransport{Path: path, Base: rt.Client.Transport}
+		rt.Client.CheckRedirect = func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }
+	}
 	s := app.New(pool, rt, log)
 	cfg, e := userconfig.FromEnvironment(pool)
 	if e != nil {
@@ -82,7 +105,9 @@ func main() {
 	}
 	if cfg != nil && cfg.IntegrationEnabled {
 		s.Integration = cfg
-		rt.Client.Transport = userconfig.TokenTransport{Path: cfg.RuntimeControlTokenFile, Base: &http.Transport{Proxy: nil}}
+		// Capture one transport for commands and protected provider probes. The
+		// authentication wrapper remains outside the UDS dialer.
+		rt.Client.Transport = userconfig.TokenTransport{Path: cfg.RuntimeControlTokenFile, Base: cfg.RuntimeTransport}
 		rt.Client.CheckRedirect = func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }
 		go func() {
 			tick := time.NewTicker(15 * time.Second)
