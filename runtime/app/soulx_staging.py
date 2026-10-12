@@ -21,6 +21,7 @@ def correlation(header):
     name=header["type"]
     for field in ("nonce","chunk_sequence","renewal_sequence","control_id","pose_ack_id"):
         if field in header:return name,header[field]
+    if "pose_proof" in header:return name,header["pose_proof"]["pose_ack_id"]
     return name,None
 
 
@@ -41,6 +42,10 @@ class Stage:
     failed: Exception | None = None
     deadline: float = 0
     renew_task: object = None
+    control_id: str | None = None
+    release_request: dict | None = None
+    cancel_request: dict | None = None
+    release_lock: object = field(default_factory=asyncio.Lock)
 
 
 class StagingClient:
@@ -48,7 +53,7 @@ class StagingClient:
         self.endpoint,self.sid,self.worker_ref,self.settings=endpoint,sid,worker_ref,settings
         self.reader=self.writer=self.rx=None;self.ready=None;self.epoch=None
         self.pending={};self.write_lock=asyncio.Lock();self.active=None;self.rtt_ms=0
-        self.highest=0;self.failed=None
+        self.highest=0;self.failed=None;self.answered={};self.on_failure=None
 
     async def _read(self):
         prefix=await self.reader.readexactly(8);size,payload_size=struct.unpack("!II",prefix)
@@ -109,12 +114,13 @@ class StagingClient:
                 if name=="StageVideo":
                     if stage.fenced or header["frame_sequence"]!=len(stage.frames) or header["sample_end"]>stage.begin["source_samples"]:
                         raise StagingFailure("STAGING_SEQUENCE_GAP")
-                    if header["provenance"]["source"]!="GPU_INFERENCE" or header["provenance"]["workerRef"]!=self.worker_ref:
+                    if not self.provenance_matches(header["provenance"]):
                         raise StagingFailure("STAGING_IDENTITY_MISMATCH")
                     stage.encoded_bytes+=len(payload)
                     if stage.encoded_bytes>self.ready["selected_limits"]["runtime_artifact_bytes"]:
                         raise StagingFailure("STAGING_BUDGET_EXCEEDED")
                     receipt=stage.identity["stageId"]+":"+str(header["frame_sequence"])
+                    if stage.frames and header["provenance"]!=stage.frames[0][0]["provenance"]:raise StagingFailure("STAGING_IDENTITY_MISMATCH")
                     stage.frames.append((copy.deepcopy(header),bytes(payload),receipt))
                     await self._write({"type":"StageReceived",**self.common(stage),"frame_sequence":header["frame_sequence"],
                         "payload_sha256":header["payload_sha256"],"native_rgb_sha256":header["native_rgb_sha256"],"storage_receipt_id":receipt})
@@ -129,27 +135,40 @@ class StagingClient:
                     d=header["descriptor"]
                     for key in ("original_samples","pad_samples","source_samples","pcm_sha256","source_format","request_fingerprint"):
                         if d[key]!=stage.begin[key]:raise StagingFailure("STAGING_CONFLICT")
-                    if d["limits"]!=self.ready["selected_limits"] or d["provenance"]["source"]!="GPU_INFERENCE" or d["provenance"]["cache_id"]!=self.ready["cache_id"]:
+                    if d["limits"]!=self.ready["selected_limits"] or not self.provenance_matches(d["provenance"]):
                         raise StagingFailure("STAGING_IDENTITY_MISMATCH")
+                    if stage.frames and d["provenance"]!=stage.frames[0][0]["provenance"]:raise StagingFailure("STAGING_IDENTITY_MISMATCH")
                     if len(stage.frames)!=d["frame_count"] or stage.storage_acks!=set(range(d["frame_count"])):
                         raise StagingFailure("STAGING_SEQUENCE_GAP")
                     digest=hashlib.sha256()
                     for _,data,_ in stage.frames:digest.update(struct.pack("!Q",len(data)));digest.update(data)
                     if d["video_bytes"]!=stage.encoded_bytes or d["video_stream_sha256"]!="sha256:"+digest.hexdigest():
                         raise StagingFailure("STAGING_CONFLICT")
-                    stage.descriptor=header;stage.produced.set_result(header)
+                    if stage.descriptor is not None:
+                        if stage.descriptor!=header:raise StagingFailure("STAGING_CONFLICT")
+                    else:
+                        stage.descriptor=header;stage.produced.set_result(header)
                 else:
                     future=self.pending.get(correlation(header))
-                    if future is None or future.done():raise StagingFailure("STAGING_CONFLICT")
+                    if future is None or future.done():
+                        if self.answered.get(correlation(header))!=header:raise StagingFailure("STAGING_CONFLICT")
+                        continue
+                    self.answered[correlation(header)]=copy.deepcopy(header)
+                    if len(self.answered)>256:self.answered.pop(next(iter(self.answered)))
                     future.set_result(header)
         except asyncio.CancelledError:raise
         except Exception as exc:
             self.failed=exc if isinstance(exc,StagingFailure) else StagingFailure("STAGING_RETIRED")
+            if self.on_failure:self.on_failure("STAGING_CONNECTION_UNKNOWN")
             if self.active:
                 self.active.fenced=True;self.active.failed=self.failed
                 if not self.active.produced.done():self.active.produced.set_exception(self.failed)
             for future in self.pending.values():
                 if not future.done():future.set_exception(self.failed)
+
+    def provenance_matches(self,p):
+        return p["source"]=="GPU_INFERENCE" and p["workerRef"]==self.worker_ref and p["workerEpoch"]==self.epoch and all(
+            p[k]==self.ready[k] for k in ("weights_manifest_sha256","input_asset_sha256","cache_id")) and p["model_source_revision"]==self.ready["model_revision"]
 
     async def health(self):
         began=time.monotonic();nonce=uuid4().hex
@@ -184,7 +203,7 @@ class StagingClient:
         begin["request_fingerprint"]=c.stage_begin_fingerprint(begin)
         stage=Stage(copy.deepcopy(identity),copy.deepcopy(begin),produced=asyncio.get_running_loop().create_future())
         self.active=stage;self.highest=identity["workerGenerationId"]
-        stage.deadline=time.monotonic()+begin["lease_ms"]/1000
+        stage.deadline=time.monotonic()+begin["lease_ms"]/1000-.2
         response=await self.exchange(begin,"StageBegun")
         if response["request_fingerprint"]!=begin["request_fingerprint"] or response["limits"]!=self.ready["selected_limits"]:
             raise StagingFailure("STAGING_CONFLICT")
@@ -222,7 +241,9 @@ class StagingClient:
                 if reply["renewal_fingerprint"]!=packet["renewal_fingerprint"] or reply["renewal_sequence"]!=sequence:raise StagingFailure("STAGING_CONFLICT")
                 stage.deadline=sent+reply["lease_remaining_ms"]/1000-(time.monotonic()-sent)-.1
         except asyncio.CancelledError:raise
-        except Exception as exc:stage.fenced=True;stage.failed=exc
+        except Exception as exc:
+            stage.fenced=True;stage.failed=exc
+            if self.on_failure:self.on_failure("STAGING_LEASE_UNKNOWN")
 
     async def arm(self,stage,proof,guard):
         guard();self.check(stage)
@@ -242,24 +263,39 @@ class StagingClient:
         stage.pose=packet;return reply
 
     async def release(self,stage,complete=False,reason="STOP"):
-        control=uuid4().hex
-        if not complete:
-            stage.fenced=True
-            await self.exchange({"type":"StageCancel",**self.common(stage),"control_id":control,"reason":reason},"StageFenced",timeout=10)
-        packet={"type":"StageRelease",**self.common(stage),"control_id":control,"reason":"COMPLETE" if complete else "CANCELLED",
-            "descriptor_sha256":stage.descriptor["descriptor_sha256"] if stage.descriptor else None,
-            "commit_proof_fingerprint":stage.commit["commit_proof_fingerprint"] if stage.commit else None,
-            "pose_proof_fingerprint":stage.pose["pose_proof_fingerprint"] if stage.pose else None,
-            "latest_consumed_sequence":stage.pose["pose_proof"]["latest_consumed_sequence"] if stage.pose else -1}
-        reply=await self.exchange(packet,"StageReleased",timeout=15)
-        if complete and (reply["terminal_disposition"]!="PROVEN_COMPLETE" or not reply["reusable"]):raise StagingFailure("STAGING_RETIRED")
-        stage.released=reply;stage.reusable=reply["reusable"]
-        if stage.renew_task:stage.renew_task.cancel();await asyncio.gather(stage.renew_task,return_exceptions=True)
-        return reply
+        async with stage.release_lock:
+            if stage.released:return stage.released
+            if stage.control_id is None:stage.control_id=uuid4().hex
+            control=stage.control_id
+            if not complete:
+                stage.fenced=True
+                if stage.renew_task:stage.renew_task.cancel();await asyncio.gather(stage.renew_task,return_exceptions=True)
+                if stage.cancel_request is None:
+                    stage.cancel_request={"type":"StageCancel",**self.common(stage),"control_id":control,"reason":reason}
+                fenced=await self.exchange(stage.cancel_request,"StageFenced",timeout=10)
+                prefix=stage.pose["pose_proof"]["latest_consumed_sequence"] if stage.pose else -1
+                if fenced["latest_consumed_sequence"]!=prefix:raise StagingFailure("STAGING_POSE_UNPROVEN")
+            if stage.release_request is None:
+                stage.release_request={"type":"StageRelease",**self.common(stage),"control_id":control,"reason":"COMPLETE" if complete else "CANCELLED",
+                    "descriptor_sha256":stage.descriptor["descriptor_sha256"] if stage.descriptor else None,
+                    "commit_proof_fingerprint":stage.commit["commit_proof_fingerprint"] if stage.commit else None,
+                    "pose_proof_fingerprint":stage.pose["pose_proof_fingerprint"] if stage.pose else None,
+                    "latest_consumed_sequence":stage.pose["pose_proof"]["latest_consumed_sequence"] if stage.pose else -1}
+            reply=await self.exchange(stage.release_request,"StageReleased",timeout=15)
+            if reply["latest_consumed_sequence"]!=stage.release_request["latest_consumed_sequence"]:raise StagingFailure("STAGING_POSE_UNPROVEN")
+            if complete and (reply["terminal_disposition"]!="PROVEN_COMPLETE" or not reply["reusable"]):raise StagingFailure("STAGING_RETIRED")
+            stage.released=reply;stage.reusable=reply["reusable"]
+            if stage.renew_task:stage.renew_task.cancel();await asyncio.gather(stage.renew_task,return_exceptions=True)
+            # Physical safe boundary is a distinct proof from business completion.
+            stage.frames.clear()
+            return reply
 
     async def close(self):
         if self.rx:self.rx.cancel();await asyncio.gather(self.rx,return_exceptions=True);self.rx=None
-        if self.writer:self.writer.close();await asyncio.wait_for(self.writer.wait_closed(),2);self.writer=None
+        if self.writer:
+            writer=self.writer;self.writer=None;writer.close()
+            try:await asyncio.wait_for(writer.wait_closed(),2)
+            except (TimeoutError,ConnectionError):writer.transport.abort()
 
 
 class StagingAvatarEngine:
@@ -267,6 +303,9 @@ class StagingAvatarEngine:
     def __init__(self,endpoint,sid,worker_ref,settings):
         self.link=StagingClient(endpoint,sid,worker_ref,settings);self.settings=settings
         self.degraded=False;self.generation_id=0;self.speaking=False
+        from .staging_observer import StagingObserver
+        import os
+        self.observer=StagingObserver(os.getenv("ASTRALIVE_STAGING_OBSERVER_DIR"))
     async def prepare(self,config):await self.link.connect()
     async def start(self):pass
     async def interrupt(self,generation):

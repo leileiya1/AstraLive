@@ -1,13 +1,15 @@
 <!doctype html><meta charset="utf-8"><title>AstraLive real-provider Golden observer</title>
 <video id="video" autoplay playsinline></video>
 <script>
-let pc, ac, recorder, recordingChain=Promise.resolve(), rows=[], audioRows=[], begun=0, stream, recordedBytes=0, recordingSequence=0;
+let pc, ac, recorder, recordingChain=Promise.resolve(), rows=[], audioRows=[], begun=0, stream, recordedBytes=0, recordingSequence=0, recordingStartedAt=null, chunkEvents=[];
 async function goldenStart(sessionId) {
   begun=performance.now(); pc=new RTCPeerConnection({iceServers:[]});
   pc.addTransceiver('audio',{direction:'recvonly'}); pc.addTransceiver('video',{direction:'recvonly'});
   stream=new MediaStream(); const video=document.getElementById('video'); video.muted=true;
   const canvas=document.createElement('canvas'); canvas.width=8; canvas.height=8;
   const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  const barcodeCanvas=document.createElement("canvas");barcodeCanvas.width=192;barcodeCanvas.height=8;
+  const barcodeContext=barcodeCanvas.getContext("2d",{willReadFrequently:true});
   let audioStarted=false, recording=false;
   pc.ontrack=async ({track}) => {
     stream.addTrack(track); video.srcObject=stream; await video.play().catch(()=>{});
@@ -34,16 +36,27 @@ async function goldenStart(sessionId) {
       recorder.ondataavailable=e=>{
         if(!e.data.size)return;
         const sequence=recordingSequence++;recordedBytes+=e.data.size;
+        chunkEvents.push({sequence,at:performance.now(),bytes:e.data.size,timecode:e.timecode});
         recordingChain=recordingChain.then(()=>new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.readAsDataURL(e.data)}))
           .then(base64=>window.__goldenRecording(sequence,base64));
-      };recorder.start(1000);
+      };recordingStartedAt=performance.now();recorder.start(1000);
     }
   };
   function frame(now, meta) {
     if (video.readyState>=2) {
       ctx.drawImage(video,0,0,8,8);const pixels=ctx.getImageData(0,0,8,8).data;let luma=[];
       for(let i=0;i<pixels.length;i+=4)luma.push(Math.round(.299*pixels[i]+.587*pixels[i+1]+.114*pixels[i+2]));
-      rows.push({at:now,mediaTime:meta.mediaTime,presentationTime:meta.presentationTime,
+      barcodeContext.drawImage(video,0,0,192,8,0,0,192,8);
+      const band=barcodeContext.getImageData(0,0,192,8).data;let code=0,valid=true;
+      for(let cell=0;cell<24;cell++){
+        const off=(4*192+cell*8+4)*4,r=band[off],g=band[off+1];
+        if(Math.abs(g-r)<60)valid=false;
+        code=code*2+(g>r?1:0);
+      }
+      const body=code>>>4;let crc=0;for(let bit=0;bit<20;bit+=4)crc^=(body>>>bit)&15;
+      const ordinal=body>>>8,sequence=body&255;
+      const barcode=valid && crc===(code&15) && ordinal>0 && sequence<200?{ordinal,frameSequence:sequence,layoutRevision:'astralive-golden-barcode-24-v1'}:null;
+      rows.push({barcode,at:now,mediaTime:meta.mediaTime,presentationTime:meta.presentationTime,
         expectedDisplayTime:meta.expectedDisplayTime,presentedFrames:meta.presentedFrames,
         luma,audioContextTime:ac?.currentTime??null});
     }
@@ -68,7 +81,7 @@ async function goldenFinish() {
   await recordingChain;
   const result={clockDomain:'chrome_performance_ms',startedAt:begun,endedAt:performance.now(),
     audioSampleRate:ac?.sampleRate??null,video:rows,audioEnergy:audioRows,inbound,
-    recordedBytes,recordingChunks:recordingSequence,audienceAudible:false,
+    recordedBytes,recordingChunks:recordingSequence,recordingStartedAt,chunkEvents,audienceAudible:false,
     correlatedAV:'NOT_ANALYSED: requires actual staged speech/frame reference matching'};
   pc.close(); if(ac)await ac.close();return result;
 }

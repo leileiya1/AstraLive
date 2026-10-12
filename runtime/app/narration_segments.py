@@ -72,6 +72,7 @@ class ReadyArtifact:
     content_hash: str
     video_hash: str
     provenance: str
+    stage: object = None
 
 
 class TimelineJournal:
@@ -150,10 +151,14 @@ class SegmentExecutor:
         self.current_identity = None
         self.preparations = set()
         self.stale_epoch_frames_dropped = 0
+        self.pose_task = None
         output = getattr(session.media_output, "output", session.media_output)
         if not hasattr(output, "bind_timeline"):
             raise RuntimeError("DEPENDENCY_UNAVAILABLE: named Timeline sinks required")
         output.bind_timeline(self.timeline)
+        from .soulx_staging import StagingAvatarEngine
+        if isinstance(session.avatar_engine, StagingAvatarEngine):
+            session.avatar_engine.link.on_failure = self.timeline.fence_now
 
     def fence(self, reason="STOP"):
         self.closed = True
@@ -198,8 +203,11 @@ class SegmentExecutor:
         try:
             await self._execute(command, attempt)
         except asyncio.CancelledError:
+            self.timeline.fence_now("SEGMENT_CANCELLED_UNKNOWN")
+            await self._cancel_staging("FORCE")
             raise
         except Exception:
+            await self._cancel_staging("FAILED")
             self.timeline.fence_now("SEGMENT_EXECUTION_UNKNOWN")
             try:
                 await self.timeline.journal.record("UNKNOWN", command,
@@ -207,6 +215,11 @@ class SegmentExecutor:
             finally:
                 self.closed = True
             raise
+        finally:
+            if self.pose_task:
+                self.pose_task.cancel()
+                await asyncio.gather(self.pose_task, return_exceptions=True)
+                self.pose_task = None
 
     async def _execute(self, command, attempt):
         request = SegmentExecutionRequest.model_validate(command["payload"])
@@ -221,7 +234,13 @@ class SegmentExecutor:
         await self.session.media_output.interrupt(generation)
         context = GenerationContext(generation, command["traceId"], command["sessionId"], request.utteranceId)
         guard = lambda: self.guard(command, generation)
-        artifact = await stage_segment(self.session, request, context, guard)
+        from .soulx_staging import StagingAvatarEngine
+        staged = isinstance(self.session.avatar_engine, StagingAvatarEngine)
+        if staged:
+            from .staging_artifact import stage_gpu
+            artifact = await stage_gpu(self.session, request, command, context, guard, self.journal)
+        else:
+            artifact = await stage_segment(self.session, request, context, guard)
         guard()
         start = self.timeline.position(self.timeline.committed_end)
         sample_count = artifact.sample_count * start.sampleRate // 16000
@@ -231,6 +250,12 @@ class SegmentExecutor:
             "videoTiming": {"fps": self.session.request.config.fps}, "providerProvenance": artifact.provenance,
             "utteranceId": request.utteranceId, "finalMarker": True, "requiredSinks": request.requiredSinks,
             "factVersion": request.factVersion, "textHash": request.textHash, "factIds": request.factIds}
+        if staged:
+            descriptor.update(workerEpoch=artifact.stage.identity["workerEpoch"],
+                workerGenerationId=artifact.stage.identity["workerGenerationId"],
+                stagingDescriptorHash=artifact.stage.descriptor["descriptor_sha256"],
+                stagingDescriptor=artifact.stage.descriptor["descriptor"],
+                originalSampleCount=artifact.stage.begin["original_samples"], padSamples=artifact.stage.begin["pad_samples"])
         await self.timeline.journal.record("SEGMENT_READY", command, {
             "attemptId": request.attemptId, "generationId": generation, "descriptor": descriptor})
         guard()
@@ -239,10 +264,23 @@ class SegmentExecutor:
         identity = result["identity"]
         self.current_identity = identity
         guard()
+        pose_task = None
+        if staged:
+            link = self.session.avatar_engine.link
+            proof = self._staging_commit_proof(artifact, identity, start, sample_count)
+            await link.arm(artifact.stage, proof, guard)
+            # Fresh SQL fence after physical arm, immediately before first sink.
+            await link.lease_fields(command, request, self.journal, guard)
+            guard();link.check(artifact.stage)
+            pose_task = asyncio.create_task(self._staging_pose_loop(artifact, identity, proof, guard), name="all-required-staging-pose")
+            self.pose_task = pose_task
+        def handoff_guard():
+            guard()
+            if staged:link.check(artifact.stage)
         video_index, source_count = 0, 0
         release_origin = asyncio.get_running_loop().time()
         for chunk in artifact.audio:
-            guard()
+            handoff_guard()
             # A READY artifact is not an unbounded publication burst. Release
             # on the source sample clock with at most two PCM chunks of lead;
             # each required sink retains its own bounded B queue and clock.
@@ -250,10 +288,10 @@ class SegmentExecutor:
             delay = due - asyncio.get_running_loop().time()
             if delay > 0:
                 await asyncio.sleep(delay)
-            guard()
+            handoff_guard()
             end = source_count + len(chunk.pcm) // 2
             while video_index < len(artifact.video) and artifact.video[video_index].pts_us * 16000 // 1000000 < end:
-                guard()
+                handoff_guard()
                 frame = artifact.video[video_index]
                 await self.session.media_output.push_video(TimedVideoFrame(frame.generation_id, frame.pts_us,
                     frame.width, frame.height, frame.rgb, identity,
@@ -266,8 +304,16 @@ class SegmentExecutor:
                 start.sampleIndex + source_count * start.sampleRate // 16000,
                 start.sampleIndex + end * start.sampleRate // 16000, start.sampleRate))
             source_count = end
-        await self.session.media_output.drain(generation)
-        guard()
+        try:
+            await self.session.media_output.drain(generation)
+            if pose_task:
+                await asyncio.wait_for(pose_task, 10)
+                await link.release(artifact.stage, complete=True)
+        finally:
+            if pose_task and not pose_task.done():
+                pose_task.cancel()
+                await asyncio.gather(pose_task, return_exceptions=True)
+        handoff_guard()
         commit = self.timeline.commits[identity.segmentId]
         final = self.timeline.position(commit.end)
         sinks = []
@@ -284,6 +330,56 @@ class SegmentExecutor:
                     "startSample": commit.start, "endSample": commit.end, "finalMarker": True,
                     "evidenceType": "sink_consumed", "evidenceRef": command["commandId"] + ":" + sink + ":" + media})
         await self.timeline.SegmentCompleted(identity, final, sinks)
+
+    async def _cancel_staging(self, reason):
+        from .soulx_staging import StagingAvatarEngine
+        avatar = self.session.avatar_engine
+        if isinstance(avatar, StagingAvatarEngine) and avatar.link.active and not avatar.link.active.released:
+            try:
+                await asyncio.shield(avatar.link.release(avatar.link.active, reason=reason))
+            except Exception:
+                # Retain UNKNOWN and binding; Session.stop retries only cleanup.
+                self.timeline.fence_now("STAGING_CLEANUP_UNKNOWN")
+
+    def _staging_commit_proof(self, artifact, identity, start, sample_count):
+        import math
+        from gpu_worker import staging_contract as c
+        actual = self.timeline.installation_ack(identity)
+        installed = c.installed_reference(artifact.stage.identity, actual["a_ack"])
+        divisor = math.gcd(start.sampleRate, 16000)
+        return {"descriptor_sha256": artifact.stage.descriptor["descriptor_sha256"],
+            "a_installed_ref": installed, "b_installed_ref": actual["b_installed_ref"],
+            "output": {"sampleRate": start.sampleRate, "startSample": start.sampleIndex,
+                "endSample": start.sampleIndex+sample_count, "sourceRate": 16000,
+                "sourceSamples": artifact.sample_count, "ratioNumerator": start.sampleRate//divisor,
+                "ratioDenominator": 16000//divisor},
+            "required_sinks": [{"sinkId": sink, "incarnation": installed["producerIncarnation"]}
+                for sink in sorted(self.timeline.commits[identity.segmentId].descriptor["requiredSinks"])],
+            "optional_sinks": []}
+
+    async def _staging_pose_loop(self, artifact, identity, proof, guard):
+        link = self.session.avatar_engine.link
+        stage = artifact.stage
+        confirmed = -1
+        try:
+            while True:
+                guard();link.check(stage)
+                # No receipt is invented before each actual required sink runs.
+                if all(self.timeline.sink_revisions.get((identity.segmentId, entry["sinkId"]), 0)>0
+                       for entry in proof["required_sinks"]):
+                    pose = self.timeline.consumed_pose_proof(identity, stage.descriptor, proof)
+                    if pose["latest_consumed_sequence"] > confirmed:
+                        await link.pose(stage, pose, guard)
+                        confirmed = pose["latest_consumed_sequence"]
+                        if confirmed == stage.descriptor["descriptor"]["last_sequence"]:
+                            return
+                await asyncio.sleep(.02)
+        except asyncio.CancelledError:
+            raise
+        except Exception as exc:
+            stage.failed = exc
+            self.timeline.fence_now("STAGING_POSE_UNKNOWN")
+            raise
 
     async def suspend(self, command):
         self.guard(command)

@@ -52,7 +52,7 @@ async def main(args):
     report={"scope":"REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
         "commentTransport":"MOCK_REPLAY_ONLY", "humanNaturalness":"NOT_TESTED",
         "audienceAudible":False,"correlatedAV":"NOT_ANALYSED",
-        "seed":args.seed,"fixture":fixture.get("name"),"events":[]}
+        "mode":args.mode,"seed":args.seed,"fixture":fixture.get("name"),"events":[]}
     session=None;browser=None;page=None;normal_stop=False;recording_file=None
     async with httpx.AsyncClient(base_url=args.backend,verify=False,trust_env=False,timeout=30) as client:
         async def api(method,path,payload=None,key=None):
@@ -125,9 +125,13 @@ async def main(args):
                 document=await api("POST",f"/api/v0.5/narration/{session}/start",plan)
                 report.update(narrationId=document["plan"]["narrationId"],requiredSinks=required,chromeVersion=browser.version)
                 began=time.monotonic();questions=fixture["questions"]
+                if args.mode=="ten-minute" and (args.seconds<600 or len(questions)<5):
+                    raise GoldenFailure("Formal G1 requires >=600 seconds and >=5 questions")
+                deadline=1800 if args.mode=="ten-minute" else args.seconds
+                required_facts=set(fact for beat in document["plan"]["beats"] for fact in beat["requiredFactIds"])
                 positions=sorted(random.Random(args.seed).uniform(args.seconds*.08,args.seconds*.87) for _ in questions)
                 report["commentPositionsSeconds"]=positions;next_question=0
-                while time.monotonic()-began<args.seconds:
+                while time.monotonic()-began<deadline:
                     elapsed=time.monotonic()-began
                     if next_question<len(questions) and elapsed>=positions[next_question]:
                         answer=await api("POST",f"/api/v0.4/interaction/{session}/mock",{"text":questions[next_question],"users":1})
@@ -137,10 +141,24 @@ async def main(args):
                     if snapshot["state"] in {"RECOVERY_REQUIRED","FAILED","STOPPING","STOPPED"}:
                         raise GoldenFailure("Narration stopped or requires recovery")
                     if snapshot["reason"]=="FINISHED":
-                        raise GoldenFailure("Authored plan finished before required continuous duration")
+                        if args.mode=="ten-minute" and elapsed<args.seconds:
+                            raise GoldenFailure("Authored plan finished early: fixture duration insufficient")
+                        if args.mode=="ten-minute":
+                            if next_question != len(questions) or not required_facts.issubset(set(snapshot["cursor"]["completedFactIds"])):
+                                raise GoldenFailure("Formal G1 plan completion lacks required facts/questions")
+                            # F additionally verifies terminal selected turns from SQL.
+                            break
+                        if args.mode=="short":
+                            report["shortPlanFinishedEarly"]=elapsed<args.seconds
+                            break
+                        if elapsed<args.seconds:
+                            raise GoldenFailure("Soak authored fixture exhausted early")
                     await asyncio.sleep(.2)
+                if args.mode=="ten-minute" and snapshot.get("reason")!="FINISHED":
+                    raise GoldenFailure("Formal G1 deadline exceeded before authored plan completion")
                 report["continuousDurationSeconds"]=time.monotonic()-began
                 report["finalNarrationBeforeStop"]=snapshot
+                report["factCoverageClaim"]="PENDING_SQL_AUDIT" if args.mode=="ten-minute" else "NOT_FORMAL_COMPLETE_FACT_COVERAGE"
                 await api("POST",f"/api/v1/live-sessions/{session}/stop",{},"golden-stop")
                 for _ in range(200):
                     state=await api("GET",f"/api/v1/live-sessions/{session}")
@@ -172,5 +190,6 @@ if __name__=="__main__":
     parser=argparse.ArgumentParser()
     for name in ["backend","username","password-file","llm-key-file","worker-ref","avatar-ref","fixture","runtime-log","output"]:
         parser.add_argument("--"+name,required=True)
+    parser.add_argument("--mode",choices=["short","ten-minute","soak"],default="short")
     parser.add_argument("--seconds",type=int,default=600);parser.add_argument("--seed",type=int,default=20261012)
     asyncio.run(main(parser.parse_args()))

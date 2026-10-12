@@ -70,6 +70,13 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	fixture := required("ASTRALIVE_GOLDEN_PLAN_FILE")
 	profile := required("ASTRALIVE_GOLDEN_PROFILE")
 	inferencePort, managementPort := integer("ASTRALIVE_GOLDEN_WORKER_PORT", 0), integer("ASTRALIVE_GOLDEN_WORKER_MANAGEMENT_PORT", 0)
+	mode := os.Getenv("NARRATION_GOLDEN_MODE")
+	if mode == "" {
+		mode = "short"
+	}
+	if mode != "short" && mode != "ten-minute" && mode != "soak" {
+		t.Fatal("invalid Golden mode")
+	}
 	seconds, seed := integer("NARRATION_GOLDEN_SECONDS", 60), integer("NARRATION_GOLDEN_SEED", 20261012)
 	out := required("NARRATION_MEDIA_EVIDENCE_DIR")
 	if err := os.MkdirAll(out, 0700); err != nil {
@@ -254,6 +261,7 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 		"SESSION_PROVIDER_STATE_DIR="+filepath.Join(private, "providers"), "TTS_MODEL_DIR="+modelDir, "TOOL_BASE_URL="+internal.URL,
 		"TOOL_TOKEN="+toolValue, "MOCK_LLM=false", "MOCK_TTS=false", "MOCK_AVATAR=false", "MOCK_MEDIA=false", "WEBRTC_ENABLED=true",
 		"RTMP_ENABLED=true", "RTMP_PUBLISH_URL="+rtmpURL, "RTMP_WIDTH=512", "RTMP_HEIGHT=512", "RTMP_FPS=25",
+		"ASTRALIVE_STAGING_OBSERVER_DIR="+filepath.Join(out, "staged-observer"),
 		"RUNTIME_MEDIA_METRICS_INTERVAL_SECONDS=0.2", "TTS_NUM_THREADS=2")
 	child := exec.Command(python, "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", fmt.Sprint(runtimePort), "--log-level", "warning")
 	child.Dir = root
@@ -292,7 +300,7 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	go service.Narration.Run(ctx)
 	observer := exec.Command(python, filepath.Join(root, "runtime/tests/narration_real_golden.py"), "--backend", public.URL, "--username", "golden",
 		"--password-file", passwordFile, "--llm-key-file", keyFile, "--worker-ref", workerRef, "--avatar-ref", avatarRef,
-		"--fixture", fixture, "--runtime-log", runtimeLog, "--output", filepath.Join(out, "observer"), "--seconds", fmt.Sprint(seconds), "--seed", fmt.Sprint(seed))
+		"--mode", mode, "--fixture", fixture, "--runtime-log", runtimeLog, "--output", filepath.Join(out, "observer"), "--seconds", fmt.Sprint(seconds), "--seed", fmt.Sprint(seed))
 	observer.Dir = root
 	observer.Env = env
 	observerLog, err := os.OpenFile(filepath.Join(out, "observer.log"), os.O_CREATE|os.O_WRONLY|os.O_EXCL, 0600)
@@ -337,7 +345,17 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	if err = pool.QueryRow(ctx, `SELECT count(*) FROM v05_interaction_turns WHERE state='COMPLETED'`).Scan(&completeTurns); err != nil {
 		t.Fatal(err)
 	}
-	if completeTurns < 5 {
+	var authored struct {
+		Questions []string `json:"questions"`
+	}
+	fixtureBytes, readErr := os.ReadFile(fixture)
+	if readErr != nil || json.Unmarshal(fixtureBytes, &authored) != nil || len(authored.Questions) == 0 {
+		t.Fatal("invalid authored Golden questions")
+	}
+	if mode == "ten-minute" && len(authored.Questions) < 5 {
+		t.Fatal("formal G1 needs 5 questions")
+	}
+	if completeTurns < len(authored.Questions) {
 		t.Fatalf("only %d completed audience answers; no simulated PASS", completeTurns)
 	}
 	var bad int

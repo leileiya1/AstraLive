@@ -284,7 +284,15 @@ func (c *Controller) Start(ctx context.Context, sid, trace string, x StartReques
 			}
 		}
 	}
-	p, e := BuildPlan(nid, sid, x.ScriptVersion, product, hash, hash, x.Style, x.Policy, x.RequiredSinks, x.Beats)
+	captured, e := c.capturedStaging(ctx, tx, run)
+	if e != nil {
+		return Document{}, e
+	}
+	packingLimit := 4000
+	if captured.Enabled && *captured.LimitsRevision == "staging-short-1" {
+		packingLimit = 0 // whole authored statements only; never recut an immutable plan
+	}
+	p, e := buildPlan(nid, sid, x.ScriptVersion, product, hash, hash, x.Style, x.Policy, x.RequiredSinks, x.Beats, packingLimit)
 	if e != nil {
 		return Document{}, e
 	}
@@ -344,9 +352,13 @@ func (c *Controller) enqueueSegment(ctx context.Context, tx pgx.Tx, r durability
 	p["utteranceId"] = stable("utt", s.ID+fmt.Sprint(r.Epoch))
 	p["attemptId"] = stable("attempt", s.ID+fmt.Sprint(r.Epoch))
 	p["requiredSinks"] = d.Plan.RequiredSinks
+	captured, e := c.capturedStaging(ctx, tx, r)
+	if e != nil {
+		return durability.Command{}, e
+	}
 	p["maxDurationMs"] = 8000
-	if c.StagingSettings.Enabled {
-		if c.StagingSettings.LimitsRevision != nil && *c.StagingSettings.LimitsRevision == "staging-short-1" {
+	if captured.Enabled {
+		if *captured.LimitsRevision == "staging-short-1" {
 			p["maxDurationMs"] = 1920
 		}
 		beat := s.BeatID
