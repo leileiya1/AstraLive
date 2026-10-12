@@ -31,6 +31,7 @@ class Stage:
     begin: dict
     frames: list = field(default_factory=list)
     storage_acks: set = field(default_factory=set)
+    frame_headers: dict = field(default_factory=dict)
     encoded_bytes: int = 0
     descriptor: dict | None = None
     produced: object = None
@@ -112,7 +113,15 @@ class StagingClient:
                     raise StagingFailure("STAGING_IDENTITY_MISMATCH")
                 if name=="StageError":raise StagingFailure(header["code"])
                 if name=="StageVideo":
-                    if stage.fenced or header["frame_sequence"]!=len(stage.frames) or header["sample_end"]>stage.begin["source_samples"]:
+                    seq=header["frame_sequence"]
+                    previous=stage.frame_headers.get(seq)
+                    if previous is not None:
+                        original,receipt=previous
+                        if header!=original:raise StagingFailure("STAGING_CONFLICT")
+                        await self._write({"type":"StageReceived",**self.common(stage),"frame_sequence":seq,
+                            "payload_sha256":header["payload_sha256"],"native_rgb_sha256":header["native_rgb_sha256"],"storage_receipt_id":receipt})
+                        continue
+                    if stage.fenced or stage.released or header["frame_sequence"]!=len(stage.frames) or header["sample_end"]>stage.begin["source_samples"]:
                         raise StagingFailure("STAGING_SEQUENCE_GAP")
                     if not self.provenance_matches(header["provenance"]):
                         raise StagingFailure("STAGING_IDENTITY_MISMATCH")
@@ -122,16 +131,20 @@ class StagingClient:
                     receipt=stage.identity["stageId"]+":"+str(header["frame_sequence"])
                     if stage.frames and header["provenance"]!=stage.frames[0][0]["provenance"]:raise StagingFailure("STAGING_IDENTITY_MISMATCH")
                     stage.frames.append((copy.deepcopy(header),bytes(payload),receipt))
+                    stage.frame_headers[seq]=(copy.deepcopy(header),receipt)
                     await self._write({"type":"StageReceived",**self.common(stage),"frame_sequence":header["frame_sequence"],
                         "payload_sha256":header["payload_sha256"],"native_rgb_sha256":header["native_rgb_sha256"],"storage_receipt_id":receipt})
                 elif name=="StageReceivedAck":
                     seq=header["frame_sequence"]
-                    if seq>=len(stage.frames):raise StagingFailure("STAGING_SEQUENCE_GAP")
-                    original,_,receipt=stage.frames[seq]
+                    if seq not in stage.frame_headers:raise StagingFailure("STAGING_SEQUENCE_GAP")
+                    original,receipt=stage.frame_headers[seq]
                     if any(header[k]!=original[k] for k in ("payload_sha256","native_rgb_sha256")) or header["storage_receipt_id"]!=receipt:
                         raise StagingFailure("STAGING_CONFLICT")
                     stage.storage_acks.add(seq)
                 elif name=="StageProduced":
+                    if stage.descriptor is not None:
+                        if stage.descriptor!=header:raise StagingFailure("STAGING_CONFLICT")
+                        continue
                     d=header["descriptor"]
                     for key in ("original_samples","pad_samples","source_samples","pcm_sha256","source_format","request_fingerprint"):
                         if d[key]!=stage.begin[key]:raise StagingFailure("STAGING_CONFLICT")

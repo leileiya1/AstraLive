@@ -208,8 +208,8 @@ class SegmentExecutor:
             await self._cancel_staging("FORCE")
             raise
         except Exception:
-            await self._cancel_staging("FAILED")
             self.timeline.fence_now("SEGMENT_EXECUTION_UNKNOWN")
+            await self._cancel_staging("FAILED")
             try:
                 await self.timeline.journal.record("UNKNOWN", command,
                     {"reason": "SEGMENT_EXECUTION_UNKNOWN", "audienceAudible": False})

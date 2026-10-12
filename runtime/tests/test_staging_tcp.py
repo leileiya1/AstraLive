@@ -28,8 +28,8 @@ from app.durability_client import fingerprint
 
 
 class SoftwareWorkerWire:
-    def __init__(self, reject_commit=False, simulation=False, production_delay=0):
-        self.reject_commit=reject_commit;self.simulation=simulation;self.production_delay=production_delay;self.background=None
+    def __init__(self, reject_commit=False, simulation=False, production_delay=0, duplicate_produced=False, block_cancel=False):
+        self.reject_commit=reject_commit;self.simulation=simulation;self.production_delay=production_delay;self.background=None;self.duplicate_produced=duplicate_produced;self.block_cancel=block_cancel;self.cancel_seen=asyncio.Event();self.cancel_gate=asyncio.Event()
         self.events=[];self.error=None;self.task=None;self.socket=None
         self.begin=None;self.full=None;self.pose=None;self.armed=False;self.sequence=-1;self.storage=set()
         self.pcm=b"";self.wire_frames=[];self.eof=None
@@ -85,11 +85,14 @@ class SoftwareWorkerWire:
                     self.pose=h;self.sequence=h["pose_proof"]["latest_consumed_sequence"]
                     await self.send(writer,self.answer("StagePoseConsumedAck",pose_ack_id=h["pose_proof"]["pose_ack_id"],pose_proof_fingerprint=h["pose_proof_fingerprint"],latest_consumed_sequence=self.sequence))
                 elif kind=="StageCancel":
+                    self.cancel_seen.set()
+                    if self.block_cancel:await self.cancel_gate.wait()
                     await self.send(writer,self.answer("StageFenced",control_id=h["control_id"],latest_consumed_sequence=self.sequence))
                 elif kind=="StageRelease":
                     complete=h["reason"]=="COMPLETE" and self.sequence==len(self.wire_frames)-1
                     await self.send(writer,self.answer("StageReleased",control_id=h["control_id"],latest_consumed_sequence=self.sequence,
                         terminal_disposition="PROVEN_COMPLETE" if complete else "UNKNOWN" if self.armed else "PROVEN_CANCELLED",reusable=complete or not self.armed))
+                    if self.duplicate_produced and self.eof:await self.send(writer,self.eof)
                 else:raise AssertionError("unexpected wire effect "+kind)
         except (asyncio.IncompleteReadError,ConnectionError,asyncio.CancelledError):pass
         except Exception as exc:self.error=exc
@@ -223,3 +226,27 @@ class LocalTCPTests(unittest.IsolatedAsyncioTestCase):
         wire=SoftwareWorkerWire(simulation=True)
         with self.assertRaisesRegex(Exception,"STAGING_IDENTITY_MISMATCH"):await self.run_segment(wire)
         self.assertFalse(wire.events)
+
+    async def test_duplicate_produced_after_release_no_rehydration_or_new_effect(self):
+        ex,wire,sink,journal=await self.run_segment(SoftwareWorkerWire(duplicate_produced=True))
+        await asyncio.wait_for(ex.task,5)
+        await asyncio.sleep(.02)
+        self.assertIsNone(ex.session.avatar_engine.link.failed)
+        self.assertEqual(ex.session.avatar_engine.link.active.frames,[])
+        self.assertEqual(wire.events.count("StageRelease"),1)
+        self.assertEqual([row["operation"] for row in journal.operations].count("SEGMENT_COMPLETED"),1)
+
+    async def test_posthandoff_failure_fences_b_queues_before_blocked_native_cleanup(self):
+        ex,wire,sink,journal=await self.run_segment(SoftwareWorkerWire(block_cancel=True))
+        async def fail_audio(chunk):raise ValueError("software posthandoff sink failure")
+        sink.push_audio=fail_audio
+        try:
+            await asyncio.wait_for(wire.cancel_seen.wait(),2)
+            self.assertTrue(sink.video)
+            self.assertTrue(ex.timeline.sealed)
+            queued=sink.video[0]
+            self.assertFalse(ex.timeline.eligible(queued.identity,queued.sourceSample,queued.sourceSample))
+            self.assertFalse(ex.task.done())
+        finally:wire.cancel_gate.set()
+        with self.assertRaisesRegex(ValueError,"posthandoff sink failure"):await asyncio.wait_for(ex.task,5)
+        self.assertEqual(journal.operations[-1]["operation"],"UNKNOWN")

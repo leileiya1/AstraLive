@@ -48,6 +48,11 @@ class CaptureTests(unittest.TestCase):
         crc=0
         for offset in range(4,24,4):crc^=(code>>offset)&15
         self.assertEqual(crc,code&15)
+        import importlib.util
+        import numpy as np
+        spec=importlib.util.spec_from_file_location("f_observer_audit",Path(__file__).resolve().parents[2]/"integration/v0.5/observer_audit.py")
+        audit=importlib.util.module_from_spec(spec);spec.loader.exec_module(audit)
+        self.assertEqual(audit.barcode(np.frombuffer(output,dtype=np.uint8).reshape(512,512,3)),(4095,199))
         with self.assertRaises(ValueError):overlay(original,0,0)
 
 
