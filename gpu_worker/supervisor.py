@@ -20,7 +20,7 @@ def child_environment():
     # Worker cannot inherit business credentials from its operator shell.
     names = ('PATH', 'LANG', 'LC_ALL', 'CUDA_VISIBLE_DEVICES', 'LD_LIBRARY_PATH', 'OMP_NUM_THREADS',
              'ASTRALIVE_GPU_STATE_DIR', 'ASTRALIVE_GPU_TOKEN_FILE', 'ASTRALIVE_GPU_MANAGEMENT_TOKEN_FILE',
-             'ASTRALIVE_GPU_PYTHON', 'ASTRALIVE_GPU_LAB_ROOT')
+             'ASTRALIVE_GPU_PYTHON', 'ASTRALIVE_GPU_LAB_ROOT', 'ASTRALIVE_WORKER_STAGING_ENABLED')
     env = {k: os.environ[k] for k in names if k in os.environ}
     env.update(HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', PYTHONUNBUFFERED='1')
     # HuggingFace local caches may need HOME, never credential files or runtime APIs.

@@ -205,6 +205,9 @@ class MediaTimeline:
         self.sink_fences = []
         self.sink_observers = []
         self.receipts = {}
+        # Staging sidecars preserve the original serialized Commit/proof shape.
+        self.installed_acks = {}
+        self.sink_revisions = {}
 
     def _replay(self, command, operation, arguments):
         positive(command.get("runEpoch"))
@@ -314,6 +317,10 @@ class MediaTimeline:
                 # The append-only durable ledger remains in A. Only a fully
                 # journalled local completion may leave this bounded cache.
                 del self.commits[retired]
+                self.installed_acks.pop(retired, None)
+                for entry in list(self.sink_revisions):
+                    if entry[0] == retired:
+                        del self.sink_revisions[entry]
             if proposed.start != self.committed_end:
                 raise ValueError("overlap or implicit audio gap")
             fence = self.fence_revision
@@ -327,11 +334,12 @@ class MediaTimeline:
             self.blocked = True
             self.commits[identity.segmentId] = proposed
             try:
-                await self._record("COMMIT_INSTALLED", command, {"commit": proposed})
+                installed_ack = await self._record("COMMIT_INSTALLED", command, {"commit": proposed})
                 if fence != self.fence_revision or self.sealed:
                     raise ValueError("RUN_SEALED")
                 self.committed_end = proposed.end
                 self.revision += 1
+                self.installed_acks[identity.segmentId] = copy.deepcopy(installed_ack)
                 self.blocked = False
             except BaseException:
                 # Ambiguous journal effect stays fenced pending reconciliation.
@@ -429,7 +437,82 @@ class MediaTimeline:
         if start != cursor or end <= start or end > commit.end:
             return False
         commit.consumed[key] = end
+        revision_key = (identity.segmentId, sink)
+        self.sink_revisions[revision_key] = self.sink_revisions.get(revision_key, 0) + 1
         return True
+
+    def installation_ack(self, identity):
+        """Exact actual COMMIT_INSTALLED ACK; no reconstruction/hydration.
+
+        New staging alone requires the additive A metadata. Old Timeline callers
+        and persisted old ACKs retain their original behavior.
+        """
+        from gpu_worker.staging_contract import bytes_digest, canonical_bytes
+        commit = self.commits.get(identity.segmentId)
+        ack = self.installed_acks.get(identity.segmentId)
+        if (not commit or commit.identity != identity or not self.eligible(identity, commit.start, commit.end) or
+                not ack or ack.get("state") != "committed" or ack.get("durable") is not True or
+                not ack.get("observationHash") or not ack.get("producerIncarnation") or
+                type(ack.get("revision")) is not int or type(ack.get("receiptSeq")) is not int):
+            raise ValueError("RECOVERY_UNKNOWN: exact installed reference unavailable")
+        local_ref = bytes_digest(canonical_bytes({"commandId": commit.command["commandId"],
+            "observationHash": ack["observationHash"], "producerIncarnation": ack["producerIncarnation"],
+            "receiptSeq": ack["receiptSeq"], "revision": ack["revision"]}))
+        return {"a_ack": copy.deepcopy(ack), "b_installed_ref": {"receipt_ref": local_ref,
+            "revision": ack["revision"], "installed": True}}
+
+    def consumed_pose_proof(self, identity, stage_produced, commit_proof):
+        """Transient proof of actual all-required continuous ranges, never SQL.
+
+        Returns the exact new pose-proof DTO. The C caller hashes/sends it under
+        the full Stage identity and its fresh A/Worker lease guard.
+        """
+        import uuid
+        from gpu_worker import staging_contract as contract
+        installed = self.installation_ack(identity)
+        commit = self.commits[identity.segmentId]
+        full_identity = stage_produced["identity"]
+        contract.validate_message(stage_produced)
+        commit_header = {"type": "StageCommit", "contract_revision": contract.REVISION,
+            "session_id": full_identity["sessionId"], "worker_epoch": full_identity["workerEpoch"],
+            "identity": full_identity, "commit_proof": commit_proof,
+            "commit_proof_fingerprint": contract.commit_fingerprint(full_identity, commit_proof)}
+        contract.validate_message(commit_header)
+        for name in ("sessionId", "runEpoch", "timelineEpoch", "generationId", "segmentId", "utteranceId", "lane", "workerEpoch", "workerGenerationId"):
+            if full_identity[name] != getattr(identity, name):
+                raise ValueError("STAGING_IDENTITY_MISMATCH")
+        if (commit_proof["a_installed_ref"] != contract.installed_reference(full_identity, installed["a_ack"]) or
+                commit_proof["b_installed_ref"] != installed["b_installed_ref"] or
+                commit_proof["descriptor_sha256"] != stage_produced["descriptor_sha256"] or
+                commit.descriptor.get("stagingDescriptorHash") != stage_produced["descriptor_sha256"]):
+            raise ValueError("STAGING_COMMIT_UNPROVEN")
+        output = commit_proof["output"]
+        if (output["sampleRate"], output["startSample"], output["endSample"]) != (self.sample_rate, commit.start, commit.end):
+            raise ValueError("STAGING_COMMIT_UNPROVEN")
+        required = commit_proof["required_sinks"]
+        if {entry["sinkId"] for entry in required} != set(commit.descriptor["requiredSinks"]):
+            raise ValueError("STAGING_POSE_UNPROVEN: required sinks changed")
+        receipts = []
+        for entry in required:
+            sink = entry["sinkId"]
+            if entry["incarnation"] != installed["a_ack"]["producerIncarnation"]:
+                raise ValueError("STAGING_POSE_UNPROVEN: foreign sink incarnation")
+            revision = self.sink_revisions.get((identity.segmentId, sink), 0)
+            audio = commit.consumed.get((sink, "audio"), commit.start)
+            video = commit.consumed.get((sink, "video"), commit.start)
+            if revision < 1:
+                raise ValueError("STAGING_POSE_UNPROVEN: sink has no actual observation")
+            reference = contract.digest({"domain": "astralive-volatile-sink-range-1", "commandId": commit.command["commandId"],
+                "sinkId": sink, "incarnation": entry["incarnation"], "revision": revision, "audioEnd": audio, "videoEnd": video})
+            receipts.append({"sinkId": sink, "incarnation": entry["incarnation"], "evidenceRef": reference,
+                "localRevision": revision, "startSample": commit.start, "audioEndSample": audio,
+                "videoEndSample": video, "evidenceType": "sink_consumed"})
+        watermark = min(min(r["audioEndSample"], r["videoEndSample"]) for r in receipts)
+        latest = contract.pose_prefix(commit_proof, watermark)
+        return {"pose_ack_id": "pose-" + uuid.uuid4().hex, "descriptor_sha256": stage_produced["descriptor_sha256"],
+            "commit_proof_fingerprint": contract.commit_fingerprint(full_identity, commit_proof),
+            "latest_consumed_sequence": latest, "source_end_sample": (latest + 1) * 640,
+            "output_end_sample": watermark, "required_sink_receipts": receipts}
 
     async def SegmentCompleted(self, identity, finalPosition, sinkReceipts):
         async with self.lock:
