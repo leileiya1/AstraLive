@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "scope": "LOCAL_SYNTHETIC_CONTROL_DIAGNOSTIC_NOT_GPU_OR_PLAYBACK",
+  "checks": {
+    "four_slot_preplayout_bound": true,
+    "no_credit_no_published_pose": true,
+    "early_credit_mutates_unplayed_pose": true,
+    "cancel_retains_false_pose": true,
+    "short_completion_requires_consumption_credit": true,
+    "normal_credit_completes": true
+  },
+  "productionSourceSHA": "48eb0387f4e0f7db08ca8b64d3ae02c2207a9f57",
+  "sourceHashes": {
+    "gpu_worker/service.py": "be33549ed1ac9181261a639ab340f3cd5a703956f8be39a3bee8da3be90b2b80",
+    "gpu_worker/model.py": "d2d95670b57ac1d56b46b83123f40e5c415694bd24da6fe770f4dc6bb9915cd9",
+    "gpu_worker/validated/adapter.py": "83b05920422870afc1e416d313a630487f7e2bc1dd45e8a4f4ad19b012142518",
+    "gpu_worker/validated/wire.py": "2547791fc3a420824c3bdace9f7353effe24330e52493c7734557dbf646736b2"
+  },
+  "probeSHA256": "8729ce2e08b3ee5abb668babce3ac450d3694dd2feb279915514b3d777522a45",
+  "noCreditSentFrames": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "earlyCreditPoseCount": 9,
+  "blockedObserveSeconds": 0.2,
+  "realGPU": "NOT TESTED",
+  "realSinks": "NOT TESTED"
+}
