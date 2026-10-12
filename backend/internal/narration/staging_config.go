@@ -31,11 +31,11 @@ func (s StagingSettings) Validate() error {
 		return fmt.Errorf("staging profile required")
 	}
 	switch *s.LimitsRevision {
-	case "staging-short-1":
+	case "staging-short-1", "staging-short-gpu1g-1":
 		if s.ShortGateSHA256 != nil {
 			return fmt.Errorf("short profile gate must be null")
 		}
-	case "staging-segment-8s-1":
+	case "staging-segment-8s-1", "staging-segment-8s-gpu1g-1":
 		if s.ShortGateSHA256 == nil || !regexp.MustCompile(`^sha256:[0-9a-f]{64}$`).MatchString(*s.ShortGateSHA256) {
 			return fmt.Errorf("8s staging requires reviewed short GPU gate SHA256")
 		}
@@ -44,6 +44,12 @@ func (s StagingSettings) Validate() error {
 	}
 	return nil
 }
+
+// ShortProfile groups explicitly frozen revisions; it does not copy GPU budgets.
+func (s StagingSettings) ShortProfile() bool {
+	return s.Enabled && s.LimitsRevision != nil && (*s.LimitsRevision == "staging-short-1" || *s.LimitsRevision == "staging-short-gpu1g-1")
+}
+
 func (s StagingSettings) Capture() map[string]any {
 	return map[string]any{"soulxStagingEnabled": s.Enabled, "soulxStagingLimitsRevision": s.LimitsRevision, "soulxStagingShortGateSHA256": s.ShortGateSHA256}
 }

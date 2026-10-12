@@ -35,6 +35,18 @@ class CaptureTests(unittest.TestCase):
             self.assertEqual(captured.check_capture(enabled.capture()),enabled.capture())
         with self.assertRaises(ValueError):StagingSettings(True,"staging-segment-8s-1").check_capture({})
 
+    def test_explicit_new_captured_profiles_use_normative_helper_only(self):
+        for name in ("staging-short-gpu1g-1", "staging-segment-8s-gpu1g-1"):
+            gate=None if name in c.SHORT_PROFILES else "sha256:"+"a"*64
+            settings=StagingSettings(True,name,gate)
+            self.assertEqual(settings.check_capture(settings.capture()),settings.capture())
+            with patch.dict(os.environ,{"ASTRALIVE_SOULX_STAGING_ENABLED":"true","ASTRALIVE_SOULX_STAGING_LIMITS_REVISION":name,**({"ASTRALIVE_SOULX_STAGING_SHORT_GPU_GATE_SHA256":gate} if gate else {})},clear=True):
+                self.assertEqual(StagingSettings.from_env(),settings)
+            changed=settings.capture()|{"soulxStagingLimitsRevision":"staging-short-1"}
+            with self.assertRaises(ValueError):settings.check_capture(changed)
+        with patch.dict(os.environ,{},clear=True):
+            self.assertEqual(StagingSettings.from_env(),StagingSettings())
+
     def test_barcode_crc_and_no_pixels_outside_band_changed(self):
         original=bytes((17,18,19))*(512*512)
         output=overlay(original,4095,199)

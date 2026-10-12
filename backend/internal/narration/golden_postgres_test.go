@@ -21,6 +21,7 @@ import (
 
 	"astralive/backend/db"
 	"astralive/backend/internal/app"
+	localconfig "astralive/backend/internal/config"
 	"astralive/backend/internal/durability"
 	"astralive/backend/internal/eventbus"
 	"astralive/backend/internal/httpapi"
@@ -33,6 +34,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"golang.org/x/crypto/bcrypt"
+	goruntime "runtime"
 )
 
 // This opt-in gate has NO injected LLM/TTS/avatar/media factory, fake binding
@@ -76,6 +78,16 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	}
 	if mode != "short" && mode != "ten-minute" && mode != "soak" {
 		t.Fatal("invalid Golden mode")
+	}
+	localMode := os.Getenv("ASTRALIVE_GOLDEN_LOCAL_TRANSPORT")
+	if localMode == "" {
+		localMode = "tcp"
+	}
+	if localMode != "tcp" && localMode != "uds" {
+		t.Fatal("invalid Golden local transport")
+	}
+	if localMode == "uds" && goruntime.GOOS != "darwin" && goruntime.GOOS != "linux" {
+		t.Skip("real UDS Golden unsupported: NOT TESTED")
 	}
 	seconds, seed := integer("NARRATION_GOLDEN_SECONDS", 60), integer("NARRATION_GOLDEN_SEED", 20261012)
 	out := required("NARRATION_MEDIA_EVIDENCE_DIR")
@@ -169,8 +181,29 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	}
 	runtimePort, rtmpPort := freePort(), freePort()
 	runtimeURL := fmt.Sprintf("http://127.0.0.1:%d", runtimePort)
-	rt := runtime.New(runtimeURL)
-	rt.Client.Transport = userconfig.TokenTransport{Path: controlToken, Base: &http.Transport{Proxy: nil}}
+	ipcRoot, err := filepath.EvalSymlinks(os.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	ipcDir, err := os.MkdirTemp(ipcRoot, "ag-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(ipcDir)
+	if err = os.Chmod(ipcDir, 0700); err != nil {
+		t.Fatal(err)
+	}
+	socketPath := filepath.Join(ipcDir, "r.sock")
+	rt, err := runtime.NewLocal(runtimeURL, localconfig.LocalTransport{Mode: localMode, SocketPath: socketPath, Fallback: "disabled"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	controlBase := rt.Client.Transport
+	if controlBase == nil {
+		controlBase = &http.Transport{Proxy: nil}
+	}
+	rt.Client.Transport = userconfig.TokenTransport{Path: controlToken, Base: controlBase}
+	rt.Client.CheckRedirect = func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }
 	logFile, err := os.OpenFile(filepath.Join(out, "backend.log"), os.O_CREATE|os.O_WRONLY|os.O_EXCL, 0600)
 	if err != nil {
 		t.Fatal(err)
@@ -191,7 +224,7 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	// Staging capture settings are composed here after the exact production
 	// helper is frozen. Without that implementation this real gate fails closed.
 	cfg := &userconfig.Service{DB: pool, Vault: userconfig.Vault{Path: keyring}, OperatorFile: operator, IntegrationEnabled: true,
-		RuntimeStatusURL: runtimeURL, RuntimeControlTokenFile: controlToken, WorkerTokenFile: bindingToken, IdentityTokenFile: identityToken,
+		RuntimeStatusURL: rt.Base, RuntimeTransport: controlBase, RuntimeControlTokenFile: controlToken, WorkerTokenFile: bindingToken, IdentityTokenFile: identityToken,
 		Hosts: map[string]bool{"api.deepseek.com": true}, Workers: map[string]userconfig.WorkerEndpoint{workerRef: {ManagementPort: managementPort, TokenFile: managementToken, AllowedScopes: []userconfig.Scope{scope}}}}
 	service.Integration = cfg
 	interactionConfig := interaction.DefaultConfig()
@@ -252,6 +285,7 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 		}
 	}
 	env = append(env, "PYTHONPATH="+filepath.Join(root, "runtime")+string(os.PathListSeparator)+root,
+		"ASTRALIVE_LOCAL_TRANSPORT="+localMode, "ASTRALIVE_LOCAL_FALLBACK=disabled", "ASTRALIVE_RUNTIME_UDS_PATH="+socketPath, "AI_RUNTIME_URL="+runtimeURL,
 		"APP_ENV=development", "ASTRALIVE_DURABILITY_ENABLED=true", "ASTRALIVE_EVENT_MODE=postgres_only", "REDIS_URL=redis://127.0.0.1:1",
 		"ASTRALIVE_CONTINUITY_ENABLED=true", "ASTRALIVE_MEDIA_TIMELINE_V2_ENABLED=true", "ASTRALIVE_SOULX_STAGING_ENABLED=true",
 		"ASTRALIVE_SOULX_STAGING_LIMITS_REVISION="+profile, "ASTRALIVE_SOULX_STAGING_SHORT_GPU_GATE_SHA256="+os.Getenv("ASTRALIVE_GOLDEN_SHORT_GPU_GATE_SHA256"),
@@ -264,6 +298,9 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 		"ASTRALIVE_STAGING_OBSERVER_DIR="+filepath.Join(out, "staged-observer"),
 		"RUNTIME_MEDIA_METRICS_INTERVAL_SECONDS=0.2", "TTS_NUM_THREADS=2")
 	child := exec.Command(python, "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", fmt.Sprint(runtimePort), "--log-level", "warning")
+	if localMode == "uds" {
+		child = exec.Command(python, "-m", "app.local_listener")
+	}
 	child.Dir = root
 	child.Env = env
 	child.Stdout = runtimeOutput
@@ -300,7 +337,7 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	go service.Narration.Run(ctx)
 	observer := exec.Command(python, filepath.Join(root, "runtime/tests/narration_real_golden.py"), "--backend", public.URL, "--username", "golden",
 		"--password-file", passwordFile, "--llm-key-file", keyFile, "--worker-ref", workerRef, "--avatar-ref", avatarRef,
-		"--mode", mode, "--fixture", fixture, "--runtime-log", runtimeLog, "--output", filepath.Join(out, "observer"), "--seconds", fmt.Sprint(seconds), "--seed", fmt.Sprint(seed))
+		"--mode", mode, "--local-transport", localMode, "--fixture", fixture, "--runtime-log", runtimeLog, "--output", filepath.Join(out, "observer"), "--seconds", fmt.Sprint(seconds), "--seed", fmt.Sprint(seed))
 	observer.Dir = root
 	observer.Env = env
 	observerLog, err := os.OpenFile(filepath.Join(out, "observer.log"), os.O_CREATE|os.O_WRONLY|os.O_EXCL, 0600)
