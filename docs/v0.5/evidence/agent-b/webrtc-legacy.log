@@ -1,0 +1,127 @@
+....                                                                     [100%]Task exception was never retrieved
+future: <Task finished name='Task-67' coro=<Connection.check_start() done, defined at /private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/aioice/ice.py:880> exception=AttributeError("'NoneType' object has no attribute 'call_exception_handler'") created at /opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:395>
+source_traceback: Object created at (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pytest/__main__.py", line 9, in <module>
+    raise SystemExit(_console_main())
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 253, in _console_main
+    code = _main(prog=_get_prog_name(sys.argv))
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 229, in _main
+    ret: ExitCode | int = config.hook.pytest_cmdline_main(config=config)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/main.py", line 377, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/main.py", line 330, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/main.py", line 384, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/main.py", line 408, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/runner.py", line 118, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/runner.py", line 139, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/runner.py", line 249, in call_and_report
+    call = CallInfo.from_call(
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/_pytest/unittest.py", line 391, in runtest
+    testcase(result=self)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/async_case.py", line 147, in run
+    return super().run(result)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 669, in run
+    self._callTestMethod(testMethod)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/async_case.py", line 102, in _callTestMethod
+    result = self._callMaybeAsync(method)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/async_case.py", line 128, in _callMaybeAsync
+    return self._asyncioRunner.run(
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 707, in run_until_complete
+    self.run_forever()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 678, in run_forever
+    self._run_once()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 2054, in _run_once
+    handle._run()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/aiortc/rtcpeerconnection.py", line 1080, in __connect
+    await iceTransport.start(self.__remoteIce[transceiver])
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/aiortc/rtcicetransport.py", line 343, in start
+    await self._connection.connect()
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/aioice/ice.py", line 594, in connect
+    if not self.check_periodic():
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/aioice/ice.py", line 865, in check_periodic
+    self.check_start_task(pair)
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/aioice/ice.py", line 946, in check_start_task
+    pair.task = asyncio.create_task(self.check_start(pair))
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 395, in create_task
+    return loop.create_task(coro, **kwargs)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py", line 1290, in sendto
+    self._sock.sendto(data, addr)
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'sendto'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/aioice/ice.py", line 889, in check_start
+    response, addr = await pair.protocol.request(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/aioice/ice.py", line 315, in request
+    return await transaction.run()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/aioice/stun.py", line 322, in run
+    self.__retry()
+    ~~~~~~~~~~~~^^
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/aioice/stun.py", line 333, in __retry
+    self.__protocol.send_stun(self.__request, self.__addr)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-b-venv/lib/python3.14/site-packages/aioice/ice.py", line 327, in send_stun
+    self.transport.sendto(bytes(message), addr)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py", line 1300, in sendto
+    self._fatal_error(
+    ~~~~~~~~~~~~~~~~~^
+        exc, 'Fatal write error on datagram transport')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py", line 886, in _fatal_error
+    self._loop.call_exception_handler({
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'call_exception_handler'
+
+4 passed in 44.60s

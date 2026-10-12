@@ -17,6 +17,78 @@ type Avatar struct {
 	UpdatedAt pgtype.Timestamptz
 }
 
+type AvatarProfile struct {
+	TenantID     string
+	UserID       string
+	ID           string
+	Kind         string
+	Name         string
+	Provider     string
+	Config       []byte
+	Version      int64
+	Enabled      bool
+	IsDefault    bool
+	Verification string
+	ErrorCode    string
+	Health       string
+	HealthAt     pgtype.Timestamptz
+	UpdatedAt    pgtype.Timestamptz
+}
+
+type ConfigAuthSession struct {
+	TokenHash string
+	TenantID  string
+	UserID    string
+	ExpiresAt pgtype.Timestamptz
+}
+
+type ConfigPrincipal struct {
+	TenantID string
+	UserID   string
+}
+
+type ConfigProfile struct {
+	TenantID     string
+	UserID       string
+	ID           string
+	Kind         string
+	Name         string
+	Provider     string
+	Config       []byte
+	Version      int64
+	Enabled      bool
+	IsDefault    bool
+	Verification string
+	ErrorCode    string
+	Health       string
+	HealthAt     pgtype.Timestamptz
+	UpdatedAt    pgtype.Timestamptz
+}
+
+type ConfigTestAttempt struct {
+	TenantID    string
+	UserID      string
+	AttemptedAt pgtype.Timestamptz
+}
+
+type GpuWorkerProfile struct {
+	TenantID     string
+	UserID       string
+	ID           string
+	Kind         string
+	Name         string
+	Provider     string
+	Config       []byte
+	Version      int64
+	Enabled      bool
+	IsDefault    bool
+	Verification string
+	ErrorCode    string
+	Health       string
+	HealthAt     pgtype.Timestamptz
+	UpdatedAt    pgtype.Timestamptz
+}
+
 type IdempotencyKey struct {
 	Key            string
 	Route          string
@@ -25,6 +97,14 @@ type IdempotencyKey struct {
 	ResponseBody   []byte
 	ExpiresAt      pgtype.Timestamptz
 	CreatedAt      pgtype.Timestamptz
+}
+
+type InteractionReceipt struct {
+	SessionID   string
+	TraceID     string
+	Status      string
+	UtteranceID pgtype.Text
+	CreatedAt   pgtype.Timestamptz
 }
 
 type Job struct {
@@ -52,6 +132,24 @@ type KnowledgeDocument struct {
 	UpdatedAt       pgtype.Timestamptz
 }
 
+type LivePlatformProfile struct {
+	TenantID     string
+	UserID       string
+	ID           string
+	Kind         string
+	Name         string
+	Provider     string
+	Config       []byte
+	Version      int64
+	Enabled      bool
+	IsDefault    bool
+	Verification string
+	ErrorCode    string
+	Health       string
+	HealthAt     pgtype.Timestamptz
+	UpdatedAt    pgtype.Timestamptz
+}
+
 type LiveRoom struct {
 	ID              string
 	Name            string
@@ -77,6 +175,30 @@ type LiveSession struct {
 	EndedAt            pgtype.Timestamptz
 }
 
+type LlmProfile struct {
+	TenantID     string
+	UserID       string
+	ID           string
+	Kind         string
+	Name         string
+	Provider     string
+	Config       []byte
+	Version      int64
+	Enabled      bool
+	IsDefault    bool
+	Verification string
+	ErrorCode    string
+	Health       string
+	HealthAt     pgtype.Timestamptz
+	UpdatedAt    pgtype.Timestamptz
+}
+
+type OperatorLoginAttempt struct {
+	ID       bool
+	WindowAt pgtype.Timestamptz
+	Attempts int32
+}
+
 type Product struct {
 	ID          string
 	Name        string
@@ -89,6 +211,29 @@ type Product struct {
 	UpdatedAt   pgtype.Timestamptz
 }
 
+type ProviderBinding struct {
+	ID        string
+	TenantID  string
+	UserID    string
+	Snapshot  []byte
+	ExpiresAt pgtype.Timestamptz
+}
+
+type ProviderCredential struct {
+	TenantID   string
+	UserID     string
+	ProfileID  string
+	KeyID      string
+	Ciphertext []byte
+}
+
+type ResourceOwner struct {
+	Kind       string
+	ResourceID string
+	TenantID   string
+	UserID     string
+}
+
 type RuntimeEvent struct {
 	EventID     string
 	SessionID   string
@@ -98,6 +243,43 @@ type RuntimeEvent struct {
 	OccurredAt  pgtype.Timestamptz
 	Envelope    []byte
 	CreatedAt   pgtype.Timestamptz
+}
+
+type SessionProviderBinding struct {
+	SessionID    string
+	TenantID     string
+	UserID       string
+	BindingID    string
+	RoomSnapshot []byte
+	Summary      []byte
+	CapturedAt   pgtype.Timestamptz
+	ExpiresAt    pgtype.Timestamptz
+	ReleasedAt   pgtype.Timestamptz
+}
+
+type TtsProfile struct {
+	TenantID     string
+	UserID       string
+	ID           string
+	Kind         string
+	Name         string
+	Provider     string
+	Config       []byte
+	Version      int64
+	Enabled      bool
+	IsDefault    bool
+	Verification string
+	ErrorCode    string
+	Health       string
+	HealthAt     pgtype.Timestamptz
+	UpdatedAt    pgtype.Timestamptz
+}
+
+type UserSetting struct {
+	TenantID string
+	UserID   string
+	Version  int64
+	Policy   []byte
 }
 
 type Utterance struct {
@@ -114,6 +296,276 @@ type Utterance struct {
 	UpdatedAt       pgtype.Timestamptz
 	StartedAt       pgtype.Timestamptz
 	CompletedAt     pgtype.Timestamptz
+}
+
+type V05Event struct {
+	EventID             string
+	TenantID            string
+	UserID              string
+	SessionID           string
+	RunEpoch            int64
+	EventSeq            int64
+	ProducerIncarnation string
+	ProducerSeq         int64
+	EventType           string
+	CommandID           pgtype.Text
+	TraceID             string
+	OccurredAt          pgtype.Timestamptz
+	EnvelopeHash        string
+	Envelope            []byte
+	ProcessingState     string
+	FailureCount        int32
+	LastErrorCode       pgtype.Text
+	NextAttemptAt       pgtype.Timestamptz
+	CreatedAt           pgtype.Timestamptz
+}
+
+type V05Inbox struct {
+	SessionID           string
+	RunEpoch            int64
+	CommandID           string
+	TenantID            string
+	UserID              string
+	RequestFingerprint  string
+	CommandType         string
+	CommandSeq          int64
+	AcceptedAt          pgtype.Timestamptz
+	OperationID         string
+	ExecutionState      string
+	ExecutionAttemptID  pgtype.Text
+	ExecutorIncarnation pgtype.Text
+	ExecutionLeaseToken pgtype.Int8
+	ExecutionStartedAt  pgtype.Timestamptz
+	GenerationID        pgtype.Int8
+	TimelineEpoch       pgtype.Int8
+	TerminalAt          pgtype.Timestamptz
+	LastReceiptSeq      int64
+}
+
+type V05InteractionCommand struct {
+	SessionID string
+	TraceID   string
+	CommandID string
+}
+
+type V05InteractionTurn struct {
+	TurnID              string
+	NarrationID         string
+	SessionID           string
+	TenantID            string
+	UserID              string
+	SourceIds           []byte
+	QuestionHash        string
+	Question            string
+	Deadline            pgtype.Timestamptz
+	State               string
+	ResumePointRevision pgtype.Int8
+	AnswerSummary       pgtype.Text
+	DocumentJson        []byte
+	UpdatedAt           pgtype.Timestamptz
+}
+
+type V05Narration struct {
+	NarrationID          string
+	SessionID            string
+	TenantID             string
+	UserID               string
+	RunEpoch             int64
+	Revision             int64
+	State                string
+	ScriptVersion        string
+	ProductSnapshotHash  string
+	PlanJson             []byte
+	CompletionCursorJson []byte
+	ResumePointJson      []byte
+	DocumentJson         []byte
+	StopBarrier          bool
+	RecoveryDisposition  pgtype.Text
+	UpdatedAt            pgtype.Timestamptz
+}
+
+type V05Outbox struct {
+	CommandID          string
+	TenantID           string
+	UserID             string
+	SessionID          string
+	RunEpoch           int64
+	CommandSeq         int64
+	CommandType        string
+	IdempotencyKey     string
+	RequestFingerprint string
+	TraceID            string
+	UtteranceID        pgtype.Text
+	PayloadEnvelope    []byte
+	DeliveryState      string
+	AttemptCount       int32
+	NextAttemptAt      pgtype.Timestamptz
+	ValidUntil         pgtype.Timestamptz
+	LastErrorCode      pgtype.Text
+	LeaseOwner         pgtype.Text
+	LeaseToken         int64
+	LeaseExpiresAt     pgtype.Timestamptz
+	AckedAt            pgtype.Timestamptz
+	UnknownSince       pgtype.Timestamptz
+	CreatedAt          pgtype.Timestamptz
+	UpdatedAt          pgtype.Timestamptz
+}
+
+type V05Receipt struct {
+	SessionID           string
+	RunEpoch            int64
+	CommandID           string
+	ReceiptSeq          int64
+	TenantID            string
+	UserID              string
+	AttemptID           pgtype.Text
+	State               string
+	Outcome             pgtype.Text
+	ObservedAt          pgtype.Timestamptz
+	ProducerIncarnation string
+	EvidenceType        string
+	EvidenceRef         string
+	RangeSinks          []byte
+	ReasonCode          pgtype.Text
+	ObservationHash     string
+}
+
+type V05RecoveryAudit struct {
+	ID         int64
+	SessionID  string
+	RunEpoch   int64
+	Action     string
+	ReasonCode string
+	RecordedAt pgtype.Timestamptz
+}
+
+type V05RecoveryLease struct {
+	SessionID  string
+	TenantID   string
+	UserID     string
+	OwnerID    string
+	LeaseToken int64
+	RunEpoch   int64
+	ExpiresAt  pgtype.Timestamptz
+	RenewedAt  pgtype.Timestamptz
+}
+
+type V05Segment struct {
+	SegmentID      string
+	NarrationID    string
+	SessionID      string
+	TenantID       string
+	UserID         string
+	BeatID         string
+	SegmentOrdinal int64
+	TextHash       string
+	FactIds        []byte
+	Text           string
+	ProductVersion string
+	Status         string
+	DocumentJson   []byte
+	CompletedAt    pgtype.Timestamptz
+	UpdatedAt      pgtype.Timestamptz
+}
+
+type V05SegmentAttempt struct {
+	AttemptID          string
+	SessionID          string
+	RunEpoch           int64
+	TimelineEpoch      int64
+	TenantID           string
+	UserID             string
+	NarrationID        string
+	SegmentID          string
+	CommandID          string
+	UtteranceID        string
+	Lane               string
+	WorkerRefJson      []byte
+	GenerationID       pgtype.Int8
+	WorkerEpoch        pgtype.Text
+	WorkerGenerationID pgtype.Int8
+	Status             string
+	DescriptorJson     []byte
+	DocumentJson       []byte
+	UpdatedAt          pgtype.Timestamptz
+}
+
+type V05SessionRun struct {
+	SessionID               string
+	RunEpoch                int64
+	TenantID                string
+	UserID                  string
+	OwnerID                 string
+	LeaseToken              int64
+	Status                  string
+	ProviderBindingID       string
+	StartedAt               pgtype.Timestamptz
+	SealedAt                pgtype.Timestamptz
+	CurrentTimelineEpoch    int64
+	CurrentCommandSeq       int64
+	CurrentEventSeq         int64
+	ControlBarrierSeq       int64
+	GenerationHighWatermark int64
+	RequiredSinks           []byte
+	OptionalSinks           []byte
+	OutputSampleRate        int32
+	CurrentCommittedSample  int64
+	TimelineRevision        int64
+}
+
+type V05TimelineCommit struct {
+	SessionID      string
+	RunEpoch       int64
+	TimelineEpoch  int64
+	SegmentID      string
+	AttemptID      string
+	TenantID       string
+	UserID         string
+	CommandID      string
+	GenerationID   int64
+	StartSample    int64
+	EndSample      int64
+	SampleRate     int32
+	IdentityJson   []byte
+	DescriptorJson []byte
+	RequiredSinks  []byte
+	OptionalSinks  []byte
+	Status         string
+	PlayState      string
+	SinkReceipts   []byte
+	CompletionHash pgtype.Text
+	CreatedAt      pgtype.Timestamptz
+	InstalledAt    pgtype.Timestamptz
+	CompletedAt    pgtype.Timestamptz
+}
+
+type V05TimelineEpoch struct {
+	SessionID             string
+	RunEpoch              int64
+	TimelineEpoch         int64
+	TenantID              string
+	UserID                string
+	Status                string
+	ReservationToken      string
+	ExpectedPreviousEpoch int64
+	OriginSample          int64
+	Reason                string
+	CreatedAt             pgtype.Timestamptz
+	ActivatedAt           pgtype.Timestamptz
+	SealedAt              pgtype.Timestamptz
+}
+
+type V05TimelineObservation struct {
+	CommandID       string
+	Operation       string
+	ObservationHash string
+	ProofJson       []byte
+	ResponseJson    []byte
+	SessionID       string
+	RunEpoch        int64
+	TenantID        string
+	UserID          string
+	CreatedAt       pgtype.Timestamptz
 }
 
 type Voice struct {

@@ -41,6 +41,7 @@ func (c Config) Validate() error {
 }
 
 type Selection struct {
+	SourceIDs        []string       `json:"sourceIds,omitempty"`
 	EstimatedReplyMS int            `json:"estimatedReplyMs"`
 	Event            platform.Event `json:"event"`
 	Topic            string         `json:"topic"`
@@ -54,11 +55,14 @@ type Dispatcher interface {
 	Dispatch(context.Context, Selection) (string, error)
 }
 type Gate struct {
-	CurrentSource      string
-	CurrentPriority    int
-	CurrentUtteranceID string
-	Running, Busy      bool
-	ProductID          string
+	// Opt-in business gate supplied by the existing interaction adapter. All
+	// priority/TTL/dedup/fairness decisions still run in this single Scheduler.
+	ContinuityActive, ContinuityMaySuspend bool
+	CurrentSource                          string
+	CurrentPriority                        int
+	CurrentUtteranceID                     string
+	Running, Busy                          bool
+	ProductID                              string
 }
 type GateFunc func(context.Context) (Gate, error)
 type Counters struct {
@@ -349,6 +353,12 @@ func (s *Scheduler) Receive(ctx context.Context, e platform.Event) error {
 	}
 	for _, c := range s.queue {
 		if c.selection.Topic == topic && now.Sub(c.selection.Event.ReceivedAt) < s.config.MergeWindow {
+			if len(c.selection.SourceIDs) >= 128 {
+				s.counters.Dropped++
+				outcomes.WithLabelValues("dropped").Inc()
+				return nil
+			}
+			c.selection.SourceIDs = append(c.selection.SourceIDs, e.EventID)
 			if len(c.users) < 128 {
 				c.users[e.UserExternalID] = true
 			}
@@ -370,7 +380,7 @@ func (s *Scheduler) Receive(ctx context.Context, e platform.Event) error {
 	if product {
 		priority += 30
 	}
-	selection := Selection{Event: e, Topic: topic, Audience: 1, Priority: priority, Policy: "NONE", ProductID: s.product, EstimatedReplyMS: estimate(topic)}
+	selection := Selection{SourceIDs: []string{e.EventID}, Event: e, Topic: topic, Audience: 1, Priority: priority, Policy: "NONE", ProductID: s.product, EstimatedReplyMS: estimate(topic)}
 	s.queue = append(s.queue, &candidate{selection, map[string]bool{e.UserExternalID: true}})
 	s.notify()
 	if len(s.queue) > s.counters.Peak {
@@ -389,7 +399,20 @@ func (s *Scheduler) Tick(ctx context.Context) error {
 	if s.stopped || s.inFlight || s.mode == OperatorOverride || now.Sub(s.lastSelected) < s.config.Interval {
 		return nil
 	}
+	// Gate may read SQL or wait on external work. Never hold the Scheduler
+	// mutex across it: Stop/Snapshot and other rooms must remain responsive.
+	s.mu.Unlock()
 	gate, err := s.gate(ctx)
+	s.mu.Lock()
+	now = s.now()
+	s.prune(now)
+	// Another Tick, Stop, mode change or expiry may have won during the read.
+	if ctx.Err() != nil {
+		return ctx.Err()
+	}
+	if s.stopped || s.inFlight || s.mode == OperatorOverride || now.Sub(s.lastSelected) < s.config.Interval {
+		return nil
+	}
 	if err != nil {
 		s.lastError = "GATE_UNAVAILABLE"
 		return err
@@ -415,6 +438,9 @@ func (s *Scheduler) Tick(ctx context.Context) error {
 	if len(s.queue) == 0 {
 		return nil
 	}
+	if gate.ContinuityActive && !gate.ContinuityMaySuspend {
+		return nil // No recursive audience answer or suspension during resume.
+	}
 	score := func(c *candidate) int {
 		n := c.selection.Priority + min(c.selection.Audience-1, 5)*4
 		if _, ok := s.served[c.selection.Event.UserExternalID]; ok {
@@ -434,11 +460,15 @@ func (s *Scheduler) Tick(ctx context.Context) error {
 	chosen := s.queue[best].selection
 	preempting := false
 	if gate.Busy {
-		if !s.config.AllowPriorityPreemption || s.mode != ProductExplaining || gate.CurrentSource != "AUTO_SCRIPT" || chosen.Priority < 80 || chosen.Audience < 3 || chosen.Priority <= gate.CurrentPriority {
-			return nil
+		if gate.ContinuityActive && gate.ContinuityMaySuspend {
+			chosen.Policy = "AT_BOUNDARY"
+		} else {
+			if !s.config.AllowPriorityPreemption || s.mode != ProductExplaining || gate.CurrentSource != "AUTO_SCRIPT" || chosen.Priority < 80 || chosen.Audience < 3 || chosen.Priority <= gate.CurrentPriority {
+				return nil
+			}
+			chosen.Policy = "INTERRUPT_LOWER_PRIORITY"
+			preempting = true
 		}
-		chosen.Policy = "INTERRUPT_LOWER_PRIORITY"
-		preempting = true
 	}
 	s.queue = append(s.queue[:best], s.queue[best+1:]...)
 	chosen.SelectedAt = now

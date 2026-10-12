@@ -11,9 +11,11 @@ import (
 
 	"astralive/backend/generated/dbgen"
 	"astralive/backend/generated/runtimeapi"
+	"astralive/backend/internal/durability"
 	"astralive/backend/internal/fsm"
 	"astralive/backend/internal/ids"
 	"astralive/backend/internal/metrics"
+	"astralive/backend/internal/narration"
 	"astralive/backend/internal/runtime"
 	"astralive/backend/internal/sse"
 	"github.com/jackc/pgx/v5"
@@ -22,14 +24,17 @@ import (
 )
 
 type Service struct {
-	commands    sync.Mutex
-	Interaction *InteractionController
-	Integration SessionIntegration
-	DB          *pgxpool.Pool
-	Q           *dbgen.Queries
-	Runtime     runtime.Client
-	Hub         *sse.Hub
-	Log         *slog.Logger
+	commands     sync.Mutex
+	Durable      *durability.Store
+	Narration    *narration.Controller
+	sessionLocks sync.Map
+	Interaction  *InteractionController
+	Integration  SessionIntegration
+	DB           *pgxpool.Pool
+	Q            *dbgen.Queries
+	Runtime      runtime.Client
+	Hub          *sse.Hub
+	Log          *slog.Logger
 }
 
 func New(db *pgxpool.Pool, rt runtime.Client, log *slog.Logger) *Service {
@@ -68,6 +73,9 @@ func (s *Service) transitionSession(ctx context.Context, id, to string) error {
 	return nil
 }
 func (s *Service) Start(ctx context.Context, id, trace string) (string, error) {
+	if s.Durable != nil {
+		return s.durableStart(ctx, id, trace)
+	}
 	se, e := s.Q.GetSession(ctx, id)
 	if e != nil {
 		return "", e
@@ -121,8 +129,11 @@ func (s *Service) Start(ctx context.Context, id, trace string) (string, error) {
 	return op.OperationID, e
 }
 func (s *Service) Stop(ctx context.Context, id, trace string) (string, error) {
-	s.commands.Lock()
-	defer s.commands.Unlock()
+	if s.Durable != nil {
+		return s.durableControl(ctx, id, trace, "STOP_SESSION", "")
+	}
+	unlock := s.lockCommands(id)
+	defer unlock()
 	if e := s.transitionSession(ctx, id, "STOPPING"); e != nil {
 		return "", e
 	}
@@ -140,8 +151,12 @@ func (s *Service) Stop(ctx context.Context, id, trace string) (string, error) {
 
 // Interrupt shares the command boundary with automatic admission and Stop.
 func (s *Service) Interrupt(ctx context.Context, id, trace, reason string) (runtime.Operation, error) {
-	s.commands.Lock()
-	defer s.commands.Unlock()
+	if s.Durable != nil {
+		op, e := s.durableControl(ctx, id, trace, "FORCE_INTERRUPT", reason)
+		return runtime.Operation{Accepted: e == nil, OperationID: op}, e
+	}
+	unlock := s.lockCommands(id)
+	defer unlock()
 	if s.Interaction != nil {
 		s.Interaction.Override(id)
 	}
@@ -149,8 +164,16 @@ func (s *Service) Interrupt(ctx context.Context, id, trace, reason string) (runt
 }
 
 func (s *Service) Speak(ctx context.Context, id, text string, priority int32, policy, source, trace string, platform *runtimeapi.PlatformContext) (dbgen.Utterance, error) {
-	s.commands.Lock()
-	defer s.commands.Unlock()
+	unlock := s.lockCommands(id)
+	defer unlock()
+	if s.Narration != nil {
+		// Timeline binding lasts for the captured run, including before the first
+		// narration command and after finish. There is no approved legacy handoff.
+		if policy == "FORCE" {
+			return s.failedNarrationForce(ctx, id, text, priority, source, trace)
+		}
+		return dbgen.Utterance{}, ErrConflict
+	}
 	if source == "OPERATOR" && s.Interaction != nil {
 		s.Interaction.Override(id)
 	}
@@ -158,6 +181,9 @@ func (s *Service) Speak(ctx context.Context, id, text string, priority int32, po
 }
 
 func (s *Service) speak(ctx context.Context, id, text string, priority int32, policy, source, trace string, platform *runtimeapi.PlatformContext) (dbgen.Utterance, error) {
+	if s.Durable != nil {
+		return s.durableSpeak(ctx, id, text, priority, policy, source, trace, platform, false)
+	}
 	se, e := s.Q.GetSession(ctx, id)
 	if e != nil {
 		return dbgen.Utterance{}, e
@@ -214,17 +240,28 @@ func (e Event) Validate() error {
 	return nil
 }
 
-// ApplyEvent makes event storage and FSM transition atomic; a duplicate event is a no-op.
+// ApplyEvent makes legacy event storage and FSM transitions atomic.
 func (s *Service) ApplyEvent(ctx context.Context, e Event) (bool, error) {
 	if err := e.Validate(); err != nil {
 		return false, err
 	}
-	b, _ := json.Marshal(e)
 	tx, err := s.DB.Begin(ctx)
 	if err != nil {
 		return false, err
 	}
 	defer tx.Rollback(ctx)
+	applied, err := s.applyEventTx(ctx, tx, e)
+	if err != nil || !applied {
+		return applied, err
+	}
+	if err = tx.Commit(ctx); err != nil {
+		return false, err
+	}
+	return true, s.afterEvent(ctx, e)
+}
+func (s *Service) applyEventTx(ctx context.Context, tx pgx.Tx, e Event) (bool, error) {
+	b, _ := json.Marshal(e)
+	var err error
 	q := s.Q.WithTx(tx)
 	var uid pgtype.Text
 	if e.UtteranceID != nil {
@@ -261,6 +298,8 @@ func (s *Service) ApplyEvent(ctx context.Context, e Event) (bool, error) {
 		}
 		if cur.Status == target && (e.EventType == "SESSION_PREPARING" || e.EventType == "SESSION_STOPPING") {
 			// Confirmation of a transition already made by Go.
+		} else if s.Durable != nil && (cur.Status == "ENDED" || cur.Status == "FAILED" || cur.Status == "STOPPING" && target != "ENDED" && target != "FAILED") {
+			// Late event is audit-only.
 		} else if !fsm.Session(cur.Status, target) {
 			return false, ErrConflict
 		} else {
@@ -309,6 +348,9 @@ func (s *Service) ApplyEvent(ctx context.Context, e Event) (bool, error) {
 		if er != nil {
 			return false, er
 		}
+		if s.Durable != nil && cur.SessionID == e.SessionID && obsoleteUtterance(cur.Status, target) {
+			target = cur.Status
+		}
 		if cur.SessionID != e.SessionID || (cur.Status != target && !fsm.Utterance(cur.Status, target)) {
 			return false, ErrConflict
 		}
@@ -322,9 +364,31 @@ func (s *Service) ApplyEvent(ctx context.Context, e Event) (bool, error) {
 			}
 		}
 	}
-	if err = tx.Commit(ctx); err != nil {
-		return false, err
+	if s.Durable != nil && e.EventType == "SESSION_READY" {
+		se, er := q.GetSession(ctx, e.SessionID)
+		if er != nil {
+			return false, er
+		}
+		if se.Status == "READY" {
+			r, er := s.Durable.Current(ctx, tx, e.SessionID, false)
+			if er != nil {
+				return false, er
+			}
+			if r.Status == "ACTIVE" {
+				if _, er = tx.Exec(ctx, `UPDATE live_sessions SET status='STARTING' WHERE id=$1 AND status='READY'`, e.SessionID); er != nil {
+					return false, er
+				}
+				if _, er = s.Durable.Enqueue(ctx, tx, r, "START_SESSION", "start", e.TraceID, "", map[string]any{}); er != nil {
+					return false, er
+				}
+			}
+		}
 	}
+	return true, nil
+}
+func (s *Service) afterEvent(ctx context.Context, e Event) error {
+	var err error
+	b, _ := json.Marshal(e)
 	if e.EventType == "UTTERANCE_FAILED" {
 		metrics.UtteranceFailedCount.Inc()
 	}
@@ -337,9 +401,9 @@ func (s *Service) ApplyEvent(ctx context.Context, e Event) (bool, error) {
 		}
 	}
 	s.Hub.Publish(e.SessionID, sse.Message{Name: eventNames[e.EventType], Data: b})
-	if e.EventType == "SESSION_READY" {
+	if s.Durable == nil && e.EventType == "SESSION_READY" {
 		if err = s.transitionSession(ctx, e.SessionID, "STARTING"); err != nil {
-			return true, err
+			return err
 		}
 		_, err = s.Runtime.StartSession(ctx, e.SessionID, map[string]any{"commandId": ids.New("cmd"), "traceId": e.TraceID})
 		if err != nil {
@@ -348,7 +412,7 @@ func (s *Service) ApplyEvent(ctx context.Context, e Event) (bool, error) {
 			_ = s.release(e.SessionID)
 		}
 	}
-	return true, err
+	return err
 }
 
 func (s *Service) release(id string) error {
@@ -358,4 +422,15 @@ func (s *Service) release(id string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	return s.Integration.Release(ctx, id)
+}
+
+func (s *Service) lockCommands(id string) func() {
+	if s.Durable == nil {
+		s.commands.Lock()
+		return s.commands.Unlock
+	}
+	v, _ := s.sessionLocks.LoadOrStore(id, &sync.Mutex{})
+	m := v.(*sync.Mutex)
+	m.Lock()
+	return m.Unlock
 }

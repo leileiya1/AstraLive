@@ -31,11 +31,12 @@ import (
 )
 
 type Server struct {
-	Config     *userconfig.Service
-	S          *app.Service
-	Redis      *redis.Client
-	Env, Token string
-	Log        *slog.Logger
+	Config           *userconfig.Service
+	S                *app.Service
+	Redis            *redis.Client
+	Env, Token       string
+	Log              *slog.Logger
+	JournalTokenFile string
 }
 type ctxKey string
 
@@ -127,7 +128,11 @@ func (h *Server) Router() http.Handler {
 	r := chi.NewRouter()
 	r.Use(h.requestContext)
 	r.Use(h.authorization)
+
 	r.Use(h.validateContract)
+	if h.S != nil && h.S.Durable != nil {
+		r.Mount("/internal/v0.5/durability", JournalRouter(h.S.Durable, h.JournalTokenFile))
+	}
 	if h.Config != nil {
 		r.Mount("/api/v0.3/config", h.Config.PublicRouter())
 		r.Mount("/api/v0.4/auth", h.Config.AuthRouter())
@@ -137,6 +142,9 @@ func (h *Server) Router() http.Handler {
 		r.Mount("/internal/v0.3", h.Config.InternalRouter())
 	}
 	r.Mount("/api/v0.4/interaction", h.interactionRouter())
+	if h.S != nil && h.S.Narration != nil {
+		r.Mount("/api/v0.5/narration", h.narrationRouter())
+	}
 	r.Get("/health/live", func(w http.ResponseWriter, r *http.Request) {
 		_ = json.NewEncoder(w).Encode(map[string]any{"status": "UP"})
 	})
@@ -168,7 +176,7 @@ func (h *Server) Router() http.Handler {
 		r.Get("/live-sessions/{sessionId}", h.getSession)
 		r.Post("/live-sessions/{sessionId}/start", h.idem(h.startSession))
 		r.Post("/live-sessions/{sessionId}/stop", h.idem(h.stopSession))
-		r.Post("/live-sessions/{sessionId}/utterances", h.idem(h.createUtterance))
+		r.Post("/live-sessions/{sessionId}/utterances", h.narrationAdmission(h.idem(h.createUtterance)))
 		r.Post("/live-sessions/{sessionId}/webrtc/offer", h.webrtcOffer)
 		r.Post("/live-sessions/{sessionId}/interrupt", h.interrupt)
 		r.Get("/live-sessions/{sessionId}/events", h.events)
@@ -241,7 +249,7 @@ func (h *Server) authorizeInternal(next http.Handler) http.Handler {
 func (h *Server) ready(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
 	defer cancel()
-	if h.S.DB.Ping(ctx) != nil || h.Redis.Ping(ctx).Err() != nil {
+	if h.S.DB.Ping(ctx) != nil || (h.Redis != nil && h.Redis.Ping(ctx).Err() != nil) {
 		failure(w, r, 503, "RUNTIME_UNAVAILABLE", "dependency unavailable")
 		return
 	}
@@ -268,6 +276,18 @@ func (c *capture) Write(p []byte) (int, error) {
 	return c.ResponseWriter.Write(p)
 }
 func (h *Server) idem(next http.HandlerFunc) http.HandlerFunc {
+	if h.S != nil && h.S.Durable != nil {
+		return func(w http.ResponseWriter, r *http.Request) {
+			if strings.HasPrefix(r.URL.Path, "/api/v1/live-sessions/") {
+				h.durableIdempotency(next)(w, r)
+			} else {
+				h.legacyIdem(next)(w, r)
+			}
+		}
+	}
+	return h.legacyIdem(next)
+}
+func (h *Server) legacyIdem(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		key := r.Header.Get("Idempotency-Key")
 		if key == "" {

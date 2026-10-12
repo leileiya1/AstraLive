@@ -13,9 +13,12 @@ import (
 	"astralive/backend/db"
 	"astralive/backend/internal/app"
 	"astralive/backend/internal/config"
+	"astralive/backend/internal/durability"
 	"astralive/backend/internal/eventbus"
 	"astralive/backend/internal/httpapi"
 	"astralive/backend/internal/interaction"
+	"astralive/backend/internal/narration"
+	"astralive/backend/internal/recovery"
 	"astralive/backend/internal/runtime"
 	"astralive/backend/internal/userconfig"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -27,6 +30,16 @@ func main() {
 	c, e := config.Load()
 	if e != nil {
 		panic(e)
+	}
+	continuity, e := narration.Enabled()
+	if e != nil {
+		panic(e)
+	}
+	if continuity && !c.DurabilityEnabled {
+		panic("continuity requires PostgreSQL durability")
+	}
+	if continuity && os.Getenv("ASTRALIVE_MEDIA_TIMELINE_ENABLED") != "true" && os.Getenv("ASTRALIVE_MEDIA_TIMELINE_ENABLED") != "1" {
+		panic("continuity requires ASTRALIVE_MEDIA_TIMELINE_ENABLED")
 	}
 	level := slog.LevelInfo
 	if c.LogLevel == "debug" {
@@ -46,13 +59,16 @@ func main() {
 		log.Error("migration failed", "error", e)
 		os.Exit(1)
 	}
-	opts, e := redis.ParseURL(c.RedisURL)
-	if e != nil {
-		log.Error("redis URL invalid", "error", e)
-		os.Exit(1)
+	var rc *redis.Client
+	if c.EventMode == "legacy_redis" {
+		opts, err := redis.ParseURL(c.RedisURL)
+		if err != nil {
+			log.Error("redis URL invalid")
+			os.Exit(1)
+		}
+		rc = redis.NewClient(opts)
+		defer rc.Close()
 	}
-	rc := redis.NewClient(opts)
-	defer rc.Close()
 	rt := runtime.New(c.RuntimeURL)
 	s := app.New(pool, rt, log)
 	cfg, e := userconfig.FromEnvironment(pool)
@@ -83,6 +99,39 @@ func main() {
 			}
 		}()
 	}
+	if c.DurabilityEnabled {
+		if cfg == nil || !cfg.IntegrationEnabled {
+			log.Error("durability requires authenticated Session integration")
+			os.Exit(1)
+		}
+		journal, err := userconfig.ReadServiceToken(c.JournalTokenFile)
+		if err != nil {
+			log.Error("journal token unavailable")
+			os.Exit(1)
+		}
+		for _, path := range []string{cfg.RuntimeControlTokenFile, cfg.WorkerTokenFile, cfg.IdentityTokenFile} {
+			if path != "" {
+				token, err := userconfig.ReadServiceToken(path)
+				if err != nil || token == journal {
+					log.Error("journal role must have a distinct valid token")
+					os.Exit(1)
+				}
+			}
+		}
+		if journal == c.InternalToken {
+			log.Error("journal token must differ from Tool token")
+			os.Exit(1)
+		}
+		s.Durable = durability.New(pool)
+		if continuity {
+			s.AttachNarration(narration.New(s.Durable))
+			go s.Narration.Run(ctx)
+		}
+		dispatcher := &durability.Dispatcher{Store: s.Durable, Remote: rt, Log: log}
+		go dispatcher.Run(ctx)
+		go (&recovery.Coordinator{Store: s.Durable, Dispatcher: dispatcher, Log: log}).Run(ctx)
+		go eventbus.RunPostgres(ctx, s, log)
+	}
 	interactionConfig, err := interaction.FromEnvironment()
 	if err != nil {
 		log.Error("invalid interaction configuration")
@@ -90,13 +139,15 @@ func main() {
 	}
 	s.Interaction = app.NewInteraction(ctx, s, cfg, interactionConfig)
 	prometheus.MustRegister(prometheus.NewGaugeFunc(prometheus.GaugeOpts{Name: "interaction_candidate_queue_length", Help: "Aggregate bounded candidate count; no identity labels."}, s.Interaction.QueueLength))
-	h := &httpapi.Server{S: s, Redis: rc, Env: c.Env, Token: c.InternalToken, Log: log, Config: cfg}
-	go func() {
-		if err := eventbus.New(rc, s, c.EventStream, log).Run(ctx); err != nil && ctx.Err() == nil {
-			log.Error("event consumer stopped", "error", err)
-			stop()
-		}
-	}()
+	h := &httpapi.Server{S: s, Redis: rc, Env: c.Env, Token: c.InternalToken, Log: log, Config: cfg, JournalTokenFile: c.JournalTokenFile}
+	if rc != nil && !c.DurabilityEnabled {
+		go func() {
+			if err := eventbus.New(rc, s, c.EventStream, log).Run(ctx); err != nil && ctx.Err() == nil {
+				log.Error("event consumer stopped", "error", err)
+				stop()
+			}
+		}()
+	}
 	srv := &http.Server{Addr: c.Addr, Handler: h.Router(), ReadHeaderTimeout: 5 * time.Second, IdleTimeout: 60 * time.Second}
 	go func() {
 		<-ctx.Done()

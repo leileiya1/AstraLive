@@ -1,0 +1,56 @@
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/XL_和_XXL_库存多少？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/2XL_库存多少？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/180码库存多少？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/商品价格和库存多少？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/商品材质和库存多少？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/价格多少，怎么搭配？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/商品名称和价格多少？
+--- PASS: TestAuditDistinctQuestionIntentsDoNotMerge (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/XL_和_XXL_库存多少？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/2XL_库存多少？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/180码库存多少？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/商品价格和库存多少？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/商品材质和库存多少？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/价格多少，怎么搭配？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/商品名称和价格多少？ (0.00s)
+=== RUN   TestAuditCancelDuringReceiveLockWait
+--- PASS: TestAuditCancelDuringReceiveLockWait (0.00s)
+=== RUN   TestFastPollDoesNotIncreaseAutomaticSpeechFrequency
+--- PASS: TestFastPollDoesNotIncreaseAutomaticSpeechFrequency (0.00s)
+=== RUN   TestFContinuityBusySelectsBoundaryWithoutLegacyPreemption
+--- PASS: TestFContinuityBusySelectsBoundaryWithoutLegacyPreemption (0.00s)
+=== RUN   TestFContinuityAnswerDefersButStillExpiresCandidates
+--- PASS: TestFContinuityAnswerDefersButStillExpiresCandidates (0.00s)
+=== RUN   TestFLegacyBusyGateStillDefersWithContinuityOff
+--- PASS: TestFLegacyBusyGateStillDefersWithContinuityOff (0.00s)
+=== RUN   TestFContinuityGateCannotOverrideProductSwitchOrOperator
+=== RUN   TestFContinuityGateCannotOverrideProductSwitchOrOperator/operator
+=== RUN   TestFContinuityGateCannotOverrideProductSwitchOrOperator/product
+--- PASS: TestFContinuityGateCannotOverrideProductSwitchOrOperator (0.00s)
+    --- PASS: TestFContinuityGateCannotOverrideProductSwitchOrOperator/operator (0.00s)
+    --- PASS: TestFContinuityGateCannotOverrideProductSwitchOrOperator/product (0.00s)
+=== RUN   TestDedupMergeAndStockSeparation
+--- PASS: TestDedupMergeAndStockSeparation (0.00s)
+=== RUN   TestDirectedRequestSelectedButAmbientStatementFiltered
+--- PASS: TestDirectedRequestSelectedButAmbientStatementFiltered (0.00s)
+=== RUN   TestTTLRateCapacityAndStop
+--- PASS: TestTTLRateCapacityAndStop (0.01s)
+=== RUN   TestUserLimitAndGlobalLimit
+--- PASS: TestUserLimitAndGlobalLimit (0.00s)
+=== RUN   TestPriorityFairnessOperatorProductSwitchAndBoundary
+--- PASS: TestPriorityFairnessOperatorProductSwitchAndBoundary (0.00s)
+=== RUN   TestFairness
+--- PASS: TestFairness (0.00s)
+=== RUN   TestFailureNoRetryAndSessionIsolation
+--- PASS: TestFailureNoRetryAndSessionIsolation (0.00s)
+=== RUN   TestConcurrentDeliveryDedup
+--- PASS: TestConcurrentDeliveryDedup (0.00s)
+=== RUN   TestOptInControlledPreemption
+--- PASS: TestOptInControlledPreemption (0.00s)
+=== RUN   TestTwoRoomsShareLimiterWithoutEventMix
+--- PASS: TestTwoRoomsShareLimiterWithoutEventMix (0.00s)
+=== RUN   TestObservationUsesLocalClockAndDispatchAcknowledgement
+--- PASS: TestObservationUsesLocalClockAndDispatchAcknowledgement (0.00s)
+PASS
+ok  	astralive/backend/internal/interaction	1.480s

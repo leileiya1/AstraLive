@@ -1,0 +1,24 @@
+{
+  "sourceSHA": "dd68849516716e173bac4392f1bb78acb327d203",
+  "sourceDirty": false,
+  "sourceFileSHA256": {
+    "runtime/app/media_fanout.py": "277b730c2655a40913a1185144f1f6feac94ce318bcd93d42c816336fe3fea53",
+    "runtime/app/media_timeline.py": "30dc1bf1c7241ad83121c44993d35ebe953007bd9e0791e1d36bf37f8b301647",
+    "runtime/app/rtmp_media.py": "07cbb48599b49b6f3f124f4c72ebe8ebf4be63f239a16323db29fdde4400fbe5",
+    "runtime/app/webrtc_media.py": "6ad58275cf74b19ac6d8c86152097042161fc9f31d33df8f58b30da823a64257",
+    "runtime/app/bound_media.py": "2557afe13506d68a803c102f22dc5c9465360f7f3e3baf84bea12bffd7c50f1a"
+  },
+  "baselineSHA": "5a24478126211cbcde5a9565d0c6063748426527",
+  "contract": "v0.5-frozen-1",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "python": "3.12.13",
+  "pyav": "17.1.0",
+  "fixture": "440Hz synthetic 80ms pulse + RGB marker every800ms; seed=0",
+  "clockDomains": "Chrome performance.now; Runtime monotonic; FLV PTS; no host-clock subtraction",
+  "limitations": [
+    "AudioContext analyser onset is not physical device output",
+    "headless native Chrome is not human visual assessment",
+    "no actual LLM/TTS/SoulX or busy interaction",
+    "sequential A then B, warm-up/resource order bias retained"
+  ]
+}

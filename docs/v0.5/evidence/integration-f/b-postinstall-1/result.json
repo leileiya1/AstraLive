@@ -1,0 +1,18 @@
+{
+  "pin": "09f06f288026fe902ff262e85a1c5a8f29dcf4ca",
+  "runtimeSourceCommit": "85bec11",
+  "scope": "B standalone CPU Runtime regressions after install-order fix, not merged A/C/real GPU READY",
+  "command": "PYTHONPATH=runtime:. <runtime-python> -m unittest discover -s runtime/tests -v",
+  "exitCode": 0,
+  "result": "PASS",
+  "sourceHashes": {
+    "runtime/app/media_timeline.py": "30dc1bf1c7241ad83121c44993d35ebe953007bd9e0791e1d36bf37f8b301647",
+    "runtime/tests/test_media_timeline.py": "dfa624dc2594caae0b78d9ae59f355e94660a0ca04077b5c1412c446e01d3883"
+  },
+  "logSHA256": "9841fdb9207405fde1cc2fe52308d5a4ffe9b3f482123f7c9e2f8dc464c76485",
+  "total": 190,
+  "passed": 179,
+  "skipped": 11,
+  "latestEvidenceOnlyPin": "dda7936faba56efe01659b6393a4d32a93322508",
+  "latestRuntimeWorkerIdentical": true
+}

@@ -7,6 +7,7 @@ from typing import Awaitable, Callable
 
 from .drop_rate import DropRateMonitor
 from .providers import AudioChunk, MediaDeliveryError, MediaOutput, VideoFrame
+from .media_timeline import enabled as timeline_enabled, split_audio, FrameDispositions
 
 
 log = logging.getLogger(__name__)
@@ -25,6 +26,7 @@ class _SinkChannel:
     audio_dropped: int = 0
     video_dropped: int = 0
     rates: dict = field(default_factory=lambda: {"audio": DropRateMonitor(), "video": DropRateMonitor()})
+    video_retired: FrameDispositions = field(default_factory=FrameDispositions)
 
 
 class FanoutMediaOutput:
@@ -49,6 +51,35 @@ class FanoutMediaOutput:
         self.warnings: list[dict] = []
         self.warning_handler: WarningHandler | None = None
         self.drain_timeout = 20.0
+        self.timeline_v2 = timeline_enabled()
+        self.timeline = None
+
+    def bind_timeline(self, timeline):
+        if not self.timeline_v2 or self.running:
+            raise ValueError("bind V2 timeline before output start")
+        self.timeline = timeline
+        for channel in self.channels:
+            channel.output.bind_timeline(timeline)
+
+    def _eligible(self, item, media):
+        if not self.timeline:
+            return True
+        if getattr(item, "identity", None) is None:
+            return False
+        if media == "audio":
+            return self.timeline.eligible(getattr(item, "identity", None), item.startSample, item.endSample)
+        return self.timeline.eligible(getattr(item, "identity", None), item.sourceSample, item.sourceSample)
+
+    def video_disposition(self, frame):
+        states = [c.video_retired.get(frame) or getattr(c.output, "video_disposition", lambda f: None)(frame)
+                  for c in self.channels if c.running]
+        if "consumed" in states:
+            return "consumed"
+        return "dropped" if states and all(s == "dropped" for s in states) else None
+
+    def _retire_video(self, channel, frame):
+        if self.timeline_v2:
+            channel.video_retired.record(frame, "dropped")
 
     def configure_session(self, config) -> None:
         for channel in self.channels:
@@ -63,6 +94,8 @@ class FanoutMediaOutput:
 
     def _warn(self, warning: dict) -> None:
         self.warnings.append(warning)
+        if self.timeline_v2:
+            del self.warnings[:-256]
         log.warning("media_sink_warning %s", warning)
         if self.warning_handler:
             asyncio.create_task(self.warning_handler(warning))
@@ -94,7 +127,7 @@ class FanoutMediaOutput:
         while channel.running:
             chunk = await channel.audio.get()
             try:
-                if chunk.generation_id == self.generation_id:
+                if chunk.generation_id == self.generation_id and self._eligible(chunk, "audio"):
                     await channel.output.push_audio(chunk)
             except asyncio.CancelledError:
                 raise
@@ -109,12 +142,13 @@ class FanoutMediaOutput:
         while channel.running:
             frame = await channel.video.get()
             try:
-                if frame.generation_id == self.generation_id:
+                if frame.generation_id == self.generation_id and self._eligible(frame, "video"):
                     await channel.output.push_video(frame)
             except asyncio.CancelledError:
                 raise
             except Exception as exc:
                 channel.failed_pushes += 1
+                self._retire_video(channel, frame)
                 self._warn({"code": "MEDIA_SINK_DEGRADED", "sink": channel.name,
                             "media": "video", "errorType": type(exc).__name__})
             finally:
@@ -122,8 +156,10 @@ class FanoutMediaOutput:
 
     def _drop_and_offer(self, channel: _SinkChannel, queue: asyncio.Queue, item, media: str) -> None:
         try:
-            queue.get_nowait()
+            retired = queue.get_nowait()
             queue.task_done()
+            if media == "video":
+                self._retire_video(channel, retired)
         except asyncio.QueueEmpty:
             pass
         if media == "audio":
@@ -163,7 +199,8 @@ class FanoutMediaOutput:
         # Pace the producer by the fastest live sink. A stalled sink is allowed
         # to drop only its own stale item and cannot hold the other sinks back.
         pending = {asyncio.create_task(queue.put(item)): (channel, queue) for channel, queue in full}
-        done, waiting = await asyncio.wait(pending, return_when=asyncio.FIRST_COMPLETED)
+        done, waiting = await asyncio.wait(pending, return_when=asyncio.FIRST_COMPLETED,
+                                          timeout=.5 if self.timeline_v2 else None)
         if waiting:
             grace = 0.04 if media == "audio" else 0.08
             also_done, waiting = await asyncio.wait(waiting, timeout=grace)
@@ -195,10 +232,13 @@ class FanoutMediaOutput:
 
     async def push_audio(self, chunk: AudioChunk) -> None:
         if self.running and chunk.generation_id == self.generation_id:
-            await self._dispatch(chunk, "audio")
+            for part in split_audio(chunk) if self.timeline_v2 else (chunk,):
+                if part.generation_id != self.generation_id or not self._eligible(part, "audio"):
+                    return
+                await self._dispatch(part, "audio")
 
     async def push_video(self, frame: VideoFrame) -> None:
-        if self.running and frame.generation_id == self.generation_id:
+        if self.running and frame.generation_id == self.generation_id and self._eligible(frame, "video"):
             await self._dispatch(frame, "video")
 
     async def drain(self, generation_id: int) -> None:
