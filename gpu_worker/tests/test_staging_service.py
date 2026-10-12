@@ -223,6 +223,57 @@ class StagingServiceTests(ServiceTests):
             self.assertEqual(client.expect('StageError', allow_error=True)[0]['code'], 'STAGING_RETIRED')
         await asyncio.to_thread(run)
 
+    async def test_unknown_survives_fresh_stage_connection_and_legacy_begin(self):
+        client = await self.client()
+        def run():
+            client.start();client.audio();client.receive_artifact();client.arm();client.cancel()
+            self.assertFalse(client.release(armed=True)['reusable'])
+            client.close()
+            fresh = Client(self.cfg)
+            self.stage_clients.append(fresh)
+            with self.assertRaises(AssertionError):
+                fresh.start()
+            fresh.close()
+            with socket.create_connection(('127.0.0.1',self.cfg.port),timeout=3) as legacy:
+                send(legacy,{'type':'Auth','protocol_version':1,'internal_version':'1.1',
+                    'session_id':'legacy-after-unknown','token':secret(self.cfg.token_file)})
+                ready,_=receive(legacy)
+                send(legacy,{'type':'BeginGeneration','session_id':'legacy-after-unknown',
+                    'worker_epoch':ready['worker_epoch'],'generation_id':100,
+                    'cache_id':ready['cache_id'],'sample_rate':16000,'channels':1,
+                    'pcm_format':'s16le','first_sample_index':0,'output_fps':25})
+                with self.assertRaises((EOFError,ConnectionResetError)):
+                    receive(legacy)
+        await asyncio.to_thread(run)
+
+    async def test_cancel_before_begin_is_idempotent_and_late_begin_is_retired(self):
+        client = await self.client()
+        def run():
+            cancel = message('StageCancel')
+            ident = cancel['identity']
+            ident.update(sessionId='stage-test',workerEpoch=client.ready['worker_epoch'],
+                workerRef=self.cfg.worker_ref,workerGenerationId=client.gid+1,stageId='prebegin-tombstone')
+            client.identity = ident
+            client.pcm = bytes(1280)
+            cancel.update(session_id='stage-test',worker_epoch=client.ready['worker_epoch'],control_id='pre-control',reason='STOP')
+            client.send(cancel)
+            fenced = client.expect('StageFenced')[0]
+            client.send(cancel)
+            self.assertEqual(client.expect('StageFenced')[0],fenced)
+            release = client.header('StageRelease')
+            release.update(control_id='pre-control',reason='CANCELLED',descriptor_sha256=None,
+                commit_proof_fingerprint=None,pose_proof_fingerprint=None,latest_consumed_sequence=-1)
+            client.send(release)
+            self.assertEqual(client.expect('StageReleased')[0]['terminal_disposition'],'PROVEN_CANCELLED')
+            late = self.header_for_future(client)
+            late['identity'] = copy.deepcopy(ident)
+            late['request_fingerprint'] = c.stage_begin_fingerprint(late)
+            client.send(late)
+            self.assertEqual(client.expect('StageError',allow_error=True)[0]['code'],'STAGING_RETIRED')
+            client.gid = ident['workerGenerationId']
+            client.start();client.cancel();client.release()
+        await asyncio.to_thread(run)
+
     @staticmethod
     def header_for_future(client):
         h = client.header('StageBegin')
