@@ -35,7 +35,8 @@ func Enabled() (bool, error) {
 }
 
 type Controller struct {
-	Store *durability.Store
+	Store           *durability.Store
+	StagingSettings StagingSettings
 	// Composed by App: conservatively retire the entire captured Session on
 	// either product identity or fact version invalidation, in THIS transaction.
 	RetireCapturedSession func(context.Context, pgx.Tx, durability.Run) error
@@ -283,7 +284,15 @@ func (c *Controller) Start(ctx context.Context, sid, trace string, x StartReques
 			}
 		}
 	}
-	p, e := BuildPlan(nid, sid, x.ScriptVersion, product, hash, hash, x.Style, x.Policy, x.RequiredSinks, x.Beats)
+	captured, e := c.capturedStaging(ctx, tx, run)
+	if e != nil {
+		return Document{}, e
+	}
+	packingLimit := 4000
+	if captured.Enabled && *captured.LimitsRevision == "staging-short-1" {
+		packingLimit = 0 // whole authored statements only; never recut an immutable plan
+	}
+	p, e := buildPlan(nid, sid, x.ScriptVersion, product, hash, hash, x.Style, x.Policy, x.RequiredSinks, x.Beats, packingLimit)
 	if e != nil {
 		return Document{}, e
 	}
@@ -343,7 +352,40 @@ func (c *Controller) enqueueSegment(ctx context.Context, tx pgx.Tx, r durability
 	p["utteranceId"] = stable("utt", s.ID+fmt.Sprint(r.Epoch))
 	p["attemptId"] = stable("attempt", s.ID+fmt.Sprint(r.Epoch))
 	p["requiredSinks"] = d.Plan.RequiredSinks
+	captured, e := c.capturedStaging(ctx, tx, r)
+	if e != nil {
+		return durability.Command{}, e
+	}
 	p["maxDurationMs"] = 8000
+	if captured.Enabled {
+		if *captured.LimitsRevision == "staging-short-1" {
+			p["maxDurationMs"] = 1920
+		}
+		beat := s.BeatID
+		if beat == "" && d.Resume != nil {
+			beat = d.Resume.NextBeatID
+		}
+		if beat == "" && d.Resume != nil {
+			// At EOF there is no next Beat; retain the proved boundary Beat.
+			for _, authored := range d.Plan.Segments {
+				if authored.ID == d.Resume.Boundary.Identity.SegmentID {
+					beat = authored.BeatID
+					break
+				}
+			}
+		}
+		if beat == "" {
+			return durability.Command{}, ErrConflict
+		}
+		p["beatId"] = beat
+		p["interactionTurnId"] = nil
+		if s.Lane != "NARRATION" {
+			if d.Turn == nil {
+				return durability.Command{}, ErrConflict
+			}
+			p["interactionTurnId"] = d.Turn.ID
+		}
+	}
 	return c.enqueue(ctx, tx, r, d, "COMMIT_SEGMENT", s.ID+":commit", trace, s.ID, s.Lane, p)
 }
 

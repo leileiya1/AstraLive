@@ -1,0 +1,203 @@
+"""Real public control/API + Chrome observer; never replaces bound providers.
+
+Comment transport is an explicit replay fixture. Speech/GPU/media must be real
+and independently proved by Runtime/Worker/SQL evidence from the owning runner.
+"""
+import argparse
+import asyncio
+import base64
+import json
+import random
+from pathlib import Path
+import time
+
+import httpx
+
+
+class GoldenFailure(Exception):
+    pass
+
+
+def require_observable_state(snapshot):
+    # Natural FINISHED is a terminal narration plan while the Session remains
+    # live for explicit normal Stop; distinguish it from operator/failure Stop.
+    if snapshot["state"] == "STOPPED" and snapshot.get("reason") == "FINISHED":
+        return
+    if snapshot["state"] in {"RECOVERY_REQUIRED", "FAILED", "STOPPING", "STOPPED"}:
+        raise GoldenFailure("Narration stopped or requires recovery")
+
+
+def private(path):
+    file=Path(path)
+    if not file.is_file() or file.stat().st_mode&0o077:
+        raise GoldenFailure("Private credential file unavailable")
+    return file.read_text().strip()
+
+
+def sink_ids(logfile,sid):
+    # Read actual owned Runtime telemetry, never invent peer/incarnation IDs.
+    found=None
+    for line in Path(logfile).read_text(errors="replace").splitlines():
+        try:
+            outer=json.loads(line);message=outer.get("message","")
+            if not message.startswith("runtime_media_metrics "):continue
+            report=json.loads(message[len("runtime_media_metrics "):])
+            for session in report["sessions"]:
+                if session["sessionId"]!=sid:continue
+                media=session["media"]
+                web=media.get("webrtc",{}).get("sink",{})
+                rtmp=media.get("rtmp",{}).get("sink",{})
+                peers=[peer["peerId"] for peer in web.get("peers",[]) if peer["connectionState"]=="connected"]
+                if peers and rtmp.get("connectionIncarnation"):
+                    found=[*peers,"rtmp:"+str(rtmp["connectionIncarnation"])]
+        except (ValueError,KeyError,TypeError):pass
+    return found
+
+
+async def main(args):
+    from playwright.async_api import async_playwright
+    out=Path(args.output);out.mkdir(parents=True,exist_ok=False)
+    fixture=json.loads(Path(args.fixture).read_text())
+    report={"scope":"REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
+        "commentTransport":"MOCK_REPLAY_ONLY", "humanNaturalness":"NOT_TESTED",
+        "audienceAudible":False,"correlatedAV":"NOT_ANALYSED",
+        "mode":args.mode,"seed":args.seed,"fixture":fixture.get("name"),"events":[]}
+    session=None;browser=None;page=None;normal_stop=False;recording_file=None
+    async with httpx.AsyncClient(base_url=args.backend,verify=False,trust_env=False,timeout=30) as client:
+        async def api(method,path,payload=None,key=None):
+            headers={"Origin":args.backend}
+            if key:headers["Idempotency-Key"]=key
+            response=await client.request(method,path,json=payload,headers=headers)
+            try:packet=response.json()
+            except ValueError:raise GoldenFailure("Non-JSON public response") from None
+            if response.status_code>=300:
+                # No raw body/request/credential is included in errors.
+                raise GoldenFailure(f"Public API failed {path}: HTTP{response.status_code}/{packet.get('code','UNKNOWN')}")
+            return packet.get("data")
+        try:
+            await api("POST","/api/v0.4/auth/login",{"username":args.username,"password":private(args.password_file)})
+            profiles={}
+            for kind,provider,config in [
+                ("LLM","deepseek",{"model":"deepseek-flash","maxTokens":256}),
+                ("TTS","xiaoya",{"voiceId":"xiao_ya","speed":1,"modelRef":"xiaoya-default"}),
+                ("GPU_WORKER","soulx",{"workerRef":args.worker_ref}),
+                ("AVATAR","soulx",{"avatarRef":args.avatar_ref,"workerProfileId":None})]:
+                if kind=="AVATAR":config["workerProfileId"]=profiles["GPU_WORKER"]["profileId"]
+                payload={"kind":kind,"name":"Golden "+kind,"provider":provider,"config":config}
+                if kind=="LLM":payload["secret"]=private(args.llm_key_file)
+                profile=await api("POST","/api/v0.3/config/profiles",payload)
+                payload.pop("secret",None)
+                profile=await api("POST","/api/v0.3/config/profiles/"+profile["profileId"]+"/test",{"expectedVersion":profile["version"]})
+                profile=await api("POST","/api/v0.3/config/profiles/"+profile["profileId"]+"/default",{"expectedVersion":profile["version"]})
+                profiles[kind]=profile
+            avatar=await api("POST","/api/v1/avatars",{"name":"Golden SoulX avatar","engine":"SOULX"})
+            voice=await api("POST","/api/v1/voices",{"name":"Golden XiaoYa","provider":"xiaoya","providerVoiceId":"xiao_ya"})
+            product=await api("POST","/api/v1/products",fixture["product"])
+            room=await api("POST","/api/v1/live-rooms",{"name":"Golden owned room","avatarId":avatar["avatarId"],"voiceId":voice["voiceId"],
+                "activeProductId":product["productId"],"systemPrompt":"自然、简短、只使用当前商品已确认事实。"})
+            created=await api("POST","/api/v1/live-sessions",{"roomId":room["roomId"]});session=created["sessionId"]
+            report.update(sessionId=session,productId=product["productId"],roomId=room["roomId"],profiles=profiles)
+            await api("POST",f"/api/v1/live-sessions/{session}/start",{},"golden-start")
+            for _ in range(600):
+                state=await api("GET",f"/api/v1/live-sessions/{session}")
+                if state["status"]=="LIVE":break
+                if state["status"] in {"FAILED","ENDED"}:raise GoldenFailure("Bound Session failed before live")
+                await asyncio.sleep(.2)
+            else:raise GoldenFailure("Bound Session startup timed out")
+            provider_status=await api("GET",f"/api/v0.4/sessions/{session}/providers")
+            if provider_status["mode"]!="REAL" or not provider_status.get("workerEpoch"):
+                raise GoldenFailure("Selected real bound provider is not ready")
+            report["capturedProviders"]=provider_status
+            async with async_playwright() as playwright:
+                browser=await playwright.chromium.launch(channel="chrome",headless=True,args=["--autoplay-policy=no-user-gesture-required"])
+                context=await browser.new_context(ignore_https_errors=True)
+                cookies=[{"name":cookie.name,"value":cookie.value,"url":args.backend,"httpOnly":True,"secure":True,"sameSite":"Strict"}
+                    for cookie in client.cookies.jar]
+                await context.add_cookies(cookies)
+                page=await context.new_page()
+                next_chunk=0
+                recording_file=open(out/"chrome.webm","wb")
+                async def record_chunk(sequence,encoded):
+                    nonlocal next_chunk
+                    if sequence!=next_chunk:raise GoldenFailure("Browser recording sequence gap")
+                    recording_file.write(base64.b64decode(encoded));recording_file.flush();next_chunk+=1
+                await page.expose_function("__goldenRecording",record_chunk)
+                await page.goto(args.backend+"/__golden/browser")
+                await page.evaluate("sid=>goldenStart(sid)",session)
+                await page.wait_for_function("pc.connectionState==='connected'",timeout=30000)
+                for _ in range(100):
+                    required=sink_ids(args.runtime_log,session)
+                    if required:break
+                    await asyncio.sleep(.1)
+                else:raise GoldenFailure("Actual named required sinks unavailable")
+                plan=fixture["plan"]|{"requiredSinks":required,"requestId":"golden-plan","scriptVersion":fixture.get("scriptVersion","golden-real-1")}
+                document=await api("POST",f"/api/v0.5/narration/{session}/start",plan)
+                report.update(narrationId=document["plan"]["narrationId"],requiredSinks=required,chromeVersion=browser.version)
+                began=time.monotonic();questions=fixture["questions"]
+                if args.mode=="ten-minute" and (args.seconds<600 or len(questions)<5):
+                    raise GoldenFailure("Formal G1 requires >=600 seconds and >=5 questions")
+                deadline=1800 if args.mode=="ten-minute" else args.seconds
+                required_facts=set(fact for beat in document["plan"]["beats"] for fact in beat["requiredFactIds"])
+                positions=sorted(random.Random(args.seed).uniform(args.seconds*.08,args.seconds*.87) for _ in questions)
+                report["commentPositionsSeconds"]=positions;next_question=0
+                while time.monotonic()-began<deadline:
+                    elapsed=time.monotonic()-began
+                    if next_question<len(questions) and elapsed>=positions[next_question]:
+                        answer=await api("POST",f"/api/v0.4/interaction/{session}/mock",{"text":questions[next_question],"users":1})
+                        report["events"].append({"kind":"COMMENT_INJECTED","question":questions[next_question],"elapsedSeconds":elapsed,
+                            "browserAt":await page.evaluate("performance.now()"),"response":answer});next_question+=1
+                    snapshot=await api("GET",f"/api/v0.5/narration/{session}/")
+                    require_observable_state(snapshot)
+                    if snapshot["reason"]=="FINISHED":
+                        if args.mode=="ten-minute" and elapsed<args.seconds:
+                            raise GoldenFailure("Authored plan finished early: fixture duration insufficient")
+                        if args.mode=="ten-minute":
+                            if next_question != len(questions) or not required_facts.issubset(set(snapshot["cursor"]["completedFactIds"])):
+                                raise GoldenFailure("Formal G1 plan completion lacks required facts/questions")
+                            # F additionally verifies terminal selected turns from SQL.
+                            break
+                        if args.mode=="short":
+                            report["shortPlanFinishedEarly"]=elapsed<args.seconds
+                            break
+                        if elapsed<args.seconds:
+                            raise GoldenFailure("Soak authored fixture exhausted early")
+                    await asyncio.sleep(.2)
+                if args.mode=="ten-minute" and snapshot.get("reason")!="FINISHED":
+                    raise GoldenFailure("Formal G1 deadline exceeded before authored plan completion")
+                report["continuousDurationSeconds"]=time.monotonic()-began
+                report["finalNarrationBeforeStop"]=snapshot
+                report["factCoverageClaim"]="PENDING_SQL_AUDIT" if args.mode=="ten-minute" else "NOT_FORMAL_COMPLETE_FACT_COVERAGE"
+                await api("POST",f"/api/v1/live-sessions/{session}/stop",{},"golden-stop")
+                for _ in range(200):
+                    state=await api("GET",f"/api/v1/live-sessions/{session}")
+                    if state["status"]=="ENDED":normal_stop=True;break
+                    await asyncio.sleep(.1)
+                chrome=await page.evaluate("goldenFinish()")
+                recording_file.close()
+                (out/"chrome.json").write_text(json.dumps(chrome,ensure_ascii=False))
+                report.update(normalStop=normal_stop,chromeAudioObserved=any(row["rms"]>.001 for row in chrome["audioEnergy"]),
+                    chromeVideoFrames=len(chrome["video"]),recordedBytes=(out/"chrome.webm").stat().st_size)
+                if not normal_stop or not report["chromeAudioObserved"] or not report["chromeVideoFrames"]:
+                    raise GoldenFailure("Actual browser AV or normal Stop missing")
+                # Correlation, complete turn/fact SQL proofs and RTMP audit are
+                # separate oracles; observing audio/video alone is not PASS.
+                report["status"]="OBSERVED_PENDING_INDEPENDENT_SQL_AV_QUALITY_AUDIT"
+        except Exception as exc:
+            report.update(status="FAIL",errorType=type(exc).__name__,reason=str(exc) if isinstance(exc,GoldenFailure) else "Golden observer failed")
+            raise
+        finally:
+            if session and not normal_stop:
+                try:await api("POST",f"/api/v1/live-sessions/{session}/stop",{},"golden-stop")
+                except Exception:report["cleanupPending"]=True
+            if browser:await browser.close()
+            if recording_file and not recording_file.closed:recording_file.close()
+            (out/"result.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+
+
+if __name__=="__main__":
+    parser=argparse.ArgumentParser()
+    for name in ["backend","username","password-file","llm-key-file","worker-ref","avatar-ref","fixture","runtime-log","output"]:
+        parser.add_argument("--"+name,required=True)
+    parser.add_argument("--mode",choices=["short","ten-minute","soak"],default="short")
+    parser.add_argument("--seconds",type=int,default=600);parser.add_argument("--seed",type=int,default=20261012)
+    asyncio.run(main(parser.parse_args()))

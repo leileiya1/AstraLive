@@ -247,6 +247,10 @@ func (d Document) Clone() Document {
 // names and long indivisible sentences are never sliced. TTS measured cap is
 // enforced separately before commit (8 seconds maximum).
 func BuildPlan(id, session, version, product, productVersion, productHash, style string, policy Policy, sinks []string, input []BeatInput) (Plan, error) {
+	return buildPlan(id, session, version, product, productVersion, productHash, style, policy, sinks, input, 4000)
+}
+
+func buildPlan(id, session, version, product, productVersion, productHash, style string, policy Policy, sinks []string, input []BeatInput, packingLimit int) (Plan, error) {
 	p := Plan{ID: id, SessionID: session, ScriptVersion: version, ProductID: product, ProductVersion: productVersion, ProductHash: productHash, Style: style, Policy: policy, RequiredSinks: sinks}
 	if id == "" || session == "" || version == "" || product == "" || productVersion == "" || productHash == "" || len(input) == 0 || len(sinks) == 0 || !validSet(sinks) || (policy != Never && policy != AtBoundary && policy != Immediate) {
 		return p, ErrConflict
@@ -273,7 +277,7 @@ func BuildPlan(id, session, version, product, productVersion, productHash, style
 			hint := utf8.RuneCountInString(text) * 200
 			// Packing uses only whole statements and remains bounded. Timing hints are
 			// estimates, never proof of synthesized duration or safe interruption time.
-			if n := len(p.Segments); n > 0 && len(stmt.FactIDs) == 0 && len(p.Segments[n-1].FactIDs) == 0 && p.Segments[n-1].BeatID == beat.ID && p.Segments[n-1].DurationHintMS+hint <= 4000 {
+			if n := len(p.Segments); n > 0 && len(stmt.FactIDs) == 0 && len(p.Segments[n-1].FactIDs) == 0 && p.Segments[n-1].BeatID == beat.ID && p.Segments[n-1].DurationHintMS+hint <= packingLimit {
 				prev := &p.Segments[n-1]
 				prev.Text += text
 				prev.TextHash = Hash(prev.Text)

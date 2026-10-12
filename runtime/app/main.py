@@ -44,6 +44,10 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
     durable_enabled = durable_flag in {"true", "1"}
     from .narration_segments import enabled as continuity_enabled
     continuity = continuity_enabled()
+    from .staging_settings import StagingSettings
+    staging_settings=StagingSettings.from_env()
+    if staging_settings.enabled and not continuity:
+        raise RuntimeError("SoulX staging requires Continuity")
     if continuity and not durable_enabled:
         raise RuntimeError("Narration Continuity requires durability")
     if continuity and not bound:
@@ -134,6 +138,7 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
             )
         factories = (llm_factory, tts_factory, avatar_factory, media_factory)
     manager = (BoundSessionManager if bound else SessionManager)(settings, publisher, *factories)
+    manager.staging_settings=staging_settings
     if durable_enabled:
         if continuity:
             from .narration import NarrationCommands
