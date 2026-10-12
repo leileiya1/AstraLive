@@ -35,6 +35,7 @@ def main():
     parser.add_argument("--python", required=True)
     parser.add_argument("--pg-bin", type=Path, required=True)
     parser.add_argument("--local-transport", choices=("tcp", "uds"), default="tcp")
+    parser.add_argument("--real-dns", action="store_true", help="owned actual HTTPS DNS relay; preserves production SSRF validation")
     parser.add_argument("--mode", choices=("short", "ten-minute", "soak", "faults"), required=True)
     parser.add_argument("--key-file", type=private_file, required=True)
     parser.add_argument("--tts-model-dir", type=Path, required=True)
@@ -67,7 +68,10 @@ def main():
     source = subprocess.check_output(["git", "-C", str(args.repo), "rev-parse", args.source], text=True).strip()
     out = args.output.absolute()
     out.mkdir(parents=True, exist_ok=False)
-    report = {"source": source, "mode": args.mode, "requestedSeconds": seconds, "seed": args.seed,
+    fixture_raw = args.plan_file.read_bytes()
+    (out / "authored-fixture.json").write_bytes(fixture_raw)
+    fixture_sha = hashlib.sha256(fixture_raw).hexdigest()
+    report = {"source": source, "fixtureSHA256": fixture_sha, "mode": args.mode, "requestedSeconds": seconds, "seed": args.seed,
               "scope": "real Go production HTTP components/owned PostgreSQL/production Python Runtime/DeepSeek/XiaoYa/SoulX/native Chrome/local RTMP; fixture audience comment replay",
               "audienceAudible": False, "humanNaturalness": "REQUIRES_SEPARATE_REVIEW",
               "profile": args.profile, "localTransport": args.local_transport, "status": "RUNNING", "checks": []}
@@ -76,7 +80,7 @@ def main():
                ASTRALIVE_GOLDEN_REAL="true",
                ASTRALIVE_GOLDEN_LOCAL_TRANSPORT=args.local_transport,
                ASTRALIVE_GOLDEN_SOURCE_SHA=source,
-               ASTRALIVE_GOLDEN_PLAN_FILE=str(args.plan_file.absolute()),
+               ASTRALIVE_GOLDEN_PLAN_FILE=str(out / "authored-fixture.json"),
                ASTRALIVE_GOLDEN_TTS_MODEL_DIR=str(args.tts_model_dir.absolute()),
                ASTRALIVE_GOLDEN_WORKER_TOKEN_FILE=str(args.worker_token_file),
                ASTRALIVE_GOLDEN_WORKER_MANAGEMENT_TOKEN_FILE=str(args.management_token_file),
@@ -96,6 +100,8 @@ def main():
     owner = uuid.uuid4().hex
     started = False
     failure = None
+    dns_process = None
+    dns_log = None
 
     def save():
         (out / "result.json").write_text(json.dumps(report, indent=2)+"\n")
@@ -138,6 +144,18 @@ def main():
                 tar.extractall(root, filter="data")
             if proc.wait():
                 raise RuntimeError("immutable source archive failed")
+            if args.real_dns:
+                dns_ready = out / "real-dns.json"
+                dns_log = (out / "real-dns.log").open("wb")
+                dns_process = subprocess.Popen([args.python, str(root/"integration/v0.5/golden_dns.py"), "--ready-file", str(dns_ready)], env=env, stdout=dns_log, stderr=subprocess.STDOUT)
+                deadline = time.monotonic()+10
+                while not dns_ready.exists() and dns_process.poll() is None and time.monotonic() < deadline:
+                    time.sleep(.05)
+                if not dns_ready.exists():
+                    raise RuntimeError("owned real DNS relay failed to start")
+                dns = json.loads(dns_ready.read_text())
+                env["ASTRALIVE_GOLDEN_REAL_DNS_ADDRESS"] = dns["address"]
+                report["realDNS"] = dns
             case = "TestPostgresRealGPUContinuityGolden"
             run("golden", ["go", "test", "-count=1", f"-timeout={seconds+1200}s", "-v", "./internal/narration", "-run", "^"+case+"$"], root/"backend")
             if "--- PASS: "+case+" " not in (out/"golden.log").read_text():
@@ -148,6 +166,15 @@ def main():
         failure = str(error)
         report["error"] = failure
     finally:
+        if dns_process is not None:
+            dns_process.terminate()
+            try:
+                dns_process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                dns_process.kill()
+                dns_process.wait()
+        if dns_log is not None:
+            dns_log.close()
         marker = pgdata/".astralive-f-owned"
         clean = not started
         if started and marker.is_file() and marker.read_text()==owner:

@@ -24,3 +24,7 @@ questions 保持 list[str]，可直接给现有 reader。questionsMetadata 是�
 这些陈述不能使用1.92秒 profile；真实短业务 smoke 也需在短 GPU gate 已通过后明确启用8秒 profile，并遵守固定身份、内存、A Grant、StageRenew和播放边界。不得假设音频符合8秒就证明 GPU、Stage TTL、流控或整段 artifact 合格。
 
 原始逐句样本、pre-pad PCM SHA256、pad、总和、重复性测量、实际生产 BuildPlan 探针源码/stdout 和原生 TTS stdout 保存在 [预检证据](../../../docs/v0.5/evidence/integration-f/catalog-tts-preflight-1/README.md)。两次测量分开保留，不将其累加为直播时长。仅F统一提交这些文件；fixture 本身不更改产品数据库/生产配置。
+
+## v2 trusted builtin correction
+
+The current v2 fixture uses canonical name/price/stock/sizes IDs and mandatory trusted {{field}} substitutions at the real SQL Controller entrypoint; the first four statements are rebound to actual99.00/20/electronic-version snapshot values. The remaining136 statements are preserved exactly. Historical v1 blobs, SHA values and two complete CPU durations remain separate evidence. New9-case CPU preflight longest5.72s; a new complete speech-duration total and public Start SQL are NOT TESTED by that preflight. See catalog-trusted-builtins-preflight-2; no old750s duration is assigned as an actual v2 live run.

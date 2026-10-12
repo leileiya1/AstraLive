@@ -1,5 +1,5 @@
 {
-  "fixtureVersion": "real-golden-catalog-1",
+  "fixtureVersion": "real-golden-catalog-2",
   "scope": "USER_CONFIRMED_DEMO_SKU_AUTHORED_CONTENT_REAL_PROVIDERS_COMMENT_TRANSPORT_REPLAY",
   "product": {
     "name": "桌面整理指南",
@@ -11,7 +11,7 @@
     ],
     "description": "示范SKU电子说明书，提供桌面分类、分区、纸张线缆收纳和日常维护的操作指南。"
   },
-  "scriptVersion": "desktop-guide-authored-v1",
+  "scriptVersion": "desktop-guide-authored-v2",
   "plan": {
     "policy": "AT_BOUNDARY",
     "style": "自然清楚地逐句讲解桌面整理步骤，每段只讲当前声明的事实。",
@@ -19,10 +19,10 @@
       {
         "title": "商品信息与阅读方法",
         "requiredFactIds": [
-          "product.name",
-          "product.price",
-          "product.stock",
-          "product.format",
+          "name",
+          "price",
+          "stock",
+          "sizes",
           "guide.01.05",
           "guide.01.06",
           "guide.01.07",
@@ -32,27 +32,27 @@
         ],
         "statements": [
           {
-            "text": "这份电子说明书的名称，叫作桌面整理指南。",
+            "text": "这份电子说明书的名称，叫作{{name}}。",
             "factIds": [
-              "product.name"
+              "name"
             ]
           },
           {
-            "text": "这份桌面整理指南，当前标价是人民币九十九元。",
+            "text": "这份电子说明书，当前标价是人民币{{price}}元。",
             "factIds": [
-              "product.price"
+              "price"
             ]
           },
           {
-            "text": "当前用于本次演示的商品库存，共有二十份可供选择。",
+            "text": "当前用于本次演示的商品库存，共有{{stock}}份可供选择。",
             "factIds": [
-              "product.stock"
+              "stock"
             ]
           },
           {
-            "text": "本商品的规格选项只有电子版，请按电子资料使用。",
+            "text": "本商品的规格选项只有{{sizes}}，请按电子资料使用。",
             "factIds": [
-              "product.format"
+              "sizes"
             ]
           },
           {
@@ -1097,10 +1097,10 @@
     ]
   },
   "facts": {
-    "product.name": "这份电子说明书的名称，叫作桌面整理指南。",
-    "product.price": "这份桌面整理指南，当前标价是人民币九十九元。",
-    "product.stock": "当前用于本次演示的商品库存，共有二十份可供选择。",
-    "product.format": "本商品的规格选项只有电子版，请按电子资料使用。",
+    "name": "这份电子说明书的名称，叫作{{name}}。",
+    "price": "这份电子说明书，当前标价是人民币{{price}}元。",
+    "stock": "当前用于本次演示的商品库存，共有{{stock}}份可供选择。",
+    "sizes": "本商品的规格选项只有{{sizes}}，请按电子资料使用。",
     "guide.01.05": "这份指南讨论桌面整理方法，不提供实体收纳工具。",
     "guide.01.06": "阅读时先选择最困扰你的桌面问题，再对应查找章节。",
     "guide.01.07": "指南按照清空、分类、分区和维护，安排整理的步骤。",
@@ -1252,7 +1252,7 @@
       "priority": 80,
       "injectAfterSegment": 22,
       "expectedFactIds": [
-        "product.price"
+        "price"
       ]
     },
     {
@@ -1261,7 +1261,7 @@
       "priority": 75,
       "injectAfterSegment": 46,
       "expectedFactIds": [
-        "product.stock"
+        "stock"
       ]
     },
     {
@@ -1270,7 +1270,7 @@
       "priority": 70,
       "injectAfterSegment": 70,
       "expectedFactIds": [
-        "product.name"
+        "name"
       ]
     },
     {
@@ -1279,7 +1279,7 @@
       "priority": 65,
       "injectAfterSegment": 94,
       "expectedFactIds": [
-        "product.price"
+        "price"
       ]
     },
     {
@@ -1288,8 +1288,16 @@
       "priority": 60,
       "injectAfterSegment": 118,
       "expectedFactIds": [
-        "product.stock"
+        "stock"
       ]
     }
-  ]
+  ],
+  "trustedBuiltinPreview": {
+    "scope": "EXPECTED_FIXED_SKU_TEXT_NOT_CLIENT_AUTHORITY",
+    "name": "桌面整理指南",
+    "price": "99.00",
+    "stock": "20",
+    "sizes": "电子版",
+    "currency": "CNY"
+  }
 }
