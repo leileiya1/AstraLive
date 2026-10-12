@@ -41,12 +41,14 @@ func TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy(t *testing.T) {
 			if e != nil {
 				t.Fatal(e)
 			}
+			oldRevision := doc.Revision
+			doc.Revision++
 			doc.State = narration.Suspended
 			doc.TimelineEpoch = 2
 			doc.Turn = &narration.Turn{ID: "turn-spoken-fixture", Question: "多少钱？", QuestionHash: narration.Hash("多少钱？"), ProductHash: doc.Plan.ProductHash, Deadline: time.Now().Add(time.Minute), Status: "SUSPENDED", SourceIDs: []string{"comment-fixture"}}
 			doc.Resume = &narration.ResumePoint{Revision: doc.Revision, NextBeatID: doc.Plan.Beats[0].ID, NextSegmentID: doc.Plan.Segments[0].ID, Boundary: narration.Checkpoint{Identity: narration.Identity{TimelineEpoch: 1}}}
 			raw, _ := json.Marshal(doc)
-			_, e = p.Exec(ctx, `UPDATE v05_narrations SET state='SUSPENDED',document_json=$1 WHERE session_id='s'`, raw)
+			_, e = p.Exec(ctx, `UPDATE v05_narrations SET state='SUSPENDED',revision=$2,document_json=$1 WHERE session_id='s' AND revision=$3`, raw, doc.Revision, oldRevision)
 			if e != nil {
 				t.Fatal(e)
 			}
