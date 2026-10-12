@@ -603,7 +603,11 @@ func (c *Controller) Drive(ctx context.Context, sid string) error {
 		p["deadline"] = d.Turn.Deadline.UTC().Format(time.RFC3339Nano)
 		p["resumePointRevision"] = d.Resume.Revision
 		p["latestFacts"] = facts
-		safe, factIDs := factAnswer(d.Turn.Question, facts)
+		captured, er := c.capturedStaging(ctx, tx, run)
+		if er != nil {
+			return er
+		}
+		safe, factIDs := factAnswerForSpeech(d.Turn.Question, facts, captured.Enabled)
 		p["answerText"] = safe
 		p["factIds"] = factIDs
 		_, e = c.enqueue(ctx, tx, run, d, "START_AUDIENCE_ANSWER", d.Turn.ID+":prepare-answer", trace, "", "AUDIENCE_ANSWER", p)
@@ -820,6 +824,24 @@ func (c *Controller) Project(ctx context.Context, tx pgx.Tx, command durability.
 		// Only Go's fresh deterministic fact resolver can satisfy original segments.
 		p.Facts = nil
 		if approved.Text != "" {
+			current, er := c.Store.Current(ctx, tx, d.Plan.SessionID, false)
+			if er != nil {
+				return er
+			}
+			captured, er := c.capturedStaging(ctx, tx, current)
+			if er != nil {
+				return er
+			}
+			if captured.Enabled {
+				_, _, freshFacts, er := c.product(ctx, tx, d.Plan.SessionID)
+				if er != nil {
+					return er
+				}
+				freshText, freshIDs := factAnswerForSpeech(d.Turn.Question, freshFacts, true)
+				if approved.Text != freshText || !sameSet(approved.Facts, freshIDs) {
+					return ErrProduct
+				}
+			}
 			if p.Text != approved.Text {
 				return ErrProduct
 			}
@@ -877,12 +899,22 @@ func (c *Controller) Project(ctx context.Context, tx pgx.Tx, command durability.
 	return nil
 }
 func factAnswer(question string, facts map[string]string) (string, []string) {
+	return factAnswerForSpeech(question, facts, false)
+}
+
+// Only captured v0.5 staging changes speech currency units. Preserve the exact
+// fresh SQL decimal string, fact IDs and other currencies; no TTS rewrite.
+func factAnswerForSpeech(question string, facts map[string]string, spokenCNY bool) (string, []string) {
 	q := strings.ToLower(question)
 	parts := []string{}
 	ids := []string{}
 	for _, cue := range []string{"价格", "多少钱", "价钱", "售价", "price", "cost", "how much"} {
 		if strings.Contains(q, cue) {
-			parts = append(parts, "这款目前价格是 "+facts["price"]+" "+facts["currency"]+"。")
+			if spokenCNY && facts["currency"] == "CNY" {
+				parts = append(parts, "这款目前价格是人民币"+facts["price"]+"元。")
+			} else {
+				parts = append(parts, "这款目前价格是 "+facts["price"]+" "+facts["currency"]+"。")
+			}
 			ids = append(ids, "price")
 			break
 		}
