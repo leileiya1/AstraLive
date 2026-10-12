@@ -129,7 +129,7 @@ class ArtifactTests(unittest.IsolatedAsyncioTestCase):
             async def begin(inner,identity,pcm,original,*args):
                 inner.identity=identity
                 h={"frame_sequence":0,"pts_us":0,"native_rgb_sha256":c.bytes_digest(raw)}
-                stage=SimpleNamespace(identity=identity,frames=[(h,payload,"storage")],encoded_bytes=len(payload),descriptor={"descriptor_sha256":"sha256:"+"b"*64,"descriptor":{"frame_count":1}},begin={"original_samples":original,"pad_samples":len(pcm)//2-original})
+                stage=SimpleNamespace(identity=identity,frames=[(h,payload,"storage")],encoded_bytes=len(payload),descriptor={"descriptor_sha256":"sha256:"+"b"*64,"descriptor":{"frame_count":1,"video_stream_sha256":c.bytes_digest(b"software-staged-H264-stream-hash-domain")}},begin={"original_samples":original,"pad_samples":len(pcm)//2-original})
                 return stage
             def check(inner,s):pass
         class TTS:
@@ -140,7 +140,9 @@ class ArtifactTests(unittest.IsolatedAsyncioTestCase):
             artifact=await stage_gpu(session,self.request(),command,GenerationContext(22,"trace","s","u"),lambda:None,None)
             self.assertEqual(artifact.sample_count,640)
             self.assertEqual(artifact.content_hash,c.bytes_digest(bytes(1280)))
-            self.assertEqual(artifact.video_hash,c.bytes_digest(artifact.video[0].rgb))
+            self.assertEqual(artifact.emitted_video_hash,c.bytes_digest(artifact.video[0].rgb))
+            self.assertEqual(artifact.video_hash,c.bytes_digest(b"software-staged-H264-stream-hash-domain"))
+            self.assertNotEqual(artifact.video_hash,artifact.emitted_video_hash)
             self.assertEqual(link.identity["generationId"],22);self.assertEqual(link.identity["workerGenerationId"],8)
             self.assertEqual(link.identity["attemptId"],"business-attempt")
             import json

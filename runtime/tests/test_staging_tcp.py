@@ -28,8 +28,8 @@ from app.durability_client import fingerprint
 
 
 class SoftwareWorkerWire:
-    def __init__(self, reject_commit=False, simulation=False):
-        self.reject_commit=reject_commit;self.simulation=simulation
+    def __init__(self, reject_commit=False, simulation=False, production_delay=0):
+        self.reject_commit=reject_commit;self.simulation=simulation;self.production_delay=production_delay;self.background=None
         self.events=[];self.error=None;self.task=None;self.socket=None
         self.begin=None;self.full=None;self.pose=None;self.armed=False;self.sequence=-1;self.storage=set()
         self.pcm=b"";self.wire_frames=[];self.eof=None
@@ -65,7 +65,7 @@ class SoftwareWorkerWire:
                 elif kind=="StageAudio":
                     self.pcm+=payload
                     await self.send(writer,self.answer("StageAudioAccepted",chunk_sequence=h["chunk_sequence"],chunk_sha256=h["chunk_sha256"],audio_credit_samples=32000))
-                    if h["final_chunk"]:await self.video(writer)
+                    if h["final_chunk"]:self.background=asyncio.create_task(self.video(writer))
                 elif kind=="StageReceived":
                     self.storage.add(h["frame_sequence"])
                     await self.send(writer,{**h,"type":"StageReceivedAck"})
@@ -93,9 +93,12 @@ class SoftwareWorkerWire:
                 else:raise AssertionError("unexpected wire effect "+kind)
         except (asyncio.IncompleteReadError,ConnectionError,asyncio.CancelledError):pass
         except Exception as exc:self.error=exc
-        finally:writer.close();await writer.wait_closed()
+        finally:
+            if self.background:self.background.cancel();await asyncio.gather(self.background,return_exceptions=True)
+            writer.close();await writer.wait_closed()
 
     async def video(self,writer):
+        await asyncio.sleep(self.production_delay)
         ctx=av.CodecContext.create("libx264","w");ctx.width=ctx.height=512;ctx.pix_fmt="yuv420p"
         ctx.time_base=Fraction(1,25);ctx.framerate=Fraction(25,1);ctx.options={"preset":"ultrafast","tune":"zerolatency","bf":"0"};ctx.open()
         native=hashlib.sha256();stream=hashlib.sha256();video_bytes=0
@@ -178,8 +181,16 @@ class LocalTCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(wire.begin["identity"]["attemptId"],"business-attempt")
         self.assertEqual(wire.begin["identity"]["generationId"],22);self.assertEqual(wire.begin["identity"]["workerGenerationId"],8)
         self.assertEqual(wire.sequence,2)
+        self.assertGreaterEqual(wire.events.count("StagePoseConsumed"),2)
         self.assertGreater(len(sink.audio),0)
         self.assertFalse(journal.operations[-1]["proof"]["audienceAudible"])
+        ready=journal.operations[0]["proof"]["descriptor"]
+        self.assertEqual(ready["videoHash"],wire.eof["descriptor"]["video_stream_sha256"])
+        self.assertEqual(ready["contentHash"],wire.eof["descriptor"]["pcm_sha256"])
+        self.assertEqual(ready["stagingEmittedVideoHash"],c.bytes_digest(b"".join(frame.rgb for frame in sink.video)))
+        self.assertNotEqual(ready["videoHash"],ready["stagingEmittedVideoHash"])
+        self.assertEqual(journal.operations[1]["proof"]["commit"]["descriptor"],ready)
+        self.assertEqual(journal.operations[2]["proof"]["commit"]["descriptor"],ready)
 
     async def test_commit_rejection_never_hands_to_sink_and_unknown(self):
         ex,wire,sink,journal=await self.run_segment(SoftwareWorkerWire(reject_commit=True))
@@ -187,3 +198,28 @@ class LocalTCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(sink.audio);self.assertFalse(sink.video)
         self.assertEqual(journal.operations[-1]["operation"],"UNKNOWN")
         self.assertTrue(ex.timeline.sealed)
+        self.assertTrue(ex.session.avatar_engine.degraded)
+
+    async def test_async_fresh_renewal_during_slow_production(self):
+        ex,wire,sink,journal=await self.run_segment(SoftwareWorkerWire(production_delay=1.2))
+        await asyncio.wait_for(ex.task,5)
+        self.assertIn("StageRenew",wire.events)
+        self.assertLess(wire.events.index("StageRenew"),wire.events.index("SEGMENT_READY"))
+        self.assertIsNone(wire.error)
+
+    async def test_force_fence_after_arm_before_first_sink(self):
+        ex,wire,sink,journal=await self.run_segment(SoftwareWorkerWire())
+        def guard():
+            if "COMMIT_ACK_WRITTEN" in wire.events:raise ValueError("software FORCE barrier")
+        ex.run_guard=guard
+        with self.assertRaisesRegex(ValueError,"FORCE barrier"):await asyncio.wait_for(ex.task,5)
+        self.assertFalse(sink.audio);self.assertFalse(sink.video)
+        self.assertIn("StageCancel",wire.events)
+        self.assertIn("StageRelease",wire.events)
+        self.assertEqual(journal.operations[-1]["operation"],"UNKNOWN")
+        self.assertFalse(ex.session.avatar_engine.link.active.reusable)
+
+    async def test_simulation_negotiation_rejected_before_any_begin(self):
+        wire=SoftwareWorkerWire(simulation=True)
+        with self.assertRaisesRegex(Exception,"STAGING_IDENTITY_MISMATCH"):await self.run_segment(wire)
+        self.assertFalse(wire.events)

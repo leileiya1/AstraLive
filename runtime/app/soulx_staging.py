@@ -303,9 +303,14 @@ class StagingAvatarEngine:
     def __init__(self,endpoint,sid,worker_ref,settings):
         self.link=StagingClient(endpoint,sid,worker_ref,settings);self.settings=settings
         self.degraded=False;self.generation_id=0;self.speaking=False
+        self.publication_fence=None
+        self.link.on_failure=self._failed
         from .staging_observer import StagingObserver
         import os
         self.observer=StagingObserver(os.getenv("ASTRALIVE_STAGING_OBSERVER_DIR"))
+    def _failed(self,reason):
+        self.degraded=True
+        if self.publication_fence:self.publication_fence(reason)
     async def prepare(self,config):await self.link.connect()
     async def start(self):pass
     async def interrupt(self,generation):

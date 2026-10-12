@@ -78,7 +78,8 @@ async def stage_gpu(session, request, command, context, guard, journal):
     audio = tuple(AudioChunk(context.generation_id, seq, pcm[offset:offset+640])
         for seq, offset in enumerate(range(0, len(pcm), 640)))
     observer.finish(observation, readyContentHash=contract.bytes_digest(pcm),
+        readyVideoHash=stage.descriptor["descriptor"]["video_stream_sha256"],
         readyEmittedVideoHash="sha256:" + decoded_hash.hexdigest(),
         originalSamples=count, padSamples=len(pcm)//2-count)
     return ReadyArtifact(audio, tuple(video), len(pcm)//2, contract.bytes_digest(pcm),
-        "sha256:" + decoded_hash.hexdigest(), "GPU_INFERENCE", stage)
+        stage.descriptor["descriptor"]["video_stream_sha256"], "GPU_INFERENCE", stage, "sha256:" + decoded_hash.hexdigest())

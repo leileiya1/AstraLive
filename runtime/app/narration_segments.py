@@ -73,6 +73,7 @@ class ReadyArtifact:
     video_hash: str
     provenance: str
     stage: object = None
+    emitted_video_hash: str | None = None
 
 
 class TimelineJournal:
@@ -158,7 +159,7 @@ class SegmentExecutor:
         output.bind_timeline(self.timeline)
         from .soulx_staging import StagingAvatarEngine
         if isinstance(session.avatar_engine, StagingAvatarEngine):
-            session.avatar_engine.link.on_failure = self.timeline.fence_now
+            session.avatar_engine.publication_fence = self.timeline.fence_now
 
     def fence(self, reason="STOP"):
         self.closed = True
@@ -254,6 +255,7 @@ class SegmentExecutor:
             descriptor.update(workerEpoch=artifact.stage.identity["workerEpoch"],
                 workerGenerationId=artifact.stage.identity["workerGenerationId"],
                 stagingDescriptorHash=artifact.stage.descriptor["descriptor_sha256"],
+                stagingEmittedVideoHash=artifact.emitted_video_hash,
                 stagingDescriptor=artifact.stage.descriptor["descriptor"],
                 originalSampleCount=artifact.stage.begin["original_samples"], padSamples=artifact.stage.begin["pad_samples"])
         await self.timeline.journal.record("SEGMENT_READY", command, {
