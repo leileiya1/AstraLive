@@ -432,7 +432,7 @@ func (s *Store) RecordTimelineTx(ctx context.Context, tx pgx.Tx, x TimelineRecor
 			return nil, e
 		}
 	}
-	response, _ = json.Marshal(map[string]any{"durable": true, "state": nextState, "revision": revision, "receiptSeq": seq})
+	response, _ = json.Marshal(map[string]any{"durable": true, "state": nextState, "revision": revision, "receiptSeq": seq, "observationHash": observationHash, "producerIncarnation": x.Producer})
 	_, e = tx.Exec(ctx, `INSERT INTO v05_timeline_observations(command_id,operation,observation_hash,proof_json,response_json,session_id,run_epoch,tenant_id,user_id) SELECT $1,$2,$3,$4,$5,session_id,run_epoch,tenant_id,user_id FROM v05_inbox WHERE command_id=$1`, c.CommandID, x.Operation, observationHash, x.Proof, response)
 	return response, e
 }
