@@ -25,6 +25,13 @@ def milliseconds():
     return time.monotonic_ns() // 1000000
 
 
+class StagingDiagnosticFault(ContractError):
+    """Local diagnostic only; wire errors and frozen limits are unchanged."""
+    def __init__(self, reason_code, resources=None):
+        super().__init__(reason_code)
+        self.reason_code, self.resources = reason_code, resources
+
+
 class StagingConnection:
     def __init__(self, worker, sock, auth):
         self.worker, self.sock, self.auth = worker, sock, auth
@@ -446,6 +453,43 @@ class StagingConnection:
             gpu_incremental_reserved_peak_bytes=reserved,
             inference_elapsed_us=native['inference_elapsed_us'])
 
+    def failure_diagnostic(self, phase, exc):
+        """Bounded counters only: never log exception text or private media."""
+        s = self.stage
+        if not s:
+            return
+        resource_snapshot = getattr(exc, 'resources', None)
+        observation_error = None
+        if resource_snapshot is None:
+            try:
+                resource_snapshot = self.resources()
+            except Exception as observation_exc:
+                observation_error = type(observation_exc).__name__[:80]
+        data = dict(phase=phase, exception_type=type(exc).__name__[:80],
+            reason_code=(exc.reason_code if isinstance(exc, StagingDiagnosticFault) else phase),
+            resources=resource_snapshot, resource_observation_error_type=observation_error,
+            limits=copy.deepcopy(self.limits), stage_state=s['state'],
+            source_samples=s['samples'], stored_frames=len(s['frames']),
+            received_sequence=s['received'], consumed_sequence=s['pose'],
+            queued_video=self.queued_video, network_wire_bytes=self.wire_bytes)
+        # Observe before fencing/cancel drains native queues. Diagnostics must
+        # not prevent the existing fence/error path if telemetry itself fails.
+        try:
+            with self.adapter.cv:
+                data.update(native_queue_frames=len(self.adapter.video),
+                    pending_audio_samples=self.adapter.pending_samples)
+            self.worker.metrics.event('StagingFailure', s['identity']['workerGenerationId'], **data)
+        except Exception:
+            pass
+
+    def enforce_resources(self, resources):
+        for measured, cap, reason in (
+            ('worker_rgb_peak_bytes', 'worker_rgb_bytes', 'WORKER_RGB_CAP'),
+            ('worker_attempt_peak_bytes', 'worker_attempt_bytes', 'WORKER_HOST_CAP'),
+            ('gpu_incremental_allocated_peak_bytes', 'gpu_incremental_allocated_bytes', 'GPU_ALLOCATED_CAP')):
+            if (resources[measured] or 0) > self.limits[cap]:
+                raise StagingDiagnosticFault(reason, resources)
+
     def produced(self):
         s = self.stage
         if not s or s['state'] != 'STAGING' or not s['eof'] or self.fenced.is_set():
@@ -472,6 +516,7 @@ class StagingConnection:
 
     def sender(self):
         ctx = generation = None
+        phase = 'NATIVE_CONSUME'
         try:
             while not self.done.is_set():
                 with self.cv:
@@ -481,6 +526,7 @@ class StagingConnection:
                         continue
                     gid = s['identity']['workerGenerationId']
                 try:
+                    phase = 'NATIVE_CONSUME'
                     packet = self.adapter.consume(lambda p: None, timeout=.1, commit=False, expected_generation=gid)
                 except TimeoutError:
                     continue
@@ -491,13 +537,17 @@ class StagingConnection:
                         continue
                     self.encoder_busy = True
                 try:
+                    phase = 'ENCODER_INITIALIZATION'
                     if generation != gid:
                         ctx, generation = self.worker.model.encoder(), gid
+                    phase = 'FRAME_CONVERSION'
                     frame = av.VideoFrame.from_ndarray(packet['frame'], format='rgb24')
                     frame.pts = packet['frame_sequence']
+                    phase = 'H264_ENCODE'
                     encoded = ctx.encode(frame)
                     if len(encoded) != 1:
-                        raise ContractError('encoder reorder/flush tail')
+                        raise StagingDiagnosticFault('ENCODER_REORDER_OR_FLUSH')
+                    phase = 'FRAME_ACCOUNTING'
                     payload = bytes(encoded[0])
                     rgb = packet['frame'].copy()
                     with self.cv:
@@ -505,14 +555,14 @@ class StagingConnection:
                             continue
                         seq = packet['frame_sequence']
                         if seq != len(s['frames']) or seq >= s['begin']['source_samples'] // 640:
-                            raise ContractError('native frame sequence/count mismatch')
+                            raise StagingDiagnosticFault('NATIVE_FRAME_SEQUENCE')
                         header = self.common('StageVideo')
                         header.update(frame_sequence=seq, pts_us=seq*40000, duration_us=40000,
                             sample_start=seq*640, sample_end=(seq+1)*640, codec='h264', width=512, height=512,
                             keyframe=encoded[0].is_keyframe, payload_sha256=bytes_digest(payload),
                             native_rgb_sha256=bytes_digest(rgb.tobytes()), provenance=self.provenance(s['identity']))
                         if seq == 0 and not header['keyframe']:
-                            raise ContractError('first frame is not IDR')
+                            raise StagingDiagnosticFault('FIRST_FRAME_NOT_IDR')
                         s['frames'][seq] = dict(rgb=rgb, **{k:header[k] for k in ('payload_sha256','native_rgb_sha256')})
                         s['rgb_bytes'] += rgb.nbytes
                         s['rgb_peak'] = max(s['rgb_peak'], s['rgb_bytes'])
@@ -520,17 +570,20 @@ class StagingConnection:
                         s['video_hash'].update(struct.pack('!Q', len(payload)) + payload)
                         s['video_bytes'] += len(payload)
                         s['slots'] -= 1
+                        phase = 'RESOURCE_OBSERVATION'
                         resources = self.resources()
-                        if resources['worker_rgb_peak_bytes'] > self.limits['worker_rgb_bytes'] or resources['worker_attempt_peak_bytes'] > self.limits['worker_attempt_bytes'] or (resources['gpu_incremental_allocated_peak_bytes'] or 0) > self.limits['gpu_incremental_allocated_bytes']:
-                            raise ContractError('resource cap exceeded')
+                        phase = 'RESOURCE_CAP_CHECK'
+                        self.enforce_resources(resources)
+                        phase = 'VIDEO_VALIDATION_OR_ENQUEUE'
                         self.reply(header, payload)
                 finally:
                     with self.cv:
                         self.encoder_busy = False
                         self.cv.notify_all()
-        except Exception:
+        except Exception as exc:
             with self.lock:
                 if self.stage:
+                    self.failure_diagnostic(phase, exc)
                     self.fence()
                     self.error(self.stage['begin'], 'STAGING_BUDGET_EXCEEDED')
 
@@ -546,7 +599,8 @@ class StagingConnection:
                 else:
                     try:
                         self.produced()
-                    except ContractError:
+                    except ContractError as exc:
+                        self.failure_diagnostic('PRODUCED_DESCRIPTOR_VALIDATION', exc)
                         self.fence()
                         self.error(s['begin'], 'STAGING_BUDGET_EXCEEDED')
 
