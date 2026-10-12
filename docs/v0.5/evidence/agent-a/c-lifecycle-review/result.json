@@ -1,0 +1,36 @@
+{
+  "source": "565993e85cac3e49dcff079b7b465d17f041b443",
+  "results": [
+    {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-v",
+        "./internal/narration",
+        "-run",
+        "^TestPostgresCapturedRetirementNativeCleanupAndFreshSession$"
+      ],
+      "exitCode": 0,
+      "log": "postgres.log",
+      "logSHA256": "0d23561fa9c76a2a28c1d2881b0e19033f4eed2871f107790d52141170afe0fc"
+    },
+    {
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive/runtime/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_narration_lifecycle.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "log": "python.log",
+      "logSHA256": "d7e23d257945abca32ed15bc6e160a060978aa24c4d55cbcb40f65755768e59a"
+    }
+  ]
+}

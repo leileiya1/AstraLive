@@ -1,0 +1,17 @@
+=== RUN   TestPostgresCapturedRetirementNativeCleanupAndFreshSession
+=== RUN   TestPostgresCapturedRetirementNativeCleanupAndFreshSession/price
+    lifecycle_postgres_test.go:122: {"scope": "REAL_POSTGRES_AUTH_HTTP_CAPTURED_PROVIDER_FIXTURES", "scenario": "price", "state": "ENDED", "fenced": true, "reservationRetained": false, "gpu": "NOT_TESTED"}
+        
+=== RUN   TestPostgresCapturedRetirementNativeCleanupAndFreshSession/product
+    lifecycle_postgres_test.go:122: {"scope": "REAL_POSTGRES_AUTH_HTTP_CAPTURED_PROVIDER_FIXTURES", "scenario": "product", "state": "ENDED", "fenced": true, "reservationRetained": false, "gpu": "NOT_TESTED"}
+        
+=== RUN   TestPostgresCapturedRetirementNativeCleanupAndFreshSession/cleanup_failure
+    lifecycle_postgres_test.go:122: stop_cleanup_failed sessionId=s component=media errorType=ConnectionError
+        {"scope": "REAL_POSTGRES_AUTH_HTTP_CAPTURED_PROVIDER_FIXTURES", "scenario": "cleanup_failure", "state": "STOPPING", "fenced": true, "reservationRetained": true, "gpu": "NOT_TESTED"}
+        
+--- PASS: TestPostgresCapturedRetirementNativeCleanupAndFreshSession (3.37s)
+    --- PASS: TestPostgresCapturedRetirementNativeCleanupAndFreshSession/price (1.59s)
+    --- PASS: TestPostgresCapturedRetirementNativeCleanupAndFreshSession/product (1.57s)
+    --- PASS: TestPostgresCapturedRetirementNativeCleanupAndFreshSession/cleanup_failure (0.22s)
+PASS
+ok  	astralive/backend/internal/narration	4.781s
