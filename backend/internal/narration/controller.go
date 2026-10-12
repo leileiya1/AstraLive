@@ -289,7 +289,7 @@ func (c *Controller) Start(ctx context.Context, sid, trace string, x StartReques
 		return Document{}, e
 	}
 	packingLimit := 4000
-	if captured.Enabled && *captured.LimitsRevision == "staging-short-1" {
+	if captured.ShortProfile() {
 		packingLimit = 0 // whole authored statements only; never recut an immutable plan
 	}
 	p, e := buildPlan(nid, sid, x.ScriptVersion, product, hash, hash, x.Style, x.Policy, x.RequiredSinks, x.Beats, packingLimit)
@@ -358,7 +358,7 @@ func (c *Controller) enqueueSegment(ctx context.Context, tx pgx.Tx, r durability
 	}
 	p["maxDurationMs"] = 8000
 	if captured.Enabled {
-		if *captured.LimitsRevision == "staging-short-1" {
+		if captured.ShortProfile() {
 			p["maxDurationMs"] = 1920
 		}
 		beat := s.BeatID

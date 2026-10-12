@@ -13,6 +13,10 @@ func TestStagingCaptureFrozenProfiles(t *testing.T) {
 	}{
 		{"false", "", "", false}, {"true", "", "", false}, {"1", "staging-short-1", "", false},
 		{"true", "staging-segment-8s-1", "sha256:" + strings.Repeat("a", 64), false},
+		{"true", "staging-short-gpu1g-1", "", false},
+		{"true", "staging-segment-8s-gpu1g-1", "sha256:" + strings.Repeat("a", 64), false},
+		{"true", "staging-short-gpu1g-1", "sha256:" + strings.Repeat("a", 64), true},
+		{"true", "staging-segment-8s-gpu1g-1", "", true},
 		{"oops", "", "", true}, {"true", "staging-segment-8s-1", "", true}, {"true", "unknown", "", true},
 		{"true", "staging-short-1", "sha256:" + strings.Repeat("a", 64), true}} {
 		t.Run(tc.flag+tc.profile+tc.gate, func(t *testing.T) {
@@ -54,5 +58,21 @@ func TestShortAuthoredPlanDoesNotPackOrCutStatements(t *testing.T) {
 	}
 	if len(old.Segments) != 1 || len(short.Segments) != 2 || short.Segments[0].Text != "欢迎。" || short.Segments[1].Text != "请看。" {
 		t.Fatal("authored semantic packing mismatch")
+	}
+}
+
+func TestFrozenShortGroupsPreservePlannerAndMeasuredCap(t *testing.T) {
+	for _, name := range []string{"staging-short-1", "staging-short-gpu1g-1"} {
+		settings := StagingSettings{Enabled: true, LimitsRevision: &name}
+		if !settings.ShortProfile() || settings.Validate() != nil {
+			t.Fatal("frozen short profile not recognized")
+		}
+	}
+	for _, name := range []string{"staging-segment-8s-1", "staging-segment-8s-gpu1g-1"} {
+		gate := "sha256:" + strings.Repeat("a", 64)
+		settings := StagingSettings{Enabled: true, LimitsRevision: &name, ShortGateSHA256: &gate}
+		if settings.ShortProfile() || settings.Validate() != nil {
+			t.Fatal("frozen long profile changed")
+		}
 	}
 }
