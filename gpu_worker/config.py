@@ -7,6 +7,8 @@ from pathlib import Path
 import re
 import stat
 
+from .staging_contract import PROFILES, SHORT_PROFILES
+
 REVISION = '9bc03de06bb0de82cd6bc477804512ae06144bf2'
 IDENTIFIER = re.compile(r'^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$')
 
@@ -75,9 +77,11 @@ class Config:
     def validate(self):
         if type(self.staging_enabled) is not bool:
             raise ValueError('invalid staging switch')
-        if self.staging_profile not in {'staging-short-1', 'staging-segment-8s-1'}:
+        if self.staging_profile not in PROFILES:
             raise ValueError('invalid staging profile')
-        if self.staging_profile == 'staging-short-1':
+        if self.mode == 'simulation' and self.staging_profile != 'staging-short-1':
+            raise ValueError('selected staging profile requires real GPU execution')
+        if self.staging_profile in SHORT_PROFILES:
             if self.staging_short_gate_sha256 is not None:
                 raise ValueError('short staging gate must be absent')
         elif self.mode == 'simulation' or not isinstance(self.staging_short_gate_sha256, str) or re.fullmatch(r'sha256:[a-f0-9]{64}', self.staging_short_gate_sha256) is None:

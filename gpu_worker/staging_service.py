@@ -41,7 +41,7 @@ class StagingConnection:
         if auth['requested_limits_revision'] != self.limits['limits_revision']:
             raise ContractError('operator profile mismatch')
         if worker.cfg.mode == 'simulation' and self.limits['limits_revision'] != 'staging-short-1':
-            raise ContractError('simulation cannot enable long GPU profile')
+            raise ContractError('simulation cannot enable selected GPU profile')
         self.adapter = None
         self.lock = threading.RLock()
         self.cv = threading.Condition(self.lock)
