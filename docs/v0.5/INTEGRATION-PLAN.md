@@ -2,7 +2,7 @@
 
 Original v0.4 baseline `cf6540bdcc788c037929836480812dfaa78362a2`; Phase 2 shared baseline `5a24478126211cbcde5a9565d0c6063748426527`; branch `exp/v0.5-integration-chaos`; worktree `../AstraLive-agent-f`; contract revision `v0.5-frozen-1`.
 
-**Current gate: A→B→C normally merged at89179c7,10b74ca,6095989; each complete postmerge Go/race/owned-PG/Runtime/contract/frontend gate PASS. C old locking defect reproduced and fixed with same-oracle independent PASS; five conflicts resolved from verified equivalent dependency base. Final merged-source native synthetic fixture PASS659.662s, five questions,209 commits/836 required receipts and200 authored facts; human/provider Golden acceptance still NOT TESTED. D production wiring remains deferred: its patch still fails on current core.** [Actual ledger](evidence/integration-f/merge-ledger.json), [review](CONTINUITY-SEAM-REVIEW.md), [report](CHAOS-TEST-REPORT.md), [acceptance](FINAL-ACCEPTANCE.md). Frozen bytes unchanged; all experimental defaults off. No real-GPU acceptance.
+**Current gate: A→B→C→D normal merges PASS; separately reviewed C lifecycle incrementbb8d8ef also full merged-source PASS. Runtime225 total/12 skipped and frontend40/build; actual PostgreSQL/Backend/Python TCP+UDS/cleanup-fault gates executed. Previous6095989 native synthetic659.662s/five-question run remains pinned to that source. Real GPU compatibility Worker is now installed/READY with two direct inference generations PASS; strict SoulX Continuity NOT TESTED. CCR-BC-002 user approved the direction; detailed contract review HOLD before implementation.** [Ledger](evidence/integration-f/merge-ledger.json), [acceptance](FINAL-ACCEPTANCE.md), [CCR draft](CCR-BC-002-SOULX-STAGING.md). Frozen1 bytes unchanged; flags default off. The old review pins/tables below are historical discovery, not current delivery status.
 
 ## 1. Delivery sequence and merge ledger
 
@@ -98,3 +98,9 @@ F's manual edits remain docs/harness/evidence only; A-owned implementation/share
 This is a proposed-request ledger, not an amendment of `v0.5-frozen-1` or an implementation merge. Task connector delivery is unavailable; peer ACK remains pending.
 
 A subsequently delivered ee5500b/edd4e1e and then the Worker fix/final evidence tip a28a409. F independently validated the final pin, merged A at89179c7 and passed the complete postmerge gate. B Runtime85bec11/latest evidence dda7936 has the installation-order fix. Latest C owner progress, FORCE and whole-Session product retirement review are in CONTINUITY-SEAM-REVIEW; C final candidate/combined acceptance and D production wiring remain pending.
+
+## Current followup (2026-10-12)
+
+D source2837bef merged85d7654; C lifecycle source4d5a0f8/implementationb028f5a mergedbb8d8ef. Both merge gates are archived under integration-f. D actual production startup/protected probes and C primary/alias helper now integrated. A independently scoped ACKs both owner sources. F remains sole final merge owner. No main changes.
+
+Compatibility GPU deployment is a separate operator action at user request, source85d7654 and release04c2be21, cached environment/models, no downloads. It remains READY/running and charged instance remains on. This does not unblock strict immutable staging. CCR detailed DTO/hash/release/lease/canonical issues in its section10 must be resolved and owners ACK before capability implementation; no simultaneous refactor of shared Session/Worker entrypoints.

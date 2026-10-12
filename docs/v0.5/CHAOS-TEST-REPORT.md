@@ -1,5 +1,14 @@
 # v0.5 F chaos and integration-gate report
 
+
+## Current merged gates and real GPU compatibility (2026-10-12)
+
+D2837bef normally merged85d7654 after core A/B/C; complete exact-merge module gate PASS (Go/race/owned PostgreSQL/outage/auth/contract, actual Backend/Python TCP+UDS Start/Speak/Stop/duplicate/restart, Runtime223/12skip, frontend40/build). C lifecycle4d5a0f8/implementationb028f5a normally mergedbb8d8ef afterward; complete exact-merge gate PASS, Runtime225/12skip. No conflicts or deleted legacy regressions. [D](evidence/integration-f/merge-d-1/result.json), [C followup](evidence/integration-f/merge-c-lifecycle-1/result.json). Concurrent early SESSION_ENDED processing during release/receipt delays retains SQL STOPPING; cleanup failure retains STARTED/UNKNOWN and binding; successful proof finalizes STOPPED/SEALED then permits fresh captured Session. Automatic cleanup retry/restart proof and exhausted events remain P1.
+
+GPU user-requested cached install/start PASS: doctor asset/source/version/architecture checks; real GPU READY; two legacyTCP1.1 direct generations48+10frames with contiguous PTS/identity and cache reuse. [Source/environment/raw hashed artifacts](evidence/integration-f/gpu-compatibility-1/manifest.json). Synthetic PCM direct collector is no business, browser or RTMP proof. Current Worker remains READY/running, loopback ports only. Strict SoulX READY capability not implemented. CCR-BC-002 direction approved, detailed review HOLD.
+
+The sections below retain historical premerge failures and earlier source-specific evidence. Their NOT IMPLEMENTED/DEFERRED entries are historical and superseded only in the scoped current ledger above. No older long media/GPU claims are reassigned to the new merged source.
+
 Status: **PARTIAL SEQUENTIAL INTEGRATION — A+B+C merged; all three postmerge software gates PASS**. Initial failures below remain historical pinned evidence. Current [merge ledger](evidence/integration-f/merge-ledger.json) and [CONTINUITY-SEAM-REVIEW](CONTINUITY-SEAM-REVIEW.md) govern remaining gates. Revision `v0.5-frozen-1`; baseline `5a24478`. Review environment macOS arm64, Go1.27.2, Python3.12.13, PostgreSQL17.11. New runs use immutable source/actual merge archives and disposable owned PG; owner worktrees and historical artifacts are preserved.
 
 ## C actual merge gate

@@ -56,13 +56,36 @@
         "status": "PASS_SCOPED_FIXTURE",
         "realInference": "NOT TESTED"
       }
+    },
+    {
+      "order": 4,
+      "agent": "D",
+      "branch": "exp/v0.5-local-ipc",
+      "sourceSHA": "2837bef263e4c59d04b6e26cf23fb58385d93242",
+      "implementationSHA": "3a571fb3247a70e86ac6f6a6a19a765c16f58a36",
+      "mergeSHA": "85d76540924e4a7861d56acc677c4358fe0c1e45",
+      "postmergeGate": "merge-d-1/result.json",
+      "postmergeStatus": "PASS",
+      "conflictFiles": [],
+      "scopedAReview": "6ca40cba5fd0d384ce753370dabdc8c6ca2f9867"
+    },
+    {
+      "order": 5,
+      "agent": "C lifecycle followup",
+      "branch": "exp/v0.5-narration-continuity",
+      "sourceSHA": "4d5a0f8f27d1407d422e6b0d9865c9de7152e8a7",
+      "implementationSHA": "b028f5aeec0b929a9779f5f50def8cebce25c98a",
+      "mergeSHA": "bb8d8ef7cfc42a85af5eff7d3925ec249c3467ab",
+      "postmergeGate": "merge-c-lifecycle-1/result.json",
+      "postmergeStatus": "PASS",
+      "conflictFiles": [],
+      "scopedAReview": "51771129672d0548aa0d6e291a87e369e00f3af2",
+      "nativeShortGate": "merge-c-lifecycle-native-short-1/result.json"
     }
   ],
-  "pending": [
-    "D"
-  ],
-  "completeIntegration": false,
-  "realInferenceAcceptance": "NOT TESTED",
+  "pending": [],
+  "completeIntegration": true,
+  "realInferenceAcceptance": "PASS_DIRECT_GPU_COMPATIBILITY_ONLY; integrated SoulX continuity NOT TESTED",
   "cCandidate": {
     "source": "06b182f840e0dc110a150a687e7ce016744edb3b",
     "merged": false,
@@ -78,7 +101,16 @@
       "agent": "D",
       "source": "1a1bce2a1cb3f933be607998576bd64558bb11be",
       "reason": "production wiring not delivered; old patch context fails actual core; requires owner rebase/auth review",
-      "evidence": "d-wiring-on-core-1/result.json"
+      "evidence": "d-wiring-on-core-1/result.json",
+      "historical": true,
+      "resolvedBy": "2837bef263e4c59d04b6e26cf23fb58385d93242"
     }
-  ]
+  ],
+  "ccrBC002": {
+    "direction": "USER_APPROVED",
+    "detailedContract": "DRAFT_OWNER_REVIEW_HOLD",
+    "implemented": false,
+    "proposalMerge": "d3afd92"
+  },
+  "integrationScope": "software/process/SQL/local-sink fixtures; real GPU only separate compatibility smoke"
 }
