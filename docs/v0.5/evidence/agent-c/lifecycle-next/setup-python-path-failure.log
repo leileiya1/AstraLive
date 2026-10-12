@@ -1,0 +1,117 @@
+?   	astralive/backend/cmd/comment-load	[no test files]
+?   	astralive/backend/cmd/config-bootstrap	[no test files]
+?   	astralive/backend/cmd/operator-bootstrap	[no test files]
+?   	astralive/backend/cmd/server	[no test files]
+?   	astralive/backend/db	[no test files]
+?   	astralive/backend/generated/dbgen	[no test files]
+?   	astralive/backend/generated/openapi	[no test files]
+?   	astralive/backend/generated/runtimeapi	[no test files]
+ok  	astralive/backend/internal/app	0.641s
+ok  	astralive/backend/internal/config	0.313s
+ok  	astralive/backend/internal/durability	11.383s
+?   	astralive/backend/internal/eventbus	[no test files]
+ok  	astralive/backend/internal/fsm	0.314s
+ok  	astralive/backend/internal/httpapi	0.856s
+?   	astralive/backend/internal/ids	[no test files]
+ok  	astralive/backend/internal/interaction	0.367s
+?   	astralive/backend/internal/metrics	[no test files]
+--- FAIL: TestPostgresCapturedRetirementNativeCleanupAndFreshSession (0.94s)
+    --- FAIL: TestPostgresCapturedRetirementNativeCleanupAndFreshSession/price (0.45s)
+        lifecycle_postgres_test.go:87: Traceback (most recent call last):
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/narration_lifecycle_pg.py", line 90, in <module>
+                asyncio.run(main())
+              File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 195, in run
+                return runner.run(main)
+                       ^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+                return self._loop.run_until_complete(task)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+                return future.result()
+                       ^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/narration_lifecycle_pg.py", line 58, in main
+                await adapter.execute(command)
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/narration.py", line 21, in execute
+                result = await super().execute(command)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durability_client.py", line 173, in execute
+                acceptance = await self.journal.accept(command)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durability_client.py", line 89, in accept
+                return await self.request("POST", "/accept", {"command": command})
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durability_client.py", line 86, in request
+                raise JournalError() from None
+            app.durability_client.JournalError: DEPENDENCY_UNAVAILABLE
+            
+        lifecycle_postgres_test.go:89: exit status 1
+    --- FAIL: TestPostgresCapturedRetirementNativeCleanupAndFreshSession/product (0.27s)
+        lifecycle_postgres_test.go:87: Traceback (most recent call last):
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/narration_lifecycle_pg.py", line 90, in <module>
+                asyncio.run(main())
+              File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 195, in run
+                return runner.run(main)
+                       ^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+                return self._loop.run_until_complete(task)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+                return future.result()
+                       ^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/narration_lifecycle_pg.py", line 58, in main
+                await adapter.execute(command)
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/narration.py", line 21, in execute
+                result = await super().execute(command)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durability_client.py", line 173, in execute
+                acceptance = await self.journal.accept(command)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durability_client.py", line 89, in accept
+                return await self.request("POST", "/accept", {"command": command})
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durability_client.py", line 86, in request
+                raise JournalError() from None
+            app.durability_client.JournalError: DEPENDENCY_UNAVAILABLE
+            
+        lifecycle_postgres_test.go:89: exit status 1
+    --- FAIL: TestPostgresCapturedRetirementNativeCleanupAndFreshSession/cleanup_failure (0.22s)
+        lifecycle_postgres_test.go:87: Traceback (most recent call last):
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/narration_lifecycle_pg.py", line 90, in <module>
+                asyncio.run(main())
+              File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 195, in run
+                return runner.run(main)
+                       ^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+                return self._loop.run_until_complete(task)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+                return future.result()
+                       ^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/narration_lifecycle_pg.py", line 58, in main
+                await adapter.execute(command)
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/narration.py", line 21, in execute
+                result = await super().execute(command)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durability_client.py", line 173, in execute
+                acceptance = await self.journal.accept(command)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durability_client.py", line 89, in accept
+                return await self.request("POST", "/accept", {"command": command})
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durability_client.py", line 86, in request
+                raise JournalError() from None
+            app.durability_client.JournalError: DEPENDENCY_UNAVAILABLE
+            
+        lifecycle_postgres_test.go:89: exit status 1
+2026/10/12 08:26:22 ERROR database operation failed requestId=req_f41fed4dc723186e2ca02ef550f958f6 error="ERROR: fixture response rollback (SQLSTATE 23514)"
+FAIL
+FAIL	astralive/backend/internal/narration	11.474s
+ok  	astralive/backend/internal/personalconfig	0.401s
+ok  	astralive/backend/internal/platform	0.349s
+ok  	astralive/backend/internal/platform/mock	0.436s
+?   	astralive/backend/internal/recovery	[no test files]
+ok  	astralive/backend/internal/runtime	0.424s
+ok  	astralive/backend/internal/sse	0.342s
+ok  	astralive/backend/internal/userconfig	0.399s
+ok  	astralive/backend/tests	0.368s
+FAIL

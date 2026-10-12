@@ -152,6 +152,7 @@ class BoundSessionManager(SessionManager):
         self.bound, self.leases, self.monitors = {}, {}, {}
         self.admission = asyncio.Lock()
         self.releasing, self.release_pending = set(), set()
+        self.release_requires_ack = set()
         self.cleanups=set()
 
     async def create_session(self, request, **kwargs):
@@ -232,6 +233,8 @@ class BoundSessionManager(SessionManager):
 
     async def _release(self, sid):
         if sid in self.releasing:
+            if sid in self.release_requires_ack:
+                raise RuntimeFailure("DEPENDENCY_UNAVAILABLE", "Binding release remains pending", 503)
             return
         self.releasing.add(sid)
         try:
@@ -240,12 +243,18 @@ class BoundSessionManager(SessionManager):
                 if task and task is not asyncio.current_task():
                     task.cancel()
                     await asyncio.gather(task, return_exceptions=True)
-            self.bound.pop(sid, None)
+            strict_release = sid in self.release_requires_ack
+            if not strict_release:
+                self.bound.pop(sid, None)
             try:
                 await self.binding_client.release(sid)
                 self.release_pending.discard(sid)
+                self.bound.pop(sid, None)
+                self.release_requires_ack.discard(sid)
             except Exception:
                 self.release_pending.add(sid)
+                if strict_release:
+                    raise RuntimeFailure("DEPENDENCY_UNAVAILABLE", "Binding release remains pending", 503) from None
         finally:
             self.releasing.discard(sid)
 
@@ -282,6 +291,18 @@ class BoundSessionManager(SessionManager):
 
     async def stop_session(self, sid, trace):
         session = self.sessions.get(sid)
+        if (session and session.continuity is not None) or sid in self.release_requires_ack:
+            self.release_requires_ack.add(sid)
+            if session:
+                # A failed native Stop must retain the Session, credentials and
+                # physical Worker reservation; no finally-release on failure.
+                await session.stop(trace)
+                await self._close_llm(session)
+            await self._release(sid)
+            async with self.lock:
+                if self.sessions.get(sid) is session:
+                    self.sessions.pop(sid, None)
+            return
         try:
             if session:
                 await super().stop_session(sid, trace)
@@ -344,8 +365,7 @@ class BoundSessionManager(SessionManager):
             previous = status["errorCode"]
             for pending in tuple(self.release_pending):
                 try:
-                    await self.binding_client.release(pending)
-                    self.release_pending.discard(pending)
+                    await self._release(pending)
                 except Exception:
                     pass
             await asyncio.sleep(1)

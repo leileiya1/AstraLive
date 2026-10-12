@@ -76,6 +76,40 @@ func (c *Controller) Snapshot(ctx context.Context, sid string) (Document, error)
 	}
 	return d, e
 }
+
+// FinalizeStop projects existing authenticated Session terminal evidence in
+// the caller's event transaction. A STOPPING tombstone alone is insufficient.
+func (c *Controller) FinalizeStop(ctx context.Context, tx pgx.Tx, sid string) error {
+	d, err := c.load(ctx, tx, sid)
+	if err == pgx.ErrNoRows {
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	if d.State != Stopping || !d.StopBarrier {
+		return ErrUnknown
+	}
+	var proven bool
+	err = tx.QueryRow(ctx, `SELECT EXISTS(
+ SELECT 1 FROM live_sessions se JOIN session_provider_bindings b ON b.session_id=se.id
+ JOIN v05_inbox i ON i.session_id=se.id AND i.run_epoch=$2 AND i.command_type='STOP_SESSION'
+ JOIN v05_receipts r ON r.session_id=i.session_id AND r.run_epoch=i.run_epoch
+ AND r.command_id=i.command_id AND r.tenant_id=i.tenant_id AND r.user_id=i.user_id
+ WHERE se.id=$1 AND se.status='ENDED' AND b.released_at IS NOT NULL
+ AND b.tenant_id=i.tenant_id AND b.user_id=i.user_id
+ AND i.execution_state='TERMINAL' AND r.state='completed' AND r.evidence_type='control_cleanup')`, sid, d.RunEpoch).Scan(&proven)
+	if err != nil {
+		return err
+	}
+	if !proven {
+		return ErrUnknown
+	}
+	old := d.Revision
+	d.State, d.Reason = Stopped, "SESSION_CLEANUP_CONFIRMED"
+	d.Revision++
+	return c.save(ctx, tx, d, old)
+}
 func (c *Controller) save(ctx context.Context, tx pgx.Tx, d Document, old int64) error {
 	raw, _ := json.Marshal(d)
 	cursor, _ := json.Marshal(d.Cursor)

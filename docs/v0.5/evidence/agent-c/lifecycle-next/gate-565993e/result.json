@@ -1,0 +1,75 @@
+{
+  "source": "565993e85cac3e49dcff079b7b465d17f041b443",
+  "scope": "owned PostgreSQL/CPU process/Go/Python software regression; no real inference or audience acceptance",
+  "checks": [
+    {
+      "name": "faults",
+      "command": [
+        "bash",
+        "backend/scripts/test-durability-faults.sh"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 101.006,
+      "log": "faults.log",
+      "sha256": "729cc7cbde7b2ba7edf07cc8d27429ce00ba04af8c2945bb0f86793ae2470e2c",
+      "bytes": 5385
+    },
+    {
+      "name": "runtime",
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive/runtime/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 11.375,
+      "log": "runtime.log",
+      "sha256": "ac02fb8fe47155e9984b31aebc016636e74d0cb18186475df8f041f653727530",
+      "bytes": 449966
+    },
+    {
+      "name": "frontend-test",
+      "command": [
+        "bun",
+        "run",
+        "test"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 1.499,
+      "log": "frontend-test.log",
+      "sha256": "1b1920ad51179018f42f6d2d58778215a105736a7ca57c75d72649a06e113ed0",
+      "bytes": 703
+    },
+    {
+      "name": "frontend-build",
+      "command": [
+        "bun",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 2.603,
+      "log": "frontend-build.log",
+      "sha256": "32d704d48c2885a0d67776a55cd1d38c442ef710cb0589701cd36a8a0c4bcedb",
+      "bytes": 2407
+    }
+  ],
+  "environment": {
+    "go": "go version go1.27.2 darwin/arm64",
+    "bun": "1.3.14",
+    "/Users/sapiece/innovationProject/AstraLive/runtime/.venv/bin/python": "Python 3.12.13",
+    "/opt/homebrew/opt/postgresql@17/bin/postgres": "postgres (PostgreSQL) 17.11 (Homebrew)"
+  },
+  "frontendDependencies": {
+    "directory": "/Users/sapiece/innovationProject/AstraLive/frontend/node_modules",
+    "matchingLockSHA256": "ab3cdb23d8d88a325bbf1c922185306b2541ec209113c43dc27ab0681ed21fd1"
+  },
+  "status": "PASS",
+  "frontend": "EXECUTED"
+}
