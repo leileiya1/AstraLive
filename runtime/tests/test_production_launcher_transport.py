@@ -8,8 +8,10 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
-from app import production_launcher
+if os.name == "posix":
+    from app import production_launcher
 
+@unittest.skipUnless(os.name == "posix", "existing production launcher requires Unix fcntl")
 class LauncherTransportTests(unittest.TestCase):
     def test_default_keeps_original_exec_and_port(self):
         opened=[]

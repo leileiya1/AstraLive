@@ -17,6 +17,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"reflect"
+	platform "runtime"
 	"strings"
 	"testing"
 	"time"
@@ -27,7 +28,12 @@ func TestLocalIPCProductionServerStartup(t *testing.T) {
 		t.Skip("explicit Python subprocess required")
 	}
 	for _, mode := range []string{"tcp", "uds"} {
-		t.Run(mode, func(t *testing.T) { localIPCProductionServerStartup(t, mode) })
+		t.Run(mode, func(t *testing.T) {
+			if mode == "uds" && platform.GOOS != "linux" && platform.GOOS != "darwin" {
+				t.Skip("UDS unsupported")
+			}
+			localIPCProductionServerStartup(t, mode)
+		})
 	}
 }
 
