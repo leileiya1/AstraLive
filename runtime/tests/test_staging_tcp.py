@@ -27,7 +27,7 @@ from app.soulx_staging import StagingAvatarEngine
 from app.staging_settings import StagingSettings
 from app.providers import AudioChunk
 from app.narration_segments import SegmentExecutor, SegmentExecutionRequest
-from app.models import VoiceConfig
+from app.models import VoiceConfig, SessionConfig
 from app.durability_client import fingerprint
 
 
@@ -165,6 +165,7 @@ class LocalTCPTests(unittest.IsolatedAsyncioTestCase):
         token=os.path.join(directory.name,"token");Path(token).write_text("software-only-role-token"*2);os.chmod(token,0o600)
         avatar=StagingAvatarEngine({"port":server.sockets[0].getsockname()[1],"assetSHA256":"a"*64,"tokenFile":token},"s","software-worker",StagingSettings(True,"staging-short-1"))
         self.addAsyncCleanup(avatar.link.close)
+        avatar.configure_session(SessionConfig(fps=25,preview={"type":"WEBRTC"}))
         await avatar.prepare(None)
         class TTS:
             async def synthesize_stream(self,text,voice,ctx):yield AudioChunk(ctx.generation_id,0,bytes(3840))

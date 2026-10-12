@@ -316,6 +316,7 @@ class StagingAvatarEngine:
     def __init__(self,endpoint,sid,worker_ref,settings):
         self.link=StagingClient(endpoint,sid,worker_ref,settings);self.settings=settings
         self.degraded=False;self.generation_id=0;self.speaking=False
+        self.config=None;self.running=False
         self.publication_fence=None
         self.link.on_failure=self._failed
         from .staging_observer import StagingObserver
@@ -324,8 +325,20 @@ class StagingAvatarEngine:
     def _failed(self,reason):
         self.degraded=True
         if self.publication_fence:self.publication_fence(reason)
-    async def prepare(self,config):await self.link.connect()
-    async def start(self):pass
+    def configure_session(self,config):
+        # Native staged frames and source/timeline mapping are fixed at25fps.
+        # Reject unsupported Session clocks before opening the captured Worker.
+        if config.fps!=25:raise StagingFailure("STAGING_UNSUPPORTED")
+        if self.link.ready is not None or self.running:raise StagingFailure("STAGING_CONFLICT")
+        self.config=config.model_copy(deep=True)
+    async def prepare(self,config):
+        if self.config is None:raise StagingFailure("STAGING_UNSUPPORTED")
+        await self.link.connect()
+    async def start(self):
+        if self.config is None or self.link.ready is None or self.link.failed or self.link.writer is None:
+            raise StagingFailure("STAGING_RETIRED")
+        # Staging has no idle inference loop; media starts only after StageCommit.
+        self.running=True
     async def interrupt(self,generation):
         stage=self.link.active
         if stage and not stage.released:
@@ -335,5 +348,6 @@ class StagingAvatarEngine:
         stage=self.link.active
         if stage and not stage.released:await self.link.release(stage,reason="STOP")
         await self.link.close()
+        self.running=False;self.speaking=False
     async def push_audio(self,chunk):raise StagingFailure("STAGING_UNSUPPORTED")
     async def push_video(self,frame):raise StagingFailure("STAGING_UNSUPPORTED")
