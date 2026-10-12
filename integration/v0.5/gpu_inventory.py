@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read-only cached GPU installation inventory; never prints credential values."""
 import json
+import platform
 from pathlib import Path
 import subprocess
 
@@ -10,8 +11,18 @@ def main():
     service = Path("/root/autodl-tmp/astralive-services/soulx-lite-01")
     result = {"scope": "read-only installation inventory; no inference/start/install",
               "labPresent": lab.is_dir(), "servicePresent": service.is_dir(), "pythonBinaries": {}}
+    result["platform"] = {"system": platform.system(), "machine": platform.machine(), "python": platform.python_version()}
+    gpu = subprocess.run(["nvidia-smi", "--query-gpu=name,driver_version,memory.total,memory.used,utilization.gpu", "--format=csv,noheader,nounits"], capture_output=True, text=True, timeout=15)
+    result["gpuQuery"] = {"exitCode": gpu.returncode, "columns": ["name", "driverVersion", "memoryTotalMiB", "memoryUsedMiB", "utilizationPercent"], "rows": [row.split(", ") for row in gpu.stdout.strip().splitlines()]}
     for path in (Path("/root/miniconda3/bin/python"), lab / "environments/astralive-soulx/bin/python"):
         result["pythonBinaries"][str(path)] = path.exists()
+    cached_python = lab / "environments/astralive-soulx/bin/python"
+    if cached_python.exists():
+        code = "import importlib.metadata as m,json,platform; names=('torch','flash-attn','av','numpy'); print(json.dumps(dict(python=platform.python_version(),packages={n: next((d.version for d in m.distributions() if d.metadata.get('Name','').lower().replace('_','-')==n),None) for n in names})))"
+        probe = subprocess.run([str(cached_python), "-c", code], capture_output=True, text=True, timeout=20)
+        result["cachedEnvironmentExit"] = probe.returncode
+        if probe.returncode == 0:
+            result["cachedEnvironment"] = json.loads(probe.stdout)
     manifest = lab / "reports/soulx-weight-manifest.json"
     result["modelManifestPresent"] = manifest.is_file()
     if manifest.is_file():
