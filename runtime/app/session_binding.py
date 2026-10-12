@@ -296,9 +296,12 @@ class BoundSessionManager(SessionManager):
             if session:
                 # A failed native Stop must retain the Session, credentials and
                 # physical Worker reservation; no finally-release on failure.
-                await super().stop_session(sid, trace)
+                await session.stop(trace)
                 await self._close_llm(session)
             await self._release(sid)
+            async with self.lock:
+                if self.sessions.get(sid) is session:
+                    self.sessions.pop(sid, None)
             return
         try:
             if session:

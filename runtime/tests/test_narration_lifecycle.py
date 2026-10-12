@@ -47,10 +47,12 @@ class ContinuityLifecycleTests(unittest.IsolatedAsyncioTestCase):
             await self.manager.stop_session("session_1", "stop")
         self.assertIn("session_1", self.manager.release_pending)
         self.assertIn("session_1", self.manager.bound)
+        self.assertIn("session_1", self.manager.sessions)
         with self.assertRaises(RuntimeFailure):
             await self.manager.create_session(CreateSession(**{**fixtures.CREATE, "sessionId": "session_2"}))
         self.client.fail_release = False
-        await self.manager._release("session_1")
+        await self.manager.stop_session("session_1", "stop")
         self.assertNotIn("session_1", self.manager.release_pending)
         self.assertNotIn("session_1", self.manager.bound)
+        self.assertNotIn("session_1", self.manager.sessions)
 
