@@ -1,0 +1,38 @@
+[
+  {
+    "name": "nested-safe",
+    "timeline": false,
+    "raw": "{\"identity\":{\"workerGenerationId\":9007199254740991},\"provenance\":{\"weightsManifestSHA256\":\"abc\"},\"resources\":{\"allocatedBytes\":1024,\"elapsedUs\":1001}}",
+    "valid": true
+  },
+  {
+    "name": "nested-float",
+    "timeline": false,
+    "raw": "{\"identity\":{\"workerGenerationId\":1},\"resources\":{\"elapsedSeconds\":1.0}}",
+    "valid": false
+  },
+  {
+    "name": "legacy-generic",
+    "timeline": false,
+    "raw": "{\"proof\":{\"identity\":{\"workerGenerationId\":9223372036854775807}}}",
+    "valid": false
+  },
+  {
+    "name": "legacy-typed",
+    "timeline": true,
+    "raw": "{\"proof\":{\"identity\":{\"workerGenerationId\":9223372036854775807}}}",
+    "valid": true
+  },
+  {
+    "name": "legacy-nested-newpath",
+    "timeline": true,
+    "raw": "{\"proof\":{\"descriptor\":{\"stagingIdentity\":{\"workerGenerationId\":9223372036854775807}}}}",
+    "valid": false
+  },
+  {
+    "name": "staging-safe-nested-newpath",
+    "timeline": true,
+    "raw": "{\"proof\":{\"descriptor\":{\"stagingIdentity\":{\"workerGenerationId\":9007199254740991}}}}",
+    "valid": true
+  }
+]
