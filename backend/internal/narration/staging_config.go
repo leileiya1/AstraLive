@@ -101,6 +101,9 @@ func (c *Controller) capturedStaging(ctx context.Context, tx pgx.Tx, r durabilit
 	if err != nil {
 		return StagingSettings{}, err
 	}
+	if (len(raw) == 0 || string(raw) == "null") && !c.StagingSettings.Enabled {
+		return StagingSettings{}, nil
+	}
 	var flags map[string]json.RawMessage
 	if json.Unmarshal(raw, &flags) != nil {
 		return StagingSettings{}, fmt.Errorf("missing captured feature flags")

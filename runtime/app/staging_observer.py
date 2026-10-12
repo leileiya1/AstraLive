@@ -5,8 +5,11 @@ The original H264 and speech reference permit independent F correlation/audit.
 """
 import hashlib
 import json
+from itertools import count
 from pathlib import Path
 import wave
+
+_ORDINALS = count(1)
 
 LAYOUT = "astralive-golden-barcode-24-v1"
 
@@ -26,7 +29,7 @@ def overlay(rgb, ordinal, sequence):
         raise ValueError("observer requires real 512 RGB frame")
     output = bytearray(rgb)
     for cell, bit in enumerate(barcode_bits(ordinal, sequence)):
-        color = bytes((40, 220, 40) if bit else (220, 40, 40)) * 8
+        color = bytes((220, 40, 40) if bit else (40, 220, 40)) * 8
         for row in range(8):
             offset = (row * 512 + cell * 8) * 3
             output[offset:offset + 24] = color
@@ -43,7 +46,7 @@ class StagingObserver:
     def begin(self, stage, pcm):
         if not self.directory:
             return None
-        self.ordinal += 1
+        self.ordinal = next(_ORDINALS)
         if self.ordinal > 4095:
             raise ValueError("observer attempt budget exceeded")
         identity = stage.identity
@@ -76,3 +79,11 @@ class StagingObserver:
         folder = observation.pop("folder")
         observation.update(metadata)
         (folder / "reference.json").write_text(json.dumps(observation, ensure_ascii=False, indent=2) + "\n")
+        index = self.directory / "refs.json"
+        rows = json.loads(index.read_text()) if index.exists() else []
+        rows.append({"ordinal": observation["ordinal"], "sourceWav": str(folder.relative_to(self.directory)/"speech.wav"),
+            "identity": observation["identity"], "reference": str(folder.relative_to(self.directory)/"reference.json"),
+            "layoutRevision": LAYOUT, "speechPCMHash": observation["speechPCMHash"], **metadata})
+        temporary = self.directory / "refs.tmp"
+        temporary.write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n")
+        temporary.replace(index)

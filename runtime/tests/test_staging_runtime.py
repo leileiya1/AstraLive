@@ -144,7 +144,7 @@ class ArtifactTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(link.identity["generationId"],22);self.assertEqual(link.identity["workerGenerationId"],8)
             self.assertEqual(link.identity["attemptId"],"business-attempt")
             import json
-            ref=json.loads((Path(directory)/"attempt-0001/reference.json").read_text())
+            ref=json.loads(next(Path(directory).glob("attempt-*/reference.json")).read_text())
             self.assertNotEqual(ref["frames"][0]["decodedRGBHash"],ref["frames"][0]["emittedRGBHash"])
             self.assertEqual(ref["frames"][0]["nativeRGBHash"],c.bytes_digest(raw))
             self.assertEqual(len(artifact.audio),2)

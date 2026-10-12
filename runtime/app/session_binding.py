@@ -73,21 +73,42 @@ class BoundDeepSeek(OpenAICompatibleLLMProvider):
     def __init__(self, config, key, errors):
         super().__init__("https://api.deepseek.com", key, config["model"], config["maxTokens"])
         self.config, self.errors = config, errors
+        # Test-only provider call evidence is captured once; no secret/prompt
+        # contents are persisted and production logging is unchanged by default.
+        self.observer_dir = os.getenv("ASTRALIVE_STAGING_OBSERVER_DIR")
+        self.observer_sequence = 0
 
     async def stream(self, request):
         if self.client is None:
             self.transport = FixedDeepSeekTransport(self.config.get("temperature"))
             self.client = httpx.AsyncClient(timeout=httpx.Timeout(60, connect=10), transport=self.transport, trust_env=False, follow_redirects=False)
+        started = asyncio.get_running_loop().time()
+        self.observer_sequence += 1
+        observed = ""
+        outcome = "FAILED"
         try:
             async for token in super().stream(request):
+                observed += token
                 yield token
             self.errors["errorCode"] = ""
+            outcome = "COMPLETED"
         except asyncio.CancelledError:
             raise
         except Exception as exc:
             code = "PROVIDER_AUTH_FAILED" if isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code in {401, 403} else "LLM_FAILED"
             self.errors["errorCode"] = code
             raise RuntimeFailure(code, "Bound LLM request failed", 502) from None
+        finally:
+            if self.observer_dir:
+                import hashlib
+                from pathlib import Path
+                folder=Path(self.observer_dir);folder.mkdir(parents=True,exist_ok=True,mode=0o700)
+                role="bridge_choice" if request.system_prompt.startswith("你只选择口语过渡") else "ordinary_speech"
+                row={"scope":"REAL_BOUND_LLM_CALL_OBSERVER","role":role,"callSequence":self.observer_sequence,
+                    "status":outcome,"model":self.config["model"],"requestHash":"sha256:"+hashlib.sha256(request.text.encode()).hexdigest(),
+                    "responseHash":"sha256:"+hashlib.sha256(observed.encode()).hexdigest(),"responseChars":len(observed),
+                    "durationMs":round((asyncio.get_running_loop().time()-started)*1000),"audienceAudible":False}
+                with (folder/"llm-calls.jsonl").open("a") as handle:handle.write(json.dumps(row,ensure_ascii=False)+"\n")
 
     async def aclose(self):
         if self.client is not None:

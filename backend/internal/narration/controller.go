@@ -365,6 +365,15 @@ func (c *Controller) enqueueSegment(ctx context.Context, tx pgx.Tx, r durability
 		if beat == "" && d.Resume != nil {
 			beat = d.Resume.NextBeatID
 		}
+		if beat == "" && d.Resume != nil {
+			// At EOF there is no next Beat; retain the proved boundary Beat.
+			for _, authored := range d.Plan.Segments {
+				if authored.ID == d.Resume.Boundary.Identity.SegmentID {
+					beat = authored.BeatID
+					break
+				}
+			}
+		}
 		if beat == "" {
 			return durability.Command{}, ErrConflict
 		}
