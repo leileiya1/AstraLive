@@ -237,7 +237,7 @@ F freezes staging-contract-1 after user authorization and A/B/C scoped reviews o
 B owns the scoped Worker/config/supervisor/inference-thread signal and Timeline sidecar implementation; C owns Runtime binding/staging and real provider fixture; F owns final serial merge and true GPU/browser/RTMP acceptance. Any later field/state/hash/limit change requires a recorded amendment and affected-owner review. No silent schema extension or shrinking proof to make a failing test pass. Native/8s/live Golden rows remain NOT TESTED until actual source-pinned runs finish.
 
 
-## 12. CCR-BC-003: additive opt-in GPU1GiB capabilities
+## 13. CCR-BC-003: additive opt-in GPU1GiB capabilities
 
 The user explicitly approved this capability allowance after F recorded an actual original512MiB-profile failure: incremental allocated peak871138816 bytes (830.78MiB) on source-pinned RTX3080 short inference. A larger allowance is not an optimization, a release verdict or a guarantee of an8-second success. This section adds exactly two negotiated limits revisions, while preserving the original profile dictionaries, original canonical vectors, original staging-freeze-1 manifest and v0.5-frozen-1 bytes. contract_revision stays staging-contract-1; message DTOs, identity/epochs, hash domains, receipt/UNKNOWN/native-safe and all other behavior are unchanged.
 
@@ -255,3 +255,5 @@ SHORT_PROFILES groups the original/new short names; LONG_PROFILES groups the ori
 F records a separate immutable staging-freeze-2 manifest after A/B/C scoped ACKs of the same additive implementation pin. Rollback seals/fences admission, proves native safe release or actual old-owner retirement, retains UNKNOWN tails and only then explicitly selects an original capability/new Session. Original artifacts/SQL and freeze-1 remain historical evidence. A limits increase cannot authorize old STARTED speech replay, recovered transient pose ranges or renewed expired/fenced attempts.
 
 Required gates: old15 contract tests and old5 Go/Python hash vectors unchanged; exact inventory comparison of both old profile dictionaries; each new dictionary differs only in revision and allocated GPU allowance; new-name Auth/Ready/capture/gate mismatch tests, simulation rejection and no implicit default/promotion; existing full Go/SQL/race/legacy/transport suites; fresh actual new-short GPU resource/pose/cancel/release, then explicit new8s source/lease/resource/required-sink pose gates and real business Golden. Unrun layers are NOT TESTED. The previously observed193.22MiB headroom under1GiB is a starting allowance, not a stability measurement.
+
+F freeze decision for §13: user-approved profile capability extension pinned in staging-freeze-2.json after A/B/C/F independently reviewed the exact e992833 source. Header numbering corrected only; no additional semantic change. Existing freeze-1 remains a historical immutable snapshot.
