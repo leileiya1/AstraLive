@@ -68,8 +68,8 @@ func StagingFromEnvironment() (StagingSettings, error) {
 	if !enabled {
 		return StagingSettings{}, nil
 	}
-	profile := os.Getenv("ASTRALIVE_SOULX_STAGING_LIMITS_REVISION")
-	if profile == "" {
+	profile, configured := os.LookupEnv("ASTRALIVE_SOULX_STAGING_LIMITS_REVISION")
+	if !configured {
 		profile = "staging-short-1"
 	}
 	s := StagingSettings{Enabled: true, LimitsRevision: &profile}
