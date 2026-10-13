@@ -1,7 +1,0 @@
--r requirements.txt
-numpy>=1.26,<3
-Pillow>=10,<13
-av>=14,<18
-jsonschema>=4,<5
-# Optional CosyVoice engine is provisioned separately with a pinned, audited lock.
-# Installing this file does not install Torch, model weights, or a clone engine.

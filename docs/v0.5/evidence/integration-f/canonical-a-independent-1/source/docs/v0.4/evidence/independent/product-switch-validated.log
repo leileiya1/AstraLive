@@ -1,6 +1,0 @@
---- FAIL: TestAuditSelectionExpiresWhileWaitingForCommandLock (1.20s)
-    --- FAIL: TestAuditSelectionExpiresWhileWaitingForCommandLock/bound_product_switch_rejects_cached_admission (0.12s)
-        interaction_audit_test.go:221: product switch not fenced: {Observation:0xc0004704e0 Mode:IDLE Candidates:0 Counters:{Input:2 Deduplicated:1 Merged:0 Selected:1 Expired:0 Dropped:0 Filtered:0 Delivered:0 Failed:1 Peak:1 Force:0} Recent:[{EventID:receipt_484f03470cc279f68e70c63c6dd3de1e3230b9bdef654a29d748707ef10603eb Platform:mock SourceEventID:audit-ttl PlatformRoomID:room_9f62aeda256ad78fef71f594c528a1e8 InternalRoomID:room_9f62aeda256ad78fef71f594c528a1e8 SessionID:session_9d2b6ca417fbb61bbba97f30fe9a8155 EventType:COMMENT UserExternalID:viewer Nickname: Content:多少钱？ SourceTimestamp:<nil> ReceivedAt:2026-10-10 23:34:51.571802 +0800 CST m=+0.331186501 TraceID:interaction_484f03470cc279f68e70c63c6dd3de1e3230b9bdef654a29d748707ef10603eb Transport:MOCK_REPLAY}] Current:0xc0004c0140 UtteranceID: LastError:DISPATCH_FAILED_NO_AUTOMATIC_RETRY Stopped:false Latency:{Samples:1 MeanMS:0.148 P50MS:0.148 P95MS:0.148 MaxMS:0.148 Boundary:comment_received → scheduler_selected (Go monotonic; last 256 selected)}}
-FAIL
-FAIL	astralive/backend/internal/app	1.753s
-FAIL
