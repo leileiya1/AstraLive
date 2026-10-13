@@ -51,6 +51,13 @@ def require_observable_state(snapshot):
         raise GoldenFailure("Narration stopped or requires recovery")
 
 
+def require_fixture_completion(snapshot,required_facts,injected_questions,total_questions):
+    if snapshot.get("state")!="STOPPED" or snapshot.get("reason")!="FINISHED":
+        raise GoldenFailure("Fixture completion budget exceeded before authored plan finished")
+    if injected_questions!=total_questions or not required_facts.issubset(set(snapshot["cursor"]["completedFactIds"])):
+        raise GoldenFailure("Fixture completion lacks required facts/questions")
+
+
 def require_browser_av(chrome,normal_stop):
     if not normal_stop:raise GoldenFailure("Actual Session normal Stop missing")
     if chrome.get("recordingFailed") or chrome.get("recorderErrors"):
@@ -100,7 +107,7 @@ async def main(args):
     report={"scope":"REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
         "commentTransport":"MOCK_REPLAY_ONLY", "humanNaturalness":"NOT_TESTED",
         "audienceAudible":False,"correlatedAV":"NOT_ANALYSED",
-        "localTransport":args.local_transport,"mode":args.mode,"seed":args.seed,"fixture":fixture.get("name"),"events":[]}
+        "localTransport":args.local_transport,"mode":args.mode,"requestedSeconds":args.seconds,"seed":args.seed,"fixture":fixture.get("name"),"events":[]}
     session=None;browser=None;page=None;normal_stop=False;recording_file=None;recording_writer=None;chrome_saved=False
     async with httpx.AsyncClient(base_url=args.backend,verify=False,trust_env=False,timeout=30) as client:
         async def api(method,path,payload=None,key=None):
@@ -199,7 +206,8 @@ async def main(args):
                 began=time.monotonic();questions=fixture["questions"]
                 if args.mode=="ten-minute" and (args.seconds<600 or len(questions)<5):
                     raise GoldenFailure("Formal G1 requires >=600 seconds and >=5 questions")
-                deadline=1800 if args.mode=="ten-minute" else args.seconds
+                deadline=1800 if args.mode=="ten-minute" else 180 if args.mode=="fixture-completion-smoke" else args.seconds
+                report["observationBudgetSeconds"]=deadline
                 required_facts=set(fact for beat in document["plan"]["beats"] for fact in beat["requiredFactIds"])
                 positions=sorted(random.Random(args.seed).uniform(args.seconds*.08,args.seconds*.87) for _ in questions)
                 report["commentPositionsSeconds"]=positions;next_question=0
@@ -212,6 +220,9 @@ async def main(args):
                     snapshot=await api("GET",f"/api/v0.5/narration/{session}/")
                     require_observable_state(snapshot)
                     if snapshot["reason"]=="FINISHED":
+                        if args.mode=="fixture-completion-smoke":
+                            require_fixture_completion(snapshot,required_facts,next_question,len(questions))
+                            break
                         if args.mode=="ten-minute" and elapsed<args.seconds:
                             raise GoldenFailure("Authored plan finished early: fixture duration insufficient")
                         if args.mode=="ten-minute":
@@ -227,6 +238,9 @@ async def main(args):
                     await asyncio.sleep(.2)
                 if args.mode=="ten-minute" and snapshot.get("reason")!="FINISHED":
                     raise GoldenFailure("Formal G1 deadline exceeded before authored plan completion")
+                if args.mode=="fixture-completion-smoke":
+                    require_fixture_completion(snapshot,required_facts,next_question,len(questions))
+                    report["fixtureCompletionClaim"]="PENDING_SQL_SELECTED_TURN_AND_AV_AUDIT"
                 report["continuousDurationSeconds"]=time.monotonic()-began
                 report["finalNarrationBeforeStop"]=snapshot
                 report["factCoverageClaim"]="PENDING_SQL_AUDIT" if args.mode=="ten-minute" else "NOT_FORMAL_COMPLETE_FACT_COVERAGE"
@@ -271,6 +285,6 @@ if __name__=="__main__":
     for name in ["backend","username","password-file","llm-key-file","worker-ref","avatar-ref","fixture","runtime-log","output"]:
         parser.add_argument("--"+name,required=True)
     parser.add_argument("--local-transport",choices=["tcp","uds"],default="tcp")
-    parser.add_argument("--mode",choices=["short","ten-minute","soak"],default="short")
+    parser.add_argument("--mode",choices=["short","fixture-completion-smoke","ten-minute","soak"],default="short")
     parser.add_argument("--seconds",type=int,default=600);parser.add_argument("--seed",type=int,default=20261012)
     asyncio.run(main(parser.parse_args()))

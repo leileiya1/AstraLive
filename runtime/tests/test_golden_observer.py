@@ -3,7 +3,7 @@ import unittest
 import io
 import base64
 import hashlib
-from narration_real_golden import require_observable_state, require_browser_av, GoldenFailure, ChromeRecordingWriter
+from narration_real_golden import require_observable_state, require_browser_av, require_fixture_completion, GoldenFailure, ChromeRecordingWriter
 
 class GoldenObserverPolicyTests(unittest.TestCase):
     def test_natural_finished_plan_allowed_for_normal_session_stop(self):
@@ -39,3 +39,10 @@ class GoldenObserverPolicyTests(unittest.TestCase):
                 file=io.BytesIO();writer=ChromeRecordingWriter(file)
                 with self.assertRaises(GoldenFailure):writer.store(0,data,size,sha)
                 self.assertTrue(writer.failed);self.assertEqual(file.getvalue(),b'')
+
+    def test_fixture_completion_never_accepts_stopped_pending_or_missing_facts_comments(self):
+        finished={'state':'STOPPED','reason':'FINISHED','cursor':{'completedFactIds':['name','price']}}
+        require_fixture_completion(finished,{'name','price'},1,1)
+        for snapshot,injected in [(finished|{'reason':'OPERATOR_STOP'},1),(finished|{'state':'NARRATING'},1),
+                                  (finished|{'cursor':{'completedFactIds':['name']}},1),(finished,0)]:
+            with self.assertRaises(GoldenFailure):require_fixture_completion(snapshot,{'name','price'},injected,1)
