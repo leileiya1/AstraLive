@@ -1,0 +1,88 @@
+{
+  "scope": "Numerical diagnostic on actual RTMP waveform; not approved formal oracle, audience sound or whole-run PASS",
+  "clockDomain": "RTMP recording PTS only",
+  "rawObserverAudit": "INVALID_NORMALIZED_CORRELATION_ALL_SIX_ROWS",
+  "method": "longdouble rolling energy, diagnostic RMS floor 1e-4, direct dot-product verification of best and competitor",
+  "rows": [
+    {
+      "ordinal": 1,
+      "status": "MATCHED_DIAGNOSTIC_ONLY",
+      "videoFirstSeconds": 11.141,
+      "referenceStartSeconds": 11.141375,
+      "directCorrelation": 0.9786655396804396,
+      "competingDirectCorrelation": 0.10239940908006356,
+      "audioMinusVideoMs": 0.3750000000000142,
+      "excludedLowEnergyWindows": 70959,
+      "invalidFiniteCorrelationWindows": 0,
+      "sampleRate": 8000,
+      "referencePrefixSamples": 24000
+    },
+    {
+      "ordinal": 2,
+      "status": "MATCHED_DIAGNOSTIC_ONLY",
+      "videoFirstSeconds": 19.861,
+      "referenceStartSeconds": 19.841375,
+      "directCorrelation": 0.9731068704022636,
+      "competingDirectCorrelation": 0.08870950379055449,
+      "audioMinusVideoMs": -19.625000000001336,
+      "excludedLowEnergyWindows": 49976,
+      "invalidFiniteCorrelationWindows": 0,
+      "sampleRate": 8000,
+      "referencePrefixSamples": 24000
+    },
+    {
+      "ordinal": 3,
+      "status": "MATCHED_DIAGNOSTIC_ONLY",
+      "videoFirstSeconds": 31.021,
+      "referenceStartSeconds": 31.001375,
+      "directCorrelation": 0.9711251997175087,
+      "competingDirectCorrelation": 0.12705846755707775,
+      "audioMinusVideoMs": -19.625000000001336,
+      "excludedLowEnergyWindows": 53028,
+      "invalidFiniteCorrelationWindows": 0,
+      "sampleRate": 8000,
+      "referencePrefixSamples": 24000
+    },
+    {
+      "ordinal": 4,
+      "status": "MATCHED_DIAGNOSTIC_ONLY",
+      "videoFirstSeconds": 41.261,
+      "referenceStartSeconds": 41.241375,
+      "directCorrelation": 0.9778359735241265,
+      "competingDirectCorrelation": 0.10803814586579051,
+      "audioMinusVideoMs": -19.62500000000489,
+      "excludedLowEnergyWindows": 33105,
+      "invalidFiniteCorrelationWindows": 0,
+      "sampleRate": 8000,
+      "referencePrefixSamples": 24000
+    },
+    {
+      "ordinal": 5,
+      "status": "MATCHED_DIAGNOSTIC_ONLY",
+      "videoFirstSeconds": 51.181,
+      "referenceStartSeconds": 51.181375,
+      "directCorrelation": 0.9734175144463333,
+      "competingDirectCorrelation": 0.0825508961438414,
+      "audioMinusVideoMs": 0.3750000000053433,
+      "excludedLowEnergyWindows": 48741,
+      "invalidFiniteCorrelationWindows": 0,
+      "sampleRate": 8000,
+      "referencePrefixSamples": 24000
+    },
+    {
+      "ordinal": 6,
+      "status": "MATCHED_DIAGNOSTIC_ONLY",
+      "videoFirstSeconds": 62.861,
+      "referenceStartSeconds": 62.841375,
+      "directCorrelation": 0.9768662119201007,
+      "competingDirectCorrelation": 0.22224566610487473,
+      "audioMinusVideoMs": -19.624999999997783,
+      "excludedLowEnergyWindows": 33052,
+      "invalidFiniteCorrelationWindows": 0,
+      "sampleRate": 8000,
+      "referencePrefixSamples": 24000
+    }
+  ],
+  "wholeRunStatus": "FAIL",
+  "formalGolden1": "NOT_FORMAL"
+}
