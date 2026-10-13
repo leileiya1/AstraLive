@@ -1,0 +1,75 @@
+{
+  "source": "a6a3a9ed72aa034e07f8e8308c185779090f1b52",
+  "scope": "owned PostgreSQL/CPU process/Go/Python software regression; no real inference or audience acceptance",
+  "checks": [
+    {
+      "name": "faults",
+      "command": [
+        "bash",
+        "backend/scripts/test-durability-faults.sh"
+      ],
+      "exitCode": 1,
+      "durationSeconds": 50.164,
+      "log": "faults.log",
+      "sha256": "28d08ae24fc6a6e0c05996d4e9c5675e7ed75146b5ea20d5e521bfee2aade473",
+      "bytes": 47119
+    },
+    {
+      "name": "runtime",
+      "command": [
+        "/private/tmp/astralive-f-media-venv-1/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 13.139,
+      "log": "runtime.log",
+      "sha256": "756705a5bf489c7b1a537bfd3f6b290f10958b429fc67c448b0087b05e58441d",
+      "bytes": 457866
+    },
+    {
+      "name": "frontend-test",
+      "command": [
+        "bun",
+        "run",
+        "test"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 1.098,
+      "log": "frontend-test.log",
+      "sha256": "2a468c8725f2fd7f1aca028f49e37e2df0a73541e2f64d03d0d9079b16d28be0",
+      "bytes": 704
+    },
+    {
+      "name": "frontend-build",
+      "command": [
+        "bun",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 2.316,
+      "log": "frontend-build.log",
+      "sha256": "5961190de7ee3e3faf89f8b588517c93969c8e1acd5d2082aafcf01e629004dc",
+      "bytes": 2407
+    }
+  ],
+  "environment": {
+    "go": "go version go1.27.2 darwin/arm64",
+    "bun": "1.3.14",
+    "/private/tmp/astralive-f-media-venv-1/bin/python": "Python 3.12.13",
+    "/opt/homebrew/opt/postgresql@17/bin/postgres": "postgres (PostgreSQL) 17.11 (Homebrew)"
+  },
+  "frontendDependencies": {
+    "directory": "/Users/sapiece/innovationProject/AstraLive/frontend/node_modules",
+    "matchingLockSHA256": "ab3cdb23d8d88a325bbf1c922185306b2541ec209113c43dc27ab0681ed21fd1"
+  },
+  "status": "FAIL",
+  "frontend": "EXECUTED"
+}
