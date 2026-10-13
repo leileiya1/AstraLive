@@ -1,0 +1,988 @@
+{
+  "ordinal": 2,
+  "layoutRevision": "astralive-golden-barcode-24-v1",
+  "identity": {
+    "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+    "runEpoch": 1,
+    "timelineEpoch": 2,
+    "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+    "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+    "lane": "AUDIENCE_ANSWER",
+    "commandId": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+    "traceId": "trace_00110762f60d7d4f1e40dfcb4525c26b",
+    "generationId": 3,
+    "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+    "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+    "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+    "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+    "stageId": "stage-4e2d59a6c92f436794350155ba97b212",
+    "workerRef": "soulx-lite-01",
+    "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+    "workerGenerationId": 2
+  },
+  "stageDescriptor": {
+    "type": "StageProduced",
+    "contract_revision": "staging-contract-1",
+    "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+    "worker_epoch": "3b23426bdaa74f0a999fcfa6e2445017",
+    "identity": {
+      "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+      "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+      "commandId": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "generationId": 3,
+      "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+      "lane": "AUDIENCE_ANSWER",
+      "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "runEpoch": 1,
+      "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+      "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "stageId": "stage-4e2d59a6c92f436794350155ba97b212",
+      "timelineEpoch": 2,
+      "traceId": "trace_00110762f60d7d4f1e40dfcb4525c26b",
+      "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+      "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+      "workerGenerationId": 2,
+      "workerRef": "soulx-lite-01"
+    },
+    "descriptor": {
+      "descriptor_revision": "staging-descriptor-1",
+      "identity": {
+        "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+        "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+        "commandId": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+        "generationId": 3,
+        "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+        "lane": "AUDIENCE_ANSWER",
+        "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+        "runEpoch": 1,
+        "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+        "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+        "stageId": "stage-4e2d59a6c92f436794350155ba97b212",
+        "timelineEpoch": 2,
+        "traceId": "trace_00110762f60d7d4f1e40dfcb4525c26b",
+        "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+        "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+        "workerGenerationId": 2,
+        "workerRef": "soulx-lite-01"
+      },
+      "request_fingerprint": "sha256:2d37673d3e4d34e24731b34e142b563eef38b3121378b821b21d080c57876955",
+      "source_format": {
+        "channels": 1,
+        "codec": "h264",
+        "fps_den": 1,
+        "fps_num": 25,
+        "height": 512,
+        "native_format": "rgb24",
+        "pcm_format": "s16le",
+        "sample_rate": 16000,
+        "width": 512
+      },
+      "original_samples": 59564,
+      "pad_samples": 596,
+      "source_samples": 60160,
+      "pcm_sha256": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+      "frame_count": 94,
+      "first_sequence": 0,
+      "last_sequence": 93,
+      "first_pts_us": 0,
+      "last_pts_us": 3720000,
+      "video_bytes": 870143,
+      "video_stream_sha256": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+      "native_rgb_stream_sha256": "sha256:1cb39e287e10e56e745b866f69674de265c30c4afaa4ec581ad7bbc1ada0db8c",
+      "eof": true,
+      "final_marker": true,
+      "native_final": true,
+      "limits": {
+        "limits_revision": "staging-segment-8s-gpu1g-1",
+        "max_source_samples": 128000,
+        "worker_rgb_bytes": 167772160,
+        "worker_pose_bytes": 8388608,
+        "runtime_artifact_bytes": 201326592,
+        "runtime_transient_bytes": 25165824,
+        "worker_attempt_bytes": 536870912,
+        "gpu_incremental_allocated_bytes": 1073741824,
+        "audio_queue_samples": 32000,
+        "native_queue_frames": 24,
+        "network_window_frames": 4,
+        "lease_ms_max": 60000
+      },
+      "provenance": {
+        "workerRef": "soulx-lite-01",
+        "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+        "model_source_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+        "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2",
+        "avatar_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+        "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+        "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+        "preprocessing_version": "soulx-lite-512-seed42-v1",
+        "capability": "immutable_segment_staging_v1",
+        "source": "GPU_INFERENCE"
+      },
+      "resources": {
+        "worker_rgb_peak_bytes": 73924608,
+        "worker_attempt_peak_bytes": 168828928,
+        "gpu_baseline_allocated_bytes": 4435577856,
+        "gpu_incremental_allocated_peak_bytes": 855803392,
+        "gpu_incremental_reserved_peak_bytes": 0,
+        "inference_elapsed_us": 2157154
+      }
+    },
+    "descriptor_sha256": "sha256:68879e186fb0a7293b8d27d49429ba838ee7423de9368a3486ac6596ce0ae785"
+  },
+  "speechPCMHash": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+  "frames": [
+    {
+      "sequence": 0,
+      "ptsUs": 0,
+      "payloadBytes": 36555,
+      "payloadSHA256": "sha256:d4332aee9a7bde22ae7c477e31c3236064d5a16f6aac5fcfd6fe38740c9f4acc",
+      "nativeRGBHash": "sha256:05ac78988292e371afee655bf1108999c8fe222d9965a2ce2fdf83701f7fcd41",
+      "decodedRGBHash": "sha256:068991cacca3cc51908f395d5242636cacaee958db20dd281ae94db41ce86904",
+      "emittedRGBHash": "sha256:282c99eb962f3754d69a91acca2e770d14a7682036fca87283fc305d05278075"
+    },
+    {
+      "sequence": 1,
+      "ptsUs": 40000,
+      "payloadBytes": 3869,
+      "payloadSHA256": "sha256:869ce0778bf984344c3fc584939b39e50c4fae3ab9eb7a8a20220534789dae31",
+      "nativeRGBHash": "sha256:b278993f471cf986bcb77a81a4961ea59e42707ad2fb0690ed0c4069cba7f108",
+      "decodedRGBHash": "sha256:3ba16897dad364c1197a142f268a30012322f268b6f8b9c65792e658b664ca6b",
+      "emittedRGBHash": "sha256:50f0fc3305814d08ebcea90d49c064361b465fc7ac972748c67aa6f142f54a68"
+    },
+    {
+      "sequence": 2,
+      "ptsUs": 80000,
+      "payloadBytes": 5388,
+      "payloadSHA256": "sha256:1562d822e6564b921511dc4f9ab722b367c4b45eea232f1cd54695963c94f1e7",
+      "nativeRGBHash": "sha256:87188802b4019d5934e4e5355e7cb7ff18cbb5022a0afb304251457274df0349",
+      "decodedRGBHash": "sha256:f396d87bae0439168cce10dfa97fbf92d60372f95de5746e795d93320f1e9206",
+      "emittedRGBHash": "sha256:e8856193cfb8fab7a799cd5466c863d3f62d41e629cf8a4c61112fbe47a939c9"
+    },
+    {
+      "sequence": 3,
+      "ptsUs": 120000,
+      "payloadBytes": 9088,
+      "payloadSHA256": "sha256:3bf62a20e744eefe1d3221027034c83a32effad33523869c51a4a4b6087acce5",
+      "nativeRGBHash": "sha256:1afdd7d9743a518eb55420650804723acff092a196eec0a128b04ec0006e44de",
+      "decodedRGBHash": "sha256:eb27f9dc51d80ccc293835b739c334aa392d2d4dbe3e5463dfba81f947bd07d6",
+      "emittedRGBHash": "sha256:afa2d6e5b9247ab6b18fd0458181955af57bd6a6778cbbc8cc736afdbd266501"
+    },
+    {
+      "sequence": 4,
+      "ptsUs": 160000,
+      "payloadBytes": 8874,
+      "payloadSHA256": "sha256:655088ad57abbabaa8358a7cc70ebce04986abb0cfbc59f2966a2640a721c4ad",
+      "nativeRGBHash": "sha256:77dca74eff588604d0d7452c9906645c6e9842b1bb239e56909574fec9f68dff",
+      "decodedRGBHash": "sha256:aa3b373a962a302ef56f423d17b4df704e583b9b7dd6898f67f70ac6a28d8ac7",
+      "emittedRGBHash": "sha256:92dd57f0428d0d3b510782ecef7f50902b418c211a0146f104022a2145b51487"
+    },
+    {
+      "sequence": 5,
+      "ptsUs": 200000,
+      "payloadBytes": 10035,
+      "payloadSHA256": "sha256:e76d50f38af2108bc6e25fbfa450bb701459af281977e40e055e7382c756eaf8",
+      "nativeRGBHash": "sha256:5006e5c227b985e9a08138eb1030aba50d05469dc9c37715376c9431aa2a7ffc",
+      "decodedRGBHash": "sha256:2acc800f9a3a9c87bf8e377d3afb1d724bf4b463e7b2930afdbcd42a175131bd",
+      "emittedRGBHash": "sha256:afd3a75f6f212ade74e564742bf2606be901b24cd33b3e233b0fdd0e85f38bda"
+    },
+    {
+      "sequence": 6,
+      "ptsUs": 240000,
+      "payloadBytes": 8835,
+      "payloadSHA256": "sha256:7f69f254be5531873755adf74054909eca21293f623db0ac442f706989064d73",
+      "nativeRGBHash": "sha256:74b99732ccf2c33e027a7093d28f09760d13f90f93fe051c9674cd96a2f0e897",
+      "decodedRGBHash": "sha256:de01a657a26a844c18b26aad076848ba1a9f58073b9911eaba36c6d129f2298e",
+      "emittedRGBHash": "sha256:6c02e410c04521c87214689f7137801c51659089e79af0c6e2ccb43eab658d83"
+    },
+    {
+      "sequence": 7,
+      "ptsUs": 280000,
+      "payloadBytes": 11067,
+      "payloadSHA256": "sha256:c068280f34b1a9ab58eba74fd2b16517f97f340d3b2392c677ee53a9aa1b3b9e",
+      "nativeRGBHash": "sha256:db1003674a66ad08b84f5bcac0a72cca5248086a1252f315afc92abab5d7f478",
+      "decodedRGBHash": "sha256:f58b7854944d6801ddc6aa497ce3cc897fa48eef98fd792bf043a401c93c90a4",
+      "emittedRGBHash": "sha256:2375075c1f0477c48fec26b5f866c6f8048720ca90d3e661f8f513630c7064ea"
+    },
+    {
+      "sequence": 8,
+      "ptsUs": 320000,
+      "payloadBytes": 11309,
+      "payloadSHA256": "sha256:9036f9f92ef4cd591cd186dd89c96b833a6e5522f9275691445bc8329b42f38d",
+      "nativeRGBHash": "sha256:87a5c357fdf3b939062bd2e206f6e3d51af6885a2e7251cd4b046dd093a64688",
+      "decodedRGBHash": "sha256:aad14fb7978db5c709162f8d7448a57d21f47f59290996c44baa34eda6f1f61a",
+      "emittedRGBHash": "sha256:21c34064696447907e3f78e842f7041389fb19103c8086fa9cb1951a3d308a54"
+    },
+    {
+      "sequence": 9,
+      "ptsUs": 360000,
+      "payloadBytes": 10107,
+      "payloadSHA256": "sha256:b324ee1b0650911d13d40536b1ac57d3140788414d4265bc6381f8000c236988",
+      "nativeRGBHash": "sha256:70736870b5613d16274b2319230b54afbb3a73337ed128f0771e39b2032241f7",
+      "decodedRGBHash": "sha256:30ad42d658e0c2724bb95b4d4e54b115a37d1d14140b0d99af95a3fab78888b6",
+      "emittedRGBHash": "sha256:e95cdff0c36a42f45f50a291e46966223e0247708e31abfff513ae437a57aca7"
+    },
+    {
+      "sequence": 10,
+      "ptsUs": 400000,
+      "payloadBytes": 10926,
+      "payloadSHA256": "sha256:881ac776ab8db82f0959a3113641c829afb4c12ce45e83732ed8a7f1f4381726",
+      "nativeRGBHash": "sha256:14f03b768ba0265e78eccf30f5d661760edf4160576c6aedc6d2af8e92d98fa8",
+      "decodedRGBHash": "sha256:0ea13ddec010e1aeab98718f0ccb2176466ba9ad291fe2aa2ef0d56c9083fb17",
+      "emittedRGBHash": "sha256:0c6a69bdcf5918268d8c4e2f1f5137d4381646b11f9645a84c0ef17746ec7cbf"
+    },
+    {
+      "sequence": 11,
+      "ptsUs": 440000,
+      "payloadBytes": 10283,
+      "payloadSHA256": "sha256:b1821db1feb7dd37b969789dd7ed0c3f9ef2a0095d6c6a5f101c1225f47ca398",
+      "nativeRGBHash": "sha256:5382aafe5321f1744e8cdda5bda81f0f9f976eedbb2207f5119440a4f3f8db52",
+      "decodedRGBHash": "sha256:37c6505401dbe2125459c0e0a2ddfb11f3d50dc694c7940d33fd64abee009c83",
+      "emittedRGBHash": "sha256:1370e239e6637ef3c452750634f62398ff7b74d5ac2eaa2c248f86655e03ef28"
+    },
+    {
+      "sequence": 12,
+      "ptsUs": 480000,
+      "payloadBytes": 9293,
+      "payloadSHA256": "sha256:c6928076b292546123a8a35102d803ec3bc53ded91c79b412b83e3cfbe9dc535",
+      "nativeRGBHash": "sha256:61236a67c94e66fceb4c3c521fd74575f186c2c26807a043003997611982a9b3",
+      "decodedRGBHash": "sha256:4ee63bbd338790769a3f6d6c6bf26ae4fc5301bd723d6a96c2ee5d0618b510f7",
+      "emittedRGBHash": "sha256:59f17528447135007968fa8b7090315feb014c9cc172fa5d2d359297c285f42e"
+    },
+    {
+      "sequence": 13,
+      "ptsUs": 520000,
+      "payloadBytes": 9343,
+      "payloadSHA256": "sha256:5831cf47f0001aeddc3bcd1409b6c9179f3f088426a39431058c1014568dea9f",
+      "nativeRGBHash": "sha256:78c221b2ae45af744e04d37f1522892fe0cdc4a15203e105307665f25c0679db",
+      "decodedRGBHash": "sha256:8753eef3ba2224a1007436b72868de9c2973aaf3a64926c9d09059c492c1dd63",
+      "emittedRGBHash": "sha256:e0ee7f71199a9b79e436c7c350f7cfe2b2316bda099e67cd07b92ae50a98b9d2"
+    },
+    {
+      "sequence": 14,
+      "ptsUs": 560000,
+      "payloadBytes": 9721,
+      "payloadSHA256": "sha256:7308e8ae2f0ec7b5f5df3b5f582e0976c117940337297f4cf6af1c60e9368ab2",
+      "nativeRGBHash": "sha256:b817f0fe238c6907c69f33c862237df03fd2000b77f2807b0c63421b83e9d5ea",
+      "decodedRGBHash": "sha256:07c563857893b5fb5b1e741a8d85d4f2c544a25699c9ab3453d3afd45d1b188b",
+      "emittedRGBHash": "sha256:d1f23d56f51ba3fb0de140ddd289ad842932adf97920a09b4a99e0a73f0654d6"
+    },
+    {
+      "sequence": 15,
+      "ptsUs": 600000,
+      "payloadBytes": 10713,
+      "payloadSHA256": "sha256:7c2da31fc3b2244fadfb4177eb91709bd45684c93da9e3de302d92a8d193fafe",
+      "nativeRGBHash": "sha256:48c14b536da496148281f5b2f644109277ec3f4e4c6c73e843f859e8bacbac37",
+      "decodedRGBHash": "sha256:19641a1643eb85f4fabef44d1b6a4acd8282d75608334c8d417f781bf18e69cb",
+      "emittedRGBHash": "sha256:eb053171f4b55ef4e54ed00342c31438f272ce4e455aca0ee17efd15ba4ee4f1"
+    },
+    {
+      "sequence": 16,
+      "ptsUs": 640000,
+      "payloadBytes": 11008,
+      "payloadSHA256": "sha256:f28fd951ea313b66c3f64d93b1d484dd2f8723e84038bd263867c267bb081cea",
+      "nativeRGBHash": "sha256:d476fc5ef783c03b5eaa03d7944e35b75028532fd385b8640918886e80762513",
+      "decodedRGBHash": "sha256:635f7ed5ec1f4fdfe8a4a83dee43d8e7492b42f5af15aa09f0350ed22b0e1855",
+      "emittedRGBHash": "sha256:3814f4cdfb8beb6b4c6c92934c3480496ac3ba678f3e07e721df98989d6ed4bb"
+    },
+    {
+      "sequence": 17,
+      "ptsUs": 680000,
+      "payloadBytes": 9958,
+      "payloadSHA256": "sha256:658d728d6970607c113dc0d2ac3b6bbc472b018155e96cc5ff5a793ef007a7c8",
+      "nativeRGBHash": "sha256:7ad94eb8a4179293de39c39eb76bd36a5edad81b9db2b5e979b08195ee1630b5",
+      "decodedRGBHash": "sha256:59c29d110f7bfd49ea22ee6e42f543edfc74e764446d7a50f37fd595d1cd227c",
+      "emittedRGBHash": "sha256:67773596b51d09fa1f32b39f6859d5ca32542f8592488432e8d93ca8d59ec506"
+    },
+    {
+      "sequence": 18,
+      "ptsUs": 720000,
+      "payloadBytes": 9686,
+      "payloadSHA256": "sha256:4e1bb3bc29a05a482cfc9ba9fdd154c67882f82e1d19b649da381254870f59f5",
+      "nativeRGBHash": "sha256:44a9c4ceda90b3e5d40b27395b515a9855d77342e1bfefe4c8572a412de249ad",
+      "decodedRGBHash": "sha256:16b933d7b53f4077205a34e03b05ebf27d3dd48d1a5640fbf989fc9a3b8155e6",
+      "emittedRGBHash": "sha256:762fca48b600d8c7eb5ce8df000e2ccddf932b8b34ea94b9358678b22bc183bd"
+    },
+    {
+      "sequence": 19,
+      "ptsUs": 760000,
+      "payloadBytes": 8792,
+      "payloadSHA256": "sha256:23d106b2ed16241042fcf8a4ce171795e1f4fe31a0eeb890d5fec50bcb1d714a",
+      "nativeRGBHash": "sha256:09d340ee8ae96bfe4af21186e99d40136c77217a358a99ed11a6ce03c8ac23cc",
+      "decodedRGBHash": "sha256:4a89f8c8eeffb16a46db2a5d6f2485dad63f55402f2c6e025580bad1e796c4d6",
+      "emittedRGBHash": "sha256:d5343efd8571fad453592fb32f6b0eaf808a4901de3c59582396bb700d3a9436"
+    },
+    {
+      "sequence": 20,
+      "ptsUs": 800000,
+      "payloadBytes": 9883,
+      "payloadSHA256": "sha256:5711f2507738f550616e8d610ff7294e4d6d598b48c0a9067b678f378be9cc16",
+      "nativeRGBHash": "sha256:5b88cb90bb4079c352b5d79adf4943a9fb234622e98899c1f6f6fe2d9aeaff99",
+      "decodedRGBHash": "sha256:312eb77ef58223ce7355e79b237a7d4353817699e2b2c9a988ba6d1f532c5269",
+      "emittedRGBHash": "sha256:81fc6c80eead2ec431ce04b012a8e9c6f8304dde6fa700862b8f0f6b737952a4"
+    },
+    {
+      "sequence": 21,
+      "ptsUs": 840000,
+      "payloadBytes": 10213,
+      "payloadSHA256": "sha256:4752eaa254ddb7c5c4b3be8245a2266ffbdc1105e7ad5e36720e7b047f4876fd",
+      "nativeRGBHash": "sha256:05968c3958cf9c546550038bacc72a39c78563e1b54f496543b7a3615ebdae52",
+      "decodedRGBHash": "sha256:e55b6162b3cf3d009f9ed7e1a9b6ed601b342b318d4c9baa2169a5c53a1040a0",
+      "emittedRGBHash": "sha256:3bac46b003af512ec5b2ed72811ecb30692831614ff93361a7470fccaff467b0"
+    },
+    {
+      "sequence": 22,
+      "ptsUs": 880000,
+      "payloadBytes": 9072,
+      "payloadSHA256": "sha256:ff74ca915e6f14febbe5b6ee2dd2b45af455673c5e774928d13d9492346b0dc7",
+      "nativeRGBHash": "sha256:730d7ee20a40f2d0a5641f5d28b293a336d2b22aaed8be254bf5029fa4ed8626",
+      "decodedRGBHash": "sha256:62f811f87997dd2da3bebd15701fff1c535ccf48f9e8ca69f7c4f73588045c1a",
+      "emittedRGBHash": "sha256:c54feeb78cc37b8f30b7475ce254d53bcbc194e7db1091f3d65b9e034ae59ffe"
+    },
+    {
+      "sequence": 23,
+      "ptsUs": 920000,
+      "payloadBytes": 7792,
+      "payloadSHA256": "sha256:8d311f8693a7bd80e63633ab2250bf79d17a498691057c84a3b73026a898af76",
+      "nativeRGBHash": "sha256:7f7d7b305072669821fad0badfdf18ac292c511a0f108d3cdf91b32a54f03e12",
+      "decodedRGBHash": "sha256:b2d6c0ecb13300970200e811f6365ee7abbec964b6e2df6166544c1bd36da475",
+      "emittedRGBHash": "sha256:be47cd7c9f10dd9bf475edb61e17f9edd098e64dda7233f052d41144dda6d2f3"
+    },
+    {
+      "sequence": 24,
+      "ptsUs": 960000,
+      "payloadBytes": 9500,
+      "payloadSHA256": "sha256:19cc46c71e05ec28a4e253288a46015c80795a5916980908ccd71c8e2fc3102d",
+      "nativeRGBHash": "sha256:3afc148694a137c0d1502b879ae9384a4062b9f016df39d133cdd94bf3f30c5b",
+      "decodedRGBHash": "sha256:0d7377a9f3ca48912fe6a39bfdeb80e4db5a5cdad2e035e8185ad88edd8ef05b",
+      "emittedRGBHash": "sha256:f5f9801e1fae46fba3cd091c97175d36dd6fba5630db23da627598bbab60c476"
+    },
+    {
+      "sequence": 25,
+      "ptsUs": 1000000,
+      "payloadBytes": 43712,
+      "payloadSHA256": "sha256:5c75d82f1113805fd56e4a8f9cbbe8117a5b938055c145a0c60d44ac82de7ecf",
+      "nativeRGBHash": "sha256:1615a86102f55aa51e69cb2caaf9407d7f5e04d2fa930b2149711955dddfa707",
+      "decodedRGBHash": "sha256:f39f4d0a1a4db292a35b323dbc244ad841f2f5039f47f76f78d843ec261e15bd",
+      "emittedRGBHash": "sha256:72cf5809ac687339c0aca695fc50bd390529f10ab9d1116191a2be055c69c74d"
+    },
+    {
+      "sequence": 26,
+      "ptsUs": 1040000,
+      "payloadBytes": 3454,
+      "payloadSHA256": "sha256:b16bfcf3d212a24b074a0ce41c2b36eb3bc4934f43a491023fc9bf404b77f2d6",
+      "nativeRGBHash": "sha256:5759d61416a8245c8732305d3638a5b3e17f7cc405f997a95b0a4742fe31a638",
+      "decodedRGBHash": "sha256:acf38f481ce1eccccffb062949881f2548d1866592eb9105fe2362632cc3758c",
+      "emittedRGBHash": "sha256:addb3450d0b75e4733efa4a869606a9052afdd681d237b78d97b1840038a5e9e"
+    },
+    {
+      "sequence": 27,
+      "ptsUs": 1080000,
+      "payloadBytes": 4929,
+      "payloadSHA256": "sha256:aaedefa802247f7e7736ae381eac101f426aca5d214b6853e0681651916f8cd4",
+      "nativeRGBHash": "sha256:b72f29dd6da05ff1b6e9e27f91306b8aa232f5093e0191185d6f3c34a7ec450f",
+      "decodedRGBHash": "sha256:cd9489f6cba4b22bdef815c7ae0cfbc82e2819289b9b9c262bdb78260247b835",
+      "emittedRGBHash": "sha256:87ac51d7b16a21309cde557feed97b0e159515420a1781aa3bb8840f3991f872"
+    },
+    {
+      "sequence": 28,
+      "ptsUs": 1120000,
+      "payloadBytes": 5273,
+      "payloadSHA256": "sha256:a06b0cd9285924cbcf1ff832b5136c7304079c7184ea950439ad00f38a6e5ec5",
+      "nativeRGBHash": "sha256:6f872164317cd289bde15e4d4786d6125be7470403a39cfeceec809f35ee2d8e",
+      "decodedRGBHash": "sha256:b9d22493bc66f7c55030f7729782254c65fa7b431d733dced39fd62641d96968",
+      "emittedRGBHash": "sha256:3821b60202149c908b9e71f367e5330bcbf8f60f1d2046584f6896af84d86c85"
+    },
+    {
+      "sequence": 29,
+      "ptsUs": 1160000,
+      "payloadBytes": 6755,
+      "payloadSHA256": "sha256:ea43c18b036189c67abb417c31b7572dced1fa2f11096d11c1f1e663f8871592",
+      "nativeRGBHash": "sha256:2f5f7e5e82d86e95a66afc27c18b68bcda68d940ad46f3b44a5c978ff867b025",
+      "decodedRGBHash": "sha256:ef0dcf3ce4a8b70e4f7c395f89e05716698ad285e2b361762533af18b087c783",
+      "emittedRGBHash": "sha256:b0967b823ff8071fdcf6652777212e2154cd47656049cd005c3d02cfbcacd8b3"
+    },
+    {
+      "sequence": 30,
+      "ptsUs": 1200000,
+      "payloadBytes": 7703,
+      "payloadSHA256": "sha256:ee993d82d5749add7781e86e4c2fd173e0720b25100beec0732da21bfcfa63fd",
+      "nativeRGBHash": "sha256:93cfabef360a3c16acc6c4c781c4b2506c246c887e0bb509bf4b01faa1020b8c",
+      "decodedRGBHash": "sha256:565fc5e603460fe3fabd40311ab238de6f21a1c9a05d258c6a4a74464b5e7478",
+      "emittedRGBHash": "sha256:53a33b33f3f7f9683fde8f52e9f8e3c53b29a87440b49155bf2f0d374b9d5f22"
+    },
+    {
+      "sequence": 31,
+      "ptsUs": 1240000,
+      "payloadBytes": 8190,
+      "payloadSHA256": "sha256:25eed62c40ff6e01b2a2da70a85e4d714ad24c32a7e1c83949894cda88440a37",
+      "nativeRGBHash": "sha256:d11abb4ab7ed1f9598f653d0e3e5f919179825370817078f043433aea14a9d9a",
+      "decodedRGBHash": "sha256:6eda49caf953c5ebde7d5fbddd5c3a57e4a50fc9ccd9eac5338ebf177b350d02",
+      "emittedRGBHash": "sha256:49a08203a9aa0c392159a2a7925f492ff964b9d5b6ef009994a6caeb811a81c5"
+    },
+    {
+      "sequence": 32,
+      "ptsUs": 1280000,
+      "payloadBytes": 8688,
+      "payloadSHA256": "sha256:cf0dff1bad4e70688f3341526008160c6c1462bb3def7ba81977b4cf1928e60b",
+      "nativeRGBHash": "sha256:8324433c209e9fe4b856acff444eb89c6ebf5694693c4af82987be0feb5649df",
+      "decodedRGBHash": "sha256:d04631e474775815d111e3682e80c31477220a421918d74e3f9452805ae0e84a",
+      "emittedRGBHash": "sha256:89879ee06081755a9264d99e182d7c16211c764f2c9f16e461a57dd041b0b578"
+    },
+    {
+      "sequence": 33,
+      "ptsUs": 1320000,
+      "payloadBytes": 9414,
+      "payloadSHA256": "sha256:2136ce7c974ec7e3a5a03f9ed0fdfedf6870c867b08311f14da4ce692c548dd1",
+      "nativeRGBHash": "sha256:e1ab71d4d87def6c6e6bf1c9c6f57573d7e26ae8a94962bce9cc652e78be7408",
+      "decodedRGBHash": "sha256:2b947dace23ad579cab53817869e8d99ea8576bfa0b4da7e7195ca4c68d8c980",
+      "emittedRGBHash": "sha256:2454c8bc035e06a13893359c87d6e8eefb5d46801845e3bd419ffbdb5f27b7c5"
+    },
+    {
+      "sequence": 34,
+      "ptsUs": 1360000,
+      "payloadBytes": 7330,
+      "payloadSHA256": "sha256:8a892a1bf7c237b0eca2262736e72405bec6afec1b9d104d61f1a038beb4e7dd",
+      "nativeRGBHash": "sha256:7c7ae74a253ec5d72c3de96b4643ce596b5d1b28734d551087dca02abedde064",
+      "decodedRGBHash": "sha256:dda558d8716b73b00c6870dd1d5185ea03f0374597f59439dc0448d19ce72685",
+      "emittedRGBHash": "sha256:2e35dbaf05245744c7101f0ad987086118adede93aac7a76593c19f0ad74eb4f"
+    },
+    {
+      "sequence": 35,
+      "ptsUs": 1400000,
+      "payloadBytes": 7473,
+      "payloadSHA256": "sha256:ecdebca61c452dc2efca908223ec9f87c26ad070b3bd3b2745f464886e1b59fa",
+      "nativeRGBHash": "sha256:df4e08d206e4bcc13357af57fb26d5a9321ebbcc5805bc5b1ffef5f0d3fc0503",
+      "decodedRGBHash": "sha256:18a49f624f931a22abea4561707d5a70e9ae86d1edbe5fd25a5f8cf6b95ce22f",
+      "emittedRGBHash": "sha256:1b223be6eefd7e03bf3b28ea79265b33e5b7ed9057d65402b9f538bc72eacd2e"
+    },
+    {
+      "sequence": 36,
+      "ptsUs": 1440000,
+      "payloadBytes": 7982,
+      "payloadSHA256": "sha256:c93ac73540b75fa580737dd6705f50e5d7b5845bc7e4d549682a5f59cd9477a4",
+      "nativeRGBHash": "sha256:513a5ab9aa3c695ee3218096b0aec83721def81078d73d99b464923c087eea3e",
+      "decodedRGBHash": "sha256:778bfce84c68a9af051de3f306d51b4dcc0f27f47b4554ef1f7aa5e4a0bbd086",
+      "emittedRGBHash": "sha256:cc02dd51274f81724957ee02ceeae627101994461c3218e16119ae889a51c29c"
+    },
+    {
+      "sequence": 37,
+      "ptsUs": 1480000,
+      "payloadBytes": 6849,
+      "payloadSHA256": "sha256:60dc9377665f74255f8194439cf8b40bec97101823ac66c577d4f45cda29e327",
+      "nativeRGBHash": "sha256:743ed7b7cf1c3c9c4d3d2aef00e1921c7f301123c58930edc6e9c1b9b4e38329",
+      "decodedRGBHash": "sha256:1757333126cc8b2602e613257a29b36461edeacc6f29813a929da80f1cd8d831",
+      "emittedRGBHash": "sha256:7b5cdba33e6f4b41676795abae9a9e878645123e6c0d45d4c68d6005452a7e98"
+    },
+    {
+      "sequence": 38,
+      "ptsUs": 1520000,
+      "payloadBytes": 6277,
+      "payloadSHA256": "sha256:78104647bff03163817a7fe9f4a8001b73498523f9f3aa47ab7bc61c09c5bed9",
+      "nativeRGBHash": "sha256:7e5f2338dc56f93a5c001f540c1da833d196bff9c088520d8409b09f32a0d8f5",
+      "decodedRGBHash": "sha256:63909693984de387c0bd623b9f267693118c5b8ec313221c7d314de0c5bb8cfa",
+      "emittedRGBHash": "sha256:145562b8443d265c0935ff967e8c102bd2c48535e026d16157fa37102a900251"
+    },
+    {
+      "sequence": 39,
+      "ptsUs": 1560000,
+      "payloadBytes": 6594,
+      "payloadSHA256": "sha256:9234c3f5042d32977edc96c6fe99ebc70c773980de6e07b9837b5cb76a1932fe",
+      "nativeRGBHash": "sha256:8e4cb3b98d87d2e86e7ea427bf989ef9b404c61c41b15357736140315e21e4a4",
+      "decodedRGBHash": "sha256:7f81883e0f4ecd0cf79f707ab49ce075a6cb74ffff1c13f128ff0548141c6057",
+      "emittedRGBHash": "sha256:4a62455c30e6f7d78e16d971b245dc0f246c9970ada39e34a9274ddb07fe5b84"
+    },
+    {
+      "sequence": 40,
+      "ptsUs": 1600000,
+      "payloadBytes": 7229,
+      "payloadSHA256": "sha256:45ec855a2668fdb97f57b09a340af6ca81e61d9797def6d24488b3befef4b29a",
+      "nativeRGBHash": "sha256:6896019805beda28aeb658187d860882c1c6636c75f9ca501b189f847f59277f",
+      "decodedRGBHash": "sha256:2b974b1402ceeb03c7d601221cbeb2661fcd987860afc0a67c3bb4779d90d754",
+      "emittedRGBHash": "sha256:b8e21c72a5451278d1ad70a1568909cf8cb202ef710a555892b497db68366e0a"
+    },
+    {
+      "sequence": 41,
+      "ptsUs": 1640000,
+      "payloadBytes": 6484,
+      "payloadSHA256": "sha256:7e97a2d6dfeb2f8a850ff7e16093e7bf98f058d5716c60ca5d6bf697084abfd5",
+      "nativeRGBHash": "sha256:eb6f81844c6258fdbc3f0360702447637a35be1e8a35198ad694c4039a8a4bac",
+      "decodedRGBHash": "sha256:d8ba146ffa25bacc26d0d5eee4412f87034d1e083fe0b13094f5cd9c0cd6b01d",
+      "emittedRGBHash": "sha256:c8f69a7bf50b4a72a595805dbf29f62bf5a77892a531d4de76d4b1614b175dfc"
+    },
+    {
+      "sequence": 42,
+      "ptsUs": 1680000,
+      "payloadBytes": 7409,
+      "payloadSHA256": "sha256:a409c2d9bdd268e6cdc78e2c004f5480724fa4cbef18acf9d8954395a2273ed9",
+      "nativeRGBHash": "sha256:aae0d729fb5871fad88549a2042686108754410bd8fbfcbcab97597492b5e4c5",
+      "decodedRGBHash": "sha256:dd93d1efe163e5176b9c2c32bcc3670b5f7921f4e2be112c2de40ec2dff3566f",
+      "emittedRGBHash": "sha256:7332c93e58d4b6a42abf85eea02e30c401da1c5d002652233189efa5c6a6866e"
+    },
+    {
+      "sequence": 43,
+      "ptsUs": 1720000,
+      "payloadBytes": 8653,
+      "payloadSHA256": "sha256:01001a2c1228be2ec8074595eea61505beeebb8b39f10c2aaaf831eb7a1f0eda",
+      "nativeRGBHash": "sha256:e870caa6c5dae6fcc2418c7008171463e8e22409e54330e2e42e2db40f7212fc",
+      "decodedRGBHash": "sha256:33815ecb4be40f9a5ce14c4a0779156f795bbd2acf917516c1c16788c278554d",
+      "emittedRGBHash": "sha256:57421f0f0eb8c9abde9ace525052c3cc81d14c6672bf4299a8ebab0def457033"
+    },
+    {
+      "sequence": 44,
+      "ptsUs": 1760000,
+      "payloadBytes": 8945,
+      "payloadSHA256": "sha256:47defc5fa1c1236ca12b30ce13fee27e7c16518ba3d697e21d45914d8b709caf",
+      "nativeRGBHash": "sha256:7706b97f313f198407f7318e16e6f1e7552daa07cde8177e6279aaa14c3046b1",
+      "decodedRGBHash": "sha256:5684c02f48e048588715eb6fdab8622e667dc7d33a6d04d646f6ac309a549793",
+      "emittedRGBHash": "sha256:47b4f200a51ed2f1ee6e2f97617e3dcf99c5a73023378ee9399f54e03916e448"
+    },
+    {
+      "sequence": 45,
+      "ptsUs": 1800000,
+      "payloadBytes": 9652,
+      "payloadSHA256": "sha256:7f2f09a481f2556ce944741c9e49bb771c34215e6f69bc34daee2c30db08e9cb",
+      "nativeRGBHash": "sha256:689056722d193afdbc9ff9a7aa4cf4114c17c216d9b2cb0f9947e3666f0b69ee",
+      "decodedRGBHash": "sha256:8c9775523984b26c0a00f83718c03759e37a879ed8c6e30b989dc59836f91444",
+      "emittedRGBHash": "sha256:75c6b3fa6f8f58b92cc7cf0b921791790642f6739830fca35e6dfc8ab15ff036"
+    },
+    {
+      "sequence": 46,
+      "ptsUs": 1840000,
+      "payloadBytes": 8951,
+      "payloadSHA256": "sha256:72ca5016610e85db30688d074b0d4e49d6e6f0352d8f8930c4124e2c467aa358",
+      "nativeRGBHash": "sha256:0c7c3ae231cd42c4c201196e275556b7967c97eb1b98b343bae4203fe6b33bd1",
+      "decodedRGBHash": "sha256:087b430be3fcc946ccd193adeabf76402461c289e87edd007c72b7c3628ab5fd",
+      "emittedRGBHash": "sha256:af88faa8938573d1b25d81711babb018a2f2ee2a7f861fdc54e76634bbd4c99b"
+    },
+    {
+      "sequence": 47,
+      "ptsUs": 1880000,
+      "payloadBytes": 7878,
+      "payloadSHA256": "sha256:d92b6aafb18a91bde5bca0a46b61ed9976d7d19eb9a778ac1926530facd0b93e",
+      "nativeRGBHash": "sha256:2cec923f2bec37ee541e08cd7bf762986478549b490a12155bf5e66d6ea97135",
+      "decodedRGBHash": "sha256:2f575df88af5ed16c5980766a0941b18d70ecd54e83327659548f90fe61bb375",
+      "emittedRGBHash": "sha256:1658bbdd183a9ec4156d180d6c4d9414a570f32fd69b3bb8c51c718efbdc6891"
+    },
+    {
+      "sequence": 48,
+      "ptsUs": 1920000,
+      "payloadBytes": 9911,
+      "payloadSHA256": "sha256:495bff96cdc8479357f7edcbef6b8efeaf9eaecbc5b4c4e0c159d2494b39554c",
+      "nativeRGBHash": "sha256:3a1e0de3ce0f8ce446cfb8c6b25f7f09a652004a41a6689bb14ad7c38c4ae3d4",
+      "decodedRGBHash": "sha256:236e5ac74bcc7739f63144fcb2546eb57481fc520faa97904ef953b94091ab1a",
+      "emittedRGBHash": "sha256:68063efc32c349090160233f53cdfb0469e6ea9ca85bf021515385a7895e71bb"
+    },
+    {
+      "sequence": 49,
+      "ptsUs": 1960000,
+      "payloadBytes": 7395,
+      "payloadSHA256": "sha256:adc770409e7c80c5e3285a1b17e800e0fc05679bfb4a5b5edb42fe89c789a022",
+      "nativeRGBHash": "sha256:c11ee149505a68f1ea53e5d7ba0f9e09e258027768ce00c9e94fb8fc50b13db1",
+      "decodedRGBHash": "sha256:efbbf15193c43e4117352a0f24b4aa174cb9e3caf90a1bdeae488b42d8570924",
+      "emittedRGBHash": "sha256:87ee1aa781d7e1044c66c73a057b1fa0b013f5c4b276e012192528337d32f07c"
+    },
+    {
+      "sequence": 50,
+      "ptsUs": 2000000,
+      "payloadBytes": 44445,
+      "payloadSHA256": "sha256:6e3011528eebfd52c588326c8499ac5eb599c0e1d2d6bf3ce003a79ae39c2709",
+      "nativeRGBHash": "sha256:354b482f35c93727c985fc30bb0501b3448d69f092429ba21a2fbb32b6ff01be",
+      "decodedRGBHash": "sha256:c76316231593dcdaa421f13758a225ee0443e33152472b567c154116d7da2a72",
+      "emittedRGBHash": "sha256:2368753d6e554cc59aaa4b8c4da4f0e4e534c9c5c90f05d295208c5b9ac9dd59"
+    },
+    {
+      "sequence": 51,
+      "ptsUs": 2040000,
+      "payloadBytes": 941,
+      "payloadSHA256": "sha256:825b85306fd86829f1db24737041e402b9f671dc538ada90153c5876b77ea6ea",
+      "nativeRGBHash": "sha256:55352d0c6393d9158391c4303a7f3e04ff8fcc506af7c53e1b52c6ade97fe0de",
+      "decodedRGBHash": "sha256:6eb32ce9894e8ef4887dc911a3ee4811c0edb9012e3c45ad651ca338a569a9fe",
+      "emittedRGBHash": "sha256:d5aa5df7fda9e08636fa5d0bcf46aaec431a4753b5842b9e07ab7df385db811b"
+    },
+    {
+      "sequence": 52,
+      "ptsUs": 2080000,
+      "payloadBytes": 2197,
+      "payloadSHA256": "sha256:a15ab80f06bd8487e5c2630f723d6113cba3d8d7dc156dd3284492957e1f53f0",
+      "nativeRGBHash": "sha256:06ce048265b55f35c51701021b5afb264d68251f8170aeebbca8eecf568fee83",
+      "decodedRGBHash": "sha256:efa0b56e91a30404cb84b3727e6da0c434688af2acdfc9d44179108c1639080b",
+      "emittedRGBHash": "sha256:c06860539e96a341e178345487670be139c64dd045a1f3ed2743bd9cf50b69c1"
+    },
+    {
+      "sequence": 53,
+      "ptsUs": 2120000,
+      "payloadBytes": 5256,
+      "payloadSHA256": "sha256:d97a00e851d3e9f5caf33bdf102288a26c677c54930a91d362545b6a0b2a9010",
+      "nativeRGBHash": "sha256:a0085dd3d3f3a2f5dd09d4acb3362f4b50dd2fb2725c6c3c3c966657683ec988",
+      "decodedRGBHash": "sha256:ecdf9bba1330da26d427eee67dc358bf9693f647a673642709e3ef3f369c0ada",
+      "emittedRGBHash": "sha256:7fb1efd8d1b4ca9f73b5666802896deb2671ea93701d0abfc2f33d6386750ecb"
+    },
+    {
+      "sequence": 54,
+      "ptsUs": 2160000,
+      "payloadBytes": 6450,
+      "payloadSHA256": "sha256:acc9d959115bd5601516dc0841741f770e7e9e45f2e2d6006d8fe21d6eb9ce9e",
+      "nativeRGBHash": "sha256:10604c0db2eabda2d3c4c543734274c9b468f251cd9820bf52571c72f1ec8937",
+      "decodedRGBHash": "sha256:9b95e30399520b3e25a301f817f785b20f8a92cf691eadca3fd694e39b18811b",
+      "emittedRGBHash": "sha256:57420f734eb301c31e4a83bb49a2f7d54c28aaf18edbe0796a3b829b6d55e789"
+    },
+    {
+      "sequence": 55,
+      "ptsUs": 2200000,
+      "payloadBytes": 7457,
+      "payloadSHA256": "sha256:ae998c807bad52a29f76396fcf37b3b2f93766b21322600bf2fa1644cae25492",
+      "nativeRGBHash": "sha256:7b55552f66649c2edcb5eb0f48a6ffb806394acfdbcb0c0b91f94f885fe62478",
+      "decodedRGBHash": "sha256:9adaedc7c97cb6f3077f711c563920d6b0584826e9291e198944491ddb2cfd25",
+      "emittedRGBHash": "sha256:6e5b2338be629ddc44776a1f2c40e68991802c4514b1a8f28381997cfdb89f81"
+    },
+    {
+      "sequence": 56,
+      "ptsUs": 2240000,
+      "payloadBytes": 7240,
+      "payloadSHA256": "sha256:95bb6f383796acbd19a031d8d24b26e6bf06e53c57de3c30303f9e1415503adc",
+      "nativeRGBHash": "sha256:2140e54575a6de0713bbb3159b127df5756a2b1e65164c3d4956eed08b98cab4",
+      "decodedRGBHash": "sha256:355f01f889921ba0604d2a74b84a3c7961c2996886b3506290ee958d65f1842e",
+      "emittedRGBHash": "sha256:fcc2cdf4baa1c3466598709052fba8dd6e4cde1fcc57cec12b7bf0a8284d0d7d"
+    },
+    {
+      "sequence": 57,
+      "ptsUs": 2280000,
+      "payloadBytes": 9679,
+      "payloadSHA256": "sha256:aa397f3b01b21e3955e1d7a234b199bf15181567ea1a55c8bbdb8215c91c5b01",
+      "nativeRGBHash": "sha256:fb9b5e05e0d6f4f5b4fce647e0adf6ccfd75e708ebf4990732a47fd449f1df8d",
+      "decodedRGBHash": "sha256:6d65f0382eb5c659b1e79b258ce5c691cc4dfcf1a7824c32035507beeebe8414",
+      "emittedRGBHash": "sha256:b9d3286eba9c880272133874b409772b7ba4ffc8cf79217d21feb324758a2895"
+    },
+    {
+      "sequence": 58,
+      "ptsUs": 2320000,
+      "payloadBytes": 7445,
+      "payloadSHA256": "sha256:a188e241d68dcedd1537b7c7a8ff594d464510afb1bbf1fbc4f47b44636d99b5",
+      "nativeRGBHash": "sha256:feb4902ec9bdc3d5b70bc09137e9e38ec737869ab69d10964069b88d2df80d59",
+      "decodedRGBHash": "sha256:491d4c44f51d6c84d9a4f698e7d0b5cdcb9dca6d1516dd2e71c4c8538c371367",
+      "emittedRGBHash": "sha256:e7f7e9edb5e010139a51e637120649b3eda013bf1166e95f882e13327675028f"
+    },
+    {
+      "sequence": 59,
+      "ptsUs": 2360000,
+      "payloadBytes": 8366,
+      "payloadSHA256": "sha256:556e5177b7a09ddd47444bbc9a8330b294bcee3f039536f4c0fc9f7df0d9e3f7",
+      "nativeRGBHash": "sha256:94955cd35c22cc6a9d1609595e5025a9759c8ebb6426741e13e435e12eed0eb2",
+      "decodedRGBHash": "sha256:2937004e964eaaa9fa6d31709bd6f976aa8afe0547aaa78fa4aafda40ddb6675",
+      "emittedRGBHash": "sha256:76f4f1e0d7f85027d3414483a378340e9696425e879f7cbb350074657a1500be"
+    },
+    {
+      "sequence": 60,
+      "ptsUs": 2400000,
+      "payloadBytes": 8694,
+      "payloadSHA256": "sha256:13e167c81f20b06ea8f7be88a1cacc5e030def9eea12dbf794cd4689b6b8ca5f",
+      "nativeRGBHash": "sha256:2be278bf156b04aee77f6c50a5ec51b6083affee5dc68bbdb242b6a3e292b71b",
+      "decodedRGBHash": "sha256:e3c78f263b00c9afef621b9179c4d0c5daddabe984e70f14cd62fe08e812408d",
+      "emittedRGBHash": "sha256:49293cb526e32a73bdab92ce634df7860b1f02aa7f136324c9a81fcae72ea42b"
+    },
+    {
+      "sequence": 61,
+      "ptsUs": 2440000,
+      "payloadBytes": 9935,
+      "payloadSHA256": "sha256:3d884206ba92c48330842d5221b4c026a0d01253e233c68707ed3659ff4f676b",
+      "nativeRGBHash": "sha256:6019ca33b7dd7c117ee5090c03561cafa005cf3612870feacb22992d147061ab",
+      "decodedRGBHash": "sha256:782fe6d5a5589d05eb9c34d0c23c6e9c90ba837bb129dba6f3b449fa9ec789bd",
+      "emittedRGBHash": "sha256:d7004215e7c227b4ae2c3614f872a8360a4335245c92ce237ec7da08e07d1d73"
+    },
+    {
+      "sequence": 62,
+      "ptsUs": 2480000,
+      "payloadBytes": 8006,
+      "payloadSHA256": "sha256:7b3f43268e6b2a4c66c0518163e6299c5a238b2285cde8e569d3768f6f2b3991",
+      "nativeRGBHash": "sha256:98b2974e80fd73b108d77f1c6e8069a2557b68a55740f184ec21e3e2aa4d05b3",
+      "decodedRGBHash": "sha256:2ac08fdb6c1cd4f097bf2d428fe9ec1216237f64b4feb5d6a16644982767a618",
+      "emittedRGBHash": "sha256:2c2b7c5dd6f241ec77226d03bcd0cb069ed7eab661508ec5b7775448f0744670"
+    },
+    {
+      "sequence": 63,
+      "ptsUs": 2520000,
+      "payloadBytes": 7880,
+      "payloadSHA256": "sha256:bbb4fd4621787c540aa9b3934cd34fdf8a7c7a69bb664754e6521eb5acb781f3",
+      "nativeRGBHash": "sha256:2b31e276fa4cd5b3b0e0849b58deecf63e6ec84c939c76805eadbf4013c0da1b",
+      "decodedRGBHash": "sha256:c4252e4ba3e8f9b1ceb8e5dd0eb901f4dd33416ad5b2ee2c8161e8d5d67de738",
+      "emittedRGBHash": "sha256:f88f890f8b68b8d4c330185670239bbe610936f667a2f76ec6ae2facd460b41a"
+    },
+    {
+      "sequence": 64,
+      "ptsUs": 2560000,
+      "payloadBytes": 8734,
+      "payloadSHA256": "sha256:0c56eed346ad6d172c8f63801131f11ffa2d076d66fa5a511de2745675c75204",
+      "nativeRGBHash": "sha256:5613850bb2083297b567a5ec25c413102e2851ca5e44e585c3680d3b853a3515",
+      "decodedRGBHash": "sha256:84ec3c21aeafb5f886f48ff3b2f418d5c51faf2b1e0db533b7e7b70419d2d4a9",
+      "emittedRGBHash": "sha256:2b09513cd6047dd1b947393569bc34d0c1325c6b6934d5a5c6d5366e51001310"
+    },
+    {
+      "sequence": 65,
+      "ptsUs": 2600000,
+      "payloadBytes": 8852,
+      "payloadSHA256": "sha256:a1e1247832a57eabb64d79359076680ed7cf93bc667fdf4d9022f337fb99b7fd",
+      "nativeRGBHash": "sha256:3e00ec5a07e0c5ac0be4018f0c2d044d6fd5bfc8d36c17e93085dfc861ac39ea",
+      "decodedRGBHash": "sha256:1473e4fd38a1686c1f1be5a2639d0dfd1b018ee95ba5ba22c5ec2313b31fd6c7",
+      "emittedRGBHash": "sha256:d4fffa892a01e54c7fd7348464f64e87e7c60b65e3e10c05935d4116ced4e2b9"
+    },
+    {
+      "sequence": 66,
+      "ptsUs": 2640000,
+      "payloadBytes": 9373,
+      "payloadSHA256": "sha256:dcc0e5b438a15548ff348a6fcffcd5958b52f4bd748828ea3b48f5b8e39fe627",
+      "nativeRGBHash": "sha256:1f01a27a4b8ab67b66be47a9bbfc7b3792f90a10f97eb07631dba64e55227518",
+      "decodedRGBHash": "sha256:8b272e8ede801ad56b27a8a854b3dec7525910fdd77f86d81ae64b21ab4d1dab",
+      "emittedRGBHash": "sha256:38a49a756833a46b7f002bc7bbca34e2add0f26cfb7e29ea955524a78d9015d2"
+    },
+    {
+      "sequence": 67,
+      "ptsUs": 2680000,
+      "payloadBytes": 8466,
+      "payloadSHA256": "sha256:f48c953bacb76bc7e22d9674bc982c9d8dccbf77f34908c62db876920985385b",
+      "nativeRGBHash": "sha256:e520bf63cc795147c35169e03f8296917a197d1ad8fc13292b9ec334302432e8",
+      "decodedRGBHash": "sha256:589aaa17a562c4bc85998345329002e732bd8838af1d5228ead4654b3b584135",
+      "emittedRGBHash": "sha256:e6e191aa2cda004164642cee4a7f6c887f8187525b42272d88796ac8d2c4d650"
+    },
+    {
+      "sequence": 68,
+      "ptsUs": 2720000,
+      "payloadBytes": 9217,
+      "payloadSHA256": "sha256:a5d4f82a941d78f382af35ab9f7edaf928ab749a24970fcad2b55f88b0b283c3",
+      "nativeRGBHash": "sha256:be8856bc9b38b5828d87d1d088b36a14307214da0879cf8255fd53e59bb11dd1",
+      "decodedRGBHash": "sha256:fc71ea732edeea654bf8c3d17ef08c5b22ffa8e197fbaf2f6a41ab42c2fabc5c",
+      "emittedRGBHash": "sha256:5d0482d5bdad5be318893a051b1228059665e176be321c33a4317d6e5fdd65f5"
+    },
+    {
+      "sequence": 69,
+      "ptsUs": 2760000,
+      "payloadBytes": 10200,
+      "payloadSHA256": "sha256:7ce50e730a40d9d2a68773a8681ba5f91de1645ff0cd9a91c2cd70d623c6ec87",
+      "nativeRGBHash": "sha256:e20fdf820b9a0989d34afcc7b94b97799d6ee1db7817ac967349acf2e8f16f66",
+      "decodedRGBHash": "sha256:f4d5b7938e407efb12517b2dfe96506e46511a58761992f3b55094026dc0d92d",
+      "emittedRGBHash": "sha256:d201b3e66bb95ac30d5cdd341474392339a35602856b90727d4af91db7a3e0a9"
+    },
+    {
+      "sequence": 70,
+      "ptsUs": 2800000,
+      "payloadBytes": 7987,
+      "payloadSHA256": "sha256:c64c3c61bd3c890a72c7960638a6835041d025ee0608110c489307a7c97d03e9",
+      "nativeRGBHash": "sha256:a83cc052a6c0f1131e9835b0866c345b31cd9cea81e42d94a4eca66940db0b10",
+      "decodedRGBHash": "sha256:120d183f55853fdaaf895fed36551f683fddb07ad06b6eda4464de4d79f280d8",
+      "emittedRGBHash": "sha256:e52b83e36b3ed3756af05eefa5ef94cea5ce4edb82cb7968e61a56a4a74cbc67"
+    },
+    {
+      "sequence": 71,
+      "ptsUs": 2840000,
+      "payloadBytes": 7179,
+      "payloadSHA256": "sha256:e90182c1da9ac836de986f15d45e81f277ae0141f7c7b532316bb5e408996c5a",
+      "nativeRGBHash": "sha256:94412629082f1274ec45e853060c65211d0078deb022fb5ebd6b5160bfb2b566",
+      "decodedRGBHash": "sha256:7d823df42d2b19cad56c07582ef157e8eaad1628e06ad7332bb7adfbf7024788",
+      "emittedRGBHash": "sha256:a76a1a16f72d61697be4fe0eb6e8e7982c49b88c8939921d682c2301bbf2453b"
+    },
+    {
+      "sequence": 72,
+      "ptsUs": 2880000,
+      "payloadBytes": 9348,
+      "payloadSHA256": "sha256:8e57303b58a3ab11916659c0161b3a87faacbe690ce3ad284b6894916a7a7fa2",
+      "nativeRGBHash": "sha256:43c90c78ef1328b365292087d6949e8033854d1301af012bb4e6f5b6a7985847",
+      "decodedRGBHash": "sha256:56becc69e5c983f3eb09f9cab9361caafbfedc618716adb55021a57a629d8b85",
+      "emittedRGBHash": "sha256:b89c0f4daffd611a5a23edb471d7fc2954839242e5647368f90a337e9761e833"
+    },
+    {
+      "sequence": 73,
+      "ptsUs": 2920000,
+      "payloadBytes": 6086,
+      "payloadSHA256": "sha256:22c7c6806c27a5822f3c3398900a78734ead67949d1f632fcb819106a7e7f0a9",
+      "nativeRGBHash": "sha256:803b4b88ea1fc6b9a25e825e0d0f757cadcf8fb5e292f012d5353959c0e6432a",
+      "decodedRGBHash": "sha256:bf3aed2cd6bf43eddd8c7110d48c34be34eb26210328823835fdcad7cfb0d9f2",
+      "emittedRGBHash": "sha256:e439c270817436a18d132e8a483a498e356d564e925e5c327df6bfad72fececa"
+    },
+    {
+      "sequence": 74,
+      "ptsUs": 2960000,
+      "payloadBytes": 6917,
+      "payloadSHA256": "sha256:37082b31f72f43153abcf1eff3cdb1b69e7624b89cb7fb388ff5979560b6e4d6",
+      "nativeRGBHash": "sha256:826e8299656a6bdcca6ae2d407a22d82b1f5b8dab3639e9bdce7a630e4b8ba06",
+      "decodedRGBHash": "sha256:f060eccbdebfb25bdb099b6df9ddc738639fa221a33f425aa8b2252796315387",
+      "emittedRGBHash": "sha256:cd13eeb49bd835466ad30509c1b193b06f2453c2f4200c7bac00389fad93a749"
+    },
+    {
+      "sequence": 75,
+      "ptsUs": 3000000,
+      "payloadBytes": 45419,
+      "payloadSHA256": "sha256:e1f4fc5cb87bb394f4a8d06531fe92a89591a30f13b6669fd27928e55143a65c",
+      "nativeRGBHash": "sha256:01c6f52e0c189bf3f6c685709038c2165b26c7ccadeeae6763d88310223c5e83",
+      "decodedRGBHash": "sha256:d8a04078795605c5c67e5272b4d52453a0766305fa34ff18c9a818264106ef1f",
+      "emittedRGBHash": "sha256:2e6e66e389dd5f51a39116d87c26bee099c8c1ea6377cb3d19103f5a82ff7715"
+    },
+    {
+      "sequence": 76,
+      "ptsUs": 3040000,
+      "payloadBytes": 1452,
+      "payloadSHA256": "sha256:27b9a0aee9230db0cd65097f15014005322f77aa00838e7f2af575006205f6fd",
+      "nativeRGBHash": "sha256:db404d89d9601b7a6f8efd1a7793ae31c636e90a0faab4ff454a7f7cf8c7a4b4",
+      "decodedRGBHash": "sha256:441b312ce85eedab8209bea8209379a1327d50af5f3d5e1c9fd914aed48f748c",
+      "emittedRGBHash": "sha256:6cd00a71073aae6cea4c90ebf0a01a738a1a2ce99e1d2cd3ce439d88b1fffe29"
+    },
+    {
+      "sequence": 77,
+      "ptsUs": 3080000,
+      "payloadBytes": 3167,
+      "payloadSHA256": "sha256:08c6a8768b76cf0b6b4c1cbd481439df3f08b0d7f46286f2deb1795086c187c3",
+      "nativeRGBHash": "sha256:1a04c1a74b11b2f1c080d99e561afc390757e2bab4dd30d9a5c55ecc8347b0cf",
+      "decodedRGBHash": "sha256:eec764d0fdc0230249d0d007f488c3390801cb124c6335ae8b900aa2c540d81c",
+      "emittedRGBHash": "sha256:c8bb8ed0384cf5b5f363e03fd9ace0c0a5788658e945aa2b70a6091479dffa39"
+    },
+    {
+      "sequence": 78,
+      "ptsUs": 3120000,
+      "payloadBytes": 5358,
+      "payloadSHA256": "sha256:440d33765ff96781fb624e75bfaf1dbec91b2527fa12cb31b0d50ed79b6b022e",
+      "nativeRGBHash": "sha256:8fd93b10988c367fab1ac6af959ad6a7da78b36c6470a8d251fd9c6d204b3789",
+      "decodedRGBHash": "sha256:73cba6159ceb6db162be5b0b1e7c60e6a921b6a71992d1dfc8e67ef645b0790e",
+      "emittedRGBHash": "sha256:11a43bbe5d875effb32251b1492733cc08a46f72f3193bde8a29b3109e675566"
+    },
+    {
+      "sequence": 79,
+      "ptsUs": 3160000,
+      "payloadBytes": 4319,
+      "payloadSHA256": "sha256:775f6814604b4f4cb0a4efe0b420f7bd9a3950e5abd17bde99ff50efb02f7c90",
+      "nativeRGBHash": "sha256:226c8c44112611f062dbf73378a57c4494abcfde30bab0d8cd3e1e624b274250",
+      "decodedRGBHash": "sha256:70eca54803a1236dc0a8ca8d5f484f50d986a55307a79bbf884bb31223048bb6",
+      "emittedRGBHash": "sha256:4e3572da7a54426c51aca9af0d6e8e7ddd2a363dee6db376cd2f015dc95d81de"
+    },
+    {
+      "sequence": 80,
+      "ptsUs": 3200000,
+      "payloadBytes": 6546,
+      "payloadSHA256": "sha256:29cd5ef03b77974f100acaef168e9a2569ff5a53c6f2aa483b22aeebae997f96",
+      "nativeRGBHash": "sha256:1c9f02c8a099a0797d306ccb8fe77a696032af8d5489509589a07ed7a3b41f99",
+      "decodedRGBHash": "sha256:16f70adcbd7f406f519749922ded2c4baaf34deb2d60f2ab36384aa09641e8b9",
+      "emittedRGBHash": "sha256:0090ea5dc833e3bd041a794dfa0f5b8d18c8d3162dc5aabff7f5c6fd1ddc0161"
+    },
+    {
+      "sequence": 81,
+      "ptsUs": 3240000,
+      "payloadBytes": 5064,
+      "payloadSHA256": "sha256:21795d8c7572ee9d1ac1ddbdbc489dc6bce7091f32649de88c47d925e7e2a39c",
+      "nativeRGBHash": "sha256:9dbb2d7602efcf0388a7adf007a4c812f359a340d2ca83667ed9f9e6a4bbe9fd",
+      "decodedRGBHash": "sha256:de697c0080a5f8d47792b0aff916abfafade9d7aa977632072a57f4f5413f046",
+      "emittedRGBHash": "sha256:557219ba2be9983f0e277b3381a36f4d23b75c1261f70c845c5ed1e10ed196ff"
+    },
+    {
+      "sequence": 82,
+      "ptsUs": 3280000,
+      "payloadBytes": 5816,
+      "payloadSHA256": "sha256:cde56135184fd3663f1c79d917b9a862f4f607565816a1730bc220b67167a581",
+      "nativeRGBHash": "sha256:6802643565789ef6acea7c6a97276802602221c221826ba9de8f190befe1f1e0",
+      "decodedRGBHash": "sha256:32366c520249102124c2371861bcac99ece2dd6023d927f0ad80832442988783",
+      "emittedRGBHash": "sha256:571b2721decb35b8a86afc529b9a9417642701e4b543529c29eb52a83ce76f49"
+    },
+    {
+      "sequence": 83,
+      "ptsUs": 3320000,
+      "payloadBytes": 5902,
+      "payloadSHA256": "sha256:64cb8af6f5e688b9d65a649ab09ce0f89e7bf335e0dbbf218318024f7cbc605b",
+      "nativeRGBHash": "sha256:5e85a141ba1578b7c93b019fd2dc501201f4322a8a1a43b7416c2fbf03041ce8",
+      "decodedRGBHash": "sha256:94c68fd4d8ab77537682e9ac0820bba3823ad6103556e8644e3a7f2bad3c585e",
+      "emittedRGBHash": "sha256:1edc223d0190c493c95a71cbad12ab852b52350435cc6a5bbbdeafa253c8eb61"
+    },
+    {
+      "sequence": 84,
+      "ptsUs": 3360000,
+      "payloadBytes": 8595,
+      "payloadSHA256": "sha256:4310e38b563968e0b5106f15680c340bc92cd6eb65549af3f6d9ed5e3b407b0e",
+      "nativeRGBHash": "sha256:0d64ae57917590b70efc0a44a5ca090bb0a68294a3986abc6584cd6e65235020",
+      "decodedRGBHash": "sha256:154ff497fc5ab50f1a23420370cf90b404eeb2898723713041dfaf919910b3d7",
+      "emittedRGBHash": "sha256:a43e19b97aeda69dd4193662460568858dfc6f97d003d36779b7207f95889315"
+    },
+    {
+      "sequence": 85,
+      "ptsUs": 3400000,
+      "payloadBytes": 6582,
+      "payloadSHA256": "sha256:572b5c4d70a217b6eff1b5533ec6eb36869895318cf9915b7127ef3b2723fb9f",
+      "nativeRGBHash": "sha256:480a6cb96722539829d4dd7be6ec5abda523c0b94a53976b6c5ebbbd4f9fa0b9",
+      "decodedRGBHash": "sha256:8c87accaacbb858c106f674ad960056cef48fe84667dd639d3a300621c7104c5",
+      "emittedRGBHash": "sha256:57812f27689d1a6f45f4377980e18b0e5244b3816273de9087a8bb18f6cc0149"
+    },
+    {
+      "sequence": 86,
+      "ptsUs": 3440000,
+      "payloadBytes": 6699,
+      "payloadSHA256": "sha256:0ac8ba261e19cfcf207190f077194d4c6c4d314800bf155602ca7bd3454d38d0",
+      "nativeRGBHash": "sha256:cc83c6c2c5028d221e632881b9a0a95322b34515dded7b83be9bc34777ae7455",
+      "decodedRGBHash": "sha256:ef1d45de017ef7f112c70fd799e6a43b22fa7bc10235ca682bd8931d930147da",
+      "emittedRGBHash": "sha256:30cfc623c4ee9773754af9a28fd76e5ac1502b65e8eeb710613fbc01d0a6b7f5"
+    },
+    {
+      "sequence": 87,
+      "ptsUs": 3480000,
+      "payloadBytes": 7558,
+      "payloadSHA256": "sha256:9b28dbeef499983ed001852ee5f004892b6436ac69d53f860a691a45e2958b1c",
+      "nativeRGBHash": "sha256:e0c1917b41543cffa2f771a5c56d4cdcbd61011c230ec41e06425529532a8388",
+      "decodedRGBHash": "sha256:f1682e3375599575a3757c8da399c722861f7d1d45f2efc32590e894d87e64ed",
+      "emittedRGBHash": "sha256:0a8c3a2a55b11061e5e7606a344f7f4b38c3acc62e309974ee1415cce6316997"
+    },
+    {
+      "sequence": 88,
+      "ptsUs": 3520000,
+      "payloadBytes": 6768,
+      "payloadSHA256": "sha256:de1f386bc1e10752587594ca8707e9557b6ec212acddc1d5f58b23910f9ee814",
+      "nativeRGBHash": "sha256:af2c7c416aae7ccae5971800bcc79e1b03e5e7ba89644b9463935defe0068dfc",
+      "decodedRGBHash": "sha256:8d58f06939ef4e71d8a873c65c2f9ab07e41e6c02cbbf6c1fd3c77c7abfcc9f2",
+      "emittedRGBHash": "sha256:0969f7de0799da74bd06cbd2d019f88e236d59ad2527e1528cae150176b504e1"
+    },
+    {
+      "sequence": 89,
+      "ptsUs": 3560000,
+      "payloadBytes": 7465,
+      "payloadSHA256": "sha256:a78221bfe470bc5fac913af198894068c95243d4bfec72a3e152d63f8a2e186d",
+      "nativeRGBHash": "sha256:6786011200ade9f169147d23576845031844f853de33d340782c5106c64128dc",
+      "decodedRGBHash": "sha256:a2121ddc826f2822438099496ca4d13b44ccf246ace3f84d489d032cb7fd2ad8",
+      "emittedRGBHash": "sha256:fccda4e6240e2dff9f2f93efc40b310d9a728f7f4ef16ef85132d42ff7e839e4"
+    },
+    {
+      "sequence": 90,
+      "ptsUs": 3600000,
+      "payloadBytes": 8247,
+      "payloadSHA256": "sha256:6ded2c8d7b5310d70f85e3e4877979515152051a3d257438dd4365e08282e708",
+      "nativeRGBHash": "sha256:58717b98ec9cdc7d89fc92994704c6d1a7d714c4e825d8056bba20fc3c7d3fc2",
+      "decodedRGBHash": "sha256:97602a83ca8e9f4a65dee357318ca6c17f38809b12f44205d3a08478df45193e",
+      "emittedRGBHash": "sha256:bed034a413e2bd48ee113a6fb8945b4f79cc2dcf6427f094b6b44905354ad6ac"
+    },
+    {
+      "sequence": 91,
+      "ptsUs": 3640000,
+      "payloadBytes": 7325,
+      "payloadSHA256": "sha256:25c2ba9d0a44b9ed2358280c430d3dfa128cb74f83fb7ec3c1d3a43f6f8a9c35",
+      "nativeRGBHash": "sha256:7c5dbefaaea4b6d9a1b3dc30e7b7e01d86dabadbbe40eaa63c9c438e49b351ad",
+      "decodedRGBHash": "sha256:a13d2d8e374eaea2f7371819eb613fa47ad052d4e793fced077ab89364f50d9c",
+      "emittedRGBHash": "sha256:4fa20edc0ed06592422fe71f39b331fa208d3f8f03271840013e2769d0ced166"
+    },
+    {
+      "sequence": 92,
+      "ptsUs": 3680000,
+      "payloadBytes": 6839,
+      "payloadSHA256": "sha256:4f539bb7e5897c622cbb8700f22b12733c42368b42a49dcfe839041764ab1bf5",
+      "nativeRGBHash": "sha256:a43c8fe447e99edae8fb344244dc4c3416d08054fc03daab3679bd81f5c1d7ec",
+      "decodedRGBHash": "sha256:ca6815e3fb6fb71467973abe8500c4e730100b52d89643fc8aad69914a1ed5bb",
+      "emittedRGBHash": "sha256:df2b20d5bea229d67c498ab432bc365a68e355ca5db3cbfc0a9edb2f8ecff96c"
+    },
+    {
+      "sequence": 93,
+      "ptsUs": 3720000,
+      "payloadBytes": 10232,
+      "payloadSHA256": "sha256:4df1c70b8bce40f7b0f96796562289c5bc03e55cd34f205a501d905437e5f4c1",
+      "nativeRGBHash": "sha256:c4cb6e3dd4557e59fcbc5d3672868fc251d3b56a6118ee27222e1a1423a1e60d",
+      "decodedRGBHash": "sha256:ced1dbfa7febaa31db2f6fc89d3c6b50719c23d1a31ce21fd4c4d828d4ad99aa",
+      "emittedRGBHash": "sha256:8b1c0d4d8a923d65cb6912f76f269cbb6968a6371da56fff37bc3db6f897c65c"
+    }
+  ],
+  "scope": "TEST_ONLY_REAL_GPU_OUTPUT_INSTRUMENTATION",
+  "audienceAudible": false,
+  "readyContentHash": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+  "readyVideoHash": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+  "readyEmittedVideoHash": "sha256:3c25a12bd82435bf29ab36c0080e91de92c2872f7acd74e81afa728a692d0766",
+  "originalSamples": 59564,
+  "padSamples": 596
+}

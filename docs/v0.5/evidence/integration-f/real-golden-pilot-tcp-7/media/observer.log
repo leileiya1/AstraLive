@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-golden-source-x32asjdf/runtime/tests/narration_real_golden.py", line 224, in <module>
+    asyncio.run(main(parser.parse_args()))
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-golden-source-x32asjdf/runtime/tests/narration_real_golden.py", line 170, in main
+    require_observable_state(snapshot)
+  File "/private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-golden-source-x32asjdf/runtime/tests/narration_real_golden.py", line 27, in require_observable_state
+    raise GoldenFailure("Narration stopped or requires recovery")
+GoldenFailure: Narration stopped or requires recovery

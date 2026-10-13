@@ -1,0 +1,190 @@
+{
+  "scope": "REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
+  "commentTransport": "MOCK_REPLAY_ONLY",
+  "humanNaturalness": "NOT_TESTED",
+  "audienceAudible": false,
+  "correlatedAV": "NOT_ANALYSED",
+  "localTransport": "tcp",
+  "mode": "short",
+  "seed": 5012,
+  "fixture": null,
+  "events": [
+    {
+      "kind": "COMMENT_INJECTED",
+      "question": "这份指南现在多少钱？",
+      "elapsedSeconds": 7.91922445804812,
+      "browserAt": 14275,
+      "response": {
+        "accepted": true,
+        "platform": "mock"
+      }
+    }
+  ],
+  "preflightProbeTiming": {
+    "clock": "Python time.monotonic",
+    "minimumStartSpacingSeconds": 5.1,
+    "attempts": [
+      {
+        "kind": "LLM",
+        "startedSeconds": 0.0023035830818116665,
+        "spacingFromPreviousSeconds": null,
+        "cooldownWaitSeconds": 8.300412446260452e-08,
+        "status": "PASSED",
+        "durationSeconds": 2.4975252089789137
+      },
+      {
+        "kind": "TTS",
+        "startedSeconds": 5.1034461670788005,
+        "spacingFromPreviousSeconds": 5.101142583996989,
+        "cooldownWaitSeconds": 2.5964033340569586,
+        "status": "PASSED",
+        "durationSeconds": 0.408164499909617
+      },
+      {
+        "kind": "GPU_WORKER",
+        "startedSeconds": 10.204517250065692,
+        "spacingFromPreviousSeconds": 5.101071082986891,
+        "cooldownWaitSeconds": 4.6900106250541285,
+        "status": "PASSED",
+        "durationSeconds": 0.08814749994780868
+      },
+      {
+        "kind": "AVATAR",
+        "startedSeconds": 15.30564666702412,
+        "spacingFromPreviousSeconds": 5.101129416958429,
+        "cooldownWaitSeconds": 5.009457584004849,
+        "status": "PASSED",
+        "durationSeconds": 0.06616608297917992
+      }
+    ]
+  },
+  "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+  "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+  "roomId": "room_02301e852ebd4b3abdb1230527c3c7ac",
+  "profiles": {
+    "LLM": {
+      "profileId": "profile_51c7ba9f277bc000f8a9ca229e488001",
+      "kind": "LLM",
+      "name": "Golden LLM",
+      "provider": "deepseek",
+      "config": {
+        "model": "deepseek-flash",
+        "maxTokens": 256
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": true,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-13T01:23:19.605033Z"
+    },
+    "TTS": {
+      "profileId": "profile_1e6d88d2e3c1f53929827d27416d69c1",
+      "kind": "TTS",
+      "name": "Golden TTS",
+      "provider": "xiaoya",
+      "config": {
+        "speed": 1,
+        "voiceId": "xiao_ya",
+        "modelRef": "xiaoya-default"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-13T01:23:22.615665Z"
+    },
+    "GPU_WORKER": {
+      "profileId": "profile_ff8981f692c1c3715673aa5172d9e675",
+      "kind": "GPU_WORKER",
+      "name": "Golden GPU_WORKER",
+      "provider": "soulx",
+      "config": {
+        "workerRef": "soulx-lite-01"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-13T01:23:27.396908Z"
+    },
+    "AVATAR": {
+      "profileId": "profile_06058d89894864921d6efdf57cae3bf3",
+      "kind": "AVATAR",
+      "name": "Golden AVATAR",
+      "provider": "soulx",
+      "config": {
+        "avatarRef": "official-girl",
+        "workerProfileId": "profile_ff8981f692c1c3715673aa5172d9e675"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-13T01:23:32.475892Z"
+    }
+  },
+  "capturedProviders": {
+    "integrationVersion": "0.4.0",
+    "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+    "bindingId": "binding_84b4ab7b550721aea276a071d2172dcd",
+    "capturedAt": "2026-10-13T01:23:32.484875Z",
+    "expiresAt": "2026-10-14T01:23:32.483186Z",
+    "profiles": [
+      {
+        "profileId": "profile_06058d89894864921d6efdf57cae3bf3",
+        "kind": "AVATAR",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-13T01:23:32.475892Z"
+      },
+      {
+        "profileId": "profile_ff8981f692c1c3715673aa5172d9e675",
+        "kind": "GPU_WORKER",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-13T01:23:27.396908Z"
+      },
+      {
+        "profileId": "profile_51c7ba9f277bc000f8a9ca229e488001",
+        "kind": "LLM",
+        "provider": "deepseek",
+        "version": 1,
+        "updatedAt": "2026-10-13T01:23:19.605033Z"
+      },
+      {
+        "profileId": "profile_1e6d88d2e3c1f53929827d27416d69c1",
+        "kind": "TTS",
+        "provider": "xiaoya",
+        "version": 1,
+        "updatedAt": "2026-10-13T01:23:22.615665Z"
+      }
+    ],
+    "mode": "REAL",
+    "errorCode": "",
+    "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017"
+  },
+  "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+  "requiredSinks": [
+    "peer_f794334832604d4aa09faad6ad6e339d",
+    "rtmp:1"
+  ],
+  "chromeVersion": "154.0.8037.98",
+  "commentPositionsSeconds": [
+    7.83401144638394
+  ],
+  "status": "FAIL",
+  "errorType": "GoldenFailure",
+  "reason": "Narration stopped or requires recovery"
+}

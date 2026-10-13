@@ -1,0 +1,91 @@
+{
+  "attempts": [],
+  "bindingRelease": [
+    {
+      "released": true,
+      "sessionId": "session_e1e6f539285749863e49a54d3e2f084e"
+    }
+  ],
+  "commandIdentities": [],
+  "commits": [],
+  "narrations": [],
+  "observations": [],
+  "receipts": [
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_761514f1ebc9f7865b3230897bfdc867",
+      "session_id": "session_e1e6f539285749863e49a54d3e2f084e",
+      "observed_at": "2026-10-12T21:13:27.275195+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_6bd537beb297925000e2bdbab135b5a4",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:8de5e18246918ea106a4e0d70803080a618a4bc8cd2879c75d7f4709a8181fc1",
+      "producer_incarnation": "owner_7c249c3197adf222dd5ed5f1e1893828"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_bb2145866e312b0cfce87eb3b5db4e07",
+      "command_id": "cmd_761514f1ebc9f7865b3230897bfdc867",
+      "session_id": "session_e1e6f539285749863e49a54d3e2f084e",
+      "observed_at": "2026-10-12T21:13:27.278167+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_bb2145866e312b0cfce87eb3b5db4e07",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:8de5e18246918ea106a4e0d70803080a618a4bc8cd2879c75d7f4709a8181fc1",
+      "producer_incarnation": "runtime_a1ccde1606cd4cada4c4d13abafb97e9"
+    }
+  ],
+  "runs": [
+    {
+      "status": "ACTIVE",
+      "user_id": "golden-user",
+      "owner_id": "owner_7c249c3197adf222dd5ed5f1e1893828",
+      "run_epoch": 1,
+      "sealed_at": null,
+      "tenant_id": "golden-tenant",
+      "session_id": "session_e1e6f539285749863e49a54d3e2f084e",
+      "started_at": "2026-10-12T21:13:27.262769+08:00",
+      "lease_token": 1,
+      "optional_sinks": [],
+      "required_sinks": [],
+      "current_event_seq": 0,
+      "timeline_revision": 0,
+      "output_sample_rate": 48000,
+      "control_barrier_seq": 0,
+      "current_command_seq": 1,
+      "provider_binding_id": "binding_4b9dd47a556f90ec4af33962960ef07e",
+      "current_timeline_epoch": 1,
+      "current_committed_sample": 0,
+      "generation_high_watermark": 0
+    }
+  ],
+  "segments": [],
+  "sessions": [
+    {
+      "id": "session_e1e6f539285749863e49a54d3e2f084e",
+      "status": "PREPARING",
+      "room_id": "room_6aac5515885d6eedb7b63dbdf87c5ac0",
+      "ended_at": null,
+      "created_at": "2026-10-12T21:13:27.25802+08:00",
+      "started_at": null,
+      "updated_at": "2026-10-12T21:13:27.263708+08:00",
+      "failure_code": null,
+      "failure_message": null,
+      "runtime_operation_id": "cmd_761514f1ebc9f7865b3230897bfdc867"
+    }
+  ],
+  "turns": []
+}

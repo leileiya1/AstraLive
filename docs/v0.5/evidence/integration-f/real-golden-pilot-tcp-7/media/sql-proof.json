@@ -1,0 +1,4323 @@
+{
+  "attempts": [
+    {
+      "lane": "NARRATION",
+      "status": "COMPLETED",
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "segment_id": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:48.449339+08:00",
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "utterance_id": "utt_c7d78dd23f0fcec41eacc754da864bea",
+      "worker_epoch": "3b23426bdaa74f0a999fcfa6e2445017",
+      "document_json": {},
+      "generation_id": 2,
+      "timeline_epoch": 1,
+      "descriptor_json": {
+        "factIds": [
+          "name"
+        ],
+        "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+        "videoHash": "sha256:478fdab546f038ccc22a1725f596c7a17f61490801f9cc28d23f13055a3e72a7",
+        "padSamples": 0,
+        "contentHash": "sha256:843d15d6a2c90b0aa76215b76a52e93ffa02a14fc85bb8d9d7398b8b5c5ba271",
+        "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+        "finalMarker": true,
+        "sampleCount": 190080,
+        "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+        "videoTiming": {
+          "fps": 25
+        },
+        "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+        "requiredSinks": [
+          "peer_f794334832604d4aa09faad6ad6e339d",
+          "rtmp:1"
+        ],
+        "videoFrameCount": 99,
+        "sourceSampleRate": 16000,
+        "sourceSampleCount": 63360,
+        "stagingDescriptor": {
+          "eof": true,
+          "limits": {
+            "lease_ms_max": 60000,
+            "limits_revision": "staging-segment-8s-gpu1g-1",
+            "worker_rgb_bytes": 167772160,
+            "worker_pose_bytes": 8388608,
+            "max_source_samples": 128000,
+            "audio_queue_samples": 32000,
+            "native_queue_frames": 24,
+            "worker_attempt_bytes": 536870912,
+            "network_window_frames": 4,
+            "runtime_artifact_bytes": 201326592,
+            "runtime_transient_bytes": 25165824,
+            "gpu_incremental_allocated_bytes": 1073741824
+          },
+          "identity": {
+            "lane": "NARRATION",
+            "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+            "stageId": "stage-c92899ae12de43e39f43ac2ddcc7affb",
+            "traceId": "req_868259fbbcb804ee161a7259a9986683",
+            "runEpoch": 1,
+            "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+            "commandId": "cmd_789e13c91303fad54d237c6b15d8217e",
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "workerRef": "soulx-lite-01",
+            "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 2,
+            "timelineEpoch": 1,
+            "interactionTurnId": null,
+            "workerGenerationId": 1
+          },
+          "resources": {
+            "inference_elapsed_us": 2741784,
+            "worker_rgb_peak_bytes": 77856768,
+            "worker_attempt_peak_bytes": 172761088,
+            "gpu_baseline_allocated_bytes": 4316367872,
+            "gpu_incremental_reserved_peak_bytes": 0,
+            "gpu_incremental_allocated_peak_bytes": 975013376
+          },
+          "pcm_sha256": "sha256:843d15d6a2c90b0aa76215b76a52e93ffa02a14fc85bb8d9d7398b8b5c5ba271",
+          "provenance": {
+            "source": "GPU_INFERENCE",
+            "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+            "workerRef": "soulx-lite-01",
+            "capability": "immutable_segment_staging_v1",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "avatar_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+            "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+            "model_source_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+            "preprocessing_version": "soulx-lite-512-seed42-v1",
+            "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2"
+          },
+          "frame_count": 99,
+          "last_pts_us": 3920000,
+          "pad_samples": 0,
+          "video_bytes": 1139571,
+          "final_marker": true,
+          "first_pts_us": 0,
+          "native_final": true,
+          "last_sequence": 98,
+          "source_format": {
+            "codec": "h264",
+            "width": 512,
+            "height": 512,
+            "fps_den": 1,
+            "fps_num": 25,
+            "channels": 1,
+            "pcm_format": "s16le",
+            "sample_rate": 16000,
+            "native_format": "rgb24"
+          },
+          "first_sequence": 0,
+          "source_samples": 63360,
+          "original_samples": 63360,
+          "descriptor_revision": "staging-descriptor-1",
+          "request_fingerprint": "sha256:809e8e7395c6f9853105531e3d76a62f1c9c6a75071fe202c23b5c38dc32cdad",
+          "video_stream_sha256": "sha256:478fdab546f038ccc22a1725f596c7a17f61490801f9cc28d23f13055a3e72a7",
+          "native_rgb_stream_sha256": "sha256:e9ddbbca30e11eb3b52de138dc8e6e0f7346d0488c1b75a204f179d8e18e9e05"
+        },
+        "providerProvenance": "GPU_INFERENCE",
+        "workerGenerationId": 1,
+        "originalSampleCount": 63360,
+        "stagingDescriptorHash": "sha256:e1dcd31d8a77ecaaff1e34991b8b0d42be87e8b3bcf75821c152edce3b89e29e",
+        "stagingEmittedVideoHash": "sha256:acda29fc3374b73bd8040057ddf6f94136bd32a5f79b6624a4e3492729383a57"
+      },
+      "worker_ref_json": {
+        "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+        "workerGenerationId": 1
+      },
+      "worker_generation_id": 1
+    },
+    {
+      "lane": "AUDIENCE_ANSWER",
+      "status": "COMPLETED",
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_56c6ef23babfd898147f39d75f4299f0",
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "segment_id": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:56.439391+08:00",
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "utterance_id": "utt_56c6ef23babfd898147f39d75f4299f0",
+      "worker_epoch": "3b23426bdaa74f0a999fcfa6e2445017",
+      "document_json": {},
+      "generation_id": 3,
+      "timeline_epoch": 2,
+      "descriptor_json": {
+        "factIds": [
+          "price"
+        ],
+        "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+        "videoHash": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+        "padSamples": 596,
+        "contentHash": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+        "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+        "finalMarker": true,
+        "sampleCount": 180480,
+        "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+        "videoTiming": {
+          "fps": 25
+        },
+        "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+        "requiredSinks": [
+          "peer_f794334832604d4aa09faad6ad6e339d",
+          "rtmp:1"
+        ],
+        "videoFrameCount": 94,
+        "sourceSampleRate": 16000,
+        "sourceSampleCount": 60160,
+        "stagingDescriptor": {
+          "eof": true,
+          "limits": {
+            "lease_ms_max": 60000,
+            "limits_revision": "staging-segment-8s-gpu1g-1",
+            "worker_rgb_bytes": 167772160,
+            "worker_pose_bytes": 8388608,
+            "max_source_samples": 128000,
+            "audio_queue_samples": 32000,
+            "native_queue_frames": 24,
+            "worker_attempt_bytes": 536870912,
+            "network_window_frames": 4,
+            "runtime_artifact_bytes": 201326592,
+            "runtime_transient_bytes": 25165824,
+            "gpu_incremental_allocated_bytes": 1073741824
+          },
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+            "stageId": "stage-4e2d59a6c92f436794350155ba97b212",
+            "traceId": "trace_00110762f60d7d4f1e40dfcb4525c26b",
+            "runEpoch": 1,
+            "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+            "commandId": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+            "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "workerRef": "soulx-lite-01",
+            "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+            "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 3,
+            "timelineEpoch": 2,
+            "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+            "workerGenerationId": 2
+          },
+          "resources": {
+            "inference_elapsed_us": 2157154,
+            "worker_rgb_peak_bytes": 73924608,
+            "worker_attempt_peak_bytes": 168828928,
+            "gpu_baseline_allocated_bytes": 4435577856,
+            "gpu_incremental_reserved_peak_bytes": 0,
+            "gpu_incremental_allocated_peak_bytes": 855803392
+          },
+          "pcm_sha256": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+          "provenance": {
+            "source": "GPU_INFERENCE",
+            "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+            "workerRef": "soulx-lite-01",
+            "capability": "immutable_segment_staging_v1",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "avatar_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+            "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+            "model_source_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+            "preprocessing_version": "soulx-lite-512-seed42-v1",
+            "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2"
+          },
+          "frame_count": 94,
+          "last_pts_us": 3720000,
+          "pad_samples": 596,
+          "video_bytes": 870143,
+          "final_marker": true,
+          "first_pts_us": 0,
+          "native_final": true,
+          "last_sequence": 93,
+          "source_format": {
+            "codec": "h264",
+            "width": 512,
+            "height": 512,
+            "fps_den": 1,
+            "fps_num": 25,
+            "channels": 1,
+            "pcm_format": "s16le",
+            "sample_rate": 16000,
+            "native_format": "rgb24"
+          },
+          "first_sequence": 0,
+          "source_samples": 60160,
+          "original_samples": 59564,
+          "descriptor_revision": "staging-descriptor-1",
+          "request_fingerprint": "sha256:2d37673d3e4d34e24731b34e142b563eef38b3121378b821b21d080c57876955",
+          "video_stream_sha256": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+          "native_rgb_stream_sha256": "sha256:1cb39e287e10e56e745b866f69674de265c30c4afaa4ec581ad7bbc1ada0db8c"
+        },
+        "providerProvenance": "GPU_INFERENCE",
+        "workerGenerationId": 2,
+        "originalSampleCount": 59564,
+        "stagingDescriptorHash": "sha256:68879e186fb0a7293b8d27d49429ba838ee7423de9368a3486ac6596ce0ae785",
+        "stagingEmittedVideoHash": "sha256:3c25a12bd82435bf29ab36c0080e91de92c2872f7acd74e81afa728a692d0766"
+      },
+      "worker_ref_json": {
+        "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+        "workerGenerationId": 2
+      },
+      "worker_generation_id": 2
+    }
+  ],
+  "bindingRelease": [
+    {
+      "released": false,
+      "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401"
+    }
+  ],
+  "commandIdentities": [
+    {
+      "lane": "NARRATION",
+      "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+      "traceId": "req_868259fbbcb804ee161a7259a9986683",
+      "runEpoch": 1,
+      "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+      "commandId": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+      "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "commandType": "COMMIT_SEGMENT",
+      "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+      "timelineEpoch": 1,
+      "interactionTurnId": null
+    },
+    {
+      "lane": "AUDIENCE_ANSWER",
+      "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+      "traceId": "trace_00110762f60d7d4f1e40dfcb4525c26b",
+      "runEpoch": 1,
+      "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+      "commandId": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+      "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "commandType": "COMMIT_SEGMENT",
+      "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+      "timelineEpoch": 2,
+      "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114"
+    }
+  ],
+  "commits": [
+    {
+      "status": "SEALED",
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "created_at": "2026-10-13T09:23:44.316807+08:00",
+      "end_sample": 190080,
+      "play_state": "COMPLETED",
+      "segment_id": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "sample_rate": 48000,
+      "completed_at": "2026-10-13T09:23:48.448171+08:00",
+      "installed_at": "2026-10-13T09:23:44.324348+08:00",
+      "start_sample": 0,
+      "generation_id": 2,
+      "identity_json": {
+        "lane": "NARRATION",
+        "runEpoch": 1,
+        "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+        "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+        "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+        "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+        "generationId": 2,
+        "timelineEpoch": 1,
+        "workerGenerationId": 1
+      },
+      "sink_receipts": [
+        {
+          "media": "audio",
+          "sinkId": "peer_f794334832604d4aa09faad6ad6e339d",
+          "identity": {
+            "lane": "NARRATION",
+            "runEpoch": 1,
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 2,
+            "timelineEpoch": 1,
+            "workerGenerationId": 1
+          },
+          "endSample": 190080,
+          "evidenceRef": "cmd_789e13c91303fad54d237c6b15d8217e:peer_f794334832604d4aa09faad6ad6e339d:audio",
+          "finalMarker": true,
+          "startSample": 0,
+          "evidenceType": "sink_consumed"
+        },
+        {
+          "media": "video",
+          "sinkId": "peer_f794334832604d4aa09faad6ad6e339d",
+          "identity": {
+            "lane": "NARRATION",
+            "runEpoch": 1,
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 2,
+            "timelineEpoch": 1,
+            "workerGenerationId": 1
+          },
+          "endSample": 190080,
+          "evidenceRef": "cmd_789e13c91303fad54d237c6b15d8217e:peer_f794334832604d4aa09faad6ad6e339d:video",
+          "finalMarker": true,
+          "startSample": 0,
+          "evidenceType": "sink_consumed"
+        },
+        {
+          "media": "audio",
+          "sinkId": "rtmp:1",
+          "identity": {
+            "lane": "NARRATION",
+            "runEpoch": 1,
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 2,
+            "timelineEpoch": 1,
+            "workerGenerationId": 1
+          },
+          "endSample": 190080,
+          "evidenceRef": "cmd_789e13c91303fad54d237c6b15d8217e:rtmp:1:audio",
+          "finalMarker": true,
+          "startSample": 0,
+          "evidenceType": "sink_consumed"
+        },
+        {
+          "media": "video",
+          "sinkId": "rtmp:1",
+          "identity": {
+            "lane": "NARRATION",
+            "runEpoch": 1,
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 2,
+            "timelineEpoch": 1,
+            "workerGenerationId": 1
+          },
+          "endSample": 190080,
+          "evidenceRef": "cmd_789e13c91303fad54d237c6b15d8217e:rtmp:1:video",
+          "finalMarker": true,
+          "startSample": 0,
+          "evidenceType": "sink_consumed"
+        }
+      ],
+      "optional_sinks": [],
+      "required_sinks": [
+        "peer_f794334832604d4aa09faad6ad6e339d",
+        "rtmp:1"
+      ],
+      "timeline_epoch": 1,
+      "completion_hash": "sha256:ece340ad91c5f7d80bd5d6e4de490e83a9abeaf3b0809b8161f87354dddf4a66",
+      "descriptor_json": {
+        "factIds": [
+          "name"
+        ],
+        "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+        "videoHash": "sha256:478fdab546f038ccc22a1725f596c7a17f61490801f9cc28d23f13055a3e72a7",
+        "padSamples": 0,
+        "contentHash": "sha256:843d15d6a2c90b0aa76215b76a52e93ffa02a14fc85bb8d9d7398b8b5c5ba271",
+        "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+        "finalMarker": true,
+        "sampleCount": 190080,
+        "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+        "videoTiming": {
+          "fps": 25
+        },
+        "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+        "requiredSinks": [
+          "peer_f794334832604d4aa09faad6ad6e339d",
+          "rtmp:1"
+        ],
+        "videoFrameCount": 99,
+        "sourceSampleRate": 16000,
+        "sourceSampleCount": 63360,
+        "stagingDescriptor": {
+          "eof": true,
+          "limits": {
+            "lease_ms_max": 60000,
+            "limits_revision": "staging-segment-8s-gpu1g-1",
+            "worker_rgb_bytes": 167772160,
+            "worker_pose_bytes": 8388608,
+            "max_source_samples": 128000,
+            "audio_queue_samples": 32000,
+            "native_queue_frames": 24,
+            "worker_attempt_bytes": 536870912,
+            "network_window_frames": 4,
+            "runtime_artifact_bytes": 201326592,
+            "runtime_transient_bytes": 25165824,
+            "gpu_incremental_allocated_bytes": 1073741824
+          },
+          "identity": {
+            "lane": "NARRATION",
+            "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+            "stageId": "stage-c92899ae12de43e39f43ac2ddcc7affb",
+            "traceId": "req_868259fbbcb804ee161a7259a9986683",
+            "runEpoch": 1,
+            "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+            "commandId": "cmd_789e13c91303fad54d237c6b15d8217e",
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "workerRef": "soulx-lite-01",
+            "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 2,
+            "timelineEpoch": 1,
+            "interactionTurnId": null,
+            "workerGenerationId": 1
+          },
+          "resources": {
+            "inference_elapsed_us": 2741784,
+            "worker_rgb_peak_bytes": 77856768,
+            "worker_attempt_peak_bytes": 172761088,
+            "gpu_baseline_allocated_bytes": 4316367872,
+            "gpu_incremental_reserved_peak_bytes": 0,
+            "gpu_incremental_allocated_peak_bytes": 975013376
+          },
+          "pcm_sha256": "sha256:843d15d6a2c90b0aa76215b76a52e93ffa02a14fc85bb8d9d7398b8b5c5ba271",
+          "provenance": {
+            "source": "GPU_INFERENCE",
+            "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+            "workerRef": "soulx-lite-01",
+            "capability": "immutable_segment_staging_v1",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "avatar_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+            "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+            "model_source_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+            "preprocessing_version": "soulx-lite-512-seed42-v1",
+            "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2"
+          },
+          "frame_count": 99,
+          "last_pts_us": 3920000,
+          "pad_samples": 0,
+          "video_bytes": 1139571,
+          "final_marker": true,
+          "first_pts_us": 0,
+          "native_final": true,
+          "last_sequence": 98,
+          "source_format": {
+            "codec": "h264",
+            "width": 512,
+            "height": 512,
+            "fps_den": 1,
+            "fps_num": 25,
+            "channels": 1,
+            "pcm_format": "s16le",
+            "sample_rate": 16000,
+            "native_format": "rgb24"
+          },
+          "first_sequence": 0,
+          "source_samples": 63360,
+          "original_samples": 63360,
+          "descriptor_revision": "staging-descriptor-1",
+          "request_fingerprint": "sha256:809e8e7395c6f9853105531e3d76a62f1c9c6a75071fe202c23b5c38dc32cdad",
+          "video_stream_sha256": "sha256:478fdab546f038ccc22a1725f596c7a17f61490801f9cc28d23f13055a3e72a7",
+          "native_rgb_stream_sha256": "sha256:e9ddbbca30e11eb3b52de138dc8e6e0f7346d0488c1b75a204f179d8e18e9e05"
+        },
+        "providerProvenance": "GPU_INFERENCE",
+        "workerGenerationId": 1,
+        "originalSampleCount": 63360,
+        "stagingDescriptorHash": "sha256:e1dcd31d8a77ecaaff1e34991b8b0d42be87e8b3bcf75821c152edce3b89e29e",
+        "stagingEmittedVideoHash": "sha256:acda29fc3374b73bd8040057ddf6f94136bd32a5f79b6624a4e3492729383a57"
+      }
+    },
+    {
+      "status": "SEALED",
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_56c6ef23babfd898147f39d75f4299f0",
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "created_at": "2026-10-13T09:23:52.430139+08:00",
+      "end_sample": 370560,
+      "play_state": "COMPLETED",
+      "segment_id": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "sample_rate": 48000,
+      "completed_at": "2026-10-13T09:23:56.439025+08:00",
+      "installed_at": "2026-10-13T09:23:52.435012+08:00",
+      "start_sample": 190080,
+      "generation_id": 3,
+      "identity_json": {
+        "lane": "AUDIENCE_ANSWER",
+        "runEpoch": 1,
+        "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+        "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+        "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+        "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+        "generationId": 3,
+        "timelineEpoch": 2,
+        "workerGenerationId": 2
+      },
+      "sink_receipts": [
+        {
+          "media": "audio",
+          "sinkId": "peer_f794334832604d4aa09faad6ad6e339d",
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "runEpoch": 1,
+            "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 3,
+            "timelineEpoch": 2,
+            "workerGenerationId": 2
+          },
+          "endSample": 370560,
+          "evidenceRef": "cmd_78e2b83daf6a9e5514a1921083384ae0:peer_f794334832604d4aa09faad6ad6e339d:audio",
+          "finalMarker": true,
+          "startSample": 190080,
+          "evidenceType": "sink_consumed"
+        },
+        {
+          "media": "video",
+          "sinkId": "peer_f794334832604d4aa09faad6ad6e339d",
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "runEpoch": 1,
+            "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 3,
+            "timelineEpoch": 2,
+            "workerGenerationId": 2
+          },
+          "endSample": 370560,
+          "evidenceRef": "cmd_78e2b83daf6a9e5514a1921083384ae0:peer_f794334832604d4aa09faad6ad6e339d:video",
+          "finalMarker": true,
+          "startSample": 190080,
+          "evidenceType": "sink_consumed"
+        },
+        {
+          "media": "audio",
+          "sinkId": "rtmp:1",
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "runEpoch": 1,
+            "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 3,
+            "timelineEpoch": 2,
+            "workerGenerationId": 2
+          },
+          "endSample": 370560,
+          "evidenceRef": "cmd_78e2b83daf6a9e5514a1921083384ae0:rtmp:1:audio",
+          "finalMarker": true,
+          "startSample": 190080,
+          "evidenceType": "sink_consumed"
+        },
+        {
+          "media": "video",
+          "sinkId": "rtmp:1",
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "runEpoch": 1,
+            "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 3,
+            "timelineEpoch": 2,
+            "workerGenerationId": 2
+          },
+          "endSample": 370560,
+          "evidenceRef": "cmd_78e2b83daf6a9e5514a1921083384ae0:rtmp:1:video",
+          "finalMarker": true,
+          "startSample": 190080,
+          "evidenceType": "sink_consumed"
+        }
+      ],
+      "optional_sinks": [],
+      "required_sinks": [
+        "peer_f794334832604d4aa09faad6ad6e339d",
+        "rtmp:1"
+      ],
+      "timeline_epoch": 2,
+      "completion_hash": "sha256:46e3ee82310238df71bd689d6ab54a01d31201235516072f3b7309a2e9260348",
+      "descriptor_json": {
+        "factIds": [
+          "price"
+        ],
+        "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+        "videoHash": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+        "padSamples": 596,
+        "contentHash": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+        "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+        "finalMarker": true,
+        "sampleCount": 180480,
+        "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+        "videoTiming": {
+          "fps": 25
+        },
+        "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+        "requiredSinks": [
+          "peer_f794334832604d4aa09faad6ad6e339d",
+          "rtmp:1"
+        ],
+        "videoFrameCount": 94,
+        "sourceSampleRate": 16000,
+        "sourceSampleCount": 60160,
+        "stagingDescriptor": {
+          "eof": true,
+          "limits": {
+            "lease_ms_max": 60000,
+            "limits_revision": "staging-segment-8s-gpu1g-1",
+            "worker_rgb_bytes": 167772160,
+            "worker_pose_bytes": 8388608,
+            "max_source_samples": 128000,
+            "audio_queue_samples": 32000,
+            "native_queue_frames": 24,
+            "worker_attempt_bytes": 536870912,
+            "network_window_frames": 4,
+            "runtime_artifact_bytes": 201326592,
+            "runtime_transient_bytes": 25165824,
+            "gpu_incremental_allocated_bytes": 1073741824
+          },
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+            "stageId": "stage-4e2d59a6c92f436794350155ba97b212",
+            "traceId": "trace_00110762f60d7d4f1e40dfcb4525c26b",
+            "runEpoch": 1,
+            "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+            "commandId": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+            "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "workerRef": "soulx-lite-01",
+            "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+            "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 3,
+            "timelineEpoch": 2,
+            "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+            "workerGenerationId": 2
+          },
+          "resources": {
+            "inference_elapsed_us": 2157154,
+            "worker_rgb_peak_bytes": 73924608,
+            "worker_attempt_peak_bytes": 168828928,
+            "gpu_baseline_allocated_bytes": 4435577856,
+            "gpu_incremental_reserved_peak_bytes": 0,
+            "gpu_incremental_allocated_peak_bytes": 855803392
+          },
+          "pcm_sha256": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+          "provenance": {
+            "source": "GPU_INFERENCE",
+            "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+            "workerRef": "soulx-lite-01",
+            "capability": "immutable_segment_staging_v1",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "avatar_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+            "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+            "model_source_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+            "preprocessing_version": "soulx-lite-512-seed42-v1",
+            "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2"
+          },
+          "frame_count": 94,
+          "last_pts_us": 3720000,
+          "pad_samples": 596,
+          "video_bytes": 870143,
+          "final_marker": true,
+          "first_pts_us": 0,
+          "native_final": true,
+          "last_sequence": 93,
+          "source_format": {
+            "codec": "h264",
+            "width": 512,
+            "height": 512,
+            "fps_den": 1,
+            "fps_num": 25,
+            "channels": 1,
+            "pcm_format": "s16le",
+            "sample_rate": 16000,
+            "native_format": "rgb24"
+          },
+          "first_sequence": 0,
+          "source_samples": 60160,
+          "original_samples": 59564,
+          "descriptor_revision": "staging-descriptor-1",
+          "request_fingerprint": "sha256:2d37673d3e4d34e24731b34e142b563eef38b3121378b821b21d080c57876955",
+          "video_stream_sha256": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+          "native_rgb_stream_sha256": "sha256:1cb39e287e10e56e745b866f69674de265c30c4afaa4ec581ad7bbc1ada0db8c"
+        },
+        "providerProvenance": "GPU_INFERENCE",
+        "workerGenerationId": 2,
+        "originalSampleCount": 59564,
+        "stagingDescriptorHash": "sha256:68879e186fb0a7293b8d27d49429ba838ee7423de9368a3486ac6596ce0ae785",
+        "stagingEmittedVideoHash": "sha256:3c25a12bd82435bf29ab36c0080e91de92c2872f7acd74e81afa728a692d0766"
+      }
+    }
+  ],
+  "narrations": [
+    {
+      "state": "STOPPING",
+      "user_id": "golden-user",
+      "revision": 15,
+      "plan_json": {
+        "beats": [
+          {
+            "title": "短测第1段",
+            "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "segmentIds": [
+              "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+            ],
+            "beatOrdinal": 0,
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "requiredFactIds": [
+              "name"
+            ]
+          },
+          {
+            "title": "短测第2段",
+            "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "segmentIds": [
+              "segment_993e0907edcf0cea9bca840a6c324707"
+            ],
+            "beatOrdinal": 1,
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "requiredFactIds": [
+              "price"
+            ]
+          },
+          {
+            "title": "短测第3段",
+            "beatId": "beat_fea4f38001c2bcabe02c019e2e3190a8",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "segmentIds": [
+              "segment_5f2727d32a4d2197e3df48bef8d8ddf4"
+            ],
+            "beatOrdinal": 2,
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "requiredFactIds": [
+              "stock"
+            ]
+          },
+          {
+            "title": "短测第4段",
+            "beatId": "beat_e47c8ea317d2c18fe7fe389e25209a71",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "segmentIds": [
+              "segment_ccd1a4dda235ecf18ed7645ce67ba363"
+            ],
+            "beatOrdinal": 3,
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "requiredFactIds": [
+              "sizes"
+            ]
+          },
+          {
+            "title": "短测第5段",
+            "beatId": "beat_9da2e49267b197053eb16c1c64c0feaf",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "segmentIds": [
+              "segment_8fa1e704002b701f4dca0d21fdadddb2"
+            ],
+            "beatOrdinal": 4,
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "requiredFactIds": [
+              "guide.01.05"
+            ]
+          },
+          {
+            "title": "短测第6段",
+            "beatId": "beat_a1e4a15bc401112028c829537cfff079",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "segmentIds": [
+              "segment_e6eca9ccaf26710c4a7f223054d4e684"
+            ],
+            "beatOrdinal": 5,
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "requiredFactIds": [
+              "guide.01.06"
+            ]
+          },
+          {
+            "title": "短测第7段",
+            "beatId": "beat_76597b04aaca6635908b13a3dd019f47",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "segmentIds": [
+              "segment_2ff72d85ad5831e8f0bb5785e316a5d9"
+            ],
+            "beatOrdinal": 6,
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "requiredFactIds": [
+              "guide.01.07"
+            ]
+          },
+          {
+            "title": "短测第8段",
+            "beatId": "beat_4aac27480f15d9b45f692b1b06c10985",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "segmentIds": [
+              "segment_7f957ec38d3a6616fc2782f2f2f64ce2"
+            ],
+            "beatOrdinal": 7,
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "requiredFactIds": [
+              "guide.01.08"
+            ]
+          },
+          {
+            "title": "短测第9段",
+            "beatId": "beat_2d7d98a33d382f0f77b925d215da0de2",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "segmentIds": [
+              "segment_8b0da1ef08f40dab3dab426a722418d0"
+            ],
+            "beatOrdinal": 8,
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "requiredFactIds": [
+              "guide.01.09"
+            ]
+          },
+          {
+            "title": "短测第10段",
+            "beatId": "beat_959d011dc02e1cb10463492338643e80",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "segmentIds": [
+              "segment_dbd7483df9210608a24b90b689f093a7"
+            ],
+            "beatOrdinal": 9,
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "requiredFactIds": [
+              "guide.01.10"
+            ]
+          }
+        ],
+        "style": "自然清楚地逐句讲解桌面整理步骤，每段只讲当前声明的事实。",
+        "policy": "AT_BOUNDARY",
+        "segments": [
+          {
+            "lane": "NARRATION",
+            "text": "这份电子说明书的名称，叫作桌面整理指南。",
+            "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+            "status": "PENDING",
+            "factIds": [
+              "name"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "durationHintMs": 4000,
+            "segmentOrdinal": 0
+          },
+          {
+            "lane": "NARRATION",
+            "text": "这份电子说明书，当前标价是人民币99.00元。",
+            "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+            "status": "PENDING",
+            "factIds": [
+              "price"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:eff894a398f528a63b40530c2c8ef3c7cc1ea13fb3bf3a7766c8173e3bbd1d1b",
+            "segmentId": "segment_993e0907edcf0cea9bca840a6c324707",
+            "durationHintMs": 4600,
+            "segmentOrdinal": 1
+          },
+          {
+            "lane": "NARRATION",
+            "text": "当前用于本次演示的商品库存，共有20份可供选择。",
+            "beatId": "beat_fea4f38001c2bcabe02c019e2e3190a8",
+            "status": "PENDING",
+            "factIds": [
+              "stock"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:c1864f9d4b16f212ab91eafba8ec1f88171899a4853e0968bfeb914d99ea7320",
+            "segmentId": "segment_5f2727d32a4d2197e3df48bef8d8ddf4",
+            "durationHintMs": 4800,
+            "segmentOrdinal": 2
+          },
+          {
+            "lane": "NARRATION",
+            "text": "本商品的规格选项只有电子版，请按电子资料使用。",
+            "beatId": "beat_e47c8ea317d2c18fe7fe389e25209a71",
+            "status": "PENDING",
+            "factIds": [
+              "sizes"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:9bcdce03971fbdf657271d718b18d65e131ccc78487bf0ef02ff48d012ce367d",
+            "segmentId": "segment_ccd1a4dda235ecf18ed7645ce67ba363",
+            "durationHintMs": 4600,
+            "segmentOrdinal": 3
+          },
+          {
+            "lane": "NARRATION",
+            "text": "这份指南讨论桌面整理方法，不提供实体收纳工具。",
+            "beatId": "beat_9da2e49267b197053eb16c1c64c0feaf",
+            "status": "PENDING",
+            "factIds": [
+              "guide.01.05"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:06590f870bc5e55b6981e62701f1c0ac08eff93edfc7eb27e5ea80551b773407",
+            "segmentId": "segment_8fa1e704002b701f4dca0d21fdadddb2",
+            "durationHintMs": 4600,
+            "segmentOrdinal": 4
+          },
+          {
+            "lane": "NARRATION",
+            "text": "阅读时先选择最困扰你的桌面问题，再对应查找章节。",
+            "beatId": "beat_a1e4a15bc401112028c829537cfff079",
+            "status": "PENDING",
+            "factIds": [
+              "guide.01.06"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:9964bb4964fdc8ce7e58cc0d3bc4c53c686f0410dfc793e8ea57198f7cb56bcf",
+            "segmentId": "segment_e6eca9ccaf26710c4a7f223054d4e684",
+            "durationHintMs": 4800,
+            "segmentOrdinal": 5
+          },
+          {
+            "lane": "NARRATION",
+            "text": "指南按照清空、分类、分区和维护，安排整理的步骤。",
+            "beatId": "beat_76597b04aaca6635908b13a3dd019f47",
+            "status": "PENDING",
+            "factIds": [
+              "guide.01.07"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:805d7c94a94becfe1a2fa5705ba8bdac60da424e71441b4e9fa0e743c0852ac1",
+            "segmentId": "segment_2ff72d85ad5831e8f0bb5785e316a5d9",
+            "durationHintMs": 4800,
+            "segmentOrdinal": 6
+          },
+          {
+            "lane": "NARRATION",
+            "text": "第一次实践可以先处理一小块区域，再逐步扩大范围。",
+            "beatId": "beat_4aac27480f15d9b45f692b1b06c10985",
+            "status": "PENDING",
+            "factIds": [
+              "guide.01.08"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:c65fe2f9a737801bbdb2b41e80c2358c3d81f0333456945f9766e747be878a7a",
+            "segmentId": "segment_7f957ec38d3a6616fc2782f2f2f64ce2",
+            "durationHintMs": 4800,
+            "segmentOrdinal": 7
+          },
+          {
+            "lane": "NARRATION",
+            "text": "整理前请记录常见物品的位置，方便之后比较变化。",
+            "beatId": "beat_2d7d98a33d382f0f77b925d215da0de2",
+            "status": "PENDING",
+            "factIds": [
+              "guide.01.09"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:ee3f4d278522e3bcee8e96b98dd4ce2cb53b83c41eb74ab755d4a5475129d349",
+            "segmentId": "segment_8b0da1ef08f40dab3dab426a722418d0",
+            "durationHintMs": 4600,
+            "segmentOrdinal": 8
+          },
+          {
+            "lane": "NARRATION",
+            "text": "每完成一个步骤都检查实际使用，避免只追求外观。",
+            "beatId": "beat_959d011dc02e1cb10463492338643e80",
+            "status": "PENDING",
+            "factIds": [
+              "guide.01.10"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:994814af7abbd0bec882fb7267530700d1e63b002a4864616da003c00d274fb1",
+            "segmentId": "segment_dbd7483df9210608a24b90b689f093a7",
+            "durationHintMs": 4600,
+            "segmentOrdinal": 9
+          }
+        ],
+        "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+        "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+        "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+        "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+        "requiredSinks": [
+          "peer_f794334832604d4aa09faad6ad6e339d",
+          "rtmp:1"
+        ],
+        "scriptVersion": "desktop-guide-smoke-v2",
+        "productSnapshotHash": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82"
+      },
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.950244+08:00",
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "stop_barrier": true,
+      "document_json": {
+        "plan": {
+          "beats": [
+            {
+              "title": "短测第1段",
+              "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "segmentIds": [
+                "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+              ],
+              "beatOrdinal": 0,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "requiredFactIds": [
+                "name"
+              ]
+            },
+            {
+              "title": "短测第2段",
+              "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "segmentIds": [
+                "segment_993e0907edcf0cea9bca840a6c324707"
+              ],
+              "beatOrdinal": 1,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "requiredFactIds": [
+                "price"
+              ]
+            },
+            {
+              "title": "短测第3段",
+              "beatId": "beat_fea4f38001c2bcabe02c019e2e3190a8",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "segmentIds": [
+                "segment_5f2727d32a4d2197e3df48bef8d8ddf4"
+              ],
+              "beatOrdinal": 2,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "requiredFactIds": [
+                "stock"
+              ]
+            },
+            {
+              "title": "短测第4段",
+              "beatId": "beat_e47c8ea317d2c18fe7fe389e25209a71",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "segmentIds": [
+                "segment_ccd1a4dda235ecf18ed7645ce67ba363"
+              ],
+              "beatOrdinal": 3,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "requiredFactIds": [
+                "sizes"
+              ]
+            },
+            {
+              "title": "短测第5段",
+              "beatId": "beat_9da2e49267b197053eb16c1c64c0feaf",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "segmentIds": [
+                "segment_8fa1e704002b701f4dca0d21fdadddb2"
+              ],
+              "beatOrdinal": 4,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "requiredFactIds": [
+                "guide.01.05"
+              ]
+            },
+            {
+              "title": "短测第6段",
+              "beatId": "beat_a1e4a15bc401112028c829537cfff079",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "segmentIds": [
+                "segment_e6eca9ccaf26710c4a7f223054d4e684"
+              ],
+              "beatOrdinal": 5,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "requiredFactIds": [
+                "guide.01.06"
+              ]
+            },
+            {
+              "title": "短测第7段",
+              "beatId": "beat_76597b04aaca6635908b13a3dd019f47",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "segmentIds": [
+                "segment_2ff72d85ad5831e8f0bb5785e316a5d9"
+              ],
+              "beatOrdinal": 6,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "requiredFactIds": [
+                "guide.01.07"
+              ]
+            },
+            {
+              "title": "短测第8段",
+              "beatId": "beat_4aac27480f15d9b45f692b1b06c10985",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "segmentIds": [
+                "segment_7f957ec38d3a6616fc2782f2f2f64ce2"
+              ],
+              "beatOrdinal": 7,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "requiredFactIds": [
+                "guide.01.08"
+              ]
+            },
+            {
+              "title": "短测第9段",
+              "beatId": "beat_2d7d98a33d382f0f77b925d215da0de2",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "segmentIds": [
+                "segment_8b0da1ef08f40dab3dab426a722418d0"
+              ],
+              "beatOrdinal": 8,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "requiredFactIds": [
+                "guide.01.09"
+              ]
+            },
+            {
+              "title": "短测第10段",
+              "beatId": "beat_959d011dc02e1cb10463492338643e80",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "segmentIds": [
+                "segment_dbd7483df9210608a24b90b689f093a7"
+              ],
+              "beatOrdinal": 9,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "requiredFactIds": [
+                "guide.01.10"
+              ]
+            }
+          ],
+          "style": "自然清楚地逐句讲解桌面整理步骤，每段只讲当前声明的事实。",
+          "policy": "AT_BOUNDARY",
+          "segments": [
+            {
+              "lane": "NARRATION",
+              "text": "这份电子说明书的名称，叫作桌面整理指南。",
+              "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+              "status": "COMPLETED",
+              "factIds": [
+                "name"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+              "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+              "durationHintMs": 4000,
+              "segmentOrdinal": 0
+            },
+            {
+              "lane": "NARRATION",
+              "text": "这份电子说明书，当前标价是人民币99.00元。",
+              "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+              "status": "CANCELLED",
+              "factIds": [
+                "price"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:eff894a398f528a63b40530c2c8ef3c7cc1ea13fb3bf3a7766c8173e3bbd1d1b",
+              "segmentId": "segment_993e0907edcf0cea9bca840a6c324707",
+              "durationHintMs": 4600,
+              "segmentOrdinal": 1
+            },
+            {
+              "lane": "NARRATION",
+              "text": "当前用于本次演示的商品库存，共有20份可供选择。",
+              "beatId": "beat_fea4f38001c2bcabe02c019e2e3190a8",
+              "status": "CANCELLED",
+              "factIds": [
+                "stock"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:c1864f9d4b16f212ab91eafba8ec1f88171899a4853e0968bfeb914d99ea7320",
+              "segmentId": "segment_5f2727d32a4d2197e3df48bef8d8ddf4",
+              "durationHintMs": 4800,
+              "segmentOrdinal": 2
+            },
+            {
+              "lane": "NARRATION",
+              "text": "本商品的规格选项只有电子版，请按电子资料使用。",
+              "beatId": "beat_e47c8ea317d2c18fe7fe389e25209a71",
+              "status": "CANCELLED",
+              "factIds": [
+                "sizes"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:9bcdce03971fbdf657271d718b18d65e131ccc78487bf0ef02ff48d012ce367d",
+              "segmentId": "segment_ccd1a4dda235ecf18ed7645ce67ba363",
+              "durationHintMs": 4600,
+              "segmentOrdinal": 3
+            },
+            {
+              "lane": "NARRATION",
+              "text": "这份指南讨论桌面整理方法，不提供实体收纳工具。",
+              "beatId": "beat_9da2e49267b197053eb16c1c64c0feaf",
+              "status": "CANCELLED",
+              "factIds": [
+                "guide.01.05"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:06590f870bc5e55b6981e62701f1c0ac08eff93edfc7eb27e5ea80551b773407",
+              "segmentId": "segment_8fa1e704002b701f4dca0d21fdadddb2",
+              "durationHintMs": 4600,
+              "segmentOrdinal": 4
+            },
+            {
+              "lane": "NARRATION",
+              "text": "阅读时先选择最困扰你的桌面问题，再对应查找章节。",
+              "beatId": "beat_a1e4a15bc401112028c829537cfff079",
+              "status": "CANCELLED",
+              "factIds": [
+                "guide.01.06"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:9964bb4964fdc8ce7e58cc0d3bc4c53c686f0410dfc793e8ea57198f7cb56bcf",
+              "segmentId": "segment_e6eca9ccaf26710c4a7f223054d4e684",
+              "durationHintMs": 4800,
+              "segmentOrdinal": 5
+            },
+            {
+              "lane": "NARRATION",
+              "text": "指南按照清空、分类、分区和维护，安排整理的步骤。",
+              "beatId": "beat_76597b04aaca6635908b13a3dd019f47",
+              "status": "CANCELLED",
+              "factIds": [
+                "guide.01.07"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:805d7c94a94becfe1a2fa5705ba8bdac60da424e71441b4e9fa0e743c0852ac1",
+              "segmentId": "segment_2ff72d85ad5831e8f0bb5785e316a5d9",
+              "durationHintMs": 4800,
+              "segmentOrdinal": 6
+            },
+            {
+              "lane": "NARRATION",
+              "text": "第一次实践可以先处理一小块区域，再逐步扩大范围。",
+              "beatId": "beat_4aac27480f15d9b45f692b1b06c10985",
+              "status": "CANCELLED",
+              "factIds": [
+                "guide.01.08"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:c65fe2f9a737801bbdb2b41e80c2358c3d81f0333456945f9766e747be878a7a",
+              "segmentId": "segment_7f957ec38d3a6616fc2782f2f2f64ce2",
+              "durationHintMs": 4800,
+              "segmentOrdinal": 7
+            },
+            {
+              "lane": "NARRATION",
+              "text": "整理前请记录常见物品的位置，方便之后比较变化。",
+              "beatId": "beat_2d7d98a33d382f0f77b925d215da0de2",
+              "status": "CANCELLED",
+              "factIds": [
+                "guide.01.09"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:ee3f4d278522e3bcee8e96b98dd4ce2cb53b83c41eb74ab755d4a5475129d349",
+              "segmentId": "segment_8b0da1ef08f40dab3dab426a722418d0",
+              "durationHintMs": 4600,
+              "segmentOrdinal": 8
+            },
+            {
+              "lane": "NARRATION",
+              "text": "每完成一个步骤都检查实际使用，避免只追求外观。",
+              "beatId": "beat_959d011dc02e1cb10463492338643e80",
+              "status": "CANCELLED",
+              "factIds": [
+                "guide.01.10"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:994814af7abbd0bec882fb7267530700d1e63b002a4864616da003c00d274fb1",
+              "segmentId": "segment_dbd7483df9210608a24b90b689f093a7",
+              "durationHintMs": 4600,
+              "segmentOrdinal": 9
+            }
+          ],
+          "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+          "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+          "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+          "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+          "requiredSinks": [
+            "peer_f794334832604d4aa09faad6ad6e339d",
+            "rtmp:1"
+          ],
+          "scriptVersion": "desktop-guide-smoke-v2",
+          "productSnapshotHash": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82"
+        },
+        "turn": {
+          "state": "COMPLETED",
+          "answer": {
+            "lane": "AUDIENCE_ANSWER",
+            "text": "这款目前价格是人民币99.00元。",
+            "beatId": "",
+            "status": "COMPLETED",
+            "factIds": [
+              "price"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+            "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+            "durationHintMs": 0,
+            "segmentOrdinal": 0
+          },
+          "deadline": "2026-10-13T09:24:48.450648+08:00",
+          "priority": 80,
+          "question": "这份指南现在多少钱？",
+          "sourceIds": [
+            "receipt_29e7955cdf6989eac26269090201c239b6182d7971ec9310744c012bfb861958"
+          ],
+          "answerText": "这款目前价格是人民币99.00元。",
+          "selectedAt": "2026-10-13T09:23:48.452234+08:00",
+          "sourceScope": {
+            "platform": "mock",
+            "transport": "MOCK_REPLAY",
+            "internalRoomId": "room_02301e852ebd4b3abdb1230527c3c7ac",
+            "platformRoomId": "room_02301e852ebd4b3abdb1230527c3c7ac"
+          },
+          "questionHash": "sha256:f8a877a064300cd2aa1d76b754bb36b093039c4179f027bd06eb11ddb41dc66f",
+          "answerFactIds": [
+            "price"
+          ],
+          "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+          "capturedProductHash": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+          "mappedNarrationFactIds": [
+            "price"
+          ]
+        },
+        "state": "STOPPING",
+        "cursor": {
+          "nextOrdinal": 1,
+          "completedFactIds": [
+            "name"
+          ],
+          "lastCompletedText": "这份电子说明书的名称，叫作桌面整理指南。",
+          "ambiguousSegmentIds": null,
+          "completedSegmentIds": [
+            "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+          ],
+          "lastCompletedSegmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+        },
+        "reason": "SESSION_STOP",
+        "runEpoch": 1,
+        "requestHash": "sha256:98492a67208da6aad5ff4423b4c88e2641b707bba3f54d19b6f292ddad3eae00",
+        "resumePoint": {
+          "cursor": {
+            "nextOrdinal": 1,
+            "completedFactIds": [
+              "name"
+            ],
+            "lastCompletedText": "这份电子说明书的名称，叫作桌面整理指南。",
+            "ambiguousSegmentIds": null,
+            "completedSegmentIds": [
+              "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+            ],
+            "lastCompletedSegmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+          },
+          "boundary": {
+            "sinks": [
+              {
+                "sink": "peer_f794334832604d4aa09faad6ad6e339d",
+                "audioEnd": 190080,
+                "videoEnd": 190080,
+                "audioStart": 0,
+                "videoStart": 0
+              },
+              {
+                "sink": "rtmp:1",
+                "audioEnd": 190080,
+                "videoEnd": 190080,
+                "audioStart": 0,
+                "videoStart": 0
+              }
+            ],
+            "identity": {
+              "lane": "NARRATION",
+              "runEpoch": 1,
+              "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+              "generationId": 2,
+              "timelineEpoch": 1
+            },
+            "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+            "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+            "evidenceRef": "cmd_789e13c91303fad54d237c6b15d8217e:SEGMENT_COMPLETED",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "finalMarker": true,
+            "finalPosition": {
+              "ptsUs": 3960000,
+              "runEpoch": 1,
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "sampleRate": 48000,
+              "sampleIndex": 190080,
+              "timelineEpoch": 1
+            },
+            "requiredSinks": [
+              "peer_f794334832604d4aa09faad6ad6e339d",
+              "rtmp:1"
+            ],
+            "startPosition": {
+              "ptsUs": 0,
+              "runEpoch": 1,
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "sampleRate": 48000,
+              "sampleIndex": 0,
+              "timelineEpoch": 1
+            },
+            "audienceAudible": false
+          },
+          "revision": 7,
+          "nextBeatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+          "nextSegmentId": "segment_993e0907edcf0cea9bca840a6c324707"
+        },
+        "stopBarrier": true,
+        "beatProgress": [
+          {
+            "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "pendingFactIds": [],
+            "requiredFactIds": [
+              "name"
+            ],
+            "completedFactIds": [
+              "name"
+            ],
+            "currentSegmentId": "",
+            "nextTargetBeatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+            "lastCompletedSegmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+          },
+          {
+            "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "pendingFactIds": [
+              "price"
+            ],
+            "requiredFactIds": [
+              "price"
+            ],
+            "completedFactIds": [],
+            "currentSegmentId": "segment_993e0907edcf0cea9bca840a6c324707",
+            "nextTargetBeatId": "beat_fea4f38001c2bcabe02c019e2e3190a8",
+            "lastCompletedSegmentId": ""
+          },
+          {
+            "beatId": "beat_fea4f38001c2bcabe02c019e2e3190a8",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "pendingFactIds": [
+              "stock"
+            ],
+            "requiredFactIds": [
+              "stock"
+            ],
+            "completedFactIds": [],
+            "currentSegmentId": "",
+            "nextTargetBeatId": "beat_e47c8ea317d2c18fe7fe389e25209a71",
+            "lastCompletedSegmentId": ""
+          },
+          {
+            "beatId": "beat_e47c8ea317d2c18fe7fe389e25209a71",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "pendingFactIds": [
+              "sizes"
+            ],
+            "requiredFactIds": [
+              "sizes"
+            ],
+            "completedFactIds": [],
+            "currentSegmentId": "",
+            "nextTargetBeatId": "beat_9da2e49267b197053eb16c1c64c0feaf",
+            "lastCompletedSegmentId": ""
+          },
+          {
+            "beatId": "beat_9da2e49267b197053eb16c1c64c0feaf",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "pendingFactIds": [
+              "guide.01.05"
+            ],
+            "requiredFactIds": [
+              "guide.01.05"
+            ],
+            "completedFactIds": [],
+            "currentSegmentId": "",
+            "nextTargetBeatId": "beat_a1e4a15bc401112028c829537cfff079",
+            "lastCompletedSegmentId": ""
+          },
+          {
+            "beatId": "beat_a1e4a15bc401112028c829537cfff079",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "pendingFactIds": [
+              "guide.01.06"
+            ],
+            "requiredFactIds": [
+              "guide.01.06"
+            ],
+            "completedFactIds": [],
+            "currentSegmentId": "",
+            "nextTargetBeatId": "beat_76597b04aaca6635908b13a3dd019f47",
+            "lastCompletedSegmentId": ""
+          },
+          {
+            "beatId": "beat_76597b04aaca6635908b13a3dd019f47",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "pendingFactIds": [
+              "guide.01.07"
+            ],
+            "requiredFactIds": [
+              "guide.01.07"
+            ],
+            "completedFactIds": [],
+            "currentSegmentId": "",
+            "nextTargetBeatId": "beat_4aac27480f15d9b45f692b1b06c10985",
+            "lastCompletedSegmentId": ""
+          },
+          {
+            "beatId": "beat_4aac27480f15d9b45f692b1b06c10985",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "pendingFactIds": [
+              "guide.01.08"
+            ],
+            "requiredFactIds": [
+              "guide.01.08"
+            ],
+            "completedFactIds": [],
+            "currentSegmentId": "",
+            "nextTargetBeatId": "beat_2d7d98a33d382f0f77b925d215da0de2",
+            "lastCompletedSegmentId": ""
+          },
+          {
+            "beatId": "beat_2d7d98a33d382f0f77b925d215da0de2",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "pendingFactIds": [
+              "guide.01.09"
+            ],
+            "requiredFactIds": [
+              "guide.01.09"
+            ],
+            "completedFactIds": [],
+            "currentSegmentId": "",
+            "nextTargetBeatId": "beat_959d011dc02e1cb10463492338643e80",
+            "lastCompletedSegmentId": ""
+          },
+          {
+            "beatId": "beat_959d011dc02e1cb10463492338643e80",
+            "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "pendingFactIds": [
+              "guide.01.10"
+            ],
+            "requiredFactIds": [
+              "guide.01.10"
+            ],
+            "completedFactIds": [],
+            "currentSegmentId": "",
+            "nextTargetBeatId": "",
+            "lastCompletedSegmentId": ""
+          }
+        ],
+        "timelineEpoch": 2,
+        "lastCheckpoint": {
+          "sinks": [
+            {
+              "sink": "peer_f794334832604d4aa09faad6ad6e339d",
+              "audioEnd": 190080,
+              "videoEnd": 190080,
+              "audioStart": 0,
+              "videoStart": 0
+            },
+            {
+              "sink": "rtmp:1",
+              "audioEnd": 190080,
+              "videoEnd": 190080,
+              "audioStart": 0,
+              "videoStart": 0
+            }
+          ],
+          "identity": {
+            "lane": "NARRATION",
+            "runEpoch": 1,
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "generationId": 2,
+            "timelineEpoch": 1
+          },
+          "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+          "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+          "evidenceRef": "cmd_789e13c91303fad54d237c6b15d8217e:SEGMENT_COMPLETED",
+          "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+          "finalMarker": true,
+          "finalPosition": {
+            "ptsUs": 3960000,
+            "runEpoch": 1,
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "sampleRate": 48000,
+            "sampleIndex": 190080,
+            "timelineEpoch": 1
+          },
+          "requiredSinks": [
+            "peer_f794334832604d4aa09faad6ad6e339d",
+            "rtmp:1"
+          ],
+          "startPosition": {
+            "ptsUs": 0,
+            "runEpoch": 1,
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "sampleRate": 48000,
+            "sampleIndex": 0,
+            "timelineEpoch": 1
+          },
+          "audienceAudible": false
+        },
+        "invalidatedEpoch": 1,
+        "operatorOverride": false,
+        "suspendInstalled": true,
+        "boundarySegmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+        "narrationRevision": 15
+      },
+      "script_version": "desktop-guide-smoke-v2",
+      "resume_point_json": {
+        "cursor": {
+          "nextOrdinal": 1,
+          "completedFactIds": [
+            "name"
+          ],
+          "lastCompletedText": "这份电子说明书的名称，叫作桌面整理指南。",
+          "ambiguousSegmentIds": null,
+          "completedSegmentIds": [
+            "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+          ],
+          "lastCompletedSegmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+        },
+        "boundary": {
+          "sinks": [
+            {
+              "sink": "peer_f794334832604d4aa09faad6ad6e339d",
+              "audioEnd": 190080,
+              "videoEnd": 190080,
+              "audioStart": 0,
+              "videoStart": 0
+            },
+            {
+              "sink": "rtmp:1",
+              "audioEnd": 190080,
+              "videoEnd": 190080,
+              "audioStart": 0,
+              "videoStart": 0
+            }
+          ],
+          "identity": {
+            "lane": "NARRATION",
+            "runEpoch": 1,
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "generationId": 2,
+            "timelineEpoch": 1
+          },
+          "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+          "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+          "evidenceRef": "cmd_789e13c91303fad54d237c6b15d8217e:SEGMENT_COMPLETED",
+          "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+          "finalMarker": true,
+          "finalPosition": {
+            "ptsUs": 3960000,
+            "runEpoch": 1,
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "sampleRate": 48000,
+            "sampleIndex": 190080,
+            "timelineEpoch": 1
+          },
+          "requiredSinks": [
+            "peer_f794334832604d4aa09faad6ad6e339d",
+            "rtmp:1"
+          ],
+          "startPosition": {
+            "ptsUs": 0,
+            "runEpoch": 1,
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "sampleRate": 48000,
+            "sampleIndex": 0,
+            "timelineEpoch": 1
+          },
+          "audienceAudible": false
+        },
+        "revision": 7,
+        "nextBeatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+        "nextSegmentId": "segment_993e0907edcf0cea9bca840a6c324707"
+      },
+      "recovery_disposition": "SESSION_STOP",
+      "product_snapshot_hash": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "completion_cursor_json": {
+        "nextOrdinal": 1,
+        "completedFactIds": [
+          "name"
+        ],
+        "lastCompletedText": "这份电子说明书的名称，叫作桌面整理指南。",
+        "ambiguousSegmentIds": null,
+        "completedSegmentIds": [
+          "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+        ],
+        "lastCompletedSegmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "operation": "SEGMENT_READY",
+      "run_epoch": 1,
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "ready",
+        "durable": true,
+        "revision": 0,
+        "receiptSeq": 4,
+        "observationHash": "sha256:6a65435e65e03336639dd75a1f4fc0fbdbe6313a39b3b539a3b8c57fd83ed057",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:6a65435e65e03336639dd75a1f4fc0fbdbe6313a39b3b539a3b8c57fd83ed057"
+    },
+    {
+      "operation": "COMMIT_INTENT",
+      "run_epoch": 1,
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "ready",
+        "durable": true,
+        "revision": 0,
+        "receiptSeq": 5,
+        "observationHash": "sha256:0497267e5e9c1b4484ef365f74ab2942fc9bc419e8c34de12b7079a565f18500",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:0497267e5e9c1b4484ef365f74ab2942fc9bc419e8c34de12b7079a565f18500"
+    },
+    {
+      "operation": "COMMIT_INSTALLED",
+      "run_epoch": 1,
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "committed",
+        "durable": true,
+        "revision": 1,
+        "receiptSeq": 6,
+        "observationHash": "sha256:8db9a507821942dfa841ad89876a7b3dd599788864a4546b848ab86d9f674eaa",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:8db9a507821942dfa841ad89876a7b3dd599788864a4546b848ab86d9f674eaa"
+    },
+    {
+      "operation": "SEGMENT_COMPLETED",
+      "run_epoch": 1,
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "completed",
+        "durable": true,
+        "revision": 1,
+        "receiptSeq": 7,
+        "observationHash": "sha256:ece340ad91c5f7d80bd5d6e4de490e83a9abeaf3b0809b8161f87354dddf4a66",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:ece340ad91c5f7d80bd5d6e4de490e83a9abeaf3b0809b8161f87354dddf4a66"
+    },
+    {
+      "operation": "SUSPEND_REQUESTED",
+      "run_epoch": 1,
+      "command_id": "cmd_4b6c0378f71d60270302fa2c3904f824",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "accepted",
+        "durable": true,
+        "revision": 2,
+        "receiptSeq": 3,
+        "observationHash": "sha256:8fd410dd0905d7a9f2e6266513741dc424a933ee2406f129b38651c1f1db9f49",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:8fd410dd0905d7a9f2e6266513741dc424a933ee2406f129b38651c1f1db9f49"
+    },
+    {
+      "operation": "INVALIDATE_AFTER",
+      "run_epoch": 1,
+      "command_id": "cmd_0558c86f410f561111c568f2fce94855",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "interrupted",
+        "durable": true,
+        "revision": 3,
+        "receiptSeq": 3,
+        "observationHash": "sha256:f21e8fc6d6cf5132fb360b0ccb3f2b1c3bd006ecd6a9caf40489142a1c833d5c",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:f21e8fc6d6cf5132fb360b0ccb3f2b1c3bd006ecd6a9caf40489142a1c833d5c"
+    },
+    {
+      "operation": "BEGIN_EPOCH_PREPARED",
+      "run_epoch": 1,
+      "command_id": "cmd_cb4ec1b3be1333bacde6fcd72bf97e76",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "accepted",
+        "durable": true,
+        "revision": 3,
+        "receiptSeq": 3,
+        "observationHash": "sha256:e494e9dbf051199aeb3472b73d48a1a57861e0c560f04237b64e7b4b8d140872",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:e494e9dbf051199aeb3472b73d48a1a57861e0c560f04237b64e7b4b8d140872"
+    },
+    {
+      "operation": "BEGIN_EPOCH_ACTIVE",
+      "run_epoch": 1,
+      "command_id": "cmd_cb4ec1b3be1333bacde6fcd72bf97e76",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "committed",
+        "durable": true,
+        "revision": 4,
+        "receiptSeq": 4,
+        "observationHash": "sha256:46c9d9545df7a89615a190a4e7aa5801b7afb6f08cddaa30b5801d16f804b095",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:46c9d9545df7a89615a190a4e7aa5801b7afb6f08cddaa30b5801d16f804b095"
+    },
+    {
+      "operation": "ANSWER_PREPARED",
+      "run_epoch": 1,
+      "command_id": "cmd_98ec860aa70755bfa06f05405fe38200",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "ready",
+        "durable": true,
+        "revision": 4,
+        "receiptSeq": 3,
+        "observationHash": "sha256:be15cb4bbc0389245561b15b66c52efdf84336cd0f978efa3ce8d8873d318e92",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:be15cb4bbc0389245561b15b66c52efdf84336cd0f978efa3ce8d8873d318e92"
+    },
+    {
+      "operation": "SEGMENT_READY",
+      "run_epoch": 1,
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "ready",
+        "durable": true,
+        "revision": 4,
+        "receiptSeq": 4,
+        "observationHash": "sha256:15857e3f3d816ae78479a3b7caea2c74ec1097183c4a35cd7ffb8c6eb4e493cb",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:15857e3f3d816ae78479a3b7caea2c74ec1097183c4a35cd7ffb8c6eb4e493cb"
+    },
+    {
+      "operation": "COMMIT_INTENT",
+      "run_epoch": 1,
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "ready",
+        "durable": true,
+        "revision": 4,
+        "receiptSeq": 5,
+        "observationHash": "sha256:25fd24ee907153b8ef25c397fc36ea0ba52c2f12e3262ee472461bdebb313fa7",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:25fd24ee907153b8ef25c397fc36ea0ba52c2f12e3262ee472461bdebb313fa7"
+    },
+    {
+      "operation": "COMMIT_INSTALLED",
+      "run_epoch": 1,
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "committed",
+        "durable": true,
+        "revision": 5,
+        "receiptSeq": 6,
+        "observationHash": "sha256:d50fe0e38e8a3ac2ad855ebfd5b54dff2166172831f23496c397ae9fd22ef5e4",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:d50fe0e38e8a3ac2ad855ebfd5b54dff2166172831f23496c397ae9fd22ef5e4"
+    },
+    {
+      "operation": "SEGMENT_COMPLETED",
+      "run_epoch": 1,
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "completed",
+        "durable": true,
+        "revision": 5,
+        "receiptSeq": 7,
+        "observationHash": "sha256:46e3ee82310238df71bd689d6ab54a01d31201235516072f3b7309a2e9260348",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:46e3ee82310238df71bd689d6ab54a01d31201235516072f3b7309a2e9260348"
+    },
+    {
+      "operation": "UNKNOWN",
+      "run_epoch": 1,
+      "command_id": "cmd_3139b470bebf357d0d4e29f0da9f9712",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "response_json": {
+        "state": "unknown",
+        "durable": true,
+        "revision": 5,
+        "receiptSeq": 3,
+        "observationHash": "sha256:8872d51af9a873231f4fa32199ecc6bf0f23ee367aec0a45bf5c05543d1c095c",
+        "producerIncarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+      },
+      "observation_hash": "sha256:8872d51af9a873231f4fa32199ecc6bf0f23ee367aec0a45bf5c05543d1c095c"
+    }
+  ],
+  "receipts": [
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_93dcc44da08a628210d31c4bf323b0ff",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:32.550119+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_c6dfcb958b6f7e41b3508b1b27986d76",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:7b7a09449b122dc4851394882f4df713221dc9745cafa56e30a0e14f26bb3b93",
+      "producer_incarnation": "owner_a68aa814e34c229bf3de6c29ee4aa68a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_4c060f689e4925b8154ad2c13fdbd603",
+      "command_id": "cmd_93dcc44da08a628210d31c4bf323b0ff",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:32.552794+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_4c060f689e4925b8154ad2c13fdbd603",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:7b7a09449b122dc4851394882f4df713221dc9745cafa56e30a0e14f26bb3b93",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "completed",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_93dcc44da08a628210d31c4bf323b0ff",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:33.019529+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 3,
+      "evidence_ref": "cmd_93dcc44da08a628210d31c4bf323b0ff:control",
+      "evidence_type": "control_cleanup",
+      "observation_hash": "sha256:7ce1305c6436e1b4387bdac89f1f7f449d01078f3f028e16895809d7b6f31f20",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_445c5c4057c7d368a00050d299c8ee8a",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:33.250932+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_05c6423019792ba8f651eb626c03883a",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:1b22f0d6d9ca90c7386d7ec6600851a3415fdf3c2d7433cd126f92d5a49e5bcf",
+      "producer_incarnation": "owner_a68aa814e34c229bf3de6c29ee4aa68a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_19794cda84e236fdbbb71c747686a01e",
+      "command_id": "cmd_445c5c4057c7d368a00050d299c8ee8a",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:33.254968+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_19794cda84e236fdbbb71c747686a01e",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:1b22f0d6d9ca90c7386d7ec6600851a3415fdf3c2d7433cd126f92d5a49e5bcf",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "completed",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_445c5c4057c7d368a00050d299c8ee8a",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:33.273105+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 3,
+      "evidence_ref": "cmd_445c5c4057c7d368a00050d299c8ee8a:control",
+      "evidence_type": "control_cleanup",
+      "observation_hash": "sha256:1d378e0a6ce07f56ebb1cec8e8689549cb5e6cbdfb2294f43cdbb02664be96f2",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:40.548432+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_1e91fcf09aa2e9d4c8fba0ea0423b721",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:98c36df48efa10de526876ad531d7a32227c8f4fef6126ac144bd4be0561689a",
+      "producer_incarnation": "owner_a68aa814e34c229bf3de6c29ee4aa68a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_deec7866da2854559cecf88d0e649006",
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:40.550062+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_deec7866da2854559cecf88d0e649006",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:98c36df48efa10de526876ad531d7a32227c8f4fef6126ac144bd4be0561689a",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "generating",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_deec7866da2854559cecf88d0e649006",
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:40.552842+08:00",
+      "range_sinks": {
+        "generationId": 2,
+        "timelineEpoch": 1
+      },
+      "reason_code": null,
+      "receipt_seq": 3,
+      "evidence_ref": "attempt_deec7866da2854559cecf88d0e649006",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:98c36df48efa10de526876ad531d7a32227c8f4fef6126ac144bd4be0561689a",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "ready",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_deec7866da2854559cecf88d0e649006",
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:44.312078+08:00",
+      "range_sinks": {
+        "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+        "descriptor": {
+          "factIds": [
+            "name"
+          ],
+          "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+          "videoHash": "sha256:478fdab546f038ccc22a1725f596c7a17f61490801f9cc28d23f13055a3e72a7",
+          "padSamples": 0,
+          "contentHash": "sha256:843d15d6a2c90b0aa76215b76a52e93ffa02a14fc85bb8d9d7398b8b5c5ba271",
+          "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+          "finalMarker": true,
+          "sampleCount": 190080,
+          "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+          "videoTiming": {
+            "fps": 25
+          },
+          "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+          "requiredSinks": [
+            "peer_f794334832604d4aa09faad6ad6e339d",
+            "rtmp:1"
+          ],
+          "videoFrameCount": 99,
+          "sourceSampleRate": 16000,
+          "sourceSampleCount": 63360,
+          "stagingDescriptor": {
+            "eof": true,
+            "limits": {
+              "lease_ms_max": 60000,
+              "limits_revision": "staging-segment-8s-gpu1g-1",
+              "worker_rgb_bytes": 167772160,
+              "worker_pose_bytes": 8388608,
+              "max_source_samples": 128000,
+              "audio_queue_samples": 32000,
+              "native_queue_frames": 24,
+              "worker_attempt_bytes": 536870912,
+              "network_window_frames": 4,
+              "runtime_artifact_bytes": 201326592,
+              "runtime_transient_bytes": 25165824,
+              "gpu_incremental_allocated_bytes": 1073741824
+            },
+            "identity": {
+              "lane": "NARRATION",
+              "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+              "stageId": "stage-c92899ae12de43e39f43ac2ddcc7affb",
+              "traceId": "req_868259fbbcb804ee161a7259a9986683",
+              "runEpoch": 1,
+              "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+              "commandId": "cmd_789e13c91303fad54d237c6b15d8217e",
+              "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "workerRef": "soulx-lite-01",
+              "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+              "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "generationId": 2,
+              "timelineEpoch": 1,
+              "interactionTurnId": null,
+              "workerGenerationId": 1
+            },
+            "resources": {
+              "inference_elapsed_us": 2741784,
+              "worker_rgb_peak_bytes": 77856768,
+              "worker_attempt_peak_bytes": 172761088,
+              "gpu_baseline_allocated_bytes": 4316367872,
+              "gpu_incremental_reserved_peak_bytes": 0,
+              "gpu_incremental_allocated_peak_bytes": 975013376
+            },
+            "pcm_sha256": "sha256:843d15d6a2c90b0aa76215b76a52e93ffa02a14fc85bb8d9d7398b8b5c5ba271",
+            "provenance": {
+              "source": "GPU_INFERENCE",
+              "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+              "workerRef": "soulx-lite-01",
+              "capability": "immutable_segment_staging_v1",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "avatar_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+              "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+              "model_source_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+              "preprocessing_version": "soulx-lite-512-seed42-v1",
+              "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2"
+            },
+            "frame_count": 99,
+            "last_pts_us": 3920000,
+            "pad_samples": 0,
+            "video_bytes": 1139571,
+            "final_marker": true,
+            "first_pts_us": 0,
+            "native_final": true,
+            "last_sequence": 98,
+            "source_format": {
+              "codec": "h264",
+              "width": 512,
+              "height": 512,
+              "fps_den": 1,
+              "fps_num": 25,
+              "channels": 1,
+              "pcm_format": "s16le",
+              "sample_rate": 16000,
+              "native_format": "rgb24"
+            },
+            "first_sequence": 0,
+            "source_samples": 63360,
+            "original_samples": 63360,
+            "descriptor_revision": "staging-descriptor-1",
+            "request_fingerprint": "sha256:809e8e7395c6f9853105531e3d76a62f1c9c6a75071fe202c23b5c38dc32cdad",
+            "video_stream_sha256": "sha256:478fdab546f038ccc22a1725f596c7a17f61490801f9cc28d23f13055a3e72a7",
+            "native_rgb_stream_sha256": "sha256:e9ddbbca30e11eb3b52de138dc8e6e0f7346d0488c1b75a204f179d8e18e9e05"
+          },
+          "providerProvenance": "GPU_INFERENCE",
+          "workerGenerationId": 1,
+          "originalSampleCount": 63360,
+          "stagingDescriptorHash": "sha256:e1dcd31d8a77ecaaff1e34991b8b0d42be87e8b3bcf75821c152edce3b89e29e",
+          "stagingEmittedVideoHash": "sha256:acda29fc3374b73bd8040057ddf6f94136bd32a5f79b6624a4e3492729383a57"
+        },
+        "generationId": 2
+      },
+      "reason_code": null,
+      "receipt_seq": 4,
+      "evidence_ref": "SEGMENT_READY",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:6a65435e65e03336639dd75a1f4fc0fbdbe6313a39b3b539a3b8c57fd83ed057",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "ready",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_deec7866da2854559cecf88d0e649006",
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:44.317539+08:00",
+      "range_sinks": {
+        "commit": {
+          "end": 190080,
+          "start": 0,
+          "command": {
+            "lane": "NARRATION",
+            "payload": {
+              "text": "这份电子说明书的名称，叫作桌面整理指南。",
+              "voice": {
+                "voiceId": "voice_3975c0f8f53576fce97743f37b33a4b7"
+              },
+              "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+              "factIds": [
+                "name"
+              ],
+              "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+              "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "leaseToken": 1,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+              "maxDurationMs": 8000,
+              "requiredSinks": [
+                "peer_f794334832604d4aa09faad6ad6e339d",
+                "rtmp:1"
+              ],
+              "interactionTurnId": null,
+              "productSnapshotHash": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "expectedTimelineRevision": 0,
+              "expectedNarrationRevision": 2
+            },
+            "traceId": "req_868259fbbcb804ee161a7259a9986683",
+            "runEpoch": 1,
+            "commandId": "cmd_789e13c91303fad54d237c6b15d8217e",
+            "createdAt": "2026-10-13T01:23:40.527173Z",
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "commandSeq": 3,
+            "commandType": "COMMIT_SEGMENT",
+            "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+            "schemaVersion": "0.5",
+            "timelineEpoch": 1,
+            "idempotencyKey": "narration_8840e937cda6b56bfccf4bcadd2d8889:segment_8e423af13d24a4ea186e2d67c5a2be1f:commit",
+            "requestFingerprint": "sha256:98c36df48efa10de526876ad531d7a32227c8f4fef6126ac144bd4be0561689a"
+          },
+          "consumed": {},
+          "identity": {
+            "lane": "NARRATION",
+            "runEpoch": 1,
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 2,
+            "timelineEpoch": 1,
+            "workerGenerationId": 1
+          },
+          "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+          "completed": false,
+          "descriptor": {
+            "factIds": [
+              "name"
+            ],
+            "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+            "videoHash": "sha256:478fdab546f038ccc22a1725f596c7a17f61490801f9cc28d23f13055a3e72a7",
+            "padSamples": 0,
+            "contentHash": "sha256:843d15d6a2c90b0aa76215b76a52e93ffa02a14fc85bb8d9d7398b8b5c5ba271",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "finalMarker": true,
+            "sampleCount": 190080,
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "videoTiming": {
+              "fps": 25
+            },
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "requiredSinks": [
+              "peer_f794334832604d4aa09faad6ad6e339d",
+              "rtmp:1"
+            ],
+            "videoFrameCount": 99,
+            "sourceSampleRate": 16000,
+            "sourceSampleCount": 63360,
+            "stagingDescriptor": {
+              "eof": true,
+              "limits": {
+                "lease_ms_max": 60000,
+                "limits_revision": "staging-segment-8s-gpu1g-1",
+                "worker_rgb_bytes": 167772160,
+                "worker_pose_bytes": 8388608,
+                "max_source_samples": 128000,
+                "audio_queue_samples": 32000,
+                "native_queue_frames": 24,
+                "worker_attempt_bytes": 536870912,
+                "network_window_frames": 4,
+                "runtime_artifact_bytes": 201326592,
+                "runtime_transient_bytes": 25165824,
+                "gpu_incremental_allocated_bytes": 1073741824
+              },
+              "identity": {
+                "lane": "NARRATION",
+                "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+                "stageId": "stage-c92899ae12de43e39f43ac2ddcc7affb",
+                "traceId": "req_868259fbbcb804ee161a7259a9986683",
+                "runEpoch": 1,
+                "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+                "commandId": "cmd_789e13c91303fad54d237c6b15d8217e",
+                "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+                "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+                "workerRef": "soulx-lite-01",
+                "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+                "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+                "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+                "generationId": 2,
+                "timelineEpoch": 1,
+                "interactionTurnId": null,
+                "workerGenerationId": 1
+              },
+              "resources": {
+                "inference_elapsed_us": 2741784,
+                "worker_rgb_peak_bytes": 77856768,
+                "worker_attempt_peak_bytes": 172761088,
+                "gpu_baseline_allocated_bytes": 4316367872,
+                "gpu_incremental_reserved_peak_bytes": 0,
+                "gpu_incremental_allocated_peak_bytes": 975013376
+              },
+              "pcm_sha256": "sha256:843d15d6a2c90b0aa76215b76a52e93ffa02a14fc85bb8d9d7398b8b5c5ba271",
+              "provenance": {
+                "source": "GPU_INFERENCE",
+                "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+                "workerRef": "soulx-lite-01",
+                "capability": "immutable_segment_staging_v1",
+                "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+                "avatar_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+                "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+                "model_source_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+                "preprocessing_version": "soulx-lite-512-seed42-v1",
+                "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2"
+              },
+              "frame_count": 99,
+              "last_pts_us": 3920000,
+              "pad_samples": 0,
+              "video_bytes": 1139571,
+              "final_marker": true,
+              "first_pts_us": 0,
+              "native_final": true,
+              "last_sequence": 98,
+              "source_format": {
+                "codec": "h264",
+                "width": 512,
+                "height": 512,
+                "fps_den": 1,
+                "fps_num": 25,
+                "channels": 1,
+                "pcm_format": "s16le",
+                "sample_rate": 16000,
+                "native_format": "rgb24"
+              },
+              "first_sequence": 0,
+              "source_samples": 63360,
+              "original_samples": 63360,
+              "descriptor_revision": "staging-descriptor-1",
+              "request_fingerprint": "sha256:809e8e7395c6f9853105531e3d76a62f1c9c6a75071fe202c23b5c38dc32cdad",
+              "video_stream_sha256": "sha256:478fdab546f038ccc22a1725f596c7a17f61490801f9cc28d23f13055a3e72a7",
+              "native_rgb_stream_sha256": "sha256:e9ddbbca30e11eb3b52de138dc8e6e0f7346d0488c1b75a204f179d8e18e9e05"
+            },
+            "providerProvenance": "GPU_INFERENCE",
+            "workerGenerationId": 1,
+            "originalSampleCount": 63360,
+            "stagingDescriptorHash": "sha256:e1dcd31d8a77ecaaff1e34991b8b0d42be87e8b3bcf75821c152edce3b89e29e",
+            "stagingEmittedVideoHash": "sha256:acda29fc3374b73bd8040057ddf6f94136bd32a5f79b6624a4e3492729383a57"
+          },
+          "completion_proof": null
+        },
+        "revision": 0
+      },
+      "reason_code": null,
+      "receipt_seq": 5,
+      "evidence_ref": "COMMIT_INTENT",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:0497267e5e9c1b4484ef365f74ab2942fc9bc419e8c34de12b7079a565f18500",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "committed",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_deec7866da2854559cecf88d0e649006",
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:44.325693+08:00",
+      "range_sinks": {
+        "commit": {
+          "end": 190080,
+          "start": 0,
+          "command": {
+            "lane": "NARRATION",
+            "payload": {
+              "text": "这份电子说明书的名称，叫作桌面整理指南。",
+              "voice": {
+                "voiceId": "voice_3975c0f8f53576fce97743f37b33a4b7"
+              },
+              "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+              "factIds": [
+                "name"
+              ],
+              "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+              "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "leaseToken": 1,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+              "maxDurationMs": 8000,
+              "requiredSinks": [
+                "peer_f794334832604d4aa09faad6ad6e339d",
+                "rtmp:1"
+              ],
+              "interactionTurnId": null,
+              "productSnapshotHash": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "expectedTimelineRevision": 0,
+              "expectedNarrationRevision": 2
+            },
+            "traceId": "req_868259fbbcb804ee161a7259a9986683",
+            "runEpoch": 1,
+            "commandId": "cmd_789e13c91303fad54d237c6b15d8217e",
+            "createdAt": "2026-10-13T01:23:40.527173Z",
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "commandSeq": 3,
+            "commandType": "COMMIT_SEGMENT",
+            "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+            "schemaVersion": "0.5",
+            "timelineEpoch": 1,
+            "idempotencyKey": "narration_8840e937cda6b56bfccf4bcadd2d8889:segment_8e423af13d24a4ea186e2d67c5a2be1f:commit",
+            "requestFingerprint": "sha256:98c36df48efa10de526876ad531d7a32227c8f4fef6126ac144bd4be0561689a"
+          },
+          "consumed": {},
+          "identity": {
+            "lane": "NARRATION",
+            "runEpoch": 1,
+            "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 2,
+            "timelineEpoch": 1,
+            "workerGenerationId": 1
+          },
+          "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+          "completed": false,
+          "descriptor": {
+            "factIds": [
+              "name"
+            ],
+            "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+            "videoHash": "sha256:478fdab546f038ccc22a1725f596c7a17f61490801f9cc28d23f13055a3e72a7",
+            "padSamples": 0,
+            "contentHash": "sha256:843d15d6a2c90b0aa76215b76a52e93ffa02a14fc85bb8d9d7398b8b5c5ba271",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "finalMarker": true,
+            "sampleCount": 190080,
+            "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+            "videoTiming": {
+              "fps": 25
+            },
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "requiredSinks": [
+              "peer_f794334832604d4aa09faad6ad6e339d",
+              "rtmp:1"
+            ],
+            "videoFrameCount": 99,
+            "sourceSampleRate": 16000,
+            "sourceSampleCount": 63360,
+            "stagingDescriptor": {
+              "eof": true,
+              "limits": {
+                "lease_ms_max": 60000,
+                "limits_revision": "staging-segment-8s-gpu1g-1",
+                "worker_rgb_bytes": 167772160,
+                "worker_pose_bytes": 8388608,
+                "max_source_samples": 128000,
+                "audio_queue_samples": 32000,
+                "native_queue_frames": 24,
+                "worker_attempt_bytes": 536870912,
+                "network_window_frames": 4,
+                "runtime_artifact_bytes": 201326592,
+                "runtime_transient_bytes": 25165824,
+                "gpu_incremental_allocated_bytes": 1073741824
+              },
+              "identity": {
+                "lane": "NARRATION",
+                "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+                "stageId": "stage-c92899ae12de43e39f43ac2ddcc7affb",
+                "traceId": "req_868259fbbcb804ee161a7259a9986683",
+                "runEpoch": 1,
+                "attemptId": "attempt_c7d78dd23f0fcec41eacc754da864bea",
+                "commandId": "cmd_789e13c91303fad54d237c6b15d8217e",
+                "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+                "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+                "workerRef": "soulx-lite-01",
+                "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+                "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+                "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+                "generationId": 2,
+                "timelineEpoch": 1,
+                "interactionTurnId": null,
+                "workerGenerationId": 1
+              },
+              "resources": {
+                "inference_elapsed_us": 2741784,
+                "worker_rgb_peak_bytes": 77856768,
+                "worker_attempt_peak_bytes": 172761088,
+                "gpu_baseline_allocated_bytes": 4316367872,
+                "gpu_incremental_reserved_peak_bytes": 0,
+                "gpu_incremental_allocated_peak_bytes": 975013376
+              },
+              "pcm_sha256": "sha256:843d15d6a2c90b0aa76215b76a52e93ffa02a14fc85bb8d9d7398b8b5c5ba271",
+              "provenance": {
+                "source": "GPU_INFERENCE",
+                "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+                "workerRef": "soulx-lite-01",
+                "capability": "immutable_segment_staging_v1",
+                "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+                "avatar_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+                "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+                "model_source_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+                "preprocessing_version": "soulx-lite-512-seed42-v1",
+                "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2"
+              },
+              "frame_count": 99,
+              "last_pts_us": 3920000,
+              "pad_samples": 0,
+              "video_bytes": 1139571,
+              "final_marker": true,
+              "first_pts_us": 0,
+              "native_final": true,
+              "last_sequence": 98,
+              "source_format": {
+                "codec": "h264",
+                "width": 512,
+                "height": 512,
+                "fps_den": 1,
+                "fps_num": 25,
+                "channels": 1,
+                "pcm_format": "s16le",
+                "sample_rate": 16000,
+                "native_format": "rgb24"
+              },
+              "first_sequence": 0,
+              "source_samples": 63360,
+              "original_samples": 63360,
+              "descriptor_revision": "staging-descriptor-1",
+              "request_fingerprint": "sha256:809e8e7395c6f9853105531e3d76a62f1c9c6a75071fe202c23b5c38dc32cdad",
+              "video_stream_sha256": "sha256:478fdab546f038ccc22a1725f596c7a17f61490801f9cc28d23f13055a3e72a7",
+              "native_rgb_stream_sha256": "sha256:e9ddbbca30e11eb3b52de138dc8e6e0f7346d0488c1b75a204f179d8e18e9e05"
+            },
+            "providerProvenance": "GPU_INFERENCE",
+            "workerGenerationId": 1,
+            "originalSampleCount": 63360,
+            "stagingDescriptorHash": "sha256:e1dcd31d8a77ecaaff1e34991b8b0d42be87e8b3bcf75821c152edce3b89e29e",
+            "stagingEmittedVideoHash": "sha256:acda29fc3374b73bd8040057ddf6f94136bd32a5f79b6624a4e3492729383a57"
+          },
+          "completion_proof": null
+        }
+      },
+      "reason_code": null,
+      "receipt_seq": 6,
+      "evidence_ref": "COMMIT_INSTALLED",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:8db9a507821942dfa841ad89876a7b3dd599788864a4546b848ab86d9f674eaa",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "completed",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_deec7866da2854559cecf88d0e649006",
+      "command_id": "cmd_789e13c91303fad54d237c6b15d8217e",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:48.449921+08:00",
+      "range_sinks": {
+        "identity": {
+          "lane": "NARRATION",
+          "runEpoch": 1,
+          "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+          "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+          "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+          "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+          "generationId": 2,
+          "timelineEpoch": 1,
+          "workerGenerationId": 1
+        },
+        "evidenceType": "sink_consumed",
+        "sinkReceipts": [
+          {
+            "media": "audio",
+            "sinkId": "peer_f794334832604d4aa09faad6ad6e339d",
+            "identity": {
+              "lane": "NARRATION",
+              "runEpoch": 1,
+              "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "generationId": 2,
+              "timelineEpoch": 1,
+              "workerGenerationId": 1
+            },
+            "endSample": 190080,
+            "evidenceRef": "cmd_789e13c91303fad54d237c6b15d8217e:peer_f794334832604d4aa09faad6ad6e339d:audio",
+            "finalMarker": true,
+            "startSample": 0,
+            "evidenceType": "sink_consumed"
+          },
+          {
+            "media": "video",
+            "sinkId": "peer_f794334832604d4aa09faad6ad6e339d",
+            "identity": {
+              "lane": "NARRATION",
+              "runEpoch": 1,
+              "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "generationId": 2,
+              "timelineEpoch": 1,
+              "workerGenerationId": 1
+            },
+            "endSample": 190080,
+            "evidenceRef": "cmd_789e13c91303fad54d237c6b15d8217e:peer_f794334832604d4aa09faad6ad6e339d:video",
+            "finalMarker": true,
+            "startSample": 0,
+            "evidenceType": "sink_consumed"
+          },
+          {
+            "media": "audio",
+            "sinkId": "rtmp:1",
+            "identity": {
+              "lane": "NARRATION",
+              "runEpoch": 1,
+              "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "generationId": 2,
+              "timelineEpoch": 1,
+              "workerGenerationId": 1
+            },
+            "endSample": 190080,
+            "evidenceRef": "cmd_789e13c91303fad54d237c6b15d8217e:rtmp:1:audio",
+            "finalMarker": true,
+            "startSample": 0,
+            "evidenceType": "sink_consumed"
+          },
+          {
+            "media": "video",
+            "sinkId": "rtmp:1",
+            "identity": {
+              "lane": "NARRATION",
+              "runEpoch": 1,
+              "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "utteranceId": "utt_c7d78dd23f0fcec41eacc754da864bea",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "generationId": 2,
+              "timelineEpoch": 1,
+              "workerGenerationId": 1
+            },
+            "endSample": 190080,
+            "evidenceRef": "cmd_789e13c91303fad54d237c6b15d8217e:rtmp:1:video",
+            "finalMarker": true,
+            "startSample": 0,
+            "evidenceType": "sink_consumed"
+          }
+        ],
+        "finalPosition": {
+          "ptsUs": 3960000,
+          "runEpoch": 1,
+          "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+          "sampleRate": 48000,
+          "sampleIndex": 190080,
+          "timelineEpoch": 1
+        },
+        "audienceAudible": false
+      },
+      "reason_code": null,
+      "receipt_seq": 7,
+      "evidence_ref": "SEGMENT_COMPLETED",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:ece340ad91c5f7d80bd5d6e4de490e83a9abeaf3b0809b8161f87354dddf4a66",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_4b6c0378f71d60270302fa2c3904f824",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:48.548287+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_ef43b62b3ffbfea84ae3681a876bfb97",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:4f7ebdada21356c56677872fb332c27114e606ca40eea69f42df7ece903fad9d",
+      "producer_incarnation": "owner_a68aa814e34c229bf3de6c29ee4aa68a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_d5f53e2123c5c3309f933b55397678db",
+      "command_id": "cmd_4b6c0378f71d60270302fa2c3904f824",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:48.550332+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_d5f53e2123c5c3309f933b55397678db",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:4f7ebdada21356c56677872fb332c27114e606ca40eea69f42df7ece903fad9d",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_d5f53e2123c5c3309f933b55397678db",
+      "command_id": "cmd_4b6c0378f71d60270302fa2c3904f824",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:48.552906+08:00",
+      "range_sinks": {
+        "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f"
+      },
+      "reason_code": null,
+      "receipt_seq": 3,
+      "evidence_ref": "SUSPEND_REQUESTED",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:8fd410dd0905d7a9f2e6266513741dc424a933ee2406f129b38651c1f1db9f49",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_0558c86f410f561111c568f2fce94855",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:48.747649+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_ea7c2e7aef49443742fe3227723d81e8",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:c143618eee0f6f8494b3137555c4d39a29edb861121b370cba2d03ecf9b14a72",
+      "producer_incarnation": "owner_a68aa814e34c229bf3de6c29ee4aa68a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_afbaa3c168df1678c39158645bb0ec64",
+      "command_id": "cmd_0558c86f410f561111c568f2fce94855",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:48.749199+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_afbaa3c168df1678c39158645bb0ec64",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:c143618eee0f6f8494b3137555c4d39a29edb861121b370cba2d03ecf9b14a72",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "interrupted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_afbaa3c168df1678c39158645bb0ec64",
+      "command_id": "cmd_0558c86f410f561111c568f2fce94855",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:48.751587+08:00",
+      "range_sinks": {
+        "reason": "ANSWER",
+        "retainedPrefix": {
+          "ptsUs": 3960000,
+          "runEpoch": 1,
+          "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+          "sampleRate": 48000,
+          "sampleIndex": 190080,
+          "timelineEpoch": 1
+        },
+        "perSinkProgress": [
+          {
+            "sink": "webrtc",
+            "peers": [
+              {
+                "sinkId": "peer_f794334832604d4aa09faad6ad6e339d",
+                "outputRate": 48000,
+                "sourceRate": 48000,
+                "videoHolds": 110,
+                "evidenceType": "sink_consumed",
+                "sourceSample": 190080,
+                "outputSamples": 400320,
+                "audioUnderruns": 219,
+                "lateVideoDrops": 0,
+                "audienceAudible": false
+              }
+            ]
+          },
+          {
+            "sink": "rtmp:1",
+            "clock": {
+              "outputRate": 48000,
+              "sourceRate": 48000,
+              "videoHolds": 288,
+              "evidenceType": "sink_consumed",
+              "sourceSample": 190080,
+              "outputSamples": 743040,
+              "audioUnderruns": 576,
+              "lateVideoDrops": 0,
+              "audienceAudible": false
+            },
+            "inFlight": {},
+            "cancelledInFlight": 0
+          }
+        ],
+        "residualAudienceBuffers": "unobservable; RTP/decoder/device buffers are not retractable"
+      },
+      "reason_code": null,
+      "receipt_seq": 3,
+      "evidence_ref": "INVALIDATE_AFTER",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:f21e8fc6d6cf5132fb360b0ccb3f2b1c3bd006ecd6a9caf40489142a1c833d5c",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_cb4ec1b3be1333bacde6fcd72bf97e76",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:48.947289+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_0688ddd3a10660ed0bb83395dc7113cb",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:9da6037da12fff18784df92d7a7e161471965578869e4f22611bed72313d069d",
+      "producer_incarnation": "owner_a68aa814e34c229bf3de6c29ee4aa68a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_8d49594fcbe892aacbddd0f32ad492e8",
+      "command_id": "cmd_cb4ec1b3be1333bacde6fcd72bf97e76",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:48.949184+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_8d49594fcbe892aacbddd0f32ad492e8",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:9da6037da12fff18784df92d7a7e161471965578869e4f22611bed72313d069d",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_8d49594fcbe892aacbddd0f32ad492e8",
+      "command_id": "cmd_cb4ec1b3be1333bacde6fcd72bf97e76",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:48.951732+08:00",
+      "range_sinks": {
+        "reason": "ANSWER",
+        "newEpoch": 2,
+        "originPosition": {
+          "ptsUs": 3960000,
+          "runEpoch": 1,
+          "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+          "sampleRate": 48000,
+          "sampleIndex": 190080,
+          "timelineEpoch": 1
+        },
+        "expectedPreviousEpoch": 1
+      },
+      "reason_code": null,
+      "receipt_seq": 3,
+      "evidence_ref": "BEGIN_EPOCH_PREPARED",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:e494e9dbf051199aeb3472b73d48a1a57861e0c560f04237b64e7b4b8d140872",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "committed",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_8d49594fcbe892aacbddd0f32ad492e8",
+      "command_id": "cmd_cb4ec1b3be1333bacde6fcd72bf97e76",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:48.956152+08:00",
+      "range_sinks": {
+        "reason": "ANSWER",
+        "newEpoch": 2,
+        "originPosition": {
+          "ptsUs": 3960000,
+          "runEpoch": 1,
+          "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+          "sampleRate": 48000,
+          "sampleIndex": 190080,
+          "timelineEpoch": 1
+        },
+        "expectedPreviousEpoch": 1
+      },
+      "reason_code": null,
+      "receipt_seq": 4,
+      "evidence_ref": "BEGIN_EPOCH_ACTIVE",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:46c9d9545df7a89615a190a4e7aa5801b7afb6f08cddaa30b5801d16f804b095",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:49.247264+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_37870ed68ce786138a3304683a7a2404",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:7e9662fce3a86915bf2d77fe5801552081149fc50a554682dea3f8c871275ed2",
+      "producer_incarnation": "owner_a68aa814e34c229bf3de6c29ee4aa68a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_a672c53715745fa11ba723495b1fb2c2",
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:49.249003+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_a672c53715745fa11ba723495b1fb2c2",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:7e9662fce3a86915bf2d77fe5801552081149fc50a554682dea3f8c871275ed2",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "generating",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_a672c53715745fa11ba723495b1fb2c2",
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:49.251745+08:00",
+      "range_sinks": {
+        "generationId": 3,
+        "timelineEpoch": 2
+      },
+      "reason_code": null,
+      "receipt_seq": 3,
+      "evidence_ref": "attempt_a672c53715745fa11ba723495b1fb2c2",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:7e9662fce3a86915bf2d77fe5801552081149fc50a554682dea3f8c871275ed2",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "committed",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_a672c53715745fa11ba723495b1fb2c2",
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:52.435634+08:00",
+      "range_sinks": {
+        "commit": {
+          "end": 370560,
+          "start": 190080,
+          "command": {
+            "lane": "AUDIENCE_ANSWER",
+            "payload": {
+              "text": "这款目前价格是人民币99.00元。",
+              "voice": {
+                "voiceId": "voice_3975c0f8f53576fce97743f37b33a4b7"
+              },
+              "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+              "factIds": [
+                "price"
+              ],
+              "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+              "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "leaseToken": 1,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+              "maxDurationMs": 8000,
+              "requiredSinks": [
+                "peer_f794334832604d4aa09faad6ad6e339d",
+                "rtmp:1"
+              ],
+              "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+              "productSnapshotHash": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "expectedTimelineRevision": 4,
+              "expectedNarrationRevision": 10
+            },
+            "traceId": "trace_00110762f60d7d4f1e40dfcb4525c26b",
+            "runEpoch": 1,
+            "commandId": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+            "createdAt": "2026-10-13T01:23:49.154626Z",
+            "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "commandSeq": 8,
+            "commandType": "COMMIT_SEGMENT",
+            "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+            "schemaVersion": "0.5",
+            "timelineEpoch": 2,
+            "idempotencyKey": "narration_8840e937cda6b56bfccf4bcadd2d8889:answer_425aa4ec753c39e3240711b0e7b9ba02:commit",
+            "requestFingerprint": "sha256:7e9662fce3a86915bf2d77fe5801552081149fc50a554682dea3f8c871275ed2"
+          },
+          "consumed": {},
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "runEpoch": 1,
+            "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 3,
+            "timelineEpoch": 2,
+            "workerGenerationId": 2
+          },
+          "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+          "completed": false,
+          "descriptor": {
+            "factIds": [
+              "price"
+            ],
+            "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+            "videoHash": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+            "padSamples": 596,
+            "contentHash": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "finalMarker": true,
+            "sampleCount": 180480,
+            "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+            "videoTiming": {
+              "fps": 25
+            },
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "requiredSinks": [
+              "peer_f794334832604d4aa09faad6ad6e339d",
+              "rtmp:1"
+            ],
+            "videoFrameCount": 94,
+            "sourceSampleRate": 16000,
+            "sourceSampleCount": 60160,
+            "stagingDescriptor": {
+              "eof": true,
+              "limits": {
+                "lease_ms_max": 60000,
+                "limits_revision": "staging-segment-8s-gpu1g-1",
+                "worker_rgb_bytes": 167772160,
+                "worker_pose_bytes": 8388608,
+                "max_source_samples": 128000,
+                "audio_queue_samples": 32000,
+                "native_queue_frames": 24,
+                "worker_attempt_bytes": 536870912,
+                "network_window_frames": 4,
+                "runtime_artifact_bytes": 201326592,
+                "runtime_transient_bytes": 25165824,
+                "gpu_incremental_allocated_bytes": 1073741824
+              },
+              "identity": {
+                "lane": "AUDIENCE_ANSWER",
+                "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+                "stageId": "stage-4e2d59a6c92f436794350155ba97b212",
+                "traceId": "trace_00110762f60d7d4f1e40dfcb4525c26b",
+                "runEpoch": 1,
+                "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+                "commandId": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+                "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+                "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+                "workerRef": "soulx-lite-01",
+                "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+                "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+                "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+                "generationId": 3,
+                "timelineEpoch": 2,
+                "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+                "workerGenerationId": 2
+              },
+              "resources": {
+                "inference_elapsed_us": 2157154,
+                "worker_rgb_peak_bytes": 73924608,
+                "worker_attempt_peak_bytes": 168828928,
+                "gpu_baseline_allocated_bytes": 4435577856,
+                "gpu_incremental_reserved_peak_bytes": 0,
+                "gpu_incremental_allocated_peak_bytes": 855803392
+              },
+              "pcm_sha256": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+              "provenance": {
+                "source": "GPU_INFERENCE",
+                "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+                "workerRef": "soulx-lite-01",
+                "capability": "immutable_segment_staging_v1",
+                "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+                "avatar_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+                "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+                "model_source_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+                "preprocessing_version": "soulx-lite-512-seed42-v1",
+                "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2"
+              },
+              "frame_count": 94,
+              "last_pts_us": 3720000,
+              "pad_samples": 596,
+              "video_bytes": 870143,
+              "final_marker": true,
+              "first_pts_us": 0,
+              "native_final": true,
+              "last_sequence": 93,
+              "source_format": {
+                "codec": "h264",
+                "width": 512,
+                "height": 512,
+                "fps_den": 1,
+                "fps_num": 25,
+                "channels": 1,
+                "pcm_format": "s16le",
+                "sample_rate": 16000,
+                "native_format": "rgb24"
+              },
+              "first_sequence": 0,
+              "source_samples": 60160,
+              "original_samples": 59564,
+              "descriptor_revision": "staging-descriptor-1",
+              "request_fingerprint": "sha256:2d37673d3e4d34e24731b34e142b563eef38b3121378b821b21d080c57876955",
+              "video_stream_sha256": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+              "native_rgb_stream_sha256": "sha256:1cb39e287e10e56e745b866f69674de265c30c4afaa4ec581ad7bbc1ada0db8c"
+            },
+            "providerProvenance": "GPU_INFERENCE",
+            "workerGenerationId": 2,
+            "originalSampleCount": 59564,
+            "stagingDescriptorHash": "sha256:68879e186fb0a7293b8d27d49429ba838ee7423de9368a3486ac6596ce0ae785",
+            "stagingEmittedVideoHash": "sha256:3c25a12bd82435bf29ab36c0080e91de92c2872f7acd74e81afa728a692d0766"
+          },
+          "completion_proof": null
+        }
+      },
+      "reason_code": null,
+      "receipt_seq": 6,
+      "evidence_ref": "COMMIT_INSTALLED",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:d50fe0e38e8a3ac2ad855ebfd5b54dff2166172831f23496c397ae9fd22ef5e4",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "completed",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_a672c53715745fa11ba723495b1fb2c2",
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:56.439803+08:00",
+      "range_sinks": {
+        "identity": {
+          "lane": "AUDIENCE_ANSWER",
+          "runEpoch": 1,
+          "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+          "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+          "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+          "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+          "generationId": 3,
+          "timelineEpoch": 2,
+          "workerGenerationId": 2
+        },
+        "evidenceType": "sink_consumed",
+        "sinkReceipts": [
+          {
+            "media": "audio",
+            "sinkId": "peer_f794334832604d4aa09faad6ad6e339d",
+            "identity": {
+              "lane": "AUDIENCE_ANSWER",
+              "runEpoch": 1,
+              "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "generationId": 3,
+              "timelineEpoch": 2,
+              "workerGenerationId": 2
+            },
+            "endSample": 370560,
+            "evidenceRef": "cmd_78e2b83daf6a9e5514a1921083384ae0:peer_f794334832604d4aa09faad6ad6e339d:audio",
+            "finalMarker": true,
+            "startSample": 190080,
+            "evidenceType": "sink_consumed"
+          },
+          {
+            "media": "video",
+            "sinkId": "peer_f794334832604d4aa09faad6ad6e339d",
+            "identity": {
+              "lane": "AUDIENCE_ANSWER",
+              "runEpoch": 1,
+              "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "generationId": 3,
+              "timelineEpoch": 2,
+              "workerGenerationId": 2
+            },
+            "endSample": 370560,
+            "evidenceRef": "cmd_78e2b83daf6a9e5514a1921083384ae0:peer_f794334832604d4aa09faad6ad6e339d:video",
+            "finalMarker": true,
+            "startSample": 190080,
+            "evidenceType": "sink_consumed"
+          },
+          {
+            "media": "audio",
+            "sinkId": "rtmp:1",
+            "identity": {
+              "lane": "AUDIENCE_ANSWER",
+              "runEpoch": 1,
+              "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "generationId": 3,
+              "timelineEpoch": 2,
+              "workerGenerationId": 2
+            },
+            "endSample": 370560,
+            "evidenceRef": "cmd_78e2b83daf6a9e5514a1921083384ae0:rtmp:1:audio",
+            "finalMarker": true,
+            "startSample": 190080,
+            "evidenceType": "sink_consumed"
+          },
+          {
+            "media": "video",
+            "sinkId": "rtmp:1",
+            "identity": {
+              "lane": "AUDIENCE_ANSWER",
+              "runEpoch": 1,
+              "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "generationId": 3,
+              "timelineEpoch": 2,
+              "workerGenerationId": 2
+            },
+            "endSample": 370560,
+            "evidenceRef": "cmd_78e2b83daf6a9e5514a1921083384ae0:rtmp:1:video",
+            "finalMarker": true,
+            "startSample": 190080,
+            "evidenceType": "sink_consumed"
+          }
+        ],
+        "finalPosition": {
+          "ptsUs": 7720000,
+          "runEpoch": 1,
+          "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+          "sampleRate": 48000,
+          "sampleIndex": 370560,
+          "timelineEpoch": 2
+        },
+        "audienceAudible": false
+      },
+      "reason_code": null,
+      "receipt_seq": 7,
+      "evidence_ref": "SEGMENT_COMPLETED",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:46e3ee82310238df71bd689d6ab54a01d31201235516072f3b7309a2e9260348",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_3139b470bebf357d0d4e29f0da9f9712",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:56.549168+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_d2733975f6b2e22b9b68fd2fd692302a",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:9d0cff8bef40d7b24021294c8e96b4520b32f900958e23c4952392839b71664d",
+      "producer_incarnation": "owner_a68aa814e34c229bf3de6c29ee4aa68a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_2235823fea5b015f41153b65e198c436",
+      "command_id": "cmd_3139b470bebf357d0d4e29f0da9f9712",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:56.551701+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_2235823fea5b015f41153b65e198c436",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:9d0cff8bef40d7b24021294c8e96b4520b32f900958e23c4952392839b71664d",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "unknown",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_2235823fea5b015f41153b65e198c436",
+      "command_id": "cmd_3139b470bebf357d0d4e29f0da9f9712",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:58.727827+08:00",
+      "range_sinks": {
+        "reason": "PREPARATION_UNKNOWN",
+        "audienceAudible": false
+      },
+      "reason_code": null,
+      "receipt_seq": 3,
+      "evidence_ref": "UNKNOWN",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:8872d51af9a873231f4fa32199ecc6bf0f23ee367aec0a45bf5c05543d1c095c",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": null,
+      "command_id": "cmd_98ec860aa70755bfa06f05405fe38200",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:49.147734+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_d0ac88208847054650e847edef4e6560",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:c64019513f8ebf5e033d5a19b647eba39afa4874840fb2acb4309bda8da88c77",
+      "producer_incarnation": "owner_a68aa814e34c229bf3de6c29ee4aa68a"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_cc3ce10c077eaf32e4860ec814fe8b23",
+      "command_id": "cmd_98ec860aa70755bfa06f05405fe38200",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:49.149412+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_cc3ce10c077eaf32e4860ec814fe8b23",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:c64019513f8ebf5e033d5a19b647eba39afa4874840fb2acb4309bda8da88c77",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "ready",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_cc3ce10c077eaf32e4860ec814fe8b23",
+      "command_id": "cmd_98ec860aa70755bfa06f05405fe38200",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:49.151925+08:00",
+      "range_sinks": {
+        "text": "这款目前价格是人民币99.00元。",
+        "factIds": [
+          "price"
+        ],
+        "productSnapshotHash": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82"
+      },
+      "reason_code": null,
+      "receipt_seq": 3,
+      "evidence_ref": "ANSWER_PREPARED",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:be15cb4bbc0389245561b15b66c52efdf84336cd0f978efa3ce8d8873d318e92",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "ready",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_a672c53715745fa11ba723495b1fb2c2",
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:52.425831+08:00",
+      "range_sinks": {
+        "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+        "descriptor": {
+          "factIds": [
+            "price"
+          ],
+          "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+          "videoHash": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+          "padSamples": 596,
+          "contentHash": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+          "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+          "finalMarker": true,
+          "sampleCount": 180480,
+          "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+          "videoTiming": {
+            "fps": 25
+          },
+          "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+          "requiredSinks": [
+            "peer_f794334832604d4aa09faad6ad6e339d",
+            "rtmp:1"
+          ],
+          "videoFrameCount": 94,
+          "sourceSampleRate": 16000,
+          "sourceSampleCount": 60160,
+          "stagingDescriptor": {
+            "eof": true,
+            "limits": {
+              "lease_ms_max": 60000,
+              "limits_revision": "staging-segment-8s-gpu1g-1",
+              "worker_rgb_bytes": 167772160,
+              "worker_pose_bytes": 8388608,
+              "max_source_samples": 128000,
+              "audio_queue_samples": 32000,
+              "native_queue_frames": 24,
+              "worker_attempt_bytes": 536870912,
+              "network_window_frames": 4,
+              "runtime_artifact_bytes": 201326592,
+              "runtime_transient_bytes": 25165824,
+              "gpu_incremental_allocated_bytes": 1073741824
+            },
+            "identity": {
+              "lane": "AUDIENCE_ANSWER",
+              "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+              "stageId": "stage-4e2d59a6c92f436794350155ba97b212",
+              "traceId": "trace_00110762f60d7d4f1e40dfcb4525c26b",
+              "runEpoch": 1,
+              "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+              "commandId": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+              "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+              "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+              "workerRef": "soulx-lite-01",
+              "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+              "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "generationId": 3,
+              "timelineEpoch": 2,
+              "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+              "workerGenerationId": 2
+            },
+            "resources": {
+              "inference_elapsed_us": 2157154,
+              "worker_rgb_peak_bytes": 73924608,
+              "worker_attempt_peak_bytes": 168828928,
+              "gpu_baseline_allocated_bytes": 4435577856,
+              "gpu_incremental_reserved_peak_bytes": 0,
+              "gpu_incremental_allocated_peak_bytes": 855803392
+            },
+            "pcm_sha256": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+            "provenance": {
+              "source": "GPU_INFERENCE",
+              "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+              "workerRef": "soulx-lite-01",
+              "capability": "immutable_segment_staging_v1",
+              "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+              "avatar_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+              "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+              "model_source_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+              "preprocessing_version": "soulx-lite-512-seed42-v1",
+              "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2"
+            },
+            "frame_count": 94,
+            "last_pts_us": 3720000,
+            "pad_samples": 596,
+            "video_bytes": 870143,
+            "final_marker": true,
+            "first_pts_us": 0,
+            "native_final": true,
+            "last_sequence": 93,
+            "source_format": {
+              "codec": "h264",
+              "width": 512,
+              "height": 512,
+              "fps_den": 1,
+              "fps_num": 25,
+              "channels": 1,
+              "pcm_format": "s16le",
+              "sample_rate": 16000,
+              "native_format": "rgb24"
+            },
+            "first_sequence": 0,
+            "source_samples": 60160,
+            "original_samples": 59564,
+            "descriptor_revision": "staging-descriptor-1",
+            "request_fingerprint": "sha256:2d37673d3e4d34e24731b34e142b563eef38b3121378b821b21d080c57876955",
+            "video_stream_sha256": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+            "native_rgb_stream_sha256": "sha256:1cb39e287e10e56e745b866f69674de265c30c4afaa4ec581ad7bbc1ada0db8c"
+          },
+          "providerProvenance": "GPU_INFERENCE",
+          "workerGenerationId": 2,
+          "originalSampleCount": 59564,
+          "stagingDescriptorHash": "sha256:68879e186fb0a7293b8d27d49429ba838ee7423de9368a3486ac6596ce0ae785",
+          "stagingEmittedVideoHash": "sha256:3c25a12bd82435bf29ab36c0080e91de92c2872f7acd74e81afa728a692d0766"
+        },
+        "generationId": 3
+      },
+      "reason_code": null,
+      "receipt_seq": 4,
+      "evidence_ref": "SEGMENT_READY",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:15857e3f3d816ae78479a3b7caea2c74ec1097183c4a35cd7ffb8c6eb4e493cb",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    },
+    {
+      "state": "ready",
+      "outcome": null,
+      "user_id": "golden-user",
+      "run_epoch": 1,
+      "tenant_id": "golden-tenant",
+      "attempt_id": "attempt_a672c53715745fa11ba723495b1fb2c2",
+      "command_id": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "observed_at": "2026-10-13T09:23:52.430497+08:00",
+      "range_sinks": {
+        "commit": {
+          "end": 370560,
+          "start": 190080,
+          "command": {
+            "lane": "AUDIENCE_ANSWER",
+            "payload": {
+              "text": "这款目前价格是人民币99.00元。",
+              "voice": {
+                "voiceId": "voice_3975c0f8f53576fce97743f37b33a4b7"
+              },
+              "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+              "factIds": [
+                "price"
+              ],
+              "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+              "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+              "productId": "product_6dbe88e5b4a7c130e3d3cf40c05b7cd8",
+              "leaseToken": 1,
+              "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+              "maxDurationMs": 8000,
+              "requiredSinks": [
+                "peer_f794334832604d4aa09faad6ad6e339d",
+                "rtmp:1"
+              ],
+              "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+              "productSnapshotHash": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+              "expectedTimelineRevision": 4,
+              "expectedNarrationRevision": 10
+            },
+            "traceId": "trace_00110762f60d7d4f1e40dfcb4525c26b",
+            "runEpoch": 1,
+            "commandId": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+            "createdAt": "2026-10-13T01:23:49.154626Z",
+            "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "commandSeq": 8,
+            "commandType": "COMMIT_SEGMENT",
+            "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+            "schemaVersion": "0.5",
+            "timelineEpoch": 2,
+            "idempotencyKey": "narration_8840e937cda6b56bfccf4bcadd2d8889:answer_425aa4ec753c39e3240711b0e7b9ba02:commit",
+            "requestFingerprint": "sha256:7e9662fce3a86915bf2d77fe5801552081149fc50a554682dea3f8c871275ed2"
+          },
+          "consumed": {},
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "runEpoch": 1,
+            "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+            "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+            "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "generationId": 3,
+            "timelineEpoch": 2,
+            "workerGenerationId": 2
+          },
+          "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+          "completed": false,
+          "descriptor": {
+            "factIds": [
+              "price"
+            ],
+            "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+            "videoHash": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+            "padSamples": 596,
+            "contentHash": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+            "factVersion": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+            "finalMarker": true,
+            "sampleCount": 180480,
+            "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+            "videoTiming": {
+              "fps": 25
+            },
+            "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+            "requiredSinks": [
+              "peer_f794334832604d4aa09faad6ad6e339d",
+              "rtmp:1"
+            ],
+            "videoFrameCount": 94,
+            "sourceSampleRate": 16000,
+            "sourceSampleCount": 60160,
+            "stagingDescriptor": {
+              "eof": true,
+              "limits": {
+                "lease_ms_max": 60000,
+                "limits_revision": "staging-segment-8s-gpu1g-1",
+                "worker_rgb_bytes": 167772160,
+                "worker_pose_bytes": 8388608,
+                "max_source_samples": 128000,
+                "audio_queue_samples": 32000,
+                "native_queue_frames": 24,
+                "worker_attempt_bytes": 536870912,
+                "network_window_frames": 4,
+                "runtime_artifact_bytes": 201326592,
+                "runtime_transient_bytes": 25165824,
+                "gpu_incremental_allocated_bytes": 1073741824
+              },
+              "identity": {
+                "lane": "AUDIENCE_ANSWER",
+                "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+                "stageId": "stage-4e2d59a6c92f436794350155ba97b212",
+                "traceId": "trace_00110762f60d7d4f1e40dfcb4525c26b",
+                "runEpoch": 1,
+                "attemptId": "attempt_56c6ef23babfd898147f39d75f4299f0",
+                "commandId": "cmd_78e2b83daf6a9e5514a1921083384ae0",
+                "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+                "sessionId": "session_fa6b55afaf5dbb1110315a6068d4c401",
+                "workerRef": "soulx-lite-01",
+                "narrationId": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+                "utteranceId": "utt_56c6ef23babfd898147f39d75f4299f0",
+                "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+                "generationId": 3,
+                "timelineEpoch": 2,
+                "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+                "workerGenerationId": 2
+              },
+              "resources": {
+                "inference_elapsed_us": 2157154,
+                "worker_rgb_peak_bytes": 73924608,
+                "worker_attempt_peak_bytes": 168828928,
+                "gpu_baseline_allocated_bytes": 4435577856,
+                "gpu_incremental_reserved_peak_bytes": 0,
+                "gpu_incremental_allocated_peak_bytes": 855803392
+              },
+              "pcm_sha256": "sha256:2ae5871044fc142f97fe0add6c4cf698aaa5542548c5a17d889084189ae2edcb",
+              "provenance": {
+                "source": "GPU_INFERENCE",
+                "cache_id": "a847a19bf3f074a826e3157756673586f347ea0be93d8284961a33811fe8281f",
+                "workerRef": "soulx-lite-01",
+                "capability": "immutable_segment_staging_v1",
+                "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017",
+                "avatar_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+                "input_asset_sha256": "sha256:384abd202f7dae45fdbbab3b6a7777cd7c8a64625fb19217a45d056f2162c624",
+                "model_source_revision": "9bc03de06bb0de82cd6bc477804512ae06144bf2",
+                "preprocessing_version": "soulx-lite-512-seed42-v1",
+                "weights_manifest_sha256": "sha256:ca1ae1cc1ce031f82617f0aa45a918362b4989a1ac06a22679c581391e2ee4b2"
+              },
+              "frame_count": 94,
+              "last_pts_us": 3720000,
+              "pad_samples": 596,
+              "video_bytes": 870143,
+              "final_marker": true,
+              "first_pts_us": 0,
+              "native_final": true,
+              "last_sequence": 93,
+              "source_format": {
+                "codec": "h264",
+                "width": 512,
+                "height": 512,
+                "fps_den": 1,
+                "fps_num": 25,
+                "channels": 1,
+                "pcm_format": "s16le",
+                "sample_rate": 16000,
+                "native_format": "rgb24"
+              },
+              "first_sequence": 0,
+              "source_samples": 60160,
+              "original_samples": 59564,
+              "descriptor_revision": "staging-descriptor-1",
+              "request_fingerprint": "sha256:2d37673d3e4d34e24731b34e142b563eef38b3121378b821b21d080c57876955",
+              "video_stream_sha256": "sha256:2e6ab9a47c4238527aece4102cc03df10698f43f766e47e3b2ec676512ff48de",
+              "native_rgb_stream_sha256": "sha256:1cb39e287e10e56e745b866f69674de265c30c4afaa4ec581ad7bbc1ada0db8c"
+            },
+            "providerProvenance": "GPU_INFERENCE",
+            "workerGenerationId": 2,
+            "originalSampleCount": 59564,
+            "stagingDescriptorHash": "sha256:68879e186fb0a7293b8d27d49429ba838ee7423de9368a3486ac6596ce0ae785",
+            "stagingEmittedVideoHash": "sha256:3c25a12bd82435bf29ab36c0080e91de92c2872f7acd74e81afa728a692d0766"
+          },
+          "completion_proof": null
+        },
+        "revision": 4
+      },
+      "reason_code": null,
+      "receipt_seq": 5,
+      "evidence_ref": "COMMIT_INTENT",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:25fd24ee907153b8ef25c397fc36ea0ba52c2f12e3262ee472461bdebb313fa7",
+      "producer_incarnation": "runtime_54534a0254a64a7cacfb7545fbe0572a"
+    }
+  ],
+  "runs": [
+    {
+      "status": "STOPPING",
+      "user_id": "golden-user",
+      "owner_id": "owner_a68aa814e34c229bf3de6c29ee4aa68a",
+      "run_epoch": 1,
+      "sealed_at": "2026-10-13T09:23:58.947142+08:00",
+      "tenant_id": "golden-tenant",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "started_at": "2026-10-13T09:23:32.487758+08:00",
+      "lease_token": 1,
+      "optional_sinks": [],
+      "required_sinks": [
+        "peer_f794334832604d4aa09faad6ad6e339d",
+        "rtmp:1"
+      ],
+      "current_event_seq": 4,
+      "timeline_revision": 5,
+      "output_sample_rate": 48000,
+      "control_barrier_seq": 10,
+      "current_command_seq": 10,
+      "provider_binding_id": "binding_84b4ab7b550721aea276a071d2172dcd",
+      "current_timeline_epoch": 2,
+      "current_committed_sample": 370560,
+      "generation_high_watermark": 3
+    }
+  ],
+  "segments": [
+    {
+      "text": "当前用于本次演示的商品库存，共有20份可供选择。",
+      "status": "CANCELLED",
+      "beat_id": "beat_fea4f38001c2bcabe02c019e2e3190a8",
+      "user_id": "golden-user",
+      "fact_ids": [
+        "stock"
+      ],
+      "tenant_id": "golden-tenant",
+      "text_hash": "sha256:c1864f9d4b16f212ab91eafba8ec1f88171899a4853e0968bfeb914d99ea7320",
+      "segment_id": "segment_5f2727d32a4d2197e3df48bef8d8ddf4",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.950814+08:00",
+      "completed_at": null,
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "当前用于本次演示的商品库存，共有20份可供选择。",
+        "beatId": "beat_fea4f38001c2bcabe02c019e2e3190a8",
+        "status": "CANCELLED",
+        "factIds": [
+          "stock"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:c1864f9d4b16f212ab91eafba8ec1f88171899a4853e0968bfeb914d99ea7320",
+        "segmentId": "segment_5f2727d32a4d2197e3df48bef8d8ddf4",
+        "durationHintMs": 4800,
+        "segmentOrdinal": 2
+      },
+      "product_version": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "segment_ordinal": 2
+    },
+    {
+      "text": "本商品的规格选项只有电子版，请按电子资料使用。",
+      "status": "CANCELLED",
+      "beat_id": "beat_e47c8ea317d2c18fe7fe389e25209a71",
+      "user_id": "golden-user",
+      "fact_ids": [
+        "sizes"
+      ],
+      "tenant_id": "golden-tenant",
+      "text_hash": "sha256:9bcdce03971fbdf657271d718b18d65e131ccc78487bf0ef02ff48d012ce367d",
+      "segment_id": "segment_ccd1a4dda235ecf18ed7645ce67ba363",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.950908+08:00",
+      "completed_at": null,
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "本商品的规格选项只有电子版，请按电子资料使用。",
+        "beatId": "beat_e47c8ea317d2c18fe7fe389e25209a71",
+        "status": "CANCELLED",
+        "factIds": [
+          "sizes"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:9bcdce03971fbdf657271d718b18d65e131ccc78487bf0ef02ff48d012ce367d",
+        "segmentId": "segment_ccd1a4dda235ecf18ed7645ce67ba363",
+        "durationHintMs": 4600,
+        "segmentOrdinal": 3
+      },
+      "product_version": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "segment_ordinal": 3
+    },
+    {
+      "text": "这份指南讨论桌面整理方法，不提供实体收纳工具。",
+      "status": "CANCELLED",
+      "beat_id": "beat_9da2e49267b197053eb16c1c64c0feaf",
+      "user_id": "golden-user",
+      "fact_ids": [
+        "guide.01.05"
+      ],
+      "tenant_id": "golden-tenant",
+      "text_hash": "sha256:06590f870bc5e55b6981e62701f1c0ac08eff93edfc7eb27e5ea80551b773407",
+      "segment_id": "segment_8fa1e704002b701f4dca0d21fdadddb2",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.950993+08:00",
+      "completed_at": null,
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "这份指南讨论桌面整理方法，不提供实体收纳工具。",
+        "beatId": "beat_9da2e49267b197053eb16c1c64c0feaf",
+        "status": "CANCELLED",
+        "factIds": [
+          "guide.01.05"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:06590f870bc5e55b6981e62701f1c0ac08eff93edfc7eb27e5ea80551b773407",
+        "segmentId": "segment_8fa1e704002b701f4dca0d21fdadddb2",
+        "durationHintMs": 4600,
+        "segmentOrdinal": 4
+      },
+      "product_version": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "segment_ordinal": 4
+    },
+    {
+      "text": "阅读时先选择最困扰你的桌面问题，再对应查找章节。",
+      "status": "CANCELLED",
+      "beat_id": "beat_a1e4a15bc401112028c829537cfff079",
+      "user_id": "golden-user",
+      "fact_ids": [
+        "guide.01.06"
+      ],
+      "tenant_id": "golden-tenant",
+      "text_hash": "sha256:9964bb4964fdc8ce7e58cc0d3bc4c53c686f0410dfc793e8ea57198f7cb56bcf",
+      "segment_id": "segment_e6eca9ccaf26710c4a7f223054d4e684",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.95109+08:00",
+      "completed_at": null,
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "阅读时先选择最困扰你的桌面问题，再对应查找章节。",
+        "beatId": "beat_a1e4a15bc401112028c829537cfff079",
+        "status": "CANCELLED",
+        "factIds": [
+          "guide.01.06"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:9964bb4964fdc8ce7e58cc0d3bc4c53c686f0410dfc793e8ea57198f7cb56bcf",
+        "segmentId": "segment_e6eca9ccaf26710c4a7f223054d4e684",
+        "durationHintMs": 4800,
+        "segmentOrdinal": 5
+      },
+      "product_version": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "segment_ordinal": 5
+    },
+    {
+      "text": "指南按照清空、分类、分区和维护，安排整理的步骤。",
+      "status": "CANCELLED",
+      "beat_id": "beat_76597b04aaca6635908b13a3dd019f47",
+      "user_id": "golden-user",
+      "fact_ids": [
+        "guide.01.07"
+      ],
+      "tenant_id": "golden-tenant",
+      "text_hash": "sha256:805d7c94a94becfe1a2fa5705ba8bdac60da424e71441b4e9fa0e743c0852ac1",
+      "segment_id": "segment_2ff72d85ad5831e8f0bb5785e316a5d9",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.951155+08:00",
+      "completed_at": null,
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "指南按照清空、分类、分区和维护，安排整理的步骤。",
+        "beatId": "beat_76597b04aaca6635908b13a3dd019f47",
+        "status": "CANCELLED",
+        "factIds": [
+          "guide.01.07"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:805d7c94a94becfe1a2fa5705ba8bdac60da424e71441b4e9fa0e743c0852ac1",
+        "segmentId": "segment_2ff72d85ad5831e8f0bb5785e316a5d9",
+        "durationHintMs": 4800,
+        "segmentOrdinal": 6
+      },
+      "product_version": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "segment_ordinal": 6
+    },
+    {
+      "text": "第一次实践可以先处理一小块区域，再逐步扩大范围。",
+      "status": "CANCELLED",
+      "beat_id": "beat_4aac27480f15d9b45f692b1b06c10985",
+      "user_id": "golden-user",
+      "fact_ids": [
+        "guide.01.08"
+      ],
+      "tenant_id": "golden-tenant",
+      "text_hash": "sha256:c65fe2f9a737801bbdb2b41e80c2358c3d81f0333456945f9766e747be878a7a",
+      "segment_id": "segment_7f957ec38d3a6616fc2782f2f2f64ce2",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.95129+08:00",
+      "completed_at": null,
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "第一次实践可以先处理一小块区域，再逐步扩大范围。",
+        "beatId": "beat_4aac27480f15d9b45f692b1b06c10985",
+        "status": "CANCELLED",
+        "factIds": [
+          "guide.01.08"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:c65fe2f9a737801bbdb2b41e80c2358c3d81f0333456945f9766e747be878a7a",
+        "segmentId": "segment_7f957ec38d3a6616fc2782f2f2f64ce2",
+        "durationHintMs": 4800,
+        "segmentOrdinal": 7
+      },
+      "product_version": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "segment_ordinal": 7
+    },
+    {
+      "text": "整理前请记录常见物品的位置，方便之后比较变化。",
+      "status": "CANCELLED",
+      "beat_id": "beat_2d7d98a33d382f0f77b925d215da0de2",
+      "user_id": "golden-user",
+      "fact_ids": [
+        "guide.01.09"
+      ],
+      "tenant_id": "golden-tenant",
+      "text_hash": "sha256:ee3f4d278522e3bcee8e96b98dd4ce2cb53b83c41eb74ab755d4a5475129d349",
+      "segment_id": "segment_8b0da1ef08f40dab3dab426a722418d0",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.951371+08:00",
+      "completed_at": null,
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "整理前请记录常见物品的位置，方便之后比较变化。",
+        "beatId": "beat_2d7d98a33d382f0f77b925d215da0de2",
+        "status": "CANCELLED",
+        "factIds": [
+          "guide.01.09"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:ee3f4d278522e3bcee8e96b98dd4ce2cb53b83c41eb74ab755d4a5475129d349",
+        "segmentId": "segment_8b0da1ef08f40dab3dab426a722418d0",
+        "durationHintMs": 4600,
+        "segmentOrdinal": 8
+      },
+      "product_version": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "segment_ordinal": 8
+    },
+    {
+      "text": "每完成一个步骤都检查实际使用，避免只追求外观。",
+      "status": "CANCELLED",
+      "beat_id": "beat_959d011dc02e1cb10463492338643e80",
+      "user_id": "golden-user",
+      "fact_ids": [
+        "guide.01.10"
+      ],
+      "tenant_id": "golden-tenant",
+      "text_hash": "sha256:994814af7abbd0bec882fb7267530700d1e63b002a4864616da003c00d274fb1",
+      "segment_id": "segment_dbd7483df9210608a24b90b689f093a7",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.95153+08:00",
+      "completed_at": null,
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "每完成一个步骤都检查实际使用，避免只追求外观。",
+        "beatId": "beat_959d011dc02e1cb10463492338643e80",
+        "status": "CANCELLED",
+        "factIds": [
+          "guide.01.10"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:994814af7abbd0bec882fb7267530700d1e63b002a4864616da003c00d274fb1",
+        "segmentId": "segment_dbd7483df9210608a24b90b689f093a7",
+        "durationHintMs": 4600,
+        "segmentOrdinal": 9
+      },
+      "product_version": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "segment_ordinal": 9
+    },
+    {
+      "text": "这份电子说明书的名称，叫作桌面整理指南。",
+      "status": "COMPLETED",
+      "beat_id": "beat_87cf8093403273cf97100aedf1ba1ab1",
+      "user_id": "golden-user",
+      "fact_ids": [
+        "name"
+      ],
+      "tenant_id": "golden-tenant",
+      "text_hash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+      "segment_id": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.950574+08:00",
+      "completed_at": "2026-10-13T09:23:48.451641+08:00",
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "这份电子说明书的名称，叫作桌面整理指南。",
+        "beatId": "beat_87cf8093403273cf97100aedf1ba1ab1",
+        "status": "COMPLETED",
+        "factIds": [
+          "name"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+        "segmentId": "segment_8e423af13d24a4ea186e2d67c5a2be1f",
+        "durationHintMs": 4000,
+        "segmentOrdinal": 0
+      },
+      "product_version": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "segment_ordinal": 0
+    },
+    {
+      "text": "这份电子说明书，当前标价是人民币99.00元。",
+      "status": "CANCELLED",
+      "beat_id": "beat_22c78345f46574c1a928c13d0aeee5f7",
+      "user_id": "golden-user",
+      "fact_ids": [
+        "price"
+      ],
+      "tenant_id": "golden-tenant",
+      "text_hash": "sha256:eff894a398f528a63b40530c2c8ef3c7cc1ea13fb3bf3a7766c8173e3bbd1d1b",
+      "segment_id": "segment_993e0907edcf0cea9bca840a6c324707",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.950669+08:00",
+      "completed_at": null,
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "这份电子说明书，当前标价是人民币99.00元。",
+        "beatId": "beat_22c78345f46574c1a928c13d0aeee5f7",
+        "status": "CANCELLED",
+        "factIds": [
+          "price"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:eff894a398f528a63b40530c2c8ef3c7cc1ea13fb3bf3a7766c8173e3bbd1d1b",
+        "segmentId": "segment_993e0907edcf0cea9bca840a6c324707",
+        "durationHintMs": 4600,
+        "segmentOrdinal": 1
+      },
+      "product_version": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "segment_ordinal": 1
+    },
+    {
+      "text": "这款目前价格是人民币99.00元。",
+      "status": "COMPLETED",
+      "beat_id": "",
+      "user_id": "golden-user",
+      "fact_ids": [
+        "price"
+      ],
+      "tenant_id": "golden-tenant",
+      "text_hash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+      "segment_id": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "updated_at": "2026-10-13T09:23:58.951811+08:00",
+      "completed_at": "2026-10-13T09:23:56.442767+08:00",
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "lane": "AUDIENCE_ANSWER",
+        "text": "这款目前价格是人民币99.00元。",
+        "beatId": "",
+        "status": "COMPLETED",
+        "factIds": [
+          "price"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+        "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+        "durationHintMs": 0,
+        "segmentOrdinal": 0
+      },
+      "product_version": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+      "segment_ordinal": 1000000
+    }
+  ],
+  "sessions": [
+    {
+      "id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "status": "STOPPING",
+      "room_id": "room_02301e852ebd4b3abdb1230527c3c7ac",
+      "ended_at": null,
+      "created_at": "2026-10-13T09:23:32.4843+08:00",
+      "started_at": "2026-10-13T09:23:33.344267+08:00",
+      "updated_at": "2026-10-13T09:23:58.948555+08:00",
+      "failure_code": null,
+      "failure_message": null,
+      "runtime_operation_id": "cmd_93dcc44da08a628210d31c4bf323b0ff"
+    }
+  ],
+  "turns": [
+    {
+      "state": "COMPLETED",
+      "turn_id": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+      "user_id": "golden-user",
+      "deadline": "2026-10-13T09:24:48.450648+08:00",
+      "question": "这份指南现在多少钱？",
+      "tenant_id": "golden-tenant",
+      "session_id": "session_fa6b55afaf5dbb1110315a6068d4c401",
+      "source_ids": [
+        "receipt_29e7955cdf6989eac26269090201c239b6182d7971ec9310744c012bfb861958"
+      ],
+      "updated_at": "2026-10-13T09:23:58.95165+08:00",
+      "narration_id": "narration_8840e937cda6b56bfccf4bcadd2d8889",
+      "document_json": {
+        "state": "COMPLETED",
+        "answer": {
+          "lane": "AUDIENCE_ANSWER",
+          "text": "这款目前价格是人民币99.00元。",
+          "beatId": "",
+          "status": "COMPLETED",
+          "factIds": [
+            "price"
+          ],
+          "boundary": "SENTENCE_END",
+          "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+          "segmentId": "answer_425aa4ec753c39e3240711b0e7b9ba02",
+          "durationHintMs": 0,
+          "segmentOrdinal": 0
+        },
+        "deadline": "2026-10-13T09:24:48.450648+08:00",
+        "priority": 80,
+        "question": "这份指南现在多少钱？",
+        "sourceIds": [
+          "receipt_29e7955cdf6989eac26269090201c239b6182d7971ec9310744c012bfb861958"
+        ],
+        "answerText": "这款目前价格是人民币99.00元。",
+        "selectedAt": "2026-10-13T09:23:48.452234+08:00",
+        "sourceScope": {
+          "platform": "mock",
+          "transport": "MOCK_REPLAY",
+          "internalRoomId": "room_02301e852ebd4b3abdb1230527c3c7ac",
+          "platformRoomId": "room_02301e852ebd4b3abdb1230527c3c7ac"
+        },
+        "questionHash": "sha256:f8a877a064300cd2aa1d76b754bb36b093039c4179f027bd06eb11ddb41dc66f",
+        "answerFactIds": [
+          "price"
+        ],
+        "interactionTurnId": "turn_7e82e9a6ec815f670b0956e7b5df4114",
+        "capturedProductHash": "sha256:2dfa2482fb1618c38c04f7bf775860e3a12696c76bc0b37b9e655188f08b2c82",
+        "mappedNarrationFactIds": [
+          "price"
+        ]
+      },
+      "question_hash": "sha256:f8a877a064300cd2aa1d76b754bb36b093039c4179f027bd06eb11ddb41dc66f",
+      "answer_summary": "这款目前价格是人民币99.00元。",
+      "resume_point_revision": 7
+    }
+  ]
+}

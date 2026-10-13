@@ -1,0 +1,9 @@
+=== RUN   TestPostgresRealGPUContinuityGolden
+2026/10/13 09:23:34 http: TLS handshake error from 127.0.0.1:60561: remote error: tls: unknown certificate
+2026/10/13 09:23:34 http: TLS handshake error from 127.0.0.1:60563: EOF
+2026/10/13 09:23:40 http: TLS handshake error from 127.0.0.1:60621: remote error: tls: unknown certificate
+    golden_postgres_test.go:389: real Golden observer failed; inspect sanitized observer/runtime/SQL evidence
+--- FAIL: TestPostgresRealGPUContinuityGolden (42.91s)
+FAIL
+FAIL	astralive/backend/internal/narration	43.392s
+FAIL

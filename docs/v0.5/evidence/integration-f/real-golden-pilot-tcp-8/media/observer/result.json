@@ -1,0 +1,45 @@
+{
+  "scope": "REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
+  "commentTransport": "MOCK_REPLAY_ONLY",
+  "humanNaturalness": "NOT_TESTED",
+  "audienceAudible": false,
+  "correlatedAV": "NOT_ANALYSED",
+  "localTransport": "tcp",
+  "mode": "short",
+  "seed": 5012,
+  "fixture": null,
+  "events": [],
+  "preflightProbeTiming": {
+    "clock": "Python time.monotonic",
+    "minimumStartSpacingSeconds": 5.1,
+    "attempts": [
+      {
+        "kind": "LLM",
+        "startedSeconds": 0.0022682909620925784,
+        "spacingFromPreviousSeconds": null,
+        "cooldownWaitSeconds": 4.0978193283081055e-08,
+        "status": "PASSED",
+        "durationSeconds": 3.211202625068836
+      },
+      {
+        "kind": "TTS",
+        "startedSeconds": 5.102400916046463,
+        "spacingFromPreviousSeconds": 5.10013262508437,
+        "cooldownWaitSeconds": 1.8850664159981534,
+        "status": "PASSED",
+        "durationSeconds": 0.39316674997098744
+      },
+      {
+        "kind": "GPU_WORKER",
+        "startedSeconds": 10.204492041026242,
+        "spacingFromPreviousSeconds": 5.102091124979779,
+        "cooldownWaitSeconds": 4.70600150001701,
+        "status": "FAILED",
+        "durationSeconds": 0.0042447090381756425
+      }
+    ]
+  },
+  "status": "FAIL",
+  "errorType": "GoldenFailure",
+  "reason": "Public API failed /api/v0.3/config/profiles/profile_dad687f9d4a7ea92c004eef6335b23e8/test: HTTP503/WORKER_UNAVAILABLE"
+}

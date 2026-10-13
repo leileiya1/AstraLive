@@ -1,5 +1,13 @@
 # v0.5 F chaos and integration-gate report
 
+## Current real live checkpoint — 2026-10-13
+
+Earlier sections are historical source-pinned results. F source `4f61a97` complete software/owned-PG regression PASSes: Go/race, migration/auth/ownership/Redis-off/fault gates, Runtime275 total with12 skipped, frontend40/build. [Result](evidence/integration-f/llm-diagnostics-c-postmerge-1/result.json).
+
+True short pilot9 recorded actual SoulX narration/answer/resumed narration, normal Stop, sealed run and released binding. Six commits were installed, five completed and the Stop tail remained UNKNOWN; resumed narration repeated the answered price fact. **Overall FAIL**: actual Chrome audio measurements stayed zero and recording produced zero bytes despite video callbacks/RTP reception. No real correlated AV/SLA/naturalness PASS. [Source/result](evidence/integration-f/real-golden-pilot-tcp-9/result.json). Pilot7's failed bridge and pilot8's missing SSH forward remain separate failures; no retry durations are accumulated.
+
+The full real live Backend/Runtime/Worker/Redis/FFmpeg crash, PostgreSQL outage, duplicate Outbox/Inbox, delayed ACK, stale frame, disconnect, Stop/FORCE and product-switch matrix remains NOT TESTED. Software-only fault cases are not promoted to real live crash recovery. Pilot9 used an unreachable Redis URL and PostgreSQL-only command flow, but does not establish real Redis kill/restart or complete playback recovery.
+
 
 ## Current merged gates and real GPU compatibility (2026-10-12)
 

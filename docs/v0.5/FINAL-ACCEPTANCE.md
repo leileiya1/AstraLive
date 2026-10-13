@@ -1,5 +1,30 @@
 # v0.5 F acceptance decision — partial sequential integration
 
+## Current checkpoint — 2026-10-13
+
+**Overall real live acceptance: FAIL / IN PROGRESS. No default enablement is approved.** This checkpoint supersedes current-state statements below; earlier source-pinned results remain historical evidence.
+
+F branch `exp/v0.5-soulx-staging-golden`, tested source `4f61a97d8cf5642f0d94b409e91277a000fb5936`: complete Go/race, owned PostgreSQL migration/auth/ownership/fault/Redis-off, Runtime (275 total, 12 skipped), frontend40/build regression PASS. Skips are not PASS. [Exact-source result](evidence/integration-f/llm-diagnostics-c-postmerge-1/result.json).
+
+Real short pilot9 used production Go HTTP components in a Go test process, separate production Python Runtime, owned PostgreSQL with Redis unreachable, actual DeepSeek/XiaoYa, remote Linux RTX3080 SoulX, native Chrome154 and local RTMP. Audience comments were `MOCK_REPLAY`. Six staged artifacts/installed SQL commits were recorded, only five COMPLETED. The selected price answer completed and the LLM selected an empty bridge; no RESUME_BRIDGE media was played. Subsequent narration resumed, but replayed the answered price fact (correctness FAIL). Stop reached `ENDED`, run `SEALED`, binding released; the final interrupted segment remained UNKNOWN in attempt/commit state despite no unknown receipt row. This is a partial functional result, not a Golden PASS. [Failed source/result](evidence/integration-f/real-golden-pilot-tcp-9/result.json), [observer](evidence/integration-f/real-golden-pilot-tcp-9/media/observer/result.json), [SQL](evidence/integration-f/real-golden-pilot-tcp-9/media/sql-proof.json).
+
+Pilot9 failed actual Chrome audio observation: 1508 video callbacks, 1918 audio rows with zero RMS, AudioContext time fixed at 0.005333 seconds, zero recording bytes. RTP packets/server receipts cannot replace browser playback evidence. Cause is under investigation. Pilot7 separately failed bridge preparation; pilot9 succeeded without a changed LLM request, so the earlier model failure is not conclusively explained. Pilot8 failed before Session creation after SSH forwarding disappeared; the authenticated tunnel and Worker READY were reverified before pilot9. Failed evidence is retained.
+
+| Release gate | Current decision |
+| --- | --- |
+| A–D software integration/default-off regressions | PASS within software/owned-PG scope |
+| Real GPU immutable staging/safe cancel | PASS within pinned no-sink component scope |
+| Real short narration→answer→resume | State sequence observed; FAIL on answered-price replay and Chrome audio/recording |
+| Golden1: ≥10min/≥5 questions/all facts/natural resume | NOT COMPLETED |
+| Golden2: continuous30–60min random questions/priorities/product switches | NOT TESTED |
+| Golden3: full real live crash/outage/recovery matrix | NOT TESTED; software faults separately PASS |
+| Golden4: correlated Chrome/RTMP A/V quality | FAIL / investigation; no accepted metrics |
+| Golden5: real live TCP/UDS/host-mode matrix | NOT TESTED; historical macOS software IPC scope PASS |
+| Human speech/naturalness/audience audibility | NOT TESTED |
+| QUIC | NOT TESTED; optional, not a Continuity blocker |
+
+PostgreSQL-only, MediaTimeline, Continuity and UDS remain CONDITIONAL, with independent default-off flags and TCP/Redis rollback preserved. No new-branch remote push or main merge at this checkpoint.
+
 **A→B→C→D are normally merged and each complete postmerge software/owned-PG/frontend regression PASSes. Reviewed C cleanup-proof correction is separately merged after D and also PASSes. C locking/outer-commit defect is fixed. Real GPU compatibility Worker is installed, READY and passes two short direct inference generations; integrated SoulX Continuity remains NOT TESTED.** Frozen `v0.5-frozen-1` bytes unchanged; no main merge or default-enable; user-requested GPU compatibility deployment recorded below. [Actual ledger](evidence/integration-f/merge-ledger.json), [report](CHAOS-TEST-REPORT.md), [review](CONTINUITY-SEAM-REVIEW.md). Final-source native synthetic long fixture completed659.662s:209 media commits/836 named receipts,200 required facts, five completed questions; scoped PASS.
 
 ## Branch and test ledger

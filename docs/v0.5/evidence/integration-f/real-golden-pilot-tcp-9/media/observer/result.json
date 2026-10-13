@@ -1,0 +1,842 @@
+{
+  "scope": "REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
+  "commentTransport": "MOCK_REPLAY_ONLY",
+  "humanNaturalness": "NOT_TESTED",
+  "audienceAudible": false,
+  "correlatedAV": "NOT_ANALYSED",
+  "localTransport": "tcp",
+  "mode": "short",
+  "seed": 5012,
+  "fixture": null,
+  "events": [
+    {
+      "kind": "COMMENT_INJECTED",
+      "question": "这份指南现在多少钱？",
+      "elapsedSeconds": 7.988382749957964,
+      "browserAt": 14469.300000071526,
+      "response": {
+        "accepted": true,
+        "platform": "mock"
+      }
+    }
+  ],
+  "preflightProbeTiming": {
+    "clock": "Python time.monotonic",
+    "minimumStartSpacingSeconds": 5.1,
+    "attempts": [
+      {
+        "kind": "LLM",
+        "startedSeconds": 0.0024672079598531127,
+        "spacingFromPreviousSeconds": null,
+        "cooldownWaitSeconds": 1.25030055642128e-07,
+        "status": "PASSED",
+        "durationSeconds": 4.245606207987294
+      },
+      {
+        "kind": "TTS",
+        "startedSeconds": 5.104595749988221,
+        "spacingFromPreviousSeconds": 5.1021285420283675,
+        "cooldownWaitSeconds": 0.8478977920021862,
+        "status": "PASSED",
+        "durationSeconds": 0.4087852080119774
+      },
+      {
+        "kind": "GPU_WORKER",
+        "startedSeconds": 10.205963957938366,
+        "spacingFromPreviousSeconds": 5.101368207950145,
+        "cooldownWaitSeconds": 4.6893257920164615,
+        "status": "PASSED",
+        "durationSeconds": 0.05766095803119242
+      },
+      {
+        "kind": "AVATAR",
+        "startedSeconds": 15.308083457988687,
+        "spacingFromPreviousSeconds": 5.102119500050321,
+        "cooldownWaitSeconds": 5.037120333057828,
+        "status": "PASSED",
+        "durationSeconds": 0.06775520800147206
+      }
+    ]
+  },
+  "sessionId": "session_66d532aca1e0dc3b5b5d76a896ec9dcd",
+  "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+  "roomId": "room_4c757ec3e8e609ff7c4363720ee7b313",
+  "profiles": {
+    "LLM": {
+      "profileId": "profile_8730906a0aa2eb70a491af9ee64d8a38",
+      "kind": "LLM",
+      "name": "Golden LLM",
+      "provider": "deepseek",
+      "config": {
+        "model": "deepseek-flash",
+        "maxTokens": 256
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": true,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-13T02:07:57.415541Z"
+    },
+    "TTS": {
+      "profileId": "profile_b8ee2a9aa8fb871d59445c8d8294eb57",
+      "kind": "TTS",
+      "name": "Golden TTS",
+      "provider": "xiaoya",
+      "config": {
+        "speed": 1,
+        "voiceId": "xiao_ya",
+        "modelRef": "xiaoya-default"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-13T02:07:58.679288Z"
+    },
+    "GPU_WORKER": {
+      "profileId": "profile_a05494d23e58519270460873887fb004",
+      "kind": "GPU_WORKER",
+      "name": "Golden GPU_WORKER",
+      "provider": "soulx",
+      "config": {
+        "workerRef": "soulx-lite-01"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-13T02:08:03.43072Z"
+    },
+    "AVATAR": {
+      "profileId": "profile_6cd13b696cb4fc2ef803dcec1936465e",
+      "kind": "AVATAR",
+      "name": "Golden AVATAR",
+      "provider": "soulx",
+      "config": {
+        "avatarRef": "official-girl",
+        "workerProfileId": "profile_a05494d23e58519270460873887fb004"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-13T02:08:08.542575Z"
+    }
+  },
+  "capturedProviders": {
+    "integrationVersion": "0.4.0",
+    "sessionId": "session_66d532aca1e0dc3b5b5d76a896ec9dcd",
+    "bindingId": "binding_879ba2aef435e1255d290895b823bbe2",
+    "capturedAt": "2026-10-13T02:08:08.56262Z",
+    "expiresAt": "2026-10-14T02:08:08.559701Z",
+    "profiles": [
+      {
+        "profileId": "profile_6cd13b696cb4fc2ef803dcec1936465e",
+        "kind": "AVATAR",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-13T02:08:08.542575Z"
+      },
+      {
+        "profileId": "profile_a05494d23e58519270460873887fb004",
+        "kind": "GPU_WORKER",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-13T02:08:03.43072Z"
+      },
+      {
+        "profileId": "profile_8730906a0aa2eb70a491af9ee64d8a38",
+        "kind": "LLM",
+        "provider": "deepseek",
+        "version": 1,
+        "updatedAt": "2026-10-13T02:07:57.415541Z"
+      },
+      {
+        "profileId": "profile_b8ee2a9aa8fb871d59445c8d8294eb57",
+        "kind": "TTS",
+        "provider": "xiaoya",
+        "version": 1,
+        "updatedAt": "2026-10-13T02:07:58.679288Z"
+      }
+    ],
+    "mode": "REAL",
+    "errorCode": "",
+    "workerEpoch": "3b23426bdaa74f0a999fcfa6e2445017"
+  },
+  "narrationId": "narration_1c493a73702e00fe3be325ba136bce12",
+  "requiredSinks": [
+    "peer_52869860f6b74dffb87c9f7bfa26ad2f",
+    "rtmp:1"
+  ],
+  "chromeVersion": "154.0.8037.98",
+  "commentPositionsSeconds": [
+    7.83401144638394
+  ],
+  "continuousDurationSeconds": 60.13328929094132,
+  "finalNarrationBeforeStop": {
+    "plan": {
+      "narrationId": "narration_1c493a73702e00fe3be325ba136bce12",
+      "sessionId": "session_66d532aca1e0dc3b5b5d76a896ec9dcd",
+      "scriptVersion": "desktop-guide-smoke-v2",
+      "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+      "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+      "productSnapshotHash": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+      "requiredSinks": [
+        "peer_52869860f6b74dffb87c9f7bfa26ad2f",
+        "rtmp:1"
+      ],
+      "policy": "AT_BOUNDARY",
+      "style": "自然清楚地逐句讲解桌面整理步骤，每段只讲当前声明的事实。",
+      "beats": [
+        {
+          "beatId": "beat_9152b8eb09c6392600e7985dd449e84d",
+          "beatOrdinal": 0,
+          "title": "短测第1段",
+          "requiredFactIds": [
+            "name"
+          ],
+          "segmentIds": [
+            "segment_829462d6db51f2ce4bdf18be08a21f63"
+          ],
+          "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+          "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89"
+        },
+        {
+          "beatId": "beat_2e9777628083d9720d8be5feede3109a",
+          "beatOrdinal": 1,
+          "title": "短测第2段",
+          "requiredFactIds": [
+            "price"
+          ],
+          "segmentIds": [
+            "segment_eea4a1b6d59e8184bea4e95f9bc103bc"
+          ],
+          "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+          "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89"
+        },
+        {
+          "beatId": "beat_e2f5a22bd5c911cec2e89339bd393200",
+          "beatOrdinal": 2,
+          "title": "短测第3段",
+          "requiredFactIds": [
+            "stock"
+          ],
+          "segmentIds": [
+            "segment_71c96728818129a08622e4f51668c014"
+          ],
+          "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+          "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89"
+        },
+        {
+          "beatId": "beat_f139ca751a97d2cfe10d6b46cf8136cc",
+          "beatOrdinal": 3,
+          "title": "短测第4段",
+          "requiredFactIds": [
+            "sizes"
+          ],
+          "segmentIds": [
+            "segment_c0f6d1204cf277fb6c96923292d75eb0"
+          ],
+          "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+          "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89"
+        },
+        {
+          "beatId": "beat_3817198000be6095e3f90fde5cfad6b4",
+          "beatOrdinal": 4,
+          "title": "短测第5段",
+          "requiredFactIds": [
+            "guide.01.05"
+          ],
+          "segmentIds": [
+            "segment_e729bb60636d88ba47000232f9a346b1"
+          ],
+          "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+          "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89"
+        },
+        {
+          "beatId": "beat_ee21441ed63c76e91988988a08c4ae11",
+          "beatOrdinal": 5,
+          "title": "短测第6段",
+          "requiredFactIds": [
+            "guide.01.06"
+          ],
+          "segmentIds": [
+            "segment_a61667d207e3a5f273e19196e1b553ce"
+          ],
+          "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+          "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89"
+        },
+        {
+          "beatId": "beat_38ea45703ecd6aecf00b37f127559ad6",
+          "beatOrdinal": 6,
+          "title": "短测第7段",
+          "requiredFactIds": [
+            "guide.01.07"
+          ],
+          "segmentIds": [
+            "segment_bbc578b4cef67b52c287ae98db2378a7"
+          ],
+          "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+          "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89"
+        },
+        {
+          "beatId": "beat_fa1ee18ff4e7594ce06bda22dad742f0",
+          "beatOrdinal": 7,
+          "title": "短测第8段",
+          "requiredFactIds": [
+            "guide.01.08"
+          ],
+          "segmentIds": [
+            "segment_12d8cff1723861b23019e3bb2eff203f"
+          ],
+          "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+          "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89"
+        },
+        {
+          "beatId": "beat_fde5fe77aaa91a4858d190a348cfceba",
+          "beatOrdinal": 8,
+          "title": "短测第9段",
+          "requiredFactIds": [
+            "guide.01.09"
+          ],
+          "segmentIds": [
+            "segment_f4b607954f76750703ef8ae8afa6a696"
+          ],
+          "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+          "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89"
+        },
+        {
+          "beatId": "beat_2a4d5a705b18fe76b5cafbbc07a552bc",
+          "beatOrdinal": 9,
+          "title": "短测第10段",
+          "requiredFactIds": [
+            "guide.01.10"
+          ],
+          "segmentIds": [
+            "segment_e62498b1ac4a08cd22b781f292614d6e"
+          ],
+          "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+          "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89"
+        }
+      ],
+      "segments": [
+        {
+          "segmentId": "segment_829462d6db51f2ce4bdf18be08a21f63",
+          "beatId": "beat_9152b8eb09c6392600e7985dd449e84d",
+          "segmentOrdinal": 0,
+          "text": "这份电子说明书的名称，叫作桌面整理指南。",
+          "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+          "factIds": [
+            "name"
+          ],
+          "durationHintMs": 4000,
+          "boundary": "SENTENCE_END",
+          "status": "COMPLETED",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_eea4a1b6d59e8184bea4e95f9bc103bc",
+          "beatId": "beat_2e9777628083d9720d8be5feede3109a",
+          "segmentOrdinal": 1,
+          "text": "这份电子说明书，当前标价是人民币99.00元。",
+          "textHash": "sha256:eff894a398f528a63b40530c2c8ef3c7cc1ea13fb3bf3a7766c8173e3bbd1d1b",
+          "factIds": [
+            "price"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "COMPLETED",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_71c96728818129a08622e4f51668c014",
+          "beatId": "beat_e2f5a22bd5c911cec2e89339bd393200",
+          "segmentOrdinal": 2,
+          "text": "当前用于本次演示的商品库存，共有20份可供选择。",
+          "textHash": "sha256:c1864f9d4b16f212ab91eafba8ec1f88171899a4853e0968bfeb914d99ea7320",
+          "factIds": [
+            "stock"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "COMPLETED",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_c0f6d1204cf277fb6c96923292d75eb0",
+          "beatId": "beat_f139ca751a97d2cfe10d6b46cf8136cc",
+          "segmentOrdinal": 3,
+          "text": "本商品的规格选项只有电子版，请按电子资料使用。",
+          "textHash": "sha256:9bcdce03971fbdf657271d718b18d65e131ccc78487bf0ef02ff48d012ce367d",
+          "factIds": [
+            "sizes"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "COMPLETED",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_e729bb60636d88ba47000232f9a346b1",
+          "beatId": "beat_3817198000be6095e3f90fde5cfad6b4",
+          "segmentOrdinal": 4,
+          "text": "这份指南讨论桌面整理方法，不提供实体收纳工具。",
+          "textHash": "sha256:06590f870bc5e55b6981e62701f1c0ac08eff93edfc7eb27e5ea80551b773407",
+          "factIds": [
+            "guide.01.05"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "EXECUTING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_a61667d207e3a5f273e19196e1b553ce",
+          "beatId": "beat_ee21441ed63c76e91988988a08c4ae11",
+          "segmentOrdinal": 5,
+          "text": "阅读时先选择最困扰你的桌面问题，再对应查找章节。",
+          "textHash": "sha256:9964bb4964fdc8ce7e58cc0d3bc4c53c686f0410dfc793e8ea57198f7cb56bcf",
+          "factIds": [
+            "guide.01.06"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_bbc578b4cef67b52c287ae98db2378a7",
+          "beatId": "beat_38ea45703ecd6aecf00b37f127559ad6",
+          "segmentOrdinal": 6,
+          "text": "指南按照清空、分类、分区和维护，安排整理的步骤。",
+          "textHash": "sha256:805d7c94a94becfe1a2fa5705ba8bdac60da424e71441b4e9fa0e743c0852ac1",
+          "factIds": [
+            "guide.01.07"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_12d8cff1723861b23019e3bb2eff203f",
+          "beatId": "beat_fa1ee18ff4e7594ce06bda22dad742f0",
+          "segmentOrdinal": 7,
+          "text": "第一次实践可以先处理一小块区域，再逐步扩大范围。",
+          "textHash": "sha256:c65fe2f9a737801bbdb2b41e80c2358c3d81f0333456945f9766e747be878a7a",
+          "factIds": [
+            "guide.01.08"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_f4b607954f76750703ef8ae8afa6a696",
+          "beatId": "beat_fde5fe77aaa91a4858d190a348cfceba",
+          "segmentOrdinal": 8,
+          "text": "整理前请记录常见物品的位置，方便之后比较变化。",
+          "textHash": "sha256:ee3f4d278522e3bcee8e96b98dd4ce2cb53b83c41eb74ab755d4a5475129d349",
+          "factIds": [
+            "guide.01.09"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_e62498b1ac4a08cd22b781f292614d6e",
+          "beatId": "beat_2a4d5a705b18fe76b5cafbbc07a552bc",
+          "segmentOrdinal": 9,
+          "text": "每完成一个步骤都检查实际使用，避免只追求外观。",
+          "textHash": "sha256:994814af7abbd0bec882fb7267530700d1e63b002a4864616da003c00d274fb1",
+          "factIds": [
+            "guide.01.10"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        }
+      ]
+    },
+    "state": "NARRATING",
+    "narrationRevision": 27,
+    "runEpoch": 1,
+    "timelineEpoch": 3,
+    "cursor": {
+      "nextOrdinal": 4,
+      "completedSegmentIds": [
+        "segment_829462d6db51f2ce4bdf18be08a21f63",
+        "segment_eea4a1b6d59e8184bea4e95f9bc103bc",
+        "segment_71c96728818129a08622e4f51668c014",
+        "segment_c0f6d1204cf277fb6c96923292d75eb0"
+      ],
+      "completedFactIds": [
+        "name",
+        "price",
+        "stock",
+        "sizes"
+      ],
+      "lastCompletedSegmentId": "segment_c0f6d1204cf277fb6c96923292d75eb0",
+      "lastCompletedText": "本商品的规格选项只有电子版，请按电子资料使用。",
+      "ambiguousSegmentIds": null
+    },
+    "resumePoint": {
+      "revision": 7,
+      "boundary": {
+        "identity": {
+          "sessionId": "session_66d532aca1e0dc3b5b5d76a896ec9dcd",
+          "runEpoch": 1,
+          "timelineEpoch": 1,
+          "generationId": 2,
+          "segmentId": "segment_829462d6db51f2ce4bdf18be08a21f63",
+          "utteranceId": "utt_bad7a78731ea02d20f5fad0ad7d0017c",
+          "lane": "NARRATION"
+        },
+        "attemptId": "attempt_bad7a78731ea02d20f5fad0ad7d0017c",
+        "startPosition": {
+          "sessionId": "session_66d532aca1e0dc3b5b5d76a896ec9dcd",
+          "runEpoch": 1,
+          "timelineEpoch": 1,
+          "sampleIndex": 0,
+          "sampleRate": 48000,
+          "ptsUs": 0
+        },
+        "finalPosition": {
+          "sessionId": "session_66d532aca1e0dc3b5b5d76a896ec9dcd",
+          "runEpoch": 1,
+          "timelineEpoch": 1,
+          "sampleIndex": 203520,
+          "sampleRate": 48000,
+          "ptsUs": 4240000
+        },
+        "requiredSinks": [
+          "peer_52869860f6b74dffb87c9f7bfa26ad2f",
+          "rtmp:1"
+        ],
+        "sinks": [
+          {
+            "sink": "peer_52869860f6b74dffb87c9f7bfa26ad2f",
+            "audioStart": 0,
+            "audioEnd": 203520,
+            "videoStart": 0,
+            "videoEnd": 203520
+          },
+          {
+            "sink": "rtmp:1",
+            "audioStart": 0,
+            "audioEnd": 203520,
+            "videoStart": 0,
+            "videoEnd": 203520
+          }
+        ],
+        "finalMarker": true,
+        "evidenceRef": "cmd_f1ea06c41b9efd53ce853c9f663b2c03:SEGMENT_COMPLETED",
+        "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+        "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+        "audienceAudible": false
+      },
+      "nextBeatId": "beat_2e9777628083d9720d8be5feede3109a",
+      "nextSegmentId": "segment_eea4a1b6d59e8184bea4e95f9bc103bc",
+      "cursor": {
+        "nextOrdinal": 1,
+        "completedSegmentIds": [
+          "segment_829462d6db51f2ce4bdf18be08a21f63"
+        ],
+        "completedFactIds": [
+          "name"
+        ],
+        "lastCompletedSegmentId": "segment_829462d6db51f2ce4bdf18be08a21f63",
+        "lastCompletedText": "这份电子说明书的名称，叫作桌面整理指南。",
+        "ambiguousSegmentIds": null
+      }
+    },
+    "turn": {
+      "interactionTurnId": "turn_e68383fd8cc4ade8f31994df013f7b06",
+      "sourceIds": [
+        "receipt_a69268e37446153de56ae7fcd2d1096fe5fb076a7879771b34637f828db24bc1"
+      ],
+      "sourceScope": {
+        "platform": "mock",
+        "platformRoomId": "room_4c757ec3e8e609ff7c4363720ee7b313",
+        "internalRoomId": "room_4c757ec3e8e609ff7c4363720ee7b313",
+        "transport": "MOCK_REPLAY"
+      },
+      "question": "这份指南现在多少钱？",
+      "questionHash": "sha256:f8a877a064300cd2aa1d76b754bb36b093039c4179f027bd06eb11ddb41dc66f",
+      "priority": 80,
+      "deadline": "2026-10-13T10:09:24.595112+08:00",
+      "selectedAt": "2026-10-13T10:08:24.598294+08:00",
+      "capturedProductHash": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+      "state": "COMPLETED",
+      "answer": {
+        "segmentId": "answer_b9c2fcc54ed8d5525bde902616b9430a",
+        "beatId": "",
+        "segmentOrdinal": 0,
+        "text": "这款目前价格是人民币99.00元。",
+        "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+        "factIds": [
+          "price"
+        ],
+        "durationHintMs": 0,
+        "boundary": "SENTENCE_END",
+        "status": "COMPLETED",
+        "lane": "AUDIENCE_ANSWER"
+      },
+      "answerText": "这款目前价格是人民币99.00元。",
+      "answerFactIds": [
+        "price"
+      ],
+      "mappedNarrationFactIds": [
+        "price"
+      ]
+    },
+    "bridge": {
+      "segmentId": "bridge_3781c6487a74962aa542587c9c569744",
+      "beatId": "",
+      "segmentOrdinal": 0,
+      "text": "",
+      "textHash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "factIds": null,
+      "durationHintMs": 0,
+      "boundary": "SENTENCE_END",
+      "status": "PLANNED",
+      "lane": "RESUME_BRIDGE"
+    },
+    "stopBarrier": false,
+    "operatorOverride": false,
+    "reason": "",
+    "boundarySegmentId": "segment_829462d6db51f2ce4bdf18be08a21f63",
+    "lastCheckpoint": {
+      "identity": {
+        "sessionId": "session_66d532aca1e0dc3b5b5d76a896ec9dcd",
+        "runEpoch": 1,
+        "timelineEpoch": 3,
+        "generationId": 6,
+        "segmentId": "segment_c0f6d1204cf277fb6c96923292d75eb0",
+        "utteranceId": "utt_d2534c442a8ee570ae19e4872d8ca90b",
+        "lane": "NARRATION"
+      },
+      "attemptId": "attempt_d2534c442a8ee570ae19e4872d8ca90b",
+      "startPosition": {
+        "sessionId": "session_66d532aca1e0dc3b5b5d76a896ec9dcd",
+        "runEpoch": 1,
+        "timelineEpoch": 3,
+        "sampleIndex": 896640,
+        "sampleRate": 48000,
+        "ptsUs": 18680000
+      },
+      "finalPosition": {
+        "sessionId": "session_66d532aca1e0dc3b5b5d76a896ec9dcd",
+        "runEpoch": 1,
+        "timelineEpoch": 3,
+        "sampleIndex": 1128960,
+        "sampleRate": 48000,
+        "ptsUs": 23520000
+      },
+      "requiredSinks": [
+        "peer_52869860f6b74dffb87c9f7bfa26ad2f",
+        "rtmp:1"
+      ],
+      "sinks": [
+        {
+          "sink": "peer_52869860f6b74dffb87c9f7bfa26ad2f",
+          "audioStart": 896640,
+          "audioEnd": 1128960,
+          "videoStart": 896640,
+          "videoEnd": 1128960
+        },
+        {
+          "sink": "rtmp:1",
+          "audioStart": 896640,
+          "audioEnd": 1128960,
+          "videoStart": 896640,
+          "videoEnd": 1128960
+        }
+      ],
+      "finalMarker": true,
+      "evidenceRef": "cmd_e35b7a95166f0961d75988a47bd3ab6c:SEGMENT_COMPLETED",
+      "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+      "textHash": "sha256:9bcdce03971fbdf657271d718b18d65e131ccc78487bf0ef02ff48d012ce367d",
+      "audienceAudible": false
+    },
+    "requestHash": "sha256:83c280d7711c47d1c76fad1b3397b4782f89d088063bab51493877edab7cdf17",
+    "suspendInstalled": true,
+    "invalidatedEpoch": 2,
+    "beatProgress": [
+      {
+        "beatId": "beat_9152b8eb09c6392600e7985dd449e84d",
+        "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+        "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+        "requiredFactIds": [
+          "name"
+        ],
+        "completedFactIds": [
+          "name"
+        ],
+        "pendingFactIds": [],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_2e9777628083d9720d8be5feede3109a",
+        "lastCompletedSegmentId": "segment_829462d6db51f2ce4bdf18be08a21f63"
+      },
+      {
+        "beatId": "beat_2e9777628083d9720d8be5feede3109a",
+        "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+        "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+        "requiredFactIds": [
+          "price"
+        ],
+        "completedFactIds": [
+          "price"
+        ],
+        "pendingFactIds": [],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_e2f5a22bd5c911cec2e89339bd393200",
+        "lastCompletedSegmentId": "segment_eea4a1b6d59e8184bea4e95f9bc103bc"
+      },
+      {
+        "beatId": "beat_e2f5a22bd5c911cec2e89339bd393200",
+        "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+        "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+        "requiredFactIds": [
+          "stock"
+        ],
+        "completedFactIds": [
+          "stock"
+        ],
+        "pendingFactIds": [],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_f139ca751a97d2cfe10d6b46cf8136cc",
+        "lastCompletedSegmentId": "segment_71c96728818129a08622e4f51668c014"
+      },
+      {
+        "beatId": "beat_f139ca751a97d2cfe10d6b46cf8136cc",
+        "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+        "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+        "requiredFactIds": [
+          "sizes"
+        ],
+        "completedFactIds": [
+          "sizes"
+        ],
+        "pendingFactIds": [],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_3817198000be6095e3f90fde5cfad6b4",
+        "lastCompletedSegmentId": "segment_c0f6d1204cf277fb6c96923292d75eb0"
+      },
+      {
+        "beatId": "beat_3817198000be6095e3f90fde5cfad6b4",
+        "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+        "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+        "requiredFactIds": [
+          "guide.01.05"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.01.05"
+        ],
+        "currentSegmentId": "segment_e729bb60636d88ba47000232f9a346b1",
+        "nextTargetBeatId": "beat_ee21441ed63c76e91988988a08c4ae11",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_ee21441ed63c76e91988988a08c4ae11",
+        "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+        "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+        "requiredFactIds": [
+          "guide.01.06"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.01.06"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_38ea45703ecd6aecf00b37f127559ad6",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_38ea45703ecd6aecf00b37f127559ad6",
+        "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+        "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+        "requiredFactIds": [
+          "guide.01.07"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.01.07"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_fa1ee18ff4e7594ce06bda22dad742f0",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_fa1ee18ff4e7594ce06bda22dad742f0",
+        "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+        "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+        "requiredFactIds": [
+          "guide.01.08"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.01.08"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_fde5fe77aaa91a4858d190a348cfceba",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_fde5fe77aaa91a4858d190a348cfceba",
+        "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+        "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+        "requiredFactIds": [
+          "guide.01.09"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.01.09"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_2a4d5a705b18fe76b5cafbbc07a552bc",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_2a4d5a705b18fe76b5cafbbc07a552bc",
+        "productId": "product_ca6f33bb918756781ebb28087cd8b396",
+        "factVersion": "sha256:d4ad5b27e381ee59792761653ec46244ce4f1eef4e75fe447b7739d3aa621e89",
+        "requiredFactIds": [
+          "guide.01.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.01.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "",
+        "lastCompletedSegmentId": ""
+      }
+    ]
+  },
+  "factCoverageClaim": "NOT_FORMAL_COMPLETE_FACT_COVERAGE",
+  "normalStop": true,
+  "chromeAudioObserved": false,
+  "chromeVideoFrames": 1508,
+  "recordedBytes": 0,
+  "status": "FAIL",
+  "errorType": "GoldenFailure",
+  "reason": "Actual browser AV or normal Stop missing"
+}

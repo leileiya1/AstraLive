@@ -1,0 +1,242 @@
+{
+  "source": "81affc9dec48017ee2b83d90bf35d4f246dbbaff",
+  "fixtureSHA256": "6b4334fed213181e71e09a0d2a7eb76aa3c36abaffed0691ecc32be583a17184",
+  "mode": "short",
+  "requestedSeconds": 60,
+  "seed": 5012,
+  "scope": "real Go production HTTP components/owned PostgreSQL/production Python Runtime/DeepSeek/XiaoYa/SoulX/native Chrome/local RTMP; fixture audience comment replay",
+  "audienceAudible": false,
+  "humanNaturalness": "REQUIRES_SEPARATE_REVIEW",
+  "profile": "staging-segment-8s-gpu1g-1",
+  "localTransport": "tcp",
+  "status": "FAIL",
+  "checks": [
+    {
+      "name": "python-dependencies",
+      "command": [
+        "/private/tmp/astralive-f-media-venv-1/bin/python",
+        "-c",
+        "import importlib.metadata as m; print(chr(10).join(sorted(d.metadata['Name']+'=='+d.version for d in m.distributions())))"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.041,
+      "log": "python-dependencies.log",
+      "sha256": "ddc2b21f09bd9f52a36ec9aa0da44743f11bb0b172389de92f8fdfac7efead60",
+      "bytes": 966
+    },
+    {
+      "name": "pg-init",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/initdb",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-golden-pg-xtsrew9j",
+        "-A",
+        "trust",
+        "--no-locale",
+        "-E",
+        "UTF8"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.331,
+      "log": "pg-init.log",
+      "sha256": "b04a3366afe6a8a790c961653cc536148bf6415b1caaaf2fe369589ea6c6a5e8",
+      "bytes": 979
+    },
+    {
+      "name": "pg-start",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-golden-pg-xtsrew9j",
+        "-l",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/astralive-f-golden-pg-xtsrew9j/postgres.log",
+        "start"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.12,
+      "log": "pg-start.log",
+      "sha256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+      "bytes": 52
+    },
+    {
+      "name": "pg-database",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/createdb",
+        "-h",
+        "127.0.0.1",
+        "-p",
+        "60360",
+        "astralive_real_golden"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.05,
+      "log": "pg-database.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "golden",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=1260s",
+        "-v",
+        "./internal/narration",
+        "-run",
+        "^TestPostgresRealGPUContinuityGolden$"
+      ],
+      "exitCode": 1,
+      "durationSeconds": 44.45,
+      "log": "golden.log",
+      "sha256": "9039b16252ba2537a4e9638deb905b0d43dc22977aaca8ed6c7fafeb9030e5b3",
+      "bytes": 557
+    }
+  ],
+  "environment": {
+    "go": "go version go1.27.2 darwin/arm64",
+    "/private/tmp/astralive-f-media-venv-1/bin/python": "Python 3.12.13",
+    "/opt/homebrew/opt/postgresql@17/bin/postgres": "postgres (PostgreSQL) 17.11 (Homebrew)",
+    "ffmpeg": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "realDNS": {
+    "address": "127.0.0.1:55447",
+    "upstream": "https://cloudflare-dns.com/dns-query",
+    "scope": "OWNED_REAL_GOLDEN_PROCESS_ONLY"
+  },
+  "error": "golden failed",
+  "ownedPGCleanup": "PASS",
+  "credentialEvidenceAudit": "PASS",
+  "artifacts": [
+    {
+      "path": "authored-fixture.json",
+      "sha256": "6b4334fed213181e71e09a0d2a7eb76aa3c36abaffed0691ecc32be583a17184",
+      "bytes": 5258
+    },
+    {
+      "path": "golden.log",
+      "sha256": "9039b16252ba2537a4e9638deb905b0d43dc22977aaca8ed6c7fafeb9030e5b3",
+      "bytes": 557
+    },
+    {
+      "path": "media/authority-snapshots.jsonl",
+      "sha256": "2ca9652928ebe8647df47c357bedaa1ecdd3b92fb36358f30988e63faed4dbfd",
+      "bytes": 599
+    },
+    {
+      "path": "media/backend.log",
+      "sha256": "2921763a45cc618fa2915c1ad7dc394d965dce483606cef98f9d7e9b8adcc513",
+      "bytes": 61526
+    },
+    {
+      "path": "media/observer/chrome.webm",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "media/observer.log",
+      "sha256": "a7bb0885b25f933aeded7768599d7543e2b453f9a88f71bff165e011c09f8ddd",
+      "bytes": 1362
+    },
+    {
+      "path": "media/processes.json",
+      "sha256": "85533daaf5d4bf760a3dc616163e3fc9bd663ce02d6f3d5c69011f741af424ee",
+      "bytes": 244
+    },
+    {
+      "path": "media/rtmp-receiver.log",
+      "sha256": "3363a93561f2cefc3ec7650dcb94a9bcf7a088618ad86ce0f022e5bb54c95e70",
+      "bytes": 68
+    },
+    {
+      "path": "media/rtmp.flv",
+      "sha256": "e719fed071a299839c24aa6880843def89f69ce177c80744b1bc3a50f296d921",
+      "bytes": 7501873
+    },
+    {
+      "path": "media/runtime.log",
+      "sha256": "97a3b836bfb482bd850d3c956c13008529243170d5cbce15c39aa9032d813839",
+      "bytes": 435499
+    },
+    {
+      "path": "media/sql-proof.json",
+      "sha256": "43188bebe0fdf002fa89c875e2b7b2453bd3776a46a6555f3e261a4bcb8254d4",
+      "bytes": 183302
+    },
+    {
+      "path": "media/staged-observer/attempt-0001/native.h264",
+      "sha256": "703a32999d255a1c951cb4bb16e5e29291e3083bf5ac09623670a46b6392d24b",
+      "bytes": 1139571
+    },
+    {
+      "path": "media/staged-observer/attempt-0001/reference.json",
+      "sha256": "94237ca7173c478a5110f9fdd845fb5b53a02305e1fa29fa8e7f172204b948e7",
+      "bytes": 53653
+    },
+    {
+      "path": "media/staged-observer/attempt-0001/speech.wav",
+      "sha256": "2ef2a1bbee018898b1ae8dc95cd7856d8ce5508d03567b0745413c86b89b7a34",
+      "bytes": 126764
+    },
+    {
+      "path": "media/staged-observer/attempt-0002/native.h264",
+      "sha256": "0ae8da69b5849c0658dbde64eef962da10fc6a562d48582527e65f6b78d81380",
+      "bytes": 870143
+    },
+    {
+      "path": "media/staged-observer/attempt-0002/reference.json",
+      "sha256": "56ce0c8fd7866de37342b7829d3a242430bd4e36810240fb8ab7b96ee13fd068",
+      "bytes": 51328
+    },
+    {
+      "path": "media/staged-observer/attempt-0002/speech.wav",
+      "sha256": "af24e305d6a2321a0914a23a909560855ed5d62ba366157a827707917035aa6b",
+      "bytes": 120364
+    },
+    {
+      "path": "media/staged-observer/llm-calls.jsonl",
+      "sha256": "b87336664949a3b5946e6030c4494795da2fe95496baf31e3a868eca8fbe356c",
+      "bytes": 380
+    },
+    {
+      "path": "media/staged-observer/refs.json",
+      "sha256": "119aeb85401b09edef3bb50eef0e49ff1a8f2c02ca7b4b8a510cf45d2df100db",
+      "bytes": 2947
+    },
+    {
+      "path": "pg-database.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "pg-init.log",
+      "sha256": "b04a3366afe6a8a790c961653cc536148bf6415b1caaaf2fe369589ea6c6a5e8",
+      "bytes": 979
+    },
+    {
+      "path": "pg-start.log",
+      "sha256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+      "bytes": 52
+    },
+    {
+      "path": "pg-stop.log",
+      "sha256": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+      "bytes": 56
+    },
+    {
+      "path": "python-dependencies.log",
+      "sha256": "ddc2b21f09bd9f52a36ec9aa0da44743f11bb0b172389de92f8fdfac7efead60",
+      "bytes": 966
+    },
+    {
+      "path": "real-dns.json",
+      "sha256": "34fb1c75785ecb4ed211a2aadf62ddf436126d9292a58fdf999bd7917feb0598",
+      "bytes": 126
+    },
+    {
+      "path": "real-dns.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

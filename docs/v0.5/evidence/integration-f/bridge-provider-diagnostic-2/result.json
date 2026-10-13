@@ -1,0 +1,67 @@
+{
+  "scope": "REAL_LLM_SSE_METADATA_ONLY_RECONSTRUCTED_DEMO_BRIDGE_NO_GPU_SINK_LIVE",
+  "primaryDocs": "https://api-docs.deepseek.com/guides/thinking_mode/",
+  "reasoningContentStored": false,
+  "cases": [
+    {
+      "name": "original-default-256",
+      "maxTokens": 256,
+      "thinking": "provider_default",
+      "requestSHA256": "e2429f5528c7d29c517d5cc40d27141bb120e5b325f1b0f8db1e56bc463ee70c",
+      "reasoningChars": 755,
+      "contentChars": 1,
+      "finishReasons": [
+        "stop"
+      ],
+      "done": true,
+      "httpStatus": 200,
+      "usage": {
+        "prompt_tokens": 2135,
+        "completion_tokens": 176,
+        "total_tokens": 2311
+      },
+      "outcome": "COMPLETE_CONTENT",
+      "durationMs": 1689
+    },
+    {
+      "name": "default-1024",
+      "maxTokens": 1024,
+      "thinking": "provider_default",
+      "requestSHA256": "7376aab51aeec95b658223339e1b782978a698794501d1b3d0ffbd450f517df9",
+      "reasoningChars": 1124,
+      "contentChars": 1,
+      "finishReasons": [
+        "stop"
+      ],
+      "done": true,
+      "httpStatus": 200,
+      "usage": {
+        "prompt_tokens": 2135,
+        "completion_tokens": 578,
+        "total_tokens": 2713
+      },
+      "outcome": "COMPLETE_CONTENT",
+      "durationMs": 4694
+    },
+    {
+      "name": "explicit-disabled-256",
+      "maxTokens": 256,
+      "thinking": "explicit_disabled",
+      "requestSHA256": "551309e8088d2ce80e79304f4c582ec9ac48b31b811fa934f09426baad6c7e5e",
+      "reasoningChars": 0,
+      "contentChars": 1,
+      "finishReasons": [
+        "stop"
+      ],
+      "done": true,
+      "httpStatus": 200,
+      "usage": {
+        "prompt_tokens": 2110,
+        "completion_tokens": 1,
+        "total_tokens": 2111
+      },
+      "outcome": "COMPLETE_CONTENT",
+      "durationMs": 702
+    }
+  ]
+}

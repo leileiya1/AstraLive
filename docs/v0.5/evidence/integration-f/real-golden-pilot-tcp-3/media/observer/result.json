@@ -1,0 +1,131 @@
+{
+  "scope": "REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
+  "commentTransport": "MOCK_REPLAY_ONLY",
+  "humanNaturalness": "NOT_TESTED",
+  "audienceAudible": false,
+  "correlatedAV": "NOT_ANALYSED",
+  "localTransport": "tcp",
+  "mode": "short",
+  "seed": 5012,
+  "fixture": null,
+  "events": [],
+  "preflightProbeTiming": {
+    "clock": "Python time.monotonic",
+    "minimumStartSpacingSeconds": 5.1,
+    "attempts": [
+      {
+        "kind": "LLM",
+        "startedSeconds": 0.0029484169790521264,
+        "spacingFromPreviousSeconds": null,
+        "cooldownWaitSeconds": 2.0791776478290558e-07,
+        "status": "PASSED",
+        "durationSeconds": 2.7042112920898944
+      },
+      {
+        "kind": "TTS",
+        "startedSeconds": 5.105011541978456,
+        "spacingFromPreviousSeconds": 5.102063124999404,
+        "cooldownWaitSeconds": 2.3874207499902695,
+        "status": "PASSED",
+        "durationSeconds": 0.5053268329938874
+      },
+      {
+        "kind": "GPU_WORKER",
+        "startedSeconds": 10.205901209032163,
+        "spacingFromPreviousSeconds": 5.100889667053707,
+        "cooldownWaitSeconds": 4.59262608399149,
+        "status": "PASSED",
+        "durationSeconds": 0.07740887498948723
+      },
+      {
+        "kind": "AVATAR",
+        "startedSeconds": 15.30801766703371,
+        "spacingFromPreviousSeconds": 5.102116458001547,
+        "cooldownWaitSeconds": 5.019807207980193,
+        "status": "PASSED",
+        "durationSeconds": 0.0784296669298783
+      }
+    ]
+  },
+  "sessionId": "session_e1e6f539285749863e49a54d3e2f084e",
+  "productId": "product_729270893949b3efd615bedf90d49144",
+  "roomId": "room_6aac5515885d6eedb7b63dbdf87c5ac0",
+  "profiles": {
+    "LLM": {
+      "profileId": "profile_390da026c5d1d0cbb0e5a4faaf4409a6",
+      "kind": "LLM",
+      "name": "Golden LLM",
+      "provider": "deepseek",
+      "config": {
+        "model": "deepseek-flash",
+        "maxTokens": 256
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": true,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-12T13:13:14.56884Z"
+    },
+    "TTS": {
+      "profileId": "profile_7c33edd7454105a6d917a5d3fff75964",
+      "kind": "TTS",
+      "name": "Golden TTS",
+      "provider": "xiaoya",
+      "config": {
+        "speed": 1,
+        "voiceId": "xiao_ya",
+        "modelRef": "xiaoya-default"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-12T13:13:17.470102Z"
+    },
+    "GPU_WORKER": {
+      "profileId": "profile_f50afd1c0c8fbb987d3053d30392fa74",
+      "kind": "GPU_WORKER",
+      "name": "Golden GPU_WORKER",
+      "provider": "soulx",
+      "config": {
+        "workerRef": "soulx-lite-01"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-12T13:13:22.143336Z"
+    },
+    "AVATAR": {
+      "profileId": "profile_eb6f64401657b9cf4db7f64749264039",
+      "kind": "AVATAR",
+      "name": "Golden AVATAR",
+      "provider": "soulx",
+      "config": {
+        "avatarRef": "official-girl",
+        "workerProfileId": "profile_f50afd1c0c8fbb987d3053d30392fa74"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-12T13:13:27.246208Z"
+    }
+  },
+  "status": "FAIL",
+  "errorType": "GoldenFailure",
+  "reason": "Bound Session startup timed out",
+  "cleanupPending": true
+}

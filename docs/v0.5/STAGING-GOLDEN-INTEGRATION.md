@@ -2,6 +2,27 @@
 
 Status: IN PROGRESS. Branch `exp/v0.5-soulx-staging-golden`, starting at `d69166461af5cd9f7b75179754ea4c086435e251`. User explicitly authorized completing the additive contract, implementation, real live Golden tests and pushing a new remote branch. No main merge or default enablement.
 
+## 2026-10-13 actual integration checkpoint
+
+Each production increment below was separately reviewed, normally merged, and followed by a complete immutable-source Go/race/owned-PG/Runtime/frontend gate before the next production merge. No frozen1 bytes, public DTOs, default flags or old TCP1.1 semantics changed.
+
+| Owner/source | F merge | Result / evidence |
+| --- | --- | --- |
+| C `51e40fc` staging CNY speech/audit | `51e119321026282adb8598f6055c353a5ebef235` | [Complete PASS](evidence/integration-f/cny-postmerge-1/result.json) |
+| C `6b2c44b` Golden profile probe pacing | `ada6f31f4f3693b1180cca941503b5b9a90cdee2` | [Complete PASS](evidence/integration-f/probe-spacing-postmerge-1/result.json) |
+| C `c639cb0` Avatar configure lifecycle | `8be7374f1250d265ae704572140290d8915e907b` | [Complete PASS](evidence/integration-f/avatar-lifecycle-postmerge-1/result.json) |
+| B `30915d8` passive WebRTC diagnostics | `2b77887d7874685c39acc47863a8f21560f8e30c` | [Complete PASS](evidence/integration-f/webrtc-diagnostics-postmerge-1/result.json) |
+| A `63ca661` authorized PREPARING Stop | `7e2fb23011a670d580d62d6775202db530cef904` | [Complete PASS](evidence/integration-f/preparing-stop-a-postmerge-1/result.json) |
+| C `e3b6aad` strict prephysical cleanup proof | `adb03b54ad03e8f9498a9c9de8c9123070fd169e` | [Complete PASS](evidence/integration-f/prephysical-stop-c-postmerge-1/result.json) |
+| C `9669f3a` authenticated readonly StageHealth ticker | `81affc9dec48017ee2b83d90bf35d4f246dbbaff` | [Complete PASS](evidence/integration-f/heartbeat-c-postmerge-1/result.json) |
+| C `3225bcd` observer-only safe LLM metadata | `4f61a97d8cf5642f0d94b409e91277a000fb5936` | [Complete PASS](evidence/integration-f/llm-diagnostics-c-postmerge-1/result.json), Runtime275 total/12skip |
+
+F `e36d790` adds a passive SQL authority snapshot before the Golden Narration start only; C ACKed this test-only shared dependency. C `deb0efc` handoff/evidence merged at `a6215b5`; B `809c2b9` diagnostic evidence merged at `b8cd0bc`. These last two merges add documentation/evidence only; production/test source is identical to tested `4f61a97`.
+
+Real pilot2 failed the existing shared provider cooldown; pilot3 exposed missing Avatar configure and unavailable PREPARING Stop; pilot4 exposed missing actual peer diagnostics; pilots5/6 diagnosed a 5s idle Worker-control disconnect during Chrome offer. Owner fixes above retain original limits/authority. Pilot7 then completed real narration and answer but failed bridge preparation. Pilot8 never created a Session after SSH forwarding disappeared; the authenticated tunnel was restored with SSH keepalive and Worker READY rechecked. No model download/reinstall.
+
+Pilot9 at `4f61a97` recorded bridge LLM completion (HTTP200/stop,1835ms), resumed real narration, six staged artifacts/installed SQL commits (five COMPLETED, one UNKNOWN Stop tail), and normal ENDED/SEALED/released Stop. The selected bridge was empty, not played bridge media. Resumed narration repeated the answered price fact. It **FAILed overall**: actual Chrome audio RMS remained zero, AudioContext did not advance, recording bytes zero. Received RTP/track consumption are not audience playback proof. Owner diagnosis is pending. [All raw source/hashes](evidence/integration-f/real-golden-pilot-tcp-9/result.json). No accepted busy latency/drift, complete 10min/30min run, human naturalness, live crash matrix or real live UDS/platform matrix yet.
+
 ## Delegated ownership and order
 
 | Owner | New work / branch | Shared scope and reason | Final merge owner |
