@@ -36,7 +36,7 @@ def main():
     parser.add_argument("--pg-bin", type=Path, required=True)
     parser.add_argument("--local-transport", choices=("tcp", "uds"), default="tcp")
     parser.add_argument("--real-dns", action="store_true", help="owned actual HTTPS DNS relay; preserves production SSRF validation")
-    parser.add_argument("--mode", choices=("short", "ten-minute", "soak", "faults"), required=True)
+    parser.add_argument("--mode", choices=("short", "fixture-completion-smoke", "ten-minute", "soak", "faults"), required=True)
     parser.add_argument("--key-file", type=private_file, required=True)
     parser.add_argument("--tts-model-dir", type=Path, required=True)
     parser.add_argument("--plan-file", type=Path, required=True)
@@ -51,7 +51,7 @@ def main():
     parser.add_argument("--short-gpu-gate-sha256", help="operator-pinned short real GPU evidence digest for 8s profile")
     parser.add_argument("--seed", type=int, default=5012)
     args = parser.parse_args()
-    seconds = {"short": 60, "ten-minute": 600, "soak": 1800, "faults": 120}[args.mode]
+    seconds = {"short": 60, "fixture-completion-smoke": 60, "ten-minute": 600, "soak": 1800, "faults": 120}[args.mode]
     for port in (args.worker_port, args.management_port):
         if not 1 <= port <= 65535:
             parser.error("port outside valid range")
@@ -75,6 +75,9 @@ def main():
               "scope": "real Go production HTTP components/owned PostgreSQL/production Python Runtime/DeepSeek/XiaoYa/SoulX/native Chrome/local RTMP; fixture audience comment replay",
               "audienceAudible": False, "humanNaturalness": "REQUIRES_SEPARATE_REVIEW",
               "profile": args.profile, "localTransport": args.local_transport, "status": "RUNNING", "checks": []}
+    if args.mode == "fixture-completion-smoke":
+        report.update(observationBudgetSeconds=180, formalGolden1="NOT_FORMAL",
+                      completionRequirement="authored fixture FINISHED, all facts/questions, terminal turns; normal Stop")
     env = {key: os.environ[key] for key in ("PATH", "HOME", "TMPDIR", "LANG") if key in os.environ}
     env.update(ASTRALIVE_GOLDEN_LLM_KEY_FILE=str(args.key_file),
                ASTRALIVE_GOLDEN_REAL="true",

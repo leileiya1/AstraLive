@@ -76,7 +76,7 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	if mode == "" {
 		mode = "short"
 	}
-	if mode != "short" && mode != "ten-minute" && mode != "soak" {
+	if mode != "short" && mode != "fixture-completion-smoke" && mode != "ten-minute" && mode != "soak" {
 		t.Fatal("invalid Golden mode")
 	}
 	localMode := os.Getenv("ASTRALIVE_GOLDEN_LOCAL_TRANSPORT")
@@ -404,6 +404,18 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	}
 	if completeTurns < len(authored.Questions) {
 		t.Fatalf("only %d completed audience answers; no simulated PASS", completeTurns)
+	}
+	if mode == "fixture-completion-smoke" {
+		var pendingTurns, unprovenMedia int
+		if err = pool.QueryRow(ctx, `SELECT count(*) FROM v05_interaction_turns WHERE state NOT IN ('COMPLETED','REJECTED','EXPIRED')`).Scan(&pendingTurns); err != nil {
+			t.Fatal(err)
+		}
+		if err = pool.QueryRow(ctx, `SELECT count(*) FROM v05_timeline_commits WHERE play_state<>'COMPLETED'`).Scan(&unprovenMedia); err != nil {
+			t.Fatal(err)
+		}
+		if pendingTurns != 0 || unprovenMedia != 0 {
+			t.Fatal("fixture-completion smoke has disallowed turn outcomes or unproven media")
+		}
 	}
 	var bad int
 	if err = pool.QueryRow(ctx, `SELECT count(*) FROM live_sessions se JOIN session_provider_bindings b ON b.session_id=se.id WHERE se.status<>'ENDED' OR b.released_at IS NULL`).Scan(&bad); err != nil {
