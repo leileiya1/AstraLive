@@ -181,6 +181,8 @@ class BoundSessionManager(SessionManager):
         self.releasing, self.release_pending = set(), set()
         self.release_requires_ack = set()
         self.cleanups=set()
+        # Volatile proof only; never persisted/rehydrated after Runtime restart.
+        self.failed_create_cleanup={}
         from .staging_settings import StagingSettings
         self.staging_settings=StagingSettings()
 
@@ -189,6 +191,8 @@ class BoundSessionManager(SessionManager):
             if request.sessionId in self.sessions:
                 raise RuntimeFailure("CONFLICT", "Session already exists", 409)
             packet = None
+            phase={"avatar":None,"mediaEntered":False};begin=None;binding=None
+            self.failed_create_cleanup.pop(request.sessionId,None)
             try:
                 packet = await self.binding_client.resolve(request.sessionId)
                 binding = packet["binding"]
@@ -208,6 +212,12 @@ class BoundSessionManager(SessionManager):
                     if not begin or self.bundle_builder is not bundle_factories:
                         raise RuntimeFailure("DEPENDENCY_UNAVAILABLE","Authenticated staging capture required",503)
                     factories=bundle_factories(packet,request.sessionId,self.media_factory,errors,self.staging_settings)
+                    llm_factory,tts_factory,avatar_factory,media_factory=factories
+                    def tracked_avatar():
+                        avatar=avatar_factory();phase["avatar"]=avatar;return avatar
+                    def tracked_media():
+                        phase["mediaEntered"]=True;return media_factory()
+                    factories=(llm_factory,tts_factory,tracked_avatar,tracked_media)
                 else:factories = self.bundle_builder(packet, request.sessionId, self.media_factory, errors)
                 self.bound[request.sessionId] = {"integrationVersion": "0.4.0", "sessionId": request.sessionId, "bindingId": binding["bindingId"], "capturedAt": packet["capturedAt"], "expiresAt": binding["expiresAt"], "profiles": [{k: p[k] for k in ("profileId", "kind", "provider", "version", "updatedAt")} for p in binding["profiles"] if p["kind"] != "LIVE_PLATFORM"], "errors": errors, "workerRef": worker, "deadline": asyncio.get_running_loop().time()+ttl}
                 await super().create_session(request, factories=factories, max_queue=binding["settings"]["policy"]["maxQueue"])
@@ -217,6 +227,19 @@ class BoundSessionManager(SessionManager):
                     task.add_done_callback(lambda t, sid=request.sessionId: asyncio.create_task(self._prepare_done(sid)))
             except BaseException:
                 if packet is not None:
+                    from .soulx_staging import StagingAvatarEngine
+                    avatar=phase["avatar"]
+                    journal=getattr(self.publisher,"journal",None)
+                    if (isinstance(avatar,StagingAvatarEngine) and avatar.configuration_failed
+                        and not avatar.preparation_started and not avatar.link.connection_started and not phase["mediaEntered"]
+                        and request.sessionId not in self.sessions and begin and binding
+                        and begin.get("schemaVersion")=="0.5" and begin.get("commandType")=="BEGIN_RUN" and begin.get("sessionId")==request.sessionId
+                        and type(begin.get("runEpoch")) is int and begin["runEpoch"]>0
+                        and begin.get("commandId") and begin.get("requestFingerprint")
+                        and getattr(journal,"incarnation",None)):
+                        self.failed_create_cleanup[request.sessionId]={
+                            **{key:begin[key] for key in ("sessionId","runEpoch","commandId","requestFingerprint")},
+                            "producerIncarnation":journal.incarnation,"bindingId":binding["bindingId"],"bindingReleaseACK":False}
                     await self._failed_cleanup(request.sessionId)
                 raise
             finally:
@@ -274,6 +297,7 @@ class BoundSessionManager(SessionManager):
                 raise RuntimeFailure("DEPENDENCY_UNAVAILABLE", "Binding release remains pending", 503)
             return
         self.releasing.add(sid)
+        binding_id=self.bound.get(sid,{}).get("bindingId")
         try:
             for tasks in (self.leases, self.monitors):
                 task = tasks.pop(sid, None)
@@ -285,6 +309,9 @@ class BoundSessionManager(SessionManager):
                 self.bound.pop(sid, None)
             try:
                 await self.binding_client.release(sid)
+                proof=self.failed_create_cleanup.get(sid)
+                if proof and binding_id==proof["bindingId"]:
+                    proof["bindingReleaseACK"]=True
                 self.release_pending.discard(sid)
                 self.bound.pop(sid, None)
                 self.release_requires_ack.discard(sid)
@@ -294,6 +321,23 @@ class BoundSessionManager(SessionManager):
                     raise RuntimeFailure("DEPENDENCY_UNAVAILABLE", "Binding release remains pending", 503) from None
         finally:
             self.releasing.discard(sid)
+
+    def prephysical_stop_proof(self,sid,epoch,incarnation):
+        proof=self.failed_create_cleanup.get(sid)
+        begin=getattr(self.publisher,"run_commands",{}).get((sid,"BEGIN_RUN"),{})
+        journal=getattr(self.publisher,"journal",None)
+        if (not proof or proof["sessionId"]!=sid or proof["runEpoch"]!=epoch
+            or proof["producerIncarnation"]!=incarnation or getattr(journal,"incarnation",None)!=incarnation
+            or not proof["bindingReleaseACK"] or sid in self.sessions or sid in self.bound
+            or sid in self.release_pending or sid in self.release_requires_ack or sid in self.releasing
+            or begin.get("commandType")!="BEGIN_RUN"
+            or any(begin.get(key)!=proof[key] for key in ("sessionId","runEpoch","commandId","requestFingerprint"))):
+            return None
+        return dict(proof)
+
+    def acknowledge_prephysical_stop(self,sid,proof):
+        if self.failed_create_cleanup.get(sid)==proof:
+            self.failed_create_cleanup.pop(sid,None)
 
     def _check_lease(self, sid):
         rec = self.bound.get(sid)

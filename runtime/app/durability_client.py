@@ -196,6 +196,7 @@ class DurableCommands:
             if run:
                 run["deadline"] = started_deadline
             try:
+                prephysical_stop=None
                 if kind == "BEGIN_RUN":
                     old = self.manager.sessions.get(sid)
                     if old:
@@ -219,12 +220,29 @@ class DurableCommands:
                         run["sealed"] = True
                     if sid in self.manager.sessions:
                         await self.manager.stop_session(sid, command["traceId"])
+                    else:
+                        begin=getattr(self.publisher,"run_commands",{}).get((sid,"BEGIN_RUN"),{})
+                        captured=begin.get("payload",{}).get("featureFlags",{}).get("soulxStagingEnabled")
+                        deployment=getattr(getattr(self.manager,"staging_settings",None),"enabled",False)
+                        # Preserve flags-off/fenceOnly legacy control receipts.
+                        # Deployment mode is only a negative guard, never proof
+                        # of an absent old Worker's physical cleanup.
+                        strict=captured is True or deployment and captured is not False
+                        if strict:
+                            proof=getattr(self.manager,"prephysical_stop_proof",None)
+                            prephysical_stop=proof(sid,epoch,self.journal.incarnation) if run and proof else None
+                            if not prephysical_stop:
+                                raise JournalError("RECOVERY_UNKNOWN",409)
+                            from .events import envelope
+                            await self.publisher.publish(envelope("SESSION_ENDED",sid,command["traceId"]))
                 else:
                     raise RuntimeFailure("INVALID_ARGUMENT", "Unsupported command", 422)
                 if kind != "SPEAK":
                     await self.journal.request("POST", "/receipts", {"sessionId": sid, "runEpoch": epoch, "commandId": command["commandId"],
                         "receiptSeq": 3, "state": "completed", "producerIncarnation": self.journal.incarnation,
                         "evidenceType": "control_cleanup", "evidenceRef": command["commandId"] + ":control"})
+                    if prephysical_stop:
+                        self.manager.acknowledge_prephysical_stop(sid,prephysical_stop)
             except Exception:
                 # STARTED has been committed. Any exception here remains UNKNOWN for reconciliation.
                 raise
