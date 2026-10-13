@@ -156,6 +156,48 @@ def full_sink_receipts(commit, expected_sinks):
     require(HASH.fullmatch(commit['completion_hash'] or '') is not None, 'MISSING_COMPLETION_HASH')
 
 
+def reject_replayed_mapped_answer_facts(turn_rows, commits, plan):
+    """Reject fact replay using completed proofs, never lexical similarity.
+
+    Generic answer/LLM fact labels do not grant narration coverage. Only Go's
+    explicit mapping under the same captured product and full sinks counts.
+    """
+    turns = {row['document_json']['answer']['segmentId']: row for row in turn_rows
+             if row['state'] == 'COMPLETED' and row['document_json'].get('answer')}
+    proven = set()
+    mapped_answers = 0
+    for commit in sorted(commits, key=lambda row: row['start_sample']):
+        if commit['play_state'] != 'COMPLETED':
+            continue
+        full_sink_receipts(commit, plan['requiredSinks'])
+        identity = commit['identity_json']
+        require(identity['sessionId'] == commit['session_id'] == plan['sessionId'] and
+                commit['descriptor_json']['factVersion'] == plan['factVersion'],
+                'FOREIGN_FACT_PROOF_IDENTITY')
+        if identity['lane'] == 'AUDIENCE_ANSWER':
+            row = turns.get(commit['segment_id'])
+            require(row is not None, 'COMPLETED_ANSWER_WITHOUT_TERMINAL_TURN')
+            require(row['session_id'] == plan['sessionId'] and row['narration_id'] == plan['narrationId'],
+                    'FOREIGN_FACT_PROOF_IDENTITY')
+            turn = row['document_json']
+            mapping = turn.get('mappedNarrationFactIds') or []
+            if mapping:
+                require(turn['capturedProductHash'] == plan['productSnapshotHash'] == plan['factVersion'],
+                        'MAPPED_ANSWER_CAPTURED_VERSION_MISMATCH')
+                require(set(mapping).issubset(set(turn['answerFactIds'])) and
+                        set(mapping).issubset(set(commit['descriptor_json']['factIds'])),
+                        'MAPPED_ANSWER_FACT_PROOF_MISMATCH')
+                proven.update(mapping)
+                mapped_answers += 1
+        elif identity['lane'] == 'NARRATION':
+            require(any(segment['segmentId'] == commit['segment_id'] for segment in plan['segments']),
+                    'FOREIGN_FACT_PROOF_IDENTITY')
+            require(not proven.intersection(commit['descriptor_json']['factIds']),
+                    'REPEATED_PROVEN_FACT_AFTER_MAPPED_ANSWER')
+    return {'completedMappedAnswers': mapped_answers, 'provenMappedFactCount': len(proven),
+            'scope': 'completed required-sink proofs and explicit captured-version mapping only'}
+
+
 def emitted_rgb(decoded, ordinal, sequence):
     """Independent interpretation of the documented 24-bit observation band."""
     require(1 <= ordinal <= 4095 and 0 <= sequence <= 199, 'BARCODE_RANGE')
@@ -448,6 +490,8 @@ class Auditor:
         return {'verified':len(rows),'nativeOriginalRGBStream':'NOT_VERIFIABLE_FROM_LOSSY_H264'}
 
     def continuity(self):
+        reject_replayed_mapped_answer_facts(
+            [r for r in self.sql['turns'] if r['session_id']==self.sid], self.commits, self.plan)
         turns, satisfied = selected_turns([r for r in self.sql['turns'] if r['session_id']==self.sid],
             self.commits,self.refs,self.plan,self.formal)
         expected_required = [f for beat in self.fixture['plan']['beats'] for f in beat['requiredFactIds']]

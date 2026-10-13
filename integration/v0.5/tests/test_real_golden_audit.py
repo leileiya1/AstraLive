@@ -171,4 +171,55 @@ class OracleRejectionTests(unittest.TestCase):
         self.assertEqual(result['status'],'AMBIGUOUS')
 
 
+    def mapped_answer_case(self, following_fact='price'):
+        plan={'sessionId':'s','narrationId':'n','requiredSinks':['chrome','rtmp'],
+              'productSnapshotHash':'captured','factVersion':'captured','segments':[{'segmentId':'1'}]}
+        answer=self.commit();narration=self.commit()
+        for index,(commit,lane,fact) in enumerate(((answer,'AUDIENCE_ANSWER','price'),
+                                                 (narration,'NARRATION',following_fact))):
+            commit.update(segment_id=str(index),session_id='s',start_sample=index*640,end_sample=(index+1)*640,
+                          descriptor_json={'factIds':[fact],'factVersion':'captured'})
+            commit['identity_json'].update(lane=lane)
+            for receipt in commit['sink_receipts']:
+                receipt.update(identity=copy.deepcopy(commit['identity_json']),
+                               startSample=commit['start_sample'],endSample=commit['end_sample'])
+        turn={'state':'COMPLETED','session_id':'s','narration_id':'n','document_json':{'answer':{'segmentId':'0'},
+              'mappedNarrationFactIds':['price'],'answerFactIds':['price'],
+              'capturedProductHash':'captured'}}
+        return [turn],[answer,narration],plan
+
+    def test_different_wording_does_not_excuse_replaying_proven_answer_fact(self):
+        turns,commits,plan=self.mapped_answer_case()
+        turns[0]['document_json']['answer']['text']='这款目前价格是人民币99.00元。'
+        commits[1]['descriptor_json']['text']='这份说明书，当前标价是人民币99.00元。'
+        self.assert_rejected('REPEATED_PROVEN_FACT_AFTER_MAPPED_ANSWER',
+                             lambda:audit.reject_replayed_mapped_answer_facts(turns,commits,plan))
+
+    def test_resuming_next_unanswered_fact_is_allowed(self):
+        turns,commits,plan=self.mapped_answer_case('stock')
+        result=audit.reject_replayed_mapped_answer_facts(turns,commits,plan)
+        self.assertEqual(result['provenMappedFactCount'],1)
+
+    def test_generic_answer_labels_do_not_grant_mapping(self):
+        turns,commits,plan=self.mapped_answer_case()
+        turns[0]['document_json']['mappedNarrationFactIds']=[]
+        result=audit.reject_replayed_mapped_answer_facts(turns,commits,plan)
+        self.assertEqual(result['provenMappedFactCount'],0)
+
+    def test_foreign_product_answer_mapping_is_rejected(self):
+        turns,commits,plan=self.mapped_answer_case()
+        turns[0]['document_json']['capturedProductHash']='old-product'
+        self.assert_rejected('MAPPED_ANSWER_CAPTURED_VERSION_MISMATCH',
+                             lambda:audit.reject_replayed_mapped_answer_facts(turns,commits,plan))
+
+    def test_partial_and_unknown_answers_cannot_claim_proven_fact_coverage(self):
+        turns,commits,plan=self.mapped_answer_case()
+        commits[0]['sink_receipts'].pop()
+        self.assert_rejected('MISSING_OR_FOREIGN_REQUIRED_SINK_MEDIA',
+                             lambda:audit.reject_replayed_mapped_answer_facts(turns,commits,plan))
+        commits[0]['play_state']='UNKNOWN'
+        result=audit.reject_replayed_mapped_answer_facts(turns,commits,plan)
+        self.assertEqual(result['provenMappedFactCount'],0)
+
+
 if __name__=='__main__':unittest.main()

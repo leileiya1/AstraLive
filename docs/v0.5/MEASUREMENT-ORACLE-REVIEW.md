@@ -1,0 +1,11 @@
+# Independent real-media oracle correction
+
+F owns `integration/v0.5/real_golden_audit.py` and `observer_audit.py`; B independently reviewed the exact changes. Frozen command/receipt/identity/resource contracts and production media code are unchanged.
+
+The fact oracle now rejects later COMPLETED narration containing an explicitly mapped, same-captured-version answer fact already proved by all required audio/video sinks. Generic LLM labels, lexical similarity, partial or UNKNOWN playback cannot grant completion. Its standalone scope is this fact check; complete identity/trace/epoch validation remains a prerequisite in the full auditor. Actual pilot9 is **FAIL: REPEATED_PROVEN_FACT_AFTER_MAPPED_ANSWER**, regardless of its older substring-based producer policy. [Actual input/hash/result](evidence/integration-f/tcp9-independent-fact-replay.json), [A's57-check SQL reproduction](evidence/integration-f/real-golden-pilot-tcp-9-independent-a/REPLAY.md).
+
+The waveform oracle previously divided FFT residuals by artificial epsilon energy after cumulative subtraction lost near-zero window energy. A synthetic microscopic-copy reproducer returned impossible correlation88.298943 and MATCHED. The corrected oracle excludes windows below its declared .001 RMS observation floor and directly recomputes both selected and competing normalized scores. Nonfinite, out-of-range or inconsistent FFT/direct candidates yield NUMERICAL_UNCERTAINTY; repeated genuine matches remain AMBIGUOUS. `longdouble` has52 mantissa bits on this Mac, so no extra precision is claimed. [Retained before/after numerical rejection](evidence/integration-f/numerical-silence-negative-reproducer.json).
+
+27 independent rejection/boundary tests passed, including an injected error affecting only the second FFT peak. These synthetic arrays are numerical tests, not real GPU or live quality evidence. [Exact test output](evidence/integration-f/fact-and-waveform-oracle-tests.log).
+
+Pilot9's recorded RTMP has actual speech and post-GPU observation bands; corrected component matches agree with B's independent numerical diagnostic. This does not complete the UNKNOWN Stop tail, restore missing Chrome audio/recording, prove lip sync/audibility/naturalness, or pass Golden1/SLA. All old invalid numerical outputs remain retained and excluded from accepted A/V metrics.

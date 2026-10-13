@@ -67,14 +67,34 @@ def match(reference,observed,expected_seconds,rate=8000,window_seconds=10):
     size=1<<(len(target)+len(ref)-2).bit_length()
     convolution=np.fft.irfft(np.fft.rfft(target,size)*np.fft.rfft(ref[::-1],size),size)
     numerator=convolution[len(ref)-1:len(target)]
-    cumulative=np.r_[0,np.cumsum(target*target)]
+    # Long silence after speech makes cumulative subtraction lose tiny window
+    # energies. longdouble is only double on some platforms; reject low energy
+    # and independently recompute candidates, never invent epsilon energy.
+    target_extended=target.astype(np.longdouble)
+    cumulative=np.r_[np.longdouble(0),np.cumsum(target_extended*target_extended,dtype=np.longdouble)]
     energy=cumulative[len(ref):]-cumulative[:-len(ref)]
-    denominator=norm*np.sqrt(np.maximum(energy,1e-20))
-    correlation=numerator/denominator
-    best=int(np.argmax(correlation));score=float(correlation[best])
+    valid=energy>=len(ref)*.001**2
+    if not np.any(valid):return {"status":"MISSING_OR_SILENT_RECORDING"}
+    correlation=np.full(len(numerator),-np.inf)
+    correlation[valid]=numerator[valid]/(norm*np.sqrt(energy[valid]))
+    best=int(np.argmax(correlation))
+    ref_extended=ref.astype(np.longdouble)
+    ref_energy=np.sum(ref_extended*ref_extended,dtype=np.longdouble)
+    def exact_score(index):
+        window=target_extended[index:index+len(ref)]
+        return float(np.sum(window*ref_extended,dtype=np.longdouble)/
+                     np.sqrt(np.sum(window*window,dtype=np.longdouble)*ref_energy))
+    score=exact_score(best)
     competitors=correlation.copy()
-    competitors[max(0,best-rate//4):min(len(competitors),best+rate//4+1)]=-1
-    second=float(np.max(competitors)) if len(competitors) else -1
+    competitors[max(0,best-rate//4):min(len(competitors),best+rate//4+1)]=-np.inf
+    other=int(np.argmax(competitors))
+    has_competitor=np.isfinite(competitors[other])
+    second=exact_score(other) if has_competitor else -1
+    if (not np.isfinite(score) or not np.isfinite(correlation[best]) or not np.isfinite(second)
+        or abs(score)>1+1e-9 or abs(second)>1+1e-9
+        or abs(score-float(correlation[best]))>1e-5
+        or (has_competitor and abs(second-float(competitors[other]))>1e-5)):
+        return {"status":"NUMERICAL_UNCERTAINTY"}
     status="UNRESOLVED" if score<.65 else "AMBIGUOUS" if second>=score-.05 else "MATCHED"
     return {"status":status, "correlation":round(score,6),"competingCorrelation":round(second,6),
             "referenceStartSeconds":(lo+best)/rate,"windowStartSeconds":lo/rate,"referenceSamples":len(ref),"sampleRate":rate}

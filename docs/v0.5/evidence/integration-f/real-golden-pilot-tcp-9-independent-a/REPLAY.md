@@ -1,0 +1,9 @@
+# Reproduction of the original 57 checks
+
+checker-original-57.py preserves the Python body of the original read-only audit, including its exact check expressions and fixed source/input paths. No predicate was strengthened, relaxed, renamed or replaced. This is a pinned snapshot audit rather than a general-purpose acceptance runner.
+
+The actual repeat command and working directory, exit status, stdout/stderr hashes and before/after hashes are in replay-invocation.json. replay.stdout.log and replay.stderr.log are actual subprocess outputs. replay-result.json is a separately saved repeated result; the original result.json was not overwritten. Repeating produced exactly the same result bytes (SHA256 dd5725dad7b5f1c920afeb61f1555d73676f31fe91d28137a80a127054f8d7e1): 57 checks, zero failed, six installed, five completed, one Stop UNKNOWN tail and zero spoken bridge commits.
+
+The input SQL evidence remains SHA256 f425e5b722cc03045f1c2e73c81f40c08992212354f1edcc6e0f34e6cc4a53cd. The script retrieves the helper from git source 4f61a97d8cf5642f0d94b409e91277a000fb5936. To rerun, preserve that Git object and restore the archived SQL input to the exact path named in invocation.json, then invoke reproduce-original-57.sh (or its equivalent explicit Python command). It creates a new temporary output directory each time and only reads the input. All source/input paths are included for reproducibility; no provider key, password or token value occurs in the checker or invocation.
+
+The original checker reports failed booleans in JSON/stdout; process exit0 alone does not mean all predicates passed. The actual repetition explicitly compared all result bytes to the preserved original and checked checks=57/failed=0. Its correctness scope is the original README: row/hash/ref/range consistency, not independent real GPU execution, viewer audibility, authorization attacks or chaos recovery.

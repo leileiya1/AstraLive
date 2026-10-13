@@ -1,0 +1,26 @@
+{
+  "scope": "Synthetic numerical rejection reproducer, not live evidence",
+  "oldSource": "e296a79",
+  "oldOracleSHA256": "7345349416b5086beec07ae8d3d5a32125132a49cab5264d1058cb5997004ce3",
+  "newOracleSHA256": "3ac572ff55678dd8d6707077aa0855e26cd1fc23a5086f4207fb2ba823eb01fe",
+  "rngSeed": 7,
+  "old": {
+    "status": "MATCHED",
+    "correlation": 88.298943,
+    "competingCorrelation": 2.778066,
+    "referenceStartSeconds": 7.0,
+    "windowStartSeconds": 0.0,
+    "referenceSamples": 8000,
+    "sampleRate": 8000
+  },
+  "corrected": {
+    "status": "UNRESOLVED",
+    "correlation": 0.042051,
+    "competingCorrelation": 0.040922,
+    "referenceStartSeconds": 1.117375,
+    "windowStartSeconds": 0.0,
+    "referenceSamples": 8000,
+    "sampleRate": 8000
+  },
+  "longdoubleMantissaBits": 52
+}
