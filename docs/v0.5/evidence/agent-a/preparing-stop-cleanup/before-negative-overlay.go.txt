@@ -1,0 +1,187 @@
+package durability_test
+
+import (
+	"encoding/json"
+	"errors"
+	"io"
+	"log/slog"
+	"net/http"
+	"net/http/httptest"
+	"strings"
+	"testing"
+
+	"astralive/backend/internal/app"
+	"astralive/backend/internal/durability"
+	"astralive/backend/internal/httpapi"
+	"astralive/backend/internal/userconfig"
+	"github.com/jackc/pgx/v5"
+)
+
+// Real PostgreSQL + actual public authorization/idempotency + A journal. The
+// injected HTTP-delivery failure has no Runtime/native sink cleanup proof.
+func TestPreparingStopUnknownStartupReleasedBinding(t *testing.T) {
+	ctx, p, store := pg(t)
+	r := run(t, ctx, p, store, "s")
+	if _, e := p.Exec(ctx, `UPDATE live_sessions SET status='PREPARING' WHERE id='s'`); e != nil {
+		t.Fatal(e)
+	}
+	tx, e := p.Begin(ctx)
+	if e != nil {
+		t.Fatal(e)
+	}
+	begin, e := store.Enqueue(ctx, tx, r, "BEGIN_RUN", "start", "start-trace", "", map[string]any{})
+	if e != nil {
+		tx.Rollback(ctx)
+		t.Fatal(e)
+	}
+	if e = tx.Commit(ctx); e != nil {
+		t.Fatal(e)
+	}
+	claim, e := store.Claim(ctx)
+	if e != nil || claim.Command.CommandID != begin.CommandID {
+		t.Fatal("startup claim", claim, e)
+	}
+	if _, e = store.Accept(ctx, claim.Raw); e != nil {
+		t.Fatal(e)
+	}
+	first, e := store.StartAttempt(ctx, "s", begin.CommandID, "runtime-before-failure", r.Token)
+	if e != nil || !first.Execute {
+		t.Fatal("startup admission", first, e)
+	}
+	// A second request does not authorize repeating startup/speech. Marking a
+	// STARTED attempt ambiguous is the existing production journal behavior.
+	again, e := store.StartAttempt(ctx, "s", begin.CommandID, "runtime-before-failure", r.Token)
+	if e != nil || again.Execute {
+		t.Fatal("ambiguous startup retried", again, e)
+	}
+	if _, e = p.Exec(ctx, `UPDATE session_provider_bindings SET released_at=clock_timestamp() WHERE session_id='s'`); e != nil {
+		t.Fatal(e)
+	}
+	if e = store.Finish(ctx, claim, "UNKNOWN", "ACK_AMBIGUOUS", 0); !errors.Is(e, durability.ErrFence) {
+		t.Fatal("released binding authorized ordinary completion", e)
+	}
+	if _, e = p.Exec(ctx, `UPDATE v05_outbox SET lease_expires_at=clock_timestamp()-interval '1 second' WHERE command_id=$1`, begin.CommandID); e != nil {
+		t.Fatal(e)
+	}
+	if _, e = p.Exec(ctx, `UPDATE v05_recovery_leases SET expires_at=clock_timestamp()-interval '1 second' WHERE session_id='s'`); e != nil {
+		t.Fatal(e)
+	}
+	if _, e = store.Claim(ctx); !errors.Is(e, pgx.ErrNoRows) {
+		t.Fatal("expired startup redelivered", e)
+	}
+
+	log := slog.New(slog.NewTextHandler(io.Discard, nil))
+	service := app.New(p, nil, log)
+	service.Durable = store
+	cfg := &userconfig.Service{DB: p, Origin: "https://preparing-stop.test"}
+	owner, e := cfg.IssueSession(ctx, userconfig.Scope{TenantID: "tenant", UserID: "user"})
+	if e != nil {
+		t.Fatal(e)
+	}
+	foreign, e := cfg.IssueSession(ctx, userconfig.Scope{TenantID: "tenant", UserID: "other"})
+	if e != nil {
+		t.Fatal(e)
+	}
+	router := (&httpapi.Server{S: service, Config: cfg, Env: "production", Log: log}).Router()
+	call := func(cookie, origin, key string) *httptest.ResponseRecorder {
+		t.Helper()
+		req := httptest.NewRequest("POST", "/api/v1/live-sessions/s/stop", strings.NewReader(`{}`))
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Origin", origin)
+		req.Header.Set("Idempotency-Key", key)
+		if cookie != "" {
+			req.AddCookie(&http.Cookie{Name: userconfig.ProductCookie, Value: cookie})
+		}
+		w := httptest.NewRecorder()
+		router.ServeHTTP(w, req)
+		return w
+	}
+	for _, tc := range []struct {
+		name, cookie, origin string
+		status               int
+	}{
+		{"anonymous", "", cfg.Origin, 401},
+		{"foreign-session-owner", foreign, cfg.Origin, 404},
+		{"bad-origin", owner, "https://foreign.test", 403},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			if w := call(tc.cookie, tc.origin, "denied-"+tc.name); w.Code != tc.status {
+				t.Fatal(w.Code, w.Body.String())
+			}
+		})
+	}
+	// Session ownership alone must not bypass the captured room owner.
+	if _, e = p.Exec(ctx, `UPDATE resource_owners SET user_id='other' WHERE kind='room' AND resource_id='room'`); e != nil {
+		t.Fatal(e)
+	}
+	if w := call(owner, cfg.Origin, "room-denied"); w.Code != 404 {
+		t.Fatal("foreign room cleanup authorized", w.Code, w.Body.String())
+	}
+	if _, e = p.Exec(ctx, `UPDATE resource_owners SET user_id='user' WHERE kind='room' AND resource_id='room'`); e != nil {
+		t.Fatal(e)
+	}
+	var before int
+	if e = p.QueryRow(ctx, `SELECT count(*) FROM v05_outbox WHERE command_type='STOP_SESSION'`).Scan(&before); e != nil || before != 0 {
+		t.Fatal("unauthorized stop persisted", before, e)
+	}
+	w := call(owner, cfg.Origin, "owner-stop")
+	if w.Code != 202 {
+		t.Fatal("PREPARING cleanup rejected", w.Code, w.Body.String())
+	}
+	var response struct {
+		Data struct {
+			OperationID string `json:"operationId"`
+		} `json:"data"`
+	}
+	if e = json.Unmarshal(w.Body.Bytes(), &response); e != nil || response.Data.OperationID == "" {
+		t.Fatal("stop missing stable operation", e)
+	}
+	for _, key := range []string{"owner-stop", "another-owner-stop"} {
+		repeat := call(owner, cfg.Origin, key)
+		var got struct {
+			Data struct {
+				OperationID string `json:"operationId"`
+			} `json:"data"`
+		}
+		if e = json.Unmarshal(repeat.Body.Bytes(), &got); e != nil || repeat.Code != 202 || got.Data.OperationID != response.Data.OperationID {
+			t.Fatal("duplicate stop changed envelope", repeat.Code, repeat.Body.String(), e)
+		}
+	}
+	var status, runStatus, inboxState, delivery string
+	var barrier, epoch, commands int64
+	if e = p.QueryRow(ctx, `SELECT se.status,r.status,r.control_barrier_seq,r.run_epoch,r.current_command_seq FROM live_sessions se JOIN v05_session_runs r ON r.session_id=se.id WHERE se.id='s'`).Scan(&status, &runStatus, &barrier, &epoch, &commands); e != nil || status != "STOPPING" || runStatus != "STOPPING" || barrier != 2 || epoch != 1 || commands != 2 {
+		t.Fatal("stop barrier/run changed", status, runStatus, barrier, epoch, commands, e)
+	}
+	if e = p.QueryRow(ctx, `SELECT i.execution_state,o.delivery_state FROM v05_inbox i JOIN v05_outbox o USING(command_id) WHERE i.command_id=$1`, begin.CommandID).Scan(&inboxState, &delivery); e != nil || inboxState != "UNKNOWN" || delivery != "UNKNOWN" {
+		t.Fatal("ambiguous startup normalized/replayed", inboxState, delivery, e)
+	}
+	stop, e := store.Claim(ctx)
+	if e != nil || stop.Command.CommandType != "STOP_SESSION" || stop.Command.CommandSeq != barrier {
+		t.Fatal("unknown startup blocked cleanup priority", stop.Command, e)
+	}
+	a, e := store.Accept(ctx, stop.Raw)
+	if e != nil || !a.Execute {
+		t.Fatal("cleanup journal rejected released binding", a, e)
+	}
+	started, e := store.StartAttempt(ctx, "s", stop.Command.CommandID, "runtime-cleanup", a.Run.Token)
+	if e != nil || !started.Execute {
+		t.Fatal("cleanup admission rejected", started, e)
+	}
+	// No simulated completed receipt: without native cleanup proof keep STOPPING.
+	if _, e = store.Accept(ctx, claim.Raw); e == nil {
+		t.Fatal("old BEGIN_RUN accepted after cleanup barrier")
+	}
+	if _, e = service.Interrupt(ctx, "s", "force-after-stop", "OPERATOR_INTERRUPT"); e == nil {
+		t.Fatal("FORCE bypassed released binding/Stop")
+	}
+	if _, e = service.Speak(ctx, "s", "forbidden", 100, "FORCE", "OPERATOR", "after-stop", nil); e == nil {
+		t.Fatal("FORCE speech revived stopped startup")
+	}
+	if _, e = p.Exec(ctx, `INSERT INTO live_sessions(id,room_id,status) VALUES('legacy','room','PREPARING')`); e != nil {
+		t.Fatal(e)
+	}
+	legacy := app.New(p, nil, log)
+	if _, e = legacy.Stop(ctx, "legacy", "legacy-stop"); !errors.Is(e, app.ErrConflict) {
+		t.Fatal("flags-off v1.1 state semantics changed", e)
+	}
+}
