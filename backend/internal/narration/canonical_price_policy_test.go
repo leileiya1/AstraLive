@@ -108,3 +108,36 @@ func TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts(t *testing
 		t.Fatal("canonical complete proof did not skip once")
 	}
 }
+
+func TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping(t *testing.T) {
+	for _, mode := range []string{"public-nil", "private-nil", "missing-key", "explicit-empty"} {
+		t.Run(mode, func(t *testing.T) {
+			d := fixture(t, 2)
+			s := start(t, &d)
+			must(t, d.CompleteNarration(proof(d, s), d.Revision, d.RunEpoch))
+			target := &d.Plan.Segments[1]
+			target.FactIDs = []string{"price"}
+			target.Text = "本商品当前标价是人民币99.00元。"
+			target.TextHash = ""
+			d.State = Answering
+			d.Turn = &Turn{ID: "turn", MappedNarrationFacts: []string{"price"}, Answer: &Segment{ID: "answer", Text: "这款目前价格是人民币99.00元。", TextHash: Hash("这款目前价格是人民币99.00元。"), FactIDs: []string{"price"}, Lane: "AUDIENCE_ANSWER"}}
+			d.Resume = &ResumePoint{NextSegmentID: target.ID, NextBeatID: target.BeatID}
+			p := proof(d, *d.Turn.Answer)
+			var coverage map[string]string
+			if mode == "missing-key" {
+				coverage = map[string]string{"other": "some-hash"}
+			}
+			if mode == "explicit-empty" {
+				coverage = map[string]string{target.ID: ""}
+			}
+			if mode == "public-nil" {
+				must(t, d.CompleteAnswer(p, d.Revision, d.RunEpoch))
+			} else {
+				must(t, d.completeAnswerWithCoverage(p, d.Revision, d.RunEpoch, coverage))
+			}
+			if d.Plan.Segments[1].Status != "PENDING" || d.Cursor.NextOrdinal != 1 || contains(d.Cursor.CompletedFacts, "price") {
+				t.Fatal("missing explicit nonempty mapping skipped price")
+			}
+		})
+	}
+}

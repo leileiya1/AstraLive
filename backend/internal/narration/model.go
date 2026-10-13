@@ -586,7 +586,8 @@ func (d *Document) completeAnswerWithCoverage(p Checkpoint, rev, run int64, cove
 		for _, f := range s.FactIDs {
 			covered = covered && contains(d.Turn.MappedNarrationFacts, f)
 		}
-		canonical := coverage[s.ID] == s.TextHash && singletonPrice(s.FactIDs) && singletonPrice(d.Turn.MappedNarrationFacts)
+		coverageHash, explicitlyMapped := coverage[s.ID]
+		canonical := explicitlyMapped && coverageHash != "" && coverageHash == s.TextHash && singletonPrice(s.FactIDs) && singletonPrice(d.Turn.MappedNarrationFacts)
 		if covered && s.Status == "PENDING" && (strings.Contains(d.Turn.AnswerText, s.Text) || canonical) {
 			s.Status = "SATISFIED_BY_ANSWER"
 			d.Cursor.CompletedSegments = appendUnique(d.Cursor.CompletedSegments, s.ID)
