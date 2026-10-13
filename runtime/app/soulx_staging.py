@@ -55,6 +55,7 @@ class StagingClient:
         self.reader=self.writer=self.rx=None;self.ready=None;self.epoch=None
         self.pending={};self.write_lock=asyncio.Lock();self.active=None;self.rtt_ms=0
         self.highest=0;self.failed=None;self.answered={};self.on_failure=None
+        self.connection_started=False
 
     async def _read(self):
         prefix=await self.reader.readexactly(8);size,payload_size=struct.unpack("!II",prefix)
@@ -87,6 +88,7 @@ class StagingClient:
         finally:self.pending.pop(marker,None)
 
     async def connect(self):
+        self.connection_started=True
         begun=time.monotonic()
         try:
             self.reader,self.writer=await asyncio.wait_for(asyncio.open_connection("127.0.0.1",self.endpoint["port"]),2)
@@ -317,6 +319,7 @@ class StagingAvatarEngine:
         self.link=StagingClient(endpoint,sid,worker_ref,settings);self.settings=settings
         self.degraded=False;self.generation_id=0;self.speaking=False
         self.config=None;self.running=False
+        self.configuration_failed=False;self.preparation_started=False
         self.publication_fence=None
         self.link.on_failure=self._failed
         from .staging_observer import StagingObserver
@@ -328,11 +331,17 @@ class StagingAvatarEngine:
     def configure_session(self,config):
         # Native staged frames and source/timeline mapping are fixed at25fps.
         # Reject unsupported Session clocks before opening the captured Worker.
-        if config.fps!=25:raise StagingFailure("STAGING_UNSUPPORTED")
-        if self.link.ready is not None or self.running:raise StagingFailure("STAGING_CONFLICT")
-        self.config=config.model_copy(deep=True)
+        self.configuration_failed=False
+        try:
+            if config.fps!=25:raise StagingFailure("STAGING_UNSUPPORTED")
+            if self.link.ready is not None or self.running:raise StagingFailure("STAGING_CONFLICT")
+            self.config=config.model_copy(deep=True)
+        except BaseException:
+            self.configuration_failed=True
+            raise
     async def prepare(self,config):
         if self.config is None:raise StagingFailure("STAGING_UNSUPPORTED")
+        self.preparation_started=True
         await self.link.connect()
     async def start(self):
         if self.config is None or self.link.ready is None or self.link.failed or self.link.writer is None:
