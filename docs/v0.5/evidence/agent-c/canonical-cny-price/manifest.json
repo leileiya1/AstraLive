@@ -1,0 +1,98 @@
+{
+  "productionSource": "c07658836c489105d33d56650c45c775152a351e",
+  "latestTestSource": "c07658836c489105d33d56650c45c775152a351e",
+  "scope": "Actual owned PostgreSQL production admission/journal/projection with explicitly controlled boundary/sink fixtures; no Runtime/GPU/real audio acceptance",
+  "priorFailures": "Runs1-3 are preserved pre-pin fixture failures: missing source descriptor fields, attempted immutable-policy alteration, missing final PTS, and JSON object string-order duplicate comparison. No production guards/contract limits were relaxed.",
+  "files": {
+    "full-result.json": {
+      "sha256": "af97e5e7507c29e7839399df92e136a1fd00ace590d55ba67d9ee575d64655d5",
+      "bytes": 2101
+    },
+    "full-faults.log": {
+      "sha256": "d88901936ccb1cca3802f0233dbeca7af137c85d815bfd588216a228761646c6",
+      "bytes": 101507
+    },
+    "full-runtime.log": {
+      "sha256": "f8341ce79824d8f06e34e287e0887d24f48af8cbfccd9eef231e70035f69edcd",
+      "bytes": 460949
+    },
+    "full-frontend-test.log": {
+      "sha256": "60def05f5841d69b4f98650abf7b8eb74a91fc4e99806514bfe9c80d44a90dbd",
+      "bytes": 704
+    },
+    "full-frontend-build.log": {
+      "sha256": "d4cbd87d3ce9b30686657bab139e6bc95cfa3013eff6c192b22de6e59b49e3ac",
+      "bytes": 2409
+    },
+    "owned-pg-race-1.log": {
+      "sha256": "efd6aeac2099a0f82f3bebb41c5f32a57e0b280b39ee205445b1c7a50bb27aa3",
+      "bytes": 7531
+    },
+    "owned-pg-race-2.log": {
+      "sha256": "58f5b5956b9a07b4262bacdee3744751214887588378f358ec2e8fdc893b3a92",
+      "bytes": 7099
+    },
+    "owned-pg-race-3.log": {
+      "sha256": "d8a9b19b2e9fbb93ddf535dd99610d02f7609407b32f95bd7099ea0fec5bc59a",
+      "bytes": 6322
+    },
+    "owned-pg-race-4.log": {
+      "sha256": "366efae5bbcf0ea265b02dec267f0f7a0946d85a210728477ee6bf29f0cb8c65",
+      "bytes": 6400
+    },
+    "owned-pg-race-5.log": {
+      "sha256": "ed8efbe7fea675469cacf9f34142e31e072ab38a73c7aadfd11ba1bb42793d40",
+      "bytes": 6560
+    },
+    "unit-policy.log": {
+      "sha256": "c819393fdb0cf452d59fdfbe3502871b75650548eb07e5e67bd0a0c59df50608",
+      "bytes": 3236
+    },
+    "ref-recheck-full-result.json": {
+      "sha256": "216dc0e51491ba8d78a78c66edd6e3d6fe7f6a6f36f997b83e9bc6a3b06a528a",
+      "bytes": 2101
+    },
+    "ref-recheck-full-faults.log": {
+      "sha256": "a4fec4378dcfd6e781b91e18f73b69ae8e05614aa9a7d52067bebaa4e63d1afe",
+      "bytes": 102972
+    },
+    "ref-recheck-full-runtime.log": {
+      "sha256": "bf975868171953a137b49ab19796330ade61996b18cf10b8908de04ccebd4a6e",
+      "bytes": 460535
+    },
+    "ref-recheck-full-frontend-test.log": {
+      "sha256": "7180ddcfc4888d5ebcefedd8e1ddba57705e67907a272cedd4f23b7ede0e3599",
+      "bytes": 705
+    },
+    "ref-recheck-full-frontend-build.log": {
+      "sha256": "ea41bc7e7229a637113cf8e6e0dd178ee3c9d4f9725765cec37ef33683ddf443",
+      "bytes": 2407
+    },
+    "final-full-result.json": {
+      "sha256": "9da050276db31381b972bfd782b322c79ced4047507d9fa653989f5a80b953e3",
+      "bytes": 2101
+    },
+    "final-full-faults.log": {
+      "sha256": "ecf9fbd95b97df98a2abab5c0418b4f3c47901212fb6bbca63c594e3998d5a03",
+      "bytes": 104665
+    },
+    "final-full-runtime.log": {
+      "sha256": "11a3e1b74b60d86997a41f41aab374141116cafe3e61bed4fd4c85080e82d65f",
+      "bytes": 460556
+    },
+    "final-full-frontend-test.log": {
+      "sha256": "4afbfdfbfbf229fa1fd6030fdac9ae40f8fbbfe6cc2aaa29a39c1cfd7bed4c68",
+      "bytes": 704
+    },
+    "final-full-frontend-build.log": {
+      "sha256": "2b2972b135c8b0c4533243b43eeb5de5d945a61b3709e6ecd374963f83359b90",
+      "bytes": 2409
+    },
+    "zero-map-focused.log": {
+      "sha256": "2089bf71fc78ce4b0a90680cb09830560a284faa7976c25e56278e5dc72a0350",
+      "bytes": 4192
+    }
+  },
+  "originalProductionSource": "df213ca4074dfb8d9b962f19d3e1d252bc5764f3",
+  "continuation": "Final evidence delivery was unfinished when the previous agent turn stopped. On October 14 the pending tool sessions returned normal completion and the exact immutable c076588 gate PASS was verified. No GPU/SSH operations in this local continuation."
+}

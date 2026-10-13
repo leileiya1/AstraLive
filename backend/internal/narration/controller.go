@@ -135,7 +135,7 @@ func (c *Controller) save(ctx context.Context, tx pgx.Tx, d Document, old int64)
 		if d.Resume != nil {
 			pointRev = &d.Resume.Revision
 		}
-		_, e = tx.Exec(ctx, `INSERT INTO v05_interaction_turns(turn_id,narration_id,session_id,tenant_id,user_id,source_ids,question_hash,question,deadline,state,resume_point_revision,answer_summary,document_json) SELECT $1,narration_id,session_id,tenant_id,user_id,$3,$4,$5,$6,$7,$8,$9,$10 FROM v05_narrations WHERE narration_id=$2 ON CONFLICT(turn_id) DO UPDATE SET state=EXCLUDED.state,resume_point_revision=EXCLUDED.resume_point_revision,answer_summary=EXCLUDED.answer_summary,document_json=EXCLUDED.document_json,updated_at=clock_timestamp()`, t.ID, d.Plan.ID, source, t.QuestionHash, t.Question, t.Deadline, t.Status, pointRev, t.AnswerText, traw)
+		_, e = tx.Exec(ctx, `INSERT INTO v05_interaction_turns(turn_id,narration_id,session_id,tenant_id,user_id,source_ids,question_hash,question,deadline,state,resume_point_revision,answer_summary,document_json) SELECT $1,narration_id,session_id,tenant_id,user_id,$3,$4,$5,$6,$7,$8,$9,$10 FROM v05_narrations WHERE narration_id=$2 ON CONFLICT(turn_id) DO UPDATE SET state=EXCLUDED.state,resume_point_revision=EXCLUDED.resume_point_revision,answer_summary=EXCLUDED.answer_summary,document_json=EXCLUDED.document_json || CASE WHEN v05_interaction_turns.document_json ? '_cnyPriceCoverageDecision' THEN jsonb_build_object('_cnyPriceCoverageDecision',v05_interaction_turns.document_json->'_cnyPriceCoverageDecision') ELSE '{}'::jsonb END,updated_at=clock_timestamp()`, t.ID, d.Plan.ID, source, t.QuestionHash, t.Question, t.Deadline, t.Status, pointRev, t.AnswerText, traw)
 		if e != nil {
 			return e
 		}
@@ -268,6 +268,8 @@ func (c *Controller) Start(ctx context.Context, sid, trace string, x StartReques
 	if active {
 		return Document{}, ErrBoundary
 	}
+	// Capture exact authored provenance before trusted substitution/packing.
+	canonicalTemplates := canonicalPriceTemplates(x.Beats, facts)
 	// Dynamic claims in authored plans use trusted substitutions. Numeric
 	// values are not copied from a stale script and facts are checked again at commit.
 	for bi := range x.Beats {
@@ -302,7 +304,10 @@ func (c *Controller) Start(ctx context.Context, sid, trace string, x StartReques
 	if e = c.Store.ConfigureTimelineOutput(ctx, tx, run, 48000, x.RequiredSinks, nil); e != nil {
 		return d, e
 	}
-	plan, _ := json.Marshal(p)
+	plan, e := marshalCanonicalPlan(p, run.Epoch, captured.Enabled, canonicalTemplates)
+	if e != nil {
+		return d, e
+	}
 	raw, _ := json.Marshal(d)
 	_, e = tx.Exec(ctx, `INSERT INTO v05_narrations(narration_id,session_id,tenant_id,user_id,run_epoch,revision,state,script_version,product_snapshot_hash,plan_json,document_json) SELECT $1,session_id,tenant_id,user_id,run_epoch,$4,$5,$6,$7,$8,$9 FROM v05_session_runs WHERE session_id=$2 AND run_epoch=$3`, nid, sid, run.Epoch, d.Revision, d.State, p.ScriptVersion, hash, plan, raw)
 	if e != nil {
@@ -711,6 +716,7 @@ func (c *Controller) Project(ctx context.Context, tx pgx.Tx, command durability.
 		return ErrStale
 	}
 	old := d.Revision
+	var fulfilledDecision *canonicalPriceDecision
 	if d.StopBarrier || d.OperatorOverride {
 		return ErrStopped
 	}
@@ -764,7 +770,11 @@ func (c *Controller) Project(ctx context.Context, tx pgx.Tx, command durability.
 				e = d.CommitResumePoint(p, d.Revision, d.RunEpoch)
 			}
 		case "AUDIENCE_ANSWER":
-			e = d.CompleteAnswer(p, old, d.RunEpoch)
+			var coverage map[string]string
+			fulfilledDecision, coverage, e = c.canonicalAnswerCoverage(ctx, tx, d, command, p)
+			if e == nil {
+				e = d.completeAnswerWithCoverage(p, old, d.RunEpoch, coverage)
+			}
 		case "RESUME_BRIDGE":
 			e = d.CompleteBridge(p, old, d.RunEpoch)
 		default:
@@ -855,6 +865,9 @@ func (c *Controller) Project(ctx context.Context, tx pgx.Tx, command durability.
 			if e != nil {
 				return e
 			}
+			if e = c.recordCanonicalPrepared(ctx, tx, d, command); e != nil {
+				return e
+			}
 			r, er := c.Store.Current(ctx, tx, d.Plan.SessionID, false)
 			if er != nil {
 				return er
@@ -894,7 +907,12 @@ func (c *Controller) Project(ctx context.Context, tx pgx.Tx, command durability.
 		return e
 	}
 	if d.Revision != old {
-		return c.save(ctx, tx, d, old)
+		if e = c.save(ctx, tx, d, old); e != nil {
+			return e
+		}
+		if fulfilledDecision != nil {
+			return c.writeCanonicalDecision(ctx, tx, d, *fulfilledDecision, false)
+		}
 	}
 	return nil
 }

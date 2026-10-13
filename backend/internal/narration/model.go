@@ -559,6 +559,12 @@ func (d *Document) BeginAnswer(s Segment, hash string, rev, run int64, now time.
 	return nil
 }
 func (d *Document) CompleteAnswer(p Checkpoint, rev, run int64) error {
+	return d.completeAnswerWithCoverage(p, rev, run, nil)
+}
+
+// Only Controller's SQL-bound canonical policy supplies this private map.
+// The public model/legacy path retains exact substring coverage.
+func (d *Document) completeAnswerWithCoverage(p Checkpoint, rev, run int64, coverage map[string]string) error {
 	if e := d.guard(rev, run); e != nil {
 		return e
 	}
@@ -580,7 +586,9 @@ func (d *Document) CompleteAnswer(p Checkpoint, rev, run int64) error {
 		for _, f := range s.FactIDs {
 			covered = covered && contains(d.Turn.MappedNarrationFacts, f)
 		}
-		if covered && s.Status == "PENDING" && strings.Contains(d.Turn.AnswerText, s.Text) {
+		coverageHash, explicitlyMapped := coverage[s.ID]
+		canonical := explicitlyMapped && coverageHash != "" && coverageHash == s.TextHash && singletonPrice(s.FactIDs) && singletonPrice(d.Turn.MappedNarrationFacts)
+		if covered && s.Status == "PENDING" && (strings.Contains(d.Turn.AnswerText, s.Text) || canonical) {
 			s.Status = "SATISFIED_BY_ANSWER"
 			d.Cursor.CompletedSegments = appendUnique(d.Cursor.CompletedSegments, s.ID)
 			d.Cursor.CompletedFacts = appendUnique(d.Cursor.CompletedFacts, s.FactIDs...)
