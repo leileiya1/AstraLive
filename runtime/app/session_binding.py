@@ -84,17 +84,27 @@ class BoundDeepSeek(OpenAICompatibleLLMProvider):
             self.client = httpx.AsyncClient(timeout=httpx.Timeout(60, connect=10), transport=self.transport, trust_env=False, follow_redirects=False)
         started = asyncio.get_running_loop().time()
         self.observer_sequence += 1
+        call_sequence=self.observer_sequence
+        stream_diagnostic={}
+        def observe_stream(fields):stream_diagnostic.update(fields)
         observed = ""
         outcome = "FAILED"
         try:
-            async for token in super().stream(request):
+            source=super().stream(request,diagnostic=observe_stream) if self.observer_dir else super().stream(request)
+            async for token in source:
                 observed += token
                 yield token
             self.errors["errorCode"] = ""
             outcome = "COMPLETED"
         except asyncio.CancelledError:
+            if self.observer_dir:stream_diagnostic["errorType"]="CancelledError"
             raise
         except Exception as exc:
+            if self.observer_dir:
+                allowed={"HTTPStatusError","ConnectError","ReadError","WriteError","ConnectTimeout","ReadTimeout","WriteTimeout","PoolTimeout","RemoteProtocolError","JSONDecodeError","RuntimeError","AttributeError","TypeError","ValueError"}
+                stream_diagnostic["errorType"]=type(exc).__name__ if type(exc).__name__ in allowed else "OTHER"
+                if isinstance(exc,httpx.HTTPStatusError):
+                    stream_diagnostic.update(httpStatus=exc.response.status_code,streamOutcome="HTTP_STATUS_ERROR")
             code = "PROVIDER_AUTH_FAILED" if isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code in {401, 403} else "LLM_FAILED"
             self.errors["errorCode"] = code
             raise RuntimeFailure(code, "Bound LLM request failed", 502) from None
@@ -104,10 +114,11 @@ class BoundDeepSeek(OpenAICompatibleLLMProvider):
                 from pathlib import Path
                 folder=Path(self.observer_dir);folder.mkdir(parents=True,exist_ok=True,mode=0o700)
                 role="bridge_choice" if request.system_prompt.startswith("你只选择口语过渡") else "ordinary_speech"
-                row={"scope":"REAL_BOUND_LLM_CALL_OBSERVER","role":role,"callSequence":self.observer_sequence,
+                row={"scope":"REAL_BOUND_LLM_CALL_OBSERVER","role":role,"callSequence":call_sequence,
                     "status":outcome,"model":self.config["model"],"requestHash":"sha256:"+hashlib.sha256(request.text.encode()).hexdigest(),
                     "responseHash":"sha256:"+hashlib.sha256(observed.encode()).hexdigest(),"responseChars":len(observed),
                     "durationMs":round((asyncio.get_running_loop().time()-started)*1000),"audienceAudible":False}
+                row["streamDiagnostic"]=stream_diagnostic
                 with (folder/"llm-calls.jsonl").open("a") as handle:handle.write(json.dumps(row,ensure_ascii=False)+"\n")
 
     async def aclose(self):
