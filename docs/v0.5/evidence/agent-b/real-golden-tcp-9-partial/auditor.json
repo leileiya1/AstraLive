@@ -1,0 +1,26 @@
+{
+  "scope": "Independent real SQL/staging bytes/recorded AV consistency oracle",
+  "audienceAudible": false,
+  "humanNaturalness": "NOT_TESTED",
+  "llmGeneratedFacts": "NOT_TESTED",
+  "busyCommentSLA": "NOT_TESTED",
+  "checks": [
+    {
+      "name": "actual_artifact_shape",
+      "status": "FAIL",
+      "code": "REAL_OBSERVER_FAILED"
+    }
+  ],
+  "clockRule": "recording PTS separately; no subtraction across clocks",
+  "auditContractSHA256": "sha256:1e3d05781dba6b7aeda965cb6fe62f517a458f285bb644e11402bfde52fd63da",
+  "processes": {
+    "goPID": 42597,
+    "localTransport": "tcp",
+    "rtmpReceiverPID": 42600,
+    "runtimePID": 42601,
+    "scope": "actual local test-process components; remote GPU operator evidence separate",
+    "source": "4f61a97d8cf5642f0d94b409e91277a000fb5936"
+  },
+  "automatedEvidenceStatus": "FAIL",
+  "formalGolden1": "NOT_VERIFIABLE"
+}

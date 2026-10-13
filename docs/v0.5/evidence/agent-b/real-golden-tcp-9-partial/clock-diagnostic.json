@@ -1,0 +1,123 @@
+{
+  "source": "4f61a97d8cf5642f0d94b409e91277a000fb5936",
+  "scope": "Actual server clock snapshots; separate synthetic codec diagnostic. No actual RTP or RTCP capture.",
+  "actualRTPTimestamps": "NOT_CAPTURED",
+  "actualRTCPMapping": "NOT_CAPTURED",
+  "wholeRunStatus": "FAIL",
+  "peers": [
+    {
+      "peerId": "peer_52869860f6b74dffb87c9f7bfa26ad2f",
+      "snapshotCount": 331,
+      "first": {
+        "sourceSample": 0,
+        "sourceRate": 48000,
+        "outputSamples": 0,
+        "outputRate": 48000,
+        "audioUnderruns": 0,
+        "lateVideoDrops": 0,
+        "videoHolds": 0,
+        "evidenceType": "sink_consumed",
+        "audienceAudible": false
+      },
+      "last": {
+        "sourceSample": 1350720,
+        "sourceRate": 48000,
+        "outputSamples": 2900160,
+        "outputRate": 48000,
+        "audioUnderruns": 1614,
+        "lateVideoDrops": 0,
+        "videoHolds": 807,
+        "evidenceType": "sink_consumed",
+        "audienceAudible": false
+      },
+      "outputSampleRegressions": 0,
+      "maxOutputSeconds": 60.42
+    }
+  ],
+  "chromeInbound": [
+    {
+      "kind": "audio",
+      "timestamp": 1791857357059.681,
+      "packetsReceived": 3029,
+      "packetsDiscarded": 3000,
+      "totalSamplesReceived": 480,
+      "totalSamplesDuration": 0.01,
+      "totalAudioEnergy": 0,
+      "jitterBufferEmittedCount": 960,
+      "estimatedPlayoutTimestamp": 4000846156930
+    },
+    {
+      "kind": "video",
+      "timestamp": 1791857357059.681,
+      "packetsReceived": 6063,
+      "jitterBufferEmittedCount": 1515,
+      "estimatedPlayoutTimestamp": 4000846157035,
+      "framesDecoded": 1515,
+      "framesDropped": 0
+    }
+  ],
+  "estimatedPlayoutTimestampRule": "Do not subtract from performance/stat timestamps without mapping; values differ by approximately NTP-to-Unix epoch offset, not an established live delay.",
+  "syntheticCodec": {
+    "scope": "CPU_SYNTHETIC_CODEC_DIAGNOSTIC_NOT_ACTUAL_TCP9_RTP",
+    "aiortc": "1.15.0",
+    "pyav": "17.1.0",
+    "rows": [
+      {
+        "inputPTS": 0,
+        "encodedRelativeTimestamp": 0,
+        "decodedSamples": [
+          960
+        ]
+      },
+      {
+        "inputPTS": 960,
+        "encodedRelativeTimestamp": 960,
+        "decodedSamples": [
+          960
+        ]
+      },
+      {
+        "inputPTS": 1920,
+        "encodedRelativeTimestamp": 1920,
+        "decodedSamples": [
+          960
+        ]
+      },
+      {
+        "inputPTS": 2880,
+        "encodedRelativeTimestamp": 2880,
+        "decodedSamples": [
+          960
+        ]
+      },
+      {
+        "inputPTS": 3840,
+        "encodedRelativeTimestamp": 3840,
+        "decodedSamples": [
+          960
+        ]
+      },
+      {
+        "inputPTS": 4800,
+        "encodedRelativeTimestamp": 4800,
+        "decodedSamples": [
+          960
+        ]
+      },
+      {
+        "inputPTS": 5760,
+        "encodedRelativeTimestamp": 5760,
+        "decodedSamples": [
+          960
+        ]
+      },
+      {
+        "inputPTS": 6720,
+        "encodedRelativeTimestamp": 6720,
+        "decodedSamples": [
+          960
+        ]
+      }
+    ]
+  }
+}
