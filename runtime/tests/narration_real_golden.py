@@ -6,6 +6,8 @@ and independently proved by Runtime/Worker/SQL evidence from the owning runner.
 import argparse
 import asyncio
 import base64
+import binascii
+import hashlib
 import json
 import random
 from pathlib import Path
@@ -16,6 +18,28 @@ import httpx
 
 class GoldenFailure(Exception):
     pass
+
+
+class ChromeRecordingWriter:
+    """Strict sequential real Blob storage; rejects a bad chunk before writing it."""
+    def __init__(self,file):
+        self.file=file;self.next_sequence=0;self.chunks=[];self.failed=False
+
+    def store(self,sequence,encoded,expected_bytes=None,expected_sha256=None):
+        try:
+            if self.failed or sequence!=self.next_sequence:
+                raise GoldenFailure("Browser recording sequence gap or previous failure")
+            try:payload=base64.b64decode(encoded,validate=True)
+            except (binascii.Error,ValueError,TypeError):
+                raise GoldenFailure("Browser recording Base64 invalid") from None
+            sha=hashlib.sha256(payload).hexdigest()
+            if not payload or (expected_bytes is not None and len(payload)!=expected_bytes) or (expected_sha256 is not None and sha!=expected_sha256):
+                raise GoldenFailure("Browser recording Blob size or hash mismatch")
+            self.file.write(payload);self.file.flush()
+            self.chunks.append({"sequence":sequence,"bytes":len(payload),"sha256":sha})
+            self.next_sequence+=1
+        except Exception:
+            self.failed=True;raise
 
 
 def require_observable_state(snapshot):
@@ -29,6 +53,8 @@ def require_observable_state(snapshot):
 
 def require_browser_av(chrome,normal_stop):
     if not normal_stop:raise GoldenFailure("Actual Session normal Stop missing")
+    if chrome.get("recordingFailed") or chrome.get("recorderErrors"):
+        raise GoldenFailure("Actual browser recording delivery failed")
     if not isinstance(chrome.get("audioPreflight"),dict) or not chrome["audioPreflight"].get("ready"):
         raise GoldenFailure("Actual browser audio clock prerequisite missing")
     if not any(row["rms"]>.001 for row in chrome.get("audioEnergy",[])):
@@ -36,6 +62,8 @@ def require_browser_av(chrome,normal_stop):
     if not chrome.get("video"):raise GoldenFailure("Actual browser video missing")
     if not chrome.get("recordedBytes") or not chrome.get("recordingChunks"):
         raise GoldenFailure("Actual browser recording bytes missing")
+    if chrome.get("deliveredRecordingBytes")!=chrome["recordedBytes"] or chrome.get("deliveredRecordingChunks")!=chrome["recordingChunks"]:
+        raise GoldenFailure("Actual browser recording delivery incomplete")
 
 
 def private(path):
@@ -73,7 +101,7 @@ async def main(args):
         "commentTransport":"MOCK_REPLAY_ONLY", "humanNaturalness":"NOT_TESTED",
         "audienceAudible":False,"correlatedAV":"NOT_ANALYSED",
         "localTransport":args.local_transport,"mode":args.mode,"seed":args.seed,"fixture":fixture.get("name"),"events":[]}
-    session=None;browser=None;page=None;normal_stop=False;recording_file=None;chrome_saved=False
+    session=None;browser=None;page=None;normal_stop=False;recording_file=None;recording_writer=None;chrome_saved=False
     async with httpx.AsyncClient(base_url=args.backend,verify=False,trust_env=False,timeout=30) as client:
         async def api(method,path,payload=None,key=None):
             headers={"Origin":args.backend}
@@ -146,12 +174,10 @@ async def main(args):
                     for cookie in client.cookies.jar]
                 await context.add_cookies(cookies)
                 page=await context.new_page()
-                next_chunk=0
                 recording_file=open(out/"chrome.webm","wb")
-                async def record_chunk(sequence,encoded):
-                    nonlocal next_chunk
-                    if sequence!=next_chunk:raise GoldenFailure("Browser recording sequence gap")
-                    recording_file.write(base64.b64decode(encoded));recording_file.flush();next_chunk+=1
+                recording_writer=ChromeRecordingWriter(recording_file)
+                async def record_chunk(sequence,encoded,expected_bytes,expected_sha256):
+                    recording_writer.store(sequence,encoded,expected_bytes,expected_sha256)
                 await page.expose_function("__goldenRecording",record_chunk)
                 await page.goto(args.backend+"/__golden/browser")
                 await page.get_by_role("button",name="Enable real audio observation").click()
@@ -233,6 +259,10 @@ async def main(args):
                 except Exception:report["browserDiagnosticPending"]=True
             if browser:await browser.close()
             if recording_file and not recording_file.closed:recording_file.close()
+            if recording_writer:
+                recording_data=(out/"chrome.webm").read_bytes()
+                report["recordingStorage"]={"failed":recording_writer.failed,"bytes":len(recording_data),
+                    "sha256":hashlib.sha256(recording_data).hexdigest(),"chunks":recording_writer.chunks}
             (out/"result.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
 
 

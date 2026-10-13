@@ -2,9 +2,37 @@
 <button id="enableAudio" type="button">Enable real audio observation</button>
 <video id="video" autoplay playsinline></video>
 <script>
-let pc, ac, recorder, audioSource, audioAnalyser, audioInputStream, audioPreflight=null, audioLifecycle=[], trackEvents=[], recorderErrors=[], audioActivation=null, recordingChain=Promise.resolve(), rows=[], audioRows=[], begun=0, stream, recordedBytes=0, recordingSequence=0, recordingStartedAt=null, chunkEvents=[];
+let pc, ac, recorder, audioSource, audioAnalyser, audioInputStream, audioPreflight=null, audioLifecycle=[], trackEvents=[], recorderErrors=[], recordingFailed=false, deliveredRecordingBytes=0, deliveredRecordingChunks=0, audioActivation=null, recordingChain=Promise.resolve(), rows=[], audioRows=[], begun=0, stream, recordedBytes=0, recordingSequence=0, recordingStartedAt=null, chunkEvents=[];
 function safeErrorName(error) {
   return ['NotAllowedError','NotSupportedError','InvalidStateError','NotReadableError','AbortError'].includes(error?.name)?error.name:'OTHER';
+}
+function recordingPayload(dataURL) {
+  const marker=';base64,',offset=typeof dataURL==='string'?dataURL.indexOf(marker):-1;
+  if(offset<0 || !dataURL.startsWith('data:'))throw new Error('Recording data URL encoding invalid');
+  return dataURL.slice(offset+marker.length);
+}
+function recordingDataURL(blob) {
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();reader.onload=()=>resolve(reader.result);
+    reader.onerror=()=>reject(new Error('Recording file read failed'));
+    reader.onabort=()=>reject(new Error('Recording file read aborted'));
+    reader.readAsDataURL(blob);
+  });
+}
+function queueRecording(blob,event) {
+  recordingChain=recordingChain.then(async()=>{
+    if(recordingFailed){event.delivery='BLOCKED_BY_PREVIOUS_FAILURE';return;}
+    try {
+      const encoded=recordingPayload(await recordingDataURL(blob));
+      const hash=await crypto.subtle.digest('SHA-256',await blob.arrayBuffer());
+      event.sha256=Array.from(new Uint8Array(hash),byte=>byte.toString(16).padStart(2,'0')).join('');
+      await window.__goldenRecording(event.sequence,encoded,event.bytes,event.sha256);
+      event.delivery='STORED';deliveredRecordingBytes+=event.bytes;deliveredRecordingChunks++;
+    } catch(error) {
+      recordingFailed=true;event.delivery='FAILED';
+      recorderErrors.push({at:performance.now(),sequence:event.sequence,errorType:safeErrorName(error),operation:'recording_delivery'});
+    }
+  });
 }
 function audioState(reason) {
   const output=ac?.getOutputTimestamp?.()??{};
@@ -103,9 +131,8 @@ async function goldenStart(sessionId) {
       recorder.ondataavailable=e=>{
         if(!e.data.size)return;
         const sequence=recordingSequence++;recordedBytes+=e.data.size;
-        chunkEvents.push({sequence,at:performance.now(),bytes:e.data.size,timecode:e.timecode});
-        recordingChain=recordingChain.then(()=>new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.readAsDataURL(e.data)}))
-          .then(base64=>window.__goldenRecording(sequence,base64));
+        const event={sequence,at:performance.now(),bytes:e.data.size,timecode:e.timecode,mimeType:e.data.type};
+        chunkEvents.push(event);queueRecording(e.data,event);
       };recorder.onerror=e=>recorderErrors.push({at:performance.now(),state:recorder.state,errorType:safeErrorName(e.error)});
       recordingStartedAt=performance.now();recorder.start(1000);
     }
@@ -150,7 +177,7 @@ async function goldenFinish() {
   const result={clockDomain:'chrome_performance_ms',timeOrigin:performance.timeOrigin,startedAt:begun,endedAt:performance.now(),
     audioSampleRate:ac?.sampleRate??null,audioContextState:ac?.state??null,audioContextTime:ac?.currentTime??null,
     audioBaseLatency:ac?.baseLatency??null,audioOutputLatency:ac?.outputLatency??null,
-    audioPreflight,audioLifecycle,trackEvents,recorderErrors,recorderState:recorder?.state??null,
+    audioPreflight,audioLifecycle,trackEvents,recorderErrors,recordingFailed,deliveredRecordingBytes,deliveredRecordingChunks,recorderState:recorder?.state??null,
     video:rows,audioEnergy:audioRows,inbound,
     recordedBytes,recordingChunks:recordingSequence,recordingStartedAt,chunkEvents,audienceAudible:false,
     correlatedAV:'NOT_ANALYSED: requires actual staged speech/frame reference matching'};
