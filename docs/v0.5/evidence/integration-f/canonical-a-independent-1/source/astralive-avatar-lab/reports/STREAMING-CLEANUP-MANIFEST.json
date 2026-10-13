@@ -1,0 +1,813 @@
+{
+  "scope": "local astralive-avatar-lab only",
+  "removed_files": 134,
+  "removed_bytes": 2142378776,
+  "school_historical_archive": "/home/sapiece/AstraLive/experiments/real-avatar/results/rtx4090d-2026-10-08",
+  "school_ten_minute_full_archive": "/home/sapiece/AstraLive/experiments/real-avatar/soulx-streaming/network/ten-minute/worker-ten-minute.mp4",
+  "files": [
+    {
+      "path": "artifacts/soulx-tails/diffusion_pytorch_model.safetensors.range-1342177280-1610612735.tail",
+      "bytes": 67108864,
+      "sha256": "ab17864791ad6da6143b31736eca495d69377de526f38e9c606e40fae9d57b36",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-tails/diffusion_pytorch_model.safetensors.range-1610612736-1676798531.tail",
+      "bytes": 41019972,
+      "sha256": "3896e204906865e351beedc4f1b32311b96371c89078958c4641c6ed89e5b9ba",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-tails/diffusion_pytorch_model.safetensors.range-268435456-536870911.tail",
+      "bytes": 25165824,
+      "sha256": "59a5bafe901b7cb0f4485a3207a34c9d2208fc05a6348bd3d6494afc00458618",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-tails/diffusion_pytorch_model.safetensors.range-805306368-1073741823.tail",
+      "bytes": 226492416,
+      "sha256": "ea31b5c65eb0d1d2f6f95d66489934a180fe3e1481453992e8a4c38e668f1932",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/accelerate-1.8.1-py3-none-any.whl",
+      "bytes": 365338,
+      "sha256": "c47b8994498875a2b1286e945bd4d20e476956056c7941d512334f4eb44ff991",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/audioread-3.1.0-py3-none-any.whl",
+      "bytes": 23143,
+      "sha256": "b30d1df6c5d3de5dcef0fb0e256f6ea17bdcf5f979408df0297d8a408e2971b4",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/cloudpickle-3.1.2-py3-none-any.whl",
+      "bytes": 22228,
+      "sha256": "9acb47f6afd73f60dc1df93bb801b472f05ff42fa6c84167d25cb206be1fbf4a",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/decord-0.6.0-py3-none-manylinux2010_x86_64.whl",
+      "bytes": 13602299,
+      "sha256": "51997f20be8958e23b7c4061ba45d0efcd86bffd5fe81c695d0befee0d442976",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/diffusers-0.34.0-py3-none-any.whl",
+      "bytes": 3774402,
+      "sha256": "b0f642cd57756357bad5d23fe95b61f2e6e30321c93f1302cca6d832a01e6d33",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/distvae-0.1.0-py3-none-any.whl",
+      "bytes": 74801,
+      "sha256": "860d77853873eaa7a1dada5c53069e7691117a385ad4afc4c90b19aa98aa87ec",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/easydict-1.13-py3-none-any.whl",
+      "bytes": 6804,
+      "sha256": "6b787daf4dcaf6377b4ad9403a5cee5a86adbc0ca9a5bcf5410e9902002aeac2",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/einops-0.8.1-py3-none-any.whl",
+      "bytes": 64359,
+      "sha256": "919387eb55330f5757c6bea9165c5ff5cfe63a642682ea788a6d472576d81737",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/flatbuffers-25.12.19-py2.py3-none-any.whl",
+      "bytes": 26661,
+      "sha256": "7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/ftfy-6.3.1-py3-none-any.whl",
+      "bytes": 44821,
+      "sha256": "7c70eb532015cd2f9adb53f101fb6c7945988d023a085d127d1573dc49dd0083",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/hf_xet-1.7.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "bytes": 4212180,
+      "sha256": "2814a6e999d13464c4d679b788cc5d784eb5a4edfc638a31f10e9a11ab531ef8",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/huggingface_hub-0.36.0-py3-none-any.whl",
+      "bytes": 566094,
+      "sha256": "7bcc9ad17d5b3f07b57c78e79d527102d08313caa278a641993acddcb894548d",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/imageio-2.38.0-py3-none-any.whl",
+      "bytes": 328055,
+      "sha256": "474ea3a39e36e0e8e02d81d7f10412aaecec7a2825e5fbc4f44cbcd7bb7cebfc",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/imageio_ffmpeg-0.6.0-py3-none-manylinux2014_x86_64.whl",
+      "bytes": 29498237,
+      "sha256": "c7e46fcec401dd990405049d2e2f475e2b397779df2519b544b8aab515195282",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/importlib_metadata-9.0.1-py3-none-any.whl",
+      "bytes": 27920,
+      "sha256": "bba5600596a7e21f3eef53281cf28d6a5195634d2f2b78ff9501a3272c6eaab0",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/iniconfig-2.3.0-py3-none-any.whl",
+      "bytes": 7484,
+      "sha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/jax-0.4.38-py3-none-any.whl",
+      "bytes": 2236864,
+      "sha256": "78987306f7041ea8500d99df1a17c33ed92620c2268c4c3677fb24e06712be64",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/jaxlib-0.4.38-cp312-cp312-manylinux2014_x86_64.whl",
+      "bytes": 101792792,
+      "sha256": "dad6c0a96567c06d083c0469fec40f201210b099365bd698be31a6d2ec88fd59",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/joblib-1.6.0-py3-none-any.whl",
+      "bytes": 306115,
+      "sha256": "3dbbf9f6e4b592a2357b854608e980fe6390d131d7a82f011a377ef2ebef7aba",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/lazy_loader-0.6-py3-none-any.whl",
+      "bytes": 8791,
+      "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/librosa-0.11.0-py3-none-any.whl",
+      "bytes": 260749,
+      "sha256": "0b6415c4fd68bff4c29288abe67c6d80b587e0e1e2cfb0aad23e4559504a7fa1",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/llvmlite-0.50.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 59696588,
+      "sha256": "d501e5103076b9a14be885d2574dc2f6793171aa54a853d1244e011d476f1399",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/loguru-0.7.3-py3-none-any.whl",
+      "bytes": 61595,
+      "sha256": "31a33c10c8e1e10422bfd431aeb5d351c7cf7fa671e3c4df004162264b28220c",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/mediapipe-0.10.21-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "bytes": 35627340,
+      "sha256": "956eb1ebc275c629e61b085b2cab89c3a5b9e93bad1bb107348d98dafb5a4bb5",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/ml_dtypes-0.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 5009002,
+      "sha256": "9ad459e99793fa6e13bd5b7e6792c8f9190b4e5a1b45c63aba14a4d0a7f1d5ff",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/ml_dtypes-0.6.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 409890,
+      "sha256": "3b4a480aa8fd54a1805b8ac10f3f91763926a74f73c0c364c10f9231854f4170",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/msgpack-1.2.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 472998,
+      "sha256": "ede33b2892ceb976283e009ad12fa1834cfdf1f9c43ee9c97849fc588d00a618",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/narwhals-2.26.0-py3-none-any.whl",
+      "bytes": 474034,
+      "sha256": "29326d74f107c347fd1009bd58e38d9f7c7c5b51e6de97bc93dbc325d9038b54",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/ninja-1.13.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "bytes": 183365,
+      "sha256": "65a24341b5ac09fcadcc37082660be40a94174e51a937fabf6e2cae26225fa2c",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/numba-0.68.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 3888027,
+      "sha256": "51fe913a70fe9a7a0b193757ff977a9e96c82ae936ae388aec8990814fffdf9d",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "bytes": 17950613,
+      "sha256": "675d61ffbfa78604709862923189bad94014bef562cc35cf61d3a07bba02a7ed",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/opencv_contrib_python-4.11.0.86-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "bytes": 69098423,
+      "sha256": "c47c0ef1098461cdc6fa1cdce4c942b8ec974c87423f4b5951443d26bb9ae407",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/opencv_python-4.11.0.86-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "bytes": 62986597,
+      "sha256": "6b02611523803495003bd87362db3e1d2a0454a6a63025dc6658a9830570aa0d",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/opt_einsum-3.4.0-py3-none-any.whl",
+      "bytes": 71932,
+      "sha256": "69bb92469f86a1565195ece4ac0323943e83477171b91d24c35afe028a90d7cd",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/pluggy-1.6.0-py3-none-any.whl",
+      "bytes": 20538,
+      "sha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/pooch-1.9.0-py3-none-any.whl",
+      "bytes": 67175,
+      "sha256": "f265597baa9f760d25ceb29d0beb8186c243d6607b0f60b83ecf14078dbc703b",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/protobuf-4.25.8-cp37-abi3-manylinux2014_x86_64.whl",
+      "bytes": 294924,
+      "sha256": "83e6e54e93d2b696a92cad6e6efc924f3850f82b52e1563778dfab8b355101b0",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/pyloudnorm-0.2.0-py3-none-any.whl",
+      "bytes": 10879,
+      "sha256": "9bb69afb904f59d007a7f9ba3d75d16fb8aeef35c44d6df822a9f192d69cf13f",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/pytest-9.1.1-py3-none-any.whl",
+      "bytes": 386536,
+      "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/regex-2026.9.29-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 807783,
+      "sha256": "39ab5894d971f9ac68baa6eca5c50387db579cfcacf36ae8df3feceb1815e6d0",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "bytes": 516040,
+      "sha256": "fd6f3f93c9a0a7cc2788ee63fb763353d4bd2e89b0751bc78fcf7dda00bea774",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/scikit_image-0.26.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 13561683,
+      "sha256": "7df650e79031634ac90b11e64a9eedaf5a5e06fcd09bcd03a34be01745744466",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 9166043,
+      "sha256": "e5d7b18a5b9dca241a74695f3275fa4c895a9dadc72b3d8df5fa9d1083c9b83e",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/scipy-1.17.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 35235890,
+      "sha256": "02ae3b274fde71c5e92ac4d54bc06c42d80e399fec704383dcd99b301df37458",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/scipy-1.18.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 35287115,
+      "sha256": "1f55797419e16e7f30cf88ffb3113ce0467f00cfe3f70d5c281730b21769bfc2",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 35344199,
+      "sha256": "f55fa87b6c612ecd6b058f167c53231b1d14e412efe361d3d6e38b3631c73218",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/sentencepiece-0.2.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 1397736,
+      "sha256": "c8a168b040bc61681293f79a949b5d911c8e25086f4260285b8d97ab5f1195da",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/sounddevice-0.5.6-py3-none-any.whl",
+      "bytes": 32793,
+      "sha256": "de099612311ad81e55d31ccbd83f43ea6bf4d87b48f9b6ea55a1fbcde0eee4e0",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/soundfile-0.13.1-py2.py3-none-manylinux_2_28_x86_64.whl",
+      "bytes": 1313646,
+      "sha256": "03267c4e493315294834a0870f31dbb3b28a95561b80b134f0bd3cf2d5f0e618",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/soxr-1.1.0-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 240413,
+      "sha256": "3b033078e86f3c4a658e5697fac8995764fad9e799563616b630136b613167f1",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/threadpoolctl-3.7.0-py3-none-any.whl",
+      "bytes": 26362,
+      "sha256": "cd8b60b5641b45c67bbf73c64c843235fc2d8a480c87389f52f5dbee893b86be",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.3.3-py3-none-any.whl",
+      "bytes": 243960,
+      "sha256": "e8be15c94273113d31ecb7aa3a39822189dd11c4967e3cc88c178f1ad2fd1170",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.4.11-py3-none-any.whl",
+      "bytes": 248227,
+      "sha256": "9b94ffeddb39e97601af646345e8808f885773de01b299e480ed6d3a41509ec9",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.5.15-py3-none-any.whl",
+      "bytes": 266665,
+      "sha256": "6715515a53cabc0cefc5c9f13a0ae2c250e63e2ca784ce02d0b6c333810c2a17",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.5.2-py3-none-any.whl",
+      "bytes": 266420,
+      "sha256": "5129b53b826e768a5b1af26b765eeea75c2d0a227d2d12849617e0737588e105",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.6.1-py3-none-any.whl",
+      "bytes": 267108,
+      "sha256": "0d7382d2769b855b81ce358528e2b40c16d48aa39031746efa81215205332a8d",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.7.14-py3-none-any.whl",
+      "bytes": 270614,
+      "sha256": "4eb20372e76edf2c9fed922b1e3a0a0567be3560bd2008336115763bb1f3c034",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.7.31-py3-none-any.whl",
+      "bytes": 271576,
+      "sha256": "81adfa08012be1c478f99b83cda2f529eef8620cfbdf94fc41eef6f1d7b47dc5",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.8.16-py3-none-any.whl",
+      "bytes": 271532,
+      "sha256": "a1263c59be7cba87af3c071542b66ae54ccbcb2768bc15b0ab67680641c7f685",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.8.23-py3-none-any.whl",
+      "bytes": 273795,
+      "sha256": "a03045afce67d97cb4ef56a1cd47eae6ab8115c7e84cfedeb5cadbfbb6d14fbe",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.9.15-py3-none-any.whl",
+      "bytes": 273353,
+      "sha256": "9a4a74671c72645e0d48372ff2d20ec1625b1cd52067a72fbd021435dd044794",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.9.20-py3-none-any.whl",
+      "bytes": 275004,
+      "sha256": "9b913167b8f66a57f2e7c0454486c4c4607196d494797461226166bd0755c0e6",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tifffile-2026.9.9-py3-none-any.whl",
+      "bytes": 273280,
+      "sha256": "f7e48417d8e83a559349f8fe6c1e302afd57e564276124bab84111129f43925a",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "bytes": 3274982,
+      "sha256": "369cc9fc8cc10cb24143873a0d95438bb8ee257bb80c71989e3ee290e8d72c67",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/transformers-4.57.3-py3-none-any.whl",
+      "bytes": 11993463,
+      "sha256": "c77d353a4851b1880191603d36acb313411d3577f6e2897814f333841f7003f4",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/xfuser-0.4.3-py3-none-any.whl",
+      "bytes": 195702,
+      "sha256": "915b8d4508427cfb36fe8d583d9d187751f670c8ece789f3ef48ef52df298e6a",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/yunchang-0.6.2-py3-none-any.whl",
+      "bytes": 47730,
+      "sha256": "60dfefabe2e29d57260388d92a8a8230916c1ae7ee18d3d71a68a393a1c8830d",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/yunchang-0.6.3-py3-none-any.whl",
+      "bytes": 48011,
+      "sha256": "75618e18c43fa667d10cf5a73c62b30da0d4f27fe2026cd754ab36e86e14f844",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "artifacts/soulx-wheelhouse/zipp-4.1.1-py3-none-any.whl",
+      "bytes": 10582,
+      "sha256": "8979f52d874162f485ff2981e3891f3a3317b7a3dd43ff1e1775b9304f307a9c",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "models/musetalk/face-detection/s3fd.pth",
+      "bytes": 89843225,
+      "sha256": "619a31681264d3f7f7fc7a16a42cbbe8b23f31a256f75a366e5a1bcd59b33543",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "models/musetalk/face-parse-bisent/79999_iter.pth",
+      "bytes": 53289463,
+      "sha256": "468e13ca13a9b43cc0881a9f99083a430e9c0a38abd935431d1c28ee94b26567",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "outputs/comparison/A-short.mp4",
+      "bytes": 149854,
+      "sha256": "d9d787baaee9fb660dac75d7058c03ded78a8d305e58d5ac456d02bc643e1b9e",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/comparison/B-short.mp4",
+      "bytes": 698731,
+      "sha256": "96491519d5270a7d8d6310356388831493176983066e10b0ae40e245718e0799",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/baseline.mp4",
+      "bytes": 2296506,
+      "sha256": "2ba77e560479b748955253eb83b3aa5a3f68a88d074d7666c4f8ce7b3c0fb202",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/continuous-1.mp4",
+      "bytes": 1476134,
+      "sha256": "c46655b065ae30e8d3c59619d6c55d546afb1759f863de9de5ac0f142c205933",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/continuous-2.mp4",
+      "bytes": 1476138,
+      "sha256": "50c40eac63a867f0f4905380c5a819dd8bfd5b27f49cb5685e86cca6a75d7d42",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/continuous-3.mp4",
+      "bytes": 1476136,
+      "sha256": "c84b1ba0416b347989eb3e416afc2c8c4032cc41170248fe2bb1f5665f7c2ec2",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/idle-silence-1.mp4",
+      "bytes": 1395807,
+      "sha256": "fe2f3b50eb9ae1febc316da0043d311c3213939565be97d75609d9dbb2dcd3aa",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/idle-silence-2.mp4",
+      "bytes": 1395809,
+      "sha256": "06c119ff9ae7e0f18351fed2154ffbc7f85bd223ef78fd7113d78e102abc1fde",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/idle-talking-sequence.mp4",
+      "bytes": 5767813,
+      "sha256": "3a159f0b2b750cc649c1dbd6445bca690d1ee1ffacb46eeca65eff676221cb87",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/musetalk-long.mp4",
+      "bytes": 9471610,
+      "sha256": "b65e8326edd7ffd1a52960a4b5b1d5f61ecb89e3ffacf2eabff6e0c6d733eebf",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/musetalk-medium.mp4",
+      "bytes": 4692992,
+      "sha256": "ed4687e3905c506fa9abaf0027ff605a7c87df4b42f7b4ecfc43a7b8d567e12d",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/musetalk-same-source.mp4",
+      "bytes": 149854,
+      "sha256": "d9d787baaee9fb660dac75d7058c03ded78a8d305e58d5ac456d02bc643e1b9e",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/musetalk-short.mp4",
+      "bytes": 1476134,
+      "sha256": "dff7aa9b4bf41a3292ede3a74a90a368c70c4716dd43a5a2fec40050c46d223f",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/official-normal/v15/baseline.mp4",
+      "bytes": 2296506,
+      "sha256": "2ba77e560479b748955253eb83b3aa5a3f68a88d074d7666c4f8ce7b3c0fb202",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/talking-after-idle-1.mp4",
+      "bytes": 1476137,
+      "sha256": "a529235b168212e062d1a64008c9d83ad68d8b2efe1ae1db20a101a22d5e40e4",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "outputs/musetalk/talking-after-idle-2.mp4",
+      "bytes": 1476130,
+      "sha256": "4b4acce46c2b8be418549dc7f5d63ac37599e68780c0a6b34cb251e9e2867883",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/network/real-prefetch-1024/video.mp4",
+      "bytes": 1912672,
+      "sha256": "c89290bee2b2078a6e2d3aac450b9c47923c811a30ae4a4cf19d12ae43de059a",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/network/short/received-input.wav",
+      "bytes": 320044,
+      "sha256": "978b2701d8ed9dffd3ee1aa6c099c808d25260890e981e0be1a7778ed2d42dc5",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/network/short/received.h264",
+      "bytes": 2692983,
+      "sha256": "2b5527860fecfee218d8c621c51607d77cb8a3fc56ac532cf3efa4432a1a4982",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/network/ten-minute/received-input.wav",
+      "bytes": 19200044,
+      "sha256": "d690310d87cb05c02c2996b23f1f307399ae9276d23d46d009ec40117811dde6",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/network/ten-minute/received.h264",
+      "bytes": 150005535,
+      "sha256": "28d39924a116b8fa62137668a0a8b9b913c7382aee0173c153a021e8d53cad50",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/network/ten-minute/worker-ten-minute.mp4",
+      "bytes": 150086406,
+      "sha256": "50a400201867a5d726a7f1c1c891114ce0d2175e4d436e313f7021b1b322afe1",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/01-20ms-10s.mp4",
+      "bytes": 2439019,
+      "sha256": "5377a75e75712b9f4239da4dea78e0f320454c47f757b3ec0c0c04667f767761",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/02-40ms-10s.mp4",
+      "bytes": 2450310,
+      "sha256": "d0caac2ec2fd0968090d4d3e86e7be320e0cc22f99c2d3d228fe1a32eab7c154",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/03-100ms-10s.mp4",
+      "bytes": 2342959,
+      "sha256": "281e0866198bb4581f0937192a0d3298b35e1d8082942318518891107170279b",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/04-20ms-30s.mp4",
+      "bytes": 7818201,
+      "sha256": "f1f3a30c18e8b2568746a83c75b79f2843a5939c68419a6fc92438dd85d2cd26",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/05-40ms-30s.mp4",
+      "bytes": 7886231,
+      "sha256": "45c908a6e77f1c8dadc009ae5b66690cf714142fb080c423375a06f0d601b1fb",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/06-100ms-30s.mp4",
+      "bytes": 7892533,
+      "sha256": "368c150c6a6924098e3fa9776d8607d5f47a4d9611173b7064355c82aecc9e78",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/07-20ms-60s.mp4",
+      "bytes": 15911443,
+      "sha256": "85ba57601455ca983d8de67e0d65eb13230e558eeb8fd8e1625b5791817285a2",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/08-40ms-60s.mp4",
+      "bytes": 15674254,
+      "sha256": "0f26bf6e042e5f456050897c3a39cda6dfc582c4507d85215c4f76c5712567f0",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/09-100ms-60s.mp4",
+      "bytes": 16048510,
+      "sha256": "81fef82e27e5c7c9aad35e87f3d8c03f2533b37f1d8115024c32c6bfa03ffd97",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/10-variable-late-10s.mp4",
+      "bytes": 2446847,
+      "sha256": "bcf2328c49cdd8bcfa6660591e0111e21c9433c06f27f551e1f7f1995b8e0660",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/11-slow-consumer-10s.mp4",
+      "bytes": 2400590,
+      "sha256": "fa67e7226e0896b2e76fc7385327710ddaabf5776877550a79cd4282402fc790",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/12-force-during-inference-10s.mp4",
+      "bytes": 262,
+      "sha256": "e20c88ddfc5bfc4c352e511da67a476d62df76971081bd35d1606164bf7a1290",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/13-force-restart-10s.mp4",
+      "bytes": 2428018,
+      "sha256": "2cec0775cb82094f9b0d71c236b46a98be409e4c297a3c722c09df2b7a503bb5",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/14-talking-to-idle-10s.mp4",
+      "bytes": 1623610,
+      "sha256": "c915edce34a0a541a24410226185f7e473581cfdac802c8984e42bb75a5be93a",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/outputs/15-idle-to-talking-10s.mp4",
+      "bytes": 2382908,
+      "sha256": "68ee4ccf3b9ef678596a172aad7e616237b8ae954d7f82c848e6126866ad6c96",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/playout-validated/outputs/01-100ms-30s.mp4",
+      "bytes": 8080100,
+      "sha256": "54a097202acec18c01798b60532a389e21dc0668c6bf637adfed2c059fecbd91",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/playout-validated/outputs/03-variable-late-10s.mp4",
+      "bytes": 2324093,
+      "sha256": "5efa2aa48ecdfc4fcc8b4b78cff5a3e7ea8845902cd889a3115fee5cb722d12c",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/playout-validated/outputs/04-slow-consumer-10s.mp4",
+      "bytes": 2371508,
+      "sha256": "e7843ce16196394aad75bec2a7b54de6ae889380ba68fef23fdbd837a6d349d0",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/playout-validated/outputs/05-force-during-inference-10s.mp4",
+      "bytes": 262,
+      "sha256": "e20c88ddfc5bfc4c352e511da67a476d62df76971081bd35d1606164bf7a1290",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/playout-validated/outputs/06-force-restart-10s.mp4",
+      "bytes": 2471799,
+      "sha256": "9bd4b159a0f16063b9f838ee5f6789c9ee25b49aa47f649d2dc535b7c6344408",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/01-20ms-10s.mp4",
+      "bytes": 2435044,
+      "sha256": "79e9064c2c13606266c5e3d6b88e7611fdbdf44427997c494472b9723100114c",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/02-40ms-10s.mp4",
+      "bytes": 2480663,
+      "sha256": "2b8f9306503269f581273ca830eeed888500727fd4b9f0efde50c6a25e8a5bdb",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/03-100ms-10s.mp4",
+      "bytes": 2349795,
+      "sha256": "e9f38db2b2c23b850c6dd84e1e0b97235b90915207d476dca32af78f82f3d00f",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/04-20ms-30s.mp4",
+      "bytes": 7819182,
+      "sha256": "2ce43e16f9d111aea8826f898055e34dd4ceccaf7bcaa0d58cc06049e718d333",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/05-40ms-30s.mp4",
+      "bytes": 7881271,
+      "sha256": "5e9eea3fef28c8d9b902cbea4b4dadec56b0fb618713992a3c504e971bdd8a7f",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/06-100ms-30s.mp4",
+      "bytes": 7954274,
+      "sha256": "ec5ea662955161b4f09851708ea0f745c7793a4ec4d6d7d18c08e11b1e1a713d",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/08-40ms-60s.mp4",
+      "bytes": 15716602,
+      "sha256": "c33796dd9772a370a3ee8d9f53b65c4e67281524755eaefa7b3c4e1b173bfeea",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/09-100ms-60s.mp4",
+      "bytes": 16006416,
+      "sha256": "6ca67cbf842974754ec7cacb528b9cc719194d3dcc2508bc3e3d5eb093b6294c",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/10-variable-late-10s.mp4",
+      "bytes": 2454414,
+      "sha256": "48738e4930e7fa976a8318cede5e0aa2d95ad8cd2f8e0fef2e542ac6a1f374b9",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/11-slow-consumer-10s.mp4",
+      "bytes": 2388360,
+      "sha256": "b76bdf352bd9914181c051ee5f9be148c2ba94698b71665cfe67fa03e2733871",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/12-force-during-inference-10s.mp4",
+      "bytes": 262,
+      "sha256": "e20c88ddfc5bfc4c352e511da67a476d62df76971081bd35d1606164bf7a1290",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/13-force-restart-10s.mp4",
+      "bytes": 2429529,
+      "sha256": "6c9e70be00d13cd0e44d462bfd3947723c44e135332b9e25d4aa5350e06ddbe8",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/14-talking-to-idle-10s.mp4",
+      "bytes": 1622613,
+      "sha256": "89491663242cd0679415f7820ae63a64ba6d1b15da56eb1b95b39ac1b0ee3bdb",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "streaming/validated/outputs/15-idle-to-talking-10s.mp4",
+      "bytes": 2392915,
+      "sha256": "f46f31c41fe77261d54ddb50404243dd6982a02d0454f2ccd9ca1b31455ad255",
+      "reason": "redundant media; see retained evidence and school archive"
+    },
+    {
+      "path": "wheelhouse/torch-range-0.partial",
+      "bytes": 245635229,
+      "sha256": "8e91f8a722464667e4749fa03caac5340db6a5a42dd85e3bdaa7fb2af61d5204",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "wheelhouse/torch-range-4.tail",
+      "bytes": 42211485,
+      "sha256": "4bce9f78c6339fc9a08c698808f128958f6296bbded574184d950446a58daf32",
+      "reason": "regenerable download/model cache"
+    },
+    {
+      "path": "wheelhouse/torch-range-5.partial",
+      "bytes": 245635226,
+      "sha256": "f09c159b9af0765b297b5d857244e20b979881567c76b679de13e1ca5c739f1a",
+      "reason": "regenerable download/model cache"
+    }
+  ]
+}

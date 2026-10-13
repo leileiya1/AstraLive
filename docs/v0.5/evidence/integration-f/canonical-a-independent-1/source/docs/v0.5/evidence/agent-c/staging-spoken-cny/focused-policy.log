@@ -1,0 +1,14 @@
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/success
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/amount-forgery
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/fact-forgery
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/currency-change
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/flags-off
+--- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy (0.33s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/success (0.09s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/amount-forgery (0.06s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/fact-forgery (0.06s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/currency-change (0.06s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/flags-off (0.06s)
+PASS
+ok  	astralive/backend/internal/narration	1.348s

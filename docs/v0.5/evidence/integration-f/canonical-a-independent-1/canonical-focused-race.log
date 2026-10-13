@@ -1,0 +1,124 @@
+=== RUN   TestAReviewMissingTargetHashDoesNotGrantCanonicalCoverage
+--- PASS: TestAReviewMissingTargetHashDoesNotGrantCanonicalCoverage (0.00s)
+=== RUN   TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton
+=== RUN   TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/subject
+=== RUN   TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/answer_wording
+=== RUN   TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/flags_off
+=== RUN   TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/USD
+=== RUN   TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/whitespace
+=== RUN   TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/qualifier
+=== RUN   TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/category
+=== RUN   TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/extra_claim
+=== RUN   TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/multiclaim
+=== RUN   TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/custom_label
+--- PASS: TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton (0.01s)
+    --- PASS: TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/subject (0.00s)
+    --- PASS: TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/answer_wording (0.00s)
+    --- PASS: TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/flags_off (0.00s)
+    --- PASS: TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/USD (0.00s)
+    --- PASS: TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/whitespace (0.00s)
+    --- PASS: TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/qualifier (0.00s)
+    --- PASS: TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/category (0.00s)
+    --- PASS: TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/extra_claim (0.00s)
+    --- PASS: TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/multiclaim (0.00s)
+    --- PASS: TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton/custom_label (0.00s)
+=== RUN   TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts
+=== RUN   TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/partial
+=== RUN   TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/stale
+=== RUN   TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/Stop
+=== RUN   TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/wrong_hash
+=== RUN   TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/unknown_target
+=== RUN   TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/other_fact
+=== RUN   TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/legacy
+--- PASS: TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts (0.01s)
+    --- PASS: TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/partial (0.00s)
+    --- PASS: TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/stale (0.00s)
+    --- PASS: TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/Stop (0.00s)
+    --- PASS: TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/wrong_hash (0.00s)
+    --- PASS: TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/unknown_target (0.00s)
+    --- PASS: TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/other_fact (0.00s)
+    --- PASS: TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts/legacy (0.00s)
+=== RUN   TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping
+=== RUN   TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping/public-nil
+=== RUN   TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping/private-nil
+=== RUN   TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping/missing-key
+=== RUN   TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping/explicit-empty
+--- PASS: TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping (0.00s)
+    --- PASS: TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping/public-nil (0.00s)
+    --- PASS: TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping/private-nil (0.00s)
+    --- PASS: TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping/missing-key (0.00s)
+    --- PASS: TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping/explicit-empty (0.00s)
+=== RUN   TestCapturedStagingSpokenCNYPreservesAmountAndFactID
+--- PASS: TestCapturedStagingSpokenCNYPreservesAmountAndFactID (0.00s)
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/success
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/answer-wording
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/duplicate
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/rollback
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/controller-reload
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/flags-off
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/USD
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/qualifier
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/extra-claim
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/category
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/custom-label
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/multi-claim
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/old-plan
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/old-exact-plan
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/partial
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/UNKNOWN
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/stale-epoch
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/price-change
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/currency-change
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/Stop
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/decision-conflict
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/prepared-ref-conflict
+=== RUN   TestPostgresCanonicalCNYPriceDecisionAndCoverage/prepared-hash-conflict
+--- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage (2.55s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/success (0.12s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/answer-wording (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/duplicate (0.12s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/rollback (0.12s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/controller-reload (0.12s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/flags-off (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/USD (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/qualifier (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/extra-claim (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/category (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/custom-label (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/multi-claim (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/old-plan (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/old-exact-plan (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/partial (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/UNKNOWN (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/stale-epoch (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/price-change (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/currency-change (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/Stop (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/decision-conflict (0.12s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/prepared-ref-conflict (0.11s)
+    --- PASS: TestPostgresCanonicalCNYPriceDecisionAndCoverage/prepared-hash-conflict (0.11s)
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/success
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/amount-forgery
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/fact-forgery
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/currency-change
+=== RUN   TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/flags-off
+--- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy (0.37s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/success (0.07s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/amount-forgery (0.07s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/fact-forgery (0.07s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/currency-change (0.08s)
+    --- PASS: TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy/flags-off (0.07s)
+=== RUN   TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata
+=== RUN   TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-1capture
+=== RUN   TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-1restart-mismatch
+=== RUN   TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-gpu1g-1capture
+=== RUN   TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-gpu1g-1restart-mismatch
+--- PASS: TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata (0.23s)
+    --- PASS: TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-1capture (0.06s)
+    --- PASS: TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-1restart-mismatch (0.05s)
+    --- PASS: TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-gpu1g-1capture (0.06s)
+    --- PASS: TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata/staging-short-gpu1g-1restart-mismatch (0.05s)
+PASS
+ok  	astralive/backend/internal/narration	4.738s

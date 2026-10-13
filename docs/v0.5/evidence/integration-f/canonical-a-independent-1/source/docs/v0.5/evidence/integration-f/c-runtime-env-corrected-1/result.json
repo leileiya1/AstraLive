@@ -1,0 +1,18 @@
+{
+  "source": "06b182f840e0dc110a150a687e7ce016744edb3b",
+  "command": [
+    "/private/tmp/astralive-f-media-venv-1/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "runtime/tests",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 11.978816875023767,
+  "sha256": "f60acc1cecdf30f4a92c0606091188bc230b76c9441f658463e936badb9969cf",
+  "reason": "correct missing jsonschema in F isolated environment; original failure retained, no source edits"
+}

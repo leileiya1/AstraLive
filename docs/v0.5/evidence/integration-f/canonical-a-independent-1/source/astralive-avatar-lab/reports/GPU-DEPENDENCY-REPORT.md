@@ -1,0 +1,32 @@
+# Dependency report — installation in progress
+
+Preserved: NVIDIA driver 580.105.08, CUDA Toolkit 12.8.93, /root/miniconda3 base Python 3.12.3 / torch 2.8.0+cu128 / torchvision 0.23.0+cu128. Base pip check PASS before any installation. Snapshots: base-before-pip-freeze.txt and base-before-conda.yaml on GPU data disk.
+
+MuseTalk isolated environment: /root/autodl-tmp/astralive-avatar-lab/environments/astralive-musetalk. Conda Python 3.10.22, FFmpeg 8.1.2, pip and supporting libraries installed using Tsinghua Anaconda mirror. Base untouched. Torch 2.0.1/cu118 and pinned MMLab packages are being installed as the upstream-supported binary ABI combination. No CUDA extension source compilation or Toolkit replacement is planned; MMCV must use a matching binary wheel.
+
+Repository: TMElyralab/MuseTalk at 0a89dec45a0192b824e3cf4daf96c239440c5ed8, matching preparation manifest. Sparse checkout includes code/configs and root files. Full and initial unfiltered fetches were stopped because they pulled unneeded media; no production files involved. Git 2.34 requires sparse-checkout init --cone before set; set --cone alone is not recognized as a mode switch in this version.
+
+Weights: MuseTalk V15 only; upstream HF repositories retrieved via hf-mirror.com, as specified by upstream download_weights.sh. Version 1.0 and training datasets excluded. SyncNet is a training/evaluation component, not used by scripts.inference or realtime_inference; it is not downloaded for this inference-only experiment. Official Drive face parser and upstream S3FD author-hosted checkpoint required developer-machine relay due cloud connectivity. ResNet downloaded from download.pytorch.org. Binary checkpoint load is still pending Torch installation; existence/size is not installation acceptance.
+
+Official Torch wheel: 2,267,321,259 bytes. A partial pip download was preserved, then resumed in six ranges against the same official URL. SHA256 must match a7a49d459bf4862f64f7bc1a68beccf8881c2fa9f3e0569608e16ba6f85ebf7b before installation. No alternative Torch version selected.
+
+Installation acceptance now PASS: pip check found no broken requirements; torch 2.0.1+cu118 / torchvision 0.15.2+cu118 / torchaudio 2.0.2+cu118 imports and synchronized CUDA matmul passed; mmengine 0.10.7 / mmcv 2.0.1 / mmdet 3.1.0 / mmpose 1.1.0 imports passed. Real MMCV CUDA NMS returned the expected survivor on SM 8.9. Lock files and musetalk-install-validation.json are on the GPU data disk.
+
+Additional adaptations, each retaining the Torch version:
+
+- setuptools 83 lacked pkg_resources, required by MMEngine. Pin setuptools 80.9.0 inside MuseTalk only.
+- Triton dependency collection attempted an unpinned new Torch. Stop before installation; install its Python dependencies from the PyPI mirror and Triton 2.0.0 without dependency resolution, then install the exact validated Torch/CUDA wheels. No newer Torch was installed in the MuseTalk environment.
+- Install the inference-only subset of the official pinned requirements after checking both inference entrypoints and musetalk/scripts imports. TensorFlow, TensorBoard, Gradio, moviepy, imageio and gdown are not imported by those paths and are omitted. Pillow 10.4.0 is explicitly fixed for the legacy image API. Exact additional dependency versions are recorded in pip freeze.
+- Chumpy 0.70 build isolation lacked pip, which its legacy setup imports. Build that package with --no-build-isolation in the existing isolated environment, then install MMPose/MMDetection with official runtime constraints.
+- Conda main FFmpeg 8.1.2 lacks libx264. Keep it installed but use /usr/bin/ffmpeg from Ubuntu signed apt packages through lab/tools/bin symlinks. A real one-second H.264/AAC encoding and complete decoding passed. No NVIDIA/system Toolkit packages changed.
+- Base Torch 2.8 weights_only=True cannot read the official legacy ResNet tar checkpoint. Verified official-source checkpoints load with weights_only=False; MuseTalk's Torch 2.0.1 handles the legacy format normally. Face parser, ResNet and S3FD CPU load passed; UNet CPU load passed, 686 tensors.
+
+All V15/SD-VAE/Whisper/DWPose weight sizes and upstream LFS hashes verified. Independent face weights have source/transfer hashes and checkpoint-load evidence. The original yongen portrait is visibly an anime character; it cannot prove a real-person appearance gate. Supplement official Sun video/audio from the same commit; Git blob equality passed. Sun has human appearance, but capture authenticity is not independently established.
+
+MuseTalk normal MP4 validation and cache benchmarks completed. Same-process 600.112-second inference generated/consumed 15,000 frames, dropped zero, no frame over 40 ms late, no OOM/error. See MUSETALK-REAL-TEST.md and benchmark JSON for timing scope. Video naturalness remains pending visual acceptance.
+
+SoulX uses a separate Python 3.12 virtual environment with read-only system-site-packages reuse of existing Torch 2.8/cu128. Base is not mutated (Torch 2.8.0/cu128 and NumPy 2.3.2 rechecked). FlashAttention 2.8.0.post2 has no matching cp312/Torch2.8/TRUE ABI release wheel; official 2.8.3 provides that exact ABI wheel. Python imports and actual BF16 CUDA FlashAttention operation PASS; SM8.9 and CXX11 ABI true verified. pip check PASS. The reference requirements' xformers 0.0.31 may force Torch2.7; it is omitted. Single-GPU Lite uses FlashAttention or native SDPA, not that xformers path.
+
+Targeted SoulX repairs: MediaPipe 0.10.9 has no Python 3.12 distribution, so use 0.10.21 (legacy solutions API retained); NumPy 1.26.4/protobuf4.25.8/OpenCV4.11/JAX0.4.38 are isolated overrides for that dependency family. Yunchang0.6.3 raises duplicate Enum TypeError on import; wheel source confirmed and 0.6.2 imports successfully. No upstream model code modified. Other dependencies and their exact versions are in freeze. Gradio/Flask UI servers are not installed or exposed. Xfuser0.4.3 and its declared dependencies are present; pip check passes without xformers.
+
+Cloud PyPI throughput measured ~20KB/s. Relay the same resolved Linux wheels through the developer machine from official PyPI; validate published SHA256 before transfer. Offline install completes without re-downloading Torch/CUDA. Official wheel hashes are preserved. Hugging Face mirror weight ranges resume prior bytes and require final official LFS SHA256; no GitHub/HF credential is passed through mirrors.

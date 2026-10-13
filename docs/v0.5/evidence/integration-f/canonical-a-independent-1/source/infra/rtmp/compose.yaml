@@ -1,0 +1,10 @@
+name: astralive-rtmp-test
+services:
+  mediamtx:
+    image: bluenviron/mediamtx:1.21.1
+    restart: "no"
+    ports:
+      - "127.0.0.1:${RTMP_TEST_PORT:-1935}:1935"
+      - "127.0.0.1:${RTMP_TEST_API_PORT:-9997}:9997"
+    volumes:
+      - ./mediamtx.yml:/mediamtx.yml:ro

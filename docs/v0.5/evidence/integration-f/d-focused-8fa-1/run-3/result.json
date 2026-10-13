@@ -1,0 +1,29 @@
+{
+  "source": "8fa0eb27b132234be9bd2afcccfeb8980ad4ca7a",
+  "scope": "corrected Python focused auth/local/lifecycle fixture import; exact source unchanged; no PostgreSQL/GPU/cloud required",
+  "checks": [
+    {
+      "name": "python-auth-local-lifecycle-corrected",
+      "command": [
+        "/private/tmp/astralive-f-media-venv-1/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "test_local_listener",
+        "test_production_launcher_transport",
+        "test_session_binding",
+        "test_durability",
+        "test_narration_lifecycle",
+        "test_staging_runtime.CaptureTests"
+      ],
+      "exitCode": 0,
+      "seconds": 3.555,
+      "log": "python-corrected.log",
+      "sha256": "4e57e78a1a435f6dccdfecbebf5cd0f43c68479f1555f1176a82926d23290cd7",
+      "bytes": 7718
+    }
+  ],
+  "relatedGoResult": "/private/tmp/astralive-d-focused-8fa0eb2-2/result.json",
+  "priorPythonError": "qualified unittest names excluded runtime/tests standalone fixture imports; execution error retained, no test deleted",
+  "status": "PASS"
+}

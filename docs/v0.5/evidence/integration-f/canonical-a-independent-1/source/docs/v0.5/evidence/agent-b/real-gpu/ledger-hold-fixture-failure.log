@@ -1,0 +1,70 @@
+....................F.......                                             [100%]
+=================================== FAILURES ===================================
+_ TrackTests.test_retained_image_hold_has_new_pts_but_no_new_semantic_progress _
+
+self = <test_media_timeline.TrackTests testMethod=test_retained_image_hold_has_new_pts_but_no_new_semantic_progress>
+
+    async def test_retained_image_hold_has_new_pts_but_no_new_semantic_progress(self):
+        timeline = MediaTimeline("session", 1, journal=TestJournal())
+        identity = (await timeline.CommitSegment(command(), "attempt", 1, descriptor(), timeline.position(0), 0))["identity"]
+        clock = AudioMasterClock(); clock.timeline = timeline
+        video = _TimelineVideoTrack(clock)
+        try:
+            await video.push(TimedVideoFrame(1,0,8,8,bytes([40,120,200])*64,identity,0))
+            clock.advance(1920,640)
+>           first = await video.recv()
+                    ^^^^^^^^^^^^^^^^^^
+
+runtime/tests/test_media_timeline.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <app.webrtc_media._TimelineVideoTrack object at 0x111359810>
+
+    async def recv(self):
+        if self.readyState != "live":
+            from aiortc.mediastreams import MediaStreamError
+            raise MediaStreamError
+        await self.clock.wait_video_tick(self.tick, self.fps, lambda: self.readyState == "live")
+        if self.readyState != "live":
+            from aiortc.mediastreams import MediaStreamError
+            raise MediaStreamError
+        # Do not burst old video after receiver stalls.
+        self.tick = max(self.tick, self.clock.output_samples * self.fps // self.clock.output_rate - 1)
+        while not self.queue.empty():
+            source = self.queue._queue[0]
+            sample = getattr(source, "sourceSample", source.pts_us * self.clock.source_rate // 1000000)
+            end = sample + self.clock.source_rate // self.fps
+            if self.clock.timeline and getattr(source, "identity", None):
+                commit = self.clock.timeline.commits.get(source.identity.segmentId)
+                if commit:
+                    end = min(end, commit.end)
+            if source.generation_id != self.generation_id or not self.clock.accepts(source, sample, end):
+                self.queue.get_nowait()
+                self.frames_dropped += 1
+                self.disposition(source, "fenced")
+                continue
+            action = self.clock.video_action(sample)
+            if action == "wait":
+                break
+            self.queue.get_nowait()
+            if action == "drop":
+                self.frames_dropped += 1
+                self.clock.video_late_drops += 1
+                self.disposition(source, "dropped")
+                continue
+            self.latest = source
+            self.consumed += 1
+            self.total_consumed += 1
+            self.last_recv_monotonic = time.monotonic()
+            self.first_recv_monotonic = self.first_recv_monotonic or self.last_recv_monotonic
+            self.last_recv_at = datetime.now(timezone.utc).isoformat()
+            self.disposition(source, "consumed")
+            if self.clock.timeline:
+>               self.clock.timeline.observe_sink_progress(source.identity, self.sink_id, "video", sample, end)
+                                                                           ^^^^^^^^^^^^
+E               AttributeError: '_TimelineVideoTrack' object has no attribute 'sink_id'
+
+runtime/app/webrtc_media.py:489: AttributeError
+=========================== short test summary info ============================
+FAILED runtime/tests/test_media_timeline.py::TrackTests::test_retained_image_hold_has_new_pts_but_no_new_semantic_progress
+1 failed, 27 passed in 2.12s

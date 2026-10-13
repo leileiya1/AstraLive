@@ -1,0 +1,14 @@
+# Official repository version: 9bc03de06bb0de82cd6bc477804512ae06144bf2
+# Do not run on the K2200.  Do not download weights during preparation.
+#
+# Official Lite interface uses a condition image and an audio path:
+CUDA_VISIBLE_DEVICES=0 python generate_video.py \
+  --ckpt_dir models/SoulX-FlashHead-1_3B \
+  --wav2vec_dir models/wav2vec2-base-960h \
+  --model_type lite \
+  --cond_image /home/sapiece/AstraLive/experiments/real-avatar/soulx/normalized/official_girl.png \
+  --audio_path /home/sapiece/AstraLive/experiments/real-avatar/audio/soulx/short_10s_16k_mono.wav \
+  --audio_encode_mode stream
+#
+# Baseline with the exact upstream examples:
+#   --cond_image examples/girl.png --audio_path examples/podcast_sichuan_16k.wav

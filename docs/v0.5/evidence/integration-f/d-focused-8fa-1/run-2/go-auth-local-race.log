@@ -1,0 +1,112 @@
+=== RUN   TestDurabilityModes
+--- PASS: TestDurabilityModes (0.00s)
+=== RUN   TestLocalTransportPlatforms
+--- PASS: TestLocalTransportPlatforms (0.00s)
+=== RUN   TestLoopbackURL
+--- PASS: TestLoopbackURL (0.00s)
+PASS
+ok  	astralive/backend/internal/config	1.426s
+=== RUN   TestRuntimeClientCreateSessionWithHTTPStub
+--- PASS: TestRuntimeClientCreateSessionWithHTTPStub (0.00s)
+=== RUN   TestV11RuntimePayloadsAndWebRTC
+--- PASS: TestV11RuntimePayloadsAndWebRTC (0.00s)
+=== RUN   TestRuntimeErrors
+--- PASS: TestRuntimeErrors (0.05s)
+=== RUN   TestLegacyClientUnchanged
+--- PASS: TestLegacyClientUnchanged (0.00s)
+=== RUN   TestActualRuntimeLocalLifecycle
+=== RUN   TestActualRuntimeLocalLifecycle/tcp
+Runtime local control transport=tcp fallback=disabled
+INFO:     Started server process [68083]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:50094 (Press CTRL+C to quit)
+Runtime local control transport=tcp fallback=disabled
+INFO:     Started server process [68084]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:50094 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [68084]
+=== RUN   TestActualRuntimeLocalLifecycle/uds
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: no such file or directory"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: no such file or directory"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: no such file or directory"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: no such file or directory"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: no such file or directory"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: no such file or directory"
+Runtime local control transport=uds fallback=disabled
+INFO:     Started server process [68086]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+2026/10/14 07:11:23 WARN runtime control rejected transport=uds status=401
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS dial: dial unix /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: connect: connection refused"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS dial: dial unix /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: connect: connection refused"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS dial: dial unix /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: connect: connection refused"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS dial: dial unix /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: connect: connection refused"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS dial: dial unix /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: connect: connection refused"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS dial: dial unix /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-ipc-3648745246/r.sock: connect: connection refused"
+Runtime local control transport=uds fallback=disabled
+INFO:     Started server process [68087]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+2026/10/14 07:11:23 WARN runtime control rejected transport=uds status=404
+2026/10/14 07:11:23 WARN runtime control rejected transport=uds status=404
+2026/10/14 07:11:23 WARN runtime control rejected transport=uds status=404
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [68087]
+--- PASS: TestActualRuntimeLocalLifecycle (1.10s)
+    --- PASS: TestActualRuntimeLocalLifecycle/tcp (0.57s)
+    --- PASS: TestActualRuntimeLocalLifecycle/uds (0.53s)
+=== RUN   TestUDSSafetyAndHTTPParity
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS must be an owned0600 socket (no symlinks)"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS must be an owned0600 socket (no symlinks)"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS must be an owned0600 socket (no symlinks)"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="context canceled"
+2026/10/14 07:11:23 ERROR runtime control transport failed transport=uds error="runtime UDS parent replaced"
+--- PASS: TestUDSSafetyAndHTTPParity (0.04s)
+PASS
+ok  	astralive/backend/internal/runtime	2.675s
+=== RUN   TestConfigurationBrowserHarness
+    browser_harness_test.go:23: browser harness opt-in
+--- SKIP: TestConfigurationBrowserHarness (0.00s)
+=== RUN   TestConfigurationSpecification
+--- PASS: TestConfigurationSpecification (0.07s)
+=== RUN   TestCapturedLocalProviderTransport
+=== RUN   TestCapturedLocalProviderTransport/tcp
+2026/10/14 07:11:26 ERROR runtime control transport failed transport=tcp error="context canceled"
+=== RUN   TestCapturedLocalProviderTransport/uds
+2026/10/14 07:11:26 ERROR runtime control transport failed transport=uds error="context canceled"
+--- PASS: TestCapturedLocalProviderTransport (0.00s)
+    --- PASS: TestCapturedLocalProviderTransport/tcp (0.00s)
+    --- PASS: TestCapturedLocalProviderTransport/uds (0.00s)
+=== RUN   TestPostgresConfigurationLifecycle
+--- PASS: TestPostgresConfigurationLifecycle (0.07s)
+=== RUN   TestLocalProviderProbesScopedAndVersioned
+--- PASS: TestLocalProviderProbesScopedAndVersioned (0.02s)
+=== RUN   TestVaultTamperIsolationAndRotation
+--- PASS: TestVaultTamperIsolationAndRotation (0.00s)
+=== RUN   TestEndpointAndAddressPolicy
+--- PASS: TestEndpointAndAddressPolicy (0.00s)
+=== RUN   TestProviderSpecificValidation
+--- PASS: TestProviderSpecificValidation (0.00s)
+=== RUN   TestProviderFailuresAreSanitized
+--- PASS: TestProviderFailuresAreSanitized (0.00s)
+=== RUN   TestNoSessionAndNoServiceTokenFailClosed
+--- PASS: TestNoSessionAndNoServiceTokenFailClosed (0.00s)
+=== RUN   TestMixedDNSAndPinnedDial
+--- PASS: TestMixedDNSAndPinnedDial (0.00s)
+=== RUN   TestRuntimeIntegrationFaultProjection
+--- PASS: TestRuntimeIntegrationFaultProjection (0.00s)
+=== RUN   TestWorkerProbeProjectionAndPrivateAuth
+--- PASS: TestWorkerProbeProjectionAndPrivateAuth (0.00s)
+=== RUN   TestWorkerStatusScopeAndAuthentication
+--- PASS: TestWorkerStatusScopeAndAuthentication (0.00s)
+=== RUN   TestOwnProfileCannotProbeForeignPhysicalWorker
+--- PASS: TestOwnProfileCannotProbeForeignPhysicalWorker (0.00s)
+PASS
+ok  	astralive/backend/internal/userconfig	1.666s

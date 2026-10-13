@@ -1,5 +1,11 @@
 # 真实 Golden 商品与讲解 fixture
 
+## 当前 v3 纯价格模板（2026-10-13）
+
+v3仅把price陈述改为无商品类别附加声明的精确模板“本商品当前标价是人民币{{price}}元。”，并更新fixtureVersion/scriptVersion和facts中的对应含义。全部必需fact IDs、数量、其余陈述与商品值保留；旧v2失败试跑各自保存了原fixture字节/hash。新版短/长分别仍有10/140必需事实。版本变化用于受控验证显式价格抵扣，不能用LLM标签或词句相似自动跳过定制声明。
+
+实际BoundXiaoYa原生输出22050Hz，再经过未修改的生产PCM16kConverter得到73455个16000Hz样本，声明145样本frame padding后4.60秒。只通过本句CPU时长预检；完整v3总时长、GPU、Chrome/RTMP和人类自然度未由此预检验收。原生输出和规范化输出分别保留，[证据](../evidence/integration-f/canonical-price-tts-preflight-3/README.md)。下文v1/v2统计均保留为对应旧版本证据，不挪用为v3的持续直播结果。
+
 `real_golden_catalog.json` 是用户确认的演示 SKU“桌面整理指南”电子说明书：价格99、币种CNY、库存20、规格电子版。说明书内容由140条独立完整陈述组成，覆盖商品信息、准备、分类、分区、纸张、线缆、文具、小物、电子资料、每日收尾、小空间、共享、安全维护和复盘。每条陈述对应一个全局唯一 factId，明确含义保存在 facts 字典；没有循环重复陈述或为凑时间改 ID。
 
 plan 的 policy=AT_BOUNDARY，style 和14个 beats 直接供生产 Go BuildPlan 使用。140条文本含标点长度20–29字符，每条均有非空 factIds，因此实际生产 planner 生成140个完整段，不依赖字数切片或事实空白段打包。真实归档源码 BuildPlan 调用验证：长 fixture14 beats/140 segments，短 fixture10 beats/10 segments，均 PASS。

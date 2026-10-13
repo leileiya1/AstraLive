@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "v0.5-integration-1",
+  "branch": "exp/v0.5-integration-chaos",
+  "frozenRevision": "v0.5-frozen-1",
+  "frozenSHA256": "969d2e82d41f20084196d68a77bb3d1a6158a596a9ca63d47de9f6c1a78e8360",
+  "mainSHA": "cf6540bdcc788c037929836480812dfaa78362a2",
+  "merges": [
+    {
+      "order": 1,
+      "agent": "A",
+      "branch": "exp/v0.5-pg-durability",
+      "sourceSHA": "a28a4098a9014d9f7577d541048b2e110f1fc325",
+      "implementationSHA": "a2f0be19f1d2fc4c71c8bcefee771b7685b8d6e3",
+      "mergeSHA": "89179c7da25a81dfa91e24bb7a06a8086813e3c9",
+      "postmergeGate": "docs/v0.5/evidence/integration-f/merge-a-1/result.json",
+      "postmergeStatus": "PASS",
+      "conflictFiles": []
+    },
+    {
+      "order": 2,
+      "agent": "B",
+      "branch": "exp/v0.5-media-timeline",
+      "source": "dda7936faba56efe01659b6393a4d32a93322508",
+      "implementation": "85bec11",
+      "merge": "10b74ca3c8a52c34f39ad152633b5784a7f94a2b",
+      "postmergeGate": "merge-b-1/result.json",
+      "postmergeStatus": "PASS",
+      "conflictFiles": [],
+      "mediaGate": {
+        "steady": "merge-b-media-steady-1/audit.json",
+        "faults": "merge-b-media-faults-1/audit.json",
+        "status": "CONDITIONAL",
+        "scope": "real local sinks, synthetic source, short regression; reconnect UNKNOWN tail retained"
+      }
+    },
+    {
+      "order": 3,
+      "agent": "C",
+      "branch": "exp/v0.5-narration-continuity",
+      "source": "ea0d48e2ebddb8e07dc4f3ea8082fc4f40c306d1",
+      "implementation": "bf66c18b3f77b71646e04e74f5e40b8d7200be32",
+      "merge": "6095989da99af3e1c458ed92db2f0bb6dcec4769",
+      "postmergeGate": "merge-c-1/result.json",
+      "postmergeStatus": "PASS",
+      "conflictFiles": [
+        "backend/cmd/server/main.go",
+        "backend/internal/app/durability.go",
+        "backend/internal/app/interaction.go",
+        "backend/internal/app/service.go",
+        "runtime/app/main.py"
+      ],
+      "conflictProvenance": "c-conflict-resolution-1.json",
+      "nativeSoak": {
+        "gate": "merge-c-native-soak-1/result.json",
+        "audit": "merge-c-native-soak-1/audit.json",
+        "status": "PASS_SCOPED_FIXTURE",
+        "realInference": "NOT TESTED"
+      }
+    },
+    {
+      "order": 4,
+      "agent": "D",
+      "branch": "exp/v0.5-local-ipc",
+      "sourceSHA": "2837bef263e4c59d04b6e26cf23fb58385d93242",
+      "implementationSHA": "3a571fb3247a70e86ac6f6a6a19a765c16f58a36",
+      "mergeSHA": "85d76540924e4a7861d56acc677c4358fe0c1e45",
+      "postmergeGate": "merge-d-1/result.json",
+      "postmergeStatus": "PASS",
+      "conflictFiles": [],
+      "scopedAReview": "6ca40cba5fd0d384ce753370dabdc8c6ca2f9867"
+    },
+    {
+      "order": 5,
+      "agent": "C lifecycle followup",
+      "branch": "exp/v0.5-narration-continuity",
+      "sourceSHA": "4d5a0f8f27d1407d422e6b0d9865c9de7152e8a7",
+      "implementationSHA": "b028f5aeec0b929a9779f5f50def8cebce25c98a",
+      "mergeSHA": "bb8d8ef7cfc42a85af5eff7d3925ec249c3467ab",
+      "postmergeGate": "merge-c-lifecycle-1/result.json",
+      "postmergeStatus": "PASS",
+      "conflictFiles": [],
+      "scopedAReview": "51771129672d0548aa0d6e291a87e369e00f3af2",
+      "nativeShortGate": "merge-c-lifecycle-native-short-1/result.json"
+    }
+  ],
+  "pending": [],
+  "completeIntegration": true,
+  "realInferenceAcceptance": "PASS_DIRECT_GPU_COMPATIBILITY_ONLY; integrated SoulX continuity NOT TESTED",
+  "cCandidate": {
+    "source": "06b182f840e0dc110a150a687e7ce016744edb3b",
+    "merged": false,
+    "gate": "HOLD_LOCK_ORDER_OWNER_FIX",
+    "premergeGate": "c-delivery-premerge-1/result.json",
+    "runtimeEnvironmentCorrected": "c-runtime-env-corrected-1/result.json",
+    "nativeShort": "c-native-short-premerge-1/result.json",
+    "supersededBy": "ea0d48e2ebddb8e07dc4f3ea8082fc4f40c306d1",
+    "historical": true
+  },
+  "deferred": [
+    {
+      "agent": "D",
+      "source": "1a1bce2a1cb3f933be607998576bd64558bb11be",
+      "reason": "production wiring not delivered; old patch context fails actual core; requires owner rebase/auth review",
+      "evidence": "d-wiring-on-core-1/result.json",
+      "historical": true,
+      "resolvedBy": "2837bef263e4c59d04b6e26cf23fb58385d93242"
+    }
+  ],
+  "ccrBC002": {
+    "direction": "USER_APPROVED",
+    "detailedContract": "DRAFT_OWNER_REVIEW_HOLD",
+    "implemented": false,
+    "proposalMerge": "d3afd92"
+  },
+  "integrationScope": "software/process/SQL/local-sink fixtures; real GPU only separate compatibility smoke"
+}

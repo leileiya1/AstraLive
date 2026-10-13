@@ -1,0 +1,13 @@
+# Actual Chrome recording payload fix
+
+Code source `5bdcf51d2bd957f6827255d8eff01b9c2f6f3bff`; subsequent test-only fixture-completion mode `c136a13`. C owns Runtime test harness; F owns integration and real Golden acceptance. No production media, provider request, timeout, lease, authentication, Worker or frozen DTO changes.
+
+Actual Chrome 155 FileReader serializes `video/webm;codecs=vp8,opus`. Splitting the data URL at every comma returns `opus;base64` instead of the payload. Strict storage against old source HTML reproduces FAIL with zero written bytes. The fix extracts after `;base64,`, validates the actual Blob size and SHA-256, enforces sequential chunks and rejects malformed Base64. A failed callback seals recording delivery; later chunks cannot jump over it. Static failure diagnostics remain available in `chrome.json`, and final recording acceptance rejects failures, partial delivery and byte/chunk mismatches.
+
+Actual Chrome/unchanged B aiortc tracks CPU silence recording: two chunks, 1,741 written bytes, per-chunk SHA/size match, ffprobe exit 0 with VP8 video and Opus audio. Zero RMS still fails real speech acceptance. This establishes harness recording storage, not real GPU/speech/audience acceptance. No tcp-10 business recording is credited to this new source before F executes it.
+
+Focused recording policy 5 tests PASS; immutable full software gate PASS (Go/PostgreSQL fault, race/auth/ownership and compatibility regressions; Runtime 272 tests with 12 skips; frontend 40 tests/build). Logs, actual before/after diagnostics and hash manifest are under `evidence/agent-c/golden-recording/`.
+
+Separate `fixture-completion-smoke` mode preserves the existing `short` controlled-Stop path and its failure evidence. It reports requested seconds separately and uses a 180-second observation budget. FINISHED, all fixture facts and all question injections are required before normal Stop; incomplete/expired fixtures fail. Go selected-turn SQL completion and independent media/fact audit remain F's required final checks. It is not ten-minute G1 and changes no Runtime business timeout. Its focused six-test observer suite passes; actual business execution and F's shared Go/runner integration are NOT TESTED by C.
+
+Reproduction: run `golden_browser_cpu_diagnostic.py` with media Python and `PYTHONPATH=runtime:runtime/tests`, a new output directory, and optionally `--fixture-html` pointing to old immutable HTML for the negative comparison. The diagnostic stores `chrome.webm`, verifies it using ffprobe and records SHA-256. Full software gate source and arguments are recorded in the manifest and full result JSON.

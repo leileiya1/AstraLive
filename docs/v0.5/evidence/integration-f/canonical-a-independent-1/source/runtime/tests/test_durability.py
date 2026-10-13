@@ -1,0 +1,349 @@
+import asyncio
+import json
+import tempfile
+import time
+import unittest
+from pathlib import Path
+from app.durability_client import canonical, fingerprint, JournalError, DurableCommands
+from app.durable_events import DurableEventPublisher
+from app.events import envelope
+
+
+class Journal:
+    def __init__(self):
+        self.incarnation = "runtime_test"
+        self.events = []
+        self.offline = False
+        self.receipt = {"accepted": True, "operationId": "op", "execute": True, "executionState": "ACCEPTED", "run": {"leaseToken": 1, "remainingMs": 10000}}
+        self.started = False
+
+    async def request(self, method, suffix, body=None):
+        if self.offline:
+            raise JournalError()
+        if suffix == "/events":
+            self.events.append(body)
+        return {"stored": True}
+
+    async def accept(self, command):
+        if self.offline:
+            raise JournalError()
+        return dict(self.receipt, execute=not self.started)
+
+    async def start(self, command, token):
+        if self.started:
+            return dict(self.receipt, execute=False)
+        self.started = True
+        return dict(self.receipt, executionState="STARTED")
+
+    async def lookup(self, sid, cid):
+        return {"executionState": "STARTED", "executorIncarnation": "previous_runtime"}
+
+
+def command():
+    c = {"schemaVersion": "0.5", "commandId": "cmd", "sessionId": "s", "runEpoch": 1, "traceId": "t", "commandType": "SPEAK", "commandSeq": 1, "createdAt": "2026-10-11T00:00:00Z", "idempotencyKey": "u", "payload": {"utteranceId": "u", "commandId": "legacy", "traceId": "t", "text": "你好", "priority": 40, "interruptPolicy": "NONE", "source": "OPERATOR", "voice": {"voiceId": "v"}}}
+    c["requestFingerprint"] = fingerprint(c)
+    return c
+
+
+class DurableTests(unittest.IsolatedAsyncioTestCase):
+    async def test_spool_survives_restart_and_backend_outage(self):
+        j = Journal()
+        with tempfile.TemporaryDirectory() as directory:
+            p = DurableEventPublisher(j, directory)
+            p.bind(command())
+            event = envelope("UTTERANCE_COMPLETED", "s", "t", "u")
+            await p.publish(event)
+            j.offline = True
+            self.assertFalse(await p.flush_once())
+            await p.close()
+            # New publisher has no in-memory command mapping; pending envelope already carries durable identity.
+            p = DurableEventPublisher(j, directory)
+            self.assertEqual(p.db.execute("SELECT count(*) FROM pending").fetchone()[0], 1)
+            j.offline = False
+            p.db.execute("UPDATE pending SET next_at=0")
+            p.db.commit()
+            self.assertTrue(await p.flush_once())
+            self.assertEqual(j.events[0]["eventId"], event["eventId"])
+            self.assertEqual(p.db.execute("SELECT count(*) FROM pending").fetchone()[0], 0)
+            await p.close()
+
+    async def test_duplicate_durable_accept_never_reexecutes(self):
+        j = Journal()
+        class Manager:
+            def __init__(self):
+                self.sessions = {}
+                self.count = 0
+            async def speak(self, sid, item):
+                self.count += 1
+        class Publisher:
+            def bind(self, c, receipt=None):
+                pass
+        m = Manager()
+        commands = DurableCommands(j, Publisher(), m)
+        commands.runs["s"] = {"epoch": 1, "deadline": time.monotonic() + 10, "sealed": False}
+        await commands.execute(command())
+        await commands.execute(command())
+        self.assertEqual(m.count, 1)
+        state = await commands.receipt("s", "cmd")
+        self.assertEqual(state["executionState"], "UNKNOWN")
+
+    async def test_journal_failure_prevents_effect_and_stale_lease(self):
+        j = Journal()
+        class Manager:
+            sessions = {}
+            async def speak(self, sid, item):
+                raise AssertionError("side effect during journal failure")
+        commands = DurableCommands(j, None, Manager())
+        commands.runs["s"] = {"epoch": 1, "deadline": time.monotonic() - 1, "sealed": False}
+        from app.session import RuntimeFailure
+        with self.assertRaises(RuntimeFailure):
+            await commands.execute(command())
+        j.offline = True
+        with self.assertRaises(JournalError):
+            await commands.execute(command())
+
+    async def test_spool_bound_and_identity_mapping(self):
+        with tempfile.TemporaryDirectory() as directory:
+            p = DurableEventPublisher(Journal(), directory, max_pending=1)
+            with self.assertRaises(JournalError):
+                await p.publish(envelope("SESSION_READY", "unmapped", "t"))
+            p.bind(command())
+            await p.publish(envelope("UTTERANCE_QUEUED", "s", "t", "u"))
+            with self.assertRaises(JournalError):
+                await p.publish(envelope("UTTERANCE_GENERATING", "s", "t", "u"))
+            await p.close()
+
+    async def test_duplicate_spool_identity_and_body_conflict(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Journal()
+            publisher = DurableEventPublisher(journal, directory)
+            publisher.bind(command())
+            event = envelope("UTTERANCE_QUEUED", "s", "t", "u")
+            await publisher.publish(event)
+            await publisher.publish(event)
+            self.assertEqual(publisher.db.execute("SELECT count(*) FROM pending").fetchone()[0], 1)
+            self.assertTrue(await publisher.flush_once())
+            await publisher.publish(event)
+            self.assertEqual(publisher.db.execute("SELECT count(*) FROM pending").fetchone()[0], 0)
+            event["payload"] = {"changed": True}
+            with self.assertRaises(JournalError):
+                await publisher.publish(event)
+            await publisher.close()
+
+    async def test_watch_fences_continuity_before_cancelling_media(self):
+        from unittest.mock import patch
+        for reason in ("CONTROL_BARRIER", "LEASE_LOST"):
+            with self.subTest(reason=reason):
+                observations = []
+                class Continuity:
+                    def fence(self, value):
+                        observations.append(value)
+                class Task:
+                    def cancel(self):
+                        observations.append("cancel")
+                class Session:
+                    continuity = Continuity()
+                    current_task = Task()
+                    generation_id = 1
+                    request = type("Request", (), {"traceId": "trace"})()
+                class Manager:
+                    sessions = {"s": Session()}
+                    async def stop_session(self, sid, trace):
+                        observations.append("cleanup")
+                class LeaseJournal(Journal):
+                    async def grant(self, sid, epoch):
+                        if reason == "LEASE_LOST":
+                            raise JournalError("LEASE_LOST", 409)
+                        return {"barrierSeq": 2}, time.monotonic() + 10
+                commands = DurableCommands(LeaseJournal(), None, Manager())
+                commands.runs["s"] = {"epoch": 1, "deadline": time.monotonic() + 10, "sealed": False, "barrier": 0}
+                async def finish_iteration(_):
+                    raise asyncio.CancelledError()
+                with patch("app.durability_client.asyncio.sleep", finish_iteration):
+                    with self.assertRaises(asyncio.CancelledError):
+                        await commands.watch()
+                await commands.close()
+                self.assertEqual(observations[:2], [reason, "cancel"])
+                self.assertEqual(Manager.sessions["s"].generation_id, 2)
+
+    def test_shared_fingerprint_vectors(self):
+        root = Path(__file__).resolve().parents[2]
+        for v in json.loads((root / "backend/internal/durability/testdata/fingerprint-v05.json").read_text()):
+            self.assertEqual(fingerprint(v["command"]), v["fingerprint"])
+        with self.assertRaises(ValueError):
+            canonical({"float": 1.0})
+
+
+class TimelineAdapterTests(unittest.IsolatedAsyncioTestCase):
+    async def test_dataclass_position_and_durable_ack(self):
+        from dataclasses import dataclass
+        from app.durability_client import PostgresTimelineJournal
+        @dataclass
+        class Position:
+            sessionId: str = "s"
+            runEpoch: int = 1
+            timelineEpoch: int = 1
+            sampleIndex: int = 640
+            sampleRate: int = 16000
+            @property
+            def ptsUs(self):
+                return self.sampleIndex * 1000000 // self.sampleRate
+        class Client:
+            incarnation = "runtime_test"
+            durable = True
+            async def request(self, method, suffix, body):
+                self.body = body
+                self.assertion = (method, suffix)
+                return {"durable": self.durable, "receiptSeq": 4}
+        client = Client()
+        journal = PostgresTimelineJournal(client)
+        with self.assertRaises(JournalError):
+            await journal.record("SEGMENT_COMPLETED", command(), {"finalPosition": Position()})
+        with tempfile.TemporaryDirectory() as directory:
+            publisher = DurableEventPublisher(client, directory)
+            result = await journal.record("SEGMENT_COMPLETED", command(), {"finalPosition": Position()})
+            self.assertTrue(result["durable"])
+            self.assertEqual(client.assertion, ("POST", "/timeline-record"))
+            self.assertEqual(client.body["proof"]["finalPosition"]["ptsUs"], 40000)
+            self.assertEqual(client.body["producerIncarnation"], client.incarnation)
+            client.durable = False
+            with self.assertRaises(JournalError):
+                await journal.record("SEGMENT_COMPLETED", command(), {"finalPosition": Position()})
+            self.assertEqual(publisher.db.execute("SELECT count(*) FROM pending").fetchone()[0], 1)
+            await publisher.close()
+
+    async def test_timeline_ack_loss_restart_and_fenced_audit(self):
+        from app.durability_client import PostgresTimelineJournal
+        class Client:
+            incarnation = "original_runtime"
+            fail_ack = True
+            fenced = False
+            observations = []
+            async def request(self, method, suffix, body):
+                self.observations.append((suffix, body))
+                if self.fenced:
+                    raise JournalError("LEASE_LOST", 409)
+                if self.fail_ack:
+                    # Server may have committed; sender still cannot expose eligibility.
+                    raise JournalError()
+                return {"durable": True, "receiptSeq": 4}
+        client = Client()
+        with tempfile.TemporaryDirectory() as directory:
+            p = DurableEventPublisher(client, directory)
+            journal = PostgresTimelineJournal(client)
+            with self.assertRaises(JournalError):
+                await journal.record("COMMIT_INSTALLED", command(), {"commit": "fixture"})
+            self.assertEqual(p.db.execute("SELECT count(*) FROM pending").fetchone()[0], 1)
+            with self.assertRaises(JournalError) as conflict:
+                await journal.record("COMMIT_INSTALLED", command(), {"commit": "changed"})
+            self.assertEqual(conflict.exception.code, "COMMAND_CONFLICT")
+            await p.close()
+            client.incarnation = "restarted_runtime"
+            client.fail_ack = False
+            p = DurableEventPublisher(client, directory)
+            p.db.execute("UPDATE pending SET next_at=0")
+            p.db.commit()
+            self.assertTrue(await p.flush_once())
+            self.assertEqual(client.observations[-1][1]["producerIncarnation"], "original_runtime")
+            self.assertEqual(client.observations[-1][0], "/timeline-record")
+            self.assertEqual(p.db.execute("SELECT count(*) FROM pending").fetchone()[0], 0)
+            # Do not reuse a cached ACK after Stop/lease loss: recheck Go authority.
+            client.fenced = True
+            with self.assertRaises(JournalError):
+                await journal.record("COMMIT_INSTALLED", command(), {"commit": "fixture"})
+            self.assertEqual(p.db.execute("SELECT disposition FROM pending").fetchone()[0], "FENCED")
+            self.assertFalse(await p.flush_once())
+            # ACKed identity metadata carries no raw command/proof body.
+            metadata = p.db.execute("SELECT metadata FROM identities").fetchone()[0]
+            self.assertNotIn("fixture", metadata)
+            await p.close()
+
+    async def test_timeline_disk_journal_before_sigkill(self):
+        import os
+        import subprocess
+        import sys
+        from app.durability_client import PostgresTimelineJournal
+        class Client:
+            incarnation = "restarted_sender"
+            async def request(self, method, suffix, body):
+                self.packet = body
+                return {"durable": True}
+        with tempfile.TemporaryDirectory() as directory:
+            code = """
+import asyncio, os, signal, sys
+from app.durable_events import DurableEventPublisher
+from app.durability_client import PostgresTimelineJournal
+class Client:
+    incarnation = 'killed_executor'
+    async def request(self, method, suffix, body):
+        os.kill(os.getpid(), signal.SIGKILL)
+client = Client()
+publisher = DurableEventPublisher(client, sys.argv[1])
+asyncio.run(PostgresTimelineJournal(client).record('COMMIT_INSTALLED', {'commandId':'killed'}, {'commit':'bounded-proof'}))
+"""
+            process = subprocess.run([sys.executable, "-c", code, directory], env=os.environ.copy(), capture_output=True, timeout=10)
+            self.assertEqual(process.returncode, -9, process.stderr.decode())
+            client = Client()
+            p = DurableEventPublisher(client, directory)
+            self.assertEqual(p.db.execute("SELECT count(*) FROM pending").fetchone()[0], 1)
+            self.assertTrue(await p.flush_once())
+            self.assertEqual(client.packet["producerIncarnation"], "killed_executor")
+            self.assertEqual(client.packet["proof"], {"commit": "bounded-proof"})
+            await p.close()
+
+    async def test_upgrade_legacy_spool_route_and_capacity(self):
+        import sqlite3
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "events.sqlite3"
+            connection = sqlite3.connect(path)
+            connection.execute("CREATE TABLE pending(event_id TEXT PRIMARY KEY,envelope TEXT NOT NULL,attempts INTEGER NOT NULL DEFAULT 0,next_at REAL NOT NULL DEFAULT 0,disposition TEXT NOT NULL DEFAULT 'PENDING')")
+            connection.execute("INSERT INTO pending(event_id,envelope) VALUES('legacy','{}')")
+            connection.commit()
+            connection.close()
+            path.chmod(0o600)
+            client = Journal()
+            p = DurableEventPublisher(client, directory, max_pending=1)
+            self.assertEqual(p.db.execute("SELECT endpoint FROM pending").fetchone()[0], "/events")
+            with self.assertRaises(JournalError):
+                p.stage_timeline({"operation":"COMMIT_INTENT", "command":command(), "proof":{}, "producerIncarnation":client.incarnation})
+            self.assertEqual(p.db.execute("SELECT count(*) FROM pending").fetchone()[0], 1)
+            self.assertTrue(await p.flush_once())
+            self.assertEqual(client.events, [{}])
+            await p.close()
+
+    async def test_worker_wire_shared_canonical_and_exact_spool(self):
+        import copy
+        import hashlib
+        from app.durability_client import timeline_canonical
+        vectors = json.loads((Path(__file__).resolve().parents[2] / "backend/internal/durability/testdata/worker-proof-v05.json").read_text())
+        for vector in vectors:
+            with self.subTest(vector=vector["name"]), tempfile.TemporaryDirectory() as directory:
+                packet = vector["packet"]
+                encoded = timeline_canonical(packet)
+                self.assertEqual(encoded.decode(), vector["canonical"])
+                self.assertEqual("sha256:" + hashlib.sha256(encoded).hexdigest(), vector["hash"])
+                publisher = DurableEventPublisher(Journal(), directory)
+                identity, staged = publisher.stage_timeline(packet)
+                raw = publisher.db.execute("SELECT envelope FROM pending WHERE event_id=?", (identity,)).fetchone()[0]
+                self.assertEqual(raw, vector["canonical"])
+                self.assertEqual(json.loads(raw), packet)
+                retry = copy.deepcopy(packet)
+                retry["producerIncarnation"] = "restarted_sender"
+                self.assertEqual(publisher.stage_timeline(retry), (identity, staged))
+                retry["proof"]["identity"]["workerGenerationId"] = 2 if packet["proof"]["identity"]["workerGenerationId"] != 2 else 3
+                with self.assertRaises(JournalError):
+                    publisher.stage_timeline(retry)
+                await publisher.close()
+        for value in (0, -1, True, "9007199254740992", float(2**53), 2**63):
+            with self.subTest(invalid=value), self.assertRaises(ValueError):
+                timeline_canonical({"proof": {"identity": {"workerGenerationId": value}}})
+        for packet in (
+            {"command": {"payload": {"workerGenerationId": 2**53}}},
+            {"proof": {"identity": {"generationId": 2**53}}},
+            {"proof": {"workerGenerationId": 2**53}},
+            {"proof": {"sinkReceipts": {"0": {"identity": {"workerGenerationId": 2**53}}}}},
+        ):
+            with self.subTest(business_or_wrong_path=packet), self.assertRaises(ValueError):
+                timeline_canonical(packet)
+        with self.assertRaises(ValueError):
+            canonical({"workerGenerationId": 2**53})

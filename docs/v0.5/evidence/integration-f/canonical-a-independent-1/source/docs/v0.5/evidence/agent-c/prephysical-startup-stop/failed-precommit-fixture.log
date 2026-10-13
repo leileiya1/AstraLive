@@ -1,0 +1,131 @@
+test_actual_wire_simulation_negotiation_rejected_and_binding_cleaned (test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_actual_wire_simulation_negotiation_rejected_and_binding_cleaned) ... session_prepare_failed
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py", line 231, in prepare
+    await self.avatar_engine.prepare(self.request.avatar)
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 345, in prepare
+    await self.link.connect()
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 102, in connect
+    raise StagingFailure("STAGING_IDENTITY_MISMATCH")
+app.soulx_staging.StagingFailure: STAGING_IDENTITY_MISMATCH
+ok
+test_real_bound_factory_configure_prepare_start_interrupt_stop (test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_real_bound_factory_configure_prepare_start_interrupt_stop) ... ok
+test_start_without_config_and_verified_connection_rejects (test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_start_without_config_and_verified_connection_rejects) ... ok
+test_unsupported_session_clock_rejected_before_worker_connection (test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_unsupported_session_clock_rejected_before_worker_connection) ... ok
+test_any_prepare_or_connection_attempt_excludes_configuration_proof (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_any_prepare_or_connection_attempt_excludes_configuration_proof) ... ok
+test_exact_prephysical_failed_create_stop_real_spool_and_ack_order (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_exact_prephysical_failed_create_stop_real_spool_and_ack_order) ... ERROR
+test_no_binding_ack_retains_unknown_without_ended_or_receipt (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_no_binding_ack_retains_unknown_without_ended_or_receipt) ... ok
+test_postconfigure_media_factory_failure_and_prepare_failure_unknown (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_postconfigure_media_factory_failure_and_prepare_failure_unknown) ... session_prepare_failed
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py", line 230, in prepare
+    await self.emit("SESSION_PREPARING", self.request.traceId)
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py", line 226, in emit
+    await self.publisher.publish(envelope(kind, self.session_id, trace, utterance, payload))
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durable_events.py", line 82, in publish
+    command = self.command_for(event)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durable_events.py", line 78, in command_for
+    raise JournalError("RECOVERY_UNKNOWN", 409)
+app.durability_client.JournalError: RECOVERY_UNKNOWN
+Task exception was never retrieved
+future: <Task finished name='Task-79' coro=<RuntimeSession.prepare() done, defined at /Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py:228> exception=JournalError('RECOVERY_UNKNOWN') created at /Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py:420>
+source_traceback: Object created at (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/__main__.py", line 18, in <module>
+    main(module=None)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/main.py", line 105, in __init__
+    self.runTests()
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/main.py", line 281, in runTests
+    self.result = testRunner.run(self.test)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/runner.py", line 240, in run
+    test(result)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 122, in run
+    test(result)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 122, in run
+    test(result)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 122, in run
+    test(result)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/case.py", line 690, in __call__
+    return self.run(*args, **kwds)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/async_case.py", line 132, in run
+    return super().run(result)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/case.py", line 634, in run
+    self._callTestMethod(testMethod)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/async_case.py", line 91, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/async_case.py", line 113, in _callMaybeAsync
+    return self._asyncioRunner.run(
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 678, in run_until_complete
+    self.run_forever()
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 645, in run_forever
+    self._run_once()
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 1991, in _run_once
+    handle._run()
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_prephysical_stop.py", line 142, in test_postconfigure_media_factory_failure_and_prepare_failure_unknown
+    await commands.execute(begin)
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durability_client.py", line 208, in execute
+    await self.manager.create_session(CreateSession.model_validate(payload["createSession"]))
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session_binding.py", line 223, in create_session
+    await super().create_session(request, factories=factories, max_queue=binding["settings"]["policy"]["maxQueue"])
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py", line 680, in create_session
+    task = asyncio.create_task(session.prepare())
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 420, in create_task
+    task = loop.create_task(coro)
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py", line 230, in prepare
+    await self.emit("SESSION_PREPARING", self.request.traceId)
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py", line 226, in emit
+    await self.publisher.publish(envelope(kind, self.session_id, trace, utterance, payload))
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durable_events.py", line 82, in publish
+    command = self.command_for(event)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durable_events.py", line 78, in command_for
+    raise JournalError("RECOVERY_UNKNOWN", 409)
+app.durability_client.JournalError: RECOVERY_UNKNOWN
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py", line 241, in prepare
+    await self.emit("SESSION_FAILED", self.request.traceId, payload={"code": exc.code if isinstance(exc, RuntimeFailure) else "PROVIDER_PREPARE_FAILED"})
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py", line 226, in emit
+    await self.publisher.publish(envelope(kind, self.session_id, trace, utterance, payload))
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durable_events.py", line 82, in publish
+    command = self.command_for(event)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/durable_events.py", line 78, in command_for
+    raise JournalError("RECOVERY_UNKNOWN", 409)
+app.durability_client.JournalError: RECOVERY_UNKNOWN
+ok
+test_receipt_outage_does_not_consume_marker_or_retry_started_stop (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_receipt_outage_does_not_consume_marker_or_retry_started_stop) ... ok
+test_wrong_original_identity_incarnation_epoch_and_reservations_unknown (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_wrong_original_identity_incarnation_epoch_and_reservations_unknown) ... ok
+
+======================================================================
+ERROR: test_exact_prephysical_failed_create_stop_real_spool_and_ack_order (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_exact_prephysical_failed_create_stop_real_spool_and_ack_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_prephysical_stop.py", line 72, in test_exact_prephysical_failed_create_stop_real_spool_and_ack_order
+    self.assertEqual(journal.events[0]["envelope"]["eventType"],"SESSION_ENDED")
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'envelope'
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.127s
+
+FAILED (errors=1)

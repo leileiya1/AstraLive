@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "v0.5-local-ipc-production-1",
+  "sourceSHA": "ecc43dd2a829fff80620b060519a1336527d6e39",
+  "implementationSHA": "3a571fb3247a70e86ac6f6a6a19a765c16f58a36",
+  "dependencyF": "48eb0387f4e0f7db08ca8b64d3ae02c2207a9f57",
+  "frozenRevision": "v0.5-frozen-1",
+  "platform": "darwin arm64",
+  "timeUTC": "2026-10-12T00:27:19.120916+00:00",
+  "scope": "actual cmd/server and real temporary PostgreSQL and Python production local_listener; CPU_SIMULATION providers/sinks. Protected secondary calls use explicit protocol fixtures. No GPU/physical audience/performance claim.",
+  "checks": [
+    {
+      "command": "GOFLAGS=-v ASTRALIVE_IPC_TEST_PYTHON=<installed Python> DURABILITY_TEST_PYTHON=<installed Python> bash backend/scripts/test-durability-faults.sh",
+      "log": "final-full-faults.log",
+      "exitCode": 0,
+      "includes": [
+        "full Go",
+        "full Go race",
+        "actual Backend/Python TCP and UDS public Start/Speak/Stop/idempotency/Backend restart",
+        "Runtime local listener auth/token rotation/Runtime kill-restart/socket cleanup",
+        "protected provider transport HTTP protocol fixture",
+        "owned PG outage",
+        "12 durable Python",
+        "v1.1 contract validation"
+      ]
+    },
+    {
+      "command": "PYTHONPATH=runtime <installed Python> -m unittest discover -s runtime/tests -v",
+      "log": "final-runtime.log",
+      "exitCode": 0,
+      "tests": 223,
+      "skipped": 12
+    },
+    {
+      "command": "GOOS=windows GOARCH=amd64 go -C backend test -exec=true ./internal/config ./internal/runtime ./internal/userconfig ./internal/durability ./cmd/server",
+      "log": "windows-compile-only.log",
+      "exitCode": 0,
+      "runtimeExecution": false
+    }
+  ],
+  "sourceFiles": {
+    "backend/cmd/server/main.go": "a82402d5eb7bd327538cc46896c38bcc4e9b0979089a0ffbaa8a4c6b50134ec2",
+    "backend/internal/config/local_transport.go": "7c97d4c84528c434b3f7dd0b4fd13e0388c8ff43f9dc1a548db5b1814491d789",
+    "backend/internal/runtime/local_transport.go": "3a99b96ba6d740339a0fbb92682e06cf3b357eb328833fb6daf66fafced125ce",
+    "backend/internal/userconfig/local_transport.go": "59e0c550a39ce75145527378a87c37bcf595aae533e76ccf0259db4fad5bca7f",
+    "backend/internal/userconfig/environment.go": "6752c292e7a130968b776c8d5d57c9c3aa3f8c530c8aa10b690727a84e604f71",
+    "backend/internal/userconfig/provider_probe.go": "725e68019af7537024535de1e1b5f39f176b0dff5141d692d89945cdf18b5323",
+    "backend/internal/userconfig/session_binding.go": "f29660a485cbcc2ea1a34f00ff94d44f1770444d2d3bae61a0baaebb0af94d1b",
+    "backend/internal/userconfig/service.go": "92f0e9658390c3839fab5fef17c2c3e26538dbaeb4b3d35f5885ccc33ec3347f",
+    "runtime/app/production_launcher.py": "7cf765be82ad03f638becdbbbb3c7e1e01311059b8a02bc176e503ce48a4cca1",
+    "runtime/app/local_listener.py": "da5140840a7991ca67f7f5706e2e2259369ec2968190d42c1aab12af7f33354a",
+    "backend/internal/narration/timeline_config.go": "630b04176cc25d35533068598969669504b3fdb1d1550c190d8906b820e3ae03",
+    "backend/internal/durability/local_transport_startup_test.go": "7b1e34ccb0ce4cd15c330f1d6a7deec7902e182c5d7acf6ce79b901f74087b29",
+    "runtime/tests/test_production_launcher_transport.py": "90ee0b09fd64704a4f6dbe2f6773e54c008042f67f509e9e4e51bffd80155ab7"
+  },
+  "artifacts": {
+    "final-full-faults.log": {
+      "sha256": "a39fb9eb066f7f4ebe22aec84c04926350657a3464ceb2e093d67283b247c1f1",
+      "bytes": 70212
+    },
+    "final-runtime.log": {
+      "sha256": "2f25f9c9920efbe3f0f04f2e652589fc9147b880ed0902603ccbd093ca2f6344",
+      "bytes": 451589
+    },
+    "full-faults.log": {
+      "sha256": "1df6354dc538e95a29c31622033fc51ac2fe564beb650dc66fc5c863af9a2084",
+      "bytes": 5501
+    },
+    "runtime.log": {
+      "sha256": "9932afc5cf111a879053de8b039f32a4e7d77d84d95bd3559ca83068f4cd1829",
+      "bytes": 451236
+    },
+    "windows-compile-only.log": {
+      "sha256": "1a16e5a5c77c039efb6e7580c73bbe587e497e4acfff9632310c4ae84764f237",
+      "bytes": 243
+    }
+  },
+  "notTested": [
+    "Linux integrated production launcher/preflight",
+    "Windows runtime authentication/NTFS/restart",
+    "real XiaoYa/SoulX inference",
+    "Chrome/RTMP/narration through UDS",
+    "transport performance improvements"
+  ],
+  "review": {
+    "C": "scoped ACK startup/config 3a571fb",
+    "A": "scoped ACK production3a571fb/delivery1a73eff; independent fixed archive full PG Go/race/outage/durable12/validator and focused TCP/UDS auth/entrypoint replay PASS; evidence commit6ca40cba5fd0d384ce753370dabdc8c6ca2f9867",
+    "F": "final merge and independent replay pending"
+  },
+  "initialRunNote": "full-faults.log began at3a571fb; only test guards changed before final rerun. final-full-faults.log and final-runtime.log are fixed ecc43dd production/test source; docs-only editing during final execution is not source mutation."
+}

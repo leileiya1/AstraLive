@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-09",
+  "scope": "Existing RTX2080Ti server deployment; CPU simulation only; no SoulX real GPU inference",
+  "gpu": {
+    "name": "RTX2080Ti",
+    "memoryMiB": 11264,
+    "capability": [
+      7,
+      5
+    ],
+    "driver": "580.105.08",
+    "cleanupMemoryMiB": 0
+  },
+  "baseEnvironment": {
+    "python": "3.12.3",
+    "torch": "2.8.0+cu128",
+    "cuda": "12.8",
+    "originallyMissing": [
+      "flash_attn",
+      "av",
+      "transformers",
+      "diffusers",
+      "SoulX lab and weights"
+    ]
+  },
+  "simulationEnvironment": {
+    "usesBaseTorch": true,
+    "av": "17.1.0",
+    "separateVenv": true,
+    "baseEnvironmentUnchanged": true
+  },
+  "gpuPreflight": {
+    "exitCode": 78,
+    "workerStarted": false,
+    "modelLoaded": false,
+    "reasons": [
+      "TURING_UNSUPPORTED_BY_PINNED_FLASH_ATTENTION",
+      "ASSETS_AND_DEPENDENCIES_MISSING"
+    ]
+  },
+  "installer": {
+    "status": "PASS",
+    "releaseId": "5e41ceca6c190341b3ffa7dcf13e5e02141c42072d394d320e16c3790c525fed",
+    "includesOfflineLab": false,
+    "archiveSHA256": "0417e003d08bcf8c5401a2407ecd75b1e79af741944ce6297e4ac46b984f8a61",
+    "idempotencyAndUpgrade": "PASS",
+    "configurationAndTokensPreserved": true
+  },
+  "cpuLifecycle": {
+    "ready": "PASS",
+    "restartEpochAndCache": "PASS",
+    "normalStop": "PASS"
+  },
+  "remoteServiceTests": {
+    "run": 5,
+    "passed": 5,
+    "seconds": 20.496,
+    "release": "d94a5a5b28b9ef42f215a598e681b8f7b77a75a5bddd17a3b5466848c50bc6a8"
+  },
+  "cleanup": {
+    "noControlledProcesses": true,
+    "serverShutdown": false,
+    "instanceDeleted": false
+  },
+  "rtx3060_12GB": {
+    "architectureCompatible": true,
+    "realTimePerformance": "NOT_MEASURED"
+  },
+  "productionDefaultChanged": false,
+  "fullOfflineSnapshotExportAndRestore": "NOT_EXECUTED",
+  "evidence": {
+    "remote-deployment-setup.log": "f63cc77d2724a0f99ffcef75f6c216894e9e81c85df1c3f8f8825b29faf2ed6f",
+    "remote-deployment-validation.log": "c67e674093c6a9fcafc3c9bf9ca5361bb96259b58ff5da256397ffac1aa9cdca",
+    "remote-deployment-final.log": "73a07019a649d6cfc074b5fb2337481e86ce934c8d626f37c5ffd64823d3fa0f",
+    "deployment-cpu.log": "02e4cd3848cd4fec3abacf2acbbfe0d20d41b931d93f7b70966079025d47cfbc",
+    "deployment-final-cpu.log": "76441452963863aaa408c4f2260b8efcb0bdfa9760d3154e80279ca3565d5dc7",
+    "production-deployment-cpu.log": "5180925c089f39914d8837ae92af4664868c27facedcfaa6f18d8c5e3e3c1d82"
+  }
+}

@@ -1,0 +1,41 @@
+test_contracts (unittest.loader._FailedTest.test_contracts) ... ERROR
+test_acceptance_guards (unittest.loader._FailedTest.test_acceptance_guards) ... ERROR
+test_interaction_observer (unittest.loader._FailedTest.test_interaction_observer) ... ERROR
+
+======================================================================
+ERROR: test_contracts (unittest.loader._FailedTest.test_contracts)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_contracts
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'test_contracts'
+
+
+======================================================================
+ERROR: test_acceptance_guards (unittest.loader._FailedTest.test_acceptance_guards)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_acceptance_guards
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'test_acceptance_guards'
+
+
+======================================================================
+ERROR: test_interaction_observer (unittest.loader._FailedTest.test_interaction_observer)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_interaction_observer
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'test_interaction_observer'
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+FAILED (errors=3)

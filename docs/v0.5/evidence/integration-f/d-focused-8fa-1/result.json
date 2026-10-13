@@ -1,0 +1,190 @@
+{
+  "source": "8fa0eb27b132234be9bd2afcccfeb8980ad4ca7a",
+  "status": "PASS_FOCUSED_REGRESSION",
+  "scope": "macOS exactarchive actual local Go/Python TCP/UDS process and owned PG/auth/default-off; providers/media explicitly CPU or protocol fixture; no real-GPU or audience/performance acceptance",
+  "checks": [
+    {
+      "name": "go-auth-local-race",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-p",
+        "1",
+        "-count=1",
+        "-v",
+        "./internal/config",
+        "./internal/runtime",
+        "./internal/userconfig"
+      ],
+      "exitCode": 0,
+      "seconds": 7.921,
+      "log": "go-auth-local-race.log",
+      "sha256": "900916856faba5019d32355618ff20a543b37e87573f207b0ec91e0b4f76fd97",
+      "bytes": 7785
+    },
+    {
+      "name": "go-production-startup-race",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-p",
+        "1",
+        "-count=1",
+        "-v",
+        "./internal/durability",
+        "-run",
+        "^(TestLocalIPCProductionServerStartup|TestPostgresOnlyServerStartup)$"
+      ],
+      "exitCode": 0,
+      "seconds": 20.288,
+      "log": "go-production-startup-race.log",
+      "sha256": "3a59ce9840731b640bd97f207eae14255ef815d19737032bfa4f543f925253a7",
+      "bytes": 3230
+    },
+    {
+      "name": "go-feature-flags-race",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-v",
+        "./internal/narration",
+        "-run",
+        "^(TestFrozenFlag|TestTimelineConfiguration|TestStagingCaptureFrozenProfiles)$"
+      ],
+      "exitCode": 0,
+      "seconds": 3.23,
+      "log": "go-feature-flags-race.log",
+      "sha256": "2a2799e164b74767c59ef8c141c1ce68aedc53aff6f8483ff9eb60ec66ad80cd",
+      "bytes": 3782
+    },
+    {
+      "name": "python-auth-local-lifecycle-corrected",
+      "command": [
+        "/private/tmp/astralive-f-media-venv-1/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "test_local_listener",
+        "test_production_launcher_transport",
+        "test_session_binding",
+        "test_durability",
+        "test_narration_lifecycle",
+        "test_staging_runtime.CaptureTests"
+      ],
+      "exitCode": 0,
+      "seconds": 3.555,
+      "log": "python-corrected.log",
+      "sha256": "4e57e78a1a435f6dccdfecbebf5cd0f43c68479f1555f1176a82926d23290cd7",
+      "bytes": 7718
+    }
+  ],
+  "pythonTests": 47,
+  "pythonSkipped": 1,
+  "goBrowserHarness": "SKIPPED opt-in; no Chrome run requested",
+  "ownedPGCleanup": "PASS",
+  "versions": {
+    "go": "go version go1.27.2 darwin/arm64",
+    "python": "Python 3.12.13",
+    "postgres": "postgres (PostgreSQL) 17.11 (Homebrew)"
+  },
+  "retainedFailures": [
+    {
+      "path": "run-1/result.json",
+      "classification": "runner setup failure: systemPython3.9 tarfilter unsupported; no PG/tests started"
+    },
+    {
+      "path": "run-2/result.json",
+      "classification": "Go checks PASS; Python runner path omitted runtime/tests fixture import; corrected exactsame-source in run-3, no productassertion waived"
+    }
+  ],
+  "sourceHashes": {
+    "backend/cmd/server/main.go": "5c5fb1de8053201e69eab56bab3b2bb7761f4cfeee3104016b17481fb98018a5",
+    "backend/internal/runtime/client.go": "9a75e5a5ea68634e7e61fd19143ed25004dc8eaa0239a84d365aad01150b791b",
+    "backend/internal/runtime/local_transport.go": "3a99b96ba6d740339a0fbb92682e06cf3b357eb328833fb6daf66fafced125ce",
+    "backend/internal/runtime/local_transport_unix.go": "1f277ab44f5fbd1ee5d49a2c22fb6a31734465b8545d2f0d08c7bb99071da2f3",
+    "backend/internal/config/local_transport.go": "7c97d4c84528c434b3f7dd0b4fd13e0388c8ff43f9dc1a548db5b1814491d789",
+    "backend/internal/userconfig/local_transport.go": "59e0c550a39ce75145527378a87c37bcf595aae533e76ccf0259db4fad5bca7f",
+    "backend/internal/userconfig/login.go": "25b74cc31b85056f7d5ed22607569685d2856e3b58cda865965ff677d6c10e86",
+    "backend/internal/userconfig/environment.go": "6752c292e7a130968b776c8d5d57c9c3aa3f8c530c8aa10b690727a84e604f71",
+    "backend/internal/userconfig/provider_probe.go": "725e68019af7537024535de1e1b5f39f176b0dff5141d692d89945cdf18b5323",
+    "backend/internal/userconfig/session_binding.go": "f29660a485cbcc2ea1a34f00ff94d44f1770444d2d3bae61a0baaebb0af94d1b",
+    "backend/internal/userconfig/provider.go": "d82283edf28d4028db4b99600f64f24f75868abc8bc9a9a73f29361b7cdb06a1",
+    "runtime/app/local_listener.py": "da5140840a7991ca67f7f5706e2e2259369ec2968190d42c1aab12af7f33354a",
+    "runtime/app/production_launcher.py": "7cf765be82ad03f638becdbbbb3c7e1e01311059b8a02bc176e503ce48a4cca1",
+    "runtime/app/main.py": "7aa04b0b2845932e0b5d49866cab3ea29fa56496dd7e91a891e4f0e1b3f13501",
+    "runtime/app/durability_client.py": "d616edcaa0f78b03bdd94d87b2625b14785b45bd609f99a88d95a491442d2d74",
+    "runtime/app/session_binding.py": "27ced4b2efbdcf440cf554de148d09913813ce1ebbb9e086c700318a9955c2e8",
+    "backend/internal/narration/staging_config.go": "7832214ae71861f4db17893b9a6a5d9e20c2eab8739db261cbe68b129d4f3cec",
+    "backend/internal/narration/timeline_config.go": "630b04176cc25d35533068598969669504b3fdb1d1550c190d8906b820e3ae03",
+    "runtime/app/staging_settings.py": "13578ad1843e21f9eebb5425d817e0aa08a82345ebd1722402c15449d6313394"
+  },
+  "notTested": [
+    "Linux actual runtime",
+    "Windows actual runtime",
+    "real GPU through UDS",
+    "Chrome/RTMP through UDS",
+    "Speak performance"
+  ],
+  "artifacts": {
+    "focused_runner.py": {
+      "sha256": "bfb5b3fa8fe57e6c822789eb7fc944de51515913241602902c2bebed9ac7fa41",
+      "bytes": 5588
+    },
+    "python_runner.py": {
+      "sha256": "1d0fe1351683b4a84354c86e054e290dd089820cab9c93730440105d90a34ace",
+      "bytes": 2019
+    },
+    "run-1/result.json": {
+      "sha256": "6ddc0b31c195d3a570701e3b9175c8a294ed14d9c0aee2d300a929827c2ef144",
+      "bytes": 772
+    },
+    "run-2/go-auth-local-race.log": {
+      "sha256": "900916856faba5019d32355618ff20a543b37e87573f207b0ec91e0b4f76fd97",
+      "bytes": 7785
+    },
+    "run-2/go-feature-flags-race.log": {
+      "sha256": "2a2799e164b74767c59ef8c141c1ce68aedc53aff6f8483ff9eb60ec66ad80cd",
+      "bytes": 3782
+    },
+    "run-2/go-production-startup-race.log": {
+      "sha256": "3a59ce9840731b640bd97f207eae14255ef815d19737032bfa4f543f925253a7",
+      "bytes": 3230
+    },
+    "run-2/pg-database.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "run-2/pg-init.log": {
+      "sha256": "2d37963455416be00043a8cdbe4c7061df3cb0d5f06b4ba9956e0343176ca84b",
+      "bytes": 951
+    },
+    "run-2/pg-start.log": {
+      "sha256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+      "bytes": 52
+    },
+    "run-2/pg-stop.log": {
+      "sha256": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+      "bytes": 56
+    },
+    "run-2/python-auth-local-lifecycle.log": {
+      "sha256": "36682adef685e50c99c7d1995c23f83a2509b9492ca79b398d39543ee07e1d85",
+      "bytes": 8688
+    },
+    "run-2/result.json": {
+      "sha256": "eb9a7be6a687e3cf52577cde67963b238df3797e60b8688a8b6690a4081ecf1c",
+      "bytes": 5408
+    },
+    "run-3/python-corrected.log": {
+      "sha256": "4e57e78a1a435f6dccdfecbebf5cd0f43c68479f1555f1176a82926d23290cd7",
+      "bytes": 7718
+    },
+    "run-3/result.json": {
+      "sha256": "b40cad5ee4ea11ec023c1c31a976c7281b9a69a80864facc01aa1842428b0f7b",
+      "bytes": 1058
+    }
+  }
+}

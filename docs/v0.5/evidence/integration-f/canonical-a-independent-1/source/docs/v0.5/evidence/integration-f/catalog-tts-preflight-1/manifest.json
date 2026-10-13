@@ -1,0 +1,30 @@
+{
+  "scope": "REAL_CPU_TTS_PRECHECK_AND_PRODUCTION_BUILDPLAN_ONLY",
+  "fixtureSHA256": {
+    "real_golden_catalog.json": "4cc8a9f41a34442747f5856c6dfe0567b0c59de32817dd537427cbd33326c280",
+    "real_golden_smoke.json": "9865f8d140d0b55bdc08b3bf7dcc565b1a2ec7b04f30ac9bd7f9add69c2e8396"
+  },
+  "artifacts": {
+    "first-measurement.json": "b41bab1678161811531653ffc2c7bc15ced2030a0c9730aa466b4593f288c9b6",
+    "repeat-measurement.json": "c55720da6f34cf44741fcd7bd0f3d042aa3675905c8b8aef7865a1245108cbc2",
+    "tts-preflight.py": "00d8d6c294eda012747ad4fd385dcdeae820b52ed3619041a34a52d80e33671e",
+    "tts.log": "449c6b2f34e6bb764efccc406dc04a50348763d91b46ec0b27078afbcd423b2f",
+    "buildplan-probe.go": "a9545a48f45dfe1fec87277bb82c4792417a50a7e70490d4e4042a0bbb867a44",
+    "buildplan.log": "69aa9b2838fb958a5c6970e9ca06f7e8df39b46c38e04c77526daeabe39ed1bc",
+    "buildplan-result.json": "e4910e1badbbba77b2fc43f3f07d1afa907530d4503ebbc10542028bc2cd0200"
+  },
+  "nativeTTSVersion": "sherpa-onnx1.13.8",
+  "avVersion": "17.1.0",
+  "narrationCount": 140,
+  "longSecondsFirst": 754.88,
+  "longSecondsRepeat": 753.88,
+  "maxSecondsFirst": 6.52,
+  "maxSecondsRepeat": 6.32,
+  "over7_5SecondsFirst": 0,
+  "over7_5SecondsRepeat": 0,
+  "over8SecondsFirst": 0,
+  "over8SecondsRepeat": 0,
+  "liveGPUChromeRTMP": "NOT_TESTED",
+  "naturalNarration": "NOT_TESTED",
+  "warning": "native TTS Ignore OOV CNY retained; currency audible expression is not accepted"
+}

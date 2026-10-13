@@ -1,0 +1,90 @@
+{
+  "scope": "read-only installation inventory; no inference/start/install",
+  "labPresent": true,
+  "servicePresent": false,
+  "pythonBinaries": {
+    "/root/miniconda3/bin/python": true,
+    "/root/autodl-tmp/astralive-avatar-lab/environments/astralive-soulx/bin/python": true
+  },
+  "platform": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "python": "3.12.3"
+  },
+  "gpuQuery": {
+    "exitCode": 0,
+    "columns": [
+      "name",
+      "driverVersion",
+      "memoryTotalMiB",
+      "memoryUsedMiB",
+      "utilizationPercent"
+    ],
+    "rows": [
+      [
+        "NVIDIA GeForce RTX 3080",
+        "595.71.05",
+        "10240",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "cachedEnvironmentExit": 0,
+  "cachedEnvironment": {
+    "python": "3.12.3",
+    "packages": {
+      "torch": "2.8.0+cu128",
+      "flash-attn": "2.8.3",
+      "av": "17.1.0",
+      "numpy": "1.26.4"
+    }
+  },
+  "modelManifestPresent": true,
+  "modelFileCount": 7,
+  "modelFilesPresent": [
+    {
+      "repo": "Soul-AILab/SoulX-FlashHead-1_3B",
+      "file": "Model_Lite/config.json",
+      "present": true
+    },
+    {
+      "repo": "Soul-AILab/SoulX-FlashHead-1_3B",
+      "file": "Model_Lite/diffusion_pytorch_model.safetensors",
+      "present": true
+    },
+    {
+      "repo": "Soul-AILab/SoulX-FlashHead-1_3B",
+      "file": "VAE_LTX/config.json",
+      "present": true
+    },
+    {
+      "repo": "Soul-AILab/SoulX-FlashHead-1_3B",
+      "file": "VAE_LTX/diffusion_pytorch_model.safetensors",
+      "present": true
+    },
+    {
+      "repo": "facebook/wav2vec2-base-960h",
+      "file": "config.json",
+      "present": true
+    },
+    {
+      "repo": "facebook/wav2vec2-base-960h",
+      "file": "preprocessor_config.json",
+      "present": true
+    },
+    {
+      "repo": "facebook/wav2vec2-base-960h",
+      "file": "pytorch_model.bin",
+      "present": true
+    }
+  ],
+  "currentRelease": null,
+  "lifecycleEntryPresent": false,
+  "cachedSupervisorStatePresent": false,
+  "toolsPresent": {
+    "/usr/local/go/bin/go": false,
+    "/usr/bin/ffmpeg": false,
+    "/root/miniconda3/bin/ffmpeg": false
+  }
+}

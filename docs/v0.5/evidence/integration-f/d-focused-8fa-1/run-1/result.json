@@ -1,0 +1,22 @@
+{
+  "source": "8fa0eb27b132234be9bd2afcccfeb8980ad4ca7a",
+  "scope": "D actual local Go/Python TCP/UDS and real owned PostgreSQL process/auth/default-off focused regression; CPU fixture providers/sinks only; no GPU/Chrome/live performance acceptance",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "checks": [],
+  "status": "FAIL",
+  "notTested": [
+    "Linux actual runtime",
+    "Windows actual runtime",
+    "real GPU through UDS",
+    "Chrome/RTMP through UDS",
+    "Speak performance"
+  ],
+  "versions": {
+    "go": "go version go1.27.2 darwin/arm64",
+    "python": "Python 3.12.13",
+    "postgres": "postgres (PostgreSQL) 17.11 (Homebrew)"
+  },
+  "error": "extractall() got an unexpected keyword argument 'filter'",
+  "ownedPGCleanup": "PASS",
+  "artifacts": {}
+}

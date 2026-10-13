@@ -1,0 +1,85 @@
+{
+  "source": "c07658836c489105d33d56650c45c775152a351e",
+  "scope": "independent real PG actualA journal C policy transactions with controlled boundary/sink fixtures; originalA zero-map regression probe overlay, no GPU/Chrome/physical consumption",
+  "overlaySHA256": "36cf25505196c0018dd9a0765b470b4a08be62024195755ed587c8203d530464",
+  "checks": [
+    {
+      "name": "pg-init",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/initdb",
+        "-D",
+        "/private/tmp/astralive-a-canonical-c076-review-zwqey2lm/pg",
+        "-A",
+        "trust",
+        "--no-locale",
+        "-E",
+        "UTF8"
+      ],
+      "exitCode": 0,
+      "seconds": 0.334
+    },
+    {
+      "name": "pg-start",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+        "-D",
+        "/private/tmp/astralive-a-canonical-c076-review-zwqey2lm/pg",
+        "-l",
+        "/private/tmp/astralive-a-canonical-c076-review-zwqey2lm/postgres.log",
+        "start"
+      ],
+      "exitCode": 0,
+      "seconds": 0.121
+    },
+    {
+      "name": "pg-createdb",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/createdb",
+        "-h",
+        "127.0.0.1",
+        "-p",
+        "49589",
+        "canonical_c076"
+      ],
+      "exitCode": 0,
+      "seconds": 0.046
+    },
+    {
+      "name": "canonical-focused-race",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-timeout=90s",
+        "-v",
+        "./internal/narration",
+        "-run",
+        "TestCanonicalPriceAuthoredProvenanceOnlyExactSingleton|TestCanonicalCoverageStillNeedsFullProofAndCannotCoverOtherFacts|TestPostgresCanonicalCNYPriceDecisionAndCoverage|TestPublicOrMissingCanonicalCoverageNeverInfersEmptyTargetHashMapping|TestAReviewMissingTargetHashDoesNotGrantCanonicalCoverage|TestCapturedStagingSpokenCNYPreservesAmountAndFactID|TestPostgresCapturedSpokenCNYAdmissionAndReceiptPolicy|TestPostgresCapturedStagingImmutableProfileAndSegmentMetadata"
+      ],
+      "exitCode": 0,
+      "seconds": 7.324
+    },
+    {
+      "name": "pg-stop",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+        "-D",
+        "/private/tmp/astralive-a-canonical-c076-review-zwqey2lm/pg",
+        "-m",
+        "fast",
+        "stop"
+      ],
+      "exitCode": 0,
+      "seconds": 0.313
+    }
+  ],
+  "logs": {
+    "pg-start.log": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "canonical-focused-race.log": "61b2af89e525173e3b518594dfdfe9564f5a823caa0691062a70b868fd9bcb8c",
+    "pg-init.log": "5dea6ff8a8f99eeacbc228b0f30a5fb3f17b566867ec87def777528307405100",
+    "pg-stop.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "postgres.log": "691e4d0a38ec9cf31494df5ba7369057a6a27ddce9b8b660e90a95c26880cfe9",
+    "pg-createdb.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

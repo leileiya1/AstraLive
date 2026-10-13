@@ -1,0 +1,2834 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:astralive:staging-contract-1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/StageBegin"
+    },
+    {
+      "$ref": "#/$defs/StageBegun"
+    },
+    {
+      "$ref": "#/$defs/StageAudio"
+    },
+    {
+      "$ref": "#/$defs/StageAudioAccepted"
+    },
+    {
+      "$ref": "#/$defs/StageVideo"
+    },
+    {
+      "$ref": "#/$defs/StageReceived"
+    },
+    {
+      "$ref": "#/$defs/StageReceivedAck"
+    },
+    {
+      "$ref": "#/$defs/StageProduced"
+    },
+    {
+      "$ref": "#/$defs/StageCommit"
+    },
+    {
+      "$ref": "#/$defs/StageCommitAck"
+    },
+    {
+      "$ref": "#/$defs/StagePoseConsumed"
+    },
+    {
+      "$ref": "#/$defs/StagePoseConsumedAck"
+    },
+    {
+      "$ref": "#/$defs/StageCancel"
+    },
+    {
+      "$ref": "#/$defs/StageFenced"
+    },
+    {
+      "$ref": "#/$defs/StageRelease"
+    },
+    {
+      "$ref": "#/$defs/StageReleased"
+    },
+    {
+      "$ref": "#/$defs/StageStatus"
+    },
+    {
+      "$ref": "#/$defs/StageStatusResult"
+    },
+    {
+      "$ref": "#/$defs/StageError"
+    },
+    {
+      "$ref": "#/$defs/StageRenew"
+    },
+    {
+      "$ref": "#/$defs/StageRenewAck"
+    },
+    {
+      "$ref": "#/$defs/Auth"
+    },
+    {
+      "$ref": "#/$defs/GPU_WORKER_READY"
+    },
+    {
+      "$ref": "#/$defs/StageHealth"
+    },
+    {
+      "$ref": "#/$defs/StageHealthAck"
+    }
+  ],
+  "$defs": {
+    "captured_settings": {
+      "type": "object",
+      "properties": {
+        "soulxStagingEnabled": {
+          "type": "boolean"
+        },
+        "soulxStagingLimitsRevision": {
+          "anyOf": [
+            {
+              "enum": [
+                "staging-short-1",
+                "staging-segment-8s-1",
+                "staging-short-gpu1g-1",
+                "staging-segment-8s-gpu1g-1"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "soulxStagingShortGateSHA256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "soulxStagingEnabled",
+        "soulxStagingLimitsRevision",
+        "soulxStagingShortGateSHA256"
+      ],
+      "additionalProperties": false
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "runEpoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "timelineEpoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "generationId": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "narrationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "beatId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "segmentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "interactionTurnId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "utteranceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "commandId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "traceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "attemptId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "stageId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "lane": {
+          "enum": [
+            "NARRATION",
+            "AUDIENCE_ANSWER",
+            "RESUME_BRIDGE"
+          ]
+        },
+        "workerRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "workerEpoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "workerGenerationId": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "sessionId",
+        "runEpoch",
+        "timelineEpoch",
+        "generationId",
+        "narrationId",
+        "beatId",
+        "segmentId",
+        "interactionTurnId",
+        "utteranceId",
+        "commandId",
+        "traceId",
+        "attemptId",
+        "stageId",
+        "lane",
+        "workerRef",
+        "workerEpoch",
+        "workerGenerationId"
+      ],
+      "additionalProperties": false
+    },
+    "source_format": {
+      "type": "object",
+      "properties": {
+        "sample_rate": {
+          "const": 16000
+        },
+        "channels": {
+          "const": 1
+        },
+        "pcm_format": {
+          "const": "s16le"
+        },
+        "fps_num": {
+          "const": 25
+        },
+        "fps_den": {
+          "const": 1
+        },
+        "width": {
+          "const": 512
+        },
+        "height": {
+          "const": 512
+        },
+        "native_format": {
+          "const": "rgb24"
+        },
+        "codec": {
+          "const": "h264"
+        }
+      },
+      "required": [
+        "sample_rate",
+        "channels",
+        "pcm_format",
+        "fps_num",
+        "fps_den",
+        "width",
+        "height",
+        "native_format",
+        "codec"
+      ],
+      "additionalProperties": false
+    },
+    "limits": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "limits_revision": {
+              "const": "staging-short-1"
+            },
+            "max_source_samples": {
+              "const": 30720
+            },
+            "worker_rgb_bytes": {
+              "const": 50331648
+            },
+            "worker_pose_bytes": {
+              "const": 8388608
+            },
+            "runtime_artifact_bytes": {
+              "const": 100663296
+            },
+            "runtime_transient_bytes": {
+              "const": 25165824
+            },
+            "worker_attempt_bytes": {
+              "const": 268435456
+            },
+            "gpu_incremental_allocated_bytes": {
+              "const": 536870912
+            },
+            "audio_queue_samples": {
+              "const": 32000
+            },
+            "native_queue_frames": {
+              "const": 24
+            },
+            "network_window_frames": {
+              "const": 4
+            },
+            "lease_ms_max": {
+              "const": 60000
+            }
+          },
+          "required": [
+            "limits_revision",
+            "max_source_samples",
+            "worker_rgb_bytes",
+            "worker_pose_bytes",
+            "runtime_artifact_bytes",
+            "runtime_transient_bytes",
+            "worker_attempt_bytes",
+            "gpu_incremental_allocated_bytes",
+            "audio_queue_samples",
+            "native_queue_frames",
+            "network_window_frames",
+            "lease_ms_max"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "limits_revision": {
+              "const": "staging-segment-8s-1"
+            },
+            "max_source_samples": {
+              "const": 128000
+            },
+            "worker_rgb_bytes": {
+              "const": 167772160
+            },
+            "worker_pose_bytes": {
+              "const": 8388608
+            },
+            "runtime_artifact_bytes": {
+              "const": 201326592
+            },
+            "runtime_transient_bytes": {
+              "const": 25165824
+            },
+            "worker_attempt_bytes": {
+              "const": 536870912
+            },
+            "gpu_incremental_allocated_bytes": {
+              "const": 536870912
+            },
+            "audio_queue_samples": {
+              "const": 32000
+            },
+            "native_queue_frames": {
+              "const": 24
+            },
+            "network_window_frames": {
+              "const": 4
+            },
+            "lease_ms_max": {
+              "const": 60000
+            }
+          },
+          "required": [
+            "limits_revision",
+            "max_source_samples",
+            "worker_rgb_bytes",
+            "worker_pose_bytes",
+            "runtime_artifact_bytes",
+            "runtime_transient_bytes",
+            "worker_attempt_bytes",
+            "gpu_incremental_allocated_bytes",
+            "audio_queue_samples",
+            "native_queue_frames",
+            "network_window_frames",
+            "lease_ms_max"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "limits_revision": {
+              "const": "staging-short-gpu1g-1"
+            },
+            "max_source_samples": {
+              "const": 30720
+            },
+            "worker_rgb_bytes": {
+              "const": 50331648
+            },
+            "worker_pose_bytes": {
+              "const": 8388608
+            },
+            "runtime_artifact_bytes": {
+              "const": 100663296
+            },
+            "runtime_transient_bytes": {
+              "const": 25165824
+            },
+            "worker_attempt_bytes": {
+              "const": 268435456
+            },
+            "gpu_incremental_allocated_bytes": {
+              "const": 1073741824
+            },
+            "audio_queue_samples": {
+              "const": 32000
+            },
+            "native_queue_frames": {
+              "const": 24
+            },
+            "network_window_frames": {
+              "const": 4
+            },
+            "lease_ms_max": {
+              "const": 60000
+            }
+          },
+          "required": [
+            "limits_revision",
+            "max_source_samples",
+            "worker_rgb_bytes",
+            "worker_pose_bytes",
+            "runtime_artifact_bytes",
+            "runtime_transient_bytes",
+            "worker_attempt_bytes",
+            "gpu_incremental_allocated_bytes",
+            "audio_queue_samples",
+            "native_queue_frames",
+            "network_window_frames",
+            "lease_ms_max"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "limits_revision": {
+              "const": "staging-segment-8s-gpu1g-1"
+            },
+            "max_source_samples": {
+              "const": 128000
+            },
+            "worker_rgb_bytes": {
+              "const": 167772160
+            },
+            "worker_pose_bytes": {
+              "const": 8388608
+            },
+            "runtime_artifact_bytes": {
+              "const": 201326592
+            },
+            "runtime_transient_bytes": {
+              "const": 25165824
+            },
+            "worker_attempt_bytes": {
+              "const": 536870912
+            },
+            "gpu_incremental_allocated_bytes": {
+              "const": 1073741824
+            },
+            "audio_queue_samples": {
+              "const": 32000
+            },
+            "native_queue_frames": {
+              "const": 24
+            },
+            "network_window_frames": {
+              "const": 4
+            },
+            "lease_ms_max": {
+              "const": 60000
+            }
+          },
+          "required": [
+            "limits_revision",
+            "max_source_samples",
+            "worker_rgb_bytes",
+            "worker_pose_bytes",
+            "runtime_artifact_bytes",
+            "runtime_transient_bytes",
+            "worker_attempt_bytes",
+            "gpu_incremental_allocated_bytes",
+            "audio_queue_samples",
+            "native_queue_frames",
+            "network_window_frames",
+            "lease_ms_max"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "workerRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "workerEpoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "model_source_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "weights_manifest_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "avatar_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "input_asset_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "cache_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "preprocessing_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "capability": {
+          "const": "immutable_segment_staging_v1"
+        },
+        "source": {
+          "enum": [
+            "GPU_INFERENCE",
+            "CPU_SIMULATION"
+          ]
+        }
+      },
+      "required": [
+        "workerRef",
+        "workerEpoch",
+        "model_source_revision",
+        "weights_manifest_sha256",
+        "avatar_sha256",
+        "input_asset_sha256",
+        "cache_id",
+        "preprocessing_version",
+        "capability",
+        "source"
+      ],
+      "additionalProperties": false
+    },
+    "resources": {
+      "type": "object",
+      "properties": {
+        "worker_rgb_peak_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "worker_attempt_peak_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "gpu_baseline_allocated_bytes": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gpu_incremental_allocated_peak_bytes": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gpu_incremental_reserved_peak_bytes": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inference_elapsed_us": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "worker_rgb_peak_bytes",
+        "worker_attempt_peak_bytes",
+        "gpu_baseline_allocated_bytes",
+        "gpu_incremental_allocated_peak_bytes",
+        "gpu_incremental_reserved_peak_bytes",
+        "inference_elapsed_us"
+      ],
+      "additionalProperties": false
+    },
+    "descriptor": {
+      "type": "object",
+      "properties": {
+        "descriptor_revision": {
+          "const": "staging-descriptor-1"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "request_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "source_format": {
+          "$ref": "#/$defs/source_format"
+        },
+        "original_samples": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "pad_samples": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 639
+        },
+        "source_samples": {
+          "type": "integer",
+          "minimum": 640,
+          "maximum": 128000
+        },
+        "pcm_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "frame_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200
+        },
+        "first_sequence": {
+          "const": 0
+        },
+        "last_sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 199
+        },
+        "first_pts_us": {
+          "const": 0
+        },
+        "last_pts_us": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "video_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "video_stream_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "native_rgb_stream_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "eof": {
+          "const": true
+        },
+        "final_marker": {
+          "const": true
+        },
+        "native_final": {
+          "const": true
+        },
+        "limits": {
+          "$ref": "#/$defs/limits"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        }
+      },
+      "required": [
+        "descriptor_revision",
+        "identity",
+        "request_fingerprint",
+        "source_format",
+        "original_samples",
+        "pad_samples",
+        "source_samples",
+        "pcm_sha256",
+        "frame_count",
+        "first_sequence",
+        "last_sequence",
+        "first_pts_us",
+        "last_pts_us",
+        "video_bytes",
+        "video_stream_sha256",
+        "native_rgb_stream_sha256",
+        "eof",
+        "final_marker",
+        "native_final",
+        "limits",
+        "provenance",
+        "resources"
+      ],
+      "additionalProperties": false
+    },
+    "sink": {
+      "type": "object",
+      "properties": {
+        "sinkId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "incarnation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        }
+      },
+      "required": [
+        "sinkId",
+        "incarnation"
+      ],
+      "additionalProperties": false
+    },
+    "installed_reference": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "COMMIT_INSTALLED"
+        },
+        "producerIncarnation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "runEpoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "timelineEpoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "commandId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "segmentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "attemptId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "generationId": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "receiptSeq": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "observationHash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "timelineRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "operation",
+        "producerIncarnation",
+        "sessionId",
+        "runEpoch",
+        "timelineEpoch",
+        "commandId",
+        "segmentId",
+        "attemptId",
+        "generationId",
+        "receiptSeq",
+        "observationHash",
+        "timelineRevision"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "sampleRate": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "startSample": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "endSample": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sourceRate": {
+          "const": 16000
+        },
+        "sourceSamples": {
+          "type": "integer",
+          "minimum": 640,
+          "maximum": 128000
+        },
+        "ratioNumerator": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "ratioDenominator": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "sampleRate",
+        "startSample",
+        "endSample",
+        "sourceRate",
+        "sourceSamples",
+        "ratioNumerator",
+        "ratioDenominator"
+      ],
+      "additionalProperties": false
+    },
+    "commit_proof": {
+      "type": "object",
+      "properties": {
+        "descriptor_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "a_installed_ref": {
+          "$ref": "#/$defs/installed_reference"
+        },
+        "b_installed_ref": {
+          "type": "object",
+          "properties": {
+            "receipt_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "installed": {
+              "const": true
+            }
+          },
+          "required": [
+            "receipt_ref",
+            "revision",
+            "installed"
+          ],
+          "additionalProperties": false
+        },
+        "output": {
+          "$ref": "#/$defs/output"
+        },
+        "required_sinks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sink"
+          },
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true
+        },
+        "optional_sinks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sink"
+          },
+          "minItems": 0,
+          "maxItems": 16,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "descriptor_sha256",
+        "a_installed_ref",
+        "b_installed_ref",
+        "output",
+        "required_sinks",
+        "optional_sinks"
+      ],
+      "additionalProperties": false
+    },
+    "sink_range": {
+      "type": "object",
+      "properties": {
+        "sinkId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "incarnation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "evidenceRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "localRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "startSample": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "audioEndSample": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "videoEndSample": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "evidenceType": {
+          "const": "sink_consumed"
+        }
+      },
+      "required": [
+        "sinkId",
+        "incarnation",
+        "evidenceRef",
+        "localRevision",
+        "startSample",
+        "audioEndSample",
+        "videoEndSample",
+        "evidenceType"
+      ],
+      "additionalProperties": false
+    },
+    "pose_proof": {
+      "type": "object",
+      "properties": {
+        "pose_ack_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "descriptor_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "commit_proof_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "latest_consumed_sequence": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 199
+        },
+        "source_end_sample": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "output_end_sample": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "required_sink_receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sink_range"
+          },
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "pose_ack_id",
+        "descriptor_sha256",
+        "commit_proof_fingerprint",
+        "latest_consumed_sequence",
+        "source_end_sample",
+        "output_end_sample",
+        "required_sink_receipts"
+      ],
+      "additionalProperties": false
+    },
+    "StageBegin": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageBegin"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "command_request_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "a_grant": {
+          "type": "object",
+          "properties": {
+            "sessionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+            },
+            "runEpoch": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "leaseToken": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "barrierSeq": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "commandSeq": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "remainingMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "sessionId",
+            "runEpoch",
+            "leaseToken",
+            "barrierSeq",
+            "commandSeq",
+            "remainingMs"
+          ],
+          "additionalProperties": false
+        },
+        "a_rtt_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "grant_age_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "worker_rtt_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "safety_ms": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 1000
+        },
+        "request_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "cache_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "pcm_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "original_samples": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "pad_samples": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 639
+        },
+        "source_samples": {
+          "type": "integer",
+          "minimum": 640,
+          "maximum": 128000
+        },
+        "source_format": {
+          "$ref": "#/$defs/source_format"
+        },
+        "lease_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60000
+        },
+        "limits_revision": {
+          "enum": [
+            "staging-short-1",
+            "staging-segment-8s-1",
+            "staging-short-gpu1g-1",
+            "staging-segment-8s-gpu1g-1"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "command_request_fingerprint",
+        "a_grant",
+        "a_rtt_ms",
+        "grant_age_ms",
+        "worker_rtt_ms",
+        "safety_ms",
+        "request_fingerprint",
+        "cache_id",
+        "pcm_sha256",
+        "original_samples",
+        "pad_samples",
+        "source_samples",
+        "source_format",
+        "lease_ms",
+        "limits_revision"
+      ],
+      "additionalProperties": false
+    },
+    "StageBegun": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageBegun"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "request_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "audio_credit_samples": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32000
+        },
+        "limits": {
+          "$ref": "#/$defs/limits"
+        },
+        "pose_history_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "request_fingerprint",
+        "audio_credit_samples",
+        "limits",
+        "pose_history_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "StageAudio": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageAudio"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "chunk_sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "first_sample_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "sample_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32000
+        },
+        "final_chunk": {
+          "type": "boolean"
+        },
+        "chunk_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "chunk_sequence",
+        "first_sample_index",
+        "sample_count",
+        "final_chunk",
+        "chunk_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "StageAudioAccepted": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageAudioAccepted"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "chunk_sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "chunk_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "accepted": {
+          "const": true
+        },
+        "audio_credit_samples": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32000
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "chunk_sequence",
+        "chunk_sha256",
+        "accepted",
+        "audio_credit_samples"
+      ],
+      "additionalProperties": false
+    },
+    "StageVideo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageVideo"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "frame_sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 199
+        },
+        "pts_us": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "duration_us": {
+          "const": 40000
+        },
+        "sample_start": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "sample_end": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "codec": {
+          "const": "h264"
+        },
+        "width": {
+          "const": 512
+        },
+        "height": {
+          "const": 512
+        },
+        "keyframe": {
+          "type": "boolean"
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "native_rgb_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "frame_sequence",
+        "pts_us",
+        "duration_us",
+        "sample_start",
+        "sample_end",
+        "codec",
+        "width",
+        "height",
+        "keyframe",
+        "payload_sha256",
+        "native_rgb_sha256",
+        "provenance"
+      ],
+      "additionalProperties": false
+    },
+    "StageReceived": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageReceived"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "frame_sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 199
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "native_rgb_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "storage_receipt_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "frame_sequence",
+        "payload_sha256",
+        "native_rgb_sha256",
+        "storage_receipt_id"
+      ],
+      "additionalProperties": false
+    },
+    "StageReceivedAck": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageReceivedAck"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "frame_sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 199
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "native_rgb_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "storage_receipt_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "frame_sequence",
+        "payload_sha256",
+        "native_rgb_sha256",
+        "storage_receipt_id"
+      ],
+      "additionalProperties": false
+    },
+    "StageProduced": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageProduced"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "descriptor": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "descriptor_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "descriptor",
+        "descriptor_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "StageCommit": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageCommit"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "commit_proof": {
+          "$ref": "#/$defs/commit_proof"
+        },
+        "commit_proof_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "commit_proof",
+        "commit_proof_fingerprint"
+      ],
+      "additionalProperties": false
+    },
+    "StageCommitAck": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageCommitAck"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "descriptor_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "commit_proof_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "state": {
+          "const": "COMMIT_ARMED"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "descriptor_sha256",
+        "commit_proof_fingerprint",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "StagePoseConsumed": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StagePoseConsumed"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "pose_proof": {
+          "$ref": "#/$defs/pose_proof"
+        },
+        "pose_proof_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "pose_proof",
+        "pose_proof_fingerprint"
+      ],
+      "additionalProperties": false
+    },
+    "StagePoseConsumedAck": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StagePoseConsumedAck"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "pose_ack_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "pose_proof_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "latest_consumed_sequence": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 199
+        },
+        "pose_history_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "pose_ack_id",
+        "pose_proof_fingerprint",
+        "latest_consumed_sequence",
+        "pose_history_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "StageCancel": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageCancel"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "control_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "reason": {
+          "enum": [
+            "STOP",
+            "FORCE",
+            "EXPIRED",
+            "STALE",
+            "FAILED"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "control_id",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "StageFenced": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageFenced"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "control_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "publication_fenced": {
+          "const": true
+        },
+        "latest_consumed_sequence": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 199
+        },
+        "pose_history_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "control_id",
+        "publication_fenced",
+        "latest_consumed_sequence",
+        "pose_history_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "StageRelease": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageRelease"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "control_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "reason": {
+          "enum": [
+            "COMPLETE",
+            "CANCELLED"
+          ]
+        },
+        "descriptor_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "commit_proof_fingerprint": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pose_proof_fingerprint": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "latest_consumed_sequence": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 199
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "control_id",
+        "reason",
+        "descriptor_sha256",
+        "commit_proof_fingerprint",
+        "pose_proof_fingerprint",
+        "latest_consumed_sequence"
+      ],
+      "additionalProperties": false
+    },
+    "StageReleased": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageReleased"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "control_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "native_safe_boundary": {
+          "const": true
+        },
+        "retained_artifact_bytes": {
+          "const": 0
+        },
+        "latest_consumed_sequence": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 199
+        },
+        "pose_history_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "terminal_disposition": {
+          "enum": [
+            "PROVEN_COMPLETE",
+            "PROVEN_CANCELLED",
+            "UNKNOWN"
+          ]
+        },
+        "reusable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "control_id",
+        "native_safe_boundary",
+        "retained_artifact_bytes",
+        "latest_consumed_sequence",
+        "pose_history_sha256",
+        "terminal_disposition",
+        "reusable"
+      ],
+      "additionalProperties": false
+    },
+    "StageStatus": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageStatus"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "nonce": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "nonce"
+      ],
+      "additionalProperties": false
+    },
+    "StageStatusResult": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageStatusResult"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "nonce": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "audio_credit_samples": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32000
+        },
+        "native_queue_frames": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 24
+        },
+        "network_inflight_frames": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "state": {
+          "enum": [
+            "STAGING",
+            "PRODUCED",
+            "COMMIT_ARMED",
+            "RELEASED",
+            "FENCED",
+            "RETIRED"
+          ]
+        },
+        "descriptor_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "received_sequence": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 199
+        },
+        "latest_consumed_sequence": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 199
+        },
+        "retained_artifact_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "lease_age_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "publication_fenced": {
+          "type": "boolean"
+        },
+        "native_safe_boundary": {
+          "type": "boolean"
+        },
+        "terminal_disposition": {
+          "anyOf": [
+            {
+              "enum": [
+                "PROVEN_COMPLETE",
+                "PROVEN_CANCELLED",
+                "UNKNOWN"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reusable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "nonce",
+        "audio_credit_samples",
+        "native_queue_frames",
+        "network_inflight_frames",
+        "state",
+        "descriptor_sha256",
+        "received_sequence",
+        "latest_consumed_sequence",
+        "retained_artifact_bytes",
+        "lease_age_ms",
+        "publication_fenced",
+        "native_safe_boundary",
+        "terminal_disposition",
+        "reusable"
+      ],
+      "additionalProperties": false
+    },
+    "StageError": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageError"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "code": {
+          "enum": [
+            "STAGING_UNSUPPORTED",
+            "STAGING_IDENTITY_MISMATCH",
+            "STAGING_GENERATION_COLLISION",
+            "STAGING_CONFLICT",
+            "STAGING_SEQUENCE_GAP",
+            "STAGING_BUDGET_EXCEEDED",
+            "STAGING_LEASE_EXPIRED",
+            "STAGING_COMMIT_UNPROVEN",
+            "STAGING_POSE_UNPROVEN",
+            "STAGING_RETIRED",
+            "STAGING_CLEANUP_PENDING"
+          ]
+        },
+        "operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "publication_fenced": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "STAGING",
+            "PRODUCED",
+            "COMMIT_ARMED",
+            "RELEASED",
+            "FENCED",
+            "RETIRED"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "code",
+        "operation_id",
+        "publication_fenced",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "StageRenew": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageRenew"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "renewal_sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "lease_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "a_grant": {
+          "type": "object",
+          "properties": {
+            "sessionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+            },
+            "runEpoch": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "leaseToken": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "barrierSeq": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "commandSeq": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "remainingMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "sessionId",
+            "runEpoch",
+            "leaseToken",
+            "barrierSeq",
+            "commandSeq",
+            "remainingMs"
+          ],
+          "additionalProperties": false
+        },
+        "a_rtt_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "grant_age_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "worker_rtt_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "safety_ms": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 1000
+        },
+        "renewal_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "renewal_sequence",
+        "lease_ms",
+        "a_grant",
+        "a_rtt_ms",
+        "grant_age_ms",
+        "worker_rtt_ms",
+        "safety_ms",
+        "renewal_fingerprint"
+      ],
+      "additionalProperties": false
+    },
+    "StageRenewAck": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageRenewAck"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "renewal_sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "renewal_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "lease_remaining_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "total_age_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60000
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "identity",
+        "renewal_sequence",
+        "renewal_fingerprint",
+        "lease_remaining_ms",
+        "total_age_ms"
+      ],
+      "additionalProperties": false
+    },
+    "Auth": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "Auth"
+        },
+        "protocol_version": {
+          "const": 1
+        },
+        "internal_version": {
+          "const": "1.2"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "token": {
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 512
+        },
+        "requested_capabilities": {
+          "const": [
+            "immutable_segment_staging_v1"
+          ]
+        },
+        "requested_limits_revision": {
+          "enum": [
+            "staging-short-1",
+            "staging-segment-8s-1",
+            "staging-short-gpu1g-1",
+            "staging-segment-8s-gpu1g-1"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "protocol_version",
+        "internal_version",
+        "session_id",
+        "token",
+        "requested_capabilities",
+        "requested_limits_revision"
+      ],
+      "additionalProperties": false
+    },
+    "GPU_WORKER_READY": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "GPU_WORKER_READY"
+        },
+        "status": {
+          "const": "GPU_WORKER_READY"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "internal_version": {
+          "const": "1.2"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "cache_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "input_asset_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "model_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "model_load_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "codec": {
+          "const": "h264"
+        },
+        "av_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "torch_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "weights_manifest_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "simulation": {
+          "type": "boolean"
+        },
+        "selected_capabilities": {
+          "const": [
+            "immutable_segment_staging_v1"
+          ]
+        },
+        "highest_generation_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "selected_limits": {
+          "$ref": "#/$defs/limits"
+        },
+        "profile_gate_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "status",
+        "contract_revision",
+        "internal_version",
+        "session_id",
+        "worker_epoch",
+        "cache_id",
+        "input_asset_sha256",
+        "model_revision",
+        "model_load_count",
+        "codec",
+        "av_version",
+        "torch_version",
+        "weights_manifest_sha256",
+        "simulation",
+        "selected_capabilities",
+        "highest_generation_id",
+        "selected_limits",
+        "profile_gate_ref"
+      ],
+      "additionalProperties": false
+    },
+    "StageHealth": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageHealth"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "nonce": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "nonce"
+      ],
+      "additionalProperties": false
+    },
+    "StageHealthAck": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "StageHealthAck"
+        },
+        "contract_revision": {
+          "const": "staging-contract-1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "worker_epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "nonce": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "audio_credit_samples": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32000
+        },
+        "native_queue_frames": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 24
+        },
+        "network_inflight_frames": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        }
+      },
+      "required": [
+        "type",
+        "contract_revision",
+        "session_id",
+        "worker_epoch",
+        "nonce",
+        "audio_credit_samples",
+        "native_queue_frames",
+        "network_inflight_frames"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

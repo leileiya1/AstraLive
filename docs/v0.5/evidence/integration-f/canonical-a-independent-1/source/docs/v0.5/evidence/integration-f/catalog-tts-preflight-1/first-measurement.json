@@ -1,0 +1,1440 @@
+{
+  "scope": "REAL_LOCAL_CPU_SHERPA_TTS_ONLY_NOT_GOLDEN",
+  "runtimeRoot": "/Users/sapiece/innovationProject/AstraLive-agent-f/runtime",
+  "nativeSampleRate": 22050,
+  "resampleRate": 16000,
+  "provider": "sherpa-onnx xiao_ya medium",
+  "speakerId": 0,
+  "speed": 1.0,
+  "numThreads": 2,
+  "fixtureSHA256": {
+    "real_golden_catalog.json": "4cc8a9f41a34442747f5856c6dfe0567b0c59de32817dd537427cbd33326c280",
+    "real_golden_smoke.json": "9865f8d140d0b55bdc08b3bf7dcc565b1a2ec7b04f30ac9bd7f9add69c2e8396"
+  },
+  "rows": [
+    {
+      "factId": "product.name",
+      "text": "这份电子说明书的名称，叫作桌面整理指南。",
+      "sourceSamples16k": 63606,
+      "padSamples": 394,
+      "paddedSamples": 64000,
+      "durationSeconds": 4.0,
+      "pcmSHA256": "82f30c5aac69c704ccfd6dc2cd331bc624513095ba78c2565590da0bfbff976b",
+      "synthesisWallSeconds": 0.2356506249634549
+    },
+    {
+      "factId": "product.price",
+      "text": "这份桌面整理指南，当前标价是人民币九十九元。",
+      "sourceSamples16k": 75307,
+      "padSamples": 213,
+      "paddedSamples": 75520,
+      "durationSeconds": 4.72,
+      "pcmSHA256": "f94c4e54155444a70706c5ff9b63950f4cb8e6de6cfa44c5eff36d3a68a5ba67",
+      "synthesisWallSeconds": 0.21033537504263222
+    },
+    {
+      "factId": "product.stock",
+      "text": "当前用于本次演示的商品库存，共有二十份可供选择。",
+      "sourceSamples16k": 83734,
+      "padSamples": 106,
+      "paddedSamples": 83840,
+      "durationSeconds": 5.24,
+      "pcmSHA256": "be8ee88e00cce1a3e4f22a14820350e65ec82f093c786526141b2cbfab9dc9c5",
+      "synthesisWallSeconds": 0.216147750033997
+    },
+    {
+      "factId": "product.format",
+      "text": "本商品的规格选项只有电子版，请按电子资料使用。",
+      "sourceSamples16k": 80145,
+      "padSamples": 495,
+      "paddedSamples": 80640,
+      "durationSeconds": 5.04,
+      "pcmSHA256": "62e677a573b78760ee17a8572764757a88496af1186df68ef648bc1b1c074eb7",
+      "synthesisWallSeconds": 0.18271933402866125
+    },
+    {
+      "factId": "guide.01.05",
+      "text": "这份指南讨论桌面整理方法，不提供实体收纳工具。",
+      "sourceSamples16k": 80344,
+      "padSamples": 296,
+      "paddedSamples": 80640,
+      "durationSeconds": 5.04,
+      "pcmSHA256": "fb552be62f6e30b4b4899b3b642f72307eeebdf491b5179396f951a55c18f4de",
+      "synthesisWallSeconds": 0.17829524993430823
+    },
+    {
+      "factId": "guide.01.06",
+      "text": "阅读时先选择最困扰你的桌面问题，再对应查找章节。",
+      "sourceSamples16k": 78310,
+      "padSamples": 410,
+      "paddedSamples": 78720,
+      "durationSeconds": 4.92,
+      "pcmSHA256": "b8d4cd3de404870f48ec104a1303aef9653968541a7ccba6ab1da76c56587216",
+      "synthesisWallSeconds": 0.18207058298867196
+    },
+    {
+      "factId": "guide.01.07",
+      "text": "指南按照清空、分类、分区和维护，安排整理的步骤。",
+      "sourceSamples16k": 81064,
+      "padSamples": 216,
+      "paddedSamples": 81280,
+      "durationSeconds": 5.08,
+      "pcmSHA256": "b9186a4a61d0e3dca724fbc9b8597868b4c01b4c52f79f463dfc344f76561927",
+      "synthesisWallSeconds": 0.20381950004957616
+    },
+    {
+      "factId": "guide.01.08",
+      "text": "第一次实践可以先处理一小块区域，再逐步扩大范围。",
+      "sourceSamples16k": 82761,
+      "padSamples": 439,
+      "paddedSamples": 83200,
+      "durationSeconds": 5.2,
+      "pcmSHA256": "7be7144bd7f9c80a96abf985ba410c5a210b1e01c5248628e5ba8733a276341e",
+      "synthesisWallSeconds": 0.2093992920126766
+    },
+    {
+      "factId": "guide.01.09",
+      "text": "整理前请记录常见物品的位置，方便之后比较变化。",
+      "sourceSamples16k": 77587,
+      "padSamples": 493,
+      "paddedSamples": 78080,
+      "durationSeconds": 4.88,
+      "pcmSHA256": "21b4dfb072d929579088be17dbef866fcec73e1b4d2babf552a049f7ef5eeba5",
+      "synthesisWallSeconds": 0.1846699999878183
+    },
+    {
+      "factId": "guide.01.10",
+      "text": "每完成一个步骤都检查实际使用，避免只追求外观。",
+      "sourceSamples16k": 76716,
+      "padSamples": 84,
+      "paddedSamples": 76800,
+      "durationSeconds": 4.8,
+      "pcmSHA256": "d7fe148fc4f4592d0f08ea1a24e335815b03cc0f8cba08d8e346b6f531fd8a06",
+      "synthesisWallSeconds": 0.18583741690963507
+    },
+    {
+      "factId": "guide.02.01",
+      "text": "开始整理之前先保存电脑工作，避免误动正在使用的物品。",
+      "sourceSamples16k": 88281,
+      "padSamples": 39,
+      "paddedSamples": 88320,
+      "durationSeconds": 5.52,
+      "pcmSHA256": "1dc0dc382ba17cd778fdff2b86bf3e80d779d69b053fae184fd6a9e53335ba17",
+      "synthesisWallSeconds": 0.212257832987234
+    },
+    {
+      "factId": "guide.02.02",
+      "text": "请准备一个临时收集盒，用来集中放置桌面上的散物。",
+      "sourceSamples16k": 80601,
+      "padSamples": 39,
+      "paddedSamples": 80640,
+      "durationSeconds": 5.04,
+      "pcmSHA256": "e0309f2d7cdb5d527514f78227427f073f28b8cb803f2a99992fff8cb7a9eef1",
+      "synthesisWallSeconds": 0.18501712498255074
+    },
+    {
+      "factId": "guide.02.03",
+      "text": "清空时先移走没有插电的轻小物品，减少碰倒的机会。",
+      "sourceSamples16k": 82211,
+      "padSamples": 349,
+      "paddedSamples": 82560,
+      "durationSeconds": 5.16,
+      "pcmSHA256": "9fdf82bb8519933768d889c15313fe267d1aceccbe697de97c50002be83cba02",
+      "synthesisWallSeconds": 0.18597395799588412
+    },
+    {
+      "factId": "guide.02.04",
+      "text": "有液体的杯子先盖好并移开，再处理旁边的纸张设备。",
+      "sourceSamples16k": 72960,
+      "padSamples": 0,
+      "paddedSamples": 72960,
+      "durationSeconds": 4.56,
+      "pcmSHA256": "5211299f3f2694c4c33e3aac9490acaf28f55f704080155de0532e7dcf00ff6b",
+      "synthesisWallSeconds": 0.17362316697835922
+    },
+    {
+      "factId": "guide.02.05",
+      "text": "需要持续供电的设备先保留，不为整理强行拔掉电源。",
+      "sourceSamples16k": 85767,
+      "padSamples": 633,
+      "paddedSamples": 86400,
+      "durationSeconds": 5.4,
+      "pcmSHA256": "57479ce34e8186d4e8f0e547eaf0da06d17ea0e146388abdfba63769f60d11e3",
+      "synthesisWallSeconds": 0.2221893749665469
+    },
+    {
+      "factId": "guide.02.06",
+      "text": "取下物品后用合适的清洁工具，擦去桌面的灰尘污渍。",
+      "sourceSamples16k": 79175,
+      "padSamples": 185,
+      "paddedSamples": 79360,
+      "durationSeconds": 4.96,
+      "pcmSHA256": "24781202049cd6d615f33a12d2f506c928196d3bf6c9cd5a05b6ac6ffd441585",
+      "synthesisWallSeconds": 0.2111339580733329
+    },
+    {
+      "factId": "guide.02.07",
+      "text": "清洁桌面后等待表面干燥，再把电子设备放回原处。",
+      "sourceSamples16k": 79011,
+      "padSamples": 349,
+      "paddedSamples": 79360,
+      "durationSeconds": 4.96,
+      "pcmSHA256": "8c79cc23aecfa05f6805e9bd78e7c40877237aa78b3bb7cc5d41abad28e0d6ed",
+      "synthesisWallSeconds": 0.1870162090053782
+    },
+    {
+      "factId": "guide.02.08",
+      "text": "暂时无法确定归属的物品，单独放进待判断的收集盒。",
+      "sourceSamples16k": 79599,
+      "padSamples": 401,
+      "paddedSamples": 80000,
+      "durationSeconds": 5.0,
+      "pcmSHA256": "e278c32d831d0974f4009acbf88a9d6e238e95b0255dd07cdc138a5bdb0f5f33",
+      "synthesisWallSeconds": 0.18167104106396437
+    },
+    {
+      "factId": "guide.02.09",
+      "text": "把明显的包装废料和垃圾移走，避免混入待整理物品。",
+      "sourceSamples16k": 82211,
+      "padSamples": 349,
+      "paddedSamples": 82560,
+      "durationSeconds": 5.16,
+      "pcmSHA256": "d6be2ed6c0817067d6f00cb563d612c8b43d1b556bd25a5404d6b486b8abba82",
+      "synthesisWallSeconds": 0.20945112500339746
+    },
+    {
+      "factId": "guide.02.10",
+      "text": "清空结束后拍下空桌面，记录能够实际使用的空间。",
+      "sourceSamples16k": 79864,
+      "padSamples": 136,
+      "paddedSamples": 80000,
+      "durationSeconds": 5.0,
+      "pcmSHA256": "84fbc9b1e055a40ed1e972f947d1221a3cd86f0d81e76a5b2143878c7a737cd4",
+      "synthesisWallSeconds": 0.18143529200460762
+    },
+    {
+      "factId": "guide.03.01",
+      "text": "先按用途把桌面物品分开，区分工作、学习和生活用品。",
+      "sourceSamples16k": 92887,
+      "padSamples": 553,
+      "paddedSamples": 93440,
+      "durationSeconds": 5.84,
+      "pcmSHA256": "b6c6e14d7c4eb41c0a2d439fad80533a093d67f7879eeed79821cae3d0b4b5e0",
+      "synthesisWallSeconds": 0.20039862499106675
+    },
+    {
+      "factId": "guide.03.02",
+      "text": "每天都要使用的物品，归入经常取用的第一组类别。",
+      "sourceSamples16k": 73830,
+      "padSamples": 410,
+      "paddedSamples": 74240,
+      "durationSeconds": 4.64,
+      "pcmSHA256": "b1f15f735832a28be557ac663a5bcc90991a63f3b03cce783be918a4bed190c3",
+      "synthesisWallSeconds": 0.17721370793879032
+    },
+    {
+      "factId": "guide.03.03",
+      "text": "每周偶尔才会用到的物品，归入低频取用的第二组。",
+      "sourceSamples16k": 83378,
+      "padSamples": 462,
+      "paddedSamples": 83840,
+      "durationSeconds": 5.24,
+      "pcmSHA256": "a4197d048ec34697ea87f2f5ed87cdc36e1c20fa9fbcf9b3eb419d2e24bad53c",
+      "synthesisWallSeconds": 0.19978675001766533
+    },
+    {
+      "factId": "guide.03.04",
+      "text": "长期没有使用而仍需保存的物品，另列为存档类别。",
+      "sourceSamples16k": 85681,
+      "padSamples": 79,
+      "paddedSamples": 85760,
+      "durationSeconds": 5.36,
+      "pcmSHA256": "797574a62204a5a9e65100c9ab526babbac2d0d557d1190884548ec24ae4b828",
+      "synthesisWallSeconds": 0.18723612499888986
+    },
+    {
+      "factId": "guide.03.05",
+      "text": "同一种用途的物品先集中比较，再决定分别保留多少。",
+      "sourceSamples16k": 78986,
+      "padSamples": 374,
+      "paddedSamples": 79360,
+      "durationSeconds": 4.96,
+      "pcmSHA256": "3ce7e0cb3a83d92aaefe2dcaefc3ff8ff101513b2310f4f4c8dd2dafe1d32ee2",
+      "synthesisWallSeconds": 0.1850254168966785
+    },
+    {
+      "factId": "guide.03.06",
+      "text": "功能相同的重复物品，优先保留状态正常且容易使用的。",
+      "sourceSamples16k": 84922,
+      "padSamples": 198,
+      "paddedSamples": 85120,
+      "durationSeconds": 5.32,
+      "pcmSHA256": "1f20028320a90f2473fa2f674c861d8677b284f32370ef7a6fe44e94d4618ecf",
+      "synthesisWallSeconds": 0.19075479195453227
+    },
+    {
+      "factId": "guide.03.07",
+      "text": "损坏物品单独标记待维修，避免再次混进正常用品里。",
+      "sourceSamples16k": 89992,
+      "padSamples": 248,
+      "paddedSamples": 90240,
+      "durationSeconds": 5.64,
+      "pcmSHA256": "3e926c7b9d9c65c49585ccf63d9d692286946f78bcbc4e10964b7a91f6c680a1",
+      "synthesisWallSeconds": 0.20052158401813358
+    },
+    {
+      "factId": "guide.03.08",
+      "text": "属于其他房间的物品，放入归还区等待一次集中送回。",
+      "sourceSamples16k": 88379,
+      "padSamples": 581,
+      "paddedSamples": 88960,
+      "durationSeconds": 5.56,
+      "pcmSHA256": "4fedaf45fb9b5a108a7c7762d6163e7015d59e104661d0209decc49ba9603681",
+      "synthesisWallSeconds": 0.2261730000609532
+    },
+    {
+      "factId": "guide.03.09",
+      "text": "借来的物品记录借用来源，避免整理时误当个人物品。",
+      "sourceSamples16k": 83091,
+      "padSamples": 109,
+      "paddedSamples": 83200,
+      "durationSeconds": 5.2,
+      "pcmSHA256": "a797d939417faa78b62b06f14f0bc357a7803a09feb6b086dfbc31d53207111f",
+      "synthesisWallSeconds": 0.19073304196354002
+    },
+    {
+      "factId": "guide.03.10",
+      "text": "分类结束后再安排容器，不先购买无法匹配物品的盒子。",
+      "sourceSamples16k": 87197,
+      "padSamples": 483,
+      "paddedSamples": 87680,
+      "durationSeconds": 5.48,
+      "pcmSHA256": "1b104ab47a8fd940c736afa0fef0522fe3bc7390def40b8427bef619989d13b0",
+      "synthesisWallSeconds": 0.1977661659475416
+    },
+    {
+      "factId": "guide.04.01",
+      "text": "把桌面中央留给当前主要任务，保持一块连续工作区域。",
+      "sourceSamples16k": 82105,
+      "padSamples": 455,
+      "paddedSamples": 82560,
+      "durationSeconds": 5.16,
+      "pcmSHA256": "22e063c865160751948b537059154d50bccd4215cdf8a9188105c3e43a2e52dd",
+      "synthesisWallSeconds": 0.18756462493911386
+    },
+    {
+      "factId": "guide.04.02",
+      "text": "经常伸手取用的物品，安排在坐姿下容易够到的位置。",
+      "sourceSamples16k": 77414,
+      "padSamples": 26,
+      "paddedSamples": 77440,
+      "durationSeconds": 4.84,
+      "pcmSHA256": "8b7d1902bc48506f7b64466fbce749c0dc0ee2f486c36dfac7cc7f6a412209be",
+      "synthesisWallSeconds": 0.17922691709827632
+    },
+    {
+      "factId": "guide.04.03",
+      "text": "低频用品放在桌角或抽屉，不占用中央的主要操作区。",
+      "sourceSamples16k": 82694,
+      "padSamples": 506,
+      "paddedSamples": 83200,
+      "durationSeconds": 5.2,
+      "pcmSHA256": "d25058827a049b324fccf6bcefd1b31ef9a05b8829a49123ed034aaba25c6a3b",
+      "synthesisWallSeconds": 0.20957037492189556
+    },
+    {
+      "factId": "guide.04.04",
+      "text": "屏幕附近留出稳定的放置区域，避免被临时物品挤歪。",
+      "sourceSamples16k": 83517,
+      "padSamples": 323,
+      "paddedSamples": 83840,
+      "durationSeconds": 5.24,
+      "pcmSHA256": "b3c38f63a5dd681b11927721d56a2796e1ddef0f4ba5383d2e450e67fdd605aa",
+      "synthesisWallSeconds": 0.18197812500875443
+    },
+    {
+      "factId": "guide.04.05",
+      "text": "纸笔作业需要的区域，预留足够展开一本书的位置。",
+      "sourceSamples16k": 77299,
+      "padSamples": 141,
+      "paddedSamples": 77440,
+      "durationSeconds": 4.84,
+      "pcmSHA256": "6ac63492430a1a2a956c86e5f288b22c5ce1c1cf08a9e03b5946bbcce592a28a",
+      "synthesisWallSeconds": 0.19256237510126084
+    },
+    {
+      "factId": "guide.04.06",
+      "text": "桌面照明的位置要结合惯用手，减少手部遮挡工作区。",
+      "sourceSamples16k": 76059,
+      "padSamples": 101,
+      "paddedSamples": 76160,
+      "durationSeconds": 4.76,
+      "pcmSHA256": "f852246dc6da1afaa0313959aad0aa7db6bad0f22642776bd9348730cfd94449",
+      "synthesisWallSeconds": 0.18702970806043595
+    },
+    {
+      "factId": "guide.04.07",
+      "text": "临时文件设置单独入口区，避免散落到整个桌面上。",
+      "sourceSamples16k": 79245,
+      "padSamples": 115,
+      "paddedSamples": 79360,
+      "durationSeconds": 4.96,
+      "pcmSHA256": "02905a2a5804aa493de97eb17f4d06406442784b43ffea75ed4b4e5054101ec8",
+      "synthesisWallSeconds": 0.1733325000386685
+    },
+    {
+      "factId": "guide.04.08",
+      "text": "已完成而待移走的物品，集中放在靠近出口的一侧。",
+      "sourceSamples16k": 74233,
+      "padSamples": 7,
+      "paddedSamples": 74240,
+      "durationSeconds": 4.64,
+      "pcmSHA256": "bbdf001aefc86914ce33e5cff4959d407b14b3cfe981e287d9d4a0131491f641",
+      "synthesisWallSeconds": 0.17882349994033575
+    },
+    {
+      "factId": "guide.04.09",
+      "text": "不同分区之间保留取放通道，不把容器堆成连续障碍。",
+      "sourceSamples16k": 84492,
+      "padSamples": 628,
+      "paddedSamples": 85120,
+      "durationSeconds": 5.32,
+      "pcmSHA256": "fddd51b28bd2ed4a5b559cbbda9dd11b209a5ac5016c47646bf5a4ee3418aba1",
+      "synthesisWallSeconds": 0.2083240000065416
+    },
+    {
+      "factId": "guide.04.10",
+      "text": "分区完成后模拟一次工作流程，检查移动和取物是否顺畅。",
+      "sourceSamples16k": 92869,
+      "padSamples": 571,
+      "paddedSamples": 93440,
+      "durationSeconds": 5.84,
+      "pcmSHA256": "679ef394d0423ba3d78ad1b864a3b68adb72e44c78e82fbaa3bd98f270b1b9ad",
+      "synthesisWallSeconds": 0.21978620789013803
+    },
+    {
+      "factId": "guide.05.01",
+      "text": "先将桌面纸张按待处理、正在处理和已完成分成三组。",
+      "sourceSamples16k": 80568,
+      "padSamples": 72,
+      "paddedSamples": 80640,
+      "durationSeconds": 5.04,
+      "pcmSHA256": "c34101668b50baa4ba097a5154bbc737f51f057424f9209236e60e9f14d0dc6e",
+      "synthesisWallSeconds": 0.21228366706054658
+    },
+    {
+      "factId": "guide.05.02",
+      "text": "待处理文件只保留一个入口，避免多个位置重复积压。",
+      "sourceSamples16k": 77965,
+      "padSamples": 115,
+      "paddedSamples": 78080,
+      "durationSeconds": 4.88,
+      "pcmSHA256": "467d466c93e0133cbd7d6a3f59707551d02e1c860fd4f3df91bfe88280515868",
+      "synthesisWallSeconds": 0.18595183303114027
+    },
+    {
+      "factId": "guide.05.03",
+      "text": "正在处理的文件放在独立文件夹里，便于结束时收起。",
+      "sourceSamples16k": 81931,
+      "padSamples": 629,
+      "paddedSamples": 82560,
+      "durationSeconds": 5.16,
+      "pcmSHA256": "17af16612b76bb2c3307ae1380dbdc0fc2f407f7c390cc37fc248d3f0adf02b3",
+      "synthesisWallSeconds": 0.20152783405501395
+    },
+    {
+      "factId": "guide.05.04",
+      "text": "已经完成的资料按主题归档，不长期留在日常操作区。",
+      "sourceSamples16k": 80286,
+      "padSamples": 354,
+      "paddedSamples": 80640,
+      "durationSeconds": 5.04,
+      "pcmSHA256": "0a1ae55b52f54eb629222cb3647447b6e2dff49d5c5a6d7e3de70dd8399579a1",
+      "synthesisWallSeconds": 0.18672608293127269
+    },
+    {
+      "factId": "guide.05.05",
+      "text": "重要原件和普通草稿分开放置，避免清理时一起丢弃。",
+      "sourceSamples16k": 84946,
+      "padSamples": 174,
+      "paddedSamples": 85120,
+      "durationSeconds": 5.32,
+      "pcmSHA256": "c7b320cc57587988e08c71728ccd843f60c15a22cea684c4ffc03d6a77aef979",
+      "synthesisWallSeconds": 0.1928307079942897
+    },
+    {
+      "factId": "guide.05.06",
+      "text": "纸张采用竖直或分层存放，避免底部内容被长期遮住。",
+      "sourceSamples16k": 90189,
+      "padSamples": 51,
+      "paddedSamples": 90240,
+      "durationSeconds": 5.64,
+      "pcmSHA256": "ead5fcd62d9228e16f569bc623e4928380f4100071b5772385fc7a02d549eb53",
+      "synthesisWallSeconds": 0.19200416596140712
+    },
+    {
+      "factId": "guide.05.07",
+      "text": "为文件夹写上清晰主题标签，不只依靠颜色判断内容。",
+      "sourceSamples16k": 86980,
+      "padSamples": 60,
+      "paddedSamples": 87040,
+      "durationSeconds": 5.44,
+      "pcmSHA256": "16f8e26d5bea33a3b315057b962d5006c291d1a372fa05086236df36cffe99d9",
+      "synthesisWallSeconds": 0.18054966698400676
+    },
+    {
+      "factId": "guide.05.08",
+      "text": "同一项目的文件按日期排列，方便找到最近的一次修改。",
+      "sourceSamples16k": 89204,
+      "padSamples": 396,
+      "paddedSamples": 89600,
+      "durationSeconds": 5.6,
+      "pcmSHA256": "5a0df310ad30c7488599f1a1817abcceeed6454f51adc55ae4d391506571fee1",
+      "synthesisWallSeconds": 0.22401074995286763
+    },
+    {
+      "factId": "guide.05.09",
+      "text": "需要销毁的敏感纸张单独处理，不直接混入公开废纸。",
+      "sourceSamples16k": 83317,
+      "padSamples": 523,
+      "paddedSamples": 83840,
+      "durationSeconds": 5.24,
+      "pcmSHA256": "10eb98084cd654eb33c547dcfff3d52b45e2af951ef8f4f94eff0f1ae942d606",
+      "synthesisWallSeconds": 0.18745245796162635
+    },
+    {
+      "factId": "guide.05.10",
+      "text": "定期检查待处理文件夹，给长时间未处理的资料安排去向。",
+      "sourceSamples16k": 86613,
+      "padSamples": 427,
+      "paddedSamples": 87040,
+      "durationSeconds": 5.44,
+      "pcmSHA256": "0b3c28354101e3a006aca79636579ef25e2ba80514fce22a75b48fa7d9facce1",
+      "synthesisWallSeconds": 0.20141212502494454
+    },
+    {
+      "factId": "guide.06.01",
+      "text": "整理线缆之前先确认用途，避免拔掉正在传输数据的连接。",
+      "sourceSamples16k": 90083,
+      "padSamples": 157,
+      "paddedSamples": 90240,
+      "durationSeconds": 5.64,
+      "pcmSHA256": "da1ab6893530c02f4cc83865ef50739478e5452268e622857195e7b0fd06fcd5",
+      "synthesisWallSeconds": 0.2036539160180837
+    },
+    {
+      "factId": "guide.06.02",
+      "text": "按照电源线、数据线和备用线分类，减少寻找时的混乱。",
+      "sourceSamples16k": 83692,
+      "padSamples": 148,
+      "paddedSamples": 83840,
+      "durationSeconds": 5.24,
+      "pcmSHA256": "69edd256f2e01f96375937d499237af19e2e949f9c0049839f306eceadb75581",
+      "synthesisWallSeconds": 0.18583270895760506
+    },
+    {
+      "factId": "guide.06.03",
+      "text": "常用充电线在固定位置收好，避免每次从桌后摸索。",
+      "sourceSamples16k": 82293,
+      "padSamples": 267,
+      "paddedSamples": 82560,
+      "durationSeconds": 5.16,
+      "pcmSHA256": "242edce0e30578eaec75b23515b238c599604ce8fcc29bfcd471507a068e7b49",
+      "synthesisWallSeconds": 0.20737162500154227
+    },
+    {
+      "factId": "guide.06.04",
+      "text": "线缆保留必要的活动余量，不拉紧设备附近的接口。",
+      "sourceSamples16k": 75497,
+      "padSamples": 23,
+      "paddedSamples": 75520,
+      "durationSeconds": 4.72,
+      "pcmSHA256": "d8eaa50a6d6ee239cdf84783f82d525a12bcdab11a8165b6e03a04761a2b34c7",
+      "synthesisWallSeconds": 0.20299029105808586
+    },
+    {
+      "factId": "guide.06.05",
+      "text": "多余长度可以松散固定，不把线缆折成明显的锐角。",
+      "sourceSamples16k": 72812,
+      "padSamples": 148,
+      "paddedSamples": 72960,
+      "durationSeconds": 4.56,
+      "pcmSHA256": "dbf5009c1de097ca42e13e18e7a0176063eb0b79c814949f74d81a73dbb025aa",
+      "synthesisWallSeconds": 0.1919986669672653
+    },
+    {
+      "factId": "guide.06.06",
+      "text": "为相似的线缆标记对应设备，避免反复试插辨认用途。",
+      "sourceSamples16k": 80645,
+      "padSamples": 635,
+      "paddedSamples": 81280,
+      "durationSeconds": 5.08,
+      "pcmSHA256": "501973de29a45bd1ca57ead3a6417dc42ddcce1406376c5667f4f4b2b4085412",
+      "synthesisWallSeconds": 0.21177333290688694
+    },
+    {
+      "factId": "guide.06.07",
+      "text": "电源插座周围留出查看空间，不被纸张和杂物完全覆盖。",
+      "sourceSamples16k": 87252,
+      "padSamples": 428,
+      "paddedSamples": 87680,
+      "durationSeconds": 5.48,
+      "pcmSHA256": "bee6851b766908cf06a21ae865e8590d8d0e26fc8ccf133712c25818c2cb874e",
+      "synthesisWallSeconds": 0.21405579103156924
+    },
+    {
+      "factId": "guide.06.08",
+      "text": "发现破损或裸露的线缆先停止使用，再安排更换处理。",
+      "sourceSamples16k": 83844,
+      "padSamples": 636,
+      "paddedSamples": 84480,
+      "durationSeconds": 5.28,
+      "pcmSHA256": "8e8836837a984cb7186f279ec4f6f7cb60f8294631e8090c6ca0f36b22f358f4",
+      "synthesisWallSeconds": 0.21802045789081603
+    },
+    {
+      "factId": "guide.06.09",
+      "text": "备用线缆集中放入小袋，不与每天使用的连接线混放。",
+      "sourceSamples16k": 80088,
+      "padSamples": 552,
+      "paddedSamples": 80640,
+      "durationSeconds": 5.04,
+      "pcmSHA256": "c54acfe5c8c06ca279d2599283b716100774201a08632392d77394ed1e7bce91",
+      "synthesisWallSeconds": 0.1887443329906091
+    },
+    {
+      "factId": "guide.06.10",
+      "text": "清洁线缆周围时避免洒水，先按设备要求做好断电处理。",
+      "sourceSamples16k": 89995,
+      "padSamples": 245,
+      "paddedSamples": 90240,
+      "durationSeconds": 5.64,
+      "pcmSHA256": "b4c7b3c49fcf1f97b7efc3c301a9a0b4669fa7ba332d67f6e2acf60afef13c58",
+      "synthesisWallSeconds": 0.19260025001130998
+    },
+    {
+      "factId": "guide.07.01",
+      "text": "把经常使用的笔集中在一个笔筒，避免分散占据桌面。",
+      "sourceSamples16k": 82766,
+      "padSamples": 434,
+      "paddedSamples": 83200,
+      "durationSeconds": 5.2,
+      "pcmSHA256": "3849ec4301e3e2f18fd92f8e1bf0fb40fadb3ff9112759489c2314ba4c640909",
+      "synthesisWallSeconds": 0.1864263330353424
+    },
+    {
+      "factId": "guide.07.02",
+      "text": "先试写并区分笔的状态，再决定哪些需要补充或丢弃。",
+      "sourceSamples16k": 82233,
+      "padSamples": 327,
+      "paddedSamples": 82560,
+      "durationSeconds": 5.16,
+      "pcmSHA256": "c028ecac0727e659e5cf8d1296f6569da0ce09b0cd20f75d5028736dfab99f5c",
+      "synthesisWallSeconds": 0.1879600000102073
+    },
+    {
+      "factId": "guide.07.03",
+      "text": "尺子和剪刀安排独立位置，避免夹在文件堆中难以找到。",
+      "sourceSamples16k": 91683,
+      "padSamples": 477,
+      "paddedSamples": 92160,
+      "durationSeconds": 5.76,
+      "pcmSHA256": "ea431d6794fadfc72099dad212595fecf610324d2df6b9d2ca29acb8b6333405",
+      "synthesisWallSeconds": 0.1949993330053985
+    },
+    {
+      "factId": "guide.07.04",
+      "text": "锋利工具存放时收好刀刃，不朝向日常伸手取物的方向。",
+      "sourceSamples16k": 82924,
+      "padSamples": 276,
+      "paddedSamples": 83200,
+      "durationSeconds": 5.2,
+      "pcmSHA256": "8c08c5143f2cbd87c85e22f6f97481b23d1bdd7336a42147b23cf66f03526fb3",
+      "synthesisWallSeconds": 0.18811012501828372
+    },
+    {
+      "factId": "guide.07.05",
+      "text": "便签纸和索引贴放在同一分区，方便记录与标记配合使用。",
+      "sourceSamples16k": 99290,
+      "padSamples": 550,
+      "paddedSamples": 99840,
+      "durationSeconds": 6.24,
+      "pcmSHA256": "b9d54b2e6bd9c74c00c3f6edbd2c1468649de1c09063da48fe61aa8efd514773",
+      "synthesisWallSeconds": 0.2182014159625396
+    },
+    {
+      "factId": "guide.07.06",
+      "text": "容易散开的回形针使用小格容器，不直接倒在抽屉底部。",
+      "sourceSamples16k": 81032,
+      "padSamples": 248,
+      "paddedSamples": 81280,
+      "durationSeconds": 5.08,
+      "pcmSHA256": "ffeeb3a3fbce4a8308a5c17c9205ad6a57130b1cfba950c1f9567af35d427703",
+      "synthesisWallSeconds": 0.22800320899114013
+    },
+    {
+      "factId": "guide.07.07",
+      "text": "备用文具和正在使用的文具分开，避免每种都摆上桌面。",
+      "sourceSamples16k": 89307,
+      "padSamples": 293,
+      "paddedSamples": 89600,
+      "durationSeconds": 5.6,
+      "pcmSHA256": "1b371f462ef0abef8bd7b62329389c5df48b7598bd22d6d24de8f049baa6d208",
+      "synthesisWallSeconds": 0.2002127090236172
+    },
+    {
+      "factId": "guide.07.08",
+      "text": "胶带和胶水检查盖口是否闭合，减少黏连附近物品的情况。",
+      "sourceSamples16k": 87674,
+      "padSamples": 6,
+      "paddedSamples": 87680,
+      "durationSeconds": 5.48,
+      "pcmSHA256": "cc7c1ef322ff298d9e6f4c395997f33c9dfaf76dd67e8d4b299ab95c95c400b3",
+      "synthesisWallSeconds": 0.2223384160315618
+    },
+    {
+      "factId": "guide.07.09",
+      "text": "体积较大的工具收进抽屉，只有使用时才放到操作区。",
+      "sourceSamples16k": 77060,
+      "padSamples": 380,
+      "paddedSamples": 77440,
+      "durationSeconds": 4.84,
+      "pcmSHA256": "4efab2839e165a717e0a6c6482276b529fd0e9266243545b22712b569f4bb360",
+      "synthesisWallSeconds": 0.1917525000171736
+    },
+    {
+      "factId": "guide.07.10",
+      "text": "选择容器时检查实际拿取动作，避免收得整齐却难以取出。",
+      "sourceSamples16k": 92539,
+      "padSamples": 261,
+      "paddedSamples": 92800,
+      "durationSeconds": 5.8,
+      "pcmSHA256": "877e68b70746cf1308a4a81087fa82ca91aeb8b2d734a00377433769441e23ba",
+      "synthesisWallSeconds": 0.22228300001006573
+    },
+    {
+      "factId": "guide.08.01",
+      "text": "钥匙等出门必需的小物，设置一个固定的临时放置位置。",
+      "sourceSamples16k": 86313,
+      "padSamples": 87,
+      "paddedSamples": 86400,
+      "durationSeconds": 5.4,
+      "pcmSHA256": "64e42a9808348468bce4a2991565feadc7520315754f6991a8671223e047d847",
+      "synthesisWallSeconds": 0.20094783301465213
+    },
+    {
+      "factId": "guide.08.02",
+      "text": "抽屉先清空并查看内部尺寸，再选择适合的分隔方式。",
+      "sourceSamples16k": 81545,
+      "padSamples": 375,
+      "paddedSamples": 81920,
+      "durationSeconds": 5.12,
+      "pcmSHA256": "f9530b3e09739c44d27e6c5ec0ca74bd8f400dd55ff09d11aee2d38a2efe9ef6",
+      "synthesisWallSeconds": 0.19166458398103714
+    },
+    {
+      "factId": "guide.08.03",
+      "text": "浅层抽屉放低矮物品，避免关闭时被突出的物品卡住。",
+      "sourceSamples16k": 79791,
+      "padSamples": 209,
+      "paddedSamples": 80000,
+      "durationSeconds": 5.0,
+      "pcmSHA256": "a952c70eba0b93a463bb769655317cd020c6333e1fd987b9951e027065c435a8",
+      "synthesisWallSeconds": 0.18595416692551225
+    },
+    {
+      "factId": "guide.08.04",
+      "text": "深层抽屉用分格区分种类，不把不同小物全部堆在一起。",
+      "sourceSamples16k": 81242,
+      "padSamples": 38,
+      "paddedSamples": 81280,
+      "durationSeconds": 5.08,
+      "pcmSHA256": "226945250642b4a26dc60c75fcf1ea16a078b35e53ff42f74d3f9355a80b4cfc",
+      "synthesisWallSeconds": 0.18641108402516693
+    },
+    {
+      "factId": "guide.08.05",
+      "text": "同类物品的容器保留一点余量，方便放回而不必重新排满。",
+      "sourceSamples16k": 93373,
+      "padSamples": 67,
+      "paddedSamples": 93440,
+      "durationSeconds": 5.84,
+      "pcmSHA256": "4bcc70808a598fb7528115d167aea6c44a66f68c0ab6b0595ac45bb9db1727cf",
+      "synthesisWallSeconds": 0.2218735000351444
+    },
+    {
+      "factId": "guide.08.06",
+      "text": "容易滚动的小物用有边缘的容器，减少开关抽屉时移动。",
+      "sourceSamples16k": 86085,
+      "padSamples": 315,
+      "paddedSamples": 86400,
+      "durationSeconds": 5.4,
+      "pcmSHA256": "dab65c4b096b6de3d6254f381ba97f87a5925a6dd6d7e6f122ea3fbad36b1452",
+      "synthesisWallSeconds": 0.19114658294711262
+    },
+    {
+      "factId": "guide.08.07",
+      "text": "暂时需要保管的票据设一个位置，不夹进随机书页里。",
+      "sourceSamples16k": 79108,
+      "padSamples": 252,
+      "paddedSamples": 79360,
+      "durationSeconds": 4.96,
+      "pcmSHA256": "5c8f31adaee9a056b8f479dac0f45dd86a61bc39aaafb099edf93e7bdeaafd7a",
+      "synthesisWallSeconds": 0.20801525004208088
+    },
+    {
+      "factId": "guide.08.08",
+      "text": "需要成套使用的配件放在一起，并在容器上注明对应用途。",
+      "sourceSamples16k": 91265,
+      "padSamples": 255,
+      "paddedSamples": 91520,
+      "durationSeconds": 5.72,
+      "pcmSHA256": "cabe78a8c9c43a8dd72252d56fa6c5e13572aa0a8c4c89ce5e183cda60da7eec",
+      "synthesisWallSeconds": 0.23660733399447054
+    },
+    {
+      "factId": "guide.08.09",
+      "text": "每个抽屉只安排明确的功能，避免重新成为杂物的汇集处。",
+      "sourceSamples16k": 86730,
+      "padSamples": 310,
+      "paddedSamples": 87040,
+      "durationSeconds": 5.44,
+      "pcmSHA256": "2f1b01ef4566c0f50b2c662ec602834bb3b2a1c79f57a4f78d99ec25f5d67df7",
+      "synthesisWallSeconds": 0.22731570806354284
+    },
+    {
+      "factId": "guide.08.10",
+      "text": "抽屉标签放在容易看见的位置，帮助使用后快速归还物品。",
+      "sourceSamples16k": 83029,
+      "padSamples": 171,
+      "paddedSamples": 83200,
+      "durationSeconds": 5.2,
+      "pcmSHA256": "4d1a900d45a207adc3764586dd6d98a472ce64b183eea74e91140d91f84c8ae2",
+      "synthesisWallSeconds": 0.1934678329853341
+    },
+    {
+      "factId": "guide.09.01",
+      "text": "电脑桌面的文件按用途分组，避免用大量图标代替文件夹。",
+      "sourceSamples16k": 89132,
+      "padSamples": 468,
+      "paddedSamples": 89600,
+      "durationSeconds": 5.6,
+      "pcmSHA256": "6bf5c53a4fd5a58700db7e09e166fafce3f8395e357e391165e55dc7c3c1be54",
+      "synthesisWallSeconds": 0.20160370809026062
+    },
+    {
+      "factId": "guide.09.02",
+      "text": "文件名称写明主题和日期，减少依靠反复打开进行辨认。",
+      "sourceSamples16k": 92062,
+      "padSamples": 98,
+      "paddedSamples": 92160,
+      "durationSeconds": 5.76,
+      "pcmSHA256": "cfbe2e248112c85e74d2909c358c16d9ef85a38532c5665420e25fc525e15936",
+      "synthesisWallSeconds": 0.20071079093031585
+    },
+    {
+      "factId": "guide.09.03",
+      "text": "同一项目的电子资料放入固定目录，减少不同路径的副本。",
+      "sourceSamples16k": 86765,
+      "padSamples": 275,
+      "paddedSamples": 87040,
+      "durationSeconds": 5.44,
+      "pcmSHA256": "afc75f65806addd05962fe405f729832cbb67b5039f197004922c913de558c3c",
+      "synthesisWallSeconds": 0.20000458299182355
+    },
+    {
+      "factId": "guide.09.04",
+      "text": "未完成文件与已归档文件分开，避免覆盖正在处理的版本。",
+      "sourceSamples16k": 94592,
+      "padSamples": 128,
+      "paddedSamples": 94720,
+      "durationSeconds": 5.92,
+      "pcmSHA256": "2b597cfb68a7723188d93b9b6613d0232ca110513637f502a3402bb153b82df2",
+      "synthesisWallSeconds": 0.2064636250725016
+    },
+    {
+      "factId": "guide.09.05",
+      "text": "下载目录定期检查归属，不把临时文件长期当作正式存档。",
+      "sourceSamples16k": 85512,
+      "padSamples": 248,
+      "paddedSamples": 85760,
+      "durationSeconds": 5.36,
+      "pcmSHA256": "483d350adb8fa8ef46e7edafd5172304bdcf8a2f6649f2afa7d7cfd51049c89f",
+      "synthesisWallSeconds": 0.18292820907663554
+    },
+    {
+      "factId": "guide.09.06",
+      "text": "需要备份的重要资料按既定规则保存，不只留在桌面文件夹。",
+      "sourceSamples16k": 88535,
+      "padSamples": 425,
+      "paddedSamples": 88960,
+      "durationSeconds": 5.56,
+      "pcmSHA256": "4e8ecd4902367e8c26fddc087e91e8913510a8b43f1ffeb6bc849f5c8b28fcf1",
+      "synthesisWallSeconds": 0.21670625009573996
+    },
+    {
+      "factId": "guide.09.07",
+      "text": "整理电子文件前确认备份情况，避免误删唯一的一份资料。",
+      "sourceSamples16k": 93651,
+      "padSamples": 429,
+      "paddedSamples": 94080,
+      "durationSeconds": 5.88,
+      "pcmSHA256": "c5d24386e75669066f69cf247994b13cddfbcbda7aafeff0efabb55711e14f8a",
+      "synthesisWallSeconds": 0.2008376669837162
+    },
+    {
+      "factId": "guide.09.08",
+      "text": "快捷方式只保留经常使用的入口，不让界面再次堆满图标。",
+      "sourceSamples16k": 92740,
+      "padSamples": 60,
+      "paddedSamples": 92800,
+      "durationSeconds": 5.8,
+      "pcmSHA256": "bf8f771bcff29a57e39f2b9f745df9c75ac18ad5ab316fc1a5364530bf1ce822",
+      "synthesisWallSeconds": 0.20947120897471905
+    },
+    {
+      "factId": "guide.09.09",
+      "text": "截图按主题及时归入目录，避免只凭自动编号寻找内容。",
+      "sourceSamples16k": 92145,
+      "padSamples": 15,
+      "paddedSamples": 92160,
+      "durationSeconds": 5.76,
+      "pcmSHA256": "3521e65511ce55d418eb66cef95886db67a85d609605fe2fa213c2797ae36967",
+      "synthesisWallSeconds": 0.19848037499468774
+    },
+    {
+      "factId": "guide.09.10",
+      "text": "共享资料与私人资料分开存放，发布前检查访问权限范围。",
+      "sourceSamples16k": 91893,
+      "padSamples": 267,
+      "paddedSamples": 92160,
+      "durationSeconds": 5.76,
+      "pcmSHA256": "d005047a3a6aefc9e2667358cc0e6d3beaa9cd078665277b5455677cee8257cb",
+      "synthesisWallSeconds": 0.21036395791452378
+    },
+    {
+      "factId": "guide.10.01",
+      "text": "每天结束工作时先保存当前进度，再收起正在使用的资料。",
+      "sourceSamples16k": 86206,
+      "padSamples": 194,
+      "paddedSamples": 86400,
+      "durationSeconds": 5.4,
+      "pcmSHA256": "9277cbb70def7d081af9c6299a61e0e953f8b6012597f8385495b2d963e1023d",
+      "synthesisWallSeconds": 0.22306970809586346
+    },
+    {
+      "factId": "guide.10.02",
+      "text": "使用过的笔和工具放回固定位置，不留给下一次开工处理。",
+      "sourceSamples16k": 85155,
+      "padSamples": 605,
+      "paddedSamples": 85760,
+      "durationSeconds": 5.36,
+      "pcmSHA256": "9c4fab256e2b253d2145bcd7f908676132330dd5b3b79db91574d4309d22db82",
+      "synthesisWallSeconds": 0.19354445789940655
+    },
+    {
+      "factId": "guide.10.03",
+      "text": "桌面上的空杯和食物包装当天移走，避免变成长期杂物。",
+      "sourceSamples16k": 91390,
+      "padSamples": 130,
+      "paddedSamples": 91520,
+      "durationSeconds": 5.72,
+      "pcmSHA256": "439fe3d063f4ed5f8ab21ba986d2bfad9512459a04f15c619754b50911faf896",
+      "synthesisWallSeconds": 0.19855495798401535
+    },
+    {
+      "factId": "guide.10.04",
+      "text": "把第二天需要继续的资料集中摆放，方便再次开始任务。",
+      "sourceSamples16k": 83491,
+      "padSamples": 349,
+      "paddedSamples": 83840,
+      "durationSeconds": 5.24,
+      "pcmSHA256": "fc559ae0c5b1fffe0ea18e04f175e637e20fa8f77de108fb88bf7d16b44feaa3",
+      "synthesisWallSeconds": 0.18918200000189245
+    },
+    {
+      "factId": "guide.10.05",
+      "text": "只为明天准备必要用品，不把所有备用物品都搬回桌面。",
+      "sourceSamples16k": 90922,
+      "padSamples": 598,
+      "paddedSamples": 91520,
+      "durationSeconds": 5.72,
+      "pcmSHA256": "28c6c17975b8ba68fe16bd27dd85bc33c175b5658783b9ca7db2c5c976c6492f",
+      "synthesisWallSeconds": 0.20290708309039474
+    },
+    {
+      "factId": "guide.10.06",
+      "text": "离开座位前查看充电和设备状态，按实际需要关闭电源。",
+      "sourceSamples16k": 89084,
+      "padSamples": 516,
+      "paddedSamples": 89600,
+      "durationSeconds": 5.6,
+      "pcmSHA256": "ce6c498af15178fd66c1e564b6f662e6d85a6cc79f93d21a58443ad5740b4b4f",
+      "synthesisWallSeconds": 0.19364737498108298
+    },
+    {
+      "factId": "guide.10.07",
+      "text": "收尾时检查中央工作区域，确认没有被临时物品占满。",
+      "sourceSamples16k": 83010,
+      "padSamples": 190,
+      "paddedSamples": 83200,
+      "durationSeconds": 5.2,
+      "pcmSHA256": "5946b46addaa84fb5e89573c6d5a09a44712e911bbc5c41c028aaf7ef72e5ed3",
+      "synthesisWallSeconds": 0.1845777080161497
+    },
+    {
+      "factId": "guide.10.08",
+      "text": "遇到不属于自己的物品，及时归还而不是继续留在手边。",
+      "sourceSamples16k": 83584,
+      "padSamples": 256,
+      "paddedSamples": 83840,
+      "durationSeconds": 5.24,
+      "pcmSHA256": "dde01aec1ab753c496450e557f1d430effe10d410fa761fb05c0db62edf858a5",
+      "synthesisWallSeconds": 0.20294524997007102
+    },
+    {
+      "factId": "guide.10.09",
+      "text": "给临时收集盒安排清理时间，避免它变成长期积压的角落。",
+      "sourceSamples16k": 85176,
+      "padSamples": 584,
+      "paddedSamples": 85760,
+      "durationSeconds": 5.36,
+      "pcmSHA256": "18454f5db385eca24a6ff3c8a2d1f77f75919b38802cdedf444c86349c421531",
+      "synthesisWallSeconds": 0.2025276250205934
+    },
+    {
+      "factId": "guide.10.10",
+      "text": "每日收尾完成后保留一个简短记录，方便观察维护是否持续。",
+      "sourceSamples16k": 95611,
+      "padSamples": 389,
+      "paddedSamples": 96000,
+      "durationSeconds": 6.0,
+      "pcmSHA256": "b6848d9646666d4669792eb520bff6a46e99bc7c99c71da73f3e5f3fcedf9b17",
+      "synthesisWallSeconds": 0.20855199999641627
+    },
+    {
+      "factId": "guide.11.01",
+      "text": "桌面空间有限时优先满足主要任务，不同时展开所有活动。",
+      "sourceSamples16k": 92092,
+      "padSamples": 68,
+      "paddedSamples": 92160,
+      "durationSeconds": 5.76,
+      "pcmSHA256": "2220d51ab9f3b0bc29954cdcaa020aa9d3b4afab3d1b89361e189faaab63772b",
+      "synthesisWallSeconds": 0.1984399170614779
+    },
+    {
+      "factId": "guide.11.02",
+      "text": "把低频用品移到其他储存位置，给高频操作留出必要空间。",
+      "sourceSamples16k": 93210,
+      "padSamples": 230,
+      "paddedSamples": 93440,
+      "durationSeconds": 5.84,
+      "pcmSHA256": "427893744ad351d70310c46519dbf0e8b6d5e11db83ae19fd9b93e324bbed6e9",
+      "synthesisWallSeconds": 0.2312698339810595
+    },
+    {
+      "factId": "guide.11.03",
+      "text": "使用竖直文件架时确认底座稳固，避免取纸时整体倾倒。",
+      "sourceSamples16k": 89259,
+      "padSamples": 341,
+      "paddedSamples": 89600,
+      "durationSeconds": 5.6,
+      "pcmSHA256": "dbbcb5191e8fce421291f71d3a09fd4e2f65aef811de3afdc1e03d66dc430a57",
+      "synthesisWallSeconds": 0.21252362499944866
+    },
+    {
+      "factId": "guide.11.04",
+      "text": "可移动的小托盘适合集中用品，切换任务时能一次收起。",
+      "sourceSamples16k": 80730,
+      "padSamples": 550,
+      "paddedSamples": 81280,
+      "durationSeconds": 5.08,
+      "pcmSHA256": "ba23f3e8b52aa70c5507ceb1f4928ee2fef8fc49f40aafbc17094deb02710ad2",
+      "synthesisWallSeconds": 0.21170837501995265
+    },
+    {
+      "factId": "guide.11.05",
+      "text": "经常变换座位时准备轻便收纳袋，减少携带多余的小工具。",
+      "sourceSamples16k": 85158,
+      "padSamples": 602,
+      "paddedSamples": 85760,
+      "durationSeconds": 5.36,
+      "pcmSHA256": "031d728ae83d2a27ca115d14fc7c27ff6905b88c0fc9e08852517964237a1e93",
+      "synthesisWallSeconds": 0.19014137494377792
+    },
+    {
+      "factId": "guide.11.06",
+      "text": "移动用品按使用顺序放置，避免每次需要把整个袋子倒空。",
+      "sourceSamples16k": 88654,
+      "padSamples": 306,
+      "paddedSamples": 88960,
+      "durationSeconds": 5.56,
+      "pcmSHA256": "a2dc35d6719d31c01ce4615bd3917ed7b620ccb2974223437ad9e9cdc3fac013",
+      "synthesisWallSeconds": 0.21802679100073874
+    },
+    {
+      "factId": "guide.11.07",
+      "text": "临时桌面也先划出工作区域，不将所有随身物品铺满。",
+      "sourceSamples16k": 83610,
+      "padSamples": 230,
+      "paddedSamples": 83840,
+      "durationSeconds": 5.24,
+      "pcmSHA256": "4de31b90a0e5917e63a19875863c4036cdefcfb37e88ce6c9c8a7c72a1651050",
+      "synthesisWallSeconds": 0.21188458299729973
+    },
+    {
+      "factId": "guide.11.08",
+      "text": "离开临时座位前检查插线和小物，避免遗忘正在使用的配件。",
+      "sourceSamples16k": 88464,
+      "padSamples": 496,
+      "paddedSamples": 88960,
+      "durationSeconds": 5.56,
+      "pcmSHA256": "b5cfaed2da768531935047297a07eb15da2a0071d26e4f6d9a4a70a1b8b0d99b",
+      "synthesisWallSeconds": 0.2066877919714898
+    },
+    {
+      "factId": "guide.11.09",
+      "text": "折叠或移动桌面前先收起设备，避免物品滑落造成损坏。",
+      "sourceSamples16k": 86948,
+      "padSamples": 92,
+      "paddedSamples": 87040,
+      "durationSeconds": 5.44,
+      "pcmSHA256": "ab54c0b7831438cac3620b3de8d114a71e9c5eace392939e04c39b124c80daf3",
+      "synthesisWallSeconds": 0.205089750001207
+    },
+    {
+      "factId": "guide.11.10",
+      "text": "空间布局改变之后重新检查取物距离，不照搬原来的分区。",
+      "sourceSamples16k": 85224,
+      "padSamples": 536,
+      "paddedSamples": 85760,
+      "durationSeconds": 5.36,
+      "pcmSHA256": "4c15a5acc908ebc132ec30f2398f5e23fb1fcef0c1ebdd501062f05b2e8efdc6",
+      "synthesisWallSeconds": 0.20371237501967698
+    },
+    {
+      "factId": "guide.12.01",
+      "text": "多人共用桌面时先约定公共区域，不让个人用品长期占用。",
+      "sourceSamples16k": 87235,
+      "padSamples": 445,
+      "paddedSamples": 87680,
+      "durationSeconds": 5.48,
+      "pcmSHA256": "b427dd72e7284f0e81a90b1c8005d0ec2cda179e7ca00823d92d469941685d35",
+      "synthesisWallSeconds": 0.1978447079891339
+    },
+    {
+      "factId": "guide.12.02",
+      "text": "公共工具和私人文具分开标记，方便使用后归还正确位置。",
+      "sourceSamples16k": 89011,
+      "padSamples": 589,
+      "paddedSamples": 89600,
+      "durationSeconds": 5.6,
+      "pcmSHA256": "fbde17ceeada9873c7955763eb850cf058f6022d89c7ab26188ce01e8acb7a68",
+      "synthesisWallSeconds": 0.19470004097092897
+    },
+    {
+      "factId": "guide.12.03",
+      "text": "共享文件设定统一的放置规则，避免每个人另开一个入口。",
+      "sourceSamples16k": 87308,
+      "padSamples": 372,
+      "paddedSamples": 87680,
+      "durationSeconds": 5.48,
+      "pcmSHA256": "b0583bc268f88ad8c26105205e2a1c9faca9da896c50a1eafc829dddc1f1aaa7",
+      "synthesisWallSeconds": 0.21836220799013972
+    },
+    {
+      "factId": "guide.12.04",
+      "text": "借用工具前确认使用安排，不打断他人正在进行的任务。",
+      "sourceSamples16k": 82435,
+      "padSamples": 125,
+      "paddedSamples": 82560,
+      "durationSeconds": 5.16,
+      "pcmSHA256": "56e5b3d38a5a0639b44626dc68ec46cdfd516d1198b3af903e24b53cfd05bb7f",
+      "synthesisWallSeconds": 0.18838716694153845
+    },
+    {
+      "factId": "guide.12.05",
+      "text": "使用完公共设备后恢复约定状态，给下一位使用者留出空间。",
+      "sourceSamples16k": 91037,
+      "padSamples": 483,
+      "paddedSamples": 91520,
+      "durationSeconds": 5.72,
+      "pcmSHA256": "9f4cfa136b9bb7e57ae8aa4a1ff8c29b45f5a30014a6050b89dd9cd560f503c9",
+      "synthesisWallSeconds": 0.24620087502989918
+    },
+    {
+      "factId": "guide.12.06",
+      "text": "临时改变桌面布局时说明原因，避免其他人找不到原有物品。",
+      "sourceSamples16k": 91871,
+      "padSamples": 289,
+      "paddedSamples": 92160,
+      "durationSeconds": 5.76,
+      "pcmSHA256": "c7a652fd1e034b4e3bdc9e9a9f86b48b0f36cb9d49941c1a28fdc71157209a9a",
+      "synthesisWallSeconds": 0.2277752080699429
+    },
+    {
+      "factId": "guide.12.07",
+      "text": "公共区域的垃圾及时清理，不把维护责任留给最后一个人。",
+      "sourceSamples16k": 85591,
+      "padSamples": 169,
+      "paddedSamples": 85760,
+      "durationSeconds": 5.36,
+      "pcmSHA256": "7fd16f5bc9822f08cd98db0d233579c9c7e150eab9750d2bcde7931c81d00db3",
+      "synthesisWallSeconds": 0.20845304196700454
+    },
+    {
+      "factId": "guide.12.08",
+      "text": "共享收纳位置采用清楚的标签，减少仅凭个人习惯判断归属。",
+      "sourceSamples16k": 96789,
+      "padSamples": 491,
+      "paddedSamples": 97280,
+      "durationSeconds": 6.08,
+      "pcmSHA256": "9003416f07e61bc2fd1173105cfa4a0500b195cc21d24c44b31740b09400e8a9",
+      "synthesisWallSeconds": 0.23267354199197143
+    },
+    {
+      "factId": "guide.12.09",
+      "text": "涉及私密资料时先收好内容，不直接留在多人可见的桌面。",
+      "sourceSamples16k": 87974,
+      "padSamples": 346,
+      "paddedSamples": 88320,
+      "durationSeconds": 5.52,
+      "pcmSHA256": "2fa27cc834b620d6d5f45c1859109eeb46482134c4e9af175c7133852dcf2210",
+      "synthesisWallSeconds": 0.27413695794530213
+    },
+    {
+      "factId": "guide.12.10",
+      "text": "共同讨论哪些物品确实需要常驻，减少公共区域的重复堆放。",
+      "sourceSamples16k": 92086,
+      "padSamples": 74,
+      "paddedSamples": 92160,
+      "durationSeconds": 5.76,
+      "pcmSHA256": "2e4412ec89014ea9a79e595c5ae15d38e585ec134b111b371ca6cea7676706e8",
+      "synthesisWallSeconds": 0.2527080000145361
+    },
+    {
+      "factId": "guide.13.01",
+      "text": "每周查看一次分区状态，找出最容易重新堆积物品的位置。",
+      "sourceSamples16k": 89066,
+      "padSamples": 534,
+      "paddedSamples": 89600,
+      "durationSeconds": 5.6,
+      "pcmSHA256": "4a62f904e8edd20d3bb907d3b73cfd500d93016a0013777beac7634efa5116be",
+      "synthesisWallSeconds": 0.2193920830031857
+    },
+    {
+      "factId": "guide.13.02",
+      "text": "检查收纳盒里是否出现无关物品，及时恢复原定用途范围。",
+      "sourceSamples16k": 93316,
+      "padSamples": 124,
+      "paddedSamples": 93440,
+      "durationSeconds": 5.84,
+      "pcmSHA256": "213fc7363c22bc8d815de153d8b962bd438516bfe524e965d3d41a30112faa3e",
+      "synthesisWallSeconds": 0.20943458296824247
+    },
+    {
+      "factId": "guide.13.03",
+      "text": "观察设备散热区域是否被遮挡，不用文件夹包围排风位置。",
+      "sourceSamples16k": 90446,
+      "padSamples": 434,
+      "paddedSamples": 90880,
+      "durationSeconds": 5.68,
+      "pcmSHA256": "acbf3cbbf16967fbcaf8d8784903b55fb633d35cf1ed38443809a866e5a21254",
+      "synthesisWallSeconds": 0.1962644999148324
+    },
+    {
+      "factId": "guide.13.04",
+      "text": "检查桌边物品是否稳固，避免常用操作把它们推到边缘。",
+      "sourceSamples16k": 98102,
+      "padSamples": 458,
+      "paddedSamples": 98560,
+      "durationSeconds": 6.16,
+      "pcmSHA256": "45c8b7ca9ed49ee0cdf1490c2c6a501297c0d1482c9e4fca6e35c1f6e52c2d22",
+      "synthesisWallSeconds": 0.20207775000017136
+    },
+    {
+      "factId": "guide.13.05",
+      "text": "发现容器破损或尖锐边角，先停止使用并更换合适的容器。",
+      "sourceSamples16k": 92650,
+      "padSamples": 150,
+      "paddedSamples": 92800,
+      "durationSeconds": 5.8,
+      "pcmSHA256": "65c7636f7a872be183f717227690c6fc16f3422e94fab8f002a9908503581210",
+      "synthesisWallSeconds": 0.1987851660232991
+    },
+    {
+      "factId": "guide.13.06",
+      "text": "定期擦拭不易看见的角落，避免积灰影响日常使用体验。",
+      "sourceSamples16k": 84237,
+      "padSamples": 243,
+      "paddedSamples": 84480,
+      "durationSeconds": 5.28,
+      "pcmSHA256": "25a8e69def148ef97e7ea3f382a9b698d5cad4bbb8878c921fa40558b30cb209",
+      "synthesisWallSeconds": 0.20430408406537026
+    },
+    {
+      "factId": "guide.13.07",
+      "text": "整理时留意插座与线缆状态，不把收纳美观放在使用安全之前。",
+      "sourceSamples16k": 92711,
+      "padSamples": 89,
+      "paddedSamples": 92800,
+      "durationSeconds": 5.8,
+      "pcmSHA256": "ee31de5fa9ce16ccaf81539eb5a4e8bee2b78df9d1a8de640a498d21cc0c29e6",
+      "synthesisWallSeconds": 0.23611091705970466
+    },
+    {
+      "factId": "guide.13.08",
+      "text": "重物放置在稳定位置，不集中堆在不适合承重的薄弱区域。",
+      "sourceSamples16k": 93038,
+      "padSamples": 402,
+      "paddedSamples": 93440,
+      "durationSeconds": 5.84,
+      "pcmSHA256": "06152a61080dae21aecd3cf88bbc6569b6c40c0c0a78f67d04325c16e4670090",
+      "synthesisWallSeconds": 0.2020032920408994
+    },
+    {
+      "factId": "guide.13.09",
+      "text": "需要抬动显示器等设备时先查看连接，避免拉扯仍插着的线缆。",
+      "sourceSamples16k": 97995,
+      "padSamples": 565,
+      "paddedSamples": 98560,
+      "durationSeconds": 6.16,
+      "pcmSHA256": "87af2da994450d0b34367aa889386b0ad8beed01ee203e443b22e1ea194ad105",
+      "synthesisWallSeconds": 0.21756970800925046
+    },
+    {
+      "factId": "guide.13.10",
+      "text": "维护发现的问题记录具体位置，下次调整时再逐项检查原因。",
+      "sourceSamples16k": 90084,
+      "padSamples": 156,
+      "paddedSamples": 90240,
+      "durationSeconds": 5.64,
+      "pcmSHA256": "5198aee99e450cf362c447cd0c42f42ba1492162b7bcf703884dd1bfadc1ed28",
+      "synthesisWallSeconds": 0.22818408394232392
+    },
+    {
+      "factId": "guide.14.01",
+      "text": "复盘时先询问哪些物品仍难找到，再考虑调整对应的分区。",
+      "sourceSamples16k": 92385,
+      "padSamples": 415,
+      "paddedSamples": 92800,
+      "durationSeconds": 5.8,
+      "pcmSHA256": "dcc679aa8c4cd43bfbcc2e29f7ba023eecce9a3468ad12f31e8ca358eddeff0a",
+      "synthesisWallSeconds": 0.2010102089261636
+    },
+    {
+      "factId": "guide.14.02",
+      "text": "检查常用用品能否顺手放回，不只检查取出时是否方便。",
+      "sourceSamples16k": 91282,
+      "padSamples": 238,
+      "paddedSamples": 91520,
+      "durationSeconds": 5.72,
+      "pcmSHA256": "d81e2525310a55a61e868bb6321aaa2614d6da44529f2c30669e1baa18882364",
+      "synthesisWallSeconds": 0.19644054200034589
+    },
+    {
+      "factId": "guide.14.03",
+      "text": "观察每天收尾时剩下的物品，判断是否遗漏了固定收纳位置。",
+      "sourceSamples16k": 91288,
+      "padSamples": 232,
+      "paddedSamples": 91520,
+      "durationSeconds": 5.72,
+      "pcmSHA256": "4180f6dcf9eb5b5bddfb4aa6683ffcdb60ced3167f8d9ea93fdddc76c4bef5cb",
+      "synthesisWallSeconds": 0.20789754099678248
+    },
+    {
+      "factId": "guide.14.04",
+      "text": "工作内容变化时重新确认高频用品，不保留已经过时的桌面安排。",
+      "sourceSamples16k": 103943,
+      "padSamples": 377,
+      "paddedSamples": 104320,
+      "durationSeconds": 6.52,
+      "pcmSHA256": "2d69487a4515c1c821bff40060f7f9c49c51b9dee093bb487bf8b06059e55810",
+      "synthesisWallSeconds": 0.2533438339596614
+    },
+    {
+      "factId": "guide.14.05",
+      "text": "某个容器持续放不下物品时，先检查分类而不是直接追加容器。",
+      "sourceSamples16k": 94745,
+      "padSamples": 615,
+      "paddedSamples": 95360,
+      "durationSeconds": 5.96,
+      "pcmSHA256": "0a6bc687ea9676fcd4db46a959bca3d48edbf74fb0a903c34e0abc4bf0f02eb4",
+      "synthesisWallSeconds": 0.23175870906561613
+    },
+    {
+      "factId": "guide.14.06",
+      "text": "物品总在同一个位置聚集时，考虑把临时入口安排在那里。",
+      "sourceSamples16k": 90525,
+      "padSamples": 355,
+      "paddedSamples": 90880,
+      "durationSeconds": 5.68,
+      "pcmSHA256": "a70de14f30863b82bd6a1036012f9a8d2aec8034b7e3d0c93100456e2422bcf5",
+      "synthesisWallSeconds": 0.20638674998190254
+    },
+    {
+      "factId": "guide.14.07",
+      "text": "调整方案之后试用几个完整任务，再判断布局是否适合自己。",
+      "sourceSamples16k": 94037,
+      "padSamples": 43,
+      "paddedSamples": 94080,
+      "durationSeconds": 5.88,
+      "pcmSHA256": "5f8f43e623e691e968e667b26904684c5d779fcfd2e6348d49148a6f2892ba49",
+      "synthesisWallSeconds": 0.21987200004514307
+    },
+    {
+      "factId": "guide.14.08",
+      "text": "保留能够持续执行的收尾动作，不用复杂流程增加维护负担。",
+      "sourceSamples16k": 90653,
+      "padSamples": 227,
+      "paddedSamples": 90880,
+      "durationSeconds": 5.68,
+      "pcmSHA256": "01a23302b1aab4ebf1b675104489947b1a5586bf7496500d948a8215b06cb5d9",
+      "synthesisWallSeconds": 0.23682495800312608
+    },
+    {
+      "factId": "guide.14.09",
+      "text": "对比整理前后的使用记录，关注寻找和归还物品的实际过程。",
+      "sourceSamples16k": 94789,
+      "padSamples": 571,
+      "paddedSamples": 95360,
+      "durationSeconds": 5.96,
+      "pcmSHA256": "8a6703dd3db6e6a3c7ff42993d6e872511e98b968a320beb9ef0fed3726fdca6",
+      "synthesisWallSeconds": 0.20727487502153963
+    },
+    {
+      "factId": "guide.14.10",
+      "text": "最后把有效的安排写入个人清单，作为下一次维护的参考。",
+      "sourceSamples16k": 93946,
+      "padSamples": 134,
+      "paddedSamples": 94080,
+      "durationSeconds": 5.88,
+      "pcmSHA256": "666465b8617f898395caa1f89d6d79291969dee5a32a701f3e5efb276ba7ac30",
+      "synthesisWallSeconds": 0.21071775001473725
+    }
+  ],
+  "longNarrationSeconds": 754.88,
+  "shortNarrationSeconds": 48.92,
+  "shortMeasurement": "reuse exact shared sentence measurements from long catalog; no separate TTS replay",
+  "overEightSeconds": [],
+  "answerRows": [
+    {
+      "text": "这款目前价格是 99 CNY。",
+      "sourceSamples16k": 38750,
+      "paddedSamples": 39040,
+      "durationSeconds": 2.44
+    },
+    {
+      "text": "目前商品整体库存还有 20 件，各规格单独库存暂不可用。",
+      "sourceSamples16k": 89563,
+      "paddedSamples": 89600,
+      "durationSeconds": 5.6
+    },
+    {
+      "text": "这款商品叫桌面整理指南。",
+      "sourceSamples16k": 39655,
+      "paddedSamples": 39680,
+      "durationSeconds": 2.48
+    }
+  ]
+}

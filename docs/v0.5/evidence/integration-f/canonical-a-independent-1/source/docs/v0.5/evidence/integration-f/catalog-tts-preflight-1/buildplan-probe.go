@@ -1,0 +1,3 @@
+package main
+import("astralive/backend/internal/narration";"encoding/json";"fmt";"os")
+func main(){for _,file:=range os.Args[1:]{raw,e:=os.ReadFile(file);if e!=nil{panic(e)};var v struct{ScriptVersion string `json:"scriptVersion"`;Plan struct{Style string `json:"style"`;Policy narration.Policy `json:"policy"`;Beats []narration.BeatInput `json:"beats"`} `json:"plan"`};if e=json.Unmarshal(raw,&v);e!=nil{panic(e)};p,e:=narration.BuildPlan("fixture-plan","fixture-session",v.ScriptVersion,"fixture-product","fixture-version","fixture-hash",v.Plan.Style,v.Plan.Policy,[]string{"webrtc-peer","rtmp-1"},v.Plan.Beats);if e!=nil{panic(e)};fmt.Printf("PASS %s beats=%d segments=%d\n",file,len(p.Beats),len(p.Segments))}}

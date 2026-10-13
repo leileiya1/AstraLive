@@ -1,0 +1,60 @@
+[
+  {
+    "name": "ordinary",
+    "command": {
+      "schemaVersion": "0.5",
+      "sessionId": "session_中文",
+      "runEpoch": 1,
+      "commandType": "SPEAK",
+      "payload": {
+        "text": "你好<& \\u003c",
+        "priority": 40,
+        "empty": null
+      },
+      "commandId": "cmd_a",
+      "traceId": "trace"
+    },
+    "canonical": "{\"commandType\":\"SPEAK\",\"payload\":{\"empty\":null,\"priority\":40,\"text\":\"你好<& \\\\u003c\"},\"runEpoch\":1,\"schemaVersion\":\"0.5\",\"sessionId\":\"session_中文\"}",
+    "fingerprint": "sha256:97d59a4f5eb3b8c9f22a17f69272edb906f9b41acc59863df18ea65675c24982"
+  },
+  {
+    "name": "explicit_null",
+    "command": {
+      "schemaVersion": "0.5",
+      "sessionId": "session_中文",
+      "runEpoch": 1,
+      "commandType": "SPEAK",
+      "payload": {
+        "text": "你好<& \\u003c",
+        "priority": 40,
+        "empty": null
+      },
+      "commandId": "cmd_a",
+      "traceId": "trace",
+      "narrationId": null,
+      "segmentId": null,
+      "timelineEpoch": 1,
+      "lane": "OPERATOR"
+    },
+    "canonical": "{\"commandType\":\"SPEAK\",\"lane\":\"OPERATOR\",\"narrationId\":null,\"payload\":{\"empty\":null,\"priority\":40,\"text\":\"你好<& \\\\u003c\"},\"runEpoch\":1,\"schemaVersion\":\"0.5\",\"segmentId\":null,\"sessionId\":\"session_中文\",\"timelineEpoch\":1}",
+    "fingerprint": "sha256:6c74ae719f9011a4414691b0790ed141cdf26ba6371798244a7d6e12dfef8f28"
+  },
+  {
+    "name": "safe_max",
+    "command": {
+      "schemaVersion": "0.5",
+      "sessionId": "session_中文",
+      "runEpoch": 9007199254740991,
+      "commandType": "SPEAK",
+      "payload": {
+        "text": "你好<& \\u003c",
+        "priority": 40,
+        "empty": null
+      },
+      "commandId": "cmd_a",
+      "traceId": "trace"
+    },
+    "canonical": "{\"commandType\":\"SPEAK\",\"payload\":{\"empty\":null,\"priority\":40,\"text\":\"你好<& \\\\u003c\"},\"runEpoch\":9007199254740991,\"schemaVersion\":\"0.5\",\"sessionId\":\"session_中文\"}",
+    "fingerprint": "sha256:af1f355a9552781e6d9f40f98e43f280eb810d5af9625040784b8c3a7136c944"
+  }
+]

@@ -1,0 +1,184 @@
+{
+  "source": "8fa0eb27b132234be9bd2afcccfeb8980ad4ca7a",
+  "scope": "D actual local Go/Python TCP/UDS and real owned PostgreSQL process/auth/default-off focused regression; CPU fixture providers/sinks only; no GPU/Chrome/live performance acceptance",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "checks": [
+    {
+      "name": "pg-init",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/initdb",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-pg-svhtoith",
+        "-A",
+        "trust",
+        "--no-locale",
+        "-E",
+        "UTF8"
+      ],
+      "exitCode": 0,
+      "seconds": 0.344,
+      "log": "pg-init.log",
+      "sha256": "2d37963455416be00043a8cdbe4c7061df3cb0d5f06b4ba9956e0343176ca84b",
+      "bytes": 951
+    },
+    {
+      "name": "pg-start",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+        "-D",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-pg-svhtoith",
+        "-l",
+        "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-pg-svhtoith/postgres.log",
+        "start"
+      ],
+      "exitCode": 0,
+      "seconds": 0.123,
+      "log": "pg-start.log",
+      "sha256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+      "bytes": 52
+    },
+    {
+      "name": "pg-database",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/createdb",
+        "-h",
+        "127.0.0.1",
+        "-p",
+        "49986",
+        "astralive_d_review"
+      ],
+      "exitCode": 0,
+      "seconds": 0.052,
+      "log": "pg-database.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "go-auth-local-race",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-p",
+        "1",
+        "-count=1",
+        "-v",
+        "./internal/config",
+        "./internal/runtime",
+        "./internal/userconfig"
+      ],
+      "exitCode": 0,
+      "seconds": 7.921,
+      "log": "go-auth-local-race.log",
+      "sha256": "900916856faba5019d32355618ff20a543b37e87573f207b0ec91e0b4f76fd97",
+      "bytes": 7785
+    },
+    {
+      "name": "go-production-startup-race",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-p",
+        "1",
+        "-count=1",
+        "-v",
+        "./internal/durability",
+        "-run",
+        "^(TestLocalIPCProductionServerStartup|TestPostgresOnlyServerStartup)$"
+      ],
+      "exitCode": 0,
+      "seconds": 20.288,
+      "log": "go-production-startup-race.log",
+      "sha256": "3a59ce9840731b640bd97f207eae14255ef815d19737032bfa4f543f925253a7",
+      "bytes": 3230
+    },
+    {
+      "name": "go-feature-flags-race",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-v",
+        "./internal/narration",
+        "-run",
+        "^(TestFrozenFlag|TestTimelineConfiguration|TestStagingCaptureFrozenProfiles)$"
+      ],
+      "exitCode": 0,
+      "seconds": 3.23,
+      "log": "go-feature-flags-race.log",
+      "sha256": "2a2799e164b74767c59ef8c141c1ce68aedc53aff6f8483ff9eb60ec66ad80cd",
+      "bytes": 3782
+    },
+    {
+      "name": "python-auth-local-lifecycle",
+      "command": [
+        "/private/tmp/astralive-f-media-venv-1/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.tests.test_local_listener",
+        "runtime.tests.test_production_launcher_transport",
+        "runtime.tests.test_session_binding",
+        "runtime.tests.test_durability",
+        "runtime.tests.test_narration_lifecycle",
+        "runtime.tests.test_staging_runtime.CaptureTests"
+      ],
+      "exitCode": 1,
+      "seconds": 3.51,
+      "log": "python-auth-local-lifecycle.log",
+      "sha256": "36682adef685e50c99c7d1995c23f83a2509b9492ca79b398d39543ee07e1d85",
+      "bytes": 8688
+    }
+  ],
+  "status": "FAIL",
+  "notTested": [
+    "Linux actual runtime",
+    "Windows actual runtime",
+    "real GPU through UDS",
+    "Chrome/RTMP through UDS",
+    "Speak performance"
+  ],
+  "versions": {
+    "go": "go version go1.27.2 darwin/arm64",
+    "python": "Python 3.12.13",
+    "postgres": "postgres (PostgreSQL) 17.11 (Homebrew)"
+  },
+  "error": "python-auth-local-lifecycle failed",
+  "ownedPGCleanup": "PASS",
+  "artifacts": {
+    "go-auth-local-race.log": {
+      "sha256": "900916856faba5019d32355618ff20a543b37e87573f207b0ec91e0b4f76fd97",
+      "bytes": 7785
+    },
+    "go-feature-flags-race.log": {
+      "sha256": "2a2799e164b74767c59ef8c141c1ce68aedc53aff6f8483ff9eb60ec66ad80cd",
+      "bytes": 3782
+    },
+    "go-production-startup-race.log": {
+      "sha256": "3a59ce9840731b640bd97f207eae14255ef815d19737032bfa4f543f925253a7",
+      "bytes": 3230
+    },
+    "pg-database.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "pg-init.log": {
+      "sha256": "2d37963455416be00043a8cdbe4c7061df3cb0d5f06b4ba9956e0343176ca84b",
+      "bytes": 951
+    },
+    "pg-start.log": {
+      "sha256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+      "bytes": 52
+    },
+    "pg-stop.log": {
+      "sha256": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+      "bytes": 56
+    },
+    "python-auth-local-lifecycle.log": {
+      "sha256": "36682adef685e50c99c7d1995c23f83a2509b9492ca79b398d39543ee07e1d85",
+      "bytes": 8688
+    }
+  }
+}

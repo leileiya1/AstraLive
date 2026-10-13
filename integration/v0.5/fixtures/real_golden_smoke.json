@@ -1,5 +1,5 @@
 {
-  "fixtureVersion": "real-golden-smoke-2",
+  "fixtureVersion": "real-golden-smoke-3",
   "scope": "SHORT_SMOKE_NOT_GOLDEN_TEST_1",
   "product": {
     "name": "桌面整理指南",
@@ -11,7 +11,7 @@
     ],
     "description": "示范SKU电子说明书，提供桌面分类、分区、纸张线缆收纳和日常维护的操作指南。"
   },
-  "scriptVersion": "desktop-guide-smoke-v2",
+  "scriptVersion": "desktop-guide-smoke-v3",
   "plan": {
     "policy": "AT_BOUNDARY",
     "style": "自然清楚地逐句讲解桌面整理步骤，每段只讲当前声明的事实。",
@@ -37,7 +37,7 @@
         ],
         "statements": [
           {
-            "text": "这份电子说明书，当前标价是人民币{{price}}元。",
+            "text": "本商品当前标价是人民币{{price}}元。",
             "factIds": [
               "price"
             ]
@@ -160,7 +160,7 @@
   },
   "facts": {
     "name": "这份电子说明书的名称，叫作{{name}}。",
-    "price": "这份电子说明书，当前标价是人民币{{price}}元。",
+    "price": "本商品当前标价是人民币{{price}}元。",
     "stock": "当前用于本次演示的商品库存，共有{{stock}}份可供选择。",
     "sizes": "本商品的规格选项只有{{sizes}}，请按电子资料使用。",
     "guide.01.05": "这份指南讨论桌面整理方法，不提供实体收纳工具。",

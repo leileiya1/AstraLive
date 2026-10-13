@@ -1,0 +1,20 @@
+{
+  "base": "d69166461af5cd9f7b75179754ea4c086435e251",
+  "revision": "staging-contract-1-candidate",
+  "status": "CONTRACT_TESTS_PASS_NOT_NATIVE_IMPLEMENTATION",
+  "sourceSHA256": {
+    "gpu_worker/staging_contract.py": "a6bb96afcfd2fd182ca90079210f529da3fd49aece5b05afa35a2b878dbfe761",
+    "gpu_worker/tests/test_staging_contract.py": "b191808079978084ed9c23c9ee0c1135e22f1f5291975acfe6ef775d919c6cb2",
+    "docs/v0.5/staging-protocol.schema.json": "95386c3c96deba471a45cf33b94ed114a4feb2784475e9cf488ef5129c68d71a",
+    "docs/v0.5/staging-canonical-vectors.json": "d898fada9f5c3099754e086194127c6f2b526c5dd69a849814d4464c659a6e66",
+    "docs/v0.5/CCR-BC-002-SOULX-STAGING.md": "5fc35704c7214f2c9dfd879a530a6b7e378a6789833c430dccd674bb197aa82c",
+    "backend/internal/durability/timeline.go": "9f0613f51fb290920a13b9461c426a6a5b1f61a986d46696ed8b59bba8cd8953",
+    "backend/internal/durability/staging_contract_test.go": "70cb7e690c3e1e85f1e78b1e8516deb718ea69c8cd6b06df97e57d6676eca31c"
+  },
+  "artifacts": {
+    "python.log": "d6c71084b7ca2aa715a943b68e0488543becc8ebfc08fb1b20ddaf860942b740",
+    "go-canonical.log": "e489c0e3b84ebf5a608ef210dfb6a0ccc7c769438331b35034bd08ff15141ba0",
+    "postgres-race.log": "068e2e5a162228b5cc17514b20ebc3822d36a74d81f9d28ac93eb5db59b01551"
+  },
+  "scope": "stdlib DTO/hash/lease accounting; exact Go canonical and owned PostgreSQL/race ACK persistence and old int63 proof regression; no GPU, Worker controller, Runtime staging or release acceptance"
+}

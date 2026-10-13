@@ -1,0 +1,109 @@
+{
+  "source": "b028f5aeec0b929a9779f5f50def8cebce25c98a",
+  "freezeUnchanged": true,
+  "gates": {
+    "565993e": "PASS",
+    "b028f5a": "PASS",
+    "negative48eb038": "EXPECTED_FAILURE"
+  },
+  "sourceHashes": {
+    "backend/internal/app/service.go": "1d0295ce11063cfb087e94d404ff37e547efa0a32471aeb1f6bffa99b97925c8",
+    "backend/internal/narration/controller.go": "229525384b75bf53c733f577460ca5e4dd9c81c8fc203ad901f74b83245830a4",
+    "backend/internal/narration/timeline_config.go": "630b04176cc25d35533068598969669504b3fdb1d1550c190d8906b820e3ae03",
+    "runtime/app/session.py": "49c7df4b07fb8d0d4629ed4257ee70f0b1775d2fd42a2fbfbc73753d67286252",
+    "runtime/app/session_binding.py": "d61b2336d73533369b9f4ceb1f806a89024b8b63e6c4388346c25f7a97896880",
+    "backend/internal/narration/lifecycle_postgres_test.go": "a355e7fbe745a02532d48fbc429e7d99c32e169232577ef0b9163efe9ee44576",
+    "runtime/tests/narration_lifecycle_pg.py": "a9ec26c63be31416b71eb6e55669969a54b262daf0709795bbbd22fc3956a1e5",
+    "runtime/tests/test_narration_lifecycle.py": "908ad0ff73939ef905acfe0d8683c0b500d2bfee823fdcc84c1891b32d066037"
+  },
+  "artifacts": {
+    "after.log": {
+      "sha256": "9cc82495d5e8a32ed94cf6702a43c79213196f76922b81be7a185a5afdbef5fc",
+      "bytes": 5866
+    },
+    "before.log": {
+      "sha256": "679b27db103ed7203a3b902636620e0dd80d568fce6e5040faba8acdb7e5c654",
+      "bytes": 2804
+    },
+    "gate-565993e/faults.log": {
+      "sha256": "729cc7cbde7b2ba7edf07cc8d27429ce00ba04af8c2945bb0f86793ae2470e2c",
+      "bytes": 5385
+    },
+    "gate-565993e/frontend-build.log": {
+      "sha256": "32d704d48c2885a0d67776a55cd1d38c442ef710cb0589701cd36a8a0c4bcedb",
+      "bytes": 2407
+    },
+    "gate-565993e/frontend-test.log": {
+      "sha256": "1b1920ad51179018f42f6d2d58778215a105736a7ca57c75d72649a06e113ed0",
+      "bytes": 703
+    },
+    "gate-565993e/result.json": {
+      "sha256": "6b552589c437e24ba9f1dad968e915769942ff2a5b28dd3c0a2ae664fd325cdd",
+      "bytes": 2137
+    },
+    "gate-565993e/runtime.log": {
+      "sha256": "ac02fb8fe47155e9984b31aebc016636e74d0cb18186475df8f041f653727530",
+      "bytes": 449966
+    },
+    "gate-b028f5a/faults.log": {
+      "sha256": "a895e7e0f579a6e06751e43094e2ecd7c01b2fa88ef9bab302f2a140c8ac3e1a",
+      "bytes": 5385
+    },
+    "gate-b028f5a/frontend-build.log": {
+      "sha256": "8bc0d57cb3d012e77e8378b5c382b2fc0be1bef2bc6394b1948c8f736fae28d3",
+      "bytes": 2409
+    },
+    "gate-b028f5a/frontend-test.log": {
+      "sha256": "4af7d0de80e6b373e111a882bc32e0926e24973da826918517680771ed641165",
+      "bytes": 704
+    },
+    "gate-b028f5a/result.json": {
+      "sha256": "1866e5f70b21489b97a19964b0fad37ef1e5e01fb127b74f2b64cc16acb5b2e5",
+      "bytes": 2137
+    },
+    "gate-b028f5a/runtime.log": {
+      "sha256": "a6b03245f650b7b7d8078bae816c21e50504c48ec0af7f6435828da3641431fb",
+      "bytes": 449944
+    },
+    "pg-full.log": {
+      "sha256": "ccb2a6e65bc489e42ebddd2c3e712366b12a10f75b6c4fb9c5bb367f3dadb273",
+      "bytes": 5385
+    },
+    "pinned-before-result.json": {
+      "sha256": "03fdeff1b84d8a1793284527848a54475d37a1a29f0ec4f27faad34842790a99",
+      "bytes": 459
+    },
+    "pinned-before.log": {
+      "sha256": "7fb7fa65dc11623eda1be0f4ae341dcc338977e21b47972720f42c921f6afd56",
+      "bytes": 2880
+    },
+    "retained-session.log": {
+      "sha256": "4b8bcee9eb991d046ae3a96cd18f9f77f7a53d83721c63d4e2acde93d3523a24",
+      "bytes": 3537
+    },
+    "runtime-full.log": {
+      "sha256": "a8986a6f0555bcbff432d40b51873ca92d8e9507f39011efdd54ad8dd1fa73e0",
+      "bytes": 449981
+    },
+    "runtime-with-duplicate-fixtures.log": {
+      "sha256": "2447a31625f7b2f38222b8fa7d89d1e15b57f36608948c0d1872f811de0b903e",
+      "bytes": 451942
+    },
+    "setup-python-path-failure.log": {
+      "sha256": "59d0f6613757161fa0d6a2d75aeac085b21d13af9b5be3d4d32e8660eb0240a4",
+      "bytes": 8563
+    },
+    "setup-python-root-failure.log": {
+      "sha256": "48e2f8a9d42e0345347e56855f5637291bfc51a7be6b19113150290c9c674645",
+      "bytes": 8563
+    },
+    "README.md": {
+      "sha256": "cfe1b39786007b85692acfcae55c70bcbd5037cc7631148808ed1c92c24b04ff",
+      "bytes": 4402
+    }
+  },
+  "scope": "REAL_PG_AUTH_HTTP_SYNTHETIC_NATIVE_CAPTURED_GET_FIXTURE",
+  "realGPU": "NOT_TESTED",
+  "cleanupReplay": "NOT_IMPLEMENTED",
+  "unknownOperatorMutation": "NOT_IMPLEMENTED"
+}

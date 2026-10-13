@@ -1,0 +1,48 @@
+{
+  "createStatus": 201,
+  "createCode": "OK",
+  "sessionId": "session_a82cac09677bca31743a50acac72d706",
+  "startStatus": 503,
+  "startCode": "RUNTIME_UNAVAILABLE",
+  "integrationCode": "WORKER_UNAVAILABLE",
+  "providers": {
+    "integrationVersion": "0.4.0",
+    "sessionId": "session_a82cac09677bca31743a50acac72d706",
+    "bindingId": "binding_1a95cf17930ff458dd571555b77cb730",
+    "capturedAt": "2026-10-10T07:38:13.202437171Z",
+    "expiresAt": "2026-10-11T07:38:12.157348367Z",
+    "profiles": [
+      {
+        "profileId": "profile_37c63f993473be6ca524324d29a7a47a",
+        "kind": "AVATAR",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:26:23.948507Z"
+      },
+      {
+        "profileId": "profile_a0122229bf182f32d63b18dff9559867",
+        "kind": "GPU_WORKER",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:25:50.517793Z"
+      },
+      {
+        "profileId": "profile_9fe0e4513f7cbcf42a0e8a6a92ff1908",
+        "kind": "LLM",
+        "provider": "deepseek",
+        "version": 3,
+        "updatedAt": "2026-10-10T07:18:47.841097Z"
+      },
+      {
+        "profileId": "profile_3b9456107f4173c62e7d59f788d7df7a",
+        "kind": "TTS",
+        "provider": "xiaoya",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:25:59.01956Z"
+      }
+    ],
+    "mode": "UNAVAILABLE",
+    "errorCode": "WORKER_UNAVAILABLE",
+    "workerEpoch": ""
+  }
+}

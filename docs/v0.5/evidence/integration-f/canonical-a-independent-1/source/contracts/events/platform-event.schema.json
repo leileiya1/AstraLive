@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astralive.local/contracts/events/platform-event.schema.json",
+  "title": "DevPlatformEvent",
+  "type": "object",
+  "required": ["eventType", "roomId", "user", "payload"],
+  "properties": {
+    "eventType": {"const": "COMMENT"},
+    "roomId": {"type": "string", "minLength": 1},
+    "user": {
+      "type": "object",
+      "required": ["externalId", "nickname"],
+      "properties": {
+        "externalId": {"type": "string", "minLength": 1},
+        "nickname": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "payload": {
+      "type": "object",
+      "required": ["text"],
+      "properties": {"text": {"type": "string", "minLength": 1}},
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

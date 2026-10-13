@@ -1,0 +1,24 @@
+=== RUN   TestLocalIPCProductionServerStartup
+=== RUN   TestLocalIPCProductionServerStartup/tcp
+    local_transport_startup_test.go:271: actual Go SIGKILL/restart, same Runtime PID: HTTP idempotency stable; one logical utterance; one synthetic sequence start; Stop ended; PostgreSQL event spool flushed
+    local_transport_startup_test.go:273: actual cmd/server local transport tcp PG-only, idempotency/restart/Stop PASS; synthetic providers only
+=== RUN   TestLocalIPCProductionServerStartup/uds
+2026/10/14 07:11:39 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-7779857/r.sock: no such file or directory"
+2026/10/14 07:11:39 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-7779857/r.sock: no such file or directory"
+2026/10/14 07:11:39 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-7779857/r.sock: no such file or directory"
+2026/10/14 07:11:39 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-7779857/r.sock: no such file or directory"
+2026/10/14 07:11:39 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-7779857/r.sock: no such file or directory"
+2026/10/14 07:11:39 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-7779857/r.sock: no such file or directory"
+2026/10/14 07:11:39 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-7779857/r.sock: no such file or directory"
+2026/10/14 07:11:39 ERROR runtime control transport failed transport=uds error="runtime UDS unavailable: lstat /private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-7779857/r.sock: no such file or directory"
+    local_transport_startup_test.go:271: actual Go SIGKILL/restart, same Runtime PID: HTTP idempotency stable; one logical utterance; one synthetic sequence start; Stop ended; PostgreSQL event spool flushed
+    local_transport_startup_test.go:273: actual cmd/server local transport uds PG-only, idempotency/restart/Stop PASS; synthetic providers only
+--- PASS: TestLocalIPCProductionServerStartup (10.91s)
+    --- PASS: TestLocalIPCProductionServerStartup/tcp (5.79s)
+    --- PASS: TestLocalIPCProductionServerStartup/uds (5.13s)
+=== RUN   TestPostgresOnlyServerStartup
+    server_startup_test.go:240: actual Go SIGKILL/restart, same Runtime PID: HTTP idempotency stable; one logical utterance; one synthetic sequence start; Stop ended; PostgreSQL event spool flushed
+    server_startup_test.go:242: cmd/server PostgreSQL-only readiness 200 before/after SIGKILL; Redis URL invalid and no Redis client
+--- PASS: TestPostgresOnlyServerStartup (5.33s)
+PASS
+ok  	astralive/backend/internal/durability	17.821s

@@ -1,0 +1,47 @@
+{
+  "mode": "v2",
+  "continuousSeconds": 121.62630762497429,
+  "requestedSeconds": 120,
+  "workerEpoch": "c1e1f0cd76204812862e84751f601207",
+  "cycles": 15,
+  "forces": 0,
+  "gpuFrames": 2565,
+  "fallbackFrames": 0,
+  "nativeEstimatedAVDriftMs": {
+    "n": 237,
+    "p50": 6,
+    "p95": 33,
+    "max": 45
+  },
+  "normalStop": true,
+  "recording": {
+    "streams": {
+      "video": {
+        "packets": 3090,
+        "backward": 0,
+        "duplicate": 0,
+        "first": 0.021,
+        "last": 123.581,
+        "maxGapMs": 40.00000000000625
+      },
+      "audio": {
+        "packets": 5794,
+        "backward": 0,
+        "duplicate": 0,
+        "first": 0.0,
+        "last": 123.584,
+        "maxGapMs": 22.00000000000557
+      }
+    },
+    "strictDecodeExit": 0,
+    "decodeErrors": ""
+  },
+  "recordingSHA256": "e7d055c3d356f20f233344173690b64fb717df4e552df7cb8173197a591e4b7e",
+  "waveSHA256": "a6e327e14f46d094191916c34e169dffda4ff3d33b5f1f12126a152dd26a2d2d",
+  "rssPeakBytes": 191676416,
+  "journalMode": "TEST_DOUBLE",
+  "completedSegments": 15,
+  "boundaryEvents": 15,
+  "staleEpochMarkerObserved": false,
+  "scope": "one Worker/Chrome session; prerecorded incremental PCM, real SoulX, local RTMP; no A/C business or physical audience"
+}

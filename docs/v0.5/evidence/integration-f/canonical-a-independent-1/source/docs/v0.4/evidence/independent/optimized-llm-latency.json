@@ -1,0 +1,370 @@
+{
+  "source": "real-browser-optimized-llm20.json",
+  "sourceSHA256": "7b0426309e32e097d419a24fba8bf3f3493b8145031ff78966758599aaa4da89",
+  "algorithm": "empirical nearest rank ceil(n*p)-1; independent quantiles of per-sample uncertainty bounds",
+  "groups": {
+    "all": {
+      "samples": 20,
+      "indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "chrome": {
+        "estimate": {
+          "samples": 20,
+          "meanMs": 2840.3278999809286,
+          "p50Ms": 2726.091000035769,
+          "p95Ms": 3551.825999976165,
+          "maxMs": 3729.524000000005
+        },
+        "lower": {
+          "samples": 20,
+          "meanMs": 2824.4928999785443,
+          "p50Ms": 2716.041000023848,
+          "p95Ms": 3526.0260000238486,
+          "maxMs": 3701.823999952321
+        },
+        "upper": {
+          "samples": 20,
+          "meanMs": 2856.162899983313,
+          "p50Ms": 2736.14100004769,
+          "p95Ms": 3577.625999928481,
+          "maxMs": 3757.2240000476886
+        },
+        "p50MsGate": "PASS_WITH_RETAINED_BOUND",
+        "p95MsGate": "PASS_WITH_RETAINED_BOUND"
+      },
+      "decomposition": {
+        "selectionMs": {
+          "samples": 20,
+          "meanMs": 61.0465,
+          "p50Ms": 61.907,
+          "p95Ms": 91.141,
+          "maxMs": 95.481
+        },
+        "selectedToSpeakableMs": {
+          "samples": 20,
+          "meanMs": 1398.8134959625972,
+          "p50Ms": 1284.9609667768818,
+          "p95Ms": 1829.3210219756438,
+          "maxMs": 2389.553718980489
+        },
+        "speakableToPCMMS": {
+          "samples": 20,
+          "meanMs": 77.31776647269726,
+          "p50Ms": 80.28919599018991,
+          "p95Ms": 94.74162897095084,
+          "maxMs": 98.20168698206544
+        },
+        "pcmToGPUFrameMS": {
+          "samples": 20,
+          "meanMs": 1080.577700061258,
+          "p50Ms": 1021.1862509604543,
+          "p95Ms": 1286.9461099617183,
+          "maxMs": 1348.201670916751
+        },
+        "gpuToBrowserVideoMs": {
+          "samples": 20,
+          "meanMs": 182.92743744742148,
+          "p50Ms": 177.37153998279246,
+          "p95Ms": 213.63231998906122,
+          "maxMs": 224.06189292370982
+        }
+      }
+    },
+    "fast": {
+      "samples": 0,
+      "indices": [],
+      "decomposition": {
+        "selectionMs": {
+          "samples": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        },
+        "selectedToSpeakableMs": {
+          "samples": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        },
+        "speakableToPCMMS": {
+          "samples": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        },
+        "pcmToGPUFrameMS": {
+          "samples": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        },
+        "gpuToBrowserVideoMs": {
+          "samples": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        }
+      }
+    },
+    "llm": {
+      "samples": 20,
+      "indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "chrome": {
+        "estimate": {
+          "samples": 20,
+          "meanMs": 2840.3278999809286,
+          "p50Ms": 2726.091000035769,
+          "p95Ms": 3551.825999976165,
+          "maxMs": 3729.524000000005
+        },
+        "lower": {
+          "samples": 20,
+          "meanMs": 2824.4928999785443,
+          "p50Ms": 2716.041000023848,
+          "p95Ms": 3526.0260000238486,
+          "maxMs": 3701.823999952321
+        },
+        "upper": {
+          "samples": 20,
+          "meanMs": 2856.162899983313,
+          "p50Ms": 2736.14100004769,
+          "p95Ms": 3577.625999928481,
+          "maxMs": 3757.2240000476886
+        },
+        "p50MsGate": "PASS_WITH_RETAINED_BOUND",
+        "p95MsGate": "PASS_WITH_RETAINED_BOUND"
+      },
+      "decomposition": {
+        "selectionMs": {
+          "samples": 20,
+          "meanMs": 61.0465,
+          "p50Ms": 61.907,
+          "p95Ms": 91.141,
+          "maxMs": 95.481
+        },
+        "selectedToSpeakableMs": {
+          "samples": 20,
+          "meanMs": 1398.8134959625972,
+          "p50Ms": 1284.9609667768818,
+          "p95Ms": 1829.3210219756438,
+          "maxMs": 2389.553718980489
+        },
+        "speakableToPCMMS": {
+          "samples": 20,
+          "meanMs": 77.31776647269726,
+          "p50Ms": 80.28919599018991,
+          "p95Ms": 94.74162897095084,
+          "maxMs": 98.20168698206544
+        },
+        "pcmToGPUFrameMS": {
+          "samples": 20,
+          "meanMs": 1080.577700061258,
+          "p50Ms": 1021.1862509604543,
+          "p95Ms": 1286.9461099617183,
+          "maxMs": 1348.201670916751
+        },
+        "gpuToBrowserVideoMs": {
+          "samples": 20,
+          "meanMs": 182.92743744742148,
+          "p50Ms": 177.37153998279246,
+          "p95Ms": 213.63231998906122,
+          "maxMs": 224.06189292370982
+        }
+      }
+    },
+    "complex": {
+      "samples": 0,
+      "indices": [],
+      "decomposition": {
+        "selectionMs": {
+          "samples": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        },
+        "selectedToSpeakableMs": {
+          "samples": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        },
+        "speakableToPCMMS": {
+          "samples": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        },
+        "pcmToGPUFrameMS": {
+          "samples": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        },
+        "gpuToBrowserVideoMs": {
+          "samples": 0,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "index": 1,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 2,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 3,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 4,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 5,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 6,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 7,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 8,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 9,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 10,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 11,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 12,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 13,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 14,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 15,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 16,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 17,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 18,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 19,
+      "topic": "chat",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 20,
+      "topic": "consultation",
+      "status": "COMPLETED"
+    }
+  ],
+  "failedAttempts": 0,
+  "errors": [],
+  "arrivalPolicy": {
+    "kind": "seeded-uniform-gap-after-previous-completion",
+    "seed": 20261010,
+    "minMs": 600,
+    "maxMs": 2200
+  },
+  "clockExchangesRetained": true,
+  "limits": [
+    "Chrome decoded/analyser + expectedDisplayTime, not physical speaker/display hardware",
+    "Audio association uses first analyser nonzero after input; sequential completed speech only",
+    "RTMP when present is a local decoder, not an official platform audience",
+    "Subgroups are reported separately; bounded samples do not establish a sustained service SLA"
+  ]
+}

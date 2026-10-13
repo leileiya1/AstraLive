@@ -1,0 +1,396 @@
+{
+  "classification": "MOCK_COMMENTS_REAL_DEEPSEEK_XIAOYA_SOULX_CHROME",
+  "samples": [
+    {
+      "index": 1,
+      "topic": "price",
+      "traceId": "interaction_ea94627a9cd4f1c67938070a915250224383c084a4289f81c3ac3ce0c6d5483e",
+      "utteranceId": "utt_080d3637b013119725228cc652ce280d",
+      "terminal": "utterance.completed",
+      "selectionMs": 13.116,
+      "receiptAlignmentUncertaintyMs": 213.30000001192093,
+      "selectedToSpeakableMs": 1078.7483338692473,
+      "selectedToSpeakableUncertaintyMs": 253.75,
+      "speakableToPCMMS": 135.9643181785941,
+      "pcmToGPUFrameMS": 1402.1893159952015,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0007099006325006485,
+        "first_speakable_segment": 240.03507080487907,
+        "tts_started": 240.80669786781073,
+        "tts_first_pcm": 375.9993889834732,
+        "avatar_first_returned_frame": 1777.6524699293077,
+        "media_first_audio": 1778.1680210027844,
+        "avatar_first_generated_frame": 1778.1887049786747,
+        "media_first_video": 1778.203795896843,
+        "utterance_completed": 6881.001056870446
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 4,
+        "firstVideoPTSUS": 12600000,
+        "speechOriginSample": 201600
+      },
+      "firstCorrelatedAudio": {
+        "at": 26277.5,
+        "contextTime": 16.778666666666666,
+        "peak": 0.022858362644910812
+      },
+      "firstCorrelatedVideo": {
+        "at": 26198,
+        "displayAt": 26214.7,
+        "mediaTime": 16.859,
+        "marker": 4,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2883.412999940396,
+      "firstAudioVideoDetectionDifferenceMs": -62.79999999999927,
+      "gpuToBrowserVideoMs": 190.59503189735187,
+      "gpuToBrowserUncertaintyMs": 80.89999997615814,
+      "rtmpFirstVideo": {
+        "kind": "video",
+        "at": 27079.268981935456,
+        "pts": 19.461,
+        "marker": 4,
+        "generation": 1,
+        "sequence": 0
+      },
+      "rtmpFirstAudio": {
+        "kind": "audio",
+        "at": 27276.978553971276,
+        "pts": 19.648,
+        "peak": 0.04450623691082001
+      },
+      "receiveToRTMPAVMs": 2887.9876528599416,
+      "rtmpAlignmentUncertaintyMs": 225.25000005960464,
+      "rtmpFirstAudioVideoPTSDifferenceMS": -187.00000000000117,
+      "receiveToCorrelatedAVLowerMs": 2670.112999928475,
+      "receiveToCorrelatedAVUpperMs": 3096.7129999523167
+    },
+    {
+      "index": 2,
+      "topic": "sizes",
+      "traceId": "interaction_4735c7ce11c2d26299ed1e53c9809f682c89d69a3aee402305bad4cc92c299a7",
+      "utteranceId": "utt_99f81b148eba598849acaf9196e6d634",
+      "terminal": "utterance.completed",
+      "selectionMs": 120.225,
+      "receiptAlignmentUncertaintyMs": 124.15000003576279,
+      "selectedToSpeakableMs": 965.7787699677356,
+      "selectedToSpeakableUncertaintyMs": 134.6500000357628,
+      "speakableToPCMMS": 104.32703699916601,
+      "pcmToGPUFrameMS": 1139.1574109438807,
+      "runtimePoints": {
+        "runtime_utterance_accepted": 0.0006919726729393005,
+        "first_speakable_segment": 171.81744100525975,
+        "tts_started": 172.25381499156356,
+        "tts_first_pcm": 276.14447800442576,
+        "avatar_first_returned_frame": 1414.5332609768957,
+        "media_first_audio": 1415.269591845572,
+        "avatar_first_generated_frame": 1415.3018889483064,
+        "media_first_video": 1415.3283520136029,
+        "utterance_completed": 3991.8047189712524
+      },
+      "media": {
+        "generationId": 1,
+        "speechMarker": 6,
+        "firstVideoPTSUS": 20200000,
+        "speechOriginSample": 323200
+      },
+      "firstCorrelatedAudio": {
+        "at": 36917.800000071526,
+        "contextTime": 27.418666666666667,
+        "peak": 0.02227783203125
+      },
+      "firstCorrelatedVideo": {
+        "at": 36864.4,
+        "displayAt": 36881,
+        "mediaTime": 27.513,
+        "marker": 6,
+        "sequence": 0,
+        "generation": 1
+      },
+      "receiveToCorrelatedAVMs": 2540.443000059604,
+      "firstAudioVideoDetectionDifferenceMs": -36.800000071525574,
+      "gpuToBrowserVideoMs": 174.15478207729757,
+      "gpuToBrowserUncertaintyMs": 21,
+      "rtmpFirstVideo": {
+        "kind": "video",
+        "at": 37720.77199188061,
+        "pts": 30.101,
+        "marker": 6,
+        "generation": 1,
+        "sequence": 0
+      },
+      "rtmpFirstAudio": {
+        "kind": "audio",
+        "at": 37918.01578295417,
+        "pts": 30.293,
+        "peak": 0.021482763811945915
+      },
+      "receiveToRTMPAVMs": 2548.716537885397,
+      "rtmpAlignmentUncertaintyMs": 137.30000001192093,
+      "rtmpFirstAudioVideoPTSDifferenceMS": -192.00000000000017,
+      "receiveToCorrelatedAVLowerMs": 2416.293000023841,
+      "receiveToCorrelatedAVUpperMs": 2664.5930000953667
+    }
+  ],
+  "attempts": [
+    {
+      "index": 1,
+      "topic": "price",
+      "status": "COMPLETED"
+    },
+    {
+      "index": 2,
+      "topic": "sizes",
+      "status": "COMPLETED"
+    }
+  ],
+  "errors": [],
+  "clockBoundary": "Chrome performance.now; remote stages aligned by request/response bounds, no cross-host wall subtraction",
+  "audioBoundary": "Chrome decoded stream analyser plus native playout stats; physical speaker NOT TESTED",
+  "roomId": "room_a19ca85cd15f15dcc9d1a351be1d657a",
+  "productId": "product_7835195c32075c290beb1660f5905667",
+  "sessionId": "session_448efecfbfd6f5194af1553d3bf9e3f1",
+  "providers": {
+    "integrationVersion": "0.4.0",
+    "sessionId": "session_448efecfbfd6f5194af1553d3bf9e3f1",
+    "bindingId": "binding_dbfbb767bcbe22fc86f918ef64101983",
+    "capturedAt": "2026-10-10T13:41:10.74398989Z",
+    "expiresAt": "2026-10-11T13:41:10.13809434Z",
+    "profiles": [
+      {
+        "profileId": "profile_37c63f993473be6ca524324d29a7a47a",
+        "kind": "AVATAR",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:50:55.715129Z"
+      },
+      {
+        "profileId": "profile_a0122229bf182f32d63b18dff9559867",
+        "kind": "GPU_WORKER",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:50:49.337999Z"
+      },
+      {
+        "profileId": "profile_9fe0e4513f7cbcf42a0e8a6a92ff1908",
+        "kind": "LLM",
+        "provider": "deepseek",
+        "version": 3,
+        "updatedAt": "2026-10-10T12:41:52.067048Z"
+      },
+      {
+        "profileId": "profile_3b9456107f4173c62e7d59f788d7df7a",
+        "kind": "TTS",
+        "provider": "xiaoya",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:49:48.234231Z"
+      }
+    ],
+    "mode": "REAL",
+    "errorCode": "",
+    "workerEpoch": "8193021e0a1741e0afe2f92bcc49de90"
+  },
+  "operatorHeld": {
+    "selected": 0,
+    "merged": 9,
+    "candidates": 1
+  },
+  "mergedUtterance": "utt_f5d5d3efc51a5ed234f28445c8bea655",
+  "receiverInitial": {
+    "audio": 564,
+    "video": 264,
+    "nonzeroAudio": 208,
+    "markedVideo": 264
+  },
+  "receiveToCorrelatedAV": {
+    "samples": 2,
+    "meanMs": 2711.928,
+    "p50Ms": 2540.443000059604,
+    "p95Ms": 2883.412999940396,
+    "maxMs": 2883.412999940396
+  },
+  "receiveToRTMPAV": {
+    "samples": 2,
+    "meanMs": 2718.3520953726693,
+    "p50Ms": 2548.716537885397,
+    "p95Ms": 2887.9876528599416,
+    "maxMs": 2887.9876528599416
+  },
+  "failedAttempts": 0,
+  "failureRatio": 0,
+  "faults": {
+    "force": {
+      "oldUtterance": "utt_c3052600f6819046e7ba9262abd019ee",
+      "newUtterance": "utt_b42bf6ab243c4d4a225ebd886050be30",
+      "oldTerminal": "utterance.interrupted",
+      "newTerminal": "utterance.completed",
+      "newGeneration": 2,
+      "staleAfterNew": 0,
+      "automaticForce": 0
+    },
+    "recovery": {
+      "fallbackTerminal": "utterance.completed",
+      "recoveredTerminal": "utterance.completed",
+      "degradedMode": "DEGRADED",
+      "recoveredMode": "REAL",
+      "oldEpoch": "8193021e0a1741e0afe2f92bcc49de90",
+      "newEpoch": "885299ba032d4d20941ca917043d7e19",
+      "bindingUnchanged": true,
+      "trace": {
+        "traceId": "interaction_b48d4b1a86eacc282aaf7c7026f4a6e36fdef921d6af69ed4387e06549c8e86e",
+        "sessionId": "session_448efecfbfd6f5194af1553d3bf9e3f1",
+        "utteranceId": "utt_07cd4702aa981d7022763a430cc90efe",
+        "clockDomain": "runtime_monotonic",
+        "clockOriginAgeMs": 4920.005894033238,
+        "points": {
+          "runtime_utterance_accepted": 0.0009690411388874054,
+          "first_speakable_segment": 200.0357210636139,
+          "tts_started": 200.8673520758748,
+          "tts_first_pcm": 306.8913819734007,
+          "avatar_first_returned_frame": 1488.799266051501,
+          "media_first_audio": 1489.2493379302323,
+          "avatar_first_generated_frame": 1489.2703380901366,
+          "media_first_video": 1489.2846399452537,
+          "utterance_completed": 4259.957303991541
+        },
+        "media": {
+          "generationId": 2,
+          "speechMarker": 14,
+          "firstVideoPTSUS": 157440000,
+          "speechOriginSample": 2519040
+        }
+      }
+    },
+    "replayCancellation": {
+      "inputStable": 45,
+      "candidates": 6,
+      "selected": 6,
+      "peak": 6
+    },
+    "sse": [
+      {
+        "name": "session.degraded",
+        "at": 54995.200000047684,
+        "utteranceId": null,
+        "code": "WORKER_DISCONNECTED"
+      },
+      {
+        "name": "runtime.warning",
+        "at": 55335.300000071526,
+        "utteranceId": null,
+        "code": "WORKER_DISCONNECTED"
+      },
+      {
+        "name": "runtime.warning",
+        "at": 181851.20000004768,
+        "utteranceId": null,
+        "code": "WORKER_RECOVERED"
+      }
+    ]
+  },
+  "finalSnapshot": {
+    "mode": "OPERATOR_OVERRIDE",
+    "candidates": 6,
+    "counters": {
+      "input": 45,
+      "deduplicated": 0,
+      "merged": 33,
+      "selected": 6,
+      "expired": 0,
+      "dropped": 0,
+      "filtered": 0,
+      "delivered": 6,
+      "failed": 0,
+      "peak": 6,
+      "force": 0
+    },
+    "latency": {
+      "samples": 6,
+      "meanMs": 295.726,
+      "p50Ms": 35.132,
+      "p95Ms": 1490.356,
+      "maxMs": 1490.356,
+      "boundary": "comment_received \u2192 scheduler_selected (Go monotonic; last 256 selected)"
+    },
+    "stopped": false
+  },
+  "afterProviders": {
+    "integrationVersion": "0.4.0",
+    "sessionId": "session_448efecfbfd6f5194af1553d3bf9e3f1",
+    "bindingId": "binding_dbfbb767bcbe22fc86f918ef64101983",
+    "capturedAt": "2026-10-10T13:41:10.74398989Z",
+    "expiresAt": "2026-10-11T13:41:10.13809434Z",
+    "profiles": [
+      {
+        "profileId": "profile_37c63f993473be6ca524324d29a7a47a",
+        "kind": "AVATAR",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:50:55.715129Z"
+      },
+      {
+        "profileId": "profile_a0122229bf182f32d63b18dff9559867",
+        "kind": "GPU_WORKER",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:50:49.337999Z"
+      },
+      {
+        "profileId": "profile_9fe0e4513f7cbcf42a0e8a6a92ff1908",
+        "kind": "LLM",
+        "provider": "deepseek",
+        "version": 3,
+        "updatedAt": "2026-10-10T12:41:52.067048Z"
+      },
+      {
+        "profileId": "profile_3b9456107f4173c62e7d59f788d7df7a",
+        "kind": "TTS",
+        "provider": "xiaoya",
+        "version": 1,
+        "updatedAt": "2026-10-10T07:49:48.234231Z"
+      }
+    ],
+    "mode": "REAL",
+    "errorCode": "",
+    "workerEpoch": "885299ba032d4d20941ca917043d7e19"
+  },
+  "bundleUnchanged": true,
+  "receiverFinal": {
+    "audio": 8460,
+    "video": 4475,
+    "nonzeroAudio": 1086,
+    "markedVideo": 1264
+  },
+  "nativeStats": [
+    {
+      "type": "media-playout",
+      "kind": "audio",
+      "totalSamplesDuration": 180.22
+    },
+    {
+      "type": "inbound-rtp",
+      "kind": "audio",
+      "packetsReceived": 9016,
+      "packetsLost": 0,
+      "totalAudioEnergy": 0.8453964811269106,
+      "estimatedPlayoutTimestamp": 4000628656375,
+      "totalSamplesDuration": 180.20999999998108
+    },
+    {
+      "type": "inbound-rtp",
+      "kind": "video",
+      "framesDecoded": 4505,
+      "framesDropped": 0,
+      "packetsReceived": 9034,
+      "packetsLost": 0,
+      "estimatedPlayoutTimestamp": 4000628656383
+    }
+  ],
+  "browserVersion": "Chrome/154.0.8037.98",
+  "failedSamples": 0,
+  "finalState": "ENDED",
+  "observationScope": "Synthetic test comments; actual captured user Provider binding, real XiaoYa CPU synthesis, RTX3080 SoulX, native headless Chrome and independent RTMP decoding. Not physical speaker or platform audience.",
+  "dropRatio": 0.0
+}

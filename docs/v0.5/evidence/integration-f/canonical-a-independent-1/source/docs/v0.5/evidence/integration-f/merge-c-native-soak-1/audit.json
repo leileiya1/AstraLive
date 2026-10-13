@@ -1,0 +1,134 @@
+{
+  "source": "6095989da99af3e1c458ed92db2f0bb6dcec4769",
+  "scope": "immutable merged source, real Go HTTP/PG/production Scheduler/Python Timeline/native Chrome/local RTMP; synthetic language/TTS/Lightweight2D",
+  "status": "PASS_SCOPED_FIXTURE",
+  "durationSeconds": 659.662,
+  "selectedQuestions": 5,
+  "completedTurns": 5,
+  "requiredFacts": 200,
+  "completedUniqueFacts": 200,
+  "segmentStates": {
+    "COMPLETED": 199,
+    "SATISFIED_BY_ANSWER": 1
+  },
+  "commits": 209,
+  "sinkReceipts": 836,
+  "laneCounts": {
+    "NARRATION": 199,
+    "AUDIENCE_ANSWER": 5,
+    "RESUME_BRIDGE": 5
+  },
+  "terminalPosition": {
+    "runEpoch": 1,
+    "timelineEpoch": 11,
+    "exclusiveEndSample": 30096000,
+    "sampleRate": 48000
+  },
+  "chrome": {
+    "uniqueDecodedVideoMarkers": 209,
+    "syntheticAudioPulses": 209,
+    "pairing": "chronological pulse proxy with equal complete coverage, not audio identity or audible speech"
+  },
+  "rtmp": {
+    "ptsRegressions": {
+      "video": 0,
+      "audio": 0
+    },
+    "duplicatePTS": {
+      "video": 0,
+      "audio": 0
+    },
+    "absoluteOnsetDriftMs": {
+      "n": 209,
+      "p50": 19.000000000005457,
+      "p95": 39.99999999996362,
+      "max": 40.00000000007731
+    }
+  },
+  "questionProxies": {
+    "clockDomain": "Chrome performance.now",
+    "scope": "synthetic pulse proxy and unique decoded video; not physical audibility, semantic relevance, human quality or busy SLA",
+    "audioPairing": "chronological, requires equal counts plus unique complete video coverage; pulses have no unique audio ID",
+    "selectedComments": 5,
+    "markedSegments": 209,
+    "decodedSegments": 209,
+    "audioPulseCount": 209,
+    "audioCoverageComplete": true,
+    "pairs": [
+      {
+        "sourceId": "receipt_7871a385e0da15392ec5b91c892cd67aa2d1a84dab7db4417bb03f8fb425ff66",
+        "answerSegmentId": "answer_1a4c6348dc401c5ffe0e4314aad08429",
+        "answerMarker": 5,
+        "commentBrowserAt": 11000.200000047684,
+        "comment_to_answer_audio_ms": 3302.7000000476837,
+        "comment_to_answer_video_ms": 3294.7000000476837
+      },
+      {
+        "sourceId": "receipt_e25db322196c7e0b5fbf73a9dbd3a88baa1dd3abb364dc84cd00a669d7f5f8bf",
+        "answerSegmentId": "answer_6108dd067881d113d49b38e0258adfc0",
+        "answerMarker": 114,
+        "commentBrowserAt": 348933.7000000477,
+        "comment_to_answer_audio_ms": 3263.600000023842,
+        "comment_to_answer_video_ms": 3285.899999976158
+      },
+      {
+        "sourceId": "receipt_8c317741c76670520b7116be580a0736e74184a5094c9d6d1bf15473c1b8a4b6",
+        "answerSegmentId": "answer_2871453b4b2642a7c29c62c13e536342",
+        "answerMarker": 118,
+        "commentBrowserAt": 361559.40000009537,
+        "comment_to_answer_audio_ms": 3264.1999999284744,
+        "comment_to_answer_video_ms": 3255.899999976158
+      },
+      {
+        "sourceId": "receipt_4d3f645afedcb1b85101a635db0bbf442d6ab00858dbd3690d39a5aac4f2cc96",
+        "answerSegmentId": "answer_50a3ac99e33682070cc14210743d6ccd",
+        "answerMarker": 157,
+        "commentBrowserAt": 482662.2000000477,
+        "comment_to_answer_audio_ms": 3282.7000000476837,
+        "comment_to_answer_video_ms": 3282.5
+      },
+      {
+        "sourceId": "receipt_558ed3f3f0f03d24233f7e7f30b6e870f5cefd93df29e9d1c2f0a09b79a38a8c",
+        "answerSegmentId": "answer_d3e7cced0a8c846bf34e4f2f5c60281a",
+        "answerMarker": 160,
+        "commentBrowserAt": 492205.60000002384,
+        "comment_to_answer_audio_ms": 3258.600000023842,
+        "comment_to_answer_video_ms": 3255.5
+      }
+    ],
+    "comment_to_answer_audio_ms": {
+      "n": 5,
+      "missing": 0,
+      "p50": 3264.1999999284744,
+      "p95": 3302.7000000476837,
+      "max": 3302.7000000476837
+    },
+    "comment_to_answer_video_ms": {
+      "n": 5,
+      "missing": 0,
+      "p50": 3282.5,
+      "p95": 3294.7000000476837,
+      "max": 3294.7000000476837
+    },
+    "notCollected": [
+      "comment_to_interrupt_decision_ms",
+      "interrupt_to_narration_stop_ms",
+      "answer_end_to_resume_audio_ms",
+      "process_resource_timeseries",
+      "real_GPU_stale_epoch_frames_dropped"
+    ]
+  },
+  "normalEncoderStop": true,
+  "ownedPGCleanup": "PASS",
+  "audienceAudible": false,
+  "notTested": [
+    "real spoken LLM/TTS/SoulX",
+    "human naturalness/relevance",
+    "physical audience hearing",
+    "busy SLA",
+    "30-60min production load",
+    "full lifecycle cleanup/rebind",
+    "real GPU disconnect/reconnect",
+    "integrated UDS/Windows/remote transport"
+  ]
+}

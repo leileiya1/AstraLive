@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astralive.local/contracts/events/speech-plan.schema.json",
+  "title": "SpeechPlan",
+  "type": "object",
+  "required": ["action", "text", "priority"],
+  "properties": {
+    "action": {"const": "SPEAK"},
+    "text": {"type": "string", "minLength": 1},
+    "priority": {"type": "integer"},
+    "emotion": {"type": "string"},
+    "gesture": {"type": "string"},
+    "interrupt": {"type": "boolean"},
+    "uiAction": {"type": ["object", "null"]}
+  },
+  "additionalProperties": false
+}

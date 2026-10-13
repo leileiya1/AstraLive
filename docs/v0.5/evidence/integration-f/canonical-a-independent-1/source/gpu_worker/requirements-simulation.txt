@@ -1,0 +1,4 @@
+# CPU tests only. GPU deployment reuses the pinned installation, never pip installs.
+torch>=2.8,<3
+numpy>=2,<3
+av>=15,<18

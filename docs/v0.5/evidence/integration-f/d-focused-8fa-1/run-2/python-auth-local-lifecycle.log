@@ -1,0 +1,74 @@
+test_no_public_listener_or_auto (runtime.tests.test_local_listener.ListenerConfigTests.test_no_public_listener_or_auto) ... ok
+test_path_length (runtime.tests.test_local_listener.ListenerConfigTests.test_path_length) ... ok
+test_windows_loopback_selection (runtime.tests.test_local_listener.ListenerConfigTests.test_windows_loopback_selection) ... UDS unsupported on win32; explicit startup TCP fallback
+ok
+test_live_socket_record_preserved (runtime.tests.test_local_listener.SocketLifecycleTests.test_live_socket_record_preserved) ... ok
+test_lock_symlink_and_socket_replacement_preserved (runtime.tests.test_local_listener.SocketLifecycleTests.test_lock_symlink_and_socket_replacement_preserved) ... UDS cleanup preserved missing/replaced/unsafe path
+ok
+test_mode_lock_and_cleanup (runtime.tests.test_local_listener.SocketLifecycleTests.test_mode_lock_and_cleanup) ... ok
+test_regular_file_symlink_and_parent_permissions (runtime.tests.test_local_listener.SocketLifecycleTests.test_regular_file_symlink_and_parent_permissions) ... ok
+test_stale_recorded_socket (runtime.tests.test_local_listener.SocketLifecycleTests.test_stale_recorded_socket) ... ok
+test_unknown_owned_socket_preserved (runtime.tests.test_local_listener.SocketLifecycleTests.test_unknown_owned_socket_preserved) ... ok
+test_unowned_socket_preserved (runtime.tests.test_local_listener.SocketLifecycleTests.test_unowned_socket_preserved) ... skipped 'requires isolated root to create unowned inode; run on Linux root test'
+test_default_keeps_original_exec_and_port (runtime.tests.test_production_launcher_transport.LauncherTransportTests.test_default_keeps_original_exec_and_port) ... ok
+test_listener_failure_releases_publisher_lock (runtime.tests.test_production_launcher_transport.LauncherTransportTests.test_listener_failure_releases_publisher_lock) ... ok
+test_uds_retains_lock_and_closes_after_listener (runtime.tests.test_production_launcher_transport.LauncherTransportTests.test_uds_retains_lock_and_closes_after_listener) ... ok
+test_bound_auth_failure_stops_and_releases_without_mock_fallback (runtime.tests.test_session_binding.BindingTests.test_bound_auth_failure_stops_and_releases_without_mock_fallback) ... ok
+test_commands_reject_lease_boundary (runtime.tests.test_session_binding.BindingTests.test_commands_reject_lease_boundary) ... ok
+test_duplicate_does_not_release_current_binding (runtime.tests.test_session_binding.BindingTests.test_duplicate_does_not_release_current_binding) ... ok
+test_expired_lease_rejected_and_released (runtime.tests.test_session_binding.BindingTests.test_expired_lease_rejected_and_released) ... ok
+test_lease_watchdog_stops_ready_session_before_expiry (runtime.tests.test_session_binding.BindingTests.test_lease_watchdog_stops_ready_session_before_expiry) ... ok
+test_no_bundle_fallback_when_builder_fails (runtime.tests.test_session_binding.BindingTests.test_no_bundle_fallback_when_builder_fails) ... ok
+test_one_physical_worker_cannot_be_double_assigned (runtime.tests.test_session_binding.BindingTests.test_one_physical_worker_cannot_be_double_assigned) ... ok
+test_prepare_failure_cleans_provider_and_binding (runtime.tests.test_session_binding.BindingTests.test_prepare_failure_cleans_provider_and_binding) ... session_prepare_failed
+Traceback (most recent call last):
+  File "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-source-y_kmzmc1/runtime/app/session.py", line 231, in prepare
+    await self.avatar_engine.prepare(self.request.avatar)
+  File "/private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-source-y_kmzmc1/runtime/tests/test_session_binding.py", line 94, in prepare
+    async def prepare(self,config):raise RuntimeFailure('WORKER_NOT_READY','worker unavailable',503)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app.session.RuntimeFailure: worker unavailable
+ok
+test_release_is_retryable_when_backend_down (runtime.tests.test_session_binding.BindingTests.test_release_is_retryable_when_backend_down) ... ok
+test_release_survives_cancelled_connection_cleanup (runtime.tests.test_session_binding.BindingTests.test_release_survives_cancelled_connection_cleanup) ... ok
+test_snapshot_key_is_used_without_global_key_or_hot_change (runtime.tests.test_session_binding.BindingTests.test_snapshot_key_is_used_without_global_key_or_hot_change) ... ok
+test_worker_degradation_and_recovery_emit_lifecycle_without_hot_switch (runtime.tests.test_session_binding.BindingTests.test_worker_degradation_and_recovery_emit_lifecycle_without_hot_switch) ... ok
+test_bound_connection_survives_two_answers_and_closes_at_release (runtime.tests.test_session_binding.ClientTests.test_bound_connection_survives_two_answers_and_closes_at_release) ... ok
+test_private_service_request_and_no_user_supplied_scope (runtime.tests.test_session_binding.ClientTests.test_private_service_request_and_no_user_supplied_scope) ... ok
+test_upstream_auth_failure_is_static_and_visible (runtime.tests.test_session_binding.ClientTests.test_upstream_auth_failure_is_static_and_visible) ... ok
+test_private_tts_probe_validates_real_result_and_rejects_empty_output (runtime.tests.test_session_binding.ProbeTests.test_private_tts_probe_validates_real_result_and_rejects_empty_output) ... ok
+test_duplicate_durable_accept_never_reexecutes (runtime.tests.test_durability.DurableTests.test_duplicate_durable_accept_never_reexecutes) ... ok
+test_duplicate_spool_identity_and_body_conflict (runtime.tests.test_durability.DurableTests.test_duplicate_spool_identity_and_body_conflict) ... ok
+test_journal_failure_prevents_effect_and_stale_lease (runtime.tests.test_durability.DurableTests.test_journal_failure_prevents_effect_and_stale_lease) ... ok
+test_shared_fingerprint_vectors (runtime.tests.test_durability.DurableTests.test_shared_fingerprint_vectors) ... ok
+test_spool_bound_and_identity_mapping (runtime.tests.test_durability.DurableTests.test_spool_bound_and_identity_mapping) ... ok
+test_spool_survives_restart_and_backend_outage (runtime.tests.test_durability.DurableTests.test_spool_survives_restart_and_backend_outage) ... ok
+test_watch_fences_continuity_before_cancelling_media (runtime.tests.test_durability.DurableTests.test_watch_fences_continuity_before_cancelling_media) ... ok
+test_dataclass_position_and_durable_ack (runtime.tests.test_durability.TimelineAdapterTests.test_dataclass_position_and_durable_ack) ... ok
+test_timeline_ack_loss_restart_and_fenced_audit (runtime.tests.test_durability.TimelineAdapterTests.test_timeline_ack_loss_restart_and_fenced_audit) ... ok
+test_timeline_disk_journal_before_sigkill (runtime.tests.test_durability.TimelineAdapterTests.test_timeline_disk_journal_before_sigkill) ... ok
+test_upgrade_legacy_spool_route_and_capacity (runtime.tests.test_durability.TimelineAdapterTests.test_upgrade_legacy_spool_route_and_capacity) ... ok
+test_worker_wire_shared_canonical_and_exact_spool (runtime.tests.test_durability.TimelineAdapterTests.test_worker_wire_shared_canonical_and_exact_spool) ... ok
+test_narration_lifecycle (unittest.loader._FailedTest.test_narration_lifecycle) ... ERROR
+test_barcode_crc_and_no_pixels_outside_band_changed (runtime.tests.test_staging_runtime.CaptureTests.test_barcode_crc_and_no_pixels_outside_band_changed) ... ok
+test_disabled_old_capture_and_enabled_exact_only (runtime.tests.test_staging_runtime.CaptureTests.test_disabled_old_capture_and_enabled_exact_only) ... ok
+test_explicit_new_captured_profiles_use_normative_helper_only (runtime.tests.test_staging_runtime.CaptureTests.test_explicit_new_captured_profiles_use_normative_helper_only) ... ok
+test_f_offline_decoder_matches_exact_runtime_barcode (runtime.tests.test_staging_runtime.CaptureTests.test_f_offline_decoder_matches_exact_runtime_barcode) ... ok
+
+======================================================================
+ERROR: test_narration_lifecycle (unittest.loader._FailedTest.test_narration_lifecycle)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_narration_lifecycle
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/al-d-source-y_kmzmc1/runtime/tests/test_narration_lifecycle.py", line 6, in <module>
+    import test_session_binding as fixtures
+ModuleNotFoundError: No module named 'test_session_binding'
+
+
+----------------------------------------------------------------------
+Ran 46 tests in 3.382s
+
+FAILED (errors=1, skipped=1)

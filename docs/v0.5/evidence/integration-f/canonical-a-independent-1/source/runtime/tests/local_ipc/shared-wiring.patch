@@ -1,0 +1,157 @@
+--- a/backend/cmd/server/main.go
++++ b/backend/cmd/server/main.go
+@@ -53,7 +53,25 @@
+ 	}
+ 	rc := redis.NewClient(opts)
+ 	defer rc.Close()
+-	rt := runtime.New(c.RuntimeURL)
++	localOptions, e := config.LocalTransportFromEnv()
++	if e != nil {
++		log.Error("local transport configuration invalid", "error", e)
++		os.Exit(1)
++	}
++	rt, e := runtime.NewLocal(c.RuntimeURL, localOptions)
++	if e != nil {
++		log.Error("local transport setup failed", "error", e)
++		os.Exit(1)
++	}
++	log.Info("Runtime control transport configured", "transport", localOptions.Mode, "fallback", localOptions.Fallback)
++	if localOptions.Mode == "uds" || localOptions.Fallback == "tcp" {
++		path := os.Getenv("RUNTIME_CONTROL_TOKEN_FILE")
++		if _, e := userconfig.ReadServiceToken(path); e != nil {
++			log.Error("UDS requires private Runtime control token")
++			os.Exit(1)
++		}
++		rt.Client.Transport = userconfig.TokenTransport{Path: path, Base: rt.Client.Transport}
++	}
+ 	s := app.New(pool, rt, log)
+ 	cfg, e := userconfig.FromEnvironment(pool)
+ 	if e != nil {
+@@ -66,7 +84,12 @@
+ 	}
+ 	if cfg != nil && cfg.IntegrationEnabled {
+ 		s.Integration = cfg
+-		rt.Client.Transport = userconfig.TokenTransport{Path: cfg.RuntimeControlTokenFile, Base: &http.Transport{Proxy: nil}}
++		base := rt.Client.Transport
++		if localOptions.Mode == "tcp" {
++			base = runtime.LocalDiagnostics{Mode: "tcp", Base: &http.Transport{Proxy: nil}}
++		}
++		// NewLocal's UDS dialer stays inside the existing authentication wrapper.
++		rt.Client.Transport = userconfig.TokenTransport{Path: cfg.RuntimeControlTokenFile, Base: base}
+ 		rt.Client.CheckRedirect = func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }
+ 		go func() {
+ 			tick := time.NewTicker(15 * time.Second)
+--- a/runtime/app/production_launcher.py
++++ b/runtime/app/production_launcher.py
+@@ -20,10 +20,17 @@
+         os.close(fd)
+         return 1
+     os.environ["MAX_SESSIONS"] = "1"
+-    os.set_inheritable(fd, True)
+-    os.execv(sys.executable, [sys.executable, '-m', 'uvicorn', 'app.main:app',
+-                             '--host', '127.0.0.1', '--port', '18000',
+-                             '--timeout-graceful-shutdown', '25'])
++    if os.getenv("ASTRALIVE_LOCAL_TRANSPORT", "tcp") == "tcp" and os.getenv("ASTRALIVE_LOCAL_FALLBACK", "disabled") == "disabled":
++        os.set_inheritable(fd, True)
++        os.execv(sys.executable, [sys.executable, '-m', 'uvicorn', 'app.main:app',
++                                 '--host', '127.0.0.1', '--port', '18000',
++                                 '--timeout-graceful-shutdown', '25'])
++    from .local_listener import run
++    try:
++        run(default_tcp_url='http://127.0.0.1:18000')
++    finally:
++        os.close(fd)
++
+ 
+ 
+ if __name__ == '__main__':
+--- a/backend/internal/userconfig/session_binding.go
++++ b/backend/internal/userconfig/session_binding.go
+@@ -313,7 +313,11 @@
+ 		ctx, cancel := context.WithTimeout(r.Context(), 3*time.Second)
+ 		defer cancel()
+ 		req, _ := http.NewRequestWithContext(ctx, "GET", s.RuntimeStatusURL+"/internal/v0.4/sessions/"+url.PathEscape(id)+"/providers", nil)
+-		client := &http.Client{Timeout: 3 * time.Second, Transport: TokenTransport{Path: s.RuntimeControlTokenFile, Base: &http.Transport{Proxy: nil}}, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
++		client, setupErr := s.localRuntimeHTTP(3 * time.Second)
++		if setupErr != nil {
++			write(w, r, 503, nil, fault(503, "PROVIDER_UNAVAILABLE", "Runtime transport unavailable"))
++			return
++		}
+ 		defer client.CloseIdleConnections()
+ 		response, er := client.Do(req)
+ 		valid := false
+--- a/backend/internal/userconfig/provider_probe.go
++++ b/backend/internal/userconfig/provider_probe.go
+@@ -75,7 +75,10 @@
+ 		return fault(503, "PROVIDER_TEST_FAILED", "TTS probe unavailable")
+ 	}
+ 	request.Header.Set("Content-Type", "application/json")
+-	client := &http.Client{Timeout: 20 * time.Second, Transport: TokenTransport{Path: s.RuntimeControlTokenFile, Base: &http.Transport{Proxy: nil}}, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
++	client, setupErr := s.localRuntimeHTTP(20 * time.Second)
++	if setupErr != nil {
++		return fault(503, "PROVIDER_TEST_FAILED", "Runtime transport unavailable")
++	}
+ 	defer client.CloseIdleConnections()
+ 	response, e := client.Do(request)
+ 	if e != nil {
+--- a/backend/internal/userconfig/service.go
++++ b/backend/internal/userconfig/service.go
+@@ -20,6 +20,7 @@
+ 	IntegrationEnabled                 bool
+ 	RuntimeStatusURL                   string
+ 	RuntimeControlTokenFile            string
++	RuntimeTransport                   http.RoundTripper
+ 	DB                                 DB
+ 	Vault                              Vault
+ 	Origin                             string
+--- a/backend/internal/userconfig/environment.go
++++ b/backend/internal/userconfig/environment.go
+@@ -41,6 +41,11 @@
+ 			unique[token] = true
+ 		}
+ 	}
++	if s.IntegrationEnabled {
++		if e = s.captureLocalRuntimeTransport(); e != nil {
++			return nil, e
++		}
++	}
+ 	s.Workers, e = loadWorkerRegistry(os.Getenv("GPU_WORKER_REGISTRY_FILE"))
+ 	if e != nil {
+ 		return nil, e
+--- /dev/null
++++ b/backend/internal/userconfig/local_transport.go
+@@ -0,0 +1,34 @@
++package userconfig
++
++import (
++	"astralive/backend/internal/config"
++	rt "astralive/backend/internal/runtime"
++	"net/http"
++	"time"
++)
++
++func (s *Service) captureLocalRuntimeTransport() error {
++	options, e := config.LocalTransportFromEnv()
++	if e != nil {
++		return e
++	}
++	if options.Mode == "tcp" && options.Fallback == "disabled" {
++		return nil
++	}
++	h, e := rt.NewLocal(s.RuntimeStatusURL, options)
++	if e != nil {
++		return e
++	}
++	s.RuntimeTransport = h.Client.Transport
++	if s.RuntimeTransport == nil {
++		s.RuntimeTransport = rt.LocalDiagnostics{Mode: "tcp", Base: &http.Transport{Proxy: nil}}
++	}
++	return nil
++}
++func (s *Service) localRuntimeHTTP(timeout time.Duration) (*http.Client, error) {
++	base := s.RuntimeTransport
++	if base == nil {
++		base = &http.Transport{Proxy: nil}
++	} // legacy test/manual Service constructors
++	return &http.Client{Timeout: timeout, Transport: TokenTransport{Path: s.RuntimeControlTokenFile, Base: base}, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}, nil
++}

@@ -1,0 +1,26 @@
+2026-10-14 07:10:45.992 CST [67422] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-14 07:10:45.993 CST [67422] LOG:  listening on IPv4 address "127.0.0.1", port 49589
+2026-10-14 07:10:45.996 CST [67425] LOG:  database system was shut down at 2026-10-14 07:10:45 CST
+2026-10-14 07:10:45.998 CST [67422] LOG:  database system is ready to accept connections
+2026-10-14 07:10:49.360 CST [67528] ERROR:  immutable narration authority/plan or stop barrier
+2026-10-14 07:10:49.360 CST [67528] CONTEXT:  PL/pgSQL function v05_narration_guard() line 4 at RAISE
+2026-10-14 07:10:49.360 CST [67528] STATEMENT:  UPDATE v05_narrations SET plan_json=plan_json-'_cnyPriceCoveragePolicy'
+2026-10-14 07:10:49.475 CST [67530] ERROR:  immutable narration authority/plan or stop barrier
+2026-10-14 07:10:49.475 CST [67530] CONTEXT:  PL/pgSQL function v05_narration_guard() line 4 at RAISE
+2026-10-14 07:10:49.475 CST [67530] STATEMENT:  UPDATE v05_narrations SET plan_json=plan_json-'_cnyPriceCoveragePolicy'
+2026-10-14 07:10:49.592 CST [67532] ERROR:  immutable narration authority/plan or stop barrier
+2026-10-14 07:10:49.592 CST [67532] CONTEXT:  PL/pgSQL function v05_narration_guard() line 4 at RAISE
+2026-10-14 07:10:49.592 CST [67532] STATEMENT:  UPDATE v05_narrations SET plan_json=plan_json-'_cnyPriceCoveragePolicy'
+2026-10-14 07:10:49.713 CST [67534] ERROR:  immutable narration authority/plan or stop barrier
+2026-10-14 07:10:49.713 CST [67534] CONTEXT:  PL/pgSQL function v05_narration_guard() line 4 at RAISE
+2026-10-14 07:10:49.713 CST [67534] STATEMENT:  UPDATE v05_narrations SET plan_json=plan_json-'_cnyPriceCoveragePolicy'
+2026-10-14 07:10:49.830 CST [67536] ERROR:  immutable narration authority/plan or stop barrier
+2026-10-14 07:10:49.830 CST [67536] CONTEXT:  PL/pgSQL function v05_narration_guard() line 4 at RAISE
+2026-10-14 07:10:49.830 CST [67536] STATEMENT:  UPDATE v05_narrations SET plan_json=plan_json-'_cnyPriceCoveragePolicy'
+2026-10-14 07:10:53.460 CST [67422] LOG:  received fast shutdown request
+2026-10-14 07:10:53.461 CST [67422] LOG:  aborting any active transactions
+2026-10-14 07:10:53.462 CST [67422] LOG:  background worker "logical replication launcher" (PID 67428) exited with exit code 1
+2026-10-14 07:10:53.462 CST [67423] LOG:  shutting down
+2026-10-14 07:10:53.462 CST [67423] LOG:  checkpoint starting: shutdown immediate
+2026-10-14 07:10:53.758 CST [67423] LOG:  checkpoint complete: wrote 3582 buffers (21.9%); 0 WAL file(s) added, 0 removed, 3 recycled; write=0.042 s, sync=0.106 s, total=0.296 s; sync files=6031, longest=0.001 s, average=0.001 s; distance=54497 kB, estimate=54497 kB; lsn=0/4A52DB8, redo lsn=0/4A52DB8
+2026-10-14 07:10:53.760 CST [67422] LOG:  database system is shut down
