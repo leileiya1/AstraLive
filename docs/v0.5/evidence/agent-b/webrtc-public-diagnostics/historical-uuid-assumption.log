@@ -1,0 +1,28 @@
+test_actual_local_rtc_offer_exposes_generated_connected_peer_id (test_webrtc_diagnostics.DiagnosticsTests.test_actual_local_rtc_offer_exposes_generated_connected_peer_id) ... ERROR
+test_empty_stopped_and_running_snapshots_do_not_invent_peers (test_webrtc_diagnostics.DiagnosticsTests.test_empty_stopped_and_running_snapshots_do_not_invent_peers) ... ok
+test_fanout_exposes_registered_ids_and_actual_connection_states (test_webrtc_diagnostics.DiagnosticsTests.test_fanout_exposes_registered_ids_and_actual_connection_states) ... ok
+test_peer_close_task_and_snapshot_reads_are_consistent (test_webrtc_diagnostics.DiagnosticsTests.test_peer_close_task_and_snapshot_reads_are_consistent) ... ok
+test_reading_snapshot_preserves_tracks_counters_and_warnings (test_webrtc_diagnostics.DiagnosticsTests.test_reading_snapshot_preserves_tracks_counters_and_warnings) ... ok
+test_registry_change_during_diagnostic_walk_uses_owned_snapshot (test_webrtc_diagnostics.DiagnosticsTests.test_registry_change_during_diagnostic_walk_uses_owned_snapshot) ... ok
+
+======================================================================
+ERROR: test_actual_local_rtc_offer_exposes_generated_connected_peer_id (test_webrtc_diagnostics.DiagnosticsTests.test_actual_local_rtc_offer_exposes_generated_connected_peer_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-b/runtime/tests/test_webrtc_diagnostics.py", line 130, in test_actual_local_rtc_offer_exposes_generated_connected_peer_id
+    self.assertEqual(str(UUID(rows[0]['peerId'])),peer.peer_id)
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/uuid.py", line 178, in __init__
+    raise ValueError('badly formed hexadecimal UUID string')
+ValueError: badly formed hexadecimal UUID string
+
+----------------------------------------------------------------------
+Ran 6 tests in 5.087s
+
+FAILED (errors=1)

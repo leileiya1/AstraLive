@@ -1,0 +1,52 @@
+{
+  "source_commit": "30915d8793a3e81d39cd28e0da25edcad22586a8",
+  "base": "8be7374",
+  "scope": "Passive actual registered peer diagnostics; Python aiortc local RTC negotiation, not real Chrome/GPU/RTMP or human audibility",
+  "commands": [
+    "PYTHONPATH=runtime /private/tmp/astralive-b-staging-venv/bin/python -m unittest discover -s runtime/tests -p test_webrtc_diagnostics.py -v",
+    "PYTHONPATH=runtime:runtime/tests /private/tmp/astralive-b-staging-venv/bin/python -m unittest test_webrtc_drain_regression test_media_fanout test_media_timeline test_staging_timeline -v",
+    "RUN_WEBRTC_INTEGRATION=1 PYTHONPATH=runtime:runtime/tests /private/tmp/astralive-b-staging-venv/bin/python -m unittest test_webrtc_media_integration.WebRTCMediaIntegrationTests.test_http_offer_returns_complete_answer_and_stop_closes_peer -v"
+  ],
+  "results": [
+    {
+      "file": "focused.log",
+      "sha256": "754a8fac112f5cb78ab0f9dc68b8cd379a88b21bd2d16735194a06877996c616",
+      "status": "PASS",
+      "tests": 6
+    },
+    {
+      "file": "regression.log",
+      "sha256": "cc4348ae6ac265bdcdf557b57e41b671521dcd68a666513663b4a1d180b46ec5",
+      "status": "PASS",
+      "tests": 53
+    },
+    {
+      "file": "existing-http-offer.log",
+      "sha256": "7a682578681389766dd866a8cf8b8947e93e60606af1765114e44221df44fa8b",
+      "status": "PASS",
+      "tests": 1
+    },
+    {
+      "file": "historical-uuid-assumption.log",
+      "sha256": "94dd5409403ced0531e071a1e3029650f72ceb60f714496a1f27e9eea5c703b9",
+      "status": "HARNESS_FAILED_UUID_PREFIX_ASSUMPTION",
+      "tests": 6
+    },
+    {
+      "file": "historical-missing-module.log",
+      "sha256": "99259e029ca563ca7942a4536fe6abee294f36a097e8c51bba272b709c0196cc",
+      "status": "HARNESS_FAILED_NONEXISTENT_TEST_MODULE",
+      "tests": 54
+    }
+  ],
+  "production_files": [
+    "runtime/app/webrtc_media.py"
+  ],
+  "production_added_lines": 8,
+  "frame_track_behavior_changed": false,
+  "contracts_changed": false,
+  "feature_flags_changed": false,
+  "real_gpu_chrome_rtmp": "NOT_TESTED_BY_B",
+  "ownership_reason": "F authorized public diagnostics: Fanout logger previously emitted webrtc.sink={} so real Golden could not capture actual required peer IDs before StartNarration",
+  "final_merge_owner": "F"
+}
