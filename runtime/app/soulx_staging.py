@@ -52,7 +52,7 @@ class Stage:
 class StagingClient:
     def __init__(self, endpoint,sid,worker_ref,settings):
         self.endpoint,self.sid,self.worker_ref,self.settings=endpoint,sid,worker_ref,settings
-        self.reader=self.writer=self.rx=None;self.ready=None;self.epoch=None
+        self.reader=self.writer=self.rx=None;self.heartbeat=None;self.ready=None;self.epoch=None
         self.pending={};self.write_lock=asyncio.Lock();self.active=None;self.rtt_ms=0
         self.highest=0;self.failed=None;self.answered={};self.on_failure=None
         self.connection_started=False
@@ -103,6 +103,7 @@ class StagingClient:
             self.epoch=self.ready["worker_epoch"];self.highest=self.ready["highest_generation_id"]
             self.rtt_ms=math.ceil((time.monotonic()-begun)*1000)
             self.rx=asyncio.create_task(self.receive_loop(),name="staging-tcp-reader")
+            self.heartbeat=asyncio.create_task(self.heartbeat_loop(),name="staging-health-heartbeat")
         except BaseException:
             await self.close();raise
 
@@ -173,21 +174,35 @@ class StagingClient:
                     future.set_result(header)
         except asyncio.CancelledError:raise
         except Exception as exc:
-            self.failed=exc if isinstance(exc,StagingFailure) else StagingFailure("STAGING_RETIRED")
-            if self.on_failure:self.on_failure("STAGING_CONNECTION_UNKNOWN")
-            if self.active:
-                self.active.fenced=True;self.active.failed=self.failed
-                if not self.active.produced.done():self.active.produced.set_exception(self.failed)
-            for future in self.pending.values():
-                if not future.done():future.set_exception(self.failed)
+            self.fail_connection(exc)
+
+    def fail_connection(self,exc):
+        if self.failed:return
+        self.failed=exc if isinstance(exc,StagingFailure) else StagingFailure("STAGING_RETIRED")
+        if self.on_failure:self.on_failure("STAGING_CONNECTION_UNKNOWN")
+        if self.active:
+            self.active.fenced=True;self.active.failed=self.failed
+            if not self.active.produced.done():self.active.produced.set_exception(self.failed)
+        for future in self.pending.values():
+            if not future.done():future.set_exception(self.failed)
+
+    async def heartbeat_loop(self):
+        try:
+            while True:
+                await asyncio.sleep(1)
+                # Existing nonce/epoch-checked Health has no A grant, StageRenew,
+                # native generation, pose mutation or publication authority.
+                await self.health(timeout=2)
+        except asyncio.CancelledError:raise
+        except Exception as exc:self.fail_connection(exc)
 
     def provenance_matches(self,p):
         return p["source"]=="GPU_INFERENCE" and p["workerRef"]==self.worker_ref and p["workerEpoch"]==self.epoch and all(
             p[k]==self.ready[k] for k in ("weights_manifest_sha256","input_asset_sha256","cache_id")) and p["model_source_revision"]==self.ready["model_revision"]
 
-    async def health(self):
+    async def health(self,timeout=5):
         began=time.monotonic();nonce=uuid4().hex
-        answer=await self.exchange({"type":"StageHealth",**self.common(),"nonce":nonce},"StageHealthAck")
+        answer=await self.exchange({"type":"StageHealth",**self.common(),"nonce":nonce},"StageHealthAck",timeout=timeout)
         if answer["nonce"]!=nonce:raise StagingFailure("STAGING_CONFLICT")
         self.rtt_ms=math.ceil((time.monotonic()-began)*1000);return answer
 
@@ -306,7 +321,10 @@ class StagingClient:
             return reply
 
     async def close(self):
-        if self.rx:self.rx.cancel();await asyncio.gather(self.rx,return_exceptions=True);self.rx=None
+        tasks=[task for task in (self.heartbeat,self.rx) if task and task is not asyncio.current_task()]
+        for task in tasks:task.cancel()
+        if tasks:await asyncio.gather(*tasks,return_exceptions=True)
+        self.heartbeat=self.rx=None
         if self.writer:
             writer=self.writer;self.writer=None;writer.close()
             try:await asyncio.wait_for(writer.wait_closed(),2)
