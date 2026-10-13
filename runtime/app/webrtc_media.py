@@ -564,6 +564,14 @@ class WebRTCMediaOutput:
         warnings, self.warnings = self.warnings, []
         return warnings
 
+    def diagnostics(self) -> dict:
+        """Snapshot actual registered peers; track recv is server consumption."""
+        peers = tuple(self.peers)
+        return {"running": self.running, "generationId": self.generation_id,
+                "peers": [self._diagnostic(peer) for peer in sorted(peers, key=lambda p: p.peer_id)],
+                "scope": "server WebRTC track queues and recv; not audience playback",
+                "audienceAudible": False}
+
     def _diagnostic(self, peer: _Peer) -> dict:
         elapsed = max(0.001, time.monotonic() - (peer.video.first_recv_monotonic or time.monotonic()))
         return {**({"mediaTimeline": peer.audio.clock.snapshot(),
