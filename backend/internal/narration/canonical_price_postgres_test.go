@@ -17,7 +17,7 @@ import (
 // Boundary state and sink receipts are controlled policy fixtures, not GPU,
 // Runtime physical consumption or audience speech acceptance.
 func TestPostgresCanonicalCNYPriceDecisionAndCoverage(t *testing.T) {
-	for _, scenario := range []string{"success", "answer-wording", "duplicate", "rollback", "controller-reload", "flags-off", "USD", "qualifier", "extra-claim", "category", "custom-label", "multi-claim", "old-plan", "partial", "UNKNOWN", "stale-epoch", "price-change", "currency-change", "Stop", "decision-conflict"} {
+	for _, scenario := range []string{"success", "answer-wording", "duplicate", "rollback", "controller-reload", "flags-off", "USD", "qualifier", "extra-claim", "category", "custom-label", "multi-claim", "old-plan", "old-exact-plan", "partial", "UNKNOWN", "stale-epoch", "price-change", "currency-change", "Stop", "decision-conflict"} {
 		t.Run(scenario, func(t *testing.T) {
 			ctx, p, store, c := setup(t)
 			if scenario != "flags-off" {
@@ -70,6 +70,26 @@ func TestPostgresCanonicalCNYPriceDecisionAndCoverage(t *testing.T) {
 			doc, err := c.Start(ctx, "s", "trace", input)
 			if err != nil {
 				t.Fatal(err)
+			}
+			if scenario == "old-exact-plan" {
+				// Reconstruct only this owned test's bootstrap rows in the legacy
+				// typed JSON format: same captured staging, exact new pure wording,
+				// but no historical private policy. No trigger is disabled/altered.
+				legacyPlan, _ := json.Marshal(doc.Plan)
+				legacyDoc, _ := json.Marshal(doc)
+				if _, err = p.Exec(ctx, `DELETE FROM v05_segment_attempts WHERE session_id='s'; DELETE FROM v05_outbox WHERE session_id='s' AND command_type='COMMIT_SEGMENT'; DELETE FROM v05_segments WHERE session_id='s'; DELETE FROM v05_narrations WHERE session_id='s'`); err != nil {
+					t.Fatal(err)
+				}
+				if _, err = p.Exec(ctx, `INSERT INTO v05_narrations(narration_id,session_id,tenant_id,user_id,run_epoch,revision,state,script_version,product_snapshot_hash,plan_json,document_json) SELECT $1,session_id,tenant_id,user_id,run_epoch,$2,$3,$4,$5,$6,$7 FROM v05_session_runs WHERE session_id='s'`, doc.Plan.ID, doc.Revision, doc.State, doc.Plan.ScriptVersion, doc.Plan.ProductHash, legacyPlan, legacyDoc); err != nil {
+					t.Fatal(err)
+				}
+				for _, segment := range doc.Plan.Segments {
+					segmentJSON, _ := json.Marshal(segment)
+					factJSON, _ := json.Marshal(segment.FactIDs)
+					if _, err = p.Exec(ctx, `INSERT INTO v05_segments(segment_id,narration_id,session_id,tenant_id,user_id,beat_id,segment_ordinal,text_hash,fact_ids,text,product_version,status,document_json) SELECT $1,narration_id,session_id,tenant_id,user_id,$3,$4,$5,$6,$7,$8,$9,$10 FROM v05_narrations WHERE narration_id=$2`, segment.ID, doc.Plan.ID, segment.BeatID, segment.Ordinal, segment.TextHash, factJSON, segment.Text, doc.Plan.ProductVersion, segment.Status, segmentJSON); err != nil {
+						t.Fatal(err)
+					}
+				}
 			}
 			// Explicit completed first boundary, preceding suspend/epoch fixtures;
 			// this does not claim physical media was played in this test.
