@@ -68,8 +68,12 @@ async def main():
         else:
             assert manager.failed_create_cleanup["s"]["bindingReleaseACK"] is False
             assert publisher.db.execute("SELECT count(*) FROM pending").fetchone()[0]==0
-        # Actual A STARTED journal admission refuses execution of either duplicate.
-        assert not (await commands.execute(begin))["execute"]
+        # Original BEGIN is also retired by Stop barrier/released binding; the
+        # real journal may fence it before returning prior STARTED state.
+        try:
+            assert not (await commands.execute(begin))["execute"]
+        except JournalError as exc:
+            assert exc.code in {"LEASE_LOST","RUN_SEALED"}
         assert not (await commands.execute(stop))["execute"]
         print(json.dumps({"scope":"REAL_GO_HTTP_POSTGRES_EXACT_PREPHYSICAL_CAPTURED_PROVIDER_FIXTURE",
             "scenario":scenario,"bindingReleaseACK":scenario=="success","gpu":"NOT_TESTED",
