@@ -235,6 +235,7 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 		t.Fatal(err)
 	}
 	h := (&httpapi.Server{S: service, Config: cfg, Env: "development", Token: toolValue, Log: log, JournalTokenFile: journalToken}).Router()
+	h = goldenAuthorityDiagnostics(h, pool, out)
 	internal := httptest.NewServer(h)
 	defer internal.Close()
 	root, err := filepath.Abs("../../..")
