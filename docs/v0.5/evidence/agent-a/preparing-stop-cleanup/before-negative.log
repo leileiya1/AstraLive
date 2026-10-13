@@ -1,0 +1,14 @@
+=== RUN   TestPreparingStopUnknownStartupReleasedBinding
+=== RUN   TestPreparingStopUnknownStartupReleasedBinding/anonymous
+=== RUN   TestPreparingStopUnknownStartupReleasedBinding/foreign-session-owner
+=== RUN   TestPreparingStopUnknownStartupReleasedBinding/bad-origin
+=== NAME  TestPreparingStopUnknownStartupReleasedBinding
+    preparing_stop_postgres_test.go:129: PREPARING cleanup rejected 409 {"code":"SESSION_NOT_READY","details":{},"message":"invalid state transition","requestId":"req_ed30fc9ff939b4da309eab0ceabcc9ce","timestamp":"2026-10-12T13:23:07.020004Z"}
+        
+--- FAIL: TestPreparingStopUnknownStartupReleasedBinding (0.10s)
+    --- PASS: TestPreparingStopUnknownStartupReleasedBinding/anonymous (0.00s)
+    --- PASS: TestPreparingStopUnknownStartupReleasedBinding/foreign-session-owner (0.00s)
+    --- PASS: TestPreparingStopUnknownStartupReleasedBinding/bad-origin (0.00s)
+FAIL
+FAIL	astralive/backend/internal/durability	1.157s
+FAIL
