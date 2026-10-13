@@ -17,7 +17,7 @@ import (
 // Boundary state and sink receipts are controlled policy fixtures, not GPU,
 // Runtime physical consumption or audience speech acceptance.
 func TestPostgresCanonicalCNYPriceDecisionAndCoverage(t *testing.T) {
-	for _, scenario := range []string{"success", "answer-wording", "duplicate", "rollback", "controller-reload", "flags-off", "USD", "qualifier", "extra-claim", "category", "custom-label", "multi-claim", "old-plan", "old-exact-plan", "partial", "UNKNOWN", "stale-epoch", "price-change", "currency-change", "Stop", "decision-conflict"} {
+	for _, scenario := range []string{"success", "answer-wording", "duplicate", "rollback", "controller-reload", "flags-off", "USD", "qualifier", "extra-claim", "category", "custom-label", "multi-claim", "old-plan", "old-exact-plan", "partial", "UNKNOWN", "stale-epoch", "price-change", "currency-change", "Stop", "decision-conflict", "prepared-ref-conflict", "prepared-hash-conflict"} {
 		t.Run(scenario, func(t *testing.T) {
 			ctx, p, store, c := setup(t)
 			if scenario != "flags-off" {
@@ -214,6 +214,14 @@ func TestPostgresCanonicalCNYPriceDecisionAndCoverage(t *testing.T) {
 				if _, err = p.Exec(ctx, `UPDATE v05_interaction_turns SET document_json=jsonb_set(document_json,'{_cnyPriceCoverageDecision,answerTextHash}','"wrong"')`); err != nil {
 					t.Fatal(err)
 				}
+			case "prepared-ref-conflict":
+				if _, err = p.Exec(ctx, `UPDATE v05_interaction_turns SET document_json=jsonb_set(document_json,'{_cnyPriceCoverageDecision,answerPreparedCommandId}','"not-original"')`); err != nil {
+					t.Fatal(err)
+				}
+			case "prepared-hash-conflict":
+				if _, err = p.Exec(ctx, `UPDATE v05_interaction_turns SET document_json=jsonb_set(document_json,'{_cnyPriceCoverageDecision,answerPreparedObservationHash}','"not-original"')`); err != nil {
+					t.Fatal(err)
+				}
 			case "Stop":
 				tx, er := p.Begin(ctx)
 				if er != nil {
@@ -255,7 +263,7 @@ func TestPostgresCanonicalCNYPriceDecisionAndCoverage(t *testing.T) {
 				store.TimelineProjection = original
 			}
 			ack, err := record(answer, "SEGMENT_COMPLETED", proof)
-			invalid := scenario == "partial" || scenario == "stale-epoch" || scenario == "price-change" || scenario == "currency-change" || scenario == "Stop" || scenario == "decision-conflict" || scenario == "UNKNOWN"
+			invalid := scenario == "partial" || scenario == "stale-epoch" || scenario == "price-change" || scenario == "currency-change" || scenario == "Stop" || scenario == "decision-conflict" || scenario == "prepared-ref-conflict" || scenario == "prepared-hash-conflict" || scenario == "UNKNOWN"
 			if invalid {
 				if err == nil {
 					t.Fatal("invalid completion accepted")

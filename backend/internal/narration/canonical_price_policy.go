@@ -236,6 +236,28 @@ func (c *Controller) canonicalAnswerCoverage(ctx context.Context, tx pgx.Tx, d D
 	if json.Unmarshal(raw, &decision) != nil || !reflect.DeepEqual(decision.Policy, *policy) || decision.TurnID != d.Turn.ID || decision.Phase != "PREPARED" || decision.PreparedCommandID == "" || decision.PreparedObservationHash == "" || decision.AnswerSegmentID != d.Turn.Answer.ID || decision.AnswerTextHash != d.Turn.Answer.TextHash || !singletonPrice(decision.MappedFacts) || !singletonPrice(d.Turn.Answer.FactIDs) || d.Turn.ProductHash != policy.ProductHash || d.Turn.Answer.TextHash != Hash(d.Turn.Answer.Text) {
 		return nil, nil, ErrConflict
 	}
+	// Rebind recorded approval to the actual immutable original command and A
+	// observation. A merely nonempty private reference is never authority.
+	var prepared bool
+	err = tx.QueryRow(ctx, `SELECT EXISTS(
+ SELECT 1 FROM v05_timeline_observations obs JOIN v05_outbox o USING(command_id)
+ JOIN v05_narrations n ON n.session_id=o.session_id AND n.run_epoch=o.run_epoch
+ AND n.narration_id=o.payload_envelope->>'narrationId'
+ WHERE o.command_id=$1 AND o.session_id=$2 AND o.run_epoch=$3 AND n.narration_id=$4
+ AND o.tenant_id=n.tenant_id AND o.user_id=n.user_id
+ AND obs.session_id=n.session_id AND obs.run_epoch=n.run_epoch AND obs.tenant_id=n.tenant_id AND obs.user_id=n.user_id
+ AND obs.operation='ANSWER_PREPARED' AND obs.observation_hash=$5
+ AND o.command_type='START_AUDIENCE_ANSWER'
+ AND o.payload_envelope->'payload'->>'interactionTurnId'=$6
+ AND o.payload_envelope->'payload'->>'answerText'=$7
+ AND o.payload_envelope->'payload'->'factIds'='["price"]'::jsonb
+ AND obs.proof_json->>'text'=$7 AND obs.proof_json->>'productSnapshotHash'=$8)`, decision.PreparedCommandID, d.Plan.SessionID, d.RunEpoch, d.Plan.ID, decision.PreparedObservationHash, d.Turn.ID, d.Turn.Answer.Text, policy.ProductHash).Scan(&prepared)
+	if err != nil {
+		return nil, nil, err
+	}
+	if !prepared {
+		return nil, nil, ErrConflict
+	}
 	run, err := c.Store.Current(ctx, tx, d.Plan.SessionID, false)
 	if err != nil {
 		return nil, nil, err
