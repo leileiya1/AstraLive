@@ -1,0 +1,42 @@
+test_async_fresh_renewal_during_slow_production (runtime.tests.test_staging_tcp.LocalTCPTests.test_async_fresh_renewal_during_slow_production) ... ok
+test_commit_rejection_never_hands_to_sink_and_unknown (runtime.tests.test_staging_tcp.LocalTCPTests.test_commit_rejection_never_hands_to_sink_and_unknown) ... ok
+test_complete_actual_tcp_and_b_sidecar_order (runtime.tests.test_staging_tcp.LocalTCPTests.test_complete_actual_tcp_and_b_sidecar_order) ... ok
+test_duplicate_produced_after_release_no_rehydration_or_new_effect (runtime.tests.test_staging_tcp.LocalTCPTests.test_duplicate_produced_after_release_no_rehydration_or_new_effect) ... ok
+test_force_fence_after_arm_before_first_sink (runtime.tests.test_staging_tcp.LocalTCPTests.test_force_fence_after_arm_before_first_sink) ... ok
+test_posthandoff_failure_fences_b_queues_before_blocked_native_cleanup (runtime.tests.test_staging_tcp.LocalTCPTests.test_posthandoff_failure_fences_b_queues_before_blocked_native_cleanup) ... ok
+test_simulation_negotiation_rejected_before_any_begin (runtime.tests.test_staging_tcp.LocalTCPTests.test_simulation_negotiation_rejected_before_any_begin) ... ok
+test_actual_wire_simulation_negotiation_rejected_and_binding_cleaned (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_actual_wire_simulation_negotiation_rejected_and_binding_cleaned) ... session_prepare_failed
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py", line 231, in prepare
+    await self.avatar_engine.prepare(self.request.avatar)
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 363, in prepare
+    await self.link.connect()
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 102, in connect
+    raise StagingFailure("STAGING_IDENTITY_MISMATCH")
+app.soulx_staging.StagingFailure: STAGING_IDENTITY_MISMATCH
+ok
+test_real_bound_factory_configure_prepare_start_interrupt_stop (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_real_bound_factory_configure_prepare_start_interrupt_stop) ... ok
+test_start_without_config_and_verified_connection_rejects (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_start_without_config_and_verified_connection_rejects) ... ok
+test_unsupported_session_clock_rejected_before_worker_connection (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_unsupported_session_clock_rejected_before_worker_connection) ... ok
+test_any_prepare_or_connection_attempt_excludes_configuration_proof (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_any_prepare_or_connection_attempt_excludes_configuration_proof) ... ok
+test_enabled_deployment_unknown_capture_after_restart_remains_unknown (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_enabled_deployment_unknown_capture_after_restart_remains_unknown) ... ok
+test_exact_prephysical_failed_create_stop_real_spool_and_ack_order (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_exact_prephysical_failed_create_stop_real_spool_and_ack_order) ... ok
+test_flags_off_and_legacy_fence_only_preserve_existing_control_receipt (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_flags_off_and_legacy_fence_only_preserve_existing_control_receipt) ... ok
+test_no_binding_ack_retains_unknown_without_ended_or_receipt (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_no_binding_ack_retains_unknown_without_ended_or_receipt) ... ok
+test_postconfigure_media_factory_failure_and_prepare_failure_unknown (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_postconfigure_media_factory_failure_and_prepare_failure_unknown) ... session_prepare_failed
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py", line 231, in prepare
+    await self.avatar_engine.prepare(self.request.avatar)
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 363, in prepare
+    await self.link.connect()
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 102, in connect
+    raise StagingFailure("STAGING_IDENTITY_MISMATCH")
+app.soulx_staging.StagingFailure: STAGING_IDENTITY_MISMATCH
+ok
+test_receipt_outage_does_not_consume_marker_or_retry_started_stop (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_receipt_outage_does_not_consume_marker_or_retry_started_stop) ... ok
+test_wrong_original_identity_incarnation_epoch_and_reservations_unknown (runtime.tests.test_prephysical_stop.PrephysicalStopTests.test_wrong_original_identity_incarnation_epoch_and_reservations_unknown) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 1.715s
+
+OK

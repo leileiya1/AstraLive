@@ -97,10 +97,14 @@ class OpenAICompatibleLLMProvider:
             async with httpx.AsyncClient(timeout=httpx.Timeout(60, connect=10), transport=self.transport, trust_env=False, follow_redirects=False) as client:
                 yield client
 
-    async def stream(self, request: LLMRequest) -> AsyncIterator[str]:
+    async def stream(self, request: LLMRequest, *, diagnostic=None) -> AsyncIterator[str]:
         import json
         done = False
         terminal_finish = False
+        counts = {"dataPackets": 0, "contentDeltaCount": 0, "reasoningDeltaCount": 0, "reasoningChars": 0}
+        def observe(**fields):
+            if diagnostic is not None:
+                diagnostic(fields)
         async with self._stream_client() as client:
             async with client.stream(
                 "POST", f"{self.base_url}/chat/completions",
@@ -113,32 +117,68 @@ class OpenAICompatibleLLMProvider:
                           {"role": "user", "content": request.text},
                       ]},
             ) as response:
+                observe(httpStatus=response.status_code)
                 response.raise_for_status()
                 async for line in response.aiter_lines():
                     if not line.startswith("data:"):
                         continue
                     data = line[5:].strip()
                     if data == "[DONE]":
+                        observe(doneObserved=True)
                         if not terminal_finish:
+                            observe(streamOutcome="DONE_WITHOUT_TERMINAL")
                             raise RuntimeError("LLM stream sent [DONE] without terminal finish")
                         done = True
                         break
                     if not data:
                         continue
+                    if diagnostic is not None:
+                        counts["dataPackets"] += 1
+                        observe(**counts)
                     packet = json.loads(data)
+                    if diagnostic is not None and isinstance(packet, dict):
+                        usage = packet.get("usage")
+                        if isinstance(usage, dict):
+                            for source, target in (("prompt_tokens", "promptTokens"), ("completion_tokens", "completionTokens"), ("total_tokens", "totalTokens")):
+                                value = usage.get(source)
+                                if type(value) is int and 0 <= value <= 2**31-1:
+                                    observe(**{target: value})
+                            details = usage.get("completion_tokens_details")
+                            value = details.get("reasoning_tokens") if isinstance(details, dict) else None
+                            if type(value) is int and 0 <= value <= 2**31-1:
+                                observe(reasoningTokens=value)
                     if packet.get("error"):
+                        observe(streamOutcome="PROVIDER_STREAM_ERROR")
                         raise RuntimeError("LLM stream returned an error")
                     for choice in packet.get("choices", []):
                         finish_reason = choice.get("finish_reason")
+                        if diagnostic is not None:
+                            delta = choice.get("delta")
+                            if isinstance(delta, dict):
+                                reasoning = delta.get("reasoning_content")
+                                if isinstance(reasoning, str) and reasoning:
+                                    counts["reasoningDeltaCount"] += 1
+                                    counts["reasoningChars"] += len(reasoning)
+                                content = delta.get("content")
+                                if isinstance(content, str) and content:
+                                    counts["contentDeltaCount"] += 1
+                                observe(**counts)
+                            if finish_reason is not None:
+                                safe_reason = finish_reason if isinstance(finish_reason, str) and finish_reason in {"stop", "length", "content_filter", "tool_calls", "function_call"} else "OTHER"
+                                observe(finishReason=safe_reason)
                         if finish_reason == "stop":
                             terminal_finish = True
+                            observe(terminalStop=True)
                         elif finish_reason is not None:
+                            observe(streamOutcome="FINISH_NOT_STOP")
                             raise RuntimeError(f"LLM stream ended with {finish_reason}")
                         content = choice.get("delta", {}).get("content")
                         if content:
                             yield content
         if not done and not terminal_finish:
+            observe(streamOutcome="MISSING_TERMINAL")
             raise RuntimeError("LLM stream ended without terminal finish")
+        observe(streamOutcome="COMPLETED")
 
 
 class MockTTSProvider:

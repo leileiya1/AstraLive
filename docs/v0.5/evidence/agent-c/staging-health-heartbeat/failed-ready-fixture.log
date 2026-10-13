@@ -1,0 +1,134 @@
+test_actual_B_health_counters_do_not_extend_expired_or_fenced_stage_lease (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_actual_B_health_counters_do_not_extend_expired_or_fenced_stage_lease) ... ok
+test_actual_B_idle_timeout_reproduced_without_control_heartbeat (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_actual_B_idle_timeout_reproduced_without_control_heartbeat) ... ERROR
+test_actual_B_socket_idle_over_five_seconds_stays_ready_without_jobs (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_actual_B_socket_idle_over_five_seconds_stays_ready_without_jobs) ... ERROR
+test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence) ... 
+  test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence) (fault='nonce') ... ERROR
+  test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence) (fault='epoch') ... ERROR
+  test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence) (fault='drop') ... ERROR
+
+======================================================================
+ERROR: test_actual_B_idle_timeout_reproduced_without_control_heartbeat (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_actual_B_idle_timeout_reproduced_without_control_heartbeat)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_staging_heartbeat.py", line 100, in test_actual_B_idle_timeout_reproduced_without_control_heartbeat
+    client,server=await self.connected()
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_staging_heartbeat.py", line 81, in connected
+    await client.connect()
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 98, in connect
+    await self._write(auth);self.ready,_=await asyncio.wait_for(self._read(),15)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 61, in _read
+    prefix=await self.reader.readexactly(8);size,payload_size=struct.unpack("!II",prefix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/streams.py", line 750, in readexactly
+    raise exceptions.IncompleteReadError(incomplete, n)
+asyncio.exceptions.IncompleteReadError: 0 bytes read on a total of 8 expected bytes
+
+======================================================================
+ERROR: test_actual_B_socket_idle_over_five_seconds_stays_ready_without_jobs (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_actual_B_socket_idle_over_five_seconds_stays_ready_without_jobs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_staging_heartbeat.py", line 85, in test_actual_B_socket_idle_over_five_seconds_stays_ready_without_jobs
+    client,server=await self.connected()
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_staging_heartbeat.py", line 81, in connected
+    await client.connect()
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 98, in connect
+    await self._write(auth);self.ready,_=await asyncio.wait_for(self._read(),15)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 61, in _read
+    prefix=await self.reader.readexactly(8);size,payload_size=struct.unpack("!II",prefix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/streams.py", line 750, in readexactly
+    raise exceptions.IncompleteReadError(incomplete, n)
+asyncio.exceptions.IncompleteReadError: 0 bytes read on a total of 8 expected bytes
+
+======================================================================
+ERROR: test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence) (fault='nonce')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_staging_heartbeat.py", line 112, in test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence
+    client,server=await self.connected(fault)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_staging_heartbeat.py", line 81, in connected
+    await client.connect()
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 98, in connect
+    await self._write(auth);self.ready,_=await asyncio.wait_for(self._read(),15)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 61, in _read
+    prefix=await self.reader.readexactly(8);size,payload_size=struct.unpack("!II",prefix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/streams.py", line 750, in readexactly
+    raise exceptions.IncompleteReadError(incomplete, n)
+asyncio.exceptions.IncompleteReadError: 0 bytes read on a total of 8 expected bytes
+
+======================================================================
+ERROR: test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence) (fault='epoch')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_staging_heartbeat.py", line 112, in test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence
+    client,server=await self.connected(fault)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_staging_heartbeat.py", line 81, in connected
+    await client.connect()
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 98, in connect
+    await self._write(auth);self.ready,_=await asyncio.wait_for(self._read(),15)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 61, in _read
+    prefix=await self.reader.readexactly(8);size,payload_size=struct.unpack("!II",prefix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/streams.py", line 750, in readexactly
+    raise exceptions.IncompleteReadError(incomplete, n)
+asyncio.exceptions.IncompleteReadError: 0 bytes read on a total of 8 expected bytes
+
+======================================================================
+ERROR: test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence) (fault='drop')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_staging_heartbeat.py", line 112, in test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence
+    client,server=await self.connected(fault)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_staging_heartbeat.py", line 81, in connected
+    await client.connect()
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 98, in connect
+    await self._write(auth);self.ready,_=await asyncio.wait_for(self._read(),15)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 61, in _read
+    prefix=await self.reader.readexactly(8);size,payload_size=struct.unpack("!II",prefix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/streams.py", line 750, in readexactly
+    raise exceptions.IncompleteReadError(incomplete, n)
+asyncio.exceptions.IncompleteReadError: 0 bytes read on a total of 8 expected bytes
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.076s
+
+FAILED (errors=5)
