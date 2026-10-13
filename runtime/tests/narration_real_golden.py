@@ -6,6 +6,8 @@ and independently proved by Runtime/Worker/SQL evidence from the owning runner.
 import argparse
 import asyncio
 import base64
+import binascii
+import hashlib
 import json
 import random
 from pathlib import Path
@@ -18,6 +20,28 @@ class GoldenFailure(Exception):
     pass
 
 
+class ChromeRecordingWriter:
+    """Strict sequential real Blob storage; rejects a bad chunk before writing it."""
+    def __init__(self,file):
+        self.file=file;self.next_sequence=0;self.chunks=[];self.failed=False
+
+    def store(self,sequence,encoded,expected_bytes=None,expected_sha256=None):
+        try:
+            if self.failed or sequence!=self.next_sequence:
+                raise GoldenFailure("Browser recording sequence gap or previous failure")
+            try:payload=base64.b64decode(encoded,validate=True)
+            except (binascii.Error,ValueError,TypeError):
+                raise GoldenFailure("Browser recording Base64 invalid") from None
+            sha=hashlib.sha256(payload).hexdigest()
+            if not payload or (expected_bytes is not None and len(payload)!=expected_bytes) or (expected_sha256 is not None and sha!=expected_sha256):
+                raise GoldenFailure("Browser recording Blob size or hash mismatch")
+            self.file.write(payload);self.file.flush()
+            self.chunks.append({"sequence":sequence,"bytes":len(payload),"sha256":sha})
+            self.next_sequence+=1
+        except Exception:
+            self.failed=True;raise
+
+
 def require_observable_state(snapshot):
     # Natural FINISHED is a terminal narration plan while the Session remains
     # live for explicit normal Stop; distinguish it from operator/failure Stop.
@@ -25,6 +49,21 @@ def require_observable_state(snapshot):
         return
     if snapshot["state"] in {"RECOVERY_REQUIRED", "FAILED", "STOPPING", "STOPPED"}:
         raise GoldenFailure("Narration stopped or requires recovery")
+
+
+def require_browser_av(chrome,normal_stop):
+    if not normal_stop:raise GoldenFailure("Actual Session normal Stop missing")
+    if chrome.get("recordingFailed") or chrome.get("recorderErrors"):
+        raise GoldenFailure("Actual browser recording delivery failed")
+    if not isinstance(chrome.get("audioPreflight"),dict) or not chrome["audioPreflight"].get("ready"):
+        raise GoldenFailure("Actual browser audio clock prerequisite missing")
+    if not any(row["rms"]>.001 for row in chrome.get("audioEnergy",[])):
+        raise GoldenFailure("Actual browser decoded speech energy missing")
+    if not chrome.get("video"):raise GoldenFailure("Actual browser video missing")
+    if not chrome.get("recordedBytes") or not chrome.get("recordingChunks"):
+        raise GoldenFailure("Actual browser recording bytes missing")
+    if chrome.get("deliveredRecordingBytes")!=chrome["recordedBytes"] or chrome.get("deliveredRecordingChunks")!=chrome["recordingChunks"]:
+        raise GoldenFailure("Actual browser recording delivery incomplete")
 
 
 def private(path):
@@ -62,7 +101,7 @@ async def main(args):
         "commentTransport":"MOCK_REPLAY_ONLY", "humanNaturalness":"NOT_TESTED",
         "audienceAudible":False,"correlatedAV":"NOT_ANALYSED",
         "localTransport":args.local_transport,"mode":args.mode,"seed":args.seed,"fixture":fixture.get("name"),"events":[]}
-    session=None;browser=None;page=None;normal_stop=False;recording_file=None
+    session=None;browser=None;page=None;normal_stop=False;recording_file=None;recording_writer=None;chrome_saved=False
     async with httpx.AsyncClient(base_url=args.backend,verify=False,trust_env=False,timeout=30) as client:
         async def api(method,path,payload=None,key=None):
             headers={"Origin":args.backend}
@@ -135,16 +174,20 @@ async def main(args):
                     for cookie in client.cookies.jar]
                 await context.add_cookies(cookies)
                 page=await context.new_page()
-                next_chunk=0
                 recording_file=open(out/"chrome.webm","wb")
-                async def record_chunk(sequence,encoded):
-                    nonlocal next_chunk
-                    if sequence!=next_chunk:raise GoldenFailure("Browser recording sequence gap")
-                    recording_file.write(base64.b64decode(encoded));recording_file.flush();next_chunk+=1
+                recording_writer=ChromeRecordingWriter(recording_file)
+                async def record_chunk(sequence,encoded,expected_bytes,expected_sha256):
+                    recording_writer.store(sequence,encoded,expected_bytes,expected_sha256)
                 await page.expose_function("__goldenRecording",record_chunk)
                 await page.goto(args.backend+"/__golden/browser")
+                await page.get_by_role("button",name="Enable real audio observation").click()
+                await page.wait_for_function("ac && ac.state==='running'",timeout=5000)
                 await page.evaluate("sid=>goldenStart(sid)",session)
                 await page.wait_for_function("pc.connectionState==='connected'",timeout=30000)
+                audio_preflight=await page.evaluate("goldenAudioReady()")
+                report["browserAudioPreflight"]=audio_preflight
+                if not audio_preflight["ready"]:
+                    raise GoldenFailure("Actual browser audio clock stalled before narration")
                 for _ in range(100):
                     required=sink_ids(args.runtime_log,session)
                     if required:break
@@ -195,10 +238,10 @@ async def main(args):
                 chrome=await page.evaluate("goldenFinish()")
                 recording_file.close()
                 (out/"chrome.json").write_text(json.dumps(chrome,ensure_ascii=False))
+                chrome_saved=True
                 report.update(normalStop=normal_stop,chromeAudioObserved=any(row["rms"]>.001 for row in chrome["audioEnergy"]),
                     chromeVideoFrames=len(chrome["video"]),recordedBytes=(out/"chrome.webm").stat().st_size)
-                if not normal_stop or not report["chromeAudioObserved"] or not report["chromeVideoFrames"]:
-                    raise GoldenFailure("Actual browser AV or normal Stop missing")
+                require_browser_av(chrome,normal_stop)
                 # Correlation, complete turn/fact SQL proofs and RTMP audit are
                 # separate oracles; observing audio/video alone is not PASS.
                 report["status"]="OBSERVED_PENDING_INDEPENDENT_SQL_AV_QUALITY_AUDIT"
@@ -209,8 +252,17 @@ async def main(args):
             if session and not normal_stop:
                 try:await api("POST",f"/api/v1/live-sessions/{session}/stop",{},"golden-stop")
                 except Exception:report["cleanupPending"]=True
+            if page and not chrome_saved:
+                try:
+                    chrome=await page.evaluate("goldenFinish()")
+                    (out/"chrome.json").write_text(json.dumps(chrome,ensure_ascii=False))
+                except Exception:report["browserDiagnosticPending"]=True
             if browser:await browser.close()
             if recording_file and not recording_file.closed:recording_file.close()
+            if recording_writer:
+                recording_data=(out/"chrome.webm").read_bytes()
+                report["recordingStorage"]={"failed":recording_writer.failed,"bytes":len(recording_data),
+                    "sha256":hashlib.sha256(recording_data).hexdigest(),"chunks":recording_writer.chunks}
             (out/"result.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
 
 

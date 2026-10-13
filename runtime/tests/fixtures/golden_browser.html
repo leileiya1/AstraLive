@@ -1,8 +1,97 @@
 <!doctype html><meta charset="utf-8"><title>AstraLive real-provider Golden observer</title>
+<button id="enableAudio" type="button">Enable real audio observation</button>
 <video id="video" autoplay playsinline></video>
 <script>
-let pc, ac, recorder, recordingChain=Promise.resolve(), rows=[], audioRows=[], begun=0, stream, recordedBytes=0, recordingSequence=0, recordingStartedAt=null, chunkEvents=[];
+let pc, ac, recorder, audioSource, audioAnalyser, audioInputStream, audioPreflight=null, audioLifecycle=[], trackEvents=[], recorderErrors=[], recordingFailed=false, deliveredRecordingBytes=0, deliveredRecordingChunks=0, audioActivation=null, recordingChain=Promise.resolve(), rows=[], audioRows=[], begun=0, stream, recordedBytes=0, recordingSequence=0, recordingStartedAt=null, chunkEvents=[];
+function safeErrorName(error) {
+  return ['NotAllowedError','NotSupportedError','InvalidStateError','NotReadableError','AbortError'].includes(error?.name)?error.name:'OTHER';
+}
+function recordingPayload(dataURL) {
+  const marker=';base64,',offset=typeof dataURL==='string'?dataURL.indexOf(marker):-1;
+  if(offset<0 || !dataURL.startsWith('data:'))throw new Error('Recording data URL encoding invalid');
+  return dataURL.slice(offset+marker.length);
+}
+function recordingDataURL(blob) {
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();reader.onload=()=>resolve(reader.result);
+    reader.onerror=()=>reject(new Error('Recording file read failed'));
+    reader.onabort=()=>reject(new Error('Recording file read aborted'));
+    reader.readAsDataURL(blob);
+  });
+}
+function queueRecording(blob,event) {
+  recordingChain=recordingChain.then(async()=>{
+    if(recordingFailed){event.delivery='BLOCKED_BY_PREVIOUS_FAILURE';return;}
+    try {
+      const encoded=recordingPayload(await recordingDataURL(blob));
+      const hash=await crypto.subtle.digest('SHA-256',await blob.arrayBuffer());
+      event.sha256=Array.from(new Uint8Array(hash),byte=>byte.toString(16).padStart(2,'0')).join('');
+      await window.__goldenRecording(event.sequence,encoded,event.bytes,event.sha256);
+      event.delivery='STORED';deliveredRecordingBytes+=event.bytes;deliveredRecordingChunks++;
+    } catch(error) {
+      recordingFailed=true;event.delivery='FAILED';
+      recorderErrors.push({at:performance.now(),sequence:event.sequence,errorType:safeErrorName(error),operation:'recording_delivery'});
+    }
+  });
+}
+function audioState(reason) {
+  const output=ac?.getOutputTimestamp?.()??{};
+  return {reason,at:performance.now(),state:ac?.state??null,contextTime:ac?.currentTime??null,
+    outputContextTime:output.contextTime??null,outputPerformanceTime:output.performanceTime??null,
+    userActivationActive:navigator.userActivation?.isActive??false,
+    userActivationSeen:navigator.userActivation?.hasBeenActive??false,
+    visibilityState:document.visibilityState,hasFocus:document.hasFocus(),isSecureContext};
+}
+async function enableAudio() {
+  if(!ac) {
+    ac=new AudioContext({sampleRate:48000});
+    ac.onstatechange=()=>audioLifecycle.push(audioState('statechange'));
+  }
+  audioLifecycle.push(audioState('before_resume'));
+  await ac.resume();
+  audioLifecycle.push(audioState('after_resume'));
+}
+document.getElementById('enableAudio').addEventListener('click',()=>{
+  audioActivation=enableAudio();
+  audioActivation.catch(error=>audioLifecycle.push({...audioState('resume_failed'),errorType:safeErrorName(error)}));
+});
+async function audioInbound() {
+  let observed=null;
+  for(const row of (await pc.getStats()).values())if(row.type==='inbound-rtp' && (row.kind??row.mediaType)==='audio') {
+    observed={at:performance.now(),packetsReceived:row.packetsReceived??null,packetsDiscarded:row.packetsDiscarded??null,
+      totalSamplesReceived:row.totalSamplesReceived??null,totalSamplesDuration:row.totalSamplesDuration??null,
+      jitterBufferEmittedCount:row.jitterBufferEmittedCount??null,totalAudioEnergy:row.totalAudioEnergy??null};
+  }
+  return observed;
+}
+async function goldenAudioReady() {
+  if(!ac || !audioSource || !audioActivation)throw new Error('Actual audio observer was not activated');
+  await audioActivation;
+  const before=audioState('preflight_start'),inboundBefore=await audioInbound();
+  // Observe real clock/decoded progress; no fixed A/V delay or synthetic source.
+  let after=before,inboundAfter=inboundBefore;
+  while(performance.now()-before.at<1500) {
+    await new Promise(resolve=>requestAnimationFrame(resolve));
+    after=audioState('preflight_end');inboundAfter=await audioInbound();
+    if(after.contextTime-before.contextTime>=0.1 &&
+       typeof inboundAfter?.totalSamplesDuration==='number' && typeof inboundBefore?.totalSamplesDuration==='number' &&
+       inboundAfter.totalSamplesDuration-inboundBefore.totalSamplesDuration>=0.1)break;
+  }
+  const track=stream?.getAudioTracks()[0];
+  audioPreflight={before,after,contextDeltaSeconds:after.contextTime-before.contextTime,
+    performanceDeltaSeconds:(after.at-before.at)/1000,
+    inboundBefore,inboundAfter,
+    decodedAudioDeltaSeconds:typeof inboundAfter?.totalSamplesDuration==='number' && typeof inboundBefore?.totalSamplesDuration==='number'
+      ?inboundAfter.totalSamplesDuration-inboundBefore.totalSamplesDuration:null,
+    trackLive:track?.readyState==='live',trackEnabled:track?.enabled===true,trackMuted:track?.muted??null};
+  audioPreflight.ready=before.state==='running' && after.state==='running'
+    && audioPreflight.contextDeltaSeconds>=0.1 && audioPreflight.decodedAudioDeltaSeconds>=0.1
+    && audioPreflight.trackLive && audioPreflight.trackEnabled;
+  return audioPreflight;
+}
 async function goldenStart(sessionId) {
+  if(!audioActivation)throw new Error('Real user audio activation required');
+  await audioActivation;
   begun=performance.now(); pc=new RTCPeerConnection({iceServers:[]});
   pc.addTransceiver('audio',{direction:'recvonly'}); pc.addTransceiver('video',{direction:'recvonly'});
   stream=new MediaStream(); const video=document.getElementById('video'); video.muted=true;
@@ -12,11 +101,17 @@ async function goldenStart(sessionId) {
   const barcodeContext=barcodeCanvas.getContext("2d",{willReadFrequently:true});
   let audioStarted=false, recording=false;
   pc.ontrack=async ({track}) => {
-    stream.addTrack(track); video.srcObject=stream; await video.play().catch(()=>{});
+    function trackState(event) {trackEvents.push({event,at:performance.now(),kind:track.kind,id:track.id,
+      readyState:track.readyState,enabled:track.enabled,muted:track.muted});}
+    trackState('track');for(const event of ['mute','unmute','ended'])track.addEventListener(event,()=>trackState(event));
+    stream.addTrack(track); video.srcObject=stream;
+    await video.play().catch(error=>trackEvents.push({event:'video_play_error',at:performance.now(),errorType:safeErrorName(error)}));
     if (track.kind==='audio' && !audioStarted) {
-      audioStarted=true; ac=new AudioContext({sampleRate:48000}); await ac.resume();
-      const source=ac.createMediaStreamSource(new MediaStream([track]));
-      const analyser=ac.createAnalyser(); analyser.fftSize=2048; source.connect(analyser); analyser.connect(ac.destination);
+      audioStarted=true; await ac.resume();
+      audioInputStream=new MediaStream([track]);audioSource=ac.createMediaStreamSource(audioInputStream);
+      audioAnalyser=ac.createAnalyser();const analyser=audioAnalyser;
+      analyser.fftSize=2048;audioSource.connect(analyser);analyser.connect(ac.destination);
+      audioLifecycle.push(audioState('real_track_connected'));
       const data=new Float32Array(analyser.fftSize);
       let previous=0;
       function observeAudio() {
@@ -25,7 +120,7 @@ async function goldenStart(sessionId) {
         const rms=Math.sqrt(energy/data.length), now=performance.now();
         if (now-previous>=20) {
           const output=ac.getOutputTimestamp();
-          audioRows.push({at:now,rms,contextTime:ac.currentTime,outputContextTime:output.contextTime,outputPerformanceTime:output.performanceTime}); previous=now;
+          audioRows.push({at:now,rms,contextState:ac.state,contextTime:ac.currentTime,outputContextTime:output.contextTime,outputPerformanceTime:output.performanceTime}); previous=now;
         }
         if (pc.connectionState!=='closed') requestAnimationFrame(observeAudio);
       }
@@ -36,10 +131,10 @@ async function goldenStart(sessionId) {
       recorder.ondataavailable=e=>{
         if(!e.data.size)return;
         const sequence=recordingSequence++;recordedBytes+=e.data.size;
-        chunkEvents.push({sequence,at:performance.now(),bytes:e.data.size,timecode:e.timecode});
-        recordingChain=recordingChain.then(()=>new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.readAsDataURL(e.data)}))
-          .then(base64=>window.__goldenRecording(sequence,base64));
-      };recordingStartedAt=performance.now();recorder.start(1000);
+        const event={sequence,at:performance.now(),bytes:e.data.size,timecode:e.timecode,mimeType:e.data.type};
+        chunkEvents.push(event);queueRecording(e.data,event);
+      };recorder.onerror=e=>recorderErrors.push({at:performance.now(),state:recorder.state,errorType:safeErrorName(e.error)});
+      recordingStartedAt=performance.now();recorder.start(1000);
     }
   };
   function frame(now, meta) {
@@ -80,7 +175,10 @@ async function goldenFinish() {
   if(recorder && recorder.state!=='inactive')await new Promise(resolve=>{recorder.onstop=resolve;recorder.stop()});
   await recordingChain;
   const result={clockDomain:'chrome_performance_ms',timeOrigin:performance.timeOrigin,startedAt:begun,endedAt:performance.now(),
-    audioSampleRate:ac?.sampleRate??null,video:rows,audioEnergy:audioRows,inbound,
+    audioSampleRate:ac?.sampleRate??null,audioContextState:ac?.state??null,audioContextTime:ac?.currentTime??null,
+    audioBaseLatency:ac?.baseLatency??null,audioOutputLatency:ac?.outputLatency??null,
+    audioPreflight,audioLifecycle,trackEvents,recorderErrors,recordingFailed,deliveredRecordingBytes,deliveredRecordingChunks,recorderState:recorder?.state??null,
+    video:rows,audioEnergy:audioRows,inbound,
     recordedBytes,recordingChunks:recordingSequence,recordingStartedAt,chunkEvents,audienceAudible:false,
     correlatedAV:'NOT_ANALYSED: requires actual staged speech/frame reference matching'};
   pc.close(); if(ac)await ac.close();return result;
