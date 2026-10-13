@@ -183,7 +183,10 @@ func (s *Service) durableControl(ctx context.Context, id, trace, kind, reason st
 				return "", er
 			}
 		}
-		if se.Status != "LIVE" && se.Status != "DEGRADED" && se.Status != "STOPPING" {
+		// A durable startup may have crossed execution admission before failing.
+		// Stop must fence that run even when it never reached LIVE; cleanup
+		// acceptance is not evidence that Runtime resources have been released.
+		if se.Status != "PREPARING" && se.Status != "LIVE" && se.Status != "DEGRADED" && se.Status != "STOPPING" {
 			return "", ErrConflict
 		}
 		if e = s.Durable.Seal(ctx, tx, r); e != nil {
