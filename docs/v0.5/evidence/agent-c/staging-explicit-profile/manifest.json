@@ -1,0 +1,42 @@
+{
+  "source": "0ccc25c0cfc0c25cb0f723e04949fcc1e83978a7",
+  "baselineProductionSource": "c4ddc43",
+  "baselineTestOverlay": "candidate backend/internal/narration/staging_config_test.go only",
+  "scope": "Local actual Go and Python environment/capture parser, owned PG CPU software regressions; no SSH/GPU",
+  "pairedCases": 12,
+  "runtimeFocusedCases": 5,
+  "files": {
+    "full-result.json": {
+      "bytes": 2101,
+      "sha256": "79b9e6d9276bf2df8cb8d9c6b03e0998e6352904a75ef42383bbd161d5086cd3"
+    },
+    "full-faults.log": {
+      "bytes": 108477,
+      "sha256": "ad96119b1478c83a9110f012a49f94ec6622c2031a522f54aeec90569835b56b"
+    },
+    "full-runtime.log": {
+      "bytes": 460725,
+      "sha256": "98de00cc9fa80ac89490de4277f42b9094a59cf28f34cf1d8a08111e7de409d0"
+    },
+    "full-frontend-test.log": {
+      "bytes": 703,
+      "sha256": "e0d90fe1049350e10bfb087e4c3a07101ab2b0f48c305405daf84d86134f7854"
+    },
+    "full-frontend-build.log": {
+      "bytes": 2407,
+      "sha256": "514c40bcdd960577bf1efd3de320a433702dbc636044b3d6b5f24c82a45e051a"
+    },
+    "paired-go-python-race.log": {
+      "bytes": 4264,
+      "sha256": "64413a258d3df051a2f83c355f81be7ceddff25f541f5f5c19896b084fa22aef"
+    },
+    "runtime-parser-tests.log": {
+      "bytes": 873,
+      "sha256": "57184a52a0c0d7139618cbb4e4f5e489d5256ce1cc70c41f592f98e54ac5f7cf"
+    },
+    "before-test-overlay-failure.log": {
+      "bytes": 398,
+      "sha256": "6b96e48692dc3bf49e7d4c8b8cae0e42e000dc0547ba0fd1d164afc07bb7dfb8"
+    }
+  }
+}
