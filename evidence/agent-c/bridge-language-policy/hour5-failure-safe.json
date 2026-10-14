@@ -1,0 +1,29 @@
+{
+  "actualSource": "b816 (F hour5 source)",
+  "scope": "ACTUAL_REAL_PROVIDER_FAILURE_NOT_NEW_CANDIDATE_PASS",
+  "originalFileSHA256": "19a74e945df2d4ebdfe74bb22416647f9ef48609833f5ef8fbd2d4e95e5f5a29",
+  "observed": {
+    "scope": "REAL_BOUND_LLM_CALL_OBSERVER",
+    "role": "bridge_choice",
+    "status": "FAILED",
+    "model": "deepseek-flash",
+    "requestHash": "sha256:b1f36dc74d8b5fc6cdaf1305ed53f9838be0e7b7095e9b4a39911616185b71b9",
+    "responseHash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "responseChars": 0,
+    "durationMs": 3549,
+    "streamDiagnostic": {
+      "httpStatus": 200,
+      "dataPackets": 258,
+      "contentDeltaCount": 0,
+      "reasoningDeltaCount": 256,
+      "reasoningChars": 438,
+      "promptTokens": 45763,
+      "completionTokens": 256,
+      "totalTokens": 46019,
+      "reasoningTokens": 256,
+      "finishReason": "length",
+      "streamOutcome": "FINISH_NOT_STOP",
+      "errorType": "RuntimeError"
+    }
+  }
+}

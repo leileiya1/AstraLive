@@ -1,0 +1,36 @@
+test_bridge_provider_failure_stays_unknown_and_has_phase (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_bridge_provider_failure_stays_unknown_and_has_phase) ... ok
+test_guard_failure_and_timeout_classified_without_retry (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_guard_failure_and_timeout_classified_without_retry) ... ok
+test_journal_unknown_exception_redacted (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_journal_unknown_exception_redacted) ... ok
+test_tool_unknown_exception_redacted (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_tool_unknown_exception_redacted) ... ok
+test_frozen_flag_no_alias (runtime.tests.test_narration_segments.ConfigTests.test_frozen_flag_no_alias) ... ok
+test_bound_runtime_rejects_untimed_before_first_after_finish_force (runtime.tests.test_narration_segments.ExecutionTests.test_bound_runtime_rejects_untimed_before_first_after_finish_force) ... ERROR
+test_bridge_cannot_invent_fact_or_cursor (runtime.tests.test_narration_segments.ExecutionTests.test_bridge_cannot_invent_fact_or_cursor) ... ok
+test_native_renderer_fail_closed_before_tts (runtime.tests.test_narration_segments.ExecutionTests.test_native_renderer_fail_closed_before_tts) ... ok
+test_position_serialization_has_exact_pts (runtime.tests.test_narration_segments.ExecutionTests.test_position_serialization_has_exact_pts) ... ok
+test_ready_commit_actual_fixture_consumption (runtime.tests.test_narration_segments.ExecutionTests.test_ready_commit_actual_fixture_consumption) ... ok
+test_ready_failure_no_commit_no_output_and_unknown (runtime.tests.test_narration_segments.ExecutionTests.test_ready_failure_no_commit_no_output_and_unknown) ... ok
+test_tts_duration_cap_no_truncation (runtime.tests.test_narration_segments.ExecutionTests.test_tts_duration_cap_no_truncation) ... ok
+test_http_auth_status_distinct_and_error_body_never_persisted (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_http_auth_status_distinct_and_error_body_never_persisted) ... ok
+test_malformed_json_records_static_exception_class_only (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_malformed_json_records_static_exception_class_only) ... ok
+test_reasoning_only_length_finish_is_distinct_without_reasoning_disclosure (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_reasoning_only_length_finish_is_distinct_without_reasoning_disclosure) ... ok
+test_success_unchanged_and_default_off_creates_no_observer (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_success_unchanged_and_default_off_creates_no_observer) ... ok
+test_unknown_finish_reason_and_stream_error_never_dump_upstream_strings (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_unknown_finish_reason_and_stream_error_never_dump_upstream_strings) ... ok
+
+======================================================================
+ERROR: test_bound_runtime_rejects_untimed_before_first_after_finish_force (runtime.tests.test_narration_segments.ExecutionTests.test_bound_runtime_rejects_untimed_before_first_after_finish_force)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/tests/test_narration_segments.py", line 145, in test_bound_runtime_rejects_untimed_before_first_after_finish_force
+    from test_runtime import CREATE,utterance
+ModuleNotFoundError: No module named 'test_runtime'
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.142s
+
+FAILED (errors=1)
