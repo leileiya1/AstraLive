@@ -444,6 +444,7 @@ async def bridge_choice(llm, context, choices):
             if staged:raise ValueError("BRIDGE_CHOICE_INVALID")
             return 0
     if staged:
+        text=text.strip(" \t\n\r\v\f")
         if text not in {str(index) for index in range(len(choices))}:raise ValueError("BRIDGE_CHOICE_INVALID")
         return int(text)
     try:

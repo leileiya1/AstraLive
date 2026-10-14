@@ -129,6 +129,9 @@ class StagingBridgePolicyTests(unittest.IsolatedAsyncioTestCase):
             self.assertIn('ASCII索引：0, 1, 2',llm.request.text)
             rendered=llm.request.text.split('；明确索引选项：',1)[1]
             self.assertEqual(json.loads(rendered),[{'index':i,'text':text} for i,text in enumerate(choices)])
+        for output,index in (("0\n",0),(" 1 ",1),("\t2\r",2)):
+            llm.output=output
+            self.assertEqual(await bridge_choice(llm,original,choices),index)
         self.assertEqual(choices,saved)
 
     async def test_noncanonical_ascii_and_one_based_three_still_rejected(self):
@@ -136,7 +139,7 @@ class StagingBridgePolicyTests(unittest.IsolatedAsyncioTestCase):
             staging_bridge_enabled=True
             async def stream(self,request):yield self.output
         llm=Choice()
-        for output in ('3','-1','+1','01','١','１','1.0','1\n',' 1','"1"',''):
+        for output in ('3','-1','+1','01','١','１','1.0','\u00a01','1\u00a0',' \n','"1"',''):
             llm.output=output
             with self.subTest(outputHash=hashlib.sha256(output.encode()).hexdigest()):
                 with self.assertRaisesRegex(ValueError,'BRIDGE_CHOICE_INVALID'):await bridge_choice(llm,context(),['','一。','二。'])
