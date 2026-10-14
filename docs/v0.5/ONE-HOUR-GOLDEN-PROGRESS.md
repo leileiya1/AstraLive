@@ -27,6 +27,7 @@ module gate passed at `1d8ca95`; `aac8cfd` changes fixture data only.
 | TCP hour-1 | `aac8cfdd92e92472d8426e32c03dd9363e2b2527` | FAIL | DeepSeek profile probe 502; no Session |
 | TCP hour-2 | same | FAIL | Worker unavailable after SSH forward exited; no Session |
 | TCP hour-3 | same | FAIL | Narration recovery projection after eight completed segments; ninth command STARTED with no media generation; no comment reached |
+| TCP hour-4 | `c12533eb8bbc74ea300e23fc4e2bbdc441857b8d` | FAIL | One completed segment; next synchronous begin failed with ValueError/OTHER; original projection already STOPPING/SESSION_STOP; no comment reached |
 
 Hour-3 test duration was 128.59 seconds including preflight/cleanup. The actual
 Session lasted about 92 seconds. Eight completed source intervals cover 38.84
@@ -65,3 +66,18 @@ repair only the reproduced cause, rerun regression gates, then start a fresh
 single-session hour. Full continuity, busy-comment latency, complete fact
 coverage and naturalness remain **FAIL / NOT TESTED**, not upgraded by local
 unit success or these short clips.
+
+Hour-4 diagnostic source `0d1c045` was normally merged as `c12533e`; full
+postmerge software gates passed. Actual hour-4 test took 50.38 seconds,
+narration observation 10.025 seconds. The prior task was done; run was not
+sealed, barrier was not pending, deadline had not expired, grant remaining was
+9594 ms at the admission diagnostic. This excludes an active prior task and
+expired grant at that observation, but does not identify the underlying
+ValueError or Worker link failure. No UNKNOWN receipt is inferred from it.
+[Hour-4 original evidence and postmerge gate](evidence/integration-f/hour-admission-diagnostic-failure-1/manifest.json).
+
+An independent B local TCP protocol reproduction shows cancellation can orphan
+an in-flight renewal ACK. Production Worker FIFO ordering was not captured in
+hour-4, so this software proof is not labeled its confirmed physical root
+cause. C is repairing the demonstrated renewal/release race and expanding
+safe diagnostics; Stop aftermath proof remains a separate issue.
