@@ -20,6 +20,8 @@ import wave
 
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from canonical_coverage_audit import CoverageAuditError, validated_cny_price_coverage
 from gpu_worker import staging_contract as contract
 from gpu_worker.config import REVISION as NATIVE_MODEL_REVISION
 
@@ -267,7 +269,27 @@ def audit_media_bytes(reference, wav_path, h264_path):
             'nativeRGBStream':'NOT_VERIFIABLE_FROM_LOSSY_H264', 'decodedEmittedAndEncodedBytes':'PASS'}
 
 
-def selected_turns(turn_rows, commits, references, plan, formal):
+def canonical_coverage_from_sql(sql, narration, turn_rows, commits):
+    """Only original SQL proof can authorize the finite private price policy."""
+    policy = narration['plan_json'].get('_cnyPriceCoveragePolicy')
+    snapshot = None
+    if policy is not None:
+        require(all(type(sql.get(k)) is list for k in
+                    ('productSnapshots', 'answerPreparedCommands', 'observations', 'receipts')),
+                'MISSING_CANONICAL_SAFE_SQL_PROJECTIONS', 'NOT_VERIFIABLE')
+        matches = [r for r in sql['productSnapshots'] if all(r.get(k)==narration[k]
+                   for k in ('session_id','narration_id','run_epoch','tenant_id','user_id'))]
+        require(len(matches)==1, 'MISSING_OR_DUPLICATE_OWNED_PRODUCT_SNAPSHOT', 'NOT_VERIFIABLE')
+        snapshot = matches[0].get('productSnapshot')
+    try:
+        return validated_cny_price_coverage(narration, turn_rows, commits,
+            sql.get('observations', []), sql.get('receipts', []),
+            sql.get('answerPreparedCommands', []), product_snapshot=snapshot)
+    except CoverageAuditError as error:
+        raise AuditFailure(error.code, error.status) from None
+
+
+def selected_turns(turn_rows, commits, references, plan, formal, canonical_coverage=None):
     turns = unique(turn_rows, 'turn_id')
     plan_segments = plan['segments']
     by_segment = {row['segment_id']:row for row in commits}
@@ -299,8 +321,10 @@ def selected_turns(turn_rows, commits, references, plan, formal):
         for segment in plan_segments:
             if segment['status']!='SATISFIED_BY_ANSWER' or segment['segmentId'] in before|skipped:
                 continue
-            if (segment['factIds'] and set(segment['factIds']).issubset(turn.get('mappedNarrationFactIds') or [])
-                    and segment['text'] in turn['answerText']):
+            lexical = (segment['factIds'] and set(segment['factIds']).issubset(turn.get('mappedNarrationFactIds') or [])
+                       and segment['text'] in turn['answerText'])
+            canonical = row['turn_id'] in (canonical_coverage or {}).get(segment['segmentId'], [])
+            if lexical or canonical:
                 coverage.setdefault(segment['segmentId'],[]).append(row['turn_id'])
                 skipped.add(segment['segmentId'])
         expected = next((s for s in plan_segments if s['segmentId'] not in before|skipped),None)
@@ -380,7 +404,7 @@ class Auditor:
             require(processes['source']==gate['source'], 'ACTUAL_PROCESS_SOURCE_PIN_MISMATCH')
         self.report.update(sessionId=self.sid,narrationId=self.nid,mode=self.observer['mode'],
             formalGolden1='PENDING' if self.formal else 'NOT_FORMAL',fixtureSHA256=sha(self.fixture_path.read_bytes()))
-        require(self.observer['mode'] in ('short','ten-minute','soak'), 'UNSUPPORTED_REAL_RUN_MODE')
+        require(self.observer['mode'] in ('short','fixture-completion-smoke','ten-minute','soak'), 'UNSUPPORTED_REAL_RUN_MODE')
         require(processes['localTransport']==self.observer['localTransport'], 'PROCESS_OBSERVER_LOCAL_TRANSPORT_MISMATCH')
         narrations = [r for r in self.sql['narrations'] if r['session_id']==self.sid]
         require(len(narrations)==1 and narrations[0]['narration_id']==self.nid, 'MULTIPLE_OR_WRONG_NARRATION')
@@ -467,7 +491,7 @@ class Auditor:
             require(previous_end is None or commit['start_sample']==previous_end, 'COMMITTED_LEDGER_INTERVAL_GAP_OR_OVERLAP')
             previous_end = commit['end_sample'];completed.add(aid)
         tails = [a for aid,a in self.attempts.items() if aid not in completed]
-        if self.formal:
+        if self.formal or self.observer['mode']=='fixture-completion-smoke':
             require(not tails and set(self.refs)==completed, 'FORMAL_UNCOMPLETED_ATTEMPT_OR_UNCOMMITTED_REFERENCE')
             require(len(producer_incarnations)==1, 'FORMAL_RUNTIME_INCARNATION_CHANGED')
         self.report['uncompletedTail'] = [{'attemptId':a['attempt_id'],'state':a['status']} for a in tails]
@@ -490,10 +514,12 @@ class Auditor:
         return {'verified':len(rows),'nativeOriginalRGBStream':'NOT_VERIFIABLE_FROM_LOSSY_H264'}
 
     def continuity(self):
+        turn_rows = [r for r in self.sql['turns'] if r['session_id']==self.sid]
+        canonical = canonical_coverage_from_sql(self.sql, self.narration, turn_rows, self.commits)
         reject_replayed_mapped_answer_facts(
-            [r for r in self.sql['turns'] if r['session_id']==self.sid], self.commits, self.plan)
-        turns, satisfied = selected_turns([r for r in self.sql['turns'] if r['session_id']==self.sid],
-            self.commits,self.refs,self.plan,self.formal)
+            turn_rows, self.commits, self.plan)
+        turns, satisfied = selected_turns(turn_rows,
+            self.commits,self.refs,self.plan,self.formal,canonical)
         expected_required = [f for beat in self.fixture['plan']['beats'] for f in beat['requiredFactIds']]
         actual_required = [f for beat in self.plan['beats'] for f in beat['requiredFactIds']]
         require(actual_required==expected_required and len(actual_required)==len(set(actual_required)), 'FIXTURE_REQUIRED_FACT_SET_MISMATCH_OR_DUPLICATE')
@@ -523,7 +549,7 @@ class Auditor:
                 require(len(satisfied.get(segment['segmentId'],[]))==1, 'UNPROVEN_OR_DUPLICATE_SATISFIED_BY_ANSWER')
                 require(not any(c['segment_id']==segment['segmentId'] for c in self.commits), 'SATISFIED_FACT_ALSO_NARRATED')
                 counts.update(segment['factIds']);completed_segments.add(segment['segmentId'])
-            elif self.formal:
+            elif self.formal or self.observer['mode']=='fixture-completion-smoke':
                 raise AuditFailure('FORMAL_UNCOMPLETED_PLAN_SEGMENT')
         require(narration_order==plan_order, 'NARRATION_REPLAY_OR_OMITTED_NEXT_POSITION')
         require(all(count<=1 for count in counts.values()), 'REPEATED_COMPLETED_NARRATION_FACT')
@@ -531,6 +557,11 @@ class Auditor:
         require(not cursor.get('ambiguousSegmentIds'), 'AMBIGUOUS_SEMANTIC_CURSOR')
         require(set(cursor['completedSegmentIds'] or [])==completed_segments
                 and set(cursor['completedFactIds'] or [])==set(counts), 'DURABLE_CURSOR_MEDIA_COVERAGE_MISMATCH')
+        if self.observer['mode']=='fixture-completion-smoke':
+            require(set(actual_required)==set(counts) and cursor['nextOrdinal']==len(self.plan['segments']),
+                    'SMOKE_FIXTURE_COVERAGE_INCOMPLETE')
+            require(self.observer['finalNarrationBeforeStop']['reason']=='FINISHED', 'SMOKE_NOT_NATURALLY_FINISHED')
+            require(selected==injected==Counter(self.fixture['questions']), 'SMOKE_QUESTION_SELECTION_INCOMPLETE')
         if self.formal:
             require(len(actual_required)==140 and set(actual_required)==set(counts), 'FORMAL_140_UNIQUE_FACT_COVERAGE_INCOMPLETE')
             require(cursor['nextOrdinal']==len(self.plan['segments']), 'FORMAL_CURSOR_NOT_FINISHED')
@@ -555,7 +586,7 @@ class Auditor:
         released = [r for r in self.sql['bindingRelease'] if r['sessionId']==self.sid]
         require(released and all(r['released'] is True for r in released), 'BINDING_RELEASE_UNCONFIRMED')
         require(self.narration['state']==self.document['state']=='STOPPED' and self.document['stopBarrier'] is True, 'NARRATION_STOP_BARRIER_UNCONFIRMED')
-        if self.formal:
+        if self.formal or self.observer['mode']=='fixture-completion-smoke':
             require(all(a['status']=='COMPLETED' for a in self.attempts.values()), 'FORMAL_UNKNOWN_OR_UNFINISHED_ATTEMPT')
             require(all(c['play_state']=='COMPLETED' for c in self.commits), 'FORMAL_UNKNOWN_PLAY_STATE')
             require(not any(o['operation']=='UNKNOWN' and o['session_id']==self.sid for o in self.sql['observations']), 'FORMAL_UNKNOWN_OBSERVATION')

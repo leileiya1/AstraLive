@@ -358,19 +358,7 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	observerLog.Close()
 	// Retain only business/media proof, never private bindings/vault/credentials.
 	dump := map[string]json.RawMessage{}
-	queries := map[string]string{
-		"sessions":          `SELECT COALESCE(jsonb_agg(to_jsonb(s)),'[]') FROM live_sessions s`,
-		"narrations":        `SELECT COALESCE(jsonb_agg(to_jsonb(n)),'[]') FROM v05_narrations n`,
-		"segments":          `SELECT COALESCE(jsonb_agg(to_jsonb(s)),'[]') FROM v05_segments s`,
-		"attempts":          `SELECT COALESCE(jsonb_agg(to_jsonb(a)),'[]') FROM v05_segment_attempts a`,
-		"turns":             `SELECT COALESCE(jsonb_agg(to_jsonb(t)),'[]') FROM v05_interaction_turns t`,
-		"commits":           `SELECT COALESCE(jsonb_agg(to_jsonb(c)),'[]') FROM v05_timeline_commits c`,
-		"receipts":          `SELECT COALESCE(jsonb_agg(to_jsonb(r)),'[]') FROM v05_receipts r`,
-		"runs":              `SELECT COALESCE(jsonb_agg(to_jsonb(r)),'[]') FROM v05_session_runs r`,
-		"commandIdentities": `SELECT COALESCE(jsonb_agg(jsonb_build_object('commandId',command_id,'sessionId',session_id,'runEpoch',run_epoch,'traceId',trace_id,'commandType',command_type,'narrationId',payload_envelope->'narrationId','segmentId',payload_envelope->'segmentId','lane',payload_envelope->'lane','timelineEpoch',payload_envelope->'timelineEpoch','beatId',payload_envelope->'payload'->'beatId','interactionTurnId',payload_envelope->'payload'->'interactionTurnId','attemptId',payload_envelope->'payload'->'attemptId','utteranceId',payload_envelope->'payload'->'utteranceId')),'[]') FROM v05_outbox WHERE command_type='COMMIT_SEGMENT'`,
-		"observations":      `SELECT COALESCE(jsonb_agg(jsonb_build_object('command_id',command_id,'operation',operation,'observation_hash',observation_hash,'response_json',response_json,'session_id',session_id,'run_epoch',run_epoch)),'[]') FROM v05_timeline_observations`,
-		"bindingRelease":    `SELECT COALESCE(jsonb_agg(jsonb_build_object('sessionId',session_id,'released',released_at IS NOT NULL)),'[]') FROM session_provider_bindings`,
-	}
+	queries := goldenProofQueries()
 	for name, query := range queries {
 		var raw []byte
 		if e := pool.QueryRow(context.Background(), query).Scan(&raw); e != nil {
