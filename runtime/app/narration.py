@@ -156,7 +156,7 @@ class NarrationCommands(DurableCommands):
         except asyncio.CancelledError:
             raise
         except Exception as exc:
-            allowed={"LLM_FAILED","PROVIDER_AUTH_FAILED","LEASE_LOST","RUN_SEALED","STALE_RUN_EPOCH","STALE_TIMELINE_EPOCH","STALE_GENERATION","COMMAND_CONFLICT","DEPENDENCY_UNAVAILABLE","ANSWER_TOO_LONG","INCOMPLETE_ANSWER"}
+            allowed={"LLM_FAILED","PROVIDER_AUTH_FAILED","LEASE_LOST","RUN_SEALED","STALE_RUN_EPOCH","STALE_TIMELINE_EPOCH","STALE_GENERATION","COMMAND_CONFLICT","DEPENDENCY_UNAVAILABLE","ANSWER_TOO_LONG","INCOMPLETE_ANSWER","BRIDGE_CONTEXT_INVALID","BRIDGE_CHOICE_INVALID"}
             code=getattr(exc,"code",None)
             if isinstance(exc,ValueError) and len(exc.args)==1 and type(exc.args[0]) is str:code=exc.args[0].split(":",1)[0]
             now=time.monotonic();timings[phase]=round((now-phase_started)*1000)

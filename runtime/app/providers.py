@@ -97,7 +97,7 @@ class OpenAICompatibleLLMProvider:
             async with httpx.AsyncClient(timeout=httpx.Timeout(60, connect=10), transport=self.transport, trust_env=False, follow_redirects=False) as client:
                 yield client
 
-    async def stream(self, request: LLMRequest, *, diagnostic=None) -> AsyncIterator[str]:
+    async def stream(self, request: LLMRequest, *, diagnostic=None, _bridge_thinking_disabled=False) -> AsyncIterator[str]:
         import json
         done = False
         terminal_finish = False
@@ -105,17 +105,17 @@ class OpenAICompatibleLLMProvider:
         def observe(**fields):
             if diagnostic is not None:
                 diagnostic(fields)
+        body={"model":self.model,"stream":True,"max_tokens":self.max_tokens,"messages":[
+            {"role":"system","content":getattr(request,"system_prompt","")},
+            {"role":"system","content":"只回复简洁自然的口语。商品库存、价格等动态事实只能依据已提供的 Tool Facts；缺失或不可用时直接说明暂时查不到，不得猜测。"},
+            {"role":"system","content":"Tool Facts:\n"+getattr(request,"fact_context","商品动态事实不可用。")},
+            {"role":"user","content":request.text}]}
+        if _bridge_thinking_disabled:body["thinking"]={"type":"disabled"}
         async with self._stream_client() as client:
             async with client.stream(
                 "POST", f"{self.base_url}/chat/completions",
                 headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
-                json={"model": self.model, "stream": True, "max_tokens": self.max_tokens,
-                      "messages": [
-                          {"role": "system", "content": getattr(request, "system_prompt", "")},
-                          {"role": "system", "content": "只回复简洁自然的口语。商品库存、价格等动态事实只能依据已提供的 Tool Facts；缺失或不可用时直接说明暂时查不到，不得猜测。"},
-                          {"role": "system", "content": "Tool Facts:\n" + getattr(request, "fact_context", "商品动态事实不可用。")},
-                          {"role": "user", "content": request.text},
-                      ]},
+                json=body,
             ) as response:
                 observe(httpStatus=response.status_code)
                 response.raise_for_status()

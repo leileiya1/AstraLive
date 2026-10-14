@@ -401,19 +401,44 @@ class SegmentExecutor:
             self.timeline.position(p["originPosition"]["sampleIndex"]), p["reason"])
 
 
+def bridge_language_context(context):
+    """Private language projection; immutable command/cursor remain Go owned."""
+    goal=context.get("goal");next_beat=context.get("nextBeatId")
+    if not isinstance(goal,list) or not isinstance(next_beat,str):raise ValueError("BRIDGE_CONTEXT_INVALID")
+    matches=[beat for beat in goal if isinstance(beat,dict) and beat.get("beatId")==next_beat] if next_beat else []
+    if next_beat and len(matches)!=1:raise ValueError("BRIDGE_CONTEXT_INVALID")
+    selected=[]
+    if matches:
+        beat=matches[0]
+        if (type(beat.get("title")) is not str or not isinstance(beat.get("requiredFactIds"),list)
+                or any(type(fact) is not str for fact in beat["requiredFactIds"])
+                or beat.get("productId")!=context.get("productId") or beat.get("factVersion")!=context.get("factVersion")):
+            raise ValueError("BRIDGE_CONTEXT_INVALID")
+        selected=[copy.deepcopy({key:beat[key] for key in ("beatId","title","requiredFactIds","productId","factVersion")})]
+    projected=copy.deepcopy(context);projected["goal"]=selected
+    return projected
+
+
 async def bridge_choice(llm, context, choices):
     """LLM chooses approved language; cannot invent facts or mutate the cursor."""
+    staged=getattr(llm,"staging_bridge_enabled",False) is True
+    if staged:context=bridge_language_context(context)
     prompt = LLMRequest(
         "选择自然的过渡语，只返回选项序号。上下文：" + json.dumps(context, ensure_ascii=False) +
         "；选项：" + json.dumps(choices, ensure_ascii=False),
         "你只选择口语过渡，不决定哪些事实已经完成。不重复已讲卖点；必要时选空过渡。", "商品事实只用于理解上下文，禁止自行添加。")
     text = ""
-    async for token in llm.stream(prompt):
+    stream=getattr(llm,"stream_bridge_choice",llm.stream)
+    async for token in stream(prompt):
         text += token
         if len(text) > 16:
+            if staged:raise ValueError("BRIDGE_CHOICE_INVALID")
             return 0
     try:
         result = int(text.strip())
-        return result if 0 <= result < len(choices) else 0
+        if 0 <= result < len(choices):return result
+        if staged:raise ValueError("BRIDGE_CHOICE_INVALID")
+        return 0
     except ValueError:
+        if staged:raise ValueError("BRIDGE_CHOICE_INVALID") from None
         return 0
