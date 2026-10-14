@@ -87,7 +87,7 @@ class AdmissionDiagnosticsTests(unittest.IsolatedAsyncioTestCase):
             with self.subTest(closed=closed,state=state,epoch=epoch):
                 adapter,executor,journal,command=self.adapter()
                 executor.closed=closed;executor.session.state=state;executor.timeline.epoch=epoch
-                executor.session.avatar=SimpleNamespace(link=SimpleNamespace(failed=SimpleNamespace(code='STAGING_CONFLICT')))
+                executor.session.avatar_engine=SimpleNamespace(link=SimpleNamespace(failed=SimpleNamespace(code='STAGING_CONFLICT')))
                 with self.assertLogs('app',level='WARNING') as logs:
                     with self.assertRaisesRegex(ValueError,expected):await adapter.execute(command)
                 row=self.row(logs)
@@ -98,7 +98,7 @@ class AdmissionDiagnosticsTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_static_prefix_never_discloses_remainder_or_foreign_link_code(self):
         adapter,executor,journal,command=self.adapter()
-        executor.session.avatar=SimpleNamespace(link=SimpleNamespace(failed=SimpleNamespace(code='PRIVATE_LINK_CODE')))
+        executor.session.avatar_engine=SimpleNamespace(link=SimpleNamespace(failed=SimpleNamespace(code='PRIVATE_LINK_CODE')))
         async def fail(*args):raise ValueError('RUN_SEALED: PRIVATE_EXCEPTION_BODY')
         executor.begin=fail
         with self.assertLogs('app',level='WARNING') as logs:

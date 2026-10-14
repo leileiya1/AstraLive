@@ -31,7 +31,7 @@ class NarrationCommands(DurableCommands):
             if prior is not None and not prior.done():boundary="ACTIVE_SEGMENT"
             elif current is not None and not current.done():boundary="ORDINARY_SPEECH"
         from gpu_worker import staging_contract
-        link=getattr(getattr(executor.session,"avatar",None),"link",None)
+        link=getattr(getattr(executor.session,"avatar_engine",None),"link",None)
         link_code=getattr(getattr(link,"failed",None),"code",None)
         staging_codes=staging_contract.MESSAGES["StageError"]["properties"]["code"]["enum"]
         timeline=getattr(executor,"timeline",None)
