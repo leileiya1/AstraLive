@@ -87,7 +87,7 @@ func TestPostgresGoldenFailureCleanupPredicate(t *testing.T) {
 		t.Fatal(err)
 	}
 	assertComplete(false)
-	if _, err := p.Exec(ctx, `DELETE FROM live_sessions WHERE id='extra';DELETE FROM v05_timeline_epochs WHERE session_id='s';DELETE FROM v05_session_runs WHERE session_id='s'`); err != nil {
+	if _, err := p.Exec(ctx, `DELETE FROM live_sessions WHERE id='extra';DELETE FROM v05_timeline_epochs WHERE session_id='s';DELETE FROM v05_recovery_leases WHERE session_id='s';DELETE FROM v05_session_runs WHERE session_id='s'`); err != nil {
 		t.Fatal(err)
 	}
 	assertComplete(false)
