@@ -9,6 +9,7 @@ import base64
 import binascii
 import hashlib
 import json
+import math
 import random
 from pathlib import Path
 import time
@@ -81,6 +82,25 @@ def require_browser_av(chrome,normal_stop):
         raise GoldenFailure("Actual browser recording bytes missing")
     if chrome.get("deliveredRecordingBytes")!=chrome["recordedBytes"] or chrome.get("deliveredRecordingChunks")!=chrome["recordingChunks"]:
         raise GoldenFailure("Actual browser recording delivery incomplete")
+
+
+def require_hour_connection(chrome,stop_at):
+    """A reconnected peer cannot masquerade as a continuous hour at checkpoints."""
+    if chrome.get('peerCreations')!=1 or not isinstance(stop_at,(int,float)) or not math.isfinite(stop_at):
+        raise GoldenFailure('One-hour peer or Stop clock proof missing')
+    connected=False
+    events=chrome.get('connectionEvents')
+    if not isinstance(events,list):raise GoldenFailure('One-hour connection history missing')
+    for event in events:
+        at=event.get('at')
+        if not isinstance(at,(int,float)) or not math.isfinite(at):
+            raise GoldenFailure('One-hour connection event clock invalid')
+        if at>=stop_at:continue  # Runtime closes sinks as part of normal Stop.
+        state,ice=event.get('state'),event.get('iceState')
+        if connected and (state!='connected' or ice not in {'connected','completed'}):
+            raise GoldenFailure('One-hour browser connection interrupted before Stop')
+        connected=connected or state=='connected'
+    if not connected:raise GoldenFailure('One-hour connected event missing')
 
 
 def private(path):
@@ -287,6 +307,7 @@ async def main(args):
                 report["continuousDurationSeconds"]=time.monotonic()-began
                 report["finalNarrationBeforeStop"]=snapshot
                 report["factCoverageClaim"]="PENDING_SQL_AUDIT" if args.mode=="ten-minute" else "NOT_FORMAL_COMPLETE_FACT_COVERAGE"
+                report['browserStopRequestedAt']=await page.evaluate('performance.now()')
                 await api("POST",f"/api/v1/live-sessions/{session}/stop",{},"golden-stop")
                 for _ in range(200):
                     state=await api("GET",f"/api/v1/live-sessions/{session}")
@@ -299,6 +320,8 @@ async def main(args):
                 report.update(normalStop=normal_stop,chromeAudioObserved=any(row["rms"]>.001 for row in chrome["audioEnergy"]),
                     chromeVideoFrames=len(chrome["video"]),recordedBytes=(out/"chrome.webm").stat().st_size)
                 require_browser_av(chrome,normal_stop)
+                if args.mode=='soak' and args.seconds==3600:
+                    require_hour_connection(chrome,report['browserStopRequestedAt'])
                 # Correlation, complete turn/fact SQL proofs and RTMP audit are
                 # separate oracles; observing audio/video alone is not PASS.
                 report["status"]="OBSERVED_PENDING_INDEPENDENT_SQL_AV_QUALITY_AUDIT"

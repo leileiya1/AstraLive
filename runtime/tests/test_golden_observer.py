@@ -3,9 +3,22 @@ import unittest
 import io
 import base64
 import hashlib
-from narration_real_golden import require_observable_state, require_browser_av, require_fixture_completion, comment_positions, GoldenFailure, ChromeRecordingWriter
+from narration_real_golden import require_observable_state, require_browser_av, require_fixture_completion, comment_positions, require_hour_connection, GoldenFailure, ChromeRecordingWriter
 
 class GoldenObserverPolicyTests(unittest.TestCase):
+    def test_hour_reconnect_between_checkpoints_cannot_pass_but_normal_stop_close_can(self):
+        initial={'event':'connectionstatechange','at':1,'state':'connecting','iceState':'checking'}
+        connected={'event':'connectionstatechange','at':2,'state':'connected','iceState':'completed'}
+        closed={'event':'connectionstatechange','at':11,'state':'closed','iceState':'closed'}
+        valid={'peerCreations':1,'connectionEvents':[initial,connected,closed]}
+        require_hour_connection(valid,10)
+        for state,ice in [('disconnected','disconnected'),('failed','failed'),('connecting','checking'),('closed','closed')]:
+            interrupted=connected|{'at':5,'state':state,'iceState':ice}
+            with self.assertRaises(GoldenFailure):require_hour_connection(valid|{'connectionEvents':[initial,connected,interrupted,connected|{'at':6},closed]},10)
+        for broken in [valid|{'peerCreations':2},valid|{'connectionEvents':[]},valid|{'connectionEvents':[connected|{'at':float('nan')}]},valid|{'connectionEvents':None}]:
+            with self.assertRaises(GoldenFailure):require_hour_connection(broken,10)
+        with self.assertRaises(GoldenFailure):require_hour_connection(valid,float('inf'))
+
     def test_hour_comments_are_seeded_single_session_stratified_not_bursts(self):
         points=comment_positions('soak',3600,25,5012)
         self.assertEqual(points,comment_positions('soak',3600,25,5012))
