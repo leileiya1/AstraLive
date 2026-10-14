@@ -53,7 +53,8 @@ class AdmissionDiagnosticsTests(unittest.IsolatedAsyncioTestCase):
                     await adapter.execute(command)
             row=self.row(logs)
             self.assertEqual(row['phase'],'segment_begin')
-            self.assertEqual(row['code'],'BOUNDARY_ACTIVE_SEGMENT')
+            self.assertEqual(row['code'],'BOUNDARY_CONFLICT')
+            self.assertEqual(row['boundaryHint'],'ACTIVE_SEGMENT')
             self.assertFalse(row['previousTaskDone'])
             self.assertEqual(journal.operations,['accept','start'])
             self.assertFalse(prior.cancelled())
@@ -80,3 +81,27 @@ class AdmissionDiagnosticsTests(unittest.IsolatedAsyncioTestCase):
             with self.assertRaises(RuntimeFailure):await adapter.execute(command)
         self.assertEqual(self.row(logs)['code'],'OTHER')
         self.assertEqual(journal.operations,['accept','start'])
+
+    async def test_actual_guard_exact_reasons_and_safe_link_scope(self):
+        for closed,state,epoch,expected in ((True,'LIVE',1,'RUN_SEALED'),(False,'DEGRADED',1,'RUN_SEALED'),(False,'LIVE',2,'STALE_TIMELINE_EPOCH')):
+            with self.subTest(closed=closed,state=state,epoch=epoch):
+                adapter,executor,journal,command=self.adapter()
+                executor.closed=closed;executor.session.state=state;executor.timeline.epoch=epoch
+                executor.session.avatar_engine=SimpleNamespace(link=SimpleNamespace(failed=SimpleNamespace(code='STAGING_CONFLICT')))
+                with self.assertLogs('app',level='WARNING') as logs:
+                    with self.assertRaisesRegex(ValueError,expected):await adapter.execute(command)
+                row=self.row(logs)
+                self.assertEqual(row['code'],expected);self.assertEqual(row['sessionState'],state)
+                self.assertEqual(row['executorClosed'],closed);self.assertEqual(row['timelineEpoch'],epoch)
+                self.assertEqual(row['stagingLinkFailureCode'],'STAGING_CONFLICT')
+                self.assertIsNone(row['boundaryHint']);self.assertEqual(journal.operations,['accept','start'])
+
+    async def test_static_prefix_never_discloses_remainder_or_foreign_link_code(self):
+        adapter,executor,journal,command=self.adapter()
+        executor.session.avatar_engine=SimpleNamespace(link=SimpleNamespace(failed=SimpleNamespace(code='PRIVATE_LINK_CODE')))
+        async def fail(*args):raise ValueError('RUN_SEALED: PRIVATE_EXCEPTION_BODY')
+        executor.begin=fail
+        with self.assertLogs('app',level='WARNING') as logs:
+            with self.assertRaises(ValueError):await adapter.execute(command)
+        row=self.row(logs);self.assertEqual(row['code'],'RUN_SEALED')
+        self.assertIsNone(row['stagingLinkFailureCode']);self.assertIsNone(row['boundaryHint'])

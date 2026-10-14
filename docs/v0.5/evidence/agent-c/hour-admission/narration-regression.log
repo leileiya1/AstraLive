@@ -1,0 +1,24 @@
+test_frozen_flag_no_alias (test_narration_segments.ConfigTests.test_frozen_flag_no_alias) ... ok
+test_bound_runtime_rejects_untimed_before_first_after_finish_force (test_narration_segments.ExecutionTests.test_bound_runtime_rejects_untimed_before_first_after_finish_force) ... {"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"runtime_utterance_accepted\", \"elapsedMs\": 0.0010409858077764511, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"llm_started\", \"elapsedMs\": 0.6415409734472632, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"llm_first_token\", \"elapsedMs\": 0.7114999461919069, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"first_speakable_segment\", \"elapsedMs\": 0.8053330238908529, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"tts_started\", \"elapsedMs\": 0.8308750111609697, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"tts_first_pcm\", \"elapsedMs\": 0.8790829451754689, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"media_first_audio\", \"elapsedMs\": 0.9159999899566174, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"media output push returned; not browser/speaker playback\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"utterance_completed\", \"elapsedMs\": 0.9389999322593212, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"media drain completed\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+ok
+test_bridge_cannot_invent_fact_or_cursor (test_narration_segments.ExecutionTests.test_bridge_cannot_invent_fact_or_cursor) ... ok
+test_native_renderer_fail_closed_before_tts (test_narration_segments.ExecutionTests.test_native_renderer_fail_closed_before_tts) ... ok
+test_position_serialization_has_exact_pts (test_narration_segments.ExecutionTests.test_position_serialization_has_exact_pts) ... ok
+test_ready_commit_actual_fixture_consumption (test_narration_segments.ExecutionTests.test_ready_commit_actual_fixture_consumption) ... ok
+test_ready_failure_no_commit_no_output_and_unknown (test_narration_segments.ExecutionTests.test_ready_failure_no_commit_no_output_and_unknown) ... ok
+test_tts_duration_cap_no_truncation (test_narration_segments.ExecutionTests.test_tts_duration_cap_no_truncation) ... ok
+test_completed_sql_before_local_task_returns_can_reject_next_begin (test_narration_admission_diagnostics.AdmissionDiagnosticsTests.test_completed_sql_before_local_task_returns_can_reject_next_begin) ... ok
+test_expired_started_grant_keeps_original_error_and_no_retry (test_narration_admission_diagnostics.AdmissionDiagnosticsTests.test_expired_started_grant_keeps_original_error_and_no_retry) ... ok
+test_unknown_exception_text_and_code_never_leak (test_narration_admission_diagnostics.AdmissionDiagnosticsTests.test_unknown_exception_text_and_code_never_leak) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.264s
+
+OK
