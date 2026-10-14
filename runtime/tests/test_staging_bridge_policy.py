@@ -116,3 +116,37 @@ class StagingBridgePolicyTests(unittest.IsolatedAsyncioTestCase):
             llm.client=httpx.AsyncClient(transport=httpx.MockTransport(reply));self.addAsyncCleanup(llm.aclose)
             with self.subTest(status=status):
                 with self.assertRaises(RuntimeFailure):await bridge_choice(llm,context(),['','继续。'])
+
+    async def test_explicit_zero_based_ascii_indices_and_exact_choice_payload(self):
+        class Choice:
+            staging_bridge_enabled=True
+            async def stream(self,request):self.request=request;yield self.output
+        llm=Choice();original=context();choices=['','回到商品。','继续下一点。'];saved=copy.deepcopy(choices)
+        for index in range(3):
+            llm.output=str(index)
+            self.assertEqual(await bridge_choice(llm,original,choices),index)
+            self.assertIn('索引从0开始，0表示空过渡',llm.request.text)
+            self.assertIn('ASCII索引：0, 1, 2',llm.request.text)
+            rendered=llm.request.text.split('；明确索引选项：',1)[1]
+            self.assertEqual(json.loads(rendered),[{'index':i,'text':text} for i,text in enumerate(choices)])
+        self.assertEqual(choices,saved)
+
+    async def test_noncanonical_ascii_and_one_based_three_still_rejected(self):
+        class Choice:
+            staging_bridge_enabled=True
+            async def stream(self,request):yield self.output
+        llm=Choice()
+        for output in ('3','-1','+1','01','١','１','1.0','1\n',' 1','"1"',''):
+            llm.output=output
+            with self.subTest(outputHash=hashlib.sha256(output.encode()).hexdigest()):
+                with self.assertRaisesRegex(ValueError,'BRIDGE_CHOICE_INVALID'):await bridge_choice(llm,context(),['','一。','二。'])
+
+    async def test_legacy_prompt_byte_identity_with_original_array_and_parser(self):
+        class Choice:
+            async def stream(self,request):self.request=request;yield ' 1\n'
+        llm=Choice();original=context(4);choices=['','继续。']
+        self.assertEqual(await bridge_choice(llm,original,choices),1)
+        expected=LLMRequest('选择自然的过渡语，只返回选项序号。上下文：'+json.dumps(original,ensure_ascii=False)+'；选项：'+json.dumps(choices,ensure_ascii=False),
+            '你只选择口语过渡，不决定哪些事实已经完成。不重复已讲卖点；必要时选空过渡。','商品事实只用于理解上下文，禁止自行添加。')
+        self.assertEqual(llm.request,expected)
+        self.assertEqual(llm.request.text.encode(),expected.text.encode())
