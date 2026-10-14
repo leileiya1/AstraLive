@@ -22,6 +22,19 @@ from app.narration_segments import SegmentExecutionRequest
 
 
 class CaptureTests(unittest.TestCase):
+    def test_startup_profile_absent_defaults_but_explicit_empty_rejects(self):
+        with patch.dict(os.environ,{"ASTRALIVE_SOULX_STAGING_ENABLED":"true"},clear=True):
+            captured=StagingSettings.from_env()
+            self.assertEqual(captured,StagingSettings(True,"staging-short-1"))
+            for explicit in (""," "):
+                os.environ["ASTRALIVE_SOULX_STAGING_LIMITS_REVISION"]=explicit
+                with self.assertRaises(ValueError):StagingSettings.from_env()
+                self.assertEqual(captured.check_capture(captured.capture()),captured.capture())
+        for enabled in (None,"false","0"):
+            env={"ASTRALIVE_SOULX_STAGING_LIMITS_REVISION":"","ASTRALIVE_SOULX_STAGING_SHORT_GPU_GATE_SHA256":"invalid"}
+            if enabled is not None:env["ASTRALIVE_SOULX_STAGING_ENABLED"]=enabled
+            with patch.dict(os.environ,env,clear=True):self.assertEqual(StagingSettings.from_env(),StagingSettings())
+
     def test_disabled_old_capture_and_enabled_exact_only(self):
         disabled=StagingSettings()
         self.assertEqual(disabled.check_capture({}),disabled.capture())

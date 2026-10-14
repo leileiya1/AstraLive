@@ -1,0 +1,54 @@
+=== RUN   TestStagingCaptureFrozenProfiles
+=== RUN   TestStagingCaptureFrozenProfiles/false
+=== RUN   TestStagingCaptureFrozenProfiles/true
+=== RUN   TestStagingCaptureFrozenProfiles/1staging-short-1
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-segment-8s-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-short-gpu1g-1
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-segment-8s-gpu1g-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-short-gpu1g-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-segment-8s-gpu1g-1
+=== RUN   TestStagingCaptureFrozenProfiles/oops
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-segment-8s-1
+=== RUN   TestStagingCaptureFrozenProfiles/trueunknown
+=== RUN   TestStagingCaptureFrozenProfiles/truestaging-short-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+--- PASS: TestStagingCaptureFrozenProfiles (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/false (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/true (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/1staging-short-1 (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-segment-8s-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-short-gpu1g-1 (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-segment-8s-gpu1g-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-short-gpu1g-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-segment-8s-gpu1g-1 (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/oops (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-segment-8s-1 (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/trueunknown (0.00s)
+    --- PASS: TestStagingCaptureFrozenProfiles/truestaging-short-1sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (0.00s)
+=== RUN   TestStagingEnvironmentGoPythonAgreement
+=== RUN   TestStagingEnvironmentGoPythonAgreement/default_off
+=== RUN   TestStagingEnvironmentGoPythonAgreement/disabled_empty_ignored
+=== RUN   TestStagingEnvironmentGoPythonAgreement/default_off_invalid_dormant_profile
+=== RUN   TestStagingEnvironmentGoPythonAgreement/enabled_absent_original_short
+=== RUN   TestStagingEnvironmentGoPythonAgreement/enabled_explicit_empty
+=== RUN   TestStagingEnvironmentGoPythonAgreement/enabled_whitespace
+=== RUN   TestStagingEnvironmentGoPythonAgreement/old_short
+=== RUN   TestStagingEnvironmentGoPythonAgreement/new_short_explicit
+=== RUN   TestStagingEnvironmentGoPythonAgreement/old_long_gate
+=== RUN   TestStagingEnvironmentGoPythonAgreement/new_long_gate
+=== RUN   TestStagingEnvironmentGoPythonAgreement/long_missing_gate
+=== RUN   TestStagingEnvironmentGoPythonAgreement/invalid_flag
+--- PASS: TestStagingEnvironmentGoPythonAgreement (0.26s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/default_off (0.03s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/disabled_empty_ignored (0.02s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/default_off_invalid_dormant_profile (0.02s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/enabled_absent_original_short (0.02s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/enabled_explicit_empty (0.02s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/enabled_whitespace (0.02s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/old_short (0.02s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/new_short_explicit (0.02s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/old_long_gate (0.02s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/new_long_gate (0.02s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/long_missing_gate (0.02s)
+    --- PASS: TestStagingEnvironmentGoPythonAgreement/invalid_flag (0.02s)
+PASS
+ok  	astralive/backend/internal/narration	1.817s
