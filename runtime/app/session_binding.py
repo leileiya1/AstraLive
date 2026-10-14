@@ -70,15 +70,22 @@ class FixedDeepSeekTransport(httpx.AsyncBaseTransport):
 
 class BoundDeepSeek(OpenAICompatibleLLMProvider):
     propagate_failures = True
-    def __init__(self, config, key, errors):
+    def __init__(self, config, key, errors, *, staging_bridge_enabled=False):
         super().__init__("https://api.deepseek.com", key, config["model"], config["maxTokens"])
         self.config, self.errors = config, errors
+        self.staging_bridge_enabled=staging_bridge_enabled is True
         # Test-only provider call evidence is captured once; no secret/prompt
         # contents are persisted and production logging is unchanged by default.
         self.observer_dir = os.getenv("ASTRALIVE_STAGING_OBSERVER_DIR")
         self.observer_sequence = 0
 
     async def stream(self, request):
+        async for token in self._bound_stream(request):yield token
+
+    async def stream_bridge_choice(self, request):
+        async for token in self._bound_stream(request,bridge=True):yield token
+
+    async def _bound_stream(self, request, *, bridge=False):
         if self.client is None:
             self.transport = FixedDeepSeekTransport(self.config.get("temperature"))
             self.client = httpx.AsyncClient(timeout=httpx.Timeout(60, connect=10), transport=self.transport, trust_env=False, follow_redirects=False)
@@ -90,7 +97,10 @@ class BoundDeepSeek(OpenAICompatibleLLMProvider):
         observed = ""
         outcome = "FAILED"
         try:
-            source=super().stream(request,diagnostic=observe_stream) if self.observer_dir else super().stream(request)
+            options={}
+            if self.observer_dir:options["diagnostic"]=observe_stream
+            if bridge and self.staging_bridge_enabled:options["_bridge_thinking_disabled"]=True
+            source=super().stream(request,**options)
             async for token in source:
                 observed += token
                 yield token
@@ -119,6 +129,8 @@ class BoundDeepSeek(OpenAICompatibleLLMProvider):
                     "responseHash":"sha256:"+hashlib.sha256(observed.encode()).hexdigest(),"responseChars":len(observed),
                     "durationMs":round((asyncio.get_running_loop().time()-started)*1000),"audienceAudible":False}
                 row["streamDiagnostic"]=stream_diagnostic
+                if bridge and self.staging_bridge_enabled:
+                    row.update(requestPolicyRevision="staging-bridge-language-1",thinking="disabled",requestBytes=len(request.text.encode()))
                 with (folder/"llm-calls.jsonl").open("a") as handle:handle.write(json.dumps(row,ensure_ascii=False)+"\n")
 
     async def aclose(self):
@@ -161,7 +173,7 @@ def bundle_factories(packet, sid, media_factory, errors, staging=None):
 
     if staging is not None and staging.enabled:
         from .soulx_staging import StagingAvatarEngine
-        return (lambda: BoundDeepSeek(llm["config"], key, errors),
+        return (lambda: BoundDeepSeek(llm["config"], key, errors,staging_bridge_enabled=True),
                 lambda: BoundXiaoYa(os.environ["TTS_MODEL_DIR"]),
                 lambda: StagingAvatarEngine(endpoint,sid,cfg.worker_ref,staging),media_factory)
 

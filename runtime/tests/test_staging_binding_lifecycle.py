@@ -41,7 +41,7 @@ class BoundStagingLifecycleTests(unittest.IsolatedAsyncioTestCase):
         manager.staging_settings=staging
         for context in [patch.dict(os.environ,{"GPU_WORKER_INFERENCE_REGISTRY_FILE":"software-registry-not-read","SESSION_PROVIDER_STATE_DIR":directory.name,"TTS_MODEL_DIR":"software-not-read"}),
             patch("gpu_worker.client.resolve_binding",return_value=endpoint),
-            patch("app.session_binding.BoundDeepSeek",lambda config,key,errors:TaggedLLM(key)),
+            patch("app.session_binding.BoundDeepSeek",lambda config,key,errors,**kwargs:TaggedLLM(key)),
             patch("app.session_binding.BoundXiaoYa",lambda model:MockTTSProvider())]:
             context.start();self.addCleanup(context.stop)
         self.addAsyncCleanup(manager.close)
