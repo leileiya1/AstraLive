@@ -43,6 +43,7 @@ class Stage:
     failed: Exception | None = None
     deadline: float = 0
     renew_task: object = None
+    renew_stop: object = field(default_factory=asyncio.Event)
     control_id: str | None = None
     release_request: dict | None = None
     cancel_request: dict | None = None
@@ -211,9 +212,12 @@ class StagingClient:
         answer=await self.exchange({"type":"StageStatus",**self.common(stage),"nonce":nonce},"StageStatusResult")
         self.rtt_ms=math.ceil((time.monotonic()-began)*1000);return answer
 
-    async def lease_fields(self,command,request,journal,guard):
+    async def lease_fields(self,command,request,journal,guard,stop=None):
+        if stop is not None and stop.is_set():return None
         guard();began=time.monotonic();grant=await journal.request("POST","/grant",{"sessionId":self.sid,"runEpoch":command["runEpoch"]})
-        received=time.monotonic();guard()
+        received=time.monotonic()
+        if stop is not None and stop.is_set():return None
+        guard()
         if grant["status"]!="ACTIVE" or grant["leaseToken"]!=request.leaseToken or command["commandSeq"]<grant["barrierSeq"]:
             raise StagingFailure("STAGING_RETIRED")
         a_rtt=math.ceil((received-began)*1000);age=math.ceil((time.monotonic()-received)*1000)
@@ -261,14 +265,22 @@ class StagingClient:
     async def renew(self,stage,command,request,journal,guard):
         sequence=0;started=time.monotonic()
         try:
-            while not stage.released and not stage.fenced:
-                await asyncio.sleep(1);guard();self.check(stage)
+            while not stage.renew_stop.is_set() and not stage.released and not stage.fenced:
+                try:
+                    await asyncio.wait_for(stage.renew_stop.wait(),1)
+                    return
+                except asyncio.TimeoutError:pass
+                if stage.renew_stop.is_set() or stage.released or stage.fenced:return
+                guard();self.check(stage)
                 if time.monotonic()-started>=59:raise StagingFailure("STAGING_LEASE_EXPIRED")
+                fields=await self.lease_fields(command,request,journal,guard,stage.renew_stop)
+                if fields is None or stage.renew_stop.is_set() or stage.released or stage.fenced:return
                 sequence+=1
-                packet={"type":"StageRenew",**self.common(stage),"renewal_sequence":sequence,**await self.lease_fields(command,request,journal,guard)}
+                packet={"type":"StageRenew",**self.common(stage),"renewal_sequence":sequence,**fields}
                 packet["renewal_fingerprint"]=c.renewal_fingerprint(packet);sent=time.monotonic()
                 reply=await self.exchange(packet,"StageRenewAck")
                 if reply["renewal_fingerprint"]!=packet["renewal_fingerprint"] or reply["renewal_sequence"]!=sequence:raise StagingFailure("STAGING_CONFLICT")
+                if stage.renew_stop.is_set() or stage.released or stage.fenced:return
                 stage.deadline=sent+reply["lease_remaining_ms"]/1000-(time.monotonic()-sent)-.1
         except asyncio.CancelledError:raise
         except Exception as exc:
@@ -295,11 +307,16 @@ class StagingClient:
     async def release(self,stage,complete=False,reason="STOP"):
         async with stage.release_lock:
             if stage.released:return stage.released
+            stage.renew_stop.set()
+            # Preserve correlation of an already-written renewal until its
+            # existing bounded ACK completes; never retire Worker first.
+            if not complete:stage.fenced=True
+            if stage.renew_task:await asyncio.gather(asyncio.shield(stage.renew_task),return_exceptions=True)
+            if complete and stage.failed:raise stage.failed
             if stage.control_id is None:stage.control_id=uuid4().hex
             control=stage.control_id
             if not complete:
                 stage.fenced=True
-                if stage.renew_task:stage.renew_task.cancel();await asyncio.gather(stage.renew_task,return_exceptions=True)
                 if stage.cancel_request is None:
                     stage.cancel_request={"type":"StageCancel",**self.common(stage),"control_id":control,"reason":reason}
                 fenced=await self.exchange(stage.cancel_request,"StageFenced",timeout=10)
@@ -315,7 +332,6 @@ class StagingClient:
             if reply["latest_consumed_sequence"]!=stage.release_request["latest_consumed_sequence"]:raise StagingFailure("STAGING_POSE_UNPROVEN")
             if complete and (reply["terminal_disposition"]!="PROVEN_COMPLETE" or not reply["reusable"]):raise StagingFailure("STAGING_RETIRED")
             stage.released=reply;stage.reusable=reply["reusable"]
-            if stage.renew_task:stage.renew_task.cancel();await asyncio.gather(stage.renew_task,return_exceptions=True)
             # Physical safe boundary is a distinct proof from business completion.
             stage.frames.clear()
             return reply

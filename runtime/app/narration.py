@@ -21,18 +21,33 @@ class NarrationCommands(DurableCommands):
         run=self.runs.get(command["sessionId"],{})
         prior=getattr(executor,"task",None)
         current=getattr(executor.session,"current_task",None)
-        allowed={"LEASE_LOST","RUN_SEALED","STALE_TIMELINE_EPOCH","STALE_GENERATION","COMMAND_CONFLICT","DEPENDENCY_UNAVAILABLE"}
+        allowed={"LEASE_LOST","RUN_SEALED","STALE_RUN_EPOCH","STALE_TIMELINE_EPOCH","STALE_GENERATION","COMMAND_CONFLICT","DEPENDENCY_UNAVAILABLE","BOUNDARY_CONFLICT"}
         code=getattr(exc,"code",None)
+        if isinstance(exc,ValueError) and len(exc.args)==1 and type(exc.args[0]) is str:
+            code=exc.args[0].split(":",1)[0]
         code=code if code in allowed else "OTHER"
-        if phase=="segment_begin" and isinstance(exc,ValueError):
-            if prior is not None and not prior.done():code="BOUNDARY_ACTIVE_SEGMENT"
-            elif current is not None and not current.done():code="BOUNDARY_ORDINARY_SPEECH"
+        boundary=None
+        if code=="BOUNDARY_CONFLICT":
+            if prior is not None and not prior.done():boundary="ACTIVE_SEGMENT"
+            elif current is not None and not current.done():boundary="ORDINARY_SPEECH"
+        from gpu_worker import staging_contract
+        link=getattr(getattr(executor.session,"avatar",None),"link",None)
+        link_code=getattr(getattr(link,"failed",None),"code",None)
+        staging_codes=staging_contract.MESSAGES["StageError"]["properties"]["code"]["enum"]
+        timeline=getattr(executor,"timeline",None)
+        state=getattr(executor.session,"state",None)
+        safe_int=lambda value:value if type(value) is int and 0<=value<=MAX_INTEGER else None
         row={"phase":phase,"commandId":command["commandId"],"commandType":command["commandType"],
             "code":code,"errorType":type(exc).__name__ if type(exc).__name__ in {"RuntimeFailure","JournalError","ValueError","ValidationError","RuntimeError","TimeoutError"} else "OTHER",
             "previousTaskDone":None if prior is None else prior.done(),"currentTaskIsPrevious":current is not None and current is prior,
             "runSealed":run.get("sealed") is True,"barrierPending":run.get("barrier_pending") is True,
             "deadlineExpired":time.monotonic()>=run.get("deadline",0),
-            "startedRemainingMs":remaining_ms if type(remaining_ms) is int else None}
+            "startedRemainingMs":remaining_ms if type(remaining_ms) is int else None,
+            "boundaryHint":boundary,"executorClosed":getattr(executor,"closed",None) is True,
+            "sessionState":state if state in {"PREPARING","LIVE","DEGRADED","STOPPING","ENDED","FAILED"} else "OTHER",
+            "stagingLinkFailureCode":link_code if link_code in staging_codes else None,
+            "commandRunEpoch":safe_int(command.get("runEpoch")),"commandTimelineEpoch":safe_int(command.get("timelineEpoch")),
+            "timelineRunEpoch":safe_int(getattr(timeline,"run_epoch",None)),"timelineEpoch":safe_int(getattr(timeline,"epoch",None))}
         logging.getLogger("app").warning("narration_admission_failed %s",json.dumps(row))
 
     async def execute(self, command):
