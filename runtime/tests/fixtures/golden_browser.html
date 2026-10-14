@@ -6,6 +6,14 @@ let pc, ac, recorder, audioSource, audioAnalyser, audioInputStream, audioPreflig
 function safeErrorName(error) {
   return ['NotAllowedError','NotSupportedError','InvalidStateError','NotReadableError','AbortError'].includes(error?.name)?error.name:'OTHER';
 }
+let peerCreations=0,connectionEvents=[];
+function goldenCheckpoint() {
+  return {at:performance.now(),peerCreations,connectionState:pc?.connectionState??null,
+    iceConnectionState:pc?.iceConnectionState??null,audio:audioState('checkpoint'),
+    videoFrames:rows.length,audioSamples:audioRows.length,recordedBytes,
+    deliveredRecordingBytes,recordingChunks:recordingSequence,recordingFailed,
+    lastVideo:rows.at(-1)??null,lastAudio:audioRows.at(-1)??null};
+}
 function recordingPayload(dataURL) {
   const marker=';base64,',offset=typeof dataURL==='string'?dataURL.indexOf(marker):-1;
   if(offset<0 || !dataURL.startsWith('data:'))throw new Error('Recording data URL encoding invalid');
@@ -107,7 +115,9 @@ async function goldenAudioReady() {
 async function goldenStart(sessionId) {
   if(!audioActivation)throw new Error('Real user audio activation required');
   await audioActivation;
-  begun=performance.now(); pc=new RTCPeerConnection({iceServers:[]});
+  begun=performance.now(); pc=new RTCPeerConnection({iceServers:[]});peerCreations++;
+  for(const event of ['connectionstatechange','iceconnectionstatechange'])pc.addEventListener(event,()=>
+    connectionEvents.push({event,at:performance.now(),state:pc.connectionState,iceState:pc.iceConnectionState}));
   pc.addTransceiver('audio',{direction:'recvonly'}); pc.addTransceiver('video',{direction:'recvonly'});
   stream=new MediaStream(); const video=document.getElementById('video'); video.muted=true;
   const canvas=document.createElement('canvas'); canvas.width=8; canvas.height=8;
@@ -192,7 +202,7 @@ async function goldenFinish() {
   const result={clockDomain:'chrome_performance_ms',timeOrigin:performance.timeOrigin,startedAt:begun,endedAt:performance.now(),
     audioSampleRate:ac?.sampleRate??null,audioContextState:ac?.state??null,audioContextTime:ac?.currentTime??null,
     audioBaseLatency:ac?.baseLatency??null,audioOutputLatency:ac?.outputLatency??null,
-    audioPreflight,audioLifecycle,trackEvents,recorderErrors,recordingFailed,deliveredRecordingBytes,deliveredRecordingChunks,recorderState:recorder?.state??null,
+    audioPreflight,audioLifecycle,trackEvents,peerCreations,connectionEvents,recorderErrors,recordingFailed,deliveredRecordingBytes,deliveredRecordingChunks,recorderState:recorder?.state??null,
     video:rows,audioEnergy:audioRows,inbound,
     recordedBytes,recordingChunks:recordingSequence,recordingStartedAt,chunkEvents,audienceAudible:false,
     correlatedAV:'NOT_ANALYSED: requires actual staged speech/frame reference matching'};

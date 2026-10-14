@@ -50,8 +50,14 @@ def main():
     parser.add_argument("--profile", choices=("staging-short-1", "staging-segment-8s-1", "staging-short-gpu1g-1", "staging-segment-8s-gpu1g-1"), default="staging-segment-8s-1")
     parser.add_argument("--short-gpu-gate-sha256", help="operator-pinned short real GPU evidence digest for 8s profile")
     parser.add_argument("--seed", type=int, default=5012)
+    parser.add_argument("--soak-seconds", type=int, choices=(1800,3600), default=1800,
+                        help="explicit single-session soak duration; defaults to original 30 minutes")
     args = parser.parse_args()
     seconds = {"short": 60, "fixture-completion-smoke": 60, "ten-minute": 600, "soak": 1800, "faults": 120}[args.mode]
+    if args.mode == "soak":
+        seconds = args.soak_seconds
+    elif args.soak_seconds != 1800:
+        parser.error("soak duration is only valid in soak mode")
     for port in (args.worker_port, args.management_port):
         if not 1 <= port <= 65535:
             parser.error("port outside valid range")

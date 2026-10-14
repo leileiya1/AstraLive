@@ -58,6 +58,16 @@ def require_fixture_completion(snapshot,required_facts,injected_questions,total_
         raise GoldenFailure("Fixture completion lacks required facts/questions")
 
 
+def comment_positions(mode,seconds,count,seed):
+    rng=random.Random(seed)
+    if mode=='soak' and seconds==3600:
+        # Seeded stratified comments avoid changing this stability run into a
+        # burst/dedup experiment. Those remain separate acceptance cases.
+        width=seconds*.79/count
+        return [seconds*.08+width*(i+rng.uniform(.25,.75)) for i in range(count)]
+    return sorted(rng.uniform(seconds*.08,seconds*.87) for _ in range(count))
+
+
 def require_browser_av(chrome,normal_stop):
     if not normal_stop:raise GoldenFailure("Actual Session normal Stop missing")
     if chrome.get("recordingFailed") or chrome.get("recorderErrors"):
@@ -209,8 +219,10 @@ async def main(args):
                 deadline=1800 if args.mode=="ten-minute" else 180 if args.mode=="fixture-completion-smoke" else args.seconds
                 report["observationBudgetSeconds"]=deadline
                 required_facts=set(fact for beat in document["plan"]["beats"] for fact in beat["requiredFactIds"])
-                positions=sorted(random.Random(args.seed).uniform(args.seconds*.08,args.seconds*.87) for _ in questions)
+                positions=comment_positions(args.mode,args.seconds,len(questions),args.seed)
                 report["commentPositionsSeconds"]=positions;next_question=0
+                checkpoint_targets=[90,300,900,1800,2700,3600] if args.mode=='soak' and args.seconds==3600 else []
+                next_checkpoint=0;report['checkpoints']=[]
                 while time.monotonic()-began<deadline:
                     elapsed=time.monotonic()-began
                     if next_question<len(questions) and elapsed>=positions[next_question]:
@@ -219,6 +231,20 @@ async def main(args):
                             "browserAt":await page.evaluate("performance.now()"),"response":answer});next_question+=1
                     snapshot=await api("GET",f"/api/v0.5/narration/{session}/")
                     require_observable_state(snapshot)
+                    if next_checkpoint<len(checkpoint_targets) and elapsed>=checkpoint_targets[next_checkpoint]:
+                        browser_state=await page.evaluate('goldenCheckpoint()')
+                        entry={'targetSeconds':checkpoint_targets[next_checkpoint],
+                            'elapsedSeconds':time.monotonic()-began,'browser':browser_state,
+                            'narrationState':snapshot['state'],'reason':snapshot['reason'],
+                            'nextOrdinal':snapshot['cursor']['nextOrdinal'],
+                            'completedFacts':len(snapshot['cursor']['completedFactIds'] or []),
+                            'completedSegments':len(snapshot['cursor']['completedSegmentIds'] or [])}
+                        report['checkpoints'].append(entry)
+                        await page.screenshot(path=str(out/f"checkpoint-{checkpoint_targets[next_checkpoint]:04d}.png"))
+                        (out/'progress.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+                        next_checkpoint+=1
+                        if browser_state['peerCreations']!=1 or browser_state['connectionState']!='connected' or browser_state['recordingFailed']:
+                            raise GoldenFailure('One-hour browser connection/recording prerequisite lost')
                     if snapshot["reason"]=="FINISHED":
                         if args.mode=="fixture-completion-smoke":
                             require_fixture_completion(snapshot,required_facts,next_question,len(questions))
@@ -236,6 +262,14 @@ async def main(args):
                         if elapsed<args.seconds:
                             raise GoldenFailure("Soak authored fixture exhausted early")
                     await asyncio.sleep(.2)
+                if args.mode=='soak' and args.seconds==3600:
+                    browser_state=await page.evaluate('goldenCheckpoint()')
+                    report['checkpoints'].append({'targetSeconds':3600,'elapsedSeconds':time.monotonic()-began,'browser':browser_state,
+                        'narrationState':snapshot['state'],'reason':snapshot['reason'],'nextOrdinal':snapshot['cursor']['nextOrdinal'],
+                        'completedFacts':len(snapshot['cursor']['completedFactIds'] or []),'completedSegments':len(snapshot['cursor']['completedSegmentIds'] or [])})
+                    await page.screenshot(path=str(out/'checkpoint-3600.png'))
+                    if next_question!=len(questions):raise GoldenFailure('One-hour comments not all injected')
+                    report['oneHourScope']='one continuous Session/peer/recording; planned tail interrupted by normal Stop, not full-plan coverage'
                 if args.mode=="ten-minute" and snapshot.get("reason")!="FINISHED":
                     raise GoldenFailure("Formal G1 deadline exceeded before authored plan completion")
                 if args.mode=="fixture-completion-smoke":

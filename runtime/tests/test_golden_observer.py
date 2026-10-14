@@ -3,9 +3,19 @@ import unittest
 import io
 import base64
 import hashlib
-from narration_real_golden import require_observable_state, require_browser_av, require_fixture_completion, GoldenFailure, ChromeRecordingWriter
+from narration_real_golden import require_observable_state, require_browser_av, require_fixture_completion, comment_positions, GoldenFailure, ChromeRecordingWriter
 
 class GoldenObserverPolicyTests(unittest.TestCase):
+    def test_hour_comments_are_seeded_single_session_stratified_not_bursts(self):
+        points=comment_positions('soak',3600,25,5012)
+        self.assertEqual(points,comment_positions('soak',3600,25,5012))
+        self.assertEqual(len(points),25)
+        self.assertGreater(min(points),90)
+        self.assertLess(max(points),3600*.87)
+        self.assertGreater(min(b-a for a,b in zip(points,points[1:])),50)
+        import random
+        rng=random.Random(5012)
+        self.assertEqual(comment_positions('short',60,5,5012),sorted(rng.uniform(4.8,52.2) for _ in range(5)))
     def test_natural_finished_plan_allowed_for_normal_session_stop(self):
         require_observable_state({"state":"STOPPED","reason":"FINISHED"})
         require_observable_state({"state":"NARRATING","reason":""})
