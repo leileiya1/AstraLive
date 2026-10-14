@@ -1,0 +1,67 @@
+{
+  "actualSource": "aac8cfdd92e92472d8426e32c03dd9363e2b2527",
+  "scope": "Read-only preserved F actual hour3 evidence; no rerun by C",
+  "completedCommits": [
+    {
+      "commandId": "cmd_5417eb5419987888ced11a6788fa984d",
+      "generationId": 3,
+      "completedAt": "2026-10-14T16:33:39.177724+08:00"
+    },
+    {
+      "commandId": "cmd_3fb41db5334a4905d0463f96069552f9",
+      "generationId": 2,
+      "completedAt": "2026-10-14T16:33:27.97626+08:00"
+    },
+    {
+      "commandId": "cmd_b83e130a0ce1b90d79dcd2694eaac89c",
+      "generationId": 6,
+      "completedAt": "2026-10-14T16:34:11.490715+08:00"
+    },
+    {
+      "commandId": "cmd_8e708e8252859e05f5a8d758f1c04558",
+      "generationId": 7,
+      "completedAt": "2026-10-14T16:34:21.206584+08:00"
+    },
+    {
+      "commandId": "cmd_11dda0eb13048db893f143fa09364107",
+      "generationId": 9,
+      "completedAt": "2026-10-14T16:34:41.407277+08:00"
+    },
+    {
+      "commandId": "cmd_629b11735f1c9b07a7599d9dfc79d780",
+      "generationId": 8,
+      "completedAt": "2026-10-14T16:34:31.303879+08:00"
+    },
+    {
+      "commandId": "cmd_741f3f159c35ee9cd8dfcd43d160cc97",
+      "generationId": 5,
+      "completedAt": "2026-10-14T16:34:00.224545+08:00"
+    },
+    {
+      "commandId": "cmd_ed56fbbb7fb021ff60adf160959fc3de",
+      "generationId": 4,
+      "completedAt": "2026-10-14T16:33:49.93637+08:00"
+    }
+  ],
+  "ninthAttempt": [
+    {
+      "commandId": "cmd_eab0c6e887b1bb346bc6e9c6de7035ed",
+      "generationId": null,
+      "status": "CANCELLED",
+      "updatedAt": "2026-10-14T16:34:42.537291+08:00"
+    }
+  ],
+  "bindingRelease": [
+    {
+      "released": true,
+      "sessionId": "session_d229b36c1d1add3cfa5c6ec23e4d614e"
+    }
+  ],
+  "firstCause": "NOT_ESTABLISHED: failure snapshot and synchronous admission exception absent from source logs",
+  "artifactSHA256": {
+    "sql-proof.json": "b23bf0d51695efda3d55635ae4d99fb0af8d5a98b4e2592adad6e51081d3730c",
+    "backend.log": "5a1c60368053bf73db08905eb27925dfa59f8e9d69bb3e79452e6dcb739c369e",
+    "runtime.log": "b761bac0cd93acf3b710fc419d8ba3adef6655fda52483e9e4ee0d9b07bd0642",
+    "observer.log": "2f8f29bd0d7f8d083c655a58a4ddd4916b616f5f0b5349d05ae92973e58f52e6"
+  }
+}
