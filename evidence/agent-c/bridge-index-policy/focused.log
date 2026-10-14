@@ -1,0 +1,64 @@
+test_bundle_factory_uses_captured_staging_scope_only (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_bundle_factory_uses_captured_staging_scope_only) ... ok
+test_captured_staging_bridge_compact_exact_body_and_command_immutable (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_captured_staging_bridge_compact_exact_body_and_command_immutable) ... ok
+test_explicit_zero_based_ascii_indices_and_exact_choice_payload (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_explicit_zero_based_ascii_indices_and_exact_choice_payload) ... ok
+test_finished_empty_next_beat_retains_facts_without_inventing_goal (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_finished_empty_next_beat_retains_facts_without_inventing_goal) ... ok
+test_flags_off_bridge_keeps_original_context_and_request_body (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_flags_off_bridge_keeps_original_context_and_request_body) ... ok
+test_invalid_missing_duplicate_stale_goal_fails_before_provider (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_invalid_missing_duplicate_stale_goal_fails_before_provider) ... ok
+test_legacy_prompt_byte_identity_with_original_array_and_parser (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_legacy_prompt_byte_identity_with_original_array_and_parser) ... ok
+test_noncanonical_ascii_and_one_based_three_still_rejected (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_noncanonical_ascii_and_one_based_three_still_rejected) ... ok
+test_staging_http_error_or_missing_terminal_never_defaults_zero (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_staging_http_error_or_missing_terminal_never_defaults_zero) ... ok
+test_staging_length_finish_still_raises_not_zero_choice (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_staging_length_finish_still_raises_not_zero_choice) ... ok
+test_staging_long_invalid_or_out_of_range_choice_never_defaults_zero (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_staging_long_invalid_or_out_of_range_choice_never_defaults_zero) ... ok
+test_staging_ordinary_stream_never_disables_thinking (runtime.tests.test_staging_bridge_policy.StagingBridgePolicyTests.test_staging_ordinary_stream_never_disables_thinking) ... ok
+test_bridge_provider_failure_stays_unknown_and_has_phase (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_bridge_provider_failure_stays_unknown_and_has_phase) ... ok
+test_guard_failure_and_timeout_classified_without_retry (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_guard_failure_and_timeout_classified_without_retry) ... ok
+test_journal_unknown_exception_redacted (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_journal_unknown_exception_redacted) ... ok
+test_tool_unknown_exception_redacted (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_tool_unknown_exception_redacted) ... ok
+test_frozen_flag_no_alias (runtime.tests.test_narration_segments.ConfigTests.test_frozen_flag_no_alias) ... ok
+test_bound_runtime_rejects_untimed_before_first_after_finish_force (runtime.tests.test_narration_segments.ExecutionTests.test_bound_runtime_rejects_untimed_before_first_after_finish_force) ... {"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"runtime_utterance_accepted\", \"elapsedMs\": 0.000750063918530941, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"llm_started\", \"elapsedMs\": 0.6647909758612514, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"llm_first_token\", \"elapsedMs\": 0.8275000145658851, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"first_speakable_segment\", \"elapsedMs\": 0.9581659687682986, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"tts_started\", \"elapsedMs\": 1.0113329626619816, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"tts_first_pcm\", \"elapsedMs\": 1.0720830177888274, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"media_first_audio\", \"elapsedMs\": 1.114165992476046, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"media output push returned; not browser/speaker playback\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"utterance_completed\", \"elapsedMs\": 1.140916021540761, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"media drain completed\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+ok
+test_bridge_cannot_invent_fact_or_cursor (runtime.tests.test_narration_segments.ExecutionTests.test_bridge_cannot_invent_fact_or_cursor) ... ok
+test_native_renderer_fail_closed_before_tts (runtime.tests.test_narration_segments.ExecutionTests.test_native_renderer_fail_closed_before_tts) ... ok
+test_position_serialization_has_exact_pts (runtime.tests.test_narration_segments.ExecutionTests.test_position_serialization_has_exact_pts) ... ok
+test_ready_commit_actual_fixture_consumption (runtime.tests.test_narration_segments.ExecutionTests.test_ready_commit_actual_fixture_consumption) ... ok
+test_ready_failure_no_commit_no_output_and_unknown (runtime.tests.test_narration_segments.ExecutionTests.test_ready_failure_no_commit_no_output_and_unknown) ... ok
+test_tts_duration_cap_no_truncation (runtime.tests.test_narration_segments.ExecutionTests.test_tts_duration_cap_no_truncation) ... ok
+test_http_auth_status_distinct_and_error_body_never_persisted (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_http_auth_status_distinct_and_error_body_never_persisted) ... ok
+test_malformed_json_records_static_exception_class_only (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_malformed_json_records_static_exception_class_only) ... ok
+test_reasoning_only_length_finish_is_distinct_without_reasoning_disclosure (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_reasoning_only_length_finish_is_distinct_without_reasoning_disclosure) ... ok
+test_success_unchanged_and_default_off_creates_no_observer (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_success_unchanged_and_default_off_creates_no_observer) ... ok
+test_unknown_finish_reason_and_stream_error_never_dump_upstream_strings (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_unknown_finish_reason_and_stream_error_never_dump_upstream_strings) ... ok
+test_bound_auth_failure_stops_and_releases_without_mock_fallback (runtime.tests.test_session_binding.BindingTests.test_bound_auth_failure_stops_and_releases_without_mock_fallback) ... ok
+test_commands_reject_lease_boundary (runtime.tests.test_session_binding.BindingTests.test_commands_reject_lease_boundary) ... ok
+test_duplicate_does_not_release_current_binding (runtime.tests.test_session_binding.BindingTests.test_duplicate_does_not_release_current_binding) ... ok
+test_expired_lease_rejected_and_released (runtime.tests.test_session_binding.BindingTests.test_expired_lease_rejected_and_released) ... ok
+test_lease_watchdog_stops_ready_session_before_expiry (runtime.tests.test_session_binding.BindingTests.test_lease_watchdog_stops_ready_session_before_expiry) ... ok
+test_no_bundle_fallback_when_builder_fails (runtime.tests.test_session_binding.BindingTests.test_no_bundle_fallback_when_builder_fails) ... ok
+test_one_physical_worker_cannot_be_double_assigned (runtime.tests.test_session_binding.BindingTests.test_one_physical_worker_cannot_be_double_assigned) ... ok
+test_prepare_failure_cleans_provider_and_binding (runtime.tests.test_session_binding.BindingTests.test_prepare_failure_cleans_provider_and_binding) ... {"level": "ERROR", "message": "session_prepare_failed", "traceId": "trace_1", "sessionId": "session_1", "utteranceId": null, "generationId": null, "errorType": "RuntimeFailure", "error": "runtime operation failed"}
+ok
+test_release_is_retryable_when_backend_down (runtime.tests.test_session_binding.BindingTests.test_release_is_retryable_when_backend_down) ... ok
+test_release_survives_cancelled_connection_cleanup (runtime.tests.test_session_binding.BindingTests.test_release_survives_cancelled_connection_cleanup) ... ok
+test_snapshot_key_is_used_without_global_key_or_hot_change (runtime.tests.test_session_binding.BindingTests.test_snapshot_key_is_used_without_global_key_or_hot_change) ... ok
+test_worker_degradation_and_recovery_emit_lifecycle_without_hot_switch (runtime.tests.test_session_binding.BindingTests.test_worker_degradation_and_recovery_emit_lifecycle_without_hot_switch) ... ok
+test_bound_connection_survives_two_answers_and_closes_at_release (runtime.tests.test_session_binding.ClientTests.test_bound_connection_survives_two_answers_and_closes_at_release) ... ok
+test_private_service_request_and_no_user_supplied_scope (runtime.tests.test_session_binding.ClientTests.test_private_service_request_and_no_user_supplied_scope) ... ok
+test_upstream_auth_failure_is_static_and_visible (runtime.tests.test_session_binding.ClientTests.test_upstream_auth_failure_is_static_and_visible) ... ok
+test_private_tts_probe_validates_real_result_and_rejects_empty_output (runtime.tests.test_session_binding.ProbeTests.test_private_tts_probe_validates_real_result_and_rejects_empty_output) ... ok
+test_actual_wire_simulation_negotiation_rejected_and_binding_cleaned (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_actual_wire_simulation_negotiation_rejected_and_binding_cleaned) ... {"level": "ERROR", "message": "session_prepare_failed", "traceId": "trace_1", "sessionId": "s", "utteranceId": null, "generationId": null, "errorType": "StagingFailure", "error": "runtime operation failed"}
+ok
+test_real_bound_factory_configure_prepare_start_interrupt_stop (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_real_bound_factory_configure_prepare_start_interrupt_stop) ... ok
+test_start_without_config_and_verified_connection_rejects (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_start_without_config_and_verified_connection_rejects) ... ok
+test_unsupported_session_clock_rejected_before_worker_connection (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_unsupported_session_clock_rejected_before_worker_connection) ... ok
+
+----------------------------------------------------------------------
+Ran 49 tests in 3.531s
+
+OK
