@@ -1,0 +1,17 @@
+{
+  "scope": "ACTUAL_OWNED_PG_GO_RACE_CHILD_CPU_RUNTIME_READY_NOT_NATIVE",
+  "command": [
+    "go",
+    "-C",
+    "backend",
+    "test",
+    "-race",
+    "./internal/narration",
+    "-run",
+    "^TestPostgresNewResumeBridgeEmptyFactsCanonical$",
+    "-count=1",
+    "-v"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 2.234
+}

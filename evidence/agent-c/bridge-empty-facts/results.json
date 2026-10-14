@@ -1,0 +1,40 @@
+[
+  {
+    "case": "old-constructor",
+    "source": "451405d142b1f61959765d2f3e956e094b613315",
+    "scope": "ACTUAL_OWNED_PG_GO_RACE_CHILD_CPU_RUNTIME_READY_NOT_NATIVE",
+    "command": [
+      "go",
+      "-C",
+      "backend",
+      "test",
+      "-race",
+      "./internal/narration",
+      "-run",
+      "^TestPostgresNewResumeBridgeEmptyFactsCanonical$",
+      "-count=1",
+      "-v"
+    ],
+    "exitCode": 1,
+    "elapsedSeconds": 2.43
+  },
+  {
+    "case": "final",
+    "source": "C_WORKTREE_ONE_LINE_CONSTRUCTOR_FIX",
+    "scope": "ACTUAL_OWNED_PG_GO_RACE_CHILD_CPU_RUNTIME_READY_NOT_NATIVE",
+    "command": [
+      "go",
+      "-C",
+      "backend",
+      "test",
+      "-race",
+      "./internal/narration",
+      "-run",
+      "^TestPostgresNewResumeBridgeEmptyFactsCanonical$",
+      "-count=1",
+      "-v"
+    ],
+    "exitCode": 1,
+    "elapsedSeconds": 1.135
+  }
+]

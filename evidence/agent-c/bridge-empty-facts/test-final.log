@@ -1,0 +1,26 @@
+=== RUN   TestPostgresNewResumeBridgeEmptyFactsCanonical
+    bridge_facts_postgres_test.go:136: CPU Runtime proof failed: exit status 1 Traceback (most recent call last):
+          File "/Users/sapiece/innovationProject/AstraLive-agent-c/backend/internal/narration/../../../runtime/tests/narration_bridge_fact_proof.py", line 30, in <module>
+            if __name__=='__main__':asyncio.run(main())
+                                    ^^^^^^^^^^^^^^^^^^^
+          File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 195, in run
+            return runner.run(main)
+                   ^^^^^^^^^^^^^^^^
+          File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+            return self._loop.run_until_complete(task)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+            return future.result()
+                   ^^^^^^^^^^^^^^^
+          File "/Users/sapiece/innovationProject/AstraLive-agent-c/backend/internal/narration/../../../runtime/tests/narration_bridge_fact_proof.py", line 22, in main
+            executor=SegmentExecutor(sess,command['runEpoch'],journal,lambda:None)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/narration_segments.py", line 160, in __init__
+            from .soulx_staging import StagingAvatarEngine
+          File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 11, in <module>
+            from gpu_worker import staging_contract as c
+        ModuleNotFoundError: No module named 'gpu_worker'
+--- FAIL: TestPostgresNewResumeBridgeEmptyFactsCanonical (0.24s)
+FAIL
+FAIL	astralive/backend/internal/narration	0.833s
+FAIL
