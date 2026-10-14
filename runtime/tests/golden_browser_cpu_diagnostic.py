@@ -57,6 +57,19 @@ async def main(args):
                 await page.wait_for_function("ac && ac.state==='running'")
             await page.evaluate("goldenStart('cpu-diagnostic')")
             await page.wait_for_function("pc.connectionState==='connected'")
+            if args.empty_first_audio_report:
+                # Reproduce first-report absence, preserving all later actual
+                # aiortc/Chrome statistics, media tracks and recording bytes.
+                await page.evaluate("""()=>{
+                  const original=pc.getStats.bind(pc);let first=true;
+                  pc.getStats=async()=>{
+                    const stats=await original();if(!first)return stats;first=false;
+                    const filtered=new Map(stats);
+                    for(const [id,row] of filtered)if(row.type==='inbound-rtp'&&(row.kind??row.mediaType)==='audio')filtered.delete(id);
+                    return filtered;
+                  };
+                }""")
+                report['initialAudioStatsIntervention']='FIRST_REPORT_WITHHELD_ONLY_ALL_LATER_STATS_ACTUAL'
             preflight=await page.evaluate('goldenAudioReady()') if not args.legacy_html else await page.evaluate("()=>({state:ac?.state??null,currentTime:ac?.currentTime??null})")
             await asyncio.sleep(1.2)
             chrome=await page.evaluate('goldenFinish()')
@@ -88,4 +101,5 @@ async def main(args):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',required=True);parser.add_argument('--legacy-html');parser.add_argument('--fixture-html')
+    parser.add_argument('--empty-first-audio-report',action='store_true')
     raise SystemExit(asyncio.run(main(parser.parse_args())))

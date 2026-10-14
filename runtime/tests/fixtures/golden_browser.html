@@ -58,7 +58,7 @@ document.getElementById('enableAudio').addEventListener('click',()=>{
 async function audioInbound() {
   let observed=null;
   for(const row of (await pc.getStats()).values())if(row.type==='inbound-rtp' && (row.kind??row.mediaType)==='audio') {
-    observed={at:performance.now(),packetsReceived:row.packetsReceived??null,packetsDiscarded:row.packetsDiscarded??null,
+    observed={reportId:row.id,at:performance.now(),packetsReceived:row.packetsReceived??null,packetsDiscarded:row.packetsDiscarded??null,
       totalSamplesReceived:row.totalSamplesReceived??null,totalSamplesDuration:row.totalSamplesDuration??null,
       jitterBufferEmittedCount:row.jitterBufferEmittedCount??null,totalAudioEnergy:row.totalAudioEnergy??null};
   }
@@ -67,24 +67,39 @@ async function audioInbound() {
 async function goldenAudioReady() {
   if(!ac || !audioSource || !audioActivation)throw new Error('Actual audio observer was not activated');
   await audioActivation;
-  const before=audioState('preflight_start'),inboundBefore=await audioInbound();
-  // Observe real clock/decoded progress; no fixed A/V delay or synthetic source.
+  const started=audioState('preflight_start');
+  const validInbound=row=>typeof row?.reportId==='string' && row.reportId.length>0
+    && Number.isFinite(row.totalSamplesDuration) && row.totalSamplesDuration>=0;
+  let before=started,inboundBefore=await audioInbound();
+  const initialInboundAvailable=validInbound(inboundBefore);
+  // The first getStats may precede the first RTP report. Establish a real
+  // baseline within the SAME 1500ms budget; missing is never a zero sample.
   let after=before,inboundAfter=inboundBefore;
-  while(performance.now()-before.at<1500) {
+  let progressed=false;
+  while(performance.now()-started.at<1500) {
     await new Promise(resolve=>requestAnimationFrame(resolve));
     after=audioState('preflight_end');inboundAfter=await audioInbound();
-    if(after.contextTime-before.contextTime>=0.1 &&
-       typeof inboundAfter?.totalSamplesDuration==='number' && typeof inboundBefore?.totalSamplesDuration==='number' &&
-       inboundAfter.totalSamplesDuration-inboundBefore.totalSamplesDuration>=0.1)break;
+    if(after.at-started.at>1500)break;
+    if(!validInbound(inboundBefore) && validInbound(inboundAfter)) {
+      before=after;inboundBefore=inboundAfter;
+    }
+    if(validInbound(inboundBefore) && validInbound(inboundAfter)
+       && inboundBefore.reportId===inboundAfter.reportId
+       && Number.isFinite(before.contextTime) && Number.isFinite(after.contextTime)
+       && after.contextTime-before.contextTime>=0.1
+       && inboundAfter.totalSamplesDuration-inboundBefore.totalSamplesDuration>=0.1) {
+      progressed=true;break;
+    }
   }
   const track=stream?.getAudioTracks()[0];
-  audioPreflight={before,after,contextDeltaSeconds:after.contextTime-before.contextTime,
+  audioPreflight={started,before,after,initialInboundAvailable,baselineWaitMs:before.at-started.at,
+    contextDeltaSeconds:after.contextTime-before.contextTime,
     performanceDeltaSeconds:(after.at-before.at)/1000,
     inboundBefore,inboundAfter,
-    decodedAudioDeltaSeconds:typeof inboundAfter?.totalSamplesDuration==='number' && typeof inboundBefore?.totalSamplesDuration==='number'
+    decodedAudioDeltaSeconds:validInbound(inboundAfter) && validInbound(inboundBefore)
       ?inboundAfter.totalSamplesDuration-inboundBefore.totalSamplesDuration:null,
     trackLive:track?.readyState==='live',trackEnabled:track?.enabled===true,trackMuted:track?.muted??null};
-  audioPreflight.ready=before.state==='running' && after.state==='running'
+  audioPreflight.ready=progressed && before.state==='running' && after.state==='running'
     && audioPreflight.contextDeltaSeconds>=0.1 && audioPreflight.decodedAudioDeltaSeconds>=0.1
     && audioPreflight.trackLive && audioPreflight.trackEnabled;
   return audioPreflight;

@@ -354,10 +354,21 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	}
 	observer.Stdout = observerLog
 	observer.Stderr = observerLog
-	err = observer.Run()
+	observerErr := observer.Run()
 	observerLog.Close()
 	// Retain only business/media proof, never private bindings/vault/credentials.
 	dump := map[string]json.RawMessage{}
+	if observerErr != nil {
+		cleanup := observeGoldenFailureCleanup(pool)
+		// Observe existing asynchronous Stop while Runtime/dispatchers are alive.
+		// Never retry speech, change SQL state or replace the original failure.
+		raw, marshalErr := json.Marshal(cleanup)
+		if marshalErr != nil {
+			t.Error("cleanup observation encoding failed")
+		} else {
+			dump["failureCleanupObservation"] = raw
+		}
+	}
 	queries := goldenProofQueries()
 	for name, query := range queries {
 		var raw []byte
@@ -373,7 +384,7 @@ func TestPostgresRealGPUContinuityGolden(t *testing.T) {
 	} else if e = os.WriteFile(filepath.Join(out, "sql-proof.json"), encoded, 0600); e != nil {
 		t.Error(e)
 	}
-	if err != nil {
+	if observerErr != nil {
 		t.Fatal("real Golden observer failed; inspect sanitized observer/runtime/SQL evidence")
 	}
 	var completeTurns int
