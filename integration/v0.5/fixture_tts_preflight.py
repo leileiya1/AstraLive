@@ -6,6 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 import sys
+import subprocess
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'runtime'))
@@ -20,7 +21,8 @@ async def run(args):
     fixture=Path(args.fixture);data=json.loads(fixture.read_text());values=data['trustedBuiltinPreview']
     provider=SherpaOnnxTTSProvider(args.model_dir,speaker_id=0,num_threads=2)
     adapter=StreamingVoiceAdapter(provider,'xiao_ya');voice=VoiceConfig(voiceId='xiao_ya',provider='xiaoya')
-    report={'source':args.source,'scope':'fresh real cached CPU TTS duration/framing only; no live/GPU/naturalness',
+    pin=subprocess.check_output(['git','-C',str(ROOT),'rev-parse',args.source],text=True).strip()
+    report={'source':pin,'requestedSource':args.source,'scope':'fresh real cached CPU TTS duration/framing only; no live/GPU/naturalness',
             'fixtureSHA256':hashlib.sha256(fixture.read_bytes()).hexdigest(),'rows':[],'nativeSampleRate':provider.sample_rate,
             'outputSampleRate':16000,'speakerId':0,'speed':1,'threads':2,'status':'RUNNING'}
     for beat in data['plan']['beats']:

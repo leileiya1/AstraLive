@@ -264,6 +264,8 @@ async def main(args):
                     await asyncio.sleep(.2)
                 if args.mode=='soak' and args.seconds==3600:
                     browser_state=await page.evaluate('goldenCheckpoint()')
+                    if browser_state['peerCreations']!=1 or browser_state['connectionState']!='connected' or browser_state['recordingFailed']:
+                        raise GoldenFailure('One-hour final browser connection/recording prerequisite lost')
                     report['checkpoints'].append({'targetSeconds':3600,'elapsedSeconds':time.monotonic()-began,'browser':browser_state,
                         'narrationState':snapshot['state'],'reason':snapshot['reason'],'nextOrdinal':snapshot['cursor']['nextOrdinal'],
                         'completedFacts':len(snapshot['cursor']['completedFactIds'] or []),'completedSegments':len(snapshot['cursor']['completedSegmentIds'] or [])})

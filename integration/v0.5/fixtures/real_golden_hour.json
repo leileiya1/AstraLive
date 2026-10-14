@@ -1,5 +1,5 @@
 {
-  "fixtureVersion": "real-golden-hour-1",
+  "fixtureVersion": "real-golden-hour-2",
   "scope": "AUTHOR_SCRIPTED_REAL_PROVIDER_ONE_HOUR_STABILITY_FIXTURE_NOT_PRODUCTION_CONTENT",
   "product": {
     "name": "桌面整理指南",
@@ -11,7 +11,7 @@
     ],
     "description": "示范SKU电子说明书，提供桌面分类、分区、纸张线缆收纳和日常维护的操作指南。"
   },
-  "scriptVersion": "desktop-guide-hour-1",
+  "scriptVersion": "desktop-guide-hour-2",
   "plan": {
     "policy": "AT_BOUNDARY",
     "style": "自然清楚地逐句讲解桌面整理步骤，每段只讲当前声明的事实。",
@@ -2741,7 +2741,7 @@
             "factIds": []
           },
           {
-            "text": "摄影选片进入定期调整环节，先比较选片清单和拍摄记录的用途，再决定摆放。",
+            "text": "摄影选片进入定期调整环节，比较选片清单和拍摄记录的用途，再摆放。",
             "factIds": []
           },
           {
@@ -2923,7 +2923,7 @@
             "factIds": []
           },
           {
-            "text": "剪辑批注进入次日复用环节，先比较剪辑提纲和镜头笔记的用途，再决定摆放。",
+            "text": "剪辑批注进入次日复用环节，比较剪辑提纲和镜头笔记的用途，再摆放。",
             "factIds": []
           },
           {
@@ -4067,7 +4067,7 @@
             "factIds": []
           },
           {
-            "text": "手工打样进入桌边复查环节，先比较打样记录和尺寸草图的用途，再决定摆放。",
+            "text": "手工打样进入桌边复查环节，比较打样记录和尺寸草图的用途，再摆放。",
             "factIds": []
           },
           {
@@ -4197,7 +4197,7 @@
             "factIds": []
           },
           {
-            "text": "手工打样进入定期调整环节，先比较打样记录和尺寸草图的用途，再决定摆放。",
+            "text": "手工打样进入定期调整环节，比较打样记录和尺寸草图的用途，再摆放。",
             "factIds": []
           },
           {
@@ -4821,7 +4821,7 @@
             "factIds": []
           },
           {
-            "text": "计划复盘进入定期调整环节，先比较计划清单和复盘笔记的用途，再决定摆放。",
+            "text": "计划复盘进入定期调整环节，比较计划清单和复盘笔记的用途，再摆放。",
             "factIds": []
           },
           {
@@ -5427,46 +5427,31 @@
   ],
   "questionsMetadata": [
     {
-      "id": "comment-price-1",
       "text": "这份指南现在多少钱？",
-      "priority": 80,
-      "injectAfterSegment": 22,
       "expectedFactIds": [
         "price"
       ]
     },
     {
-      "id": "comment-stock-1",
       "text": "现在库存还有多少份？",
-      "priority": 75,
-      "injectAfterSegment": 46,
       "expectedFactIds": [
         "stock"
       ]
     },
     {
-      "id": "comment-name-1",
       "text": "你讲的这份说明书叫什么名字？",
-      "priority": 70,
-      "injectAfterSegment": 70,
       "expectedFactIds": [
         "name"
       ]
     },
     {
-      "id": "comment-price-2",
       "text": "能再告诉我当前价格吗？",
-      "priority": 65,
-      "injectAfterSegment": 94,
       "expectedFactIds": [
         "price"
       ]
     },
     {
-      "id": "comment-stock-2",
       "text": "我想确认一下目前的库存数量。",
-      "priority": 60,
-      "injectAfterSegment": 118,
       "expectedFactIds": [
         "stock"
       ]
