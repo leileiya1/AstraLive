@@ -4,9 +4,13 @@ import os
 from pathlib import Path
 import unittest
 
-from playwright.async_api import async_playwright
+try:
+    from playwright.async_api import async_playwright
+except ImportError:
+    async_playwright = None
 
 
+@unittest.skipIf(async_playwright is None, 'Playwright missing; browser oracle NOT TESTED')
 class GoldenAudioPreflightTests(unittest.IsolatedAsyncioTestCase):
     async def test_initial_missing_report_and_real_stall_rejection(self):
         html = Path(os.environ.get('GOLDEN_AUDIO_PREFLIGHT_HTML',
