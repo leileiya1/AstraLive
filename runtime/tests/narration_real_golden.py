@@ -230,7 +230,14 @@ async def main(args):
                         report["events"].append({"kind":"COMMENT_INJECTED","question":questions[next_question],"elapsedSeconds":elapsed,
                             "browserAt":await page.evaluate("performance.now()"),"response":answer});next_question+=1
                     snapshot=await api("GET",f"/api/v0.5/narration/{session}/")
-                    require_observable_state(snapshot)
+                    try:
+                        require_observable_state(snapshot)
+                    except GoldenFailure:
+                        # Preserve the public failure projection before finally's
+                        # normal Stop can overwrite its original disposition.
+                        report['failureNarrationBeforeStop']=snapshot
+                        report['failureElapsedSeconds']=time.monotonic()-began
+                        raise
                     if next_checkpoint<len(checkpoint_targets) and elapsed>=checkpoint_targets[next_checkpoint]:
                         browser_state=await page.evaluate('goldenCheckpoint()')
                         entry={'targetSeconds':checkpoint_targets[next_checkpoint],
