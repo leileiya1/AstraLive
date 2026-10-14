@@ -110,6 +110,11 @@ class NarrationCommands(DurableCommands):
 
     async def _prepare(self, executor, command):
         p, session = command["payload"], executor.session
+        begun=phase_started=time.monotonic();phase="initial_guard";timings={}
+        def step(name):
+            nonlocal phase,phase_started
+            now=time.monotonic();timings[phase]=round((now-phase_started)*1000)
+            phase=name;phase_started=now
         try:
             executor.guard(command)
             if command["commandType"] == "START_AUDIENCE_ANSWER":
@@ -119,6 +124,7 @@ class NarrationCommands(DurableCommands):
                         "只回答当前问题，不扩展新主题，最多两句。只能使用本轮最新事实，缺失时说明无法确认。",
                         json.dumps(p["latestFacts"], ensure_ascii=False))
                     text = ""
+                    step("answer_llm")
                     async with asyncio.timeout(8):
                         async for token in session.llm.stream(request):
                             executor.guard(command)
@@ -136,16 +142,28 @@ class NarrationCommands(DurableCommands):
                 # Refresh required dynamic facts immediately before language
                 # generation; Go revalidates product hash and authority at CAS.
                 if session.tool_client:
+                    step("tool_refresh")
                     facts = await session.tool_client.get_product(context["productId"])
                     context["latestFacts"] = facts
+                step("bridge_llm")
                 async with asyncio.timeout(8):
                     choice = await bridge_choice(session.llm, context, p["choices"])
                 proof, operation = {"choice": choice}, "RESUME_PREPARED"
+            step("final_guard")
             executor.guard(command)
+            step("journal_record")
             await executor.timeline.journal.record(operation, command, proof)
         except asyncio.CancelledError:
             raise
-        except Exception:
+        except Exception as exc:
+            allowed={"LLM_FAILED","PROVIDER_AUTH_FAILED","LEASE_LOST","RUN_SEALED","STALE_RUN_EPOCH","STALE_TIMELINE_EPOCH","STALE_GENERATION","COMMAND_CONFLICT","DEPENDENCY_UNAVAILABLE","ANSWER_TOO_LONG","INCOMPLETE_ANSWER"}
+            code=getattr(exc,"code",None)
+            if isinstance(exc,ValueError) and len(exc.args)==1 and type(exc.args[0]) is str:code=exc.args[0].split(":",1)[0]
+            now=time.monotonic();timings[phase]=round((now-phase_started)*1000)
+            row={"commandId":command["commandId"],"commandType":command["commandType"],"phase":phase,
+                 "code":code if code in allowed else "OTHER","elapsedMs":round((now-begun)*1000),"phaseDurationsMs":timings,
+                 "errorType":type(exc).__name__ if type(exc).__name__ in {"RuntimeFailure","JournalError","ValueError","RuntimeError","TimeoutError"} else "OTHER"}
+            logging.getLogger("app").warning("narration_preparation_failed %s",json.dumps(row))
             try:
                 await executor.timeline.journal.record("UNKNOWN", command,
                     {"reason": "PREPARATION_UNKNOWN", "audienceAudible": False})
