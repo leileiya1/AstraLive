@@ -2,7 +2,7 @@
 
 ## Latest checkpoint — 2026-10-14 fresh hour
 
-Real hour-7 is running on immutable `88a68246d46a3942515d9895247a3ebfe15e2e07`
+Real hour-7 ran on immutable `88a68246d46a3942515d9895247a3ebfe15e2e07`
 after cached Worker restart following the user's cloud reboot. Complete
 postmerge software/owned-PG gates passed; actual attempts 1–6 remain FAIL in
 their stated scopes. [Source, failures and fixes](ONE-HOUR-GOLDEN-PROGRESS.md).
@@ -10,7 +10,16 @@ Hour-6 failed after 1391.268 seconds with ten completed answers and nine
 subsequent resume transitions; its normal failure Stop reached ENDED/SEALED
 and released the binding within 101 ms. This is not a successful hour.
 
-The ongoing run uses Redis-unreachable PostgreSQL-only flow, real LLM/TTS/GPU,
+Hour-7 recorded 3600.1805 seconds, six same-peer checkpoints, 25 completed
+answers and 25 correctly bound resume transitions. **Overall FAIL:** normal
+Stop left Session/run STOPPING, binding unreleased and one committed tail
+UNKNOWN; read-only20s cleanup guard also lacked terminal proof. Runtime avatar
+interrupt/cleanup raised StagingFailure. Owner CPU reproduction establishes an
+in-flight pose ACK cancellation/orphan mechanism; original exact ACK subtype
+was not logged. No blind media replay or false ENDED projection is allowed.
+[Original evidence and component scope](evidence/integration-f/real-hour-tcp-7/manifest.json).
+
+This run uses Redis-unreachable PostgreSQL-only flow, real LLM/TTS/GPU,
 native Chrome and local RTMP. It does not kill/restart Redis, Backend, Runtime
 or Worker during live playback. The full real crash/recovery, FORCE/product
 switch, delayed ACK and stale-frame matrix remains NOT TESTED. Historical

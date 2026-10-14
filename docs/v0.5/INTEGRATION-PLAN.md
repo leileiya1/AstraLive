@@ -8,10 +8,13 @@ passed the full software/owned-PG gate before the next real attempt. Frozen1
 bytes and experimental defaults are unchanged. [Complete attempt ledger and
 evidence](ONE-HOUR-GOLDEN-PROGRESS.md). Original A→B→C→D history is preserved.
 
-Hour-7 is running from immutable `88a68246d46a3942515d9895247a3ebfe15e2e07`
-after verified cached GPU restart. No live code replacement or Chrome peer
-recreation is allowed. After normal Stop, independently audit closed SQL,
-native Chrome/RTMP recordings and resource samples. F separately merged B's
+Hour-7 completed a 3600.1805-second observation from immutable
+`88a68246d46a3942515d9895247a3ebfe15e2e07` after verified cached GPU restart.
+One Session/peer and 25 metadata-correct resumes are proven, but normal Stop
+failed and original gate remains FAIL. C owns the minimal ACK/cancellation
+repair; no live code replacement or peer recreation occurred. Closed SQL,
+native Chrome/RTMP recording and resource component audits preserve that FAIL.
+F separately merged B's
 post-run-only metrics tool `34d978e` as `f378e96`; its 21 rejection tests pass.
 This adds no production changes and cannot upgrade an original failed gate.
 Then record remaining acceptance gaps and push the authorized new F branch;

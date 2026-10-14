@@ -1,0 +1,447 @@
+{
+  "scope": "original complete3600.180s observation with FAIL normalStop; 25 correct metadata resumes; closed recording/resource component analysis never upgrades original gate",
+  "source": "88a68246d46a3942515d9895247a3ebfe15e2e07",
+  "frozen1SHA256": "969d2e82d41f20084196d68a77bb3d1a6158a596a9ca63d47de9f6c1a78e8360",
+  "workerEpoch": "407e0b9b24a94f75b3f63aeeba2576d1",
+  "credentialEvidenceAudit": "PASS",
+  "originalGateStatus": "FAIL",
+  "recordingsOutsideGit": [
+    {
+      "recording": "chrome",
+      "path": "/private/tmp/astralive-f-real-hour-tcp-7/media/observer/chrome.webm",
+      "bytes": 869357426,
+      "sha256": "6c957c1386f39af1551cbf134f1967b12b68311f3993158f6116919b8934a0ce",
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "vp8",
+          "codec_type": "video",
+          "time_base": "1/1000",
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "tags": {
+            "language": "eng",
+            "alpha_mode": "1"
+          },
+          "packetCount": 90017,
+          "pts_time": {
+            "count": 90017,
+            "first": 0.0,
+            "last": 3600.702,
+            "regressions": 0,
+            "duplicates": 0
+          },
+          "dts_time": {
+            "count": 90017,
+            "first": 0.0,
+            "last": 3600.702,
+            "regressions": 0,
+            "duplicates": 0
+          }
+        },
+        {
+          "index": 1,
+          "codec_name": "opus",
+          "codec_type": "audio",
+          "time_base": "1/1000",
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "tags": {
+            "language": "eng"
+          },
+          "packetCount": 60358,
+          "pts_time": {
+            "count": 60358,
+            "first": 0.007,
+            "last": 3621.418,
+            "regressions": 0,
+            "duplicates": 0
+          },
+          "dts_time": {
+            "count": 60358,
+            "first": 0.007,
+            "last": 3621.418,
+            "regressions": 0,
+            "duplicates": 0
+          }
+        }
+      ]
+    },
+    {
+      "recording": "rtmp",
+      "path": "/private/tmp/astralive-f-real-hour-tcp-7/media/rtmp.flv",
+      "bytes": 1392333663,
+      "sha256": "13ae68831aec816dc988a2329ec39d29ec751ae02cf9ba0fa155d1ae53f8589b",
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "h264",
+          "codec_type": "video",
+          "time_base": "1/1000",
+          "disposition": {
+            "default": 0,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "packetCount": 90113,
+          "pts_time": {
+            "count": 90113,
+            "first": 0.021,
+            "last": 3604.501,
+            "regressions": 0,
+            "duplicates": 0
+          },
+          "dts_time": {
+            "count": 90113,
+            "first": 0.021,
+            "last": 3604.501,
+            "regressions": 0,
+            "duplicates": 0
+          }
+        },
+        {
+          "index": 1,
+          "codec_name": "aac",
+          "codec_type": "audio",
+          "time_base": "1/1000",
+          "disposition": {
+            "default": 0,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "packetCount": 168962,
+          "pts_time": {
+            "count": 168962,
+            "first": 0.0,
+            "last": 3604.501,
+            "regressions": 0,
+            "duplicates": 0
+          },
+          "dts_time": {
+            "count": 168962,
+            "first": 0.0,
+            "last": 3604.501,
+            "regressions": 0,
+            "duplicates": 0
+          }
+        }
+      ]
+    }
+  ],
+  "reproduce": "gunzip stored .gz to original relative filenames in isolated folder and validate originalSHA256; component scripts pin original local paths and must be retargeted to that isolated folder; original full gate remains FAIL",
+  "files": [
+    {
+      "path": "result.json",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/result.json",
+      "originalBytes": 185919,
+      "originalSHA256": "894495615043094f30acda41fba446deb0b930f4922feb92d89e0e003ac22ccb",
+      "storedBytes": 185919,
+      "storedSHA256": "894495615043094f30acda41fba446deb0b930f4922feb92d89e0e003ac22ccb"
+    },
+    {
+      "path": "golden.log",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/golden.log",
+      "originalBytes": 561,
+      "originalSHA256": "070d9ae98e4081a2cd959bf81818cca8ab2754e8e74572d6a7f990be55778282",
+      "storedBytes": 561,
+      "storedSHA256": "070d9ae98e4081a2cd959bf81818cca8ab2754e8e74572d6a7f990be55778282"
+    },
+    {
+      "path": "media/sql-proof.json.gz",
+      "encoding": "gzip",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/sql-proof.json",
+      "originalBytes": 20224281,
+      "originalSHA256": "6f7a4403f35b66edb4805eb002d7e6aaf2ce6883b02760d8bad26c6b7d4a6231",
+      "storedBytes": 1964066,
+      "storedSHA256": "3f2079070b3633c0af98ca633fb821bd51f12f91304a96601258ce6421fa9af6"
+    },
+    {
+      "path": "media/processes.json",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/processes.json",
+      "originalBytes": 241,
+      "originalSHA256": "ac28902e91d50da6cafa78d08fa7afd8086192b24d266e41063cae4a8fdfbd30",
+      "storedBytes": 241,
+      "storedSHA256": "ac28902e91d50da6cafa78d08fa7afd8086192b24d266e41063cae4a8fdfbd30"
+    },
+    {
+      "path": "media/observer/result.json.gz",
+      "encoding": "gzip",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/observer/result.json",
+      "originalBytes": 1350270,
+      "originalSHA256": "be2c1736660f23f844ca9bb310f1fa2718e405ae70d88fdf0bc2302dff81190d",
+      "storedBytes": 304655,
+      "storedSHA256": "b39f867cd8064b77464b4d363ee66da443cf200357ec631c6c883aa3db739f1b"
+    },
+    {
+      "path": "media/observer/progress.json",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/observer/progress.json",
+      "originalBytes": 27703,
+      "originalSHA256": "c1f0c63384adb0e6b22cec361454cf50bf9460551803a008694991ec00a9d8db",
+      "storedBytes": 27703,
+      "storedSHA256": "c1f0c63384adb0e6b22cec361454cf50bf9460551803a008694991ec00a9d8db"
+    },
+    {
+      "path": "media/observer/chrome.json.gz",
+      "encoding": "gzip",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/observer/chrome.json",
+      "originalBytes": 73324929,
+      "originalSHA256": "9bf23792ff5945da61c44cb88d7b49c0348050cc93fab5c4154318a36921a6e7",
+      "storedBytes": 8819274,
+      "storedSHA256": "105f4f8344405628af763e888b398088490c778dd7419fc968bb9e539cc41fec"
+    },
+    {
+      "path": "media/backend.log.gz",
+      "encoding": "gzip",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/backend.log",
+      "originalBytes": 26709946,
+      "originalSHA256": "95242f8776d79cd1fff7689618733cad218098539151e7c2dd611fc9cac4f293",
+      "storedBytes": 3485539,
+      "storedSHA256": "e44c588188fe72d5bb7522c4f526e1530097552d20eaa728ccb90abcd6575c5a"
+    },
+    {
+      "path": "media/runtime.log.gz",
+      "encoding": "gzip",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/runtime.log",
+      "originalBytes": 62286211,
+      "originalSHA256": "d4d26da9764d825c83f00a07d8e282d0293218c25e3afa8f7efd506735f92a03",
+      "storedBytes": 1458110,
+      "storedSHA256": "dd23536efaf292ade1ec12624d6a9ee40d642e8a9c1a5dff9a9ca823cc5d039c"
+    },
+    {
+      "path": "media/staged-observer/refs.json",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/staged-observer/refs.json",
+      "originalBytes": 472764,
+      "originalSHA256": "8d6b8b89f292c18b1e43b1a236058b15abf9cff3d2d62d9ef600ba025906b57f",
+      "storedBytes": 472764,
+      "storedSHA256": "8d6b8b89f292c18b1e43b1a236058b15abf9cff3d2d62d9ef600ba025906b57f"
+    },
+    {
+      "path": "media/staged-observer/llm-calls.jsonl",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/staged-observer/llm-calls.jsonl",
+      "originalBytes": 19418,
+      "originalSHA256": "54414fd65b418da8cc770c1ed8ff2cbdd44ed9b11f9bb6e095c23dca76448658",
+      "storedBytes": 19418,
+      "storedSHA256": "54414fd65b418da8cc770c1ed8ff2cbdd44ed9b11f9bb6e095c23dca76448658"
+    },
+    {
+      "path": "analysis/astralive-f-real-hour-monitor-7.jsonl",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-monitor-7.jsonl",
+      "originalBytes": 176775,
+      "originalSHA256": "cc65495cc313f683e9d4bb9a52d27c57d00e5208fd8555b24b6f03affa24da1a",
+      "storedBytes": 176775,
+      "storedSHA256": "cc65495cc313f683e9d4bb9a52d27c57d00e5208fd8555b24b6f03affa24da1a"
+    },
+    {
+      "path": "analysis/astralive-f-hour7-original-audit.json",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-hour7-original-audit.json",
+      "originalBytes": 595,
+      "originalSHA256": "b2dd6d474504451b932562129ea2d34c2ff183e64b4d5ebbb7d7fb364dec4816",
+      "storedBytes": 595,
+      "storedSHA256": "b2dd6d474504451b932562129ea2d34c2ff183e64b4d5ebbb7d7fb364dec4816"
+    },
+    {
+      "path": "analysis/astralive-f-hour7-component-av.json",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-hour7-component-av.json",
+      "originalBytes": 364288,
+      "originalSHA256": "3921be262b33ecbb1be3b8405aa2631eec0b2a3097a01d0d822f2d637547c884",
+      "storedBytes": 364288,
+      "storedSHA256": "3921be262b33ecbb1be3b8405aa2631eec0b2a3097a01d0d822f2d637547c884"
+    },
+    {
+      "path": "analysis/astralive-f-hour7-audit-plus-components.json",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-hour7-audit-plus-components.json",
+      "originalBytes": 364208,
+      "originalSHA256": "9f3dbd06ec9376a91c97cba4748096e9878718404074b603dd9a83064bdde74d",
+      "storedBytes": 364208,
+      "storedSHA256": "9f3dbd06ec9376a91c97cba4748096e9878718404074b603dd9a83064bdde74d"
+    },
+    {
+      "path": "analysis/astralive-f-hour7-metrics.json",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-hour7-metrics.json",
+      "originalBytes": 462226,
+      "originalSHA256": "15adf4ea079d99a2f7cf49e81a36ed36941e5cf59f79a3fb218b0a95c373d429",
+      "storedBytes": 462226,
+      "storedSHA256": "15adf4ea079d99a2f7cf49e81a36ed36941e5cf59f79a3fb218b0a95c373d429"
+    },
+    {
+      "path": "analysis/astralive-f-hour7-ffprobe.json",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-hour7-ffprobe.json",
+      "originalBytes": 5322,
+      "originalSHA256": "f6b8c98e67e60a07013a1a22c5fc369cb0d440882b8ac85c89fe7d19e2cd9e69",
+      "storedBytes": 5322,
+      "storedSHA256": "f6b8c98e67e60a07013a1a22c5fc369cb0d440882b8ac85c89fe7d19e2cd9e69"
+    },
+    {
+      "path": "analysis/astralive-f-hour7-component-recordings.py",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-hour7-component-recordings.py",
+      "originalBytes": 1671,
+      "originalSHA256": "e2e5691b563d454295d2a221b6ed5656de4fe32f2e80fe591120b522eeee4be3",
+      "storedBytes": 1671,
+      "storedSHA256": "e2e5691b563d454295d2a221b6ed5656de4fe32f2e80fe591120b522eeee4be3"
+    },
+    {
+      "path": "analysis/astralive-f-hour7-ffprobe.py",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-hour7-ffprobe.py",
+      "originalBytes": 1435,
+      "originalSHA256": "8f7d1687f8fd796a268a0bdec2932d92b9eb06bc1c7301fe1f489ebc2f64c1fc",
+      "storedBytes": 1435,
+      "storedSHA256": "8f7d1687f8fd796a268a0bdec2932d92b9eb06bc1c7301fe1f489ebc2f64c1fc"
+    },
+    {
+      "path": "media/observer/checkpoint-0090.png",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/observer/checkpoint-0090.png",
+      "originalBytes": 351800,
+      "originalSHA256": "40fba23b5334a6cae2fb6687eb051dee75cceafa280fed6e916872a92c20b18e",
+      "storedBytes": 351800,
+      "storedSHA256": "40fba23b5334a6cae2fb6687eb051dee75cceafa280fed6e916872a92c20b18e"
+    },
+    {
+      "path": "media/observer/checkpoint-0300.png",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/observer/checkpoint-0300.png",
+      "originalBytes": 348913,
+      "originalSHA256": "2f05674473d697a3e0ff99dce78c1069543cee23da1099545c541655a4934a37",
+      "storedBytes": 348913,
+      "storedSHA256": "2f05674473d697a3e0ff99dce78c1069543cee23da1099545c541655a4934a37"
+    },
+    {
+      "path": "media/observer/checkpoint-0900.png",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/observer/checkpoint-0900.png",
+      "originalBytes": 350414,
+      "originalSHA256": "326ff5bfc25293ddf77d0b0c6b0b05637647465ec3a5b4b4b67d3debb6b99b84",
+      "storedBytes": 350414,
+      "storedSHA256": "326ff5bfc25293ddf77d0b0c6b0b05637647465ec3a5b4b4b67d3debb6b99b84"
+    },
+    {
+      "path": "media/observer/checkpoint-1800.png",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/observer/checkpoint-1800.png",
+      "originalBytes": 335782,
+      "originalSHA256": "ae898b50984684df822e897d140086fadcdca969682c0d60269352c9202d2960",
+      "storedBytes": 335782,
+      "storedSHA256": "ae898b50984684df822e897d140086fadcdca969682c0d60269352c9202d2960"
+    },
+    {
+      "path": "media/observer/checkpoint-2700.png",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/observer/checkpoint-2700.png",
+      "originalBytes": 328337,
+      "originalSHA256": "c95ae318a3d8ff6450cf9d1060f56023ca637e2f7cd5ba03a7d89619dcdb5ed9",
+      "storedBytes": 328337,
+      "storedSHA256": "c95ae318a3d8ff6450cf9d1060f56023ca637e2f7cd5ba03a7d89619dcdb5ed9"
+    },
+    {
+      "path": "media/observer/checkpoint-3600.png",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-real-hour-tcp-7/media/observer/checkpoint-3600.png",
+      "originalBytes": 337713,
+      "originalSHA256": "ee7f7e51b416053a90c47730b4c29eac149c17f6aaac8c4eafac50babf9a0252",
+      "storedBytes": 337713,
+      "storedSHA256": "ee7f7e51b416053a90c47730b4c29eac149c17f6aaac8c4eafac50babf9a0252"
+    },
+    {
+      "path": "preview/astralive-f-hour7-preview.json",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-hour7-preview.json",
+      "originalBytes": 318,
+      "originalSHA256": "5fd0bdc09134d18903163efc79be04c9aaa7f63535db08e075232d0ab99ffa1d",
+      "storedBytes": 318,
+      "storedSHA256": "5fd0bdc09134d18903163efc79be04c9aaa7f63535db08e075232d0ab99ffa1d"
+    },
+    {
+      "path": "preview/astralive-f-hour7-answer-resume-45s.mp4",
+      "encoding": "identity",
+      "originalPath": "/private/tmp/astralive-f-hour7-answer-resume-45s.mp4",
+      "originalBytes": 847558,
+      "originalSHA256": "357abd515b56a0d9412e5fd45b06f0ac135762535e527dc171a7719100ff1660",
+      "storedBytes": 847558,
+      "storedSHA256": "357abd515b56a0d9412e5fd45b06f0ac135762535e527dc171a7719100ff1660"
+    }
+  ]
+}

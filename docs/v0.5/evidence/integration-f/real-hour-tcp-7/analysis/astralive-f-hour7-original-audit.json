@@ -1,0 +1,18 @@
+{
+  "scope": "Independent real SQL/staging bytes/recorded AV consistency oracle",
+  "audienceAudible": false,
+  "humanNaturalness": "NOT_TESTED",
+  "llmGeneratedFacts": "NOT_TESTED",
+  "busyCommentSLA": "NOT_TESTED",
+  "checks": [
+    {
+      "name": "actual_artifact_shape",
+      "status": "FAIL",
+      "code": "JSON_ARTIFACT_LIMIT"
+    }
+  ],
+  "clockRule": "recording PTS separately; no subtraction across clocks",
+  "auditContractSHA256": "sha256:1e3d05781dba6b7aeda965cb6fe62f517a458f285bb644e11402bfde52fd63da",
+  "automatedEvidenceStatus": "FAIL",
+  "formalGolden1": "NOT_VERIFIABLE"
+}

@@ -1,0 +1,197 @@
+{
+  "scope": "closed-recording packet timestamps only; no AV drift, lip-sync, continuous audibility or acceptance upgrade",
+  "originalGateStatus": "FAIL",
+  "recordings": [
+    {
+      "recording": "chrome",
+      "path": "/private/tmp/astralive-f-real-hour-tcp-7/media/observer/chrome.webm",
+      "bytes": 869357426,
+      "sha256": "6c957c1386f39af1551cbf134f1967b12b68311f3993158f6116919b8934a0ce",
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "vp8",
+          "codec_type": "video",
+          "time_base": "1/1000",
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "tags": {
+            "language": "eng",
+            "alpha_mode": "1"
+          },
+          "packetCount": 90017,
+          "pts_time": {
+            "count": 90017,
+            "first": 0.0,
+            "last": 3600.702,
+            "regressions": 0,
+            "duplicates": 0
+          },
+          "dts_time": {
+            "count": 90017,
+            "first": 0.0,
+            "last": 3600.702,
+            "regressions": 0,
+            "duplicates": 0
+          }
+        },
+        {
+          "index": 1,
+          "codec_name": "opus",
+          "codec_type": "audio",
+          "time_base": "1/1000",
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "tags": {
+            "language": "eng"
+          },
+          "packetCount": 60358,
+          "pts_time": {
+            "count": 60358,
+            "first": 0.007,
+            "last": 3621.418,
+            "regressions": 0,
+            "duplicates": 0
+          },
+          "dts_time": {
+            "count": 60358,
+            "first": 0.007,
+            "last": 3621.418,
+            "regressions": 0,
+            "duplicates": 0
+          }
+        }
+      ]
+    },
+    {
+      "recording": "rtmp",
+      "path": "/private/tmp/astralive-f-real-hour-tcp-7/media/rtmp.flv",
+      "bytes": 1392333663,
+      "sha256": "13ae68831aec816dc988a2329ec39d29ec751ae02cf9ba0fa155d1ae53f8589b",
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "h264",
+          "codec_type": "video",
+          "time_base": "1/1000",
+          "disposition": {
+            "default": 0,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "packetCount": 90113,
+          "pts_time": {
+            "count": 90113,
+            "first": 0.021,
+            "last": 3604.501,
+            "regressions": 0,
+            "duplicates": 0
+          },
+          "dts_time": {
+            "count": 90113,
+            "first": 0.021,
+            "last": 3604.501,
+            "regressions": 0,
+            "duplicates": 0
+          }
+        },
+        {
+          "index": 1,
+          "codec_name": "aac",
+          "codec_type": "audio",
+          "time_base": "1/1000",
+          "disposition": {
+            "default": 0,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "packetCount": 168962,
+          "pts_time": {
+            "count": 168962,
+            "first": 0.0,
+            "last": 3604.501,
+            "regressions": 0,
+            "duplicates": 0
+          },
+          "dts_time": {
+            "count": 168962,
+            "first": 0.0,
+            "last": 3604.501,
+            "regressions": 0,
+            "duplicates": 0
+          }
+        }
+      ]
+    }
+  ]
+}

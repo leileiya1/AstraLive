@@ -1,7 +1,9 @@
 # One-hour Golden progress — 2026-10-14
 
-**FAIL / IN PROGRESS. No continuous one-hour run has completed.** Distinct
-failed attempts are retained; their durations are never added together.
+**FAIL / IN PROGRESS. Hour-7 recorded 3600.1805 continuous seconds, but normal
+Stop did not reach terminal state.** Distinct failed attempts are retained;
+their durations are never added together. A full hour observed is not a full
+acceptance PASS.
 This increment is on `exp/v0.5-soulx-staging-golden`; no main merge or default
 enablement is authorized by this evidence.
 
@@ -134,6 +136,49 @@ Twenty-five real model calls on the saved tenth-turn language context all
 returned valid choices, maximum 1.856 seconds. This is component evidence,
 not another GPU/live hour. [Original failure, full gate and model evidence](evidence/integration-f/bridge-index-real-provider-2/manifest.json).
 
-Hour-7 began afresh at 20:30 local time on `88a6824`; final status is pending.
-Root remains the only GPU/SSH operator. B is preparing an independent metrics
-tool; unverified clock mappings must stay conditional or NOT VERIFIABLE.
+Hour-7 began afresh at 20:30 local time on `88a6824`. Actual duration was
+3600.1805 seconds with one Session/Chrome peer, six ordered checkpoints and no
+connection loss before the normal Stop request. The SQL proof records 25
+COMPLETED audience turns; independent analysis proves all 25 returned to the
+expected next segment/Beat with both required sinks' full receipts. It records
+293 completed narration segments, four bridge segments and 25 answers; one
+additional narration commit remained UNKNOWN during Stop. All 140 authored
+required facts appear once in completed plan metadata; no automatic fact result
+is a human naturalness or spoken-content review.
+
+**Overall result remains FAIL:** Stop left Session/run STOPPING and binding
+unreleased, including the read-only 20-second teardown guard. Runtime media
+stopped, but avatar interruption/cleanup raised StagingFailure. Owner diagnosis
+and a bounded ACK/cancellation reproduction are in progress; this is not
+silently treated as ENDED, retried speech or a cleanup PASS.
+
+Closed recording components are CONDITIONAL. Chrome has 321 MATCHED speech
+prefix/barcode rows, one UNRESOLVED row (ordinal176), and one Stop-censored tail;
+RTMP has 322 MATCHED rows and the same censored tail. Absolute speech-prefix to
+observation-band offsets P50/P95/max are 13.75/26.75/43.25 ms in Chrome and
+0.375/19.625/39.625 ms in RTMP. These are separate recording PTS domains, not
+phoneme lip sync, whole-segment drift or physical audience audibility. Both
+recordings have zero packet PTS/DTS regressions in this run; no reconnect was
+injected.
+
+For all 25 selected SQL turns, conditional selectedAt→Chrome correlated first
+audio/video estimates are P50 9.374 s, P95 12.093 s, P99 12.408 s and maximum
+12.478 s. They exceed the stated 5/8-second target; same-host UTC/render/device
+clock assumptions and selection busy state are not independently calibrated,
+so formal busy-comment SLA remains NOT VERIFIABLE. Estimated answer-end gaps
+use source duration and are not direct waveform-tail or naturalness proof.
+
+Sampled maxima: Go CPU36.3%/RSS68.75 MiB, Runtime CPU131.6%/RSS827.031 MiB,
+RTMP receiver CPU1.8%/RSS21.969 MiB. This excludes Chrome, PostgreSQL, publisher
+and whole-host totals. Worker descriptor incremental allocated peak is
+966,428,160 bytes (921.658 MiB), below the explicitly selected 1 GiB profile;
+sampled device memory maximum is 6,038,749,184 bytes, a separate domain.
+
+Root remains the only GPU/SSH operator. F merged B's closed-run metrics tool
+`34d978e` as `f378e96`; 21 rejection/calculation tests pass, and the prior
+hour-6 FAIL remains FAIL. [Original hour-7 records, hashes, scripts and separate
+component analysis](evidence/integration-f/real-hour-tcp-7/manifest.json).
+Large original recordings remain outside Git at
+`/private/tmp/astralive-f-real-hour-tcp-7/media/observer/chrome.webm` and
+`/private/tmp/astralive-f-real-hour-tcp-7/media/rtmp.flv`. Evidence JSON/log gzip
+files preserve original-byte hashes and can be decompressed for inspection.

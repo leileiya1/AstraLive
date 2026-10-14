@@ -2,21 +2,28 @@
 
 ## Latest checkpoint — fresh real hour, 2026-10-14
 
-**Real one-hour acceptance is IN PROGRESS, not PASS.** After the user's cloud
+**Real hour-7 acceptance is FAIL; Stop repair is IN PROGRESS.** After the user's cloud
 reboot, F verified and restarted the cached authenticated SoulX Worker. Fresh
 hour-7 uses immutable source `88a68246d46a3942515d9895247a3ebfe15e2e07`, one
 Session/native Chrome peer and actual DeepSeek/XiaoYa/RTX3080/local RTMP with
 PostgreSQL-only command flow. Earlier failed attempts remain separately pinned;
 elapsed durations are never combined. The complete postmerge software gate
-passed before this run. [Attempts, repairs and exact evidence](ONE-HOUR-GOLDEN-PROGRESS.md).
+passed before this run. Actual duration is 3600.1805 seconds, six checkpoints,
+25 completed answers and 25 metadata-correct resumes with both required sinks.
+Normal Stop failed to finalize Session/run/binding; one media tail remains
+UNKNOWN. [Attempts, repairs and exact evidence](ONE-HOUR-GOLDEN-PROGRESS.md).
 
 New private staging bridge policy fixes oversized reasoning-only requests and
 ambiguous array numbering within existing budgets. Frozen1 API/identity bytes,
 ordinary/default-off behavior, Redis/TCP rollback and experimental defaults
 remain unchanged. This does not establish human naturalness, physical
 audibility, complete crash recovery, busy-comment SLA, UDS or QUIC acceptance.
-The current real run must finish and its closed recordings/SQL must be audited
-before any result is upgraded. Statements below are historical checkpoints.
+Closed Chrome/RTMP recording components are CONDITIONAL, with one unresolved
+Chrome row and a Stop-censored tail. Conditional selectedAt→first correlated
+Chrome AV estimates P50/P95=9.374/12.093 seconds exceed the 5/8-second target;
+they are not a calibrated busy-comment SLA. The full live crash/Redis-kill,
+FORCE/product-switch and host/UDS matrix remains NOT TESTED. Statements below
+are historical checkpoints.
 
 ## Latest checkpoint — pilot11 and local browser repair
 
