@@ -1,0 +1,108 @@
+{
+  "source": "609ee76cec0924a44d683152d8e3d0285966a4ea",
+  "scope": "REAL_CACHED_CPU_TTS_FULL_FRESH_V3_SYNTHESIS_NOT_LIVE_NOT_GOLDEN_NOT_NATURALNESS",
+  "fixtureSHA256": "sha256:150bd11e3ad734a6aba7bf34ea6416dd7104bda93c7bf3f73e537e6854445387",
+  "config": {
+    "provider": "cpu",
+    "voiceId": "xiao_ya",
+    "speakerId": 0,
+    "speed": 1,
+    "threads": 2,
+    "outputSampleRate": 16000
+  },
+  "versions": {
+    "sherpa-onnx": "1.13.8",
+    "av": "17.1.0",
+    "numpy": "2.5.3",
+    "pydantic": "2.13.5"
+  },
+  "nativeSampleRate": 22050,
+  "completedNarrationCount": 140,
+  "freshNarrationOriginalSeconds": 750.2934375,
+  "freshNarrationPaddedSeconds": 753.2,
+  "elapsedWallSeconds": 27.118158625089563,
+  "cpuPreflightStatus": "PASS",
+  "liveGolden": "NOT_TESTED",
+  "audible": "NOT_TESTED",
+  "humanNaturalness": "NOT_TESTED",
+  "narrationSourceSamples16k": 12004695,
+  "narrationPaddedSamples16k": 12051200,
+  "minNarrationPaddedSeconds": 4.12,
+  "maxNarrationPaddedSeconds": 6.36,
+  "maxNarrationRows": [
+    {
+      "ordinal": 134,
+      "factIds": [
+        "guide.14.04"
+      ],
+      "sourceSamples16k": 101297,
+      "padSamples640": 463,
+      "paddedSamples16k": 101760,
+      "paddedDurationSeconds": 6.36
+    }
+  ],
+  "extraCases": [
+    {
+      "kind": "CANONICAL_CNY_PRICE_ANSWER",
+      "text": "这款目前价格是人民币99.00元。",
+      "sourceSamples16k": 62662,
+      "padSamples640": 58,
+      "paddedSamples16k": 62720,
+      "paddedDurationSeconds": 3.92,
+      "synthesisWallSeconds": 0.12702154205180705,
+      "readyContentHash": "sha256:befd5453fa19264db9ffb02727aaaf359dbe4b4277b2439ce916085893d0e207"
+    },
+    {
+      "kind": "APPROVED_FACT_FREE_BRIDGE",
+      "text": "说到这里，接下来看看下一项讲解内容。",
+      "sourceSamples16k": 57755,
+      "padSamples640": 485,
+      "paddedSamples16k": 58240,
+      "paddedDurationSeconds": 3.64,
+      "synthesisWallSeconds": 0.14273100008722395,
+      "readyContentHash": "sha256:2e5ff956cf597f8a5a926603b410bb6d6069ed6f948c50b09499c12c12f57d7a"
+    },
+    {
+      "kind": "APPROVED_FACT_FREE_BRIDGE",
+      "text": "这个问题也正好引出了下一项讲解内容，我们接着往下看。",
+      "sourceSamples16k": 85901,
+      "padSamples640": 499,
+      "paddedSamples16k": 86400,
+      "paddedDurationSeconds": 5.4,
+      "synthesisWallSeconds": 0.20072266703937203,
+      "readyContentHash": "sha256:bc5c60fa9ecf3f8cb2926c558dc11d4195d5c3611760435100019273abec0c0f"
+    }
+  ],
+  "emptyBridge": {
+    "text": "",
+    "status": "VALID_EMPTY_CHOICE_NO_TTS_OR_MEDIA_REQUIRED"
+  },
+  "historicalDurationUsed": false,
+  "sshOrGPUUsed": false,
+  "manifest": {
+    "tts_preflight.py": {
+      "bytes": 8096,
+      "sha256": "5437b2673878b5db26b636b7b3520d8571956c2802c1151b1889e9dee5598656"
+    },
+    "result.json": {
+      "bytes": 137409,
+      "sha256": "851cf1f62382bf7d438ff921d1924dec1427e0f63d393663d2851f71c7f16cd5"
+    },
+    "tts.log": {
+      "bytes": 116352,
+      "sha256": "944c2504d1816203af759084f642383237b2d38b29b6decabf7e9892590407d6"
+    },
+    "modelhash.json": {
+      "bytes": 1061,
+      "sha256": "6e337907b6031347379fdb610840b25ffb83cac59881951251ef66ded7c03394"
+    },
+    "fixturehash.json": {
+      "bytes": 1041,
+      "sha256": "cc3149779bc912c1452cf0eb88c42e79247143221f0d60eb3a77de686bd2386f"
+    },
+    "sourcepin.json": {
+      "bytes": 163,
+      "sha256": "c06b85023b689533c726b9de6abe3b61e7938e39a214f217e96b5bef5043d45a"
+    }
+  }
+}

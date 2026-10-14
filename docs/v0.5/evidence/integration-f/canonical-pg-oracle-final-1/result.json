@@ -1,0 +1,154 @@
+{
+  "source": "609ee76cec0924a44d683152d8e3d0285966a4ea",
+  "scope": "local owned real PostgreSQL/A+C transactions; controlled initial boundary and sink receipts; no Runtime/GPU/browser/audibility",
+  "checks": [
+    {
+      "name": "pg-init",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/initdb",
+        "-D",
+        "/private/tmp/astralive-f-final-pg-oracle-1/pg",
+        "-A",
+        "trust",
+        "--no-locale",
+        "-E",
+        "UTF8"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.327,
+      "sha256": "9f595134d770c606f2b3bf065bfb5c64944e6d03f2fe442a5520cd69cd4452e6"
+    },
+    {
+      "name": "pg-start",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+        "-D",
+        "/private/tmp/astralive-f-final-pg-oracle-1/pg",
+        "-l",
+        "/private/tmp/astralive-f-final-pg-oracle-1/postgres.log",
+        "start"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.121,
+      "sha256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad"
+    },
+    {
+      "name": "pg-createdb",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/createdb",
+        "-h",
+        "127.0.0.1",
+        "-p",
+        "57315",
+        "canonical_projection"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.052,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "go-pg-projection",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-timeout=90s",
+        "-v",
+        "./internal/narration",
+        "-run",
+        "^TestFPostgresCanonicalProjectionOracleData$"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 3.415,
+      "sha256": "a4e5d5b2ba56d02091e44023654ee8507b419db3d296ee89244cac3e9a15f338"
+    },
+    {
+      "name": "old-oracle",
+      "command": [
+        "/private/tmp/astralive-f-media-venv-1/bin/python",
+        "/private/tmp/astralive-f-final-pg-oracle-1/oracle-driver.py",
+        "/private/tmp/astralive-f-final-pg-oracle-1/sql-proof.json"
+      ],
+      "exitCode": 1,
+      "expectedExit": 1,
+      "seconds": 0.037,
+      "sha256": "2f87e55a8262bdd3e58fc4e9dbe64878a9d07e4b4206f83d0ed03a98fbcb6dd2"
+    },
+    {
+      "name": "fixed-oracle",
+      "command": [
+        "/private/tmp/astralive-f-media-venv-1/bin/python",
+        "/private/tmp/astralive-f-final-pg-oracle-1/oracle-driver.py",
+        "/private/tmp/astralive-f-final-pg-oracle-1/sql-proof.json"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.026,
+      "sha256": "6533e3904bf359bf46941310f3fb3c820732f0117d8f598bf6fdb0b209aafe30"
+    },
+    {
+      "name": "pg-stop",
+      "command": [
+        "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+        "-D",
+        "/private/tmp/astralive-f-final-pg-oracle-1/pg",
+        "-m",
+        "fast",
+        "stop"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.111,
+      "sha256": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d"
+    }
+  ],
+  "derivedTestParentSHA256": "444691c2ca37b8be730fbd4f1640ce53ea9d26b928b66197075bd5587c3ed6e0",
+  "overlayChanges": [
+    "rename test",
+    "success-only case",
+    "add os/filepath imports",
+    "execute F safe queries and export after existing assertions/Stop"
+  ],
+  "overlaySHA256": "20aa6574fe6fc7d3b6b1df4129cbb21d254861b6e6960a10d27ff35cd6578f80",
+  "queryFileSHA256": "6048f7cda32b27dee83f4b63157b0919e342f27b9ef3f92a1647d49ad66740d4",
+  "sqlSHA256": "aad4f9cadc22a7be6410d00aae496fd393ae0b185484f84f30389fc8e27c93b7",
+  "oracleSources": {
+    "old-oracle": {
+      "source": "7d10c314aa690caf8325815139d7b8be05a1fcff",
+      "moduleSHA256": "d0c2f07bc1e697b7ca2b017c3250585895f913f34040fdd6372139ee78c7ed1a"
+    },
+    "fixed-oracle": {
+      "source": "7a7055e9515c2f9d5f5401d0da1dc1694b662556",
+      "moduleSHA256": "07f7d2790e32b3b845b194bd86a065b9e69e2c71db3dbfbb992977aa54676036"
+    }
+  },
+  "inputChecks": {
+    "old-oracle": {
+      "beforeSHA256": "aad4f9cadc22a7be6410d00aae496fd393ae0b185484f84f30389fc8e27c93b7",
+      "afterSHA256": "aad4f9cadc22a7be6410d00aae496fd393ae0b185484f84f30389fc8e27c93b7"
+    },
+    "fixed-oracle": {
+      "beforeSHA256": "aad4f9cadc22a7be6410d00aae496fd393ae0b185484f84f30389fc8e27c93b7",
+      "afterSHA256": "aad4f9cadc22a7be6410d00aae496fd393ae0b185484f84f30389fc8e27c93b7"
+    }
+  },
+  "status": "PASS",
+  "artifacts": {
+    "pg-start.log": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "sql-proof.json": "aad4f9cadc22a7be6410d00aae496fd393ae0b185484f84f30389fc8e27c93b7",
+    "old-oracle.log": "2f87e55a8262bdd3e58fc4e9dbe64878a9d07e4b4206f83d0ed03a98fbcb6dd2",
+    "fixed-oracle.log": "6533e3904bf359bf46941310f3fb3c820732f0117d8f598bf6fdb0b209aafe30",
+    "go-pg-projection.log": "a4e5d5b2ba56d02091e44023654ee8507b419db3d296ee89244cac3e9a15f338",
+    "generated-overlay.go.txt": "20aa6574fe6fc7d3b6b1df4129cbb21d254861b6e6960a10d27ff35cd6578f80",
+    "pg-init.log": "9f595134d770c606f2b3bf065bfb5c64944e6d03f2fe442a5520cd69cd4452e6",
+    "pg-stop.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "postgres.log": "481b344813b7429f9c6a1824d560a951ab619ad1c34db1d68899f95006176e7f",
+    "oracle-driver.py": "7f51bdbd9db171358c8cb9d101badd2ca93c544788ee8cb43f2f1c8383401e9f",
+    "pg-createdb.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

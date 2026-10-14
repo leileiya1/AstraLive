@@ -1,0 +1,49 @@
+{
+  "source": "378d978d5e64bf060e351cfb4362b285c02aeba4",
+  "oldOracle": {
+    "source": "7d10c314aa690caf8325815139d7b8be05a1fcff",
+    "moduleSHA256": "d0c2f07bc1e697b7ca2b017c3250585895f913f34040fdd6372139ee78c7ed1a"
+  },
+  "fixedOracle": {
+    "source": "7a7055e9515c2f9d5f5401d0da1dc1694b662556",
+    "moduleSHA256": "07f7d2790e32b3b845b194bd86a065b9e69e2c71db3dbfbb992977aa54676036"
+  },
+  "scriptSHA256": "2084cb3506d1eedaa3a8b5be8c4eaf07ff2a03be202b59b38e9825edaa6a6ec7",
+  "querySHA256": "6048f7cda32b27dee83f4b63157b0919e342f27b9ef3f92a1647d49ad66740d4",
+  "sqlSHA256": "9c15fbb92f01a42e4030f8676684fe72e6c6775cf33cce4e37074cc34a3f6735",
+  "scope": "controlled real PostgreSQL component only",
+  "scopedACK": true,
+  "pgStopExitCode": 0,
+  "files": {
+    "README.md": "76a16ef0cc0199cc549d7a7c61f5f50f61c3c65746c31a657d22303a16111c5b",
+    "actual-invocation.json": "cf325b594583f1192badb42f083b1d9da7ca7e9d81afd1813ec90d748899d0e7",
+    "final-full-repro-6/fixed-oracle.log": "6533e3904bf359bf46941310f3fb3c820732f0117d8f598bf6fdb0b209aafe30",
+    "final-full-repro-6/generated-overlay.go.txt": "20aa6574fe6fc7d3b6b1df4129cbb21d254861b6e6960a10d27ff35cd6578f80",
+    "final-full-repro-6/go-pg-projection.log": "886f7a7f67b0c3070294f2c0ee4ea665f755aed2d29c5ecf52ef10112664ee8f",
+    "final-full-repro-6/old-oracle.log": "2f87e55a8262bdd3e58fc4e9dbe64878a9d07e4b4206f83d0ed03a98fbcb6dd2",
+    "final-full-repro-6/oracle-driver.py": "7f51bdbd9db171358c8cb9d101badd2ca93c544788ee8cb43f2f1c8383401e9f",
+    "final-full-repro-6/pg-createdb.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final-full-repro-6/pg-init.log": "af83476aa603c4acd480ee79b82e060da1b0f100ab3a3ab7ff75cb2b83d04819",
+    "final-full-repro-6/pg-start.log": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "final-full-repro-6/pg-stop.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "final-full-repro-6/postgres.log": "fb5d1d232d492e2c08db4d7b8bd71d31a28b900a77a5e0749d69b357ad393f4b",
+    "final-full-repro-6/result.json": "0b6141b7d2da9cd58795368a10314ce4f12e0567694da44a43a61d4358ce7ef7",
+    "final-full-repro-6/sql-proof.json": "9c15fbb92f01a42e4030f8676684fe72e6c6775cf33cce4e37074cc34a3f6735",
+    "historical-import-path-error-2/fixed-oracle.log": "2f87e55a8262bdd3e58fc4e9dbe64878a9d07e4b4206f83d0ed03a98fbcb6dd2",
+    "historical-import-path-error-2/old-oracle.log": "2f87e55a8262bdd3e58fc4e9dbe64878a9d07e4b4206f83d0ed03a98fbcb6dd2",
+    "historical-import-path-error-2/oracle-driver.py": "6d9e529b84c66cb2b648402ac8852ff09801fe1270b49f36749682bf99e0be78",
+    "historical-import-path-error-2/result.json": "f14db814350ed73a09fcbd49f9e516b73df4479c0829f748a2c8538ba8e3d3bc",
+    "historical-runner-error-1/fixed-oracle.log": "91ae353b2ad05009ae26d3e88073119ad8dcd55cb2a9b704a7c846aac17472a3",
+    "historical-runner-error-1/go-pg-projection.log": "819c5eb20432fd7800a8e7380f3e8b8115e4590ce5dea3d97593a3f3203a2541",
+    "historical-runner-error-1/old-oracle.log": "91ae353b2ad05009ae26d3e88073119ad8dcd55cb2a9b704a7c846aac17472a3",
+    "historical-runner-error-1/oracle-driver.py": "d310c61fea01c2ba5037f293d948d738955940d4b376b311ac29ba210c02d250",
+    "historical-runner-error-1/pg-stop.log": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "historical-runner-error-1/result.json": "773ce8d8373a241ac7624b01c6135c4251d8a7144613d6443393dca7adc6df0a",
+    "historical-runner-error-1/sql-proof.json": "b92aef71f35d2b49ec8c0a83cbb5a007928d42294d845719872152f6b12aaa14",
+    "pg_canonical_projection_gate.py": "2084cb3506d1eedaa3a8b5be8c4eaf07ff2a03be202b59b38e9825edaa6a6ec7",
+    "same-input-pinned-replay-3/fixed-oracle.log": "6533e3904bf359bf46941310f3fb3c820732f0117d8f598bf6fdb0b209aafe30",
+    "same-input-pinned-replay-3/old-oracle.log": "2f87e55a8262bdd3e58fc4e9dbe64878a9d07e4b4206f83d0ed03a98fbcb6dd2",
+    "same-input-pinned-replay-3/oracle-driver.py": "7f51bdbd9db171358c8cb9d101badd2ca93c544788ee8cb43f2f1c8383401e9f",
+    "same-input-pinned-replay-3/result.json": "6ba25b04e592c18263910b14dbce4b9aaa90438129806cb4362758a97d9910d6"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "source": "609ee76cec0924a44d683152d8e3d0285966a4ea",
+  "scope": "64 synthetic oracle tests; actual PG projection privacy/hash separately verified by full module gates; not GPU/Chrome/RTMP live acceptance",
+  "command": [
+    "/private/tmp/astralive-f-media-venv-1/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "integration/v0.5/tests",
+    "-v"
+  ],
+  "exitCode": 0,
+  "tests": 64,
+  "sourceSHA256": {
+    "integration/v0.5/canonical_coverage_audit.py": "07f7d2790e32b3b845b194bd86a065b9e69e2c71db3dbfbb992977aa54676036",
+    "integration/v0.5/real_golden_audit.py": "4e4e7752d9385f768876ca9cac522cd2754958be7bb989539b656e40cb060dca",
+    "integration/v0.5/tests/test_canonical_oracle_wiring.py": "121fbf53f8911ce985161ffca94f96ce8784d59d465ee826f2455d98db060855",
+    "backend/internal/narration/golden_safe_projection_test.go": "6048f7cda32b27dee83f4b63157b0919e342f27b9ef3f92a1647d49ad66740d4"
+  },
+  "logSHA256": "11fde030c5a1884e5307cc3607c961cf6d499fc2a9c49b114da826509c7ce03b"
+}

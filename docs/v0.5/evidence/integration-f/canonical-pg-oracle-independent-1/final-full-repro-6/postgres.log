@@ -1,0 +1,14 @@
+2026-10-14 08:32:14.044 CST [78809] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-14 08:32:14.044 CST [78809] LOG:  listening on IPv4 address "127.0.0.1", port 56831
+2026-10-14 08:32:14.047 CST [78812] LOG:  database system was shut down at 2026-10-14 08:32:13 CST
+2026-10-14 08:32:14.049 CST [78809] LOG:  database system is ready to accept connections
+2026-10-14 08:32:16.588 CST [78880] ERROR:  immutable narration authority/plan or stop barrier
+2026-10-14 08:32:16.588 CST [78880] CONTEXT:  PL/pgSQL function v05_narration_guard() line 4 at RAISE
+2026-10-14 08:32:16.588 CST [78880] STATEMENT:  UPDATE v05_narrations SET plan_json=plan_json-'_cnyPriceCoveragePolicy'
+2026-10-14 08:32:17.777 CST [78809] LOG:  received fast shutdown request
+2026-10-14 08:32:17.778 CST [78809] LOG:  aborting any active transactions
+2026-10-14 08:32:17.778 CST [78809] LOG:  background worker "logical replication launcher" (PID 78815) exited with exit code 1
+2026-10-14 08:32:17.778 CST [78810] LOG:  shutting down
+2026-10-14 08:32:17.778 CST [78810] LOG:  checkpoint starting: shutdown immediate
+2026-10-14 08:32:17.825 CST [78810] LOG:  checkpoint complete: wrote 1035 buffers (6.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.035 s, sync=0.009 s, total=0.047 s; sync files=482, longest=0.001 s, average=0.001 s; distance=5940 kB, estimate=5940 kB; lsn=0/1AE7AD8, redo lsn=0/1AE7AD8
+2026-10-14 08:32:17.827 CST [78809] LOG:  database system is shut down

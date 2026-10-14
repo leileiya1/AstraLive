@@ -1,6 +1,19 @@
 # v0.5 F chaos and integration-gate report
 
-## Current real live checkpoint — 2026-10-13
+## Current local repair checkpoint — 2026-10-14
+
+Tested source `609ee76cec0924a44d683152d8e3d0285966a4ea` full local module
+gate PASS, Runtime280 total/12skip, frontend40/build,64 independent oracle tests.
+Actual safe PostgreSQL projections execute and preserve product hash/ownership
+and selected-field privacy; private price policy/source proofs and profile
+agreement are repaired. [Exact gates and scope](LOCAL-REPAIR-CHECKPOINT.md).
+
+Existing software fault/restart/Redis-off tests passed again. No real Worker,
+Chrome, RTMP, cloud crash or Redis-kill business recovery was run here. Historical
+real pilot failures below are unchanged; complete Golden/fault/A/V matrix remains
+FAIL / NOT TESTED. No performance/default-enable claim follows from local PASS.
+
+## Previous real live checkpoint — 2026-10-13
 
 Earlier sections are historical source-pinned results. F source `4f61a97` complete software/owned-PG regression PASSes: Go/race, migration/auth/ownership/Redis-off/fault gates, Runtime275 total with12 skipped, frontend40/build. [Result](evidence/integration-f/llm-diagnostics-c-postmerge-1/result.json).
 

@@ -1,0 +1,1514 @@
+{
+  "answerPreparedCommands": [
+    {
+      "userId": "user",
+      "factIds": [
+        "price"
+      ],
+      "traceId": "trace_e73f5268806a5d79f23513b6be8ba456",
+      "runEpoch": 1,
+      "tenantId": "tenant",
+      "commandId": "cmd_ce6376990b8d14a4b2ce7082ab8b7e06",
+      "sessionId": "s",
+      "answerText": "这款目前价格是人民币99.00元。",
+      "commandType": "START_AUDIENCE_ANSWER",
+      "narrationId": "narration_a83ebe66834077185b125333d9bba7b4",
+      "interactionTurnId": "canonical-turn",
+      "productSnapshotHash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff"
+    }
+  ],
+  "attempts": [
+    {
+      "lane": "NARRATION",
+      "status": "PLANNED",
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": "attempt_bb133ad4677b833c8971bae123f71de8",
+      "command_id": "cmd_546367cfcc11e92f52bd0154755420be",
+      "segment_id": "segment_ebf9074bbe943d359a1e85f5c75c2c50",
+      "session_id": "s",
+      "updated_at": "2026-10-14T08:23:21.550121+08:00",
+      "narration_id": "narration_a83ebe66834077185b125333d9bba7b4",
+      "utterance_id": "utt_bb133ad4677b833c8971bae123f71de8",
+      "worker_epoch": null,
+      "document_json": {},
+      "generation_id": null,
+      "timeline_epoch": 1,
+      "descriptor_json": {},
+      "worker_ref_json": {},
+      "worker_generation_id": null
+    },
+    {
+      "lane": "AUDIENCE_ANSWER",
+      "status": "COMPLETED",
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": "attempt_e611b92e8afc0bd78a64f145e0d55908",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "segment_id": "answer_8bd944d943b99a469215bf9a81d49672",
+      "session_id": "s",
+      "updated_at": "2026-10-14T08:23:21.597332+08:00",
+      "narration_id": "narration_a83ebe66834077185b125333d9bba7b4",
+      "utterance_id": "utt_e611b92e8afc0bd78a64f145e0d55908",
+      "worker_epoch": null,
+      "document_json": {},
+      "generation_id": 1,
+      "timeline_epoch": 2,
+      "descriptor_json": {
+        "factIds": [
+          "price"
+        ],
+        "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+        "videoHash": "controlled-sink-video-fixture",
+        "contentHash": "controlled-sink-pcm-fixture",
+        "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+        "finalMarker": true,
+        "sampleCount": 48000,
+        "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+        "requiredSinks": [
+          "fixture"
+        ],
+        "videoFrameCount": 25,
+        "sourceSampleRate": 16000,
+        "sourceSampleCount": 16000
+      },
+      "worker_ref_json": {
+        "workerEpoch": null,
+        "workerGenerationId": null
+      },
+      "worker_generation_id": null
+    }
+  ],
+  "bindingRelease": [
+    {
+      "released": false,
+      "sessionId": "s"
+    }
+  ],
+  "commandIdentities": [
+    {
+      "lane": "NARRATION",
+      "beatId": "beat_4542e63f628a96a276ec7a6be2c391e3",
+      "traceId": "trace",
+      "runEpoch": 1,
+      "attemptId": "attempt_bb133ad4677b833c8971bae123f71de8",
+      "commandId": "cmd_546367cfcc11e92f52bd0154755420be",
+      "segmentId": "segment_ebf9074bbe943d359a1e85f5c75c2c50",
+      "sessionId": "s",
+      "commandType": "COMMIT_SEGMENT",
+      "narrationId": "narration_a83ebe66834077185b125333d9bba7b4",
+      "utteranceId": "utt_bb133ad4677b833c8971bae123f71de8",
+      "timelineEpoch": 1,
+      "interactionTurnId": null
+    },
+    {
+      "lane": "AUDIENCE_ANSWER",
+      "beatId": "beat_3604fe58886f3fa18da3b38b9e3d8ffc",
+      "traceId": "trace_e73f5268806a5d79f23513b6be8ba456",
+      "runEpoch": 1,
+      "attemptId": "attempt_e611b92e8afc0bd78a64f145e0d55908",
+      "commandId": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+      "sessionId": "s",
+      "commandType": "COMMIT_SEGMENT",
+      "narrationId": "narration_a83ebe66834077185b125333d9bba7b4",
+      "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+      "timelineEpoch": 2,
+      "interactionTurnId": "canonical-turn"
+    }
+  ],
+  "commits": [
+    {
+      "status": "ELIGIBLE",
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": "attempt_e611b92e8afc0bd78a64f145e0d55908",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "created_at": "2026-10-14T08:23:21.584216+08:00",
+      "end_sample": 48000,
+      "play_state": "COMPLETED",
+      "segment_id": "answer_8bd944d943b99a469215bf9a81d49672",
+      "session_id": "s",
+      "sample_rate": 48000,
+      "completed_at": "2026-10-14T08:23:21.597118+08:00",
+      "installed_at": "2026-10-14T08:23:21.590186+08:00",
+      "start_sample": 0,
+      "generation_id": 1,
+      "identity_json": {
+        "lane": "AUDIENCE_ANSWER",
+        "runEpoch": 1,
+        "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+        "sessionId": "s",
+        "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+        "workerEpoch": null,
+        "generationId": 1,
+        "timelineEpoch": 2,
+        "workerGenerationId": null
+      },
+      "sink_receipts": [
+        {
+          "media": "audio",
+          "sinkId": "fixture",
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "runEpoch": 1,
+            "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+            "sessionId": "s",
+            "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+            "workerEpoch": null,
+            "generationId": 1,
+            "timelineEpoch": 2,
+            "workerGenerationId": null
+          },
+          "endSample": 48000,
+          "evidenceRef": "controlled-policy-fixture:fixture:audio",
+          "finalMarker": true,
+          "startSample": 0,
+          "evidenceType": "sink_consumed"
+        },
+        {
+          "media": "video",
+          "sinkId": "fixture",
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "runEpoch": 1,
+            "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+            "sessionId": "s",
+            "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+            "workerEpoch": null,
+            "generationId": 1,
+            "timelineEpoch": 2,
+            "workerGenerationId": null
+          },
+          "endSample": 48000,
+          "evidenceRef": "controlled-policy-fixture:fixture:video",
+          "finalMarker": true,
+          "startSample": 0,
+          "evidenceType": "sink_consumed"
+        }
+      ],
+      "optional_sinks": [],
+      "required_sinks": [
+        "fixture"
+      ],
+      "timeline_epoch": 2,
+      "completion_hash": "sha256:a645be3ae636ed74f1ebb0e1d4ec6fe7d6120a311788b3f6d83fe14d4e609f79",
+      "descriptor_json": {
+        "factIds": [
+          "price"
+        ],
+        "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+        "videoHash": "controlled-sink-video-fixture",
+        "contentHash": "controlled-sink-pcm-fixture",
+        "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+        "finalMarker": true,
+        "sampleCount": 48000,
+        "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+        "requiredSinks": [
+          "fixture"
+        ],
+        "videoFrameCount": 25,
+        "sourceSampleRate": 16000,
+        "sourceSampleCount": 16000
+      }
+    }
+  ],
+  "narrations": [
+    {
+      "state": "STOPPING",
+      "user_id": "user",
+      "revision": 7,
+      "plan_json": {
+        "beats": [
+          {
+            "title": "商品定位",
+            "beatId": "beat_4542e63f628a96a276ec7a6be2c391e3",
+            "productId": "p",
+            "segmentIds": [
+              "segment_ebf9074bbe943d359a1e85f5c75c2c50"
+            ],
+            "beatOrdinal": 0,
+            "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+            "requiredFactIds": [
+              "name"
+            ]
+          },
+          {
+            "title": "购买说明",
+            "beatId": "beat_3604fe58886f3fa18da3b38b9e3d8ffc",
+            "productId": "p",
+            "segmentIds": [
+              "segment_97720092098a8740972bc2a8cdca1edb"
+            ],
+            "beatOrdinal": 1,
+            "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+            "requiredFactIds": [
+              "price"
+            ]
+          },
+          {
+            "title": "下一项讲解内容",
+            "beatId": "beat_89f6dfab3b739ca3290de14163686480",
+            "productId": "p",
+            "segmentIds": [
+              "segment_a1bf1ec70c66ba82d74bbdc48d8766cf"
+            ],
+            "beatOrdinal": 2,
+            "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+            "requiredFactIds": []
+          }
+        ],
+        "style": "自然亲切",
+        "policy": "AT_BOUNDARY",
+        "segments": [
+          {
+            "lane": "NARRATION",
+            "text": "这款是测试商品。",
+            "beatId": "beat_4542e63f628a96a276ec7a6be2c391e3",
+            "status": "PENDING",
+            "factIds": [
+              "name"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:8f97008d3135ce6a1b9dd251e5863c0513ba4286136ce4ef9672cdd41f6a04fd",
+            "segmentId": "segment_ebf9074bbe943d359a1e85f5c75c2c50",
+            "durationHintMs": 1600,
+            "segmentOrdinal": 0
+          },
+          {
+            "lane": "NARRATION",
+            "text": "本商品当前标价是人民币99.00元。",
+            "beatId": "beat_3604fe58886f3fa18da3b38b9e3d8ffc",
+            "status": "PENDING",
+            "factIds": [
+              "price"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:e3ada4ecd6bbedcead0ff92c2b3227be253a7038a0b8c6d8bc7cefa918abf7b8",
+            "segmentId": "segment_97720092098a8740972bc2a8cdca1edb",
+            "durationHintMs": 3600,
+            "segmentOrdinal": 1
+          },
+          {
+            "lane": "NARRATION",
+            "text": "接下来继续讲解使用方法。",
+            "beatId": "beat_89f6dfab3b739ca3290de14163686480",
+            "status": "PENDING",
+            "factIds": [],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:dfce107fbbd367a4745125a80d98975c77042d7ff0c1aa624e0719d1d3f30edb",
+            "segmentId": "segment_a1bf1ec70c66ba82d74bbdc48d8766cf",
+            "durationHintMs": 2400,
+            "segmentOrdinal": 2
+          }
+        ],
+        "productId": "p",
+        "sessionId": "s",
+        "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+        "narrationId": "narration_a83ebe66834077185b125333d9bba7b4",
+        "requiredSinks": [
+          "fixture"
+        ],
+        "scriptVersion": "script1",
+        "productSnapshotHash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+        "_cnyPriceCoveragePolicy": {
+          "targets": [
+            {
+              "factId": "price",
+              "textHash": "sha256:e3ada4ecd6bbedcead0ff92c2b3227be253a7038a0b8c6d8bc7cefa918abf7b8",
+              "segmentId": "segment_97720092098a8740972bc2a8cdca1edb",
+              "templateRevision": "price-subject-1"
+            }
+          ],
+          "runEpoch": 1,
+          "productId": "p",
+          "sessionId": "s",
+          "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+          "narrationId": "narration_a83ebe66834077185b125333d9bba7b4",
+          "policyRevision": "canonical-cny-price-1",
+          "productSnapshotHash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff"
+        }
+      },
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "session_id": "s",
+      "updated_at": "2026-10-14T08:23:21.605236+08:00",
+      "narration_id": "narration_a83ebe66834077185b125333d9bba7b4",
+      "stop_barrier": true,
+      "document_json": {
+        "plan": {
+          "beats": [
+            {
+              "title": "商品定位",
+              "beatId": "beat_4542e63f628a96a276ec7a6be2c391e3",
+              "productId": "p",
+              "segmentIds": [
+                "segment_ebf9074bbe943d359a1e85f5c75c2c50"
+              ],
+              "beatOrdinal": 0,
+              "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+              "requiredFactIds": [
+                "name"
+              ]
+            },
+            {
+              "title": "购买说明",
+              "beatId": "beat_3604fe58886f3fa18da3b38b9e3d8ffc",
+              "productId": "p",
+              "segmentIds": [
+                "segment_97720092098a8740972bc2a8cdca1edb"
+              ],
+              "beatOrdinal": 1,
+              "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+              "requiredFactIds": [
+                "price"
+              ]
+            },
+            {
+              "title": "下一项讲解内容",
+              "beatId": "beat_89f6dfab3b739ca3290de14163686480",
+              "productId": "p",
+              "segmentIds": [
+                "segment_a1bf1ec70c66ba82d74bbdc48d8766cf"
+              ],
+              "beatOrdinal": 2,
+              "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+              "requiredFactIds": []
+            }
+          ],
+          "style": "自然亲切",
+          "policy": "AT_BOUNDARY",
+          "segments": [
+            {
+              "lane": "NARRATION",
+              "text": "这款是测试商品。",
+              "beatId": "beat_4542e63f628a96a276ec7a6be2c391e3",
+              "status": "COMPLETED",
+              "factIds": [
+                "name"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:8f97008d3135ce6a1b9dd251e5863c0513ba4286136ce4ef9672cdd41f6a04fd",
+              "segmentId": "segment_ebf9074bbe943d359a1e85f5c75c2c50",
+              "durationHintMs": 1600,
+              "segmentOrdinal": 0
+            },
+            {
+              "lane": "NARRATION",
+              "text": "本商品当前标价是人民币99.00元。",
+              "beatId": "beat_3604fe58886f3fa18da3b38b9e3d8ffc",
+              "status": "SATISFIED_BY_ANSWER",
+              "factIds": [
+                "price"
+              ],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:e3ada4ecd6bbedcead0ff92c2b3227be253a7038a0b8c6d8bc7cefa918abf7b8",
+              "segmentId": "segment_97720092098a8740972bc2a8cdca1edb",
+              "durationHintMs": 3600,
+              "segmentOrdinal": 1
+            },
+            {
+              "lane": "NARRATION",
+              "text": "接下来继续讲解使用方法。",
+              "beatId": "beat_89f6dfab3b739ca3290de14163686480",
+              "status": "CANCELLED",
+              "factIds": [],
+              "boundary": "SENTENCE_END",
+              "textHash": "sha256:dfce107fbbd367a4745125a80d98975c77042d7ff0c1aa624e0719d1d3f30edb",
+              "segmentId": "segment_a1bf1ec70c66ba82d74bbdc48d8766cf",
+              "durationHintMs": 2400,
+              "segmentOrdinal": 2
+            }
+          ],
+          "productId": "p",
+          "sessionId": "s",
+          "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+          "narrationId": "narration_a83ebe66834077185b125333d9bba7b4",
+          "requiredSinks": [
+            "fixture"
+          ],
+          "scriptVersion": "script1",
+          "productSnapshotHash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff"
+        },
+        "turn": {
+          "state": "COMPLETED",
+          "answer": {
+            "lane": "AUDIENCE_ANSWER",
+            "text": "这款目前价格是人民币99.00元。",
+            "beatId": "",
+            "status": "COMPLETED",
+            "factIds": [
+              "price"
+            ],
+            "boundary": "SENTENCE_END",
+            "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+            "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+            "durationHintMs": 0,
+            "segmentOrdinal": 0
+          },
+          "deadline": "2026-10-14T08:24:21.550697+08:00",
+          "priority": 0,
+          "question": "多少钱？",
+          "sourceIds": [
+            "fixture-comment"
+          ],
+          "answerText": "这款目前价格是人民币99.00元。",
+          "selectedAt": "0001-01-01T00:00:00Z",
+          "sourceScope": {
+            "platform": "",
+            "transport": "",
+            "internalRoomId": "",
+            "platformRoomId": ""
+          },
+          "questionHash": "sha256:4eb241c847dc1625313b373beeff8102805499aeb0ad8898e855f205e40efc1f",
+          "answerFactIds": [
+            "price"
+          ],
+          "interactionTurnId": "canonical-turn",
+          "capturedProductHash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+          "mappedNarrationFactIds": [
+            "price"
+          ]
+        },
+        "state": "STOPPING",
+        "cursor": {
+          "nextOrdinal": 2,
+          "completedFactIds": [
+            "name",
+            "price"
+          ],
+          "lastCompletedText": "",
+          "ambiguousSegmentIds": null,
+          "completedSegmentIds": [
+            "segment_ebf9074bbe943d359a1e85f5c75c2c50",
+            "segment_97720092098a8740972bc2a8cdca1edb"
+          ],
+          "lastCompletedSegmentId": ""
+        },
+        "reason": "SESSION_STOP",
+        "runEpoch": 1,
+        "requestHash": "sha256:41f3a9848bc82af7048139eadf01bc363b0d6d5b6782cc0e6e9a1385fdf9e4a8",
+        "resumePoint": {
+          "cursor": {
+            "nextOrdinal": 1,
+            "completedFactIds": [
+              "name"
+            ],
+            "lastCompletedText": "",
+            "ambiguousSegmentIds": null,
+            "completedSegmentIds": [
+              "segment_ebf9074bbe943d359a1e85f5c75c2c50"
+            ],
+            "lastCompletedSegmentId": ""
+          },
+          "boundary": {
+            "sinks": null,
+            "identity": {
+              "lane": "",
+              "runEpoch": 0,
+              "segmentId": "",
+              "sessionId": "",
+              "utteranceId": "",
+              "generationId": 0,
+              "timelineEpoch": 1
+            },
+            "textHash": "",
+            "attemptId": "",
+            "evidenceRef": "",
+            "factVersion": "",
+            "finalMarker": false,
+            "finalPosition": {
+              "ptsUs": 0,
+              "runEpoch": 0,
+              "sessionId": "",
+              "sampleRate": 0,
+              "sampleIndex": 0,
+              "timelineEpoch": 0
+            },
+            "requiredSinks": null,
+            "startPosition": {
+              "ptsUs": 0,
+              "runEpoch": 0,
+              "sessionId": "",
+              "sampleRate": 0,
+              "sampleIndex": 0,
+              "timelineEpoch": 0
+            },
+            "audienceAudible": false
+          },
+          "revision": 3,
+          "nextBeatId": "beat_89f6dfab3b739ca3290de14163686480",
+          "nextSegmentId": "segment_a1bf1ec70c66ba82d74bbdc48d8766cf"
+        },
+        "stopBarrier": true,
+        "beatProgress": [
+          {
+            "beatId": "beat_4542e63f628a96a276ec7a6be2c391e3",
+            "productId": "p",
+            "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+            "pendingFactIds": [],
+            "requiredFactIds": [
+              "name"
+            ],
+            "completedFactIds": [
+              "name"
+            ],
+            "currentSegmentId": "",
+            "nextTargetBeatId": "beat_3604fe58886f3fa18da3b38b9e3d8ffc",
+            "lastCompletedSegmentId": "segment_ebf9074bbe943d359a1e85f5c75c2c50"
+          },
+          {
+            "beatId": "beat_3604fe58886f3fa18da3b38b9e3d8ffc",
+            "productId": "p",
+            "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+            "pendingFactIds": [],
+            "requiredFactIds": [
+              "price"
+            ],
+            "completedFactIds": [
+              "price"
+            ],
+            "currentSegmentId": "",
+            "nextTargetBeatId": "beat_89f6dfab3b739ca3290de14163686480",
+            "lastCompletedSegmentId": ""
+          },
+          {
+            "beatId": "beat_89f6dfab3b739ca3290de14163686480",
+            "productId": "p",
+            "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+            "pendingFactIds": [],
+            "requiredFactIds": [],
+            "completedFactIds": [],
+            "currentSegmentId": "segment_a1bf1ec70c66ba82d74bbdc48d8766cf",
+            "nextTargetBeatId": "",
+            "lastCompletedSegmentId": ""
+          }
+        ],
+        "timelineEpoch": 2,
+        "invalidatedEpoch": 0,
+        "operatorOverride": false,
+        "suspendInstalled": false,
+        "boundarySegmentId": "",
+        "narrationRevision": 7
+      },
+      "script_version": "script1",
+      "resume_point_json": {
+        "cursor": {
+          "nextOrdinal": 1,
+          "completedFactIds": [
+            "name"
+          ],
+          "lastCompletedText": "",
+          "ambiguousSegmentIds": null,
+          "completedSegmentIds": [
+            "segment_ebf9074bbe943d359a1e85f5c75c2c50"
+          ],
+          "lastCompletedSegmentId": ""
+        },
+        "boundary": {
+          "sinks": null,
+          "identity": {
+            "lane": "",
+            "runEpoch": 0,
+            "segmentId": "",
+            "sessionId": "",
+            "utteranceId": "",
+            "generationId": 0,
+            "timelineEpoch": 1
+          },
+          "textHash": "",
+          "attemptId": "",
+          "evidenceRef": "",
+          "factVersion": "",
+          "finalMarker": false,
+          "finalPosition": {
+            "ptsUs": 0,
+            "runEpoch": 0,
+            "sessionId": "",
+            "sampleRate": 0,
+            "sampleIndex": 0,
+            "timelineEpoch": 0
+          },
+          "requiredSinks": null,
+          "startPosition": {
+            "ptsUs": 0,
+            "runEpoch": 0,
+            "sessionId": "",
+            "sampleRate": 0,
+            "sampleIndex": 0,
+            "timelineEpoch": 0
+          },
+          "audienceAudible": false
+        },
+        "revision": 3,
+        "nextBeatId": "beat_89f6dfab3b739ca3290de14163686480",
+        "nextSegmentId": "segment_a1bf1ec70c66ba82d74bbdc48d8766cf"
+      },
+      "recovery_disposition": null,
+      "product_snapshot_hash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+      "completion_cursor_json": {
+        "nextOrdinal": 2,
+        "completedFactIds": [
+          "name",
+          "price"
+        ],
+        "lastCompletedText": "",
+        "ambiguousSegmentIds": null,
+        "completedSegmentIds": [
+          "segment_ebf9074bbe943d359a1e85f5c75c2c50",
+          "segment_97720092098a8740972bc2a8cdca1edb"
+        ],
+        "lastCompletedSegmentId": ""
+      }
+    }
+  ],
+  "observations": [
+    {
+      "user_id": "user",
+      "operation": "ANSWER_PREPARED",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "command_id": "cmd_ce6376990b8d14a4b2ce7082ab8b7e06",
+      "session_id": "s",
+      "preparedProof": {
+        "text": "这款目前价格是人民币99.00元。",
+        "factIds": [
+          "price"
+        ],
+        "productSnapshotHash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff"
+      },
+      "response_json": {
+        "state": "ready",
+        "durable": true,
+        "revision": 0,
+        "receiptSeq": 3,
+        "observationHash": "sha256:026284837ee77201ab932acf1ce3e2163b98913400a81ac00c0cf6d75a1064cb",
+        "producerIncarnation": "canonical-runtime-fixture"
+      },
+      "observation_hash": "sha256:026284837ee77201ab932acf1ce3e2163b98913400a81ac00c0cf6d75a1064cb"
+    },
+    {
+      "user_id": "user",
+      "operation": "SEGMENT_READY",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "session_id": "s",
+      "preparedProof": null,
+      "response_json": {
+        "state": "ready",
+        "durable": true,
+        "revision": 0,
+        "receiptSeq": 4,
+        "observationHash": "sha256:da6961eaca4e69052fe13f436990b3d9f90463da5d650b053ef54a74a0443dfa",
+        "producerIncarnation": "canonical-runtime-fixture"
+      },
+      "observation_hash": "sha256:da6961eaca4e69052fe13f436990b3d9f90463da5d650b053ef54a74a0443dfa"
+    },
+    {
+      "user_id": "user",
+      "operation": "COMMIT_INTENT",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "session_id": "s",
+      "preparedProof": null,
+      "response_json": {
+        "state": "ready",
+        "durable": true,
+        "revision": 0,
+        "receiptSeq": 5,
+        "observationHash": "sha256:540f3a1d1f52ecedde0416520d0441c2a15e94ac30a0471a2f4f7841944e91b0",
+        "producerIncarnation": "canonical-runtime-fixture"
+      },
+      "observation_hash": "sha256:540f3a1d1f52ecedde0416520d0441c2a15e94ac30a0471a2f4f7841944e91b0"
+    },
+    {
+      "user_id": "user",
+      "operation": "COMMIT_INSTALLED",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "session_id": "s",
+      "preparedProof": null,
+      "response_json": {
+        "state": "committed",
+        "durable": true,
+        "revision": 1,
+        "receiptSeq": 6,
+        "observationHash": "sha256:2f8c477143561333b52790660b62d2acd7c6494bf3b3c00b95f6efd4d2fc4c75",
+        "producerIncarnation": "canonical-runtime-fixture"
+      },
+      "observation_hash": "sha256:2f8c477143561333b52790660b62d2acd7c6494bf3b3c00b95f6efd4d2fc4c75"
+    },
+    {
+      "user_id": "user",
+      "operation": "SEGMENT_COMPLETED",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "session_id": "s",
+      "preparedProof": null,
+      "response_json": {
+        "state": "completed",
+        "durable": true,
+        "revision": 1,
+        "receiptSeq": 7,
+        "observationHash": "sha256:a645be3ae636ed74f1ebb0e1d4ec6fe7d6120a311788b3f6d83fe14d4e609f79",
+        "producerIncarnation": "canonical-runtime-fixture"
+      },
+      "observation_hash": "sha256:a645be3ae636ed74f1ebb0e1d4ec6fe7d6120a311788b3f6d83fe14d4e609f79"
+    }
+  ],
+  "productSnapshots": [
+    {
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "session_id": "s",
+      "narration_id": "narration_a83ebe66834077185b125333d9bba7b4",
+      "productSnapshot": {
+        "name": "测试商品",
+        "price": "99.00",
+        "sizes": "XL",
+        "stock": "20",
+        "currency": "CNY",
+        "productId": "p",
+        "description": "水箱容量五升。"
+      }
+    }
+  ],
+  "receipts": [
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": null,
+      "command_id": "cmd_ce6376990b8d14a4b2ce7082ab8b7e06",
+      "session_id": "s",
+      "observed_at": "2026-10-14T08:23:21.557774+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_7a39a6ed3095f3008e3171ed9f5fd4ce",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:1a8b87552d929120314b7efa401127911af72d3a829553991e4c52e8daddad1c",
+      "producer_incarnation": "owner_269af40596bd57b48f74fbb26c01748f"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": "attempt_5ad49789ba3dae2a16fbd0e545acb429",
+      "command_id": "cmd_ce6376990b8d14a4b2ce7082ab8b7e06",
+      "session_id": "s",
+      "observed_at": "2026-10-14T08:23:21.559318+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_5ad49789ba3dae2a16fbd0e545acb429",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:1a8b87552d929120314b7efa401127911af72d3a829553991e4c52e8daddad1c",
+      "producer_incarnation": "canonical-runtime-fixture"
+    },
+    {
+      "state": "ready",
+      "outcome": null,
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": "attempt_5ad49789ba3dae2a16fbd0e545acb429",
+      "command_id": "cmd_ce6376990b8d14a4b2ce7082ab8b7e06",
+      "session_id": "s",
+      "observed_at": "2026-10-14T08:23:21.562075+08:00",
+      "range_sinks": {
+        "text": "这款目前价格是人民币99.00元。",
+        "factIds": [
+          "price"
+        ],
+        "productSnapshotHash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff"
+      },
+      "reason_code": null,
+      "receipt_seq": 3,
+      "evidence_ref": "ANSWER_PREPARED",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:026284837ee77201ab932acf1ce3e2163b98913400a81ac00c0cf6d75a1064cb",
+      "producer_incarnation": "canonical-runtime-fixture"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": null,
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "session_id": "s",
+      "observed_at": "2026-10-14T08:23:21.572305+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 1,
+      "evidence_ref": "op_runtime_c1d48ef4e0c35d93707f85b3fdae5383",
+      "evidence_type": "inbox_acceptance",
+      "observation_hash": "sha256:0fc5bcf9ec2dbf20957c35c217dfc84e522ea74d47e41f92ff087b3bd942006f",
+      "producer_incarnation": "owner_269af40596bd57b48f74fbb26c01748f"
+    },
+    {
+      "state": "accepted",
+      "outcome": null,
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": "attempt_1ab532115e8c777e595c92c5cf95de8d",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "session_id": "s",
+      "observed_at": "2026-10-14T08:23:21.573567+08:00",
+      "range_sinks": {},
+      "reason_code": null,
+      "receipt_seq": 2,
+      "evidence_ref": "attempt_1ab532115e8c777e595c92c5cf95de8d",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:0fc5bcf9ec2dbf20957c35c217dfc84e522ea74d47e41f92ff087b3bd942006f",
+      "producer_incarnation": "canonical-runtime-fixture"
+    },
+    {
+      "state": "generating",
+      "outcome": null,
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": "attempt_1ab532115e8c777e595c92c5cf95de8d",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "session_id": "s",
+      "observed_at": "2026-10-14T08:23:21.575656+08:00",
+      "range_sinks": {
+        "generationId": 1,
+        "timelineEpoch": 2
+      },
+      "reason_code": null,
+      "receipt_seq": 3,
+      "evidence_ref": "attempt_1ab532115e8c777e595c92c5cf95de8d",
+      "evidence_type": "execution_started",
+      "observation_hash": "sha256:0fc5bcf9ec2dbf20957c35c217dfc84e522ea74d47e41f92ff087b3bd942006f",
+      "producer_incarnation": "canonical-runtime-fixture"
+    },
+    {
+      "state": "ready",
+      "outcome": null,
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": "attempt_1ab532115e8c777e595c92c5cf95de8d",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "session_id": "s",
+      "observed_at": "2026-10-14T08:23:21.578787+08:00",
+      "range_sinks": {
+        "attemptId": "attempt_e611b92e8afc0bd78a64f145e0d55908",
+        "descriptor": {
+          "factIds": [
+            "price"
+          ],
+          "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+          "videoHash": "controlled-sink-video-fixture",
+          "contentHash": "controlled-sink-pcm-fixture",
+          "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+          "finalMarker": true,
+          "sampleCount": 48000,
+          "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+          "requiredSinks": [
+            "fixture"
+          ],
+          "videoFrameCount": 25,
+          "sourceSampleRate": 16000,
+          "sourceSampleCount": 16000
+        },
+        "generationId": 1
+      },
+      "reason_code": null,
+      "receipt_seq": 4,
+      "evidence_ref": "SEGMENT_READY",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:da6961eaca4e69052fe13f436990b3d9f90463da5d650b053ef54a74a0443dfa",
+      "producer_incarnation": "canonical-runtime-fixture"
+    },
+    {
+      "state": "ready",
+      "outcome": null,
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": "attempt_1ab532115e8c777e595c92c5cf95de8d",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "session_id": "s",
+      "observed_at": "2026-10-14T08:23:21.584695+08:00",
+      "range_sinks": {
+        "commit": {
+          "end": 48000,
+          "start": 0,
+          "command": {
+            "lane": "AUDIENCE_ANSWER",
+            "payload": {
+              "text": "这款目前价格是人民币99.00元。",
+              "voice": {
+                "voiceId": "v"
+              },
+              "beatId": "beat_3604fe58886f3fa18da3b38b9e3d8ffc",
+              "factIds": [
+                "price"
+              ],
+              "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+              "attemptId": "attempt_e611b92e8afc0bd78a64f145e0d55908",
+              "productId": "p",
+              "leaseToken": 1,
+              "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+              "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+              "maxDurationMs": 8000,
+              "requiredSinks": [
+                "fixture"
+              ],
+              "interactionTurnId": "canonical-turn",
+              "productSnapshotHash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+              "expectedTimelineRevision": 0,
+              "expectedNarrationRevision": 4
+            },
+            "traceId": "trace_e73f5268806a5d79f23513b6be8ba456",
+            "runEpoch": 1,
+            "commandId": "cmd_63467031274622b282f4c4db08cdb9f3",
+            "createdAt": "2026-10-14T00:23:21.568255Z",
+            "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+            "sessionId": "s",
+            "commandSeq": 4,
+            "commandType": "COMMIT_SEGMENT",
+            "narrationId": "narration_a83ebe66834077185b125333d9bba7b4",
+            "schemaVersion": "0.5",
+            "timelineEpoch": 2,
+            "idempotencyKey": "narration_a83ebe66834077185b125333d9bba7b4:answer_8bd944d943b99a469215bf9a81d49672:commit",
+            "requestFingerprint": "sha256:0fc5bcf9ec2dbf20957c35c217dfc84e522ea74d47e41f92ff087b3bd942006f"
+          },
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "runEpoch": 1,
+            "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+            "sessionId": "s",
+            "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+            "workerEpoch": null,
+            "generationId": 1,
+            "timelineEpoch": 2,
+            "workerGenerationId": null
+          },
+          "attemptId": "attempt_e611b92e8afc0bd78a64f145e0d55908",
+          "descriptor": {
+            "factIds": [
+              "price"
+            ],
+            "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+            "videoHash": "controlled-sink-video-fixture",
+            "contentHash": "controlled-sink-pcm-fixture",
+            "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+            "finalMarker": true,
+            "sampleCount": 48000,
+            "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+            "requiredSinks": [
+              "fixture"
+            ],
+            "videoFrameCount": 25,
+            "sourceSampleRate": 16000,
+            "sourceSampleCount": 16000
+          }
+        },
+        "revision": 0
+      },
+      "reason_code": null,
+      "receipt_seq": 5,
+      "evidence_ref": "COMMIT_INTENT",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:540f3a1d1f52ecedde0416520d0441c2a15e94ac30a0471a2f4f7841944e91b0",
+      "producer_incarnation": "canonical-runtime-fixture"
+    },
+    {
+      "state": "committed",
+      "outcome": null,
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": "attempt_1ab532115e8c777e595c92c5cf95de8d",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "session_id": "s",
+      "observed_at": "2026-10-14T08:23:21.590764+08:00",
+      "range_sinks": {
+        "commit": {
+          "end": 48000,
+          "start": 0,
+          "command": {
+            "lane": "AUDIENCE_ANSWER",
+            "payload": {
+              "text": "这款目前价格是人民币99.00元。",
+              "voice": {
+                "voiceId": "v"
+              },
+              "beatId": "beat_3604fe58886f3fa18da3b38b9e3d8ffc",
+              "factIds": [
+                "price"
+              ],
+              "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+              "attemptId": "attempt_e611b92e8afc0bd78a64f145e0d55908",
+              "productId": "p",
+              "leaseToken": 1,
+              "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+              "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+              "maxDurationMs": 8000,
+              "requiredSinks": [
+                "fixture"
+              ],
+              "interactionTurnId": "canonical-turn",
+              "productSnapshotHash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+              "expectedTimelineRevision": 0,
+              "expectedNarrationRevision": 4
+            },
+            "traceId": "trace_e73f5268806a5d79f23513b6be8ba456",
+            "runEpoch": 1,
+            "commandId": "cmd_63467031274622b282f4c4db08cdb9f3",
+            "createdAt": "2026-10-14T00:23:21.568255Z",
+            "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+            "sessionId": "s",
+            "commandSeq": 4,
+            "commandType": "COMMIT_SEGMENT",
+            "narrationId": "narration_a83ebe66834077185b125333d9bba7b4",
+            "schemaVersion": "0.5",
+            "timelineEpoch": 2,
+            "idempotencyKey": "narration_a83ebe66834077185b125333d9bba7b4:answer_8bd944d943b99a469215bf9a81d49672:commit",
+            "requestFingerprint": "sha256:0fc5bcf9ec2dbf20957c35c217dfc84e522ea74d47e41f92ff087b3bd942006f"
+          },
+          "identity": {
+            "lane": "AUDIENCE_ANSWER",
+            "runEpoch": 1,
+            "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+            "sessionId": "s",
+            "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+            "workerEpoch": null,
+            "generationId": 1,
+            "timelineEpoch": 2,
+            "workerGenerationId": null
+          },
+          "attemptId": "attempt_e611b92e8afc0bd78a64f145e0d55908",
+          "descriptor": {
+            "factIds": [
+              "price"
+            ],
+            "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+            "videoHash": "controlled-sink-video-fixture",
+            "contentHash": "controlled-sink-pcm-fixture",
+            "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+            "finalMarker": true,
+            "sampleCount": 48000,
+            "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+            "requiredSinks": [
+              "fixture"
+            ],
+            "videoFrameCount": 25,
+            "sourceSampleRate": 16000,
+            "sourceSampleCount": 16000
+          }
+        }
+      },
+      "reason_code": null,
+      "receipt_seq": 6,
+      "evidence_ref": "COMMIT_INSTALLED",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:2f8c477143561333b52790660b62d2acd7c6494bf3b3c00b95f6efd4d2fc4c75",
+      "producer_incarnation": "canonical-runtime-fixture"
+    },
+    {
+      "state": "completed",
+      "outcome": null,
+      "user_id": "user",
+      "run_epoch": 1,
+      "tenant_id": "tenant",
+      "attempt_id": "attempt_1ab532115e8c777e595c92c5cf95de8d",
+      "command_id": "cmd_63467031274622b282f4c4db08cdb9f3",
+      "session_id": "s",
+      "observed_at": "2026-10-14T08:23:21.597562+08:00",
+      "range_sinks": {
+        "identity": {
+          "lane": "AUDIENCE_ANSWER",
+          "runEpoch": 1,
+          "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+          "sessionId": "s",
+          "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+          "workerEpoch": null,
+          "generationId": 1,
+          "timelineEpoch": 2,
+          "workerGenerationId": null
+        },
+        "evidenceType": "sink_consumed",
+        "sinkReceipts": [
+          {
+            "media": "audio",
+            "sinkId": "fixture",
+            "identity": {
+              "lane": "AUDIENCE_ANSWER",
+              "runEpoch": 1,
+              "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+              "sessionId": "s",
+              "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+              "workerEpoch": null,
+              "generationId": 1,
+              "timelineEpoch": 2,
+              "workerGenerationId": null
+            },
+            "endSample": 48000,
+            "evidenceRef": "controlled-policy-fixture:fixture:audio",
+            "finalMarker": true,
+            "startSample": 0,
+            "evidenceType": "sink_consumed"
+          },
+          {
+            "media": "video",
+            "sinkId": "fixture",
+            "identity": {
+              "lane": "AUDIENCE_ANSWER",
+              "runEpoch": 1,
+              "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+              "sessionId": "s",
+              "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+              "workerEpoch": null,
+              "generationId": 1,
+              "timelineEpoch": 2,
+              "workerGenerationId": null
+            },
+            "endSample": 48000,
+            "evidenceRef": "controlled-policy-fixture:fixture:video",
+            "finalMarker": true,
+            "startSample": 0,
+            "evidenceType": "sink_consumed"
+          }
+        ],
+        "finalPosition": {
+          "ptsUs": 1000000,
+          "runEpoch": 1,
+          "sessionId": "s",
+          "sampleRate": 48000,
+          "sampleIndex": 48000,
+          "timelineEpoch": 2
+        },
+        "audienceAudible": false
+      },
+      "reason_code": null,
+      "receipt_seq": 7,
+      "evidence_ref": "SEGMENT_COMPLETED",
+      "evidence_type": "timeline_journal",
+      "observation_hash": "sha256:a645be3ae636ed74f1ebb0e1d4ec6fe7d6120a311788b3f6d83fe14d4e609f79",
+      "producer_incarnation": "canonical-runtime-fixture"
+    }
+  ],
+  "runs": [
+    {
+      "status": "ACTIVE",
+      "user_id": "user",
+      "owner_id": "owner_269af40596bd57b48f74fbb26c01748f",
+      "run_epoch": 1,
+      "sealed_at": null,
+      "tenant_id": "tenant",
+      "session_id": "s",
+      "started_at": "2026-10-14T08:23:21.536561+08:00",
+      "lease_token": 1,
+      "optional_sinks": [],
+      "required_sinks": [
+        "fixture"
+      ],
+      "current_event_seq": 0,
+      "timeline_revision": 1,
+      "output_sample_rate": 48000,
+      "control_barrier_seq": 0,
+      "current_command_seq": 4,
+      "provider_binding_id": "binding",
+      "current_timeline_epoch": 2,
+      "current_committed_sample": 48000,
+      "generation_high_watermark": 1
+    }
+  ],
+  "segments": [
+    {
+      "text": "接下来继续讲解使用方法。",
+      "status": "CANCELLED",
+      "beat_id": "beat_89f6dfab3b739ca3290de14163686480",
+      "user_id": "user",
+      "fact_ids": [],
+      "tenant_id": "tenant",
+      "text_hash": "sha256:dfce107fbbd367a4745125a80d98975c77042d7ff0c1aa624e0719d1d3f30edb",
+      "segment_id": "segment_a1bf1ec70c66ba82d74bbdc48d8766cf",
+      "session_id": "s",
+      "updated_at": "2026-10-14T08:23:21.60564+08:00",
+      "completed_at": null,
+      "narration_id": "narration_a83ebe66834077185b125333d9bba7b4",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "接下来继续讲解使用方法。",
+        "beatId": "beat_89f6dfab3b739ca3290de14163686480",
+        "status": "CANCELLED",
+        "factIds": [],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:dfce107fbbd367a4745125a80d98975c77042d7ff0c1aa624e0719d1d3f30edb",
+        "segmentId": "segment_a1bf1ec70c66ba82d74bbdc48d8766cf",
+        "durationHintMs": 2400,
+        "segmentOrdinal": 2
+      },
+      "product_version": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+      "segment_ordinal": 2
+    },
+    {
+      "text": "这款是测试商品。",
+      "status": "COMPLETED",
+      "beat_id": "beat_4542e63f628a96a276ec7a6be2c391e3",
+      "user_id": "user",
+      "fact_ids": [
+        "name"
+      ],
+      "tenant_id": "tenant",
+      "text_hash": "sha256:8f97008d3135ce6a1b9dd251e5863c0513ba4286136ce4ef9672cdd41f6a04fd",
+      "segment_id": "segment_ebf9074bbe943d359a1e85f5c75c2c50",
+      "session_id": "s",
+      "updated_at": "2026-10-14T08:23:21.605421+08:00",
+      "completed_at": "2026-10-14T08:23:21.564714+08:00",
+      "narration_id": "narration_a83ebe66834077185b125333d9bba7b4",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "这款是测试商品。",
+        "beatId": "beat_4542e63f628a96a276ec7a6be2c391e3",
+        "status": "COMPLETED",
+        "factIds": [
+          "name"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:8f97008d3135ce6a1b9dd251e5863c0513ba4286136ce4ef9672cdd41f6a04fd",
+        "segmentId": "segment_ebf9074bbe943d359a1e85f5c75c2c50",
+        "durationHintMs": 1600,
+        "segmentOrdinal": 0
+      },
+      "product_version": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+      "segment_ordinal": 0
+    },
+    {
+      "text": "这款目前价格是人民币99.00元。",
+      "status": "COMPLETED",
+      "beat_id": "",
+      "user_id": "user",
+      "fact_ids": [
+        "price"
+      ],
+      "tenant_id": "tenant",
+      "text_hash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+      "segment_id": "answer_8bd944d943b99a469215bf9a81d49672",
+      "session_id": "s",
+      "updated_at": "2026-10-14T08:23:21.606034+08:00",
+      "completed_at": "2026-10-14T08:23:21.601601+08:00",
+      "narration_id": "narration_a83ebe66834077185b125333d9bba7b4",
+      "document_json": {
+        "lane": "AUDIENCE_ANSWER",
+        "text": "这款目前价格是人民币99.00元。",
+        "beatId": "",
+        "status": "COMPLETED",
+        "factIds": [
+          "price"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+        "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+        "durationHintMs": 0,
+        "segmentOrdinal": 0
+      },
+      "product_version": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+      "segment_ordinal": 1000000
+    },
+    {
+      "text": "本商品当前标价是人民币99.00元。",
+      "status": "SATISFIED_BY_ANSWER",
+      "beat_id": "beat_3604fe58886f3fa18da3b38b9e3d8ffc",
+      "user_id": "user",
+      "fact_ids": [
+        "price"
+      ],
+      "tenant_id": "tenant",
+      "text_hash": "sha256:e3ada4ecd6bbedcead0ff92c2b3227be253a7038a0b8c6d8bc7cefa918abf7b8",
+      "segment_id": "segment_97720092098a8740972bc2a8cdca1edb",
+      "session_id": "s",
+      "updated_at": "2026-10-14T08:23:21.605533+08:00",
+      "completed_at": null,
+      "narration_id": "narration_a83ebe66834077185b125333d9bba7b4",
+      "document_json": {
+        "lane": "NARRATION",
+        "text": "本商品当前标价是人民币99.00元。",
+        "beatId": "beat_3604fe58886f3fa18da3b38b9e3d8ffc",
+        "status": "SATISFIED_BY_ANSWER",
+        "factIds": [
+          "price"
+        ],
+        "boundary": "SENTENCE_END",
+        "textHash": "sha256:e3ada4ecd6bbedcead0ff92c2b3227be253a7038a0b8c6d8bc7cefa918abf7b8",
+        "segmentId": "segment_97720092098a8740972bc2a8cdca1edb",
+        "durationHintMs": 3600,
+        "segmentOrdinal": 1
+      },
+      "product_version": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+      "segment_ordinal": 1
+    }
+  ],
+  "sessions": [
+    {
+      "id": "s",
+      "status": "LIVE",
+      "room_id": "room",
+      "ended_at": null,
+      "created_at": "2026-10-14T08:23:21.534646+08:00",
+      "started_at": null,
+      "updated_at": "2026-10-14T08:23:21.534646+08:00",
+      "failure_code": null,
+      "failure_message": null,
+      "runtime_operation_id": null
+    }
+  ],
+  "turns": [
+    {
+      "state": "COMPLETED",
+      "turn_id": "canonical-turn",
+      "user_id": "user",
+      "deadline": "2026-10-14T08:24:21.550697+08:00",
+      "question": "多少钱？",
+      "tenant_id": "tenant",
+      "session_id": "s",
+      "source_ids": [
+        "fixture-comment"
+      ],
+      "updated_at": "2026-10-14T08:23:21.605805+08:00",
+      "narration_id": "narration_a83ebe66834077185b125333d9bba7b4",
+      "document_json": {
+        "state": "COMPLETED",
+        "answer": {
+          "lane": "AUDIENCE_ANSWER",
+          "text": "这款目前价格是人民币99.00元。",
+          "beatId": "",
+          "status": "COMPLETED",
+          "factIds": [
+            "price"
+          ],
+          "boundary": "SENTENCE_END",
+          "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+          "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+          "durationHintMs": 0,
+          "segmentOrdinal": 0
+        },
+        "deadline": "2026-10-14T08:24:21.550697+08:00",
+        "priority": 0,
+        "question": "多少钱？",
+        "sourceIds": [
+          "fixture-comment"
+        ],
+        "answerText": "这款目前价格是人民币99.00元。",
+        "selectedAt": "0001-01-01T00:00:00Z",
+        "sourceScope": {
+          "platform": "",
+          "transport": "",
+          "internalRoomId": "",
+          "platformRoomId": ""
+        },
+        "questionHash": "sha256:4eb241c847dc1625313b373beeff8102805499aeb0ad8898e855f205e40efc1f",
+        "answerFactIds": [
+          "price"
+        ],
+        "interactionTurnId": "canonical-turn",
+        "capturedProductHash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+        "mappedNarrationFactIds": [
+          "price"
+        ],
+        "_cnyPriceCoverageDecision": {
+          "phase": "FULFILLED",
+          "policy": {
+            "targets": [
+              {
+                "factId": "price",
+                "textHash": "sha256:e3ada4ecd6bbedcead0ff92c2b3227be253a7038a0b8c6d8bc7cefa918abf7b8",
+                "segmentId": "segment_97720092098a8740972bc2a8cdca1edb",
+                "templateRevision": "price-subject-1"
+              }
+            ],
+            "runEpoch": 1,
+            "productId": "p",
+            "sessionId": "s",
+            "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+            "narrationId": "narration_a83ebe66834077185b125333d9bba7b4",
+            "policyRevision": "canonical-cny-price-1",
+            "productSnapshotHash": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff"
+          },
+          "mappedFactIds": [
+            "price"
+          ],
+          "answerTextHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+          "answerSegmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+          "interactionTurnId": "canonical-turn",
+          "completedCheckpoint": {
+            "sinks": [
+              {
+                "sink": "fixture",
+                "audioEnd": 48000,
+                "videoEnd": 48000,
+                "audioStart": 0,
+                "videoStart": 0
+              }
+            ],
+            "identity": {
+              "lane": "AUDIENCE_ANSWER",
+              "runEpoch": 1,
+              "segmentId": "answer_8bd944d943b99a469215bf9a81d49672",
+              "sessionId": "s",
+              "utteranceId": "utt_e611b92e8afc0bd78a64f145e0d55908",
+              "generationId": 1,
+              "timelineEpoch": 2
+            },
+            "textHash": "sha256:9d1ad5ec3667ff0c29c7bd0c5240baca6cb8e2101ba38ef41dd5c4b3e6a026d2",
+            "attemptId": "attempt_e611b92e8afc0bd78a64f145e0d55908",
+            "evidenceRef": "cmd_63467031274622b282f4c4db08cdb9f3:SEGMENT_COMPLETED",
+            "factVersion": "sha256:185860ba952bdbeb417c583fed23d77bf53c3b08f9b66aa13b3b14da473beaff",
+            "finalMarker": true,
+            "finalPosition": {
+              "ptsUs": 1000000,
+              "runEpoch": 1,
+              "sessionId": "s",
+              "sampleRate": 48000,
+              "sampleIndex": 48000,
+              "timelineEpoch": 2
+            },
+            "requiredSinks": [
+              "fixture"
+            ],
+            "startPosition": {
+              "ptsUs": 0,
+              "runEpoch": 1,
+              "sessionId": "s",
+              "sampleRate": 48000,
+              "sampleIndex": 0,
+              "timelineEpoch": 2
+            },
+            "audienceAudible": false
+          },
+          "completionCommandId": "cmd_63467031274622b282f4c4db08cdb9f3",
+          "completionProofHash": "sha256:a645be3ae636ed74f1ebb0e1d4ec6fe7d6120a311788b3f6d83fe14d4e609f79",
+          "answerPreparedCommandId": "cmd_ce6376990b8d14a4b2ce7082ab8b7e06",
+          "appliedTargetSegmentIds": [
+            "segment_97720092098a8740972bc2a8cdca1edb"
+          ],
+          "answerPreparedObservationHash": "sha256:026284837ee77201ab932acf1ce3e2163b98913400a81ac00c0cf6d75a1064cb"
+        }
+      },
+      "question_hash": "sha256:4eb241c847dc1625313b373beeff8102805499aeb0ad8898e855f205e40efc1f",
+      "answer_summary": "这款目前价格是人民币99.00元。",
+      "resume_point_revision": 3
+    }
+  ]
+}

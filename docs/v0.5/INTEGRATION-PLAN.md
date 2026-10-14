@@ -1,8 +1,20 @@
 # AstraLive v0.5 Integration Plan
 
+## Current phase — 2026-10-14
+
+F branch is `exp/v0.5-soulx-staging-golden`; final software source
+`609ee76cec0924a44d683152d8e3d0285966a4ea` passes the full local integration
+gate. Approved additive staging, canonical-price proof repairs and profile
+agreement are integrated serially. [Exact followup merge/source table, ownership,
+evidence, flag matrix and rollback](LOCAL-REPAIR-CHECKPOINT.md).
+No frozen1 bytes or experimental defaults changed. Current work needs a new real
+GPU/Chrome/RTMP business run; G1/G2/full crash and host acceptance remain pending.
+The user was notified to start the cloud only after local gates/preflight passed.
+Push the authorized new branch after the real-testing checkpoint; never main.
+
 Original v0.4 baseline `cf6540bdcc788c037929836480812dfaa78362a2`; Phase 2 shared baseline `5a24478126211cbcde5a9565d0c6063748426527`; branch `exp/v0.5-integration-chaos`; worktree `../AstraLive-agent-f`; contract revision `v0.5-frozen-1`.
 
-**Current gate: A→B→C→D normal merges PASS; separately reviewed C lifecycle incrementbb8d8ef also full merged-source PASS. Runtime225 total/12 skipped and frontend40/build; actual PostgreSQL/Backend/Python TCP+UDS/cleanup-fault gates executed. Previous6095989 native synthetic659.662s/five-question run remains pinned to that source. Real GPU compatibility Worker is now installed/READY with two direct inference generations PASS; strict SoulX Continuity NOT TESTED. CCR-BC-002 user approved the direction; detailed contract review HOLD before implementation.** [Ledger](evidence/integration-f/merge-ledger.json), [acceptance](FINAL-ACCEPTANCE.md), [CCR draft](CCR-BC-002-SOULX-STAGING.md). Frozen1 bytes unchanged; flags default off. The old review pins/tables below are historical discovery, not current delivery status.
+**Historical pre-staging gate: A→B→C→D normal merges PASS; separately reviewed C lifecycle incrementbb8d8ef also full merged-source PASS. Runtime225 total/12 skipped and frontend40/build; actual PostgreSQL/Backend/Python TCP+UDS/cleanup-fault gates executed. Previous6095989 native synthetic659.662s/five-question run remains pinned to that source. Real GPU compatibility Worker was installed/READY with two direct inference generations PASS; strict SoulX Continuity was NOT TESTED. CCR-BC-002 direction was approved; detailed contract review was HOLD before implementation.** [Ledger](evidence/integration-f/merge-ledger.json), [acceptance](FINAL-ACCEPTANCE.md), [CCR](CCR-BC-002-SOULX-STAGING.md). Frozen1 bytes unchanged; flags default off. The old review pins/tables below are historical discovery, not current delivery status or cloud powered-state checks.
 
 ## 1. Delivery sequence and merge ledger
 

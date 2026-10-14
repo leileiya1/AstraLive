@@ -1,5 +1,27 @@
 # v0.5 F acceptance decision — partial sequential integration
 
+## Current local checkpoint — 2026-10-14
+
+**Local repaired-source software gate: PASS. Real live acceptance: FAIL / IN PROGRESS.**
+Final tested software source `609ee76cec0924a44d683152d8e3d0285966a4ea`:
+Go/race, owned PostgreSQL migration/auth/ownership/fault/Redis-off, Runtime280
+total (268 passed,12 skipped), frontend40/build and v1.1 contract validation
+PASS. Independent oracle64 CPU tests PASS. New safe original-SQL projection
+hash/privacy/foreign-owner tests actually ran in Go and race suites.
+[Local repairs, sources, evidence, flags and rollback](LOCAL-REPAIR-CHECKPOINT.md).
+
+C finite-price provenance/empty-hash coverage and Go/Python explicit-empty
+profile mismatch are repaired locally. Independent review corrected the oracle's
+checkpoint `sink` field; fresh140-segment CPU speech preflight totals753.2
+padded seconds, all segments within8s. These results do not upgrade tcp9/tcp10
+failed live pilots. G1/G2, complete real crash/Redis-kill recovery, new fixed-source
+GPU/Chrome/RTMP A/V metrics and human naturalness remain NOT TESTED.
+
+No cloud connection or inference occurred in this local checkpoint. The user
+has been notified that the next real test requires opening the GPU instance.
+All experimental defaults remain off. No main merge or new-branch push occurred
+yet; the authorized new-branch push follows the real-testing checkpoint.
+
 ## Current checkpoint — 2026-10-13
 
 **Overall real live acceptance: FAIL / IN PROGRESS. No default enablement is approved.** This checkpoint supersedes current-state statements below; earlier source-pinned results remain historical evidence.

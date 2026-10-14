@@ -1,0 +1,210 @@
+{
+  "schemaVersion": "v0.5-d-compatibility-mapping-2",
+  "createdUTC": "2026-10-14T00:28:28.262529+00:00",
+  "currentSource": "609ee76cec0924a44d683152d8e3d0285966a4ea",
+  "rawTestedSource": "8fa0eb27b132234be9bd2afcccfeb8980ad4ca7a",
+  "rawEvidence": "/private/tmp/astralive-d-focused-8fa0eb2-final",
+  "rawResultSHA256": "89792dc7d43c3ddfec6803410bca83f67e70c8bc912d39865f8dfb2000e1bba5",
+  "rawStatus": "PASS_FOCUSED_REGRESSION",
+  "status": "ACK_D_DEPENDENCY_MAPPING_WITH_REVIEWED_CONFIG_DELTA",
+  "actualProcessRerunAtCurrentSource": false,
+  "scope": "D scoped dependency mapping from independently executed actual macOS Go/Python TCP/UDS and owned real PG/auth/default-off regression at8fa only. Current18 identical paths plus one previously reviewed exact config fix. Does not claim a new current-source actual process test or new business/GPU/media acceptance.",
+  "matchingCriticalPaths": 18,
+  "reviewedChangedCriticalPaths": 1,
+  "totalCriticalPaths": 19,
+  "fileMappings": [
+    {
+      "path": "backend/cmd/server/main.go",
+      "rawTestedSHA256": "5c5fb1de8053201e69eab56bab3b2bb7761f4cfeee3104016b17481fb98018a5",
+      "currentSHA256": "5c5fb1de8053201e69eab56bab3b2bb7761f4cfeee3104016b17481fb98018a5",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "backend/internal/runtime/client.go",
+      "rawTestedSHA256": "9a75e5a5ea68634e7e61fd19143ed25004dc8eaa0239a84d365aad01150b791b",
+      "currentSHA256": "9a75e5a5ea68634e7e61fd19143ed25004dc8eaa0239a84d365aad01150b791b",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "backend/internal/runtime/local_transport.go",
+      "rawTestedSHA256": "3a99b96ba6d740339a0fbb92682e06cf3b357eb328833fb6daf66fafced125ce",
+      "currentSHA256": "3a99b96ba6d740339a0fbb92682e06cf3b357eb328833fb6daf66fafced125ce",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "backend/internal/runtime/local_transport_unix.go",
+      "rawTestedSHA256": "1f277ab44f5fbd1ee5d49a2c22fb6a31734465b8545d2f0d08c7bb99071da2f3",
+      "currentSHA256": "1f277ab44f5fbd1ee5d49a2c22fb6a31734465b8545d2f0d08c7bb99071da2f3",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "backend/internal/config/local_transport.go",
+      "rawTestedSHA256": "7c97d4c84528c434b3f7dd0b4fd13e0388c8ff43f9dc1a548db5b1814491d789",
+      "currentSHA256": "7c97d4c84528c434b3f7dd0b4fd13e0388c8ff43f9dc1a548db5b1814491d789",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "backend/internal/userconfig/local_transport.go",
+      "rawTestedSHA256": "59e0c550a39ce75145527378a87c37bcf595aae533e76ccf0259db4fad5bca7f",
+      "currentSHA256": "59e0c550a39ce75145527378a87c37bcf595aae533e76ccf0259db4fad5bca7f",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "backend/internal/userconfig/login.go",
+      "rawTestedSHA256": "25b74cc31b85056f7d5ed22607569685d2856e3b58cda865965ff677d6c10e86",
+      "currentSHA256": "25b74cc31b85056f7d5ed22607569685d2856e3b58cda865965ff677d6c10e86",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "backend/internal/userconfig/environment.go",
+      "rawTestedSHA256": "6752c292e7a130968b776c8d5d57c9c3aa3f8c530c8aa10b690727a84e604f71",
+      "currentSHA256": "6752c292e7a130968b776c8d5d57c9c3aa3f8c530c8aa10b690727a84e604f71",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "backend/internal/userconfig/provider_probe.go",
+      "rawTestedSHA256": "725e68019af7537024535de1e1b5f39f176b0dff5141d692d89945cdf18b5323",
+      "currentSHA256": "725e68019af7537024535de1e1b5f39f176b0dff5141d692d89945cdf18b5323",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "backend/internal/userconfig/session_binding.go",
+      "rawTestedSHA256": "f29660a485cbcc2ea1a34f00ff94d44f1770444d2d3bae61a0baaebb0af94d1b",
+      "currentSHA256": "f29660a485cbcc2ea1a34f00ff94d44f1770444d2d3bae61a0baaebb0af94d1b",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "backend/internal/userconfig/provider.go",
+      "rawTestedSHA256": "d82283edf28d4028db4b99600f64f24f75868abc8bc9a9a73f29361b7cdb06a1",
+      "currentSHA256": "d82283edf28d4028db4b99600f64f24f75868abc8bc9a9a73f29361b7cdb06a1",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "runtime/app/local_listener.py",
+      "rawTestedSHA256": "da5140840a7991ca67f7f5706e2e2259369ec2968190d42c1aab12af7f33354a",
+      "currentSHA256": "da5140840a7991ca67f7f5706e2e2259369ec2968190d42c1aab12af7f33354a",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "runtime/app/production_launcher.py",
+      "rawTestedSHA256": "7cf765be82ad03f638becdbbbb3c7e1e01311059b8a02bc176e503ce48a4cca1",
+      "currentSHA256": "7cf765be82ad03f638becdbbbb3c7e1e01311059b8a02bc176e503ce48a4cca1",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "runtime/app/main.py",
+      "rawTestedSHA256": "7aa04b0b2845932e0b5d49866cab3ea29fa56496dd7e91a891e4f0e1b3f13501",
+      "currentSHA256": "7aa04b0b2845932e0b5d49866cab3ea29fa56496dd7e91a891e4f0e1b3f13501",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "runtime/app/durability_client.py",
+      "rawTestedSHA256": "d616edcaa0f78b03bdd94d87b2625b14785b45bd609f99a88d95a491442d2d74",
+      "currentSHA256": "d616edcaa0f78b03bdd94d87b2625b14785b45bd609f99a88d95a491442d2d74",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "runtime/app/session_binding.py",
+      "rawTestedSHA256": "27ced4b2efbdcf440cf554de148d09913813ce1ebbb9e086c700318a9955c2e8",
+      "currentSHA256": "27ced4b2efbdcf440cf554de148d09913813ce1ebbb9e086c700318a9955c2e8",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "backend/internal/narration/staging_config.go",
+      "rawTestedSHA256": "7832214ae71861f4db17893b9a6a5d9e20c2eab8739db261cbe68b129d4f3cec",
+      "currentSHA256": "a8a6087d2a4a8142c5133958edf8a43a04dce2544696fb2ddea5a84f228ea4b1",
+      "matchesRawTestedSource": false,
+      "disposition": "REVIEWED_CONFIG_ONLY_CHANGE",
+      "reviewedSource": "0ccc25c0cfc0c25cb0f723e04949fcc1e83978a7",
+      "review": "D scoped ACK LookupEnv: absent defaults originalshort; explicit empty/whitespace rejects via unchangedValidate; disabled dormant fields ignored; immutablecapture/caps/transport/auth unchanged"
+    },
+    {
+      "path": "backend/internal/narration/timeline_config.go",
+      "rawTestedSHA256": "630b04176cc25d35533068598969669504b3fdb1d1550c190d8906b820e3ae03",
+      "currentSHA256": "630b04176cc25d35533068598969669504b3fdb1d1550c190d8906b820e3ae03",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    },
+    {
+      "path": "runtime/app/staging_settings.py",
+      "rawTestedSHA256": "13578ad1843e21f9eebb5425d817e0aa08a82345ebd1722402c15449d6313394",
+      "currentSHA256": "13578ad1843e21f9eebb5425d817e0aa08a82345ebd1722402c15449d6313394",
+      "matchesRawTestedSource": true,
+      "disposition": "UNCHANGED_D_SCOPED_DEPENDENCY"
+    }
+  ],
+  "mainEntryUnchanged": true,
+  "goldenQueryExtractionReview": {
+    "paths": [
+      "backend/internal/narration/golden_postgres_test.go",
+      "backend/internal/narration/golden_safe_projection_test.go"
+    ],
+    "status": "ACK_TEST_ONLY_SOURCE_REVIEW",
+    "detail": "goldenProofQueries helper and selective prepared-answer/product proof extraction declared in narration_test *_test.go only; production main/auth/socket ownership/SSRF/DNS transport unchanged; D did not rerun query PG test in this mapping",
+    "fReportedPostgate": "F reports full Go/race/PG/faults/Runtime280 total12skip/frontend40build PASS at currentsource; this is separately F-owned evidence, not fresh D verification"
+  },
+  "sourceChangesOutsideCriticalMapping": [
+    "backend/internal/narration/canonical_price_policy.go",
+    "backend/internal/narration/canonical_price_policy_test.go",
+    "backend/internal/narration/canonical_price_postgres_test.go",
+    "backend/internal/narration/controller.go",
+    "backend/internal/narration/golden_postgres_test.go",
+    "backend/internal/narration/golden_safe_projection_test.go",
+    "backend/internal/narration/model.go",
+    "backend/internal/narration/staging_config_test.go",
+    "integration/v0.5/canonical_coverage_audit.py",
+    "integration/v0.5/fixtures/REAL-GOLDEN-CATALOG.md",
+    "integration/v0.5/fixtures/real_golden_catalog.json",
+    "integration/v0.5/fixtures/real_golden_smoke.json",
+    "integration/v0.5/real_golden_audit.py",
+    "integration/v0.5/tests/test_canonical_coverage_audit.py",
+    "integration/v0.5/tests/test_canonical_oracle_wiring.py",
+    "runtime/tests/test_staging_runtime.py"
+  ],
+  "otherChangeDisposition": "canonical narration/business/oracle/test changes outside D mapping rely on their independent A/C/F scope; no inherited PASS for those paths",
+  "configurationFixIntegrated": {
+    "source": "0ccc25c0cfc0c25cb0f723e04949fcc1e83978a7",
+    "presentAtCurrent": true,
+    "productionFileByteIdenticalToReviewedSource": true,
+    "DScopedACK": true
+  },
+  "retainedRawExecutionFailures": [
+    {
+      "path": "run-1/result.json",
+      "classification": "runner setup failure: systemPython3.9 tarfilter unsupported; no PG/tests started"
+    },
+    {
+      "path": "run-2/result.json",
+      "classification": "Go checks PASS; Python runner path omitted runtime/tests fixture import; corrected exactsame-source in run-3, no productassertion waived"
+    }
+  ],
+  "notTested": [
+    "Linux actual runtime",
+    "Windows actual runtime",
+    "real GPU through UDS",
+    "Chrome/RTMP through UDS",
+    "Speak performance"
+  ],
+  "noActions": [
+    "no production or test source edits",
+    "no target actual-process rerun",
+    "no SSH/GPU",
+    "no system DNS or shared service changes"
+  ]
+}

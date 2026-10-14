@@ -2,6 +2,23 @@
 
 Status: IN PROGRESS. Branch `exp/v0.5-soulx-staging-golden`, starting at `d69166461af5cd9f7b75179754ea4c086435e251`. User explicitly authorized completing the additive contract, implementation, real live Golden tests and pushing a new remote branch. No main merge or default enablement.
 
+## 2026-10-14 local repair checkpoint
+
+Tested source `609ee76cec0924a44d683152d8e3d0285966a4ea` full local regression
+PASS: Go/race/owned PostgreSQL/contract, Runtime280 total/12skip, frontend40/build;
+64 CPU oracle tests. Price coverage now uses original SQL proofs, explicit
+nonempty target hashes and a finite new-plan CNY policy; profile parsing agrees
+across Go/Python. Acceptance reads actual checkpoint `sink` separately from
+media receipt `sinkId`. Fresh complete V3 CPU speech synthesis totals753.2
+padded seconds, each segment≤8s; no historical durations were added.
+[Merge order, scope, raw evidence and rollback](LOCAL-REPAIR-CHECKPOINT.md).
+
+No SSH/GPU or real Chrome/RTMP live run occurred in this checkpoint. Local PASS
+does not upgrade historical failed real pilots. User notification to start GPU
+precedes the next complete short business fixture; only after its machine and
+human review proceed to G1/G2/fault acceptance. No default flags or frozen1
+contracts changed, no branch push or main merge yet.
+
 ## 2026-10-13 actual integration checkpoint
 
 Each production increment below was separately reviewed, normally merged, and followed by a complete immutable-source Go/race/owned-PG/Runtime/frontend gate before the next production merge. No frozen1 bytes, public DTOs, default flags or old TCP1.1 semantics changed.

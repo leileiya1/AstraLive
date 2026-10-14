@@ -1,0 +1,32 @@
+$ bun run generate:api && bun run generate:config-api && bun run generate:personal-api && tsgo --noEmit && vite build
+$ openapi-typescript ../contracts/control-api.openapi.yaml -o src/api/generated.ts
+✨ openapi-typescript 7.13.0
+🚀 ../contracts/control-api.openapi.yaml → src/api/generated.ts [25.8ms]
+$ openapi-typescript ../contracts/user-config/schema.json -o src/api/config-generated.ts
+✨ openapi-typescript 7.13.0
+🚀 ../contracts/user-config/schema.json → src/api/config-generated.ts [22.1ms]
+$ openapi-typescript ../contracts/personal-assets/schema.json -o src/api/personal-assets-generated.ts
+✨ openapi-typescript 7.13.0
+🚀 ../contracts/personal-assets/schema.json → src/api/personal-assets-generated.ts [31.1ms]
+vite v7.3.7 building client environment for production...
+transforming...
+../../../../../../../../Users/sapiece/innovationProject/AstraLive/frontend/node_modules/zod/v4/core/util.js (400:0): A comment
+
+"// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+
+in "../../../../../../../../Users/sapiece/innovationProject/AstraLive/frontend/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+../../../../../../../../Users/sapiece/innovationProject/AstraLive/frontend/node_modules/zod/v4/core/regexes.js (74:0): A comment
+
+"/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+ * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+ * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+
+in "../../../../../../../../Users/sapiece/innovationProject/AstraLive/frontend/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 2166 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                            0.36 kB │ gzip:   0.26 kB
+dist/assets/index-DflfzUW0.css            17.95 kB │ gzip:   4.37 kB
+dist/assets/motion-features-CdRsqvcd.js   86.17 kB │ gzip:  28.44 kB
+dist/assets/index-CCIJ5oHH.js            484.40 kB │ gzip: 151.07 kB
+✓ built in 1.65s
