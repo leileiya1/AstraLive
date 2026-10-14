@@ -1,10 +1,22 @@
 # Canonical CNY coverage audit handoff
 
 Owner: F acceptance; implementation author: delegated B.
-Source pin: `7d10c314aa690caf8325815139d7b8be05a1fcff`.
+Corrected source pin: `7a7055e9515c2f9d5f5401d0da1dc1694b662556`.
 Branch: `exp/v0.5-canonical-coverage-audit`.
 Base: F `394749e16028b56a244e6bded005f0d3d4ec8b57`.
-Module SHA256: `d0c2f07bc1e697b7ca2b017c3250585895f913f34040fdd6372139ee78c7ed1a`.
+Module SHA256: `07f7d2790e32b3b845b194bd86a065b9e69e2c71db3dbfbb992977aa54676036`.
+
+Correction: the initial source `7d10c314...` incorrectly expected `sinkId` in
+private `completedCheckpoint.sinks`, and its synthetic fixture repeated that
+mistake. A's independent actual source review found Go `narration.SinkRange`
+serializes **`sink`**. A correct source-shaped checkpoint was deterministically
+rejected before this fix with `CANONICAL_CHECKPOINT_SINK_RANGES`; the original
+31 passing synthetic tests did not establish actual SQL compatibility. The
+corrected source uses `sink` only in checkpoint ranges; actual media
+`commit.sink_receipts` retain `sinkId`. A new negative rejects the wrong old
+checkpoint shape. F/A retain the separate actual PostgreSQL pre-fix failure
+and perform corrected fixed-pin projection integration; these are not replaced
+by this local synthetic reproduction.
 
 Only new independent acceptance code and synthetic rejection tests were added.
 No production, frozen contract, Go, Runtime, GPU Worker, media sinks, or existing
@@ -78,7 +90,9 @@ does not compare their local receipt sequence numbers as a global ordering.
 
 The recorded completion command/hash and checkpoint must match actual SQL
 identity, attempt, start/final positions, PTS arithmetic, all sink ranges and
-answer text/version. Applied target IDs must be unique and SATISFIED_BY_ANSWER;
+answer text/version. The checkpoint range's sink ID field is `sink`, while the
+audio/video media receipt's sink ID field is `sinkId`; never rename actual SQL
+projection fields to satisfy the oracle. Applied target IDs must be unique and SATISFIED_BY_ANSWER;
 a target cannot also have a committed narration media segment. Empty applied
 targets grant no coverage. Old plans without private policy return `{}` and gain
 no inferred canonical coverage; orphan private decisions are rejected.
@@ -99,8 +113,8 @@ Run from the B branch:
   -s integration/v0.5/tests -p 'test_*audit.py' -v
 ```
 
-31 new synthetic oracle tests PASS. All existing 27 fact/domain/numerical oracle
-tests remain and PASS; total 58. Rejection tests cover noncanonical resigned
+32 new synthetic oracle tests PASS. All existing 27 fact/domain/numerical oracle
+tests remain and PASS; total 59. Rejection tests cover noncanonical resigned
 claims, generic/multiple facts, old/missing policy, unfulfilled/UNKNOWN/partial
 proofs, missing/duplicate audio/video receipts, changed final product version,
 foreign owner/run/turn, forged private hash, receipt hash/producer/sequence
