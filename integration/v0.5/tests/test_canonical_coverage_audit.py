@@ -47,7 +47,7 @@ def fixture(template='price-subject-1'):
                                    'sampleRate':16000, 'ptsUs':0},
                   'finalPosition':{'sessionId':'session', 'runEpoch':1, 'timelineEpoch':2, 'sampleIndex':16000,
                                    'sampleRate':16000, 'ptsUs':1000000},
-                  'requiredSinks':plan['requiredSinks'], 'sinks':[{'sinkId':sink,'audioStart':0,'audioEnd':16000,
+                  'requiredSinks':plan['requiredSinks'], 'sinks':[{'sink':sink,'audioStart':0,'audioEnd':16000,
                   'videoStart':0,'videoEnd':16000} for sink in plan['requiredSinks']],
                   'finalMarker':True, 'evidenceRef':'commit:SEGMENT_COMPLETED', 'factVersion':version,
                   'textHash':answer_hash, 'audienceAudible':False}
@@ -220,6 +220,14 @@ class CanonicalEvidenceRejectionTests(unittest.TestCase):
             elif field=='finalPosition':p[field]['ptsUs']+=1
             else:p[field][0]['audioEnd']-=1
             with self.subTest(field=field):self.rejected(args,snapshot)
+
+    def test_checkpoint_rejects_wrong_sink_id_shape_but_media_receipts_keep_sink_id(self):
+        args,snapshot=fixture()
+        self.assertTrue(all('sinkId' in row and 'sink' not in row for row in args[2][0]['sink_receipts']))
+        self.assertEqual(self.call(args,snapshot),{'target':['turn']})
+        checkpoint=args[1][0]['document_json']['_cnyPriceCoverageDecision']['completedCheckpoint']
+        for row in checkpoint['sinks']:row['sinkId']=row.pop('sink')
+        self.rejected(args,snapshot,'CANONICAL_CHECKPOINT_SINK_RANGES')
 
     def test_duplicate_targets_or_applied_ids_are_not_multiple_coverage(self):
         args,snapshot=fixture();policy=args[0]['plan_json']['_cnyPriceCoveragePolicy'];policy['targets']*=2

@@ -138,7 +138,8 @@ def checkpoint_matches(p, commit, narration, answer_hash, required):
         expected = {k:identity[k] for k in ('sessionId','runEpoch','timelineEpoch')}
         expected.update(sampleIndex=sample, sampleRate=commit['sample_rate'], ptsUs=sample*1000000//commit['sample_rate'])
         require(position == expected, 'CANONICAL_CHECKPOINT_POSITION')
-    ranges = [{'sinkId':sink, 'audioStart':commit['start_sample'], 'audioEnd':commit['end_sample'],
+    # C Checkpoint uses SinkRange.json:"sink"; media SinkReceipt uses sinkId.
+    ranges = [{'sink':sink, 'audioStart':commit['start_sample'], 'audioEnd':commit['end_sample'],
                'videoStart':commit['start_sample'], 'videoEnd':commit['end_sample']} for sink in required]
     require(p['sinks'] == ranges, 'CANONICAL_CHECKPOINT_SINK_RANGES')
 
