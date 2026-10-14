@@ -113,3 +113,27 @@ installation without downloading models. New Worker epoch
 `407e0b9b24a94f75b3f63aeeba2576d1`, PID 1162, Ready/UP. Hour-6 began afresh on
 `a1583df`, with no old Session or elapsed duration reused. Its final result is
 pending; original five failures are not overwritten.
+
+Hour-6 subsequently failed at 1391.268 seconds (23 minutes 11 seconds), with
+122 completed narration segments, ten completed answers and nine subsequent
+resume transitions. Call ten returned HTTP 200/terminal STOP in 902 ms, one
+character whose SHA256 equals `3`. The implicit array index prompt had not
+specified zero-based numbering; `3` is outside the three allowed choices.
+The parser correctly rejected it. This failure remains valid. Failure Stop
+completed ENDED/SEALED/binding release, observed within 101 ms. Chrome final
+diagnostic history was not saved after the observer failure; three checkpoints
+cannot establish an uninterrupted full hour.
+
+C production `06d886f`/delivery `476f2fb` merged normally as `88a6824`. Only
+new staging bridge language lists explicit indices starting at 0 and parses
+canonical ASCII indices after trimming ASCII edge whitespace. Invalid values,
+provider failures and incomplete terminals remain errors; ordinary/default-off
+request and parsing behavior remain unchanged. No frozen API, epoch, profile,
+budget or default changed. Full F regression passed at exact `88a6824`.
+Twenty-five real model calls on the saved tenth-turn language context all
+returned valid choices, maximum 1.856 seconds. This is component evidence,
+not another GPU/live hour. [Original failure, full gate and model evidence](evidence/integration-f/bridge-index-real-provider-2/manifest.json).
+
+Hour-7 began afresh at 20:30 local time on `88a6824`; final status is pending.
+Root remains the only GPU/SSH operator. B is preparing an independent metrics
+tool; unverified clock mappings must stay conditional or NOT VERIFIABLE.
