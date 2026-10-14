@@ -1,0 +1,46 @@
+{
+  "scope": "REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
+  "commentTransport": "MOCK_REPLAY_ONLY",
+  "humanNaturalness": "NOT_TESTED",
+  "audienceAudible": false,
+  "correlatedAV": "NOT_ANALYSED",
+  "localTransport": "tcp",
+  "mode": "soak",
+  "requestedSeconds": 3600,
+  "seed": 5012,
+  "fixture": null,
+  "events": [],
+  "preflightProbeTiming": {
+    "clock": "Python time.monotonic",
+    "minimumStartSpacingSeconds": 5.1,
+    "attempts": [
+      {
+        "kind": "LLM",
+        "startedSeconds": 0.0023609999334439635,
+        "spacingFromPreviousSeconds": null,
+        "cooldownWaitSeconds": 2.909218892455101e-07,
+        "status": "PASSED",
+        "durationSeconds": 6.757883375044912
+      },
+      {
+        "kind": "TTS",
+        "startedSeconds": 6.767766291974112,
+        "spacingFromPreviousSeconds": 6.765405292040668,
+        "cooldownWaitSeconds": 7.50063918530941e-07,
+        "status": "PASSED",
+        "durationSeconds": 0.39895704202353954
+      },
+      {
+        "kind": "GPU_WORKER",
+        "startedSeconds": 11.868032083963044,
+        "spacingFromPreviousSeconds": 5.100265791988932,
+        "cooldownWaitSeconds": 4.69806783401873,
+        "status": "FAILED",
+        "durationSeconds": 0.00840916601009667
+      }
+    ]
+  },
+  "status": "FAIL",
+  "errorType": "GoldenFailure",
+  "reason": "Public API failed /api/v0.3/config/profiles/profile_ae1f925778ebf31a64094e0a2bdb2874/test: HTTP503/WORKER_UNAVAILABLE"
+}

@@ -1,0 +1,30 @@
+{
+  "scope": "REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
+  "commentTransport": "MOCK_REPLAY_ONLY",
+  "humanNaturalness": "NOT_TESTED",
+  "audienceAudible": false,
+  "correlatedAV": "NOT_ANALYSED",
+  "localTransport": "tcp",
+  "mode": "soak",
+  "requestedSeconds": 3600,
+  "seed": 5012,
+  "fixture": null,
+  "events": [],
+  "preflightProbeTiming": {
+    "clock": "Python time.monotonic",
+    "minimumStartSpacingSeconds": 5.1,
+    "attempts": [
+      {
+        "kind": "LLM",
+        "startedSeconds": 0.002449499908834696,
+        "spacingFromPreviousSeconds": null,
+        "cooldownWaitSeconds": 2.909218892455101e-07,
+        "status": "FAILED",
+        "durationSeconds": 5.612827917095274
+      }
+    ]
+  },
+  "status": "FAIL",
+  "errorType": "GoldenFailure",
+  "reason": "Public API failed /api/v0.3/config/profiles/profile_78fa380d48f2e61363abf50bc25aea3e/test: HTTP502/PROVIDER_TEST_FAILED"
+}

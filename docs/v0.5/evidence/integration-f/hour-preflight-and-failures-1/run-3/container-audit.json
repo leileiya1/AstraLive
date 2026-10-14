@@ -1,0 +1,61 @@
+{
+  "scope": "container packet clock domains only; no correlated AV drift or naturalness claim",
+  "runs": [
+    {
+      "file": "rtmp.flv",
+      "durationSeconds": 91.101,
+      "streams": [
+        {
+          "index": 0,
+          "media": "video",
+          "codec": "h264",
+          "packets": 2277,
+          "ptsRegressions": 0,
+          "dtsRegressions": 0,
+          "firstPTS": 0.021,
+          "lastPTS": 91.061,
+          "lastDTS": 91.061
+        },
+        {
+          "index": 1,
+          "media": "audio",
+          "codec": "aac",
+          "packets": 4270,
+          "ptsRegressions": 0,
+          "dtsRegressions": 0,
+          "firstPTS": 0.0,
+          "lastPTS": 91.072,
+          "lastDTS": 91.072
+        }
+      ]
+    },
+    {
+      "file": "observer/chrome.webm",
+      "durationSeconds": null,
+      "streams": [
+        {
+          "index": 0,
+          "media": "video",
+          "codec": "vp8",
+          "packets": 2086,
+          "ptsRegressions": 0,
+          "dtsRegressions": 0,
+          "firstPTS": 0.0,
+          "lastPTS": 83.645,
+          "lastDTS": 83.645
+        },
+        {
+          "index": 1,
+          "media": "audio",
+          "codec": "opus",
+          "packets": 1394,
+          "ptsRegressions": 0,
+          "dtsRegressions": 0,
+          "firstPTS": 0.007,
+          "lastPTS": 83.605,
+          "lastDTS": 83.605
+        }
+      ]
+    }
+  ]
+}
