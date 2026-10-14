@@ -81,3 +81,35 @@ an in-flight renewal ACK. Production Worker FIFO ordering was not captured in
 hour-4, so this software proof is not labeled its confirmed physical root
 cause. C is repairing the demonstrated renewal/release race and expanding
 safe diagnostics; Stop aftermath proof remains a separate issue.
+
+## Subsequent source and actual first bridge failure
+
+F merged C renewal drain `8b335e8` as `b816ac0`; independent B protocol review
+and full F postmerge software gates passed. Actual hour-5 reached 90/300-second
+checkpoints, 33 completed narration segments and one completed price answer,
+then failed at 342.077 seconds with `PREPARATION_UNKNOWN`. It remains FAIL.
+The real bridge call returned HTTP 200 in 3549 ms, `finishReason=length`, all
+256 completion tokens used for reasoning, zero content, and 45,763 prompt
+tokens. This was not an 8-second timeout. Cleanup still lacked terminal proof.
+
+C private bridge policy `8971085` normally merged as `a1583df` limits only
+captured-staging bridge requests to a next-Beat language projection and
+`thinking.type=disabled`. The command/payload/fingerprint, semantic cursor,
+provider binding/profile, ordinary/default-off stream, 256-token and 8-second
+limits remain unchanged. A fixed-source contract review ACK confirms this
+private implementation needs no frozen-interface revision. Provider failures
+and invalid/overlong staging choices remain errors rather than empty bridges.
+The parameter is supported by the [official DeepSeek API reference](https://api-docs.deepseek.com/api/create-chat-completion/).
+
+Full F software gates at exact `a1583df` passed. Three actual DeepSeek bridge
+component calls returned approved indices with terminal STOP, in
+0.566/0.681/0.908 seconds. Their context was reconstructed from original owned
+hour-5 SQL, reduced from 98,028 to 3,354 UTF-8 bytes including saved facts.
+They are not a live coordinator, fresh tool refresh, GPU, naturalness or busy
+SLA result. [Original failure, regression, component evidence and hashes](evidence/integration-f/bridge-policy-real-provider-1/manifest.json).
+
+After the user's cloud reboot, Worker was restarted from verified cached
+installation without downloading models. New Worker epoch
+`407e0b9b24a94f75b3f63aeeba2576d1`, PID 1162, Ready/UP. Hour-6 began afresh on
+`a1583df`, with no old Session or elapsed duration reused. Its final result is
+pending; original five failures are not overwritten.
