@@ -43,6 +43,7 @@ class Stage:
     failed: Exception | None = None
     deadline: float = 0
     renew_task: object = None
+    pose_exchange_task: object = None
     renew_stop: object = field(default_factory=asyncio.Event)
     control_id: str | None = None
     release_request: dict | None = None
@@ -111,6 +112,7 @@ class StagingClient:
     async def receive_loop(self):
         try:
             while True:
+                name=None;header={}
                 header,payload=await self._read();name=header["type"]
                 stage=self.active
                 if "identity" in header and (stage is None or header["identity"]!=stage.identity):
@@ -175,6 +177,19 @@ class StagingClient:
                     future.set_result(header)
         except asyncio.CancelledError:raise
         except Exception as exc:
+            import logging,json
+            code=getattr(exc,"code",None)
+            codes=c.MESSAGES["StageError"]["properties"]["code"]["enum"]
+            name=locals().get("name")
+            header=locals().get("header",{})
+            marker=correlation(header) if name in c.MESSAGES else None
+            future=self.pending.get(marker)
+            logging.getLogger("app").warning("staging_receive_failed %s",json.dumps({
+                "messageType":name if name in c.MESSAGES else "OTHER",
+                "code":code if code in codes else "OTHER",
+                "pendingPresent":future is not None,"pendingDone":future.done() if future is not None else None,
+                "answeredPresent":marker in self.answered,
+                "stageFenced":self.active.fenced if self.active else None,"stageReleased":bool(self.active and self.active.released)}))
             self.fail_connection(exc)
 
     def fail_connection(self,exc):
@@ -297,10 +312,18 @@ class StagingClient:
 
     async def pose(self,stage,proof,guard):
         guard();self.check(stage)
-        packet={"type":"StagePoseConsumed",**self.common(stage),"pose_proof":proof,"pose_proof_fingerprint":c.pose_fingerprint(stage.identity,proof)}
+        if stage.pose_exchange_task is not None and not stage.pose_exchange_task.done():raise StagingFailure("STAGING_CONFLICT")
+        packet={"type":"StagePoseConsumed",**self.common(stage),"pose_proof":copy.deepcopy(proof),"pose_proof_fingerprint":c.pose_fingerprint(stage.identity,proof)}
         c.validate_pose_consumed(packet,stage.commit)
+        # Caller cancellation fences publication but must not orphan a written
+        # pose ACK. Its exact validated state is needed for subsequent cleanup.
+        stage.pose_exchange_task=asyncio.create_task(self._pose_exchange(stage,packet),name="staging-pose-ack")
+        stage.pose_exchange_task.add_done_callback(lambda task:None if task.cancelled() else task.exception())
+        return await asyncio.shield(stage.pose_exchange_task)
+
+    async def _pose_exchange(self,stage,packet):
         reply=await self.exchange(packet,"StagePoseConsumedAck")
-        if reply["pose_proof_fingerprint"]!=packet["pose_proof_fingerprint"] or reply["latest_consumed_sequence"]!=proof["latest_consumed_sequence"]:
+        if reply["pose_proof_fingerprint"]!=packet["pose_proof_fingerprint"] or reply["latest_consumed_sequence"]!=packet["pose_proof"]["latest_consumed_sequence"]:
             raise StagingFailure("STAGING_CONFLICT")
         stage.pose=packet;return reply
 
@@ -312,6 +335,7 @@ class StagingClient:
             # existing bounded ACK completes; never retire Worker first.
             if not complete:stage.fenced=True
             if stage.renew_task:await asyncio.gather(asyncio.shield(stage.renew_task),return_exceptions=True)
+            if stage.pose_exchange_task is not None:await asyncio.shield(stage.pose_exchange_task)
             if complete and stage.failed:raise stage.failed
             if stage.control_id is None:stage.control_id=uuid4().hex
             control=stage.control_id
