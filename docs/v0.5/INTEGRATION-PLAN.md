@@ -1,5 +1,22 @@
 # AstraLive v0.5 Integration Plan
 
+## Latest execution — 2026-10-14 one-hour run
+
+F serially merged C renewal-drain repair as `b816ac0`, private compact bridge
+policy as `a1583df`, and explicit bridge indices as `88a6824`. Each exact merge
+passed the full software/owned-PG gate before the next real attempt. Frozen1
+bytes and experimental defaults are unchanged. [Complete attempt ledger and
+evidence](ONE-HOUR-GOLDEN-PROGRESS.md). Original A→B→C→D history is preserved.
+
+Hour-7 is running from immutable `88a68246d46a3942515d9895247a3ebfe15e2e07`
+after verified cached GPU restart. No live code replacement or Chrome peer
+recreation is allowed. After normal Stop, independently audit closed SQL,
+native Chrome/RTMP recordings and resource samples. F separately merged B's
+post-run-only metrics tool `34d978e` as `f378e96`; its 21 rejection tests pass.
+This adds no production changes and cannot upgrade an original failed gate.
+Then record remaining acceptance gaps and push the authorized new F branch;
+never main. Earlier sections are historical plans/checkpoints.
+
 ## Latest source / next execution
 
 Final local repair source `25f58511cb6b46e4783a25b018487ebda0237e30` passes

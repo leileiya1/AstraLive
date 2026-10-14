@@ -1,5 +1,21 @@
 # v0.5 F chaos and integration-gate report
 
+## Latest checkpoint — 2026-10-14 fresh hour
+
+Real hour-7 is running on immutable `88a68246d46a3942515d9895247a3ebfe15e2e07`
+after cached Worker restart following the user's cloud reboot. Complete
+postmerge software/owned-PG gates passed; actual attempts 1–6 remain FAIL in
+their stated scopes. [Source, failures and fixes](ONE-HOUR-GOLDEN-PROGRESS.md).
+Hour-6 failed after 1391.268 seconds with ten completed answers and nine
+subsequent resume transitions; its normal failure Stop reached ENDED/SEALED
+and released the binding within 101 ms. This is not a successful hour.
+
+The ongoing run uses Redis-unreachable PostgreSQL-only flow, real LLM/TTS/GPU,
+native Chrome and local RTMP. It does not kill/restart Redis, Backend, Runtime
+or Worker during live playback. The full real crash/recovery, FORCE/product
+switch, delayed ACK and stale-frame matrix remains NOT TESTED. Historical
+provider-error cleanup lacking terminal proof remains an unresolved P1.
+
 ## Latest actual pilot11 / local followup
 
 Real pilot11 `ed69236` FAILs before narration: initial audio inbound report was

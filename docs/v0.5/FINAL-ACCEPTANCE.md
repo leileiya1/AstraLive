@@ -1,5 +1,23 @@
 # v0.5 F acceptance decision — partial sequential integration
 
+## Latest checkpoint — fresh real hour, 2026-10-14
+
+**Real one-hour acceptance is IN PROGRESS, not PASS.** After the user's cloud
+reboot, F verified and restarted the cached authenticated SoulX Worker. Fresh
+hour-7 uses immutable source `88a68246d46a3942515d9895247a3ebfe15e2e07`, one
+Session/native Chrome peer and actual DeepSeek/XiaoYa/RTX3080/local RTMP with
+PostgreSQL-only command flow. Earlier failed attempts remain separately pinned;
+elapsed durations are never combined. The complete postmerge software gate
+passed before this run. [Attempts, repairs and exact evidence](ONE-HOUR-GOLDEN-PROGRESS.md).
+
+New private staging bridge policy fixes oversized reasoning-only requests and
+ambiguous array numbering within existing budgets. Frozen1 API/identity bytes,
+ordinary/default-off behavior, Redis/TCP rollback and experimental defaults
+remain unchanged. This does not establish human naturalness, physical
+audibility, complete crash recovery, busy-comment SLA, UDS or QUIC acceptance.
+The current real run must finish and its closed recordings/SQL must be audited
+before any result is upgraded. Statements below are historical checkpoints.
+
 ## Latest checkpoint — pilot11 and local browser repair
 
 **Real business acceptance remains FAIL; fixed-source local gate PASS.** Real

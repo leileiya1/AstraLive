@@ -1,0 +1,19 @@
+{
+  "scope": "closed hour6 metadata component analysis only; original FAIL preserved; no recording decode or cloud calls",
+  "toolOwnerPin": "34d978ea80f0e69f0677e75bcd7a114d0e5539e3",
+  "mergeSource": "f378e96db9251bf75dd0589064aa031a67425421",
+  "toolSHA256": "dcd77142240571671f2fb97309b4dda0fd554ca39213df3580c4914ec98b423f",
+  "tests": {
+    "command": "python -m unittest discover -s integration/v0.5/tests -p test_hour_metrics.py -v",
+    "executedCount": 21,
+    "result": "PASS",
+    "scope": "rejection/calculation unit cases, not live acceptance"
+  },
+  "files": [
+    {
+      "path": "hour6-metrics.json",
+      "bytes": 25551,
+      "sha256": "b106907503fdd061b7219d34052213ecb508c348c70195e8cf7911b5b44385ed"
+    }
+  ]
+}
