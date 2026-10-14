@@ -1,0 +1,396 @@
+{
+  "scope": "Independent real SQL/staging bytes/recorded AV consistency oracle",
+  "audienceAudible": false,
+  "humanNaturalness": "NOT_TESTED",
+  "llmGeneratedFacts": "NOT_TESTED",
+  "busyCommentSLA": "NOT_TESTED",
+  "checks": [
+    {
+      "name": "actual_artifact_shape",
+      "status": "PASS",
+      "result": {
+        "commits": 7,
+        "references": 7,
+        "schema": "Go to_jsonb arrays/C staging-observer"
+      }
+    },
+    {
+      "name": "sql_staging_bindings_and_full_required_sinks",
+      "status": "FAIL",
+      "code": "SEGMENT_FACT_OR_PRODUCT_VERSION_MISMATCH"
+    },
+    {
+      "name": "actual_pcm_h264_decoded_emitted_hash_domains",
+      "status": "PASS",
+      "result": {
+        "verified": 7,
+        "nativeOriginalRGBStream": "NOT_VERIFIABLE_FROM_LOSSY_H264"
+      }
+    },
+    {
+      "name": "selected_turn_answer_resume_and_unique_fact_metadata",
+      "status": "NOT_VERIFIABLE",
+      "code": "DEPENDENCY_SQL_STAGING_BINDING_UNPROVEN"
+    },
+    {
+      "name": "normal_stop_and_binding_release",
+      "status": "PASS",
+      "result": {
+        "normalStop": true,
+        "bindingReleased": true,
+        "runEpoch": 1
+      }
+    },
+    {
+      "name": "actual_chrome_decoded_video_and_recording",
+      "status": "PASS",
+      "result": {
+        "decodedCommittedOrdinals": 7,
+        "clockDomain": "Chrome performance only",
+        "correlatedAV": "SEPARATE_RECORDING_ORACLE"
+      }
+    },
+    {
+      "name": "same_recording_actual_waveform_and_barcode",
+      "status": "CONDITIONAL",
+      "code": "AMBIGUOUS_UNRESOLVED_OR_CENSORED_RECORDED_AV"
+    }
+  ],
+  "clockRule": "recording PTS separately; no subtraction across clocks",
+  "auditContractSHA256": "sha256:1e3d05781dba6b7aeda965cb6fe62f517a458f285bb644e11402bfde52fd63da",
+  "processes": {
+    "goPID": 13089,
+    "localTransport": "tcp",
+    "rtmpReceiverPID": 13092,
+    "runtimePID": 13093,
+    "scope": "actual local test-process components; remote GPU operator evidence separate",
+    "source": "8f04a7567db2710547da2b313e027d1c76eed02e"
+  },
+  "source": "8f04a7567db2710547da2b313e027d1c76eed02e",
+  "sessionId": "session_37e1ce5e26e0543d0dd9ec9685658964",
+  "narrationId": "narration_348cc4522a04b129f5e7d47413734307",
+  "mode": "short",
+  "formalGolden1": "NOT_FORMAL",
+  "fixtureSHA256": "sha256:a81b9132ea38c36ee6573af1f643e312664eccbe498e2e8c962528b7505141ab",
+  "referenceArtifacts": [
+    {
+      "ordinal": 1,
+      "attemptId": "attempt_585fd3217dd9d8cb84b9a3d881ee0912",
+      "frames": 105,
+      "originalSeconds": 4.1725,
+      "nativeRGBStream": "NOT_VERIFIABLE_FROM_LOSSY_H264",
+      "decodedEmittedAndEncodedBytes": "PASS"
+    },
+    {
+      "ordinal": 2,
+      "attemptId": "attempt_3f65031c07d04c6342cd521cc56ba50c",
+      "frames": 94,
+      "originalSeconds": 3.755375,
+      "nativeRGBStream": "NOT_VERIFIABLE_FROM_LOSSY_H264",
+      "decodedEmittedAndEncodedBytes": "PASS"
+    },
+    {
+      "ordinal": 3,
+      "attemptId": "attempt_17ca56e42f7e060dbfb8b0acef3bdfca",
+      "frames": 92,
+      "originalSeconds": 3.668125,
+      "nativeRGBStream": "NOT_VERIFIABLE_FROM_LOSSY_H264",
+      "decodedEmittedAndEncodedBytes": "PASS"
+    },
+    {
+      "ordinal": 4,
+      "attemptId": "attempt_e4e9beeb697029d0d7cc3cdf476645c1",
+      "frames": 131,
+      "originalSeconds": 5.2033125,
+      "nativeRGBStream": "NOT_VERIFIABLE_FROM_LOSSY_H264",
+      "decodedEmittedAndEncodedBytes": "PASS"
+    },
+    {
+      "ordinal": 5,
+      "attemptId": "attempt_e4085446d0c54200c203174090709fe4",
+      "frames": 123,
+      "originalSeconds": 4.8868125,
+      "nativeRGBStream": "NOT_VERIFIABLE_FROM_LOSSY_H264",
+      "decodedEmittedAndEncodedBytes": "PASS"
+    },
+    {
+      "ordinal": 6,
+      "attemptId": "attempt_95b4757198817662e422582a217b731f",
+      "frames": 133,
+      "originalSeconds": 5.284375,
+      "nativeRGBStream": "NOT_VERIFIABLE_FROM_LOSSY_H264",
+      "decodedEmittedAndEncodedBytes": "PASS"
+    },
+    {
+      "ordinal": 7,
+      "attemptId": "attempt_66b16fa6772461caad8df4b0925aa53f",
+      "frames": 121,
+      "originalSeconds": 4.8284375,
+      "nativeRGBStream": "NOT_VERIFIABLE_FROM_LOSSY_H264",
+      "decodedEmittedAndEncodedBytes": "PASS"
+    }
+  ],
+  "recordedAV": [
+    {
+      "recording": "chrome",
+      "clockDomain": "this recording PTS only",
+      "rows": [
+        {
+          "ordinal": 1,
+          "status": "MATCHED",
+          "correlation": 0.971588,
+          "competingCorrelation": 0.097328,
+          "referenceStartSeconds": 4.266125,
+          "windowStartSeconds": 0.0,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 4.221,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 104,
+          "expectedLastSequence": 104,
+          "audioMinusVideoMs": 45.12499999999964
+        },
+        {
+          "ordinal": 2,
+          "status": "MATCHED",
+          "correlation": 0.968316,
+          "competingCorrelation": 0.082001,
+          "referenceStartSeconds": 12.666125,
+          "windowStartSeconds": 2.631,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 12.631,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 93,
+          "expectedLastSequence": 93,
+          "audioMinusVideoMs": 35.12499999999896
+        },
+        {
+          "ordinal": 3,
+          "status": "MATCHED",
+          "correlation": 0.767179,
+          "competingCorrelation": 0.084539,
+          "referenceStartSeconds": 21.453625,
+          "windowStartSeconds": 11.447,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 21.447,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 91,
+          "expectedLastSequence": 91,
+          "audioMinusVideoMs": 6.624999999999659
+        },
+        {
+          "ordinal": 4,
+          "status": "MATCHED",
+          "correlation": 0.926683,
+          "competingCorrelation": 0.092905,
+          "referenceStartSeconds": 30.02925,
+          "windowStartSeconds": 20.007,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 30.007,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 130,
+          "expectedLastSequence": 130,
+          "audioMinusVideoMs": 22.24999999999966
+        },
+        {
+          "ordinal": 5,
+          "status": "MATCHED",
+          "correlation": 0.925629,
+          "competingCorrelation": 0.141508,
+          "referenceStartSeconds": 40.009375,
+          "windowStartSeconds": 30.022,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 40.022,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 122,
+          "expectedLastSequence": 122,
+          "audioMinusVideoMs": -12.624999999999886
+        },
+        {
+          "ordinal": 6,
+          "status": "MATCHED",
+          "correlation": 0.928415,
+          "competingCorrelation": 0.16836,
+          "referenceStartSeconds": 49.74925,
+          "windowStartSeconds": 39.742,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 49.742,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 132,
+          "expectedLastSequence": 132,
+          "audioMinusVideoMs": 7.250000000006196
+        },
+        {
+          "ordinal": 7,
+          "status": "CENSORED",
+          "correlation": 0.10404,
+          "competingCorrelation": 0.090315,
+          "referenceStartSeconds": 53.09725,
+          "windowStartSeconds": 49.823,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "UNRESOLVED",
+          "videoFirstSeconds": 59.823,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 16,
+          "expectedLastSequence": 120
+        }
+      ],
+      "statusCounts": {
+        "MATCHED": 6,
+        "CENSORED": 1
+      },
+      "speechPrefixOnsetAbsoluteAudioVideoMs": {
+        "count": 6,
+        "P50": 17.437499999999773,
+        "P95": 42.62499999999947,
+        "P99": 44.6249999999996,
+        "max": 45.12499999999964,
+        "scope": "actual speech prefix / observation band onset; not phoneme lip-sync drift"
+      },
+      "status": "CONDITIONAL"
+    },
+    {
+      "recording": "rtmp",
+      "clockDomain": "this recording PTS only",
+      "rows": [
+        {
+          "ordinal": 1,
+          "status": "MATCHED",
+          "correlation": 0.979048,
+          "competingCorrelation": 0.098743,
+          "referenceStartSeconds": 8.061375,
+          "windowStartSeconds": 0.0,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 8.061,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 104,
+          "expectedLastSequence": 104,
+          "audioMinusVideoMs": 0.3750000000000142
+        },
+        {
+          "ordinal": 2,
+          "status": "MATCHED",
+          "correlation": 0.976052,
+          "competingCorrelation": 0.082206,
+          "referenceStartSeconds": 16.481375,
+          "windowStartSeconds": 6.501,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 16.501,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 93,
+          "expectedLastSequence": 93,
+          "audioMinusVideoMs": -19.625000000001336
+        },
+        {
+          "ordinal": 3,
+          "status": "MATCHED",
+          "correlation": 0.968075,
+          "competingCorrelation": 0.077616,
+          "referenceStartSeconds": 25.261375,
+          "windowStartSeconds": 15.261,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 25.261,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 91,
+          "expectedLastSequence": 91,
+          "audioMinusVideoMs": 0.37500000000179057
+        },
+        {
+          "ordinal": 4,
+          "status": "MATCHED",
+          "correlation": 0.976297,
+          "competingCorrelation": 0.095479,
+          "referenceStartSeconds": 33.821375,
+          "windowStartSeconds": 23.860875,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 33.861,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 130,
+          "expectedLastSequence": 130,
+          "audioMinusVideoMs": -39.624999999993804
+        },
+        {
+          "ordinal": 5,
+          "status": "MATCHED",
+          "correlation": 0.971713,
+          "competingCorrelation": 0.137195,
+          "referenceStartSeconds": 43.821375,
+          "windowStartSeconds": 33.821,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 43.821,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 122,
+          "expectedLastSequence": 122,
+          "audioMinusVideoMs": 0.3750000000053433
+        },
+        {
+          "ordinal": 6,
+          "status": "MATCHED",
+          "correlation": 0.976532,
+          "competingCorrelation": 0.168033,
+          "referenceStartSeconds": 53.561375,
+          "windowStartSeconds": 43.581,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "MATCHED",
+          "videoFirstSeconds": 53.581,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 132,
+          "expectedLastSequence": 132,
+          "audioMinusVideoMs": -19.62500000000489
+        },
+        {
+          "ordinal": 7,
+          "status": "CENSORED",
+          "correlation": 0.104004,
+          "competingCorrelation": 0.089479,
+          "referenceStartSeconds": 56.909375,
+          "windowStartSeconds": 53.661,
+          "referenceSamples": 24000,
+          "sampleRate": 8000,
+          "correlationStatus": "UNRESOLVED",
+          "videoFirstSeconds": 63.661,
+          "firstObservedSequence": 0,
+          "lastObservedSequence": 15,
+          "expectedLastSequence": 120
+        }
+      ],
+      "statusCounts": {
+        "MATCHED": 6,
+        "CENSORED": 1
+      },
+      "speechPrefixOnsetAbsoluteAudioVideoMs": {
+        "count": 6,
+        "P50": 10.00000000000334,
+        "P95": 34.624999999996575,
+        "P99": 38.62499999999436,
+        "max": 39.624999999993804,
+        "scope": "actual speech prefix / observation band onset; not phoneme lip-sync drift"
+      },
+      "status": "CONDITIONAL"
+    }
+  ],
+  "automatedEvidenceStatus": "FAIL"
+}

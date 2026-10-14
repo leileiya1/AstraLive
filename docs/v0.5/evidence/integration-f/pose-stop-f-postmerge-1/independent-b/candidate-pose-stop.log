@@ -1,0 +1,12 @@
+test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop) ... ok
+test_cancelled_pose_foreign_ack_still_fences (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_foreign_ack_still_fences) ... staging_receive_failed {"messageType": "StagePoseConsumedAck", "code": "STAGING_IDENTITY_MISMATCH", "pendingPresent": true, "pendingDone": false, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancelled_pose_missing_ack_keeps_original_five_second_deadline (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_missing_ack_keeps_original_five_second_deadline) ... ok
+test_cancelled_pose_unknown_ack_still_fences (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_unknown_ack_still_fences) ... staging_receive_failed {"messageType": "StagePoseConsumedAck", "code": "STAGING_CONFLICT", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancelled_pose_wrong_proof_cannot_claim_cleanup (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_wrong_proof_cannot_claim_cleanup) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 5.128s
+
+OK

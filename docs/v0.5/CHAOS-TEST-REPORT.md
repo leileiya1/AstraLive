@@ -1,5 +1,23 @@
 # v0.5 F chaos and integration-gate report
 
+## Latest Stop repair gate
+
+C43771588/delivery451405d normally merged8f04a75, no conflicts. A scoped
+contract ACK and B independent realTCP old-Fail/fixed-Pass controls preserve
+UNKNOWN/nonreuse and all deadlines. F exact8f software/owned-PG full gate PASS:
+Runtime315 total/12skip, Go/race/auth/outage/Redis-off/contracts, frontend40/build.
+Actual fresh-epoch one-question60.147s public-flow/Stop component PASS:
+ENDED/SEALED/binding released, interrupted commit UNKNOWN. Actual five-question
+60s case still FAILs with only2 completed questions although Stop succeeded.
+Same retired Worker epoch safely refuses later staging; F only restarts the
+owned Worker explicitly and creates a new Session, without replaying old tasks.
+[Every original attempt and scope](ONE-HOUR-GOLDEN-PROGRESS.md).
+
+Original source88 hour7 Stop FAIL is unchanged. New source8f full-hour and full
+real crash/Redis-kill/FORCE/product-switch recovery remain NOT TESTED. This
+repair and component PASS do not close provider-error cleanup/restart gaps or
+meet the latency target. Default flags/Redis/TCP rollback remain unchanged.
+
 ## Latest checkpoint — 2026-10-14 fresh hour
 
 Real hour-7 ran on immutable `88a68246d46a3942515d9895247a3ebfe15e2e07`

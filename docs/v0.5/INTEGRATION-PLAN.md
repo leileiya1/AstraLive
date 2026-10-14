@@ -1,5 +1,25 @@
 # AstraLive v0.5 Integration Plan
 
+## Latest delivery / remaining execution
+
+F final production source8f04a7567db2710547da2b313e027d1c76eed02e normally
+merges C pose-ACK cleanup43771588/delivery451405d after A/B scoped review,
+without conflict or frozen/default change. F complete exact-merge software gate
+and a fresh-epoch real60.147s single-question normal-Stop component PASS.
+Original hour7 FAIL and subsequent short failures remain intact.
+[Exact chronology, sources and evidence](ONE-HOUR-GOLDEN-PROGRESS.md).
+
+The authorized new branch is `exp/v0.5-soulx-staging-golden`; never main.
+Remaining gates: fresh full hour on8f, calibrated busy latency/answer gaps,
+complete live crash/Redis-kill/FORCE/product-switch, actual UDS/host matrix and
+human speech/A/V quality review. Operator-restarted fresh Worker epoch is
+required after committed cancellation/UNKNOWN; no unauthorized recovery or
+speech replay. Keep experimental defaults off. Roll back this increment with
+reviewed `git revert -m 1 8f04a7567db2710547da2b313e027d1c76eed02e`, then earlier
+merges in reverse dependency order; preserve additive SQL and evidence. First
+fence admission/stop and retain UNKNOWN records, captured binding proofs and
+legacy Redis/TCP. Never use a destructive down migration/reset to hide failure.
+
 ## Latest execution — 2026-10-14 one-hour run
 
 F serially merged C renewal-drain repair as `b816ac0`, private compact bridge

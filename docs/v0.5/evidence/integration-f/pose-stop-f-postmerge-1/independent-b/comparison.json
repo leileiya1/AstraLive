@@ -1,0 +1,25 @@
+{
+  "scope": "Independent execution of actual TCP client against software peer; no native/GPU/Chrome/live acceptance",
+  "candidate": "43771588c9b988fa1d30ad99e3fab7dafc6db6ba",
+  "baseline": "88a68246d46a3942515d9895247a3ebfe15e2e07",
+  "runs": [
+    {
+      "label": "baseline-fifo-ack",
+      "exitCode": 1,
+      "elapsedSeconds": 0.12354187504388392,
+      "log": "/private/tmp/astralive-b-pose-review-4377158-crtomocy/baseline-fifo-ack.log",
+      "logSHA256": "8cb117ee1fcd5fba951406733bbb325e1902abad521e7e40254b31908545f549",
+      "sourceFileSHA256": "cd5fa7286306dba3be57fa49e5468f08489d066d9cd7dc0c87e3190ab0e29916"
+    },
+    {
+      "label": "candidate-pose-stop",
+      "exitCode": 0,
+      "elapsedSeconds": 5.239847834105603,
+      "log": "/private/tmp/astralive-b-pose-review-4377158-crtomocy/candidate-pose-stop.log",
+      "logSHA256": "dec649c30d6d7661498fc22b8b5abfdc7c776f0e7da0ffec793b9ac49b246c88",
+      "sourceFileSHA256": "b04dc3fc22d8cff006c405d568bb4cf67769c815e33ea9dcfbcc701249fd2bd7"
+    }
+  ],
+  "actualHour7": "RX pending/answered mismatch STAGING_CONFLICT confirmed by stderr traceback; actual response message type not captured",
+  "physicalCleanup": "Candidate incomplete StageReleased is UNKNOWN/reusable=false; not COMPLETED or audible proof"
+}

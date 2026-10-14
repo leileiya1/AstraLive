@@ -182,3 +182,50 @@ Large original recordings remain outside Git at
 `/private/tmp/astralive-f-real-hour-tcp-7/media/observer/chrome.webm` and
 `/private/tmp/astralive-f-real-hour-tcp-7/media/rtmp.flv`. Evidence JSON/log gzip
 files preserve original-byte hashes and can be decompressed for inspection.
+
+## Stop repair and subsequent real component tests
+
+C production `43771588c9b988fa1d30ad99e3fab7dafc6db6ba` / delivery
+`451405d142b1f61959765d2f3e956e094b613315` merged normally as
+`8f04a7567db2710547da2b313e027d1c76eed02e`, without conflicts. It shields the
+same admitted, bounded pose ACK transaction from caller cancellation and drains
+its exact fingerprint/prefix before Cancel/Release. No Session/Go/Worker/API,
+default, profile or deadline changed. A scoped frozen-contract review ACKs no
+CCR; B independently reproduces old88 FAIL and fixed PASS over actual loopback
+TCP. The original hour's response subtype was not logged, so this proves a
+consistent failure mechanism, not exact original packet identity.
+
+F's exact merge gate PASS: Go/race/owned PostgreSQL migration/auth/ownership/
+outage/Redis-off/contract, Runtime315 total (303 passed,12 skipped), frontend40
+and build. The original5s ACK and2s write bounds remain; this does not guarantee
+every delayed cleanup finishes within the Session interrupt budget.
+
+| New actual test | Result | Boundary |
+| --- | --- | --- |
+| Short1, old Worker epoch407 | FAIL | StageError/STAGING_RETIRED before first media; prior UNKNOWN prevents reuse |
+| Short2, fresh Worker epoch080 | Overall FAIL; normal Stop PASS | 60.031s; two of five questions completed; ENDED/SEALED/binding released; committed Stop tail UNKNOWN |
+| Short3, same epoch080 | FAIL | Refused by retired Worker after committed cancellation; no media |
+| Short4, fresh Worker epoch1faa | PASS for public-flow/normal-Stop component | 60.147s; one explicitly authored question completed, bridge and narration resumed; ENDED/SEALED/binding released; Stop tail remains UNKNOWN |
+
+Short4 uses a separately hashed Stop-component fixture: the same140-statement
+product plan and one question. Original five-question fixture, assertion and
+failed results are retained. This PASS is not G1/G2, complete fact coverage,
+all-question load, complete A/V or human acceptance. The repaired source has
+**not** run a fresh full hour; hour7's original FAIL remains unchanged.
+Worker committed cancellation deliberately returns UNKNOWN/nonreusable and
+retires the epoch. F explicitly restarted the cached owned Worker and opened a
+new authorized Session; no old task was recovered or speech replayed. This
+operator lifecycle requirement is a release limitation.
+Short4's unchanged independent full oracle additionally FAILs on completed
+bridge metadata: descriptor `factIds=[]` versus SQL `fact_ids`/segment document
+JSON `null`, with equal product versions. All four completed hour7 bridges have
+the same mismatch. Public-flow/Stop component PASS does not override this.
+Independent normal-Stop, decoded-browser and actual media-byte checks PASS;
+recordedAV has six matches plus one Stop-censored tail in each recording.
+C/A are fixing only new bridge creation before first save/hash; historical
+immutable rows, commands and oracle rules stay unchanged.
+[F exact merge, independent controls, all short attempts and hashes](evidence/integration-f/pose-stop-f-postmerge-1/manifest.json).
+
+The new remote branch `exp/v0.5-soulx-staging-golden` was created at `da24925`
+with the original hour evidence. The fix and final evidence are subsequently
+pushed on that branch only. No main merge/force push or default enablement.

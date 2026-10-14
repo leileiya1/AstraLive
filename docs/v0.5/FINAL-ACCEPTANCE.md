@@ -1,5 +1,40 @@
 # v0.5 F acceptance decision — partial sequential integration
 
+## Latest decision — Stop repair verified; hour acceptance remains FAIL
+
+Final production source `8f04a7567db2710547da2b313e027d1c76eed02e` normally
+merges C's bounded pose-ACK fix with A/B scoped ACKs and no frozen revision.
+F exact-source software gate PASS: Go/race/owned-PG/auth/fault/Redis-off/
+contracts, Runtime303 passed+12 skipped, frontend40/build. Real one-question
+Stop component ran60.147s and PASSed public-flow/normal-Stop checks:
+answer→bridge→narration, ENDED/SEALED and binding release. Its interrupted media
+tail remains UNKNOWN. [Sources, failures and proof](ONE-HOUR-GOLDEN-PROGRESS.md).
+
+The unchanged full artifact oracle still FAILs: completed bridge descriptor
+`factIds=[]` disagrees with PostgreSQL/document JSON `null` (same product
+version). The four completed bridges in source88 hour7 share the gap. C/A are
+repairing new bridge construction only; no historical rewrite or oracle
+relaxation. Therefore real Stop component PASS is not full contract acceptance.
+
+**The source88 full hour remains FAIL on final Stop.** It nevertheless proves
+one3600.1805s Session/peer,25 metadata-correct answer/resume transitions and
+140 required facts covered once in completed metadata. Recorded A/V components
+are CONDITIONAL; latency reference estimates P50/P95=9.374/12.093s exceed the
+5/8s target. Source8f has not run another full hour. Human naturalness/audibility,
+calibrated busy SLA, complete live crash/Redis-kill/FORCE/product-switch,
+Windows/Linux local IPC and real UDS media remain NOT TESTED.
+
+PostgreSQL-only, MediaTimeline, Continuity, UDS and the selected1GiB staging
+profile remain **CONDITIONAL/default off**. QUIC is NOT TESTED and optional.
+No default enablement is recommended. Committed cancellation safely retires
+Worker staging: operator restart/fresh epoch/new authorized Session is required,
+never UNKNOWN speech replay. Remaining P1: latency and resume gaps, source8f
+full-hour/fault matrix, operator UNKNOWN reconciliation/cleanup after provider
+failure, automatic authorized Worker lifecycle and host/human acceptance.
+No new unresolved P0 is identified by these scoped tests; this is not a proof
+that all P0s are absent. The new branch is pushed; main is untouched. Earlier
+sections are historical checkpoints, not current feature or server-power claims.
+
 ## Latest checkpoint — fresh real hour, 2026-10-14
 
 **Real hour-7 acceptance is FAIL; Stop repair is IN PROGRESS.** After the user's cloud

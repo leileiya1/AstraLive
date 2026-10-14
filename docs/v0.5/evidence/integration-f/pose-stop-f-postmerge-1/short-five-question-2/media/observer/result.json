@@ -1,0 +1,3704 @@
+{
+  "scope": "REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
+  "commentTransport": "MOCK_REPLAY_ONLY",
+  "humanNaturalness": "NOT_TESTED",
+  "audienceAudible": false,
+  "correlatedAV": "NOT_ANALYSED",
+  "localTransport": "tcp",
+  "mode": "short",
+  "requestedSeconds": 60,
+  "seed": 5012,
+  "fixture": null,
+  "events": [
+    {
+      "kind": "COMMENT_INJECTED",
+      "question": "这份指南现在多少钱？",
+      "elapsedSeconds": 8.03877854195889,
+      "browserAt": 11922.700000047684,
+      "response": {
+        "accepted": true,
+        "platform": "mock"
+      }
+    },
+    {
+      "kind": "COMMENT_INJECTED",
+      "question": "现在库存还有多少份？",
+      "elapsedSeconds": 21.59701666701585,
+      "browserAt": 25480.600000023842,
+      "response": {
+        "accepted": true,
+        "platform": "mock"
+      }
+    },
+    {
+      "kind": "COMMENT_INJECTED",
+      "question": "你讲的这份说明书叫什么名字？",
+      "elapsedSeconds": 33.323256041971035,
+      "browserAt": 37206.5,
+      "response": {
+        "accepted": true,
+        "platform": "mock"
+      }
+    },
+    {
+      "kind": "COMMENT_INJECTED",
+      "question": "能再告诉我当前价格吗？",
+      "elapsedSeconds": 42.15542045899201,
+      "browserAt": 46039.5,
+      "response": {
+        "accepted": true,
+        "platform": "mock"
+      }
+    },
+    {
+      "kind": "COMMENT_INJECTED",
+      "question": "我想确认一下目前的库存数量。",
+      "elapsedSeconds": 43.60268391703721,
+      "browserAt": 47485.60000002384,
+      "response": {
+        "accepted": true,
+        "platform": "mock"
+      }
+    }
+  ],
+  "preflightProbeTiming": {
+    "clock": "Python time.monotonic",
+    "minimumStartSpacingSeconds": 5.1,
+    "attempts": [
+      {
+        "kind": "LLM",
+        "startedSeconds": 0.002388790948316455,
+        "spacingFromPreviousSeconds": null,
+        "cooldownWaitSeconds": 8.300412446260452e-08,
+        "status": "PASSED",
+        "durationSeconds": 5.018783750012517
+      },
+      {
+        "kind": "TTS",
+        "startedSeconds": 5.102916082949378,
+        "spacingFromPreviousSeconds": 5.100527292001061,
+        "cooldownWaitSeconds": 0.07323833298869431,
+        "status": "PASSED",
+        "durationSeconds": 0.41630779206752777
+      },
+      {
+        "kind": "GPU_WORKER",
+        "startedSeconds": 10.203298500040546,
+        "spacingFromPreviousSeconds": 5.1003824170911685,
+        "cooldownWaitSeconds": 4.681040459079668,
+        "status": "PASSED",
+        "durationSeconds": 0.11489466589409858
+      },
+      {
+        "kind": "AVATAR",
+        "startedSeconds": 15.30896970804315,
+        "spacingFromPreviousSeconds": 5.1056712080026045,
+        "cooldownWaitSeconds": 4.98184366710484,
+        "status": "PASSED",
+        "durationSeconds": 0.3694301249925047
+      }
+    ]
+  },
+  "sessionId": "session_74071714b7aafe97688c8c1b761b989f",
+  "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+  "roomId": "room_d4770b5edcbe17d4f2f8e6320de1098b",
+  "profiles": {
+    "LLM": {
+      "profileId": "profile_ba1327c56df3b36eaa46c32e8ec2a08d",
+      "kind": "LLM",
+      "name": "Golden LLM",
+      "provider": "deepseek",
+      "config": {
+        "model": "deepseek-flash",
+        "maxTokens": 256
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": true,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-14T13:58:34.3688Z"
+    },
+    "TTS": {
+      "profileId": "profile_e13bf4df23c04f9689b1c98a83b1f66c",
+      "kind": "TTS",
+      "name": "Golden TTS",
+      "provider": "xiaoya",
+      "config": {
+        "speed": 1,
+        "voiceId": "xiao_ya",
+        "modelRef": "xiaoya-default"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-14T13:58:34.864924Z"
+    },
+    "GPU_WORKER": {
+      "profileId": "profile_428b3be0e0df48f6b5e58a9c7e69c06b",
+      "kind": "GPU_WORKER",
+      "name": "Golden GPU_WORKER",
+      "provider": "soulx",
+      "config": {
+        "workerRef": "soulx-lite-01"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-14T13:58:39.665802Z"
+    },
+    "AVATAR": {
+      "profileId": "profile_4ead70380b534232f7eb25ec22ed4e43",
+      "kind": "AVATAR",
+      "name": "Golden AVATAR",
+      "provider": "soulx",
+      "config": {
+        "avatarRef": "official-girl",
+        "workerProfileId": "profile_428b3be0e0df48f6b5e58a9c7e69c06b"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-14T13:58:45.02575Z"
+    }
+  },
+  "capturedProviders": {
+    "integrationVersion": "0.4.0",
+    "sessionId": "session_74071714b7aafe97688c8c1b761b989f",
+    "bindingId": "binding_f4756b11ba84d839b1ad0a0e177ed835",
+    "capturedAt": "2026-10-14T13:58:45.056042Z",
+    "expiresAt": "2026-10-15T13:58:45.051848Z",
+    "profiles": [
+      {
+        "profileId": "profile_4ead70380b534232f7eb25ec22ed4e43",
+        "kind": "AVATAR",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-14T13:58:45.02575Z"
+      },
+      {
+        "profileId": "profile_428b3be0e0df48f6b5e58a9c7e69c06b",
+        "kind": "GPU_WORKER",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-14T13:58:39.665802Z"
+      },
+      {
+        "profileId": "profile_ba1327c56df3b36eaa46c32e8ec2a08d",
+        "kind": "LLM",
+        "provider": "deepseek",
+        "version": 1,
+        "updatedAt": "2026-10-14T13:58:34.3688Z"
+      },
+      {
+        "profileId": "profile_e13bf4df23c04f9689b1c98a83b1f66c",
+        "kind": "TTS",
+        "provider": "xiaoya",
+        "version": 1,
+        "updatedAt": "2026-10-14T13:58:34.864924Z"
+      }
+    ],
+    "mode": "REAL",
+    "errorCode": "",
+    "workerEpoch": "080b22e7cd874d58a2a172185de9a0d7"
+  },
+  "browserAudioPreflight": {
+    "started": {
+      "reason": "preflight_start",
+      "at": 3703.5,
+      "state": "running",
+      "contextTime": 3.541333333333333,
+      "outputContextTime": 3.508718,
+      "outputPerformanceTime": 3702.100000023842,
+      "userActivationActive": true,
+      "userActivationSeen": true,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "isSecureContext": true
+    },
+    "before": {
+      "reason": "preflight_start",
+      "at": 3703.5,
+      "state": "running",
+      "contextTime": 3.541333333333333,
+      "outputContextTime": 3.508718,
+      "outputPerformanceTime": 3702.100000023842,
+      "userActivationActive": true,
+      "userActivationSeen": true,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "isSecureContext": true
+    },
+    "after": {
+      "reason": "preflight_end",
+      "at": 3835.100000023842,
+      "state": "running",
+      "contextTime": 3.6693333333333333,
+      "outputContextTime": 3.636711,
+      "outputPerformanceTime": 3830.100000023842,
+      "userActivationActive": true,
+      "userActivationSeen": true,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "isSecureContext": true
+    },
+    "initialInboundAvailable": true,
+    "baselineWaitMs": 0,
+    "contextDeltaSeconds": 0.1280000000000001,
+    "performanceDeltaSeconds": 0.13160000002384187,
+    "inboundBefore": {
+      "reportId": "IT01A745516455",
+      "at": 3704,
+      "packetsReceived": 1,
+      "packetsDiscarded": 0,
+      "totalSamplesReceived": 0,
+      "totalSamplesDuration": 0.04,
+      "jitterBufferEmittedCount": 0,
+      "totalAudioEnergy": 0
+    },
+    "inboundAfter": {
+      "reportId": "IT01A745516455",
+      "at": 3835.2000000476837,
+      "packetsReceived": 7,
+      "packetsDiscarded": 0,
+      "totalSamplesReceived": 6240,
+      "totalSamplesDuration": 0.17,
+      "jitterBufferEmittedCount": 6720,
+      "totalAudioEnergy": 0
+    },
+    "decodedAudioDeltaSeconds": 0.13,
+    "trackLive": true,
+    "trackEnabled": true,
+    "trackMuted": false,
+    "ready": true
+  },
+  "narrationId": "narration_ecdd55a56cc51bbaa7b55342e79e6099",
+  "requiredSinks": [
+    "peer_63256f8fa4a94fa59ba64179612fc9fa",
+    "rtmp:1"
+  ],
+  "chromeVersion": "155.0.8059.40",
+  "observationBudgetSeconds": 60,
+  "commentPositionsSeconds": [
+    7.83401144638394,
+    21.44935403793365,
+    33.12930601852487,
+    41.98019229838104,
+    43.46029257002833
+  ],
+  "checkpoints": [],
+  "continuousDurationSeconds": 60.03101966693066,
+  "finalNarrationBeforeStop": {
+    "plan": {
+      "narrationId": "narration_ecdd55a56cc51bbaa7b55342e79e6099",
+      "sessionId": "session_74071714b7aafe97688c8c1b761b989f",
+      "scriptVersion": "desktop-guide-authored-v3",
+      "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+      "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+      "productSnapshotHash": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+      "requiredSinks": [
+        "peer_63256f8fa4a94fa59ba64179612fc9fa",
+        "rtmp:1"
+      ],
+      "policy": "AT_BOUNDARY",
+      "style": "自然清楚地逐句讲解桌面整理步骤，每段只讲当前声明的事实。",
+      "beats": [
+        {
+          "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+          "beatOrdinal": 0,
+          "title": "商品信息与阅读方法",
+          "requiredFactIds": [
+            "name",
+            "price",
+            "stock",
+            "sizes",
+            "guide.01.05",
+            "guide.01.06",
+            "guide.01.07",
+            "guide.01.08",
+            "guide.01.09",
+            "guide.01.10"
+          ],
+          "segmentIds": [
+            "segment_78bc4af81e59bfb2edf4c2e5ca42f329",
+            "segment_598c8bbbe03b5dfba98d71fc64c5dce5",
+            "segment_b4653ae6da6577d9f33d4a7adeef907d",
+            "segment_6010c0570db6b633ed5d475d0a6f1b23",
+            "segment_3e9cee823a7795c95873450b5e83a4af",
+            "segment_0dda4650d504fe232f9734845edaa1f1",
+            "segment_5ac82e3f07c40e6f2c5c5b6b37fa643d",
+            "segment_4620c0cd6c35bb6a50bcd2b9be6b6f6f",
+            "segment_56d937f8a3c369cf0563827a816d4856",
+            "segment_32406bd79b2c293e0e9eb02b0c5efe29"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+          "beatOrdinal": 1,
+          "title": "准备与清空桌面",
+          "requiredFactIds": [
+            "guide.02.01",
+            "guide.02.02",
+            "guide.02.03",
+            "guide.02.04",
+            "guide.02.05",
+            "guide.02.06",
+            "guide.02.07",
+            "guide.02.08",
+            "guide.02.09",
+            "guide.02.10"
+          ],
+          "segmentIds": [
+            "segment_7726cf96e9304d763c7ed722267f68c8",
+            "segment_e20f746e1dae8f94f505c4da6aa96b90",
+            "segment_c896eadcf8d3640fdafa608615b61e82",
+            "segment_b185cfb3c370322d0a3b87bd2e9cd9fa",
+            "segment_cd593db7392e191deda98109d24629f9",
+            "segment_2958a4e3efd435f6df1e1db516f88b94",
+            "segment_4da07ce2c7d5681487172481e022b2d4",
+            "segment_bedf001480f6fdf2b485e8c18294b024",
+            "segment_5069afb77f2163a9dcd374afd96b4f7e",
+            "segment_4b631a3092c4493c0e6184a3e714b867"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+          "beatOrdinal": 2,
+          "title": "按用途与频率分类",
+          "requiredFactIds": [
+            "guide.03.01",
+            "guide.03.02",
+            "guide.03.03",
+            "guide.03.04",
+            "guide.03.05",
+            "guide.03.06",
+            "guide.03.07",
+            "guide.03.08",
+            "guide.03.09",
+            "guide.03.10"
+          ],
+          "segmentIds": [
+            "segment_4d9b5dd06335e744d01338a3263415cd",
+            "segment_cf548220ec6877b870b8affc620e0003",
+            "segment_45abba0680f354282417ccd7182cfeb7",
+            "segment_fb4d469d4515d362d04c48a4401c6469",
+            "segment_122f11857ebe59d9632ef9bc233a1a4c",
+            "segment_9cf5a7941a105ca99f34935bba9821fb",
+            "segment_9669a9dda6e92d00c731d9b5b52c0629",
+            "segment_2e96ff0d3ac50581861c0a6dab185140",
+            "segment_a2065c8c5abc2e42dcee499812da2d28",
+            "segment_dae56a37b8a24a1af442e58f33f1ddd7"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+          "beatOrdinal": 3,
+          "title": "确定桌面功能分区",
+          "requiredFactIds": [
+            "guide.04.01",
+            "guide.04.02",
+            "guide.04.03",
+            "guide.04.04",
+            "guide.04.05",
+            "guide.04.06",
+            "guide.04.07",
+            "guide.04.08",
+            "guide.04.09",
+            "guide.04.10"
+          ],
+          "segmentIds": [
+            "segment_f8f7c71c6f05a7568867e4c873465d43",
+            "segment_7470f097f15b9d43622e718ee5559eb4",
+            "segment_b25316ac737dcacd0d64e6f46d21a444",
+            "segment_0a9dcc8f7db843442e5c3a48489078e4",
+            "segment_20651ba719a36fad12d06cfdd60e4efa",
+            "segment_ea3e440ab3c3a810a2e3e95a2e56cba7",
+            "segment_4b1cc900d0d98afbb1f0c029d05e08c0",
+            "segment_f4abdc067e82efb77d70455975811a31",
+            "segment_5f8d92c69b9281372fd98ad40afe5ec4",
+            "segment_e990b04e84a9c8c35666066d657ada1b"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+          "beatOrdinal": 4,
+          "title": "整理纸张与文件",
+          "requiredFactIds": [
+            "guide.05.01",
+            "guide.05.02",
+            "guide.05.03",
+            "guide.05.04",
+            "guide.05.05",
+            "guide.05.06",
+            "guide.05.07",
+            "guide.05.08",
+            "guide.05.09",
+            "guide.05.10"
+          ],
+          "segmentIds": [
+            "segment_7cdc077b071ed2c8deca7aa5546ba623",
+            "segment_3a09ddafd9e5cb44412c851aa5be9172",
+            "segment_9d6566bcd8a29c74d16e74a56709ffd3",
+            "segment_3e6a0ea4675ab1e1ecd7da5ece7d4a92",
+            "segment_9734808731fcb2db9478213e8cffb1a7",
+            "segment_aded6e080226463adb70a5f80dddc2eb",
+            "segment_28a3c0985297e7723a56eec9eb36ebda",
+            "segment_03cafa1c177a12fedbddea4e3b66a7f4",
+            "segment_2263db59c9327c82269b07d2e1d0114f",
+            "segment_de019f9e6ce1bde35dc3683935f3476a"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+          "beatOrdinal": 5,
+          "title": "安排线缆与充电区",
+          "requiredFactIds": [
+            "guide.06.01",
+            "guide.06.02",
+            "guide.06.03",
+            "guide.06.04",
+            "guide.06.05",
+            "guide.06.06",
+            "guide.06.07",
+            "guide.06.08",
+            "guide.06.09",
+            "guide.06.10"
+          ],
+          "segmentIds": [
+            "segment_9cd0fcd41154c1f039d20ef03078de8d",
+            "segment_78d6a371248299d1facb271aa75f6458",
+            "segment_814f2009de9a04468c4f4346b3baa3e3",
+            "segment_7060c21279541ed73cb753b01a0455d4",
+            "segment_d3d9a14b4b00524b806ace167cf1ea89",
+            "segment_f93fc75cac4085aac9a1aec3e0d04074",
+            "segment_19d66b870d234e955487e2f63461f554",
+            "segment_7ce73ca5b25c0f598a925fb7a35cdd93",
+            "segment_711c4f905f00f11e635768081883fbce",
+            "segment_7ccaf6fd5a413e4c8ac813fc7047d70c"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+          "beatOrdinal": 6,
+          "title": "收纳文具与小工具",
+          "requiredFactIds": [
+            "guide.07.01",
+            "guide.07.02",
+            "guide.07.03",
+            "guide.07.04",
+            "guide.07.05",
+            "guide.07.06",
+            "guide.07.07",
+            "guide.07.08",
+            "guide.07.09",
+            "guide.07.10"
+          ],
+          "segmentIds": [
+            "segment_1d9df11d50ec3e238e25eb8c933e56e0",
+            "segment_89c8e499ee08ac023ebfc4250b4dadee",
+            "segment_86f1aff70ffdd5f3f09eb6cc071b9261",
+            "segment_278759cb53cb8aa613f6312233e2c731",
+            "segment_a516dfaf25ec1e12e56c140360432417",
+            "segment_8e619232060eb255ed713bc30c88d72c",
+            "segment_75bcc2e831e0247991e27bbb3eb3bb55",
+            "segment_76a13acb94fb907f1beb4a62aec2363d",
+            "segment_81f547851f0435b86df014a0bec85896",
+            "segment_50d5f492caba233b266c26362ec58f66"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+          "beatOrdinal": 7,
+          "title": "小物品与抽屉管理",
+          "requiredFactIds": [
+            "guide.08.01",
+            "guide.08.02",
+            "guide.08.03",
+            "guide.08.04",
+            "guide.08.05",
+            "guide.08.06",
+            "guide.08.07",
+            "guide.08.08",
+            "guide.08.09",
+            "guide.08.10"
+          ],
+          "segmentIds": [
+            "segment_9691a028a26557de792b41f237b76ca8",
+            "segment_9e64168a350941ad6ae735ef3608b563",
+            "segment_bb6bc06638e747afafa2795c1ee6d854",
+            "segment_e001a305e20c6bf69e4c1bf38c90a670",
+            "segment_30943613823cd87adf4de9cc23b99358",
+            "segment_0f9c982776541297f9d9a38038d88af0",
+            "segment_122904fa7d3931e3e0991c4b44f479b7",
+            "segment_6eb510bd8fe399d73c44cedd59ffbfc6",
+            "segment_165a48217c718697878f79ccb3b1ae8a",
+            "segment_ff65ad2993863a05b45abc8cdbe6040c"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+          "beatOrdinal": 8,
+          "title": "电子资料与桌面界面",
+          "requiredFactIds": [
+            "guide.09.01",
+            "guide.09.02",
+            "guide.09.03",
+            "guide.09.04",
+            "guide.09.05",
+            "guide.09.06",
+            "guide.09.07",
+            "guide.09.08",
+            "guide.09.09",
+            "guide.09.10"
+          ],
+          "segmentIds": [
+            "segment_4294cfc8d41c143602c79bfc7ccc51de",
+            "segment_e9e13842a6daac655df751ad40c01596",
+            "segment_2159e5716acd0318107ac9bfcc4d643c",
+            "segment_624e45332fe9c122b436756ba2efb16c",
+            "segment_a2bace49fffb2b8b2917d8665ed679cc",
+            "segment_ac981be0be1fd071970a7e047ada3c99",
+            "segment_b03adeec8fd57a84a2d6ffeb3064f363",
+            "segment_9cd9b4a2175644b580dda2b37d6dd83a",
+            "segment_d5140dd99885bf7af1643cd0da3aa0bf",
+            "segment_fdd24fd69c198f2d1fd72c62486cb443"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+          "beatOrdinal": 9,
+          "title": "建立每日收尾动作",
+          "requiredFactIds": [
+            "guide.10.01",
+            "guide.10.02",
+            "guide.10.03",
+            "guide.10.04",
+            "guide.10.05",
+            "guide.10.06",
+            "guide.10.07",
+            "guide.10.08",
+            "guide.10.09",
+            "guide.10.10"
+          ],
+          "segmentIds": [
+            "segment_98da39427d8c0cb5368ba43ab7b3ea48",
+            "segment_8956db0f573536e9bc95d3042baec826",
+            "segment_fdc458c72bbe3d43f8e3f951b87a92bf",
+            "segment_4acabc0265ae62d4cd476c73ca17a3c2",
+            "segment_139c4be18b38d265c19edbc3f6b49154",
+            "segment_a75ee2d8e22e0749d9d48739a796ef63",
+            "segment_8811937d87ad687ddb3d36232591bf42",
+            "segment_7a24358a85114568553423ac7f95a97f",
+            "segment_b4a3dbcffe95b42564b70c8f9ed9b5bd",
+            "segment_d0928c00c2424e84941a8ea9875116cd"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+          "beatOrdinal": 10,
+          "title": "小空间与移动使用",
+          "requiredFactIds": [
+            "guide.11.01",
+            "guide.11.02",
+            "guide.11.03",
+            "guide.11.04",
+            "guide.11.05",
+            "guide.11.06",
+            "guide.11.07",
+            "guide.11.08",
+            "guide.11.09",
+            "guide.11.10"
+          ],
+          "segmentIds": [
+            "segment_2fae0a7b631d3826671d351cc0518fe8",
+            "segment_2adb93fc60472155450129397e895096",
+            "segment_1060083133189bc9783b4b6d5dc9a6c7",
+            "segment_18838b40bde1bc4368a5cad42a6959c8",
+            "segment_08f22ac051336680c0ac11f1b529d0d9",
+            "segment_d7d6ba27c3cfa30beb3e523813341e7d",
+            "segment_9f2774c6b3d8a2cbc75814b542e90fde",
+            "segment_51be904eb100a979862c60c6fe137c78",
+            "segment_b5dc58bda995853fbb92a6f328e49b87",
+            "segment_cb367fb5b1fdb2875dbd484ef343c439"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+          "beatOrdinal": 11,
+          "title": "共享桌面与协作规则",
+          "requiredFactIds": [
+            "guide.12.01",
+            "guide.12.02",
+            "guide.12.03",
+            "guide.12.04",
+            "guide.12.05",
+            "guide.12.06",
+            "guide.12.07",
+            "guide.12.08",
+            "guide.12.09",
+            "guide.12.10"
+          ],
+          "segmentIds": [
+            "segment_63dcf13158d3f276f28156786cfb2624",
+            "segment_379ce1e45186744c9b3a1c8074f76684",
+            "segment_191b743309ef21a6ea89a09c5c83d87e",
+            "segment_d294c28b10b04c1f11ca1fe83849ed02",
+            "segment_111df56556f4ab720341a3d9e2997781",
+            "segment_59c306e9a304b323d4aa0469c3fc5986",
+            "segment_08cd932ec97c83a5707d95b0ce2ffbb8",
+            "segment_ae421977d1de5cb86787ce44e8f29342",
+            "segment_d0ed1c1d7e7c7d724b5126fe3d50fd04",
+            "segment_e6d7e610696bfe5d55c32c3f3dcb3b15"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+          "beatOrdinal": 12,
+          "title": "定期维护与安全检查",
+          "requiredFactIds": [
+            "guide.13.01",
+            "guide.13.02",
+            "guide.13.03",
+            "guide.13.04",
+            "guide.13.05",
+            "guide.13.06",
+            "guide.13.07",
+            "guide.13.08",
+            "guide.13.09",
+            "guide.13.10"
+          ],
+          "segmentIds": [
+            "segment_3000b10496673d4f657752b87c8e3dc0",
+            "segment_ffb86af37157375dadbfe39e1d4846a1",
+            "segment_1cc168eb811f5da14b95e7e5a4b6c282",
+            "segment_3195efc73023ca5b767761a091d6b67d",
+            "segment_db2b78b1df37b49e27ad3f19d159a33d",
+            "segment_a8afc5200b8b1821c73dc8b09774245d",
+            "segment_1fd883bcf97126cbd863678f86b327fd",
+            "segment_67c6ffc81ca51d6b8677621bfcc04196",
+            "segment_6e2a347e4f335f3de53177034eb87b30",
+            "segment_105e345373cadfe0235c960884322919"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        },
+        {
+          "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+          "beatOrdinal": 13,
+          "title": "复盘与调整整理方案",
+          "requiredFactIds": [
+            "guide.14.01",
+            "guide.14.02",
+            "guide.14.03",
+            "guide.14.04",
+            "guide.14.05",
+            "guide.14.06",
+            "guide.14.07",
+            "guide.14.08",
+            "guide.14.09",
+            "guide.14.10"
+          ],
+          "segmentIds": [
+            "segment_dd4a188ebb2beacd987f82ab3288b97d",
+            "segment_5e8e80e5ce3af0788079c408459c437c",
+            "segment_9b483aac4c126e27d34f6a42fdc5cbff",
+            "segment_6ec029178cdd718b5015407aa4a5c50c",
+            "segment_9dda2be2901dfdbf71fbc54c799043e6",
+            "segment_6214c86b670b48c9911498eb47d1e775",
+            "segment_aecd4af6306439567ade80bf7578cebe",
+            "segment_6aaf42b50e9198fb659f85d60a5dfd81",
+            "segment_f19b28fdcdd1127bdf207c5e5806804a",
+            "segment_c7ec020d17af4454ab0c3c524de8ff81"
+          ],
+          "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+          "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8"
+        }
+      ],
+      "segments": [
+        {
+          "segmentId": "segment_78bc4af81e59bfb2edf4c2e5ca42f329",
+          "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+          "segmentOrdinal": 0,
+          "text": "这份电子说明书的名称，叫作桌面整理指南。",
+          "textHash": "sha256:ccb88731e174bdb986ddecc86f72fb5ca4fecc5f71c00938ee7636e880565184",
+          "factIds": [
+            "name"
+          ],
+          "durationHintMs": 4000,
+          "boundary": "SENTENCE_END",
+          "status": "COMPLETED",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_598c8bbbe03b5dfba98d71fc64c5dce5",
+          "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+          "segmentOrdinal": 1,
+          "text": "本商品当前标价是人民币99.00元。",
+          "textHash": "sha256:e3ada4ecd6bbedcead0ff92c2b3227be253a7038a0b8c6d8bc7cefa918abf7b8",
+          "factIds": [
+            "price"
+          ],
+          "durationHintMs": 3600,
+          "boundary": "SENTENCE_END",
+          "status": "SATISFIED_BY_ANSWER",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_b4653ae6da6577d9f33d4a7adeef907d",
+          "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+          "segmentOrdinal": 2,
+          "text": "当前用于本次演示的商品库存，共有20份可供选择。",
+          "textHash": "sha256:c1864f9d4b16f212ab91eafba8ec1f88171899a4853e0968bfeb914d99ea7320",
+          "factIds": [
+            "stock"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "COMPLETED",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_6010c0570db6b633ed5d475d0a6f1b23",
+          "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+          "segmentOrdinal": 3,
+          "text": "本商品的规格选项只有电子版，请按电子资料使用。",
+          "textHash": "sha256:9bcdce03971fbdf657271d718b18d65e131ccc78487bf0ef02ff48d012ce367d",
+          "factIds": [
+            "sizes"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_3e9cee823a7795c95873450b5e83a4af",
+          "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+          "segmentOrdinal": 4,
+          "text": "这份指南讨论桌面整理方法，不提供实体收纳工具。",
+          "textHash": "sha256:06590f870bc5e55b6981e62701f1c0ac08eff93edfc7eb27e5ea80551b773407",
+          "factIds": [
+            "guide.01.05"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_0dda4650d504fe232f9734845edaa1f1",
+          "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+          "segmentOrdinal": 5,
+          "text": "阅读时先选择最困扰你的桌面问题，再对应查找章节。",
+          "textHash": "sha256:9964bb4964fdc8ce7e58cc0d3bc4c53c686f0410dfc793e8ea57198f7cb56bcf",
+          "factIds": [
+            "guide.01.06"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_5ac82e3f07c40e6f2c5c5b6b37fa643d",
+          "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+          "segmentOrdinal": 6,
+          "text": "指南按照清空、分类、分区和维护，安排整理的步骤。",
+          "textHash": "sha256:805d7c94a94becfe1a2fa5705ba8bdac60da424e71441b4e9fa0e743c0852ac1",
+          "factIds": [
+            "guide.01.07"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_4620c0cd6c35bb6a50bcd2b9be6b6f6f",
+          "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+          "segmentOrdinal": 7,
+          "text": "第一次实践可以先处理一小块区域，再逐步扩大范围。",
+          "textHash": "sha256:c65fe2f9a737801bbdb2b41e80c2358c3d81f0333456945f9766e747be878a7a",
+          "factIds": [
+            "guide.01.08"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_56d937f8a3c369cf0563827a816d4856",
+          "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+          "segmentOrdinal": 8,
+          "text": "整理前请记录常见物品的位置，方便之后比较变化。",
+          "textHash": "sha256:ee3f4d278522e3bcee8e96b98dd4ce2cb53b83c41eb74ab755d4a5475129d349",
+          "factIds": [
+            "guide.01.09"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_32406bd79b2c293e0e9eb02b0c5efe29",
+          "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+          "segmentOrdinal": 9,
+          "text": "每完成一个步骤都检查实际使用，避免只追求外观。",
+          "textHash": "sha256:994814af7abbd0bec882fb7267530700d1e63b002a4864616da003c00d274fb1",
+          "factIds": [
+            "guide.01.10"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_7726cf96e9304d763c7ed722267f68c8",
+          "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+          "segmentOrdinal": 10,
+          "text": "开始整理之前先保存电脑工作，避免误动正在使用的物品。",
+          "textHash": "sha256:b3c248d50713ebb757685c76114f07194ba9078b7120bffd5390f40eddca04a8",
+          "factIds": [
+            "guide.02.01"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_e20f746e1dae8f94f505c4da6aa96b90",
+          "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+          "segmentOrdinal": 11,
+          "text": "请准备一个临时收集盒，用来集中放置桌面上的散物。",
+          "textHash": "sha256:2ffd99fb8aa9e3966eafbdcdb1e5e586be7478ff4700949c5c41fc8d03e760a4",
+          "factIds": [
+            "guide.02.02"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_c896eadcf8d3640fdafa608615b61e82",
+          "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+          "segmentOrdinal": 12,
+          "text": "清空时先移走没有插电的轻小物品，减少碰倒的机会。",
+          "textHash": "sha256:5ab703cc49db7f05e69903a2b78e3b16050b4bfbd31dd4d91a957ed9f880acd2",
+          "factIds": [
+            "guide.02.03"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_b185cfb3c370322d0a3b87bd2e9cd9fa",
+          "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+          "segmentOrdinal": 13,
+          "text": "有液体的杯子先盖好并移开，再处理旁边的纸张设备。",
+          "textHash": "sha256:cb5bbe7e451f58937b4deec2cce356cba2c349c9976a3a7beb24432e03762fc1",
+          "factIds": [
+            "guide.02.04"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_cd593db7392e191deda98109d24629f9",
+          "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+          "segmentOrdinal": 14,
+          "text": "需要持续供电的设备先保留，不为整理强行拔掉电源。",
+          "textHash": "sha256:cbd6ccb49687eb4cef66eca000e69c1784ac0a7935644f30dfdc8cf71945b41f",
+          "factIds": [
+            "guide.02.05"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_2958a4e3efd435f6df1e1db516f88b94",
+          "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+          "segmentOrdinal": 15,
+          "text": "取下物品后用合适的清洁工具，擦去桌面的灰尘污渍。",
+          "textHash": "sha256:e026566e4a263a2648e113de45492e1c6f9510ba9b7bc318b7f73d225e25cf2e",
+          "factIds": [
+            "guide.02.06"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_4da07ce2c7d5681487172481e022b2d4",
+          "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+          "segmentOrdinal": 16,
+          "text": "清洁桌面后等待表面干燥，再把电子设备放回原处。",
+          "textHash": "sha256:a0da0149887cfed32037da6bb2aa134c2b5f84f580ef9a71a425aea22692b1ab",
+          "factIds": [
+            "guide.02.07"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_bedf001480f6fdf2b485e8c18294b024",
+          "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+          "segmentOrdinal": 17,
+          "text": "暂时无法确定归属的物品，单独放进待判断的收集盒。",
+          "textHash": "sha256:60c1f9d28971bc2879b35e757a6433548d0997580cb373e1dccbca15d8ece413",
+          "factIds": [
+            "guide.02.08"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_5069afb77f2163a9dcd374afd96b4f7e",
+          "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+          "segmentOrdinal": 18,
+          "text": "把明显的包装废料和垃圾移走，避免混入待整理物品。",
+          "textHash": "sha256:08f76c62ccbbedcc56fb247ca0ed54ef0ae492b881dce2c0ef1104f0dc8fa828",
+          "factIds": [
+            "guide.02.09"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_4b631a3092c4493c0e6184a3e714b867",
+          "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+          "segmentOrdinal": 19,
+          "text": "清空结束后拍下空桌面，记录能够实际使用的空间。",
+          "textHash": "sha256:25c456e5eb94550529163e43f7d1cbee1e5d8087de585482084792ae5557c183",
+          "factIds": [
+            "guide.02.10"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_4d9b5dd06335e744d01338a3263415cd",
+          "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+          "segmentOrdinal": 20,
+          "text": "先按用途把桌面物品分开，区分工作、学习和生活用品。",
+          "textHash": "sha256:1148e2800c8d3b8c0d07e249ab342f8c90eaaf43e7d289da8db27ab86498b5b5",
+          "factIds": [
+            "guide.03.01"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_cf548220ec6877b870b8affc620e0003",
+          "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+          "segmentOrdinal": 21,
+          "text": "每天都要使用的物品，归入经常取用的第一组类别。",
+          "textHash": "sha256:3598485e1118efa28f674472843ae373a5966ec055167dbdd9387fb1292d9a7c",
+          "factIds": [
+            "guide.03.02"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_45abba0680f354282417ccd7182cfeb7",
+          "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+          "segmentOrdinal": 22,
+          "text": "每周偶尔才会用到的物品，归入低频取用的第二组。",
+          "textHash": "sha256:ea20520558f7ec7ccf0ed4808ba012f5110c9ffc24060d8777da0973add574b0",
+          "factIds": [
+            "guide.03.03"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_fb4d469d4515d362d04c48a4401c6469",
+          "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+          "segmentOrdinal": 23,
+          "text": "长期没有使用而仍需保存的物品，另列为存档类别。",
+          "textHash": "sha256:f00e5d6ce2033e6df4757ef446685141e75dd00e789c3bc8a6956b4a4141a465",
+          "factIds": [
+            "guide.03.04"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_122f11857ebe59d9632ef9bc233a1a4c",
+          "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+          "segmentOrdinal": 24,
+          "text": "同一种用途的物品先集中比较，再决定分别保留多少。",
+          "textHash": "sha256:48e40d18f54a43a56bb98400c2e70316036c7993ee5e24ab5a1224ce887386eb",
+          "factIds": [
+            "guide.03.05"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_9cf5a7941a105ca99f34935bba9821fb",
+          "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+          "segmentOrdinal": 25,
+          "text": "功能相同的重复物品，优先保留状态正常且容易使用的。",
+          "textHash": "sha256:dcc4c1ee0fb917b9a9271012da8cbccf86d8dfbf893fe4fca8f359c1ba272e24",
+          "factIds": [
+            "guide.03.06"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_9669a9dda6e92d00c731d9b5b52c0629",
+          "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+          "segmentOrdinal": 26,
+          "text": "损坏物品单独标记待维修，避免再次混进正常用品里。",
+          "textHash": "sha256:6d5b344684a2625c76b7bb253fce70675d0d06fd12412d1435dc3a179bdf3b69",
+          "factIds": [
+            "guide.03.07"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_2e96ff0d3ac50581861c0a6dab185140",
+          "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+          "segmentOrdinal": 27,
+          "text": "属于其他房间的物品，放入归还区等待一次集中送回。",
+          "textHash": "sha256:e442af3cea28eb9abb2bbe9348e987cdf321f4483e1543b9f60c31bfc020f2e3",
+          "factIds": [
+            "guide.03.08"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_a2065c8c5abc2e42dcee499812da2d28",
+          "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+          "segmentOrdinal": 28,
+          "text": "借来的物品记录借用来源，避免整理时误当个人物品。",
+          "textHash": "sha256:b2bcffa3067640ab5e2e5070e61d7584727187225dd146de3f0f55c1056e75d6",
+          "factIds": [
+            "guide.03.09"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_dae56a37b8a24a1af442e58f33f1ddd7",
+          "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+          "segmentOrdinal": 29,
+          "text": "分类结束后再安排容器，不先购买无法匹配物品的盒子。",
+          "textHash": "sha256:efce2fd86d7f97742d5db448ff92d8f368de36ba191e5466b9ad299aefccfc32",
+          "factIds": [
+            "guide.03.10"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_f8f7c71c6f05a7568867e4c873465d43",
+          "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+          "segmentOrdinal": 30,
+          "text": "把桌面中央留给当前主要任务，保持一块连续工作区域。",
+          "textHash": "sha256:98241b25b9095f46e57fd1019d517087f49f74f51bb2b6b7051fbcf520c43262",
+          "factIds": [
+            "guide.04.01"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_7470f097f15b9d43622e718ee5559eb4",
+          "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+          "segmentOrdinal": 31,
+          "text": "经常伸手取用的物品，安排在坐姿下容易够到的位置。",
+          "textHash": "sha256:51d4819ccd23dc4eb917e72e6f48103a76b6d6bf8b78f5273e70d011b3c89d11",
+          "factIds": [
+            "guide.04.02"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_b25316ac737dcacd0d64e6f46d21a444",
+          "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+          "segmentOrdinal": 32,
+          "text": "低频用品放在桌角或抽屉，不占用中央的主要操作区。",
+          "textHash": "sha256:1db8ab833ad26ec53a7dd55ad8ba349357e40c24ad81ec4ceae5b3ef3c5caeb0",
+          "factIds": [
+            "guide.04.03"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_0a9dcc8f7db843442e5c3a48489078e4",
+          "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+          "segmentOrdinal": 33,
+          "text": "屏幕附近留出稳定的放置区域，避免被临时物品挤歪。",
+          "textHash": "sha256:0c52ed88598b8e619c711393be859e637f772fb10be0d2947cdf43f524915be6",
+          "factIds": [
+            "guide.04.04"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_20651ba719a36fad12d06cfdd60e4efa",
+          "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+          "segmentOrdinal": 34,
+          "text": "纸笔作业需要的区域，预留足够展开一本书的位置。",
+          "textHash": "sha256:f3e66147b9c3c2dd120422dc1e03496c647a50e4875ad0a86a7d723a884f43a8",
+          "factIds": [
+            "guide.04.05"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_ea3e440ab3c3a810a2e3e95a2e56cba7",
+          "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+          "segmentOrdinal": 35,
+          "text": "桌面照明的位置要结合惯用手，减少手部遮挡工作区。",
+          "textHash": "sha256:a1124127dd093de2d1a3abb25906cdeda51b4fc833ca8862fa329b78aad21241",
+          "factIds": [
+            "guide.04.06"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_4b1cc900d0d98afbb1f0c029d05e08c0",
+          "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+          "segmentOrdinal": 36,
+          "text": "临时文件设置单独入口区，避免散落到整个桌面上。",
+          "textHash": "sha256:fd97f527ed86fea39830369488e45eb2a6ae5e76bf79c58f1f32da604c7b92e6",
+          "factIds": [
+            "guide.04.07"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_f4abdc067e82efb77d70455975811a31",
+          "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+          "segmentOrdinal": 37,
+          "text": "已完成而待移走的物品，集中放在靠近出口的一侧。",
+          "textHash": "sha256:18e34dd369687f4b4ba9dd9eb0899f399dfd243e69b09dc9877a6529490d59f3",
+          "factIds": [
+            "guide.04.08"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_5f8d92c69b9281372fd98ad40afe5ec4",
+          "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+          "segmentOrdinal": 38,
+          "text": "不同分区之间保留取放通道，不把容器堆成连续障碍。",
+          "textHash": "sha256:7dda205c0ba496c258059f3ed65ded328e55b365c65a97f719ad5dffa658132d",
+          "factIds": [
+            "guide.04.09"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_e990b04e84a9c8c35666066d657ada1b",
+          "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+          "segmentOrdinal": 39,
+          "text": "分区完成后模拟一次工作流程，检查移动和取物是否顺畅。",
+          "textHash": "sha256:eaf64448ea232dc973989880dce10b280f4c6b3c7a5ab6f6bde7adba7f841cbd",
+          "factIds": [
+            "guide.04.10"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_7cdc077b071ed2c8deca7aa5546ba623",
+          "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+          "segmentOrdinal": 40,
+          "text": "先将桌面纸张按待处理、正在处理和已完成分成三组。",
+          "textHash": "sha256:0692ad8b9be1c5ac46cffc5ceb3da9f4039c5be82f7e7e55212b7cea98f60c88",
+          "factIds": [
+            "guide.05.01"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_3a09ddafd9e5cb44412c851aa5be9172",
+          "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+          "segmentOrdinal": 41,
+          "text": "待处理文件只保留一个入口，避免多个位置重复积压。",
+          "textHash": "sha256:8ffc95ae31edd50ccf240eaf03963f594e2d2373d68a8dadda6746a7922fc89f",
+          "factIds": [
+            "guide.05.02"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_9d6566bcd8a29c74d16e74a56709ffd3",
+          "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+          "segmentOrdinal": 42,
+          "text": "正在处理的文件放在独立文件夹里，便于结束时收起。",
+          "textHash": "sha256:14818c810097f2a2c891c088a477e51dcc9a5ecca7e8a645bc868b8aae7cf418",
+          "factIds": [
+            "guide.05.03"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_3e6a0ea4675ab1e1ecd7da5ece7d4a92",
+          "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+          "segmentOrdinal": 43,
+          "text": "已经完成的资料按主题归档，不长期留在日常操作区。",
+          "textHash": "sha256:d49b9db5e3b01c6a0c41cd75462c1a35582a0c009de17719ad382b58054a0d8e",
+          "factIds": [
+            "guide.05.04"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_9734808731fcb2db9478213e8cffb1a7",
+          "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+          "segmentOrdinal": 44,
+          "text": "重要原件和普通草稿分开放置，避免清理时一起丢弃。",
+          "textHash": "sha256:4847ab02982ac285e57165b88b1cb6e0b2b28cd881227571f12b1b4ab3e1c020",
+          "factIds": [
+            "guide.05.05"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_aded6e080226463adb70a5f80dddc2eb",
+          "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+          "segmentOrdinal": 45,
+          "text": "纸张采用竖直或分层存放，避免底部内容被长期遮住。",
+          "textHash": "sha256:6cba2a5de1e7c586a9ec6a153db3fa731ae848bbabd164fa09640471f7537683",
+          "factIds": [
+            "guide.05.06"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_28a3c0985297e7723a56eec9eb36ebda",
+          "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+          "segmentOrdinal": 46,
+          "text": "为文件夹写上清晰主题标签，不只依靠颜色判断内容。",
+          "textHash": "sha256:525cf61135345363b0af343e6ceeff57321890c91da9cfae8c16859a26170e89",
+          "factIds": [
+            "guide.05.07"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_03cafa1c177a12fedbddea4e3b66a7f4",
+          "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+          "segmentOrdinal": 47,
+          "text": "同一项目的文件按日期排列，方便找到最近的一次修改。",
+          "textHash": "sha256:e8d0b5db72d9f8e6dee01f8b6ca2f4463c3fed6b9e86325e8c22b2ddf6b8c920",
+          "factIds": [
+            "guide.05.08"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_2263db59c9327c82269b07d2e1d0114f",
+          "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+          "segmentOrdinal": 48,
+          "text": "需要销毁的敏感纸张单独处理，不直接混入公开废纸。",
+          "textHash": "sha256:6521cfe0dfe52a099bfd9cf8e975654619702d3da5d6fbfd89283bcd510a36e4",
+          "factIds": [
+            "guide.05.09"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_de019f9e6ce1bde35dc3683935f3476a",
+          "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+          "segmentOrdinal": 49,
+          "text": "定期检查待处理文件夹，给长时间未处理的资料安排去向。",
+          "textHash": "sha256:d0da9e873b93e68fb929947dc2416a19fd87a9d443e71f4f19d6795550fc67b3",
+          "factIds": [
+            "guide.05.10"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_9cd0fcd41154c1f039d20ef03078de8d",
+          "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+          "segmentOrdinal": 50,
+          "text": "整理线缆之前先确认用途，避免拔掉正在传输数据的连接。",
+          "textHash": "sha256:3ee2d75180217043743449816a0903111363decb9d1a30261e85c8bf42cbd99b",
+          "factIds": [
+            "guide.06.01"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_78d6a371248299d1facb271aa75f6458",
+          "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+          "segmentOrdinal": 51,
+          "text": "按照电源线、数据线和备用线分类，减少寻找时的混乱。",
+          "textHash": "sha256:fe795f0c343915b125e3c169b92917f426458aa80f98a2e5f17eeb1f449ac44c",
+          "factIds": [
+            "guide.06.02"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_814f2009de9a04468c4f4346b3baa3e3",
+          "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+          "segmentOrdinal": 52,
+          "text": "常用充电线在固定位置收好，避免每次从桌后摸索。",
+          "textHash": "sha256:b09394dd126ab7eb991ca1c2cc6c3f69138761e5d324b5ff96c40f7d105307ae",
+          "factIds": [
+            "guide.06.03"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_7060c21279541ed73cb753b01a0455d4",
+          "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+          "segmentOrdinal": 53,
+          "text": "线缆保留必要的活动余量，不拉紧设备附近的接口。",
+          "textHash": "sha256:ade97b7331c365929642f255dbca620b2c42a102fe6b51b64e049c57834938cb",
+          "factIds": [
+            "guide.06.04"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_d3d9a14b4b00524b806ace167cf1ea89",
+          "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+          "segmentOrdinal": 54,
+          "text": "多余长度可以松散固定，不把线缆折成明显的锐角。",
+          "textHash": "sha256:ec400828b9b868006675635e227986502f7da0bb942e3778328b9337c55fa1e6",
+          "factIds": [
+            "guide.06.05"
+          ],
+          "durationHintMs": 4600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_f93fc75cac4085aac9a1aec3e0d04074",
+          "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+          "segmentOrdinal": 55,
+          "text": "为相似的线缆标记对应设备，避免反复试插辨认用途。",
+          "textHash": "sha256:f1bc4a6cc3d86415fee1c317e559b5cacc58b4d42b8d8c2b9046db19d82913e2",
+          "factIds": [
+            "guide.06.06"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_19d66b870d234e955487e2f63461f554",
+          "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+          "segmentOrdinal": 56,
+          "text": "电源插座周围留出查看空间，不被纸张和杂物完全覆盖。",
+          "textHash": "sha256:4cf317c11e1aed2f9af04710a2de62815e56185ec64af1d52b470e6ed06653be",
+          "factIds": [
+            "guide.06.07"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_7ce73ca5b25c0f598a925fb7a35cdd93",
+          "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+          "segmentOrdinal": 57,
+          "text": "发现破损或裸露的线缆先停止使用，再安排更换处理。",
+          "textHash": "sha256:e4ae3afd3bb1d2df2d301b10bcf187eedaadc00159ece4b17b31f8c8f024e56f",
+          "factIds": [
+            "guide.06.08"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_711c4f905f00f11e635768081883fbce",
+          "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+          "segmentOrdinal": 58,
+          "text": "备用线缆集中放入小袋，不与每天使用的连接线混放。",
+          "textHash": "sha256:44795e00050897cbf6a80c18a69c0df7eac0ff58d13d0b18948475229659c4e4",
+          "factIds": [
+            "guide.06.09"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_7ccaf6fd5a413e4c8ac813fc7047d70c",
+          "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+          "segmentOrdinal": 59,
+          "text": "清洁线缆周围时避免洒水，先按设备要求做好断电处理。",
+          "textHash": "sha256:408b9535e0a73ce958776ffc58d059123c9c02d30f4bb3d68d9a1bc3cf5a9b90",
+          "factIds": [
+            "guide.06.10"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_1d9df11d50ec3e238e25eb8c933e56e0",
+          "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+          "segmentOrdinal": 60,
+          "text": "把经常使用的笔集中在一个笔筒，避免分散占据桌面。",
+          "textHash": "sha256:30202f30cb15e2da2b6b572d0f0af63d4676be81f6cd93fd757c83d25bb168aa",
+          "factIds": [
+            "guide.07.01"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_89c8e499ee08ac023ebfc4250b4dadee",
+          "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+          "segmentOrdinal": 61,
+          "text": "先试写并区分笔的状态，再决定哪些需要补充或丢弃。",
+          "textHash": "sha256:64a01ec675c1d7e878dd97e3b939959013c13ea3ecfa57d5fb15255da65b0aa3",
+          "factIds": [
+            "guide.07.02"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_86f1aff70ffdd5f3f09eb6cc071b9261",
+          "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+          "segmentOrdinal": 62,
+          "text": "尺子和剪刀安排独立位置，避免夹在文件堆中难以找到。",
+          "textHash": "sha256:a930f626b79642a72a93c1a3a38345291aa4cd96921f0deb1b63cab0a7811270",
+          "factIds": [
+            "guide.07.03"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_278759cb53cb8aa613f6312233e2c731",
+          "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+          "segmentOrdinal": 63,
+          "text": "锋利工具存放时收好刀刃，不朝向日常伸手取物的方向。",
+          "textHash": "sha256:90e69aad7298556c9f9d66e57d35dc9f1a9e1867da11dc1ff8ff281947df0389",
+          "factIds": [
+            "guide.07.04"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_a516dfaf25ec1e12e56c140360432417",
+          "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+          "segmentOrdinal": 64,
+          "text": "便签纸和索引贴放在同一分区，方便记录与标记配合使用。",
+          "textHash": "sha256:d312bbd4ab4b36e8b3c244824212aae91c8e5a295801222696b4c07a7b7e223b",
+          "factIds": [
+            "guide.07.05"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_8e619232060eb255ed713bc30c88d72c",
+          "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+          "segmentOrdinal": 65,
+          "text": "容易散开的回形针使用小格容器，不直接倒在抽屉底部。",
+          "textHash": "sha256:ae3eb8bc6eeb6e1c10bf304c04d41be871db806adf0746ae2ebb7d2b4726c924",
+          "factIds": [
+            "guide.07.06"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_75bcc2e831e0247991e27bbb3eb3bb55",
+          "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+          "segmentOrdinal": 66,
+          "text": "备用文具和正在使用的文具分开，避免每种都摆上桌面。",
+          "textHash": "sha256:0e4d8443f067bc6d77636b47d2d1e0d68502040668573ba792182531598a6da1",
+          "factIds": [
+            "guide.07.07"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_76a13acb94fb907f1beb4a62aec2363d",
+          "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+          "segmentOrdinal": 67,
+          "text": "胶带和胶水检查盖口是否闭合，减少黏连附近物品的情况。",
+          "textHash": "sha256:2000776798414feb8848325f22cc123d5fbccba8aed69c7d1b94d0fb6aad3af1",
+          "factIds": [
+            "guide.07.08"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_81f547851f0435b86df014a0bec85896",
+          "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+          "segmentOrdinal": 68,
+          "text": "体积较大的工具收进抽屉，只有使用时才放到操作区。",
+          "textHash": "sha256:f43bbbd110b26eb6b66795b73003b81f26eada80b9f3bf84c282726b3dce72f9",
+          "factIds": [
+            "guide.07.09"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_50d5f492caba233b266c26362ec58f66",
+          "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+          "segmentOrdinal": 69,
+          "text": "选择容器时检查实际拿取动作，避免收得整齐却难以取出。",
+          "textHash": "sha256:b52875042aaf999abbd853e56746ab0c1bb13dc03b5aca5d06d3d5a6b63f2525",
+          "factIds": [
+            "guide.07.10"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_9691a028a26557de792b41f237b76ca8",
+          "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+          "segmentOrdinal": 70,
+          "text": "钥匙等出门必需的小物，设置一个固定的临时放置位置。",
+          "textHash": "sha256:17126be5c01491931f6f9e6b6fb9674033253b8a9916861105d9d659abe9661f",
+          "factIds": [
+            "guide.08.01"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_9e64168a350941ad6ae735ef3608b563",
+          "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+          "segmentOrdinal": 71,
+          "text": "抽屉先清空并查看内部尺寸，再选择适合的分隔方式。",
+          "textHash": "sha256:5b9f07e94d6f7889442b6ff3cfb24de04484e899e198570ba8548ec320fce731",
+          "factIds": [
+            "guide.08.02"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_bb6bc06638e747afafa2795c1ee6d854",
+          "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+          "segmentOrdinal": 72,
+          "text": "浅层抽屉放低矮物品，避免关闭时被突出的物品卡住。",
+          "textHash": "sha256:0e09c99fb520a97366c2084e7429153f157b0f3b5300df59f44165ad6fbb3702",
+          "factIds": [
+            "guide.08.03"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_e001a305e20c6bf69e4c1bf38c90a670",
+          "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+          "segmentOrdinal": 73,
+          "text": "深层抽屉用分格区分种类，不把不同小物全部堆在一起。",
+          "textHash": "sha256:138be466ac1137680efa6a654602b3553c8eaf80f1975303b707cacaea019ccc",
+          "factIds": [
+            "guide.08.04"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_30943613823cd87adf4de9cc23b99358",
+          "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+          "segmentOrdinal": 74,
+          "text": "同类物品的容器保留一点余量，方便放回而不必重新排满。",
+          "textHash": "sha256:d4d7f1833ef5732c37b90205e7615ed517a4dea29c6b146da757494a85057584",
+          "factIds": [
+            "guide.08.05"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_0f9c982776541297f9d9a38038d88af0",
+          "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+          "segmentOrdinal": 75,
+          "text": "容易滚动的小物用有边缘的容器，减少开关抽屉时移动。",
+          "textHash": "sha256:16d262d71dc30f3867938b47ee27542e136c9ae2c064a46a898dbc9aad7c40c0",
+          "factIds": [
+            "guide.08.06"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_122904fa7d3931e3e0991c4b44f479b7",
+          "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+          "segmentOrdinal": 76,
+          "text": "暂时需要保管的票据设一个位置，不夹进随机书页里。",
+          "textHash": "sha256:aea379c4508215a4b9326b0bf5d0e03097fb0852e686d23ed3eb0b6807107cd3",
+          "factIds": [
+            "guide.08.07"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_6eb510bd8fe399d73c44cedd59ffbfc6",
+          "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+          "segmentOrdinal": 77,
+          "text": "需要成套使用的配件放在一起，并在容器上注明对应用途。",
+          "textHash": "sha256:2387363034dd1b59e72a9199b0fc7aade9439b28187a11543ac53818daaf35f6",
+          "factIds": [
+            "guide.08.08"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_165a48217c718697878f79ccb3b1ae8a",
+          "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+          "segmentOrdinal": 78,
+          "text": "每个抽屉只安排明确的功能，避免重新成为杂物的汇集处。",
+          "textHash": "sha256:d4843aaee6c61dec18ad7e08aee9593732faa0f2539f19a945abf1ac6fcf72bb",
+          "factIds": [
+            "guide.08.09"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_ff65ad2993863a05b45abc8cdbe6040c",
+          "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+          "segmentOrdinal": 79,
+          "text": "抽屉标签放在容易看见的位置，帮助使用后快速归还物品。",
+          "textHash": "sha256:782a824db3dfbb83da52bb0e923b5b429e821b75c8d4d6a32a47819336d207b9",
+          "factIds": [
+            "guide.08.10"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_4294cfc8d41c143602c79bfc7ccc51de",
+          "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+          "segmentOrdinal": 80,
+          "text": "电脑桌面的文件按用途分组，避免用大量图标代替文件夹。",
+          "textHash": "sha256:bac3ad3263ba5295002a282304f635610aa45f14c327c9cac5f7c69c31b94985",
+          "factIds": [
+            "guide.09.01"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_e9e13842a6daac655df751ad40c01596",
+          "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+          "segmentOrdinal": 81,
+          "text": "文件名称写明主题和日期，减少依靠反复打开进行辨认。",
+          "textHash": "sha256:720a02c0c2612e6900441bc19b3b8831167cbd03b5d71d1f97fab4b05d90c164",
+          "factIds": [
+            "guide.09.02"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_2159e5716acd0318107ac9bfcc4d643c",
+          "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+          "segmentOrdinal": 82,
+          "text": "同一项目的电子资料放入固定目录，减少不同路径的副本。",
+          "textHash": "sha256:dfcacb9395509fd1706291e09ea037ffcfb5dfe45ab3d91cfad20760aacff480",
+          "factIds": [
+            "guide.09.03"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_624e45332fe9c122b436756ba2efb16c",
+          "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+          "segmentOrdinal": 83,
+          "text": "未完成文件与已归档文件分开，避免覆盖正在处理的版本。",
+          "textHash": "sha256:f9b4b6c9200d749d6f7aba3a923eefcff2fb95c16e5c2117464be213345fb0f7",
+          "factIds": [
+            "guide.09.04"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_a2bace49fffb2b8b2917d8665ed679cc",
+          "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+          "segmentOrdinal": 84,
+          "text": "下载目录定期检查归属，不把临时文件长期当作正式存档。",
+          "textHash": "sha256:e31b227bd14e701106b8ccdfd0479af9de69c703673ac4fd5ba39113faef4fa5",
+          "factIds": [
+            "guide.09.05"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_ac981be0be1fd071970a7e047ada3c99",
+          "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+          "segmentOrdinal": 85,
+          "text": "需要备份的重要资料按既定规则保存，不只留在桌面文件夹。",
+          "textHash": "sha256:6e064e18b915e0a428d58103f50e83e1e4ffe9ece176ecf1f339d0fbf9071b40",
+          "factIds": [
+            "guide.09.06"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_b03adeec8fd57a84a2d6ffeb3064f363",
+          "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+          "segmentOrdinal": 86,
+          "text": "整理电子文件前确认备份情况，避免误删唯一的一份资料。",
+          "textHash": "sha256:a6b982cbf61a94404b071464f9bc8734082fc1d809ac382995bb0b26fe05d5c6",
+          "factIds": [
+            "guide.09.07"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_9cd9b4a2175644b580dda2b37d6dd83a",
+          "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+          "segmentOrdinal": 87,
+          "text": "快捷方式只保留经常使用的入口，不让界面再次堆满图标。",
+          "textHash": "sha256:573798d3fc65d44654804e50ea66913a8d53a0cb3134e25e1fb8fc9b13d69422",
+          "factIds": [
+            "guide.09.08"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_d5140dd99885bf7af1643cd0da3aa0bf",
+          "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+          "segmentOrdinal": 88,
+          "text": "截图按主题及时归入目录，避免只凭自动编号寻找内容。",
+          "textHash": "sha256:448af5858809d9b3325ee1d97f8a2f3ce2e11b262c4d3e7582513d27f7fc1bbf",
+          "factIds": [
+            "guide.09.09"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_fdd24fd69c198f2d1fd72c62486cb443",
+          "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+          "segmentOrdinal": 89,
+          "text": "共享资料与私人资料分开存放，发布前检查访问权限范围。",
+          "textHash": "sha256:5117543fbf0e56d8d0ccc690e047c075ebbe6b137282677fad6eb0fdf278282a",
+          "factIds": [
+            "guide.09.10"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_98da39427d8c0cb5368ba43ab7b3ea48",
+          "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+          "segmentOrdinal": 90,
+          "text": "每天结束工作时先保存当前进度，再收起正在使用的资料。",
+          "textHash": "sha256:e821d49284dad938a30c1e7ef6d034a6517c8250d65fac273cdec9237f5ea578",
+          "factIds": [
+            "guide.10.01"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_8956db0f573536e9bc95d3042baec826",
+          "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+          "segmentOrdinal": 91,
+          "text": "使用过的笔和工具放回固定位置，不留给下一次开工处理。",
+          "textHash": "sha256:4149dcf46af83289fd98fc80791f656808a6522f5591354258dfb419d1490fdd",
+          "factIds": [
+            "guide.10.02"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_fdc458c72bbe3d43f8e3f951b87a92bf",
+          "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+          "segmentOrdinal": 92,
+          "text": "桌面上的空杯和食物包装当天移走，避免变成长期杂物。",
+          "textHash": "sha256:9eca420506efaaa5e946589433fc5b41b46a4ee7acf5289c67d7f0d1f8a688c5",
+          "factIds": [
+            "guide.10.03"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_4acabc0265ae62d4cd476c73ca17a3c2",
+          "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+          "segmentOrdinal": 93,
+          "text": "把第二天需要继续的资料集中摆放，方便再次开始任务。",
+          "textHash": "sha256:45a1fd89832e40d4a8d9d2ef6ce363911fd5085d23a2338e33533de2aa5831e4",
+          "factIds": [
+            "guide.10.04"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_139c4be18b38d265c19edbc3f6b49154",
+          "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+          "segmentOrdinal": 94,
+          "text": "只为明天准备必要用品，不把所有备用物品都搬回桌面。",
+          "textHash": "sha256:dfc61d198f26b98ddb9fee39f2732aed7c7013ce3de3b8e8ec8d8ce567d37662",
+          "factIds": [
+            "guide.10.05"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_a75ee2d8e22e0749d9d48739a796ef63",
+          "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+          "segmentOrdinal": 95,
+          "text": "离开座位前查看充电和设备状态，按实际需要关闭电源。",
+          "textHash": "sha256:2df40ddf690b7d28ddceedf5c12c30febbd74f1b0696570aed9408a0a54a9ec7",
+          "factIds": [
+            "guide.10.06"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_8811937d87ad687ddb3d36232591bf42",
+          "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+          "segmentOrdinal": 96,
+          "text": "收尾时检查中央工作区域，确认没有被临时物品占满。",
+          "textHash": "sha256:ee4bc9a8602f8f001fb87ff9b84606a042bba7f119fedbb7c710a5563dd967a3",
+          "factIds": [
+            "guide.10.07"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_7a24358a85114568553423ac7f95a97f",
+          "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+          "segmentOrdinal": 97,
+          "text": "遇到不属于自己的物品，及时归还而不是继续留在手边。",
+          "textHash": "sha256:07c10c73fed076800ab5c0bf4cae16a22f3e6ebcd2c4842023ab30dcd19f4999",
+          "factIds": [
+            "guide.10.08"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_b4a3dbcffe95b42564b70c8f9ed9b5bd",
+          "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+          "segmentOrdinal": 98,
+          "text": "给临时收集盒安排清理时间，避免它变成长期积压的角落。",
+          "textHash": "sha256:41ea439f392b718b8d5a0fc6b680cc1f648b31a2204019ad566ea613c3e65490",
+          "factIds": [
+            "guide.10.09"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_d0928c00c2424e84941a8ea9875116cd",
+          "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+          "segmentOrdinal": 99,
+          "text": "每日收尾完成后保留一个简短记录，方便观察维护是否持续。",
+          "textHash": "sha256:7b3ecc6eed153cc071bec72c1f39bca51bb5c2a9a269ef5488797da8b82478d7",
+          "factIds": [
+            "guide.10.10"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_2fae0a7b631d3826671d351cc0518fe8",
+          "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+          "segmentOrdinal": 100,
+          "text": "桌面空间有限时优先满足主要任务，不同时展开所有活动。",
+          "textHash": "sha256:bac0b853fbe1f281e8889444ece45a726d12b90bcb058229bb964cd19345a2bd",
+          "factIds": [
+            "guide.11.01"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_2adb93fc60472155450129397e895096",
+          "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+          "segmentOrdinal": 101,
+          "text": "把低频用品移到其他储存位置，给高频操作留出必要空间。",
+          "textHash": "sha256:23d8d8d4f36867011b767f2d7dd87176c096021aba91b416590d8b500c0a9271",
+          "factIds": [
+            "guide.11.02"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_1060083133189bc9783b4b6d5dc9a6c7",
+          "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+          "segmentOrdinal": 102,
+          "text": "使用竖直文件架时确认底座稳固，避免取纸时整体倾倒。",
+          "textHash": "sha256:377f1c712c80aa6f78f9b00399d449550472f3c903cbdbd29623bbcdbb190db1",
+          "factIds": [
+            "guide.11.03"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_18838b40bde1bc4368a5cad42a6959c8",
+          "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+          "segmentOrdinal": 103,
+          "text": "可移动的小托盘适合集中用品，切换任务时能一次收起。",
+          "textHash": "sha256:35ddfda6f832d80a89a2abf8ca5c79bf39cc0f13438d0a7d5ee3db98c35603cf",
+          "factIds": [
+            "guide.11.04"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_08f22ac051336680c0ac11f1b529d0d9",
+          "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+          "segmentOrdinal": 104,
+          "text": "经常变换座位时准备轻便收纳袋，减少携带多余的小工具。",
+          "textHash": "sha256:479303d8f9604e59a25db16de13280a1e3df1d6a388e5eb6448e83c086b008a2",
+          "factIds": [
+            "guide.11.05"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_d7d6ba27c3cfa30beb3e523813341e7d",
+          "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+          "segmentOrdinal": 105,
+          "text": "移动用品按使用顺序放置，避免每次需要把整个袋子倒空。",
+          "textHash": "sha256:92fc074240a80a2fedc81bbf872aedee2cd83de5fa452b62558698184ac5692d",
+          "factIds": [
+            "guide.11.06"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_9f2774c6b3d8a2cbc75814b542e90fde",
+          "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+          "segmentOrdinal": 106,
+          "text": "临时桌面也先划出工作区域，不将所有随身物品铺满。",
+          "textHash": "sha256:bb57f8674da95af4ff9e2166eb9cb5ecb8e12493f13e4772d5d18f2b31799b77",
+          "factIds": [
+            "guide.11.07"
+          ],
+          "durationHintMs": 4800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_51be904eb100a979862c60c6fe137c78",
+          "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+          "segmentOrdinal": 107,
+          "text": "离开临时座位前检查插线和小物，避免遗忘正在使用的配件。",
+          "textHash": "sha256:a3c4d5dd9b269b9b89db160e7d01a4dfae237e450cf40246cc0a07de16726bec",
+          "factIds": [
+            "guide.11.08"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_b5dc58bda995853fbb92a6f328e49b87",
+          "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+          "segmentOrdinal": 108,
+          "text": "折叠或移动桌面前先收起设备，避免物品滑落造成损坏。",
+          "textHash": "sha256:260f942688c87956317848eb9f0fa2c9040864017c849c836fea8d9eb74753a2",
+          "factIds": [
+            "guide.11.09"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_cb367fb5b1fdb2875dbd484ef343c439",
+          "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+          "segmentOrdinal": 109,
+          "text": "空间布局改变之后重新检查取物距离，不照搬原来的分区。",
+          "textHash": "sha256:589d27f70f843a39bba4c5d208156de10892f70054949903354cdffbf4871a66",
+          "factIds": [
+            "guide.11.10"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_63dcf13158d3f276f28156786cfb2624",
+          "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+          "segmentOrdinal": 110,
+          "text": "多人共用桌面时先约定公共区域，不让个人用品长期占用。",
+          "textHash": "sha256:8963ebf1895b1cd44f9600a2e6d3f4720cabe2f52265565874a3c6542366d669",
+          "factIds": [
+            "guide.12.01"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_379ce1e45186744c9b3a1c8074f76684",
+          "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+          "segmentOrdinal": 111,
+          "text": "公共工具和私人文具分开标记，方便使用后归还正确位置。",
+          "textHash": "sha256:dfd9c5f4aabfff44d12e6ee9e0f72b51831d7a01bdc2a7e5822b1352a4560ec1",
+          "factIds": [
+            "guide.12.02"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_191b743309ef21a6ea89a09c5c83d87e",
+          "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+          "segmentOrdinal": 112,
+          "text": "共享文件设定统一的放置规则，避免每个人另开一个入口。",
+          "textHash": "sha256:5e3303ffba25b0a603124850446bb67c931b065728e1dcd7f344e83d9fb7c5fc",
+          "factIds": [
+            "guide.12.03"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_d294c28b10b04c1f11ca1fe83849ed02",
+          "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+          "segmentOrdinal": 113,
+          "text": "借用工具前确认使用安排，不打断他人正在进行的任务。",
+          "textHash": "sha256:35b03a97849466a7f14efc83d618b4c6a6677ff75d1b9530332e6a1b2f0b4c5c",
+          "factIds": [
+            "guide.12.04"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_111df56556f4ab720341a3d9e2997781",
+          "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+          "segmentOrdinal": 114,
+          "text": "使用完公共设备后恢复约定状态，给下一位使用者留出空间。",
+          "textHash": "sha256:51ec7ce2e21e6b6606ae2df44e386d0d4c550341bda5d79a2ab57ba5421a9271",
+          "factIds": [
+            "guide.12.05"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_59c306e9a304b323d4aa0469c3fc5986",
+          "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+          "segmentOrdinal": 115,
+          "text": "临时改变桌面布局时说明原因，避免其他人找不到原有物品。",
+          "textHash": "sha256:b891a9774b5189a34db430cd93b5241a2ed0f10349ed053e9c8075fc14aa8067",
+          "factIds": [
+            "guide.12.06"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_08cd932ec97c83a5707d95b0ce2ffbb8",
+          "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+          "segmentOrdinal": 116,
+          "text": "公共区域的垃圾及时清理，不把维护责任留给最后一个人。",
+          "textHash": "sha256:29d7b28faf5231a68e0e114216972011d49f4393a15754cf3a85549fa1525706",
+          "factIds": [
+            "guide.12.07"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_ae421977d1de5cb86787ce44e8f29342",
+          "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+          "segmentOrdinal": 117,
+          "text": "共享收纳位置采用清楚的标签，减少仅凭个人习惯判断归属。",
+          "textHash": "sha256:da4c164ffaee12e84d11911528226fd7751b41930cbdbc8276e6df180ab944e6",
+          "factIds": [
+            "guide.12.08"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_d0ed1c1d7e7c7d724b5126fe3d50fd04",
+          "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+          "segmentOrdinal": 118,
+          "text": "涉及私密资料时先收好内容，不直接留在多人可见的桌面。",
+          "textHash": "sha256:28da989ab8424dddfc6c3f9ce3a0ff87a43e250c8bb75522d35256d9109d978b",
+          "factIds": [
+            "guide.12.09"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_e6d7e610696bfe5d55c32c3f3dcb3b15",
+          "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+          "segmentOrdinal": 119,
+          "text": "共同讨论哪些物品确实需要常驻，减少公共区域的重复堆放。",
+          "textHash": "sha256:cbf20c17cfa30b1acb70b003e23de330fcb438d5ca8e824bd1e9cb6c986eaf9a",
+          "factIds": [
+            "guide.12.10"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_3000b10496673d4f657752b87c8e3dc0",
+          "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+          "segmentOrdinal": 120,
+          "text": "每周查看一次分区状态，找出最容易重新堆积物品的位置。",
+          "textHash": "sha256:a61c14c56b0efce49428ba5e553f7c9fc59cb412f265185eb7edbfb8c13c608f",
+          "factIds": [
+            "guide.13.01"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_ffb86af37157375dadbfe39e1d4846a1",
+          "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+          "segmentOrdinal": 121,
+          "text": "检查收纳盒里是否出现无关物品，及时恢复原定用途范围。",
+          "textHash": "sha256:943560cbd1f2452eb07306a1a6dd535a8bc4ca311076121e7a7f7e84ace126ef",
+          "factIds": [
+            "guide.13.02"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_1cc168eb811f5da14b95e7e5a4b6c282",
+          "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+          "segmentOrdinal": 122,
+          "text": "观察设备散热区域是否被遮挡，不用文件夹包围排风位置。",
+          "textHash": "sha256:f87dd4f0fdbcde322a6097c1f49e242f05c2c5a004eb1cc1cb9e444e15b14b9a",
+          "factIds": [
+            "guide.13.03"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_3195efc73023ca5b767761a091d6b67d",
+          "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+          "segmentOrdinal": 123,
+          "text": "检查桌边物品是否稳固，避免常用操作把它们推到边缘。",
+          "textHash": "sha256:8f26f7e5644c44e8c8b0d500d38ed7ea6507fcb15112b203b67087321817fb93",
+          "factIds": [
+            "guide.13.04"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_db2b78b1df37b49e27ad3f19d159a33d",
+          "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+          "segmentOrdinal": 124,
+          "text": "发现容器破损或尖锐边角，先停止使用并更换合适的容器。",
+          "textHash": "sha256:2549900e2123a28ba390b73afa0ba6170440ebf3485ff51dbe23c27fd722f1a7",
+          "factIds": [
+            "guide.13.05"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_a8afc5200b8b1821c73dc8b09774245d",
+          "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+          "segmentOrdinal": 125,
+          "text": "定期擦拭不易看见的角落，避免积灰影响日常使用体验。",
+          "textHash": "sha256:8bd6f9e9d56e1f2c3304ed0767bc3d19579f17a6d5db6a934527c54bb5e0a79d",
+          "factIds": [
+            "guide.13.06"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_1fd883bcf97126cbd863678f86b327fd",
+          "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+          "segmentOrdinal": 126,
+          "text": "整理时留意插座与线缆状态，不把收纳美观放在使用安全之前。",
+          "textHash": "sha256:b24f97dc5e63e81bd23fc75a8ae8026bcd1af135ad5c573c072175a79501cbd3",
+          "factIds": [
+            "guide.13.07"
+          ],
+          "durationHintMs": 5600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_67c6ffc81ca51d6b8677621bfcc04196",
+          "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+          "segmentOrdinal": 127,
+          "text": "重物放置在稳定位置，不集中堆在不适合承重的薄弱区域。",
+          "textHash": "sha256:02c0e3589d1d3e54740866da544a255dcce0d1e3856fafbd756dba07cf49ad9f",
+          "factIds": [
+            "guide.13.08"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_6e2a347e4f335f3de53177034eb87b30",
+          "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+          "segmentOrdinal": 128,
+          "text": "需要抬动显示器等设备时先查看连接，避免拉扯仍插着的线缆。",
+          "textHash": "sha256:a3520b4d89c8ef518c01fa62e2cc1f6f3a2396321d1fec3c59e98f95e90ab1fa",
+          "factIds": [
+            "guide.13.09"
+          ],
+          "durationHintMs": 5600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_105e345373cadfe0235c960884322919",
+          "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+          "segmentOrdinal": 129,
+          "text": "维护发现的问题记录具体位置，下次调整时再逐项检查原因。",
+          "textHash": "sha256:df2f5eb4f0af0c0cdb3b41c085fbe5459a6dcbea325ebaa49d59de247c1814ba",
+          "factIds": [
+            "guide.13.10"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_dd4a188ebb2beacd987f82ab3288b97d",
+          "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+          "segmentOrdinal": 130,
+          "text": "复盘时先询问哪些物品仍难找到，再考虑调整对应的分区。",
+          "textHash": "sha256:464db000b701ccb518194bb644934890493b533a351bdcb683e379ab9f3b4475",
+          "factIds": [
+            "guide.14.01"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_5e8e80e5ce3af0788079c408459c437c",
+          "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+          "segmentOrdinal": 131,
+          "text": "检查常用用品能否顺手放回，不只检查取出时是否方便。",
+          "textHash": "sha256:88981f83e22d2150edc3723263494768097f9ed1d484034158f708e61a2499e6",
+          "factIds": [
+            "guide.14.02"
+          ],
+          "durationHintMs": 5000,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_9b483aac4c126e27d34f6a42fdc5cbff",
+          "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+          "segmentOrdinal": 132,
+          "text": "观察每天收尾时剩下的物品，判断是否遗漏了固定收纳位置。",
+          "textHash": "sha256:9f0ca3ac7ae1aafd0df886e07f1455f0cd8eb97da424dae69d26b396ffc99e22",
+          "factIds": [
+            "guide.14.03"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_6ec029178cdd718b5015407aa4a5c50c",
+          "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+          "segmentOrdinal": 133,
+          "text": "工作内容变化时重新确认高频用品，不保留已经过时的桌面安排。",
+          "textHash": "sha256:c1fb69fc1747bca0084c8f9c36ede77db2f81542c02b6a63330fb063b06f62fe",
+          "factIds": [
+            "guide.14.04"
+          ],
+          "durationHintMs": 5800,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_9dda2be2901dfdbf71fbc54c799043e6",
+          "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+          "segmentOrdinal": 134,
+          "text": "某个容器持续放不下物品时，先检查分类而不是直接追加容器。",
+          "textHash": "sha256:2d1628395967a79d8665dff69f13689448a037d8b0e78dc83bbb37b30dda8595",
+          "factIds": [
+            "guide.14.05"
+          ],
+          "durationHintMs": 5600,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_6214c86b670b48c9911498eb47d1e775",
+          "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+          "segmentOrdinal": 135,
+          "text": "物品总在同一个位置聚集时，考虑把临时入口安排在那里。",
+          "textHash": "sha256:6a693fd1f1d2db422e87ac645b08a98a29a805c46851f0e2c2d913df41b52c1d",
+          "factIds": [
+            "guide.14.06"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_aecd4af6306439567ade80bf7578cebe",
+          "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+          "segmentOrdinal": 136,
+          "text": "调整方案之后试用几个完整任务，再判断布局是否适合自己。",
+          "textHash": "sha256:f3cfe64279d5c5119074cd0d6c63aed27097e71857b10a894e1ca214ec949061",
+          "factIds": [
+            "guide.14.07"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_6aaf42b50e9198fb659f85d60a5dfd81",
+          "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+          "segmentOrdinal": 137,
+          "text": "保留能够持续执行的收尾动作，不用复杂流程增加维护负担。",
+          "textHash": "sha256:593cfec64c4a1ac9fb4a265ecabb8f60b215e2bdca10cd69366cee3281f36d9a",
+          "factIds": [
+            "guide.14.08"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_f19b28fdcdd1127bdf207c5e5806804a",
+          "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+          "segmentOrdinal": 138,
+          "text": "对比整理前后的使用记录，关注寻找和归还物品的实际过程。",
+          "textHash": "sha256:330c7ea0e18098af2051632c88c8d990e9d96f5620a9ca79f491126075339a5c",
+          "factIds": [
+            "guide.14.09"
+          ],
+          "durationHintMs": 5400,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        },
+        {
+          "segmentId": "segment_c7ec020d17af4454ab0c3c524de8ff81",
+          "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+          "segmentOrdinal": 139,
+          "text": "最后把有效的安排写入个人清单，作为下一次维护的参考。",
+          "textHash": "sha256:b2ae62e05580ba1cafbce51f046a3e788135e812cf30afd64b859209d86b3736",
+          "factIds": [
+            "guide.14.10"
+          ],
+          "durationHintMs": 5200,
+          "boundary": "SENTENCE_END",
+          "status": "PENDING",
+          "lane": "NARRATION"
+        }
+      ]
+    },
+    "state": "RESUMING",
+    "narrationRevision": 34,
+    "runEpoch": 1,
+    "timelineEpoch": 5,
+    "cursor": {
+      "nextOrdinal": 3,
+      "completedSegmentIds": [
+        "segment_78bc4af81e59bfb2edf4c2e5ca42f329",
+        "segment_598c8bbbe03b5dfba98d71fc64c5dce5",
+        "segment_b4653ae6da6577d9f33d4a7adeef907d"
+      ],
+      "completedFactIds": [
+        "name",
+        "price",
+        "stock"
+      ],
+      "lastCompletedSegmentId": "segment_b4653ae6da6577d9f33d4a7adeef907d",
+      "lastCompletedText": "当前用于本次演示的商品库存，共有20份可供选择。",
+      "ambiguousSegmentIds": null
+    },
+    "resumePoint": {
+      "revision": 24,
+      "boundary": {
+        "identity": {
+          "sessionId": "session_74071714b7aafe97688c8c1b761b989f",
+          "runEpoch": 1,
+          "timelineEpoch": 3,
+          "generationId": 5,
+          "segmentId": "segment_b4653ae6da6577d9f33d4a7adeef907d",
+          "utteranceId": "utt_ec19a8cd2face227f532f79538ed924c",
+          "lane": "NARRATION"
+        },
+        "attemptId": "attempt_ec19a8cd2face227f532f79538ed924c",
+        "startPosition": {
+          "sessionId": "session_74071714b7aafe97688c8c1b761b989f",
+          "runEpoch": 1,
+          "timelineEpoch": 3,
+          "sampleIndex": 627840,
+          "sampleRate": 48000,
+          "ptsUs": 13080000
+        },
+        "finalPosition": {
+          "sessionId": "session_74071714b7aafe97688c8c1b761b989f",
+          "runEpoch": 1,
+          "timelineEpoch": 3,
+          "sampleIndex": 871680,
+          "sampleRate": 48000,
+          "ptsUs": 18160000
+        },
+        "requiredSinks": [
+          "peer_63256f8fa4a94fa59ba64179612fc9fa",
+          "rtmp:1"
+        ],
+        "sinks": [
+          {
+            "sink": "peer_63256f8fa4a94fa59ba64179612fc9fa",
+            "audioStart": 627840,
+            "audioEnd": 871680,
+            "videoStart": 627840,
+            "videoEnd": 871680
+          },
+          {
+            "sink": "rtmp:1",
+            "audioStart": 627840,
+            "audioEnd": 871680,
+            "videoStart": 627840,
+            "videoEnd": 871680
+          }
+        ],
+        "finalMarker": true,
+        "evidenceRef": "cmd_b10016e6047c9dfb77936e386c572819:SEGMENT_COMPLETED",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "textHash": "sha256:c1864f9d4b16f212ab91eafba8ec1f88171899a4853e0968bfeb914d99ea7320",
+        "audienceAudible": false
+      },
+      "nextBeatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+      "nextSegmentId": "segment_6010c0570db6b633ed5d475d0a6f1b23",
+      "cursor": {
+        "nextOrdinal": 3,
+        "completedSegmentIds": [
+          "segment_78bc4af81e59bfb2edf4c2e5ca42f329",
+          "segment_598c8bbbe03b5dfba98d71fc64c5dce5",
+          "segment_b4653ae6da6577d9f33d4a7adeef907d"
+        ],
+        "completedFactIds": [
+          "name",
+          "price",
+          "stock"
+        ],
+        "lastCompletedSegmentId": "segment_b4653ae6da6577d9f33d4a7adeef907d",
+        "lastCompletedText": "当前用于本次演示的商品库存，共有20份可供选择。",
+        "ambiguousSegmentIds": null
+      }
+    },
+    "turn": {
+      "interactionTurnId": "turn_9c1b3068facd3cc8f3f113d143d2bd9f",
+      "sourceIds": [
+        "receipt_47747596fdd1027774a5cd6f80dccef3a72774f022a2dce753a232f38193abf1"
+      ],
+      "sourceScope": {
+        "platform": "mock",
+        "platformRoomId": "room_d4770b5edcbe17d4f2f8e6320de1098b",
+        "internalRoomId": "room_d4770b5edcbe17d4f2f8e6320de1098b",
+        "transport": "MOCK_REPLAY"
+      },
+      "question": "现在库存还有多少份？",
+      "questionHash": "sha256:2dd8b0b8fc8485a52cb37ee666a3ec2a33ec470cd3007c95b150a7adbfabdb4f",
+      "priority": 80,
+      "deadline": "2026-10-14T22:00:12.077105+08:00",
+      "selectedAt": "2026-10-14T21:59:23.32251+08:00",
+      "capturedProductHash": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+      "state": "COMPLETED",
+      "answer": {
+        "segmentId": "answer_121327224761d85e9a13f1a9532583ac",
+        "beatId": "",
+        "segmentOrdinal": 0,
+        "text": "目前商品整体库存还有 20 件，各规格单独库存暂不可用。",
+        "textHash": "sha256:ca2b8928cd955fdb0129c4b7cc75cf53b6d99d2a113c09460da88ded74dba42e",
+        "factIds": [
+          "stock"
+        ],
+        "durationHintMs": 0,
+        "boundary": "SENTENCE_END",
+        "status": "COMPLETED",
+        "lane": "AUDIENCE_ANSWER"
+      },
+      "answerText": "目前商品整体库存还有 20 件，各规格单独库存暂不可用。",
+      "answerFactIds": [
+        "stock"
+      ],
+      "mappedNarrationFactIds": [
+        "stock"
+      ]
+    },
+    "bridge": {
+      "segmentId": "bridge_ded281562d45124d11fb9e8aa22e7593",
+      "beatId": "",
+      "segmentOrdinal": 0,
+      "text": "这个问题也正好引出了下一项讲解内容，我们接着往下看。",
+      "textHash": "sha256:5bfac4a03016015c4e02e53c63e8140ea33198716ffd8b120f0e9e14a6bede0e",
+      "factIds": null,
+      "durationHintMs": 0,
+      "boundary": "SENTENCE_END",
+      "status": "EXECUTING",
+      "lane": "RESUME_BRIDGE"
+    },
+    "stopBarrier": false,
+    "operatorOverride": false,
+    "reason": "",
+    "boundarySegmentId": "segment_b4653ae6da6577d9f33d4a7adeef907d",
+    "lastCheckpoint": {
+      "identity": {
+        "sessionId": "session_74071714b7aafe97688c8c1b761b989f",
+        "runEpoch": 1,
+        "timelineEpoch": 3,
+        "generationId": 5,
+        "segmentId": "segment_b4653ae6da6577d9f33d4a7adeef907d",
+        "utteranceId": "utt_ec19a8cd2face227f532f79538ed924c",
+        "lane": "NARRATION"
+      },
+      "attemptId": "attempt_ec19a8cd2face227f532f79538ed924c",
+      "startPosition": {
+        "sessionId": "session_74071714b7aafe97688c8c1b761b989f",
+        "runEpoch": 1,
+        "timelineEpoch": 3,
+        "sampleIndex": 627840,
+        "sampleRate": 48000,
+        "ptsUs": 13080000
+      },
+      "finalPosition": {
+        "sessionId": "session_74071714b7aafe97688c8c1b761b989f",
+        "runEpoch": 1,
+        "timelineEpoch": 3,
+        "sampleIndex": 871680,
+        "sampleRate": 48000,
+        "ptsUs": 18160000
+      },
+      "requiredSinks": [
+        "peer_63256f8fa4a94fa59ba64179612fc9fa",
+        "rtmp:1"
+      ],
+      "sinks": [
+        {
+          "sink": "peer_63256f8fa4a94fa59ba64179612fc9fa",
+          "audioStart": 627840,
+          "audioEnd": 871680,
+          "videoStart": 627840,
+          "videoEnd": 871680
+        },
+        {
+          "sink": "rtmp:1",
+          "audioStart": 627840,
+          "audioEnd": 871680,
+          "videoStart": 627840,
+          "videoEnd": 871680
+        }
+      ],
+      "finalMarker": true,
+      "evidenceRef": "cmd_b10016e6047c9dfb77936e386c572819:SEGMENT_COMPLETED",
+      "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+      "textHash": "sha256:c1864f9d4b16f212ab91eafba8ec1f88171899a4853e0968bfeb914d99ea7320",
+      "audienceAudible": false
+    },
+    "requestHash": "sha256:192607132ed1ce3352f313029161d6b05370a93274ad5dd6c65e745ceb5f1627",
+    "suspendInstalled": true,
+    "invalidatedEpoch": 4,
+    "beatProgress": [
+      {
+        "beatId": "beat_c4e601338b4a2e49d44ed0e953d15a91",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "name",
+          "price",
+          "stock",
+          "sizes",
+          "guide.01.05",
+          "guide.01.06",
+          "guide.01.07",
+          "guide.01.08",
+          "guide.01.09",
+          "guide.01.10"
+        ],
+        "completedFactIds": [
+          "name",
+          "price",
+          "stock"
+        ],
+        "pendingFactIds": [
+          "sizes",
+          "guide.01.05",
+          "guide.01.06",
+          "guide.01.07",
+          "guide.01.08",
+          "guide.01.09",
+          "guide.01.10"
+        ],
+        "currentSegmentId": "segment_6010c0570db6b633ed5d475d0a6f1b23",
+        "nextTargetBeatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+        "lastCompletedSegmentId": "segment_b4653ae6da6577d9f33d4a7adeef907d"
+      },
+      {
+        "beatId": "beat_eb9c4dbf4f1521de6d437cec922836e7",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.02.01",
+          "guide.02.02",
+          "guide.02.03",
+          "guide.02.04",
+          "guide.02.05",
+          "guide.02.06",
+          "guide.02.07",
+          "guide.02.08",
+          "guide.02.09",
+          "guide.02.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.02.01",
+          "guide.02.02",
+          "guide.02.03",
+          "guide.02.04",
+          "guide.02.05",
+          "guide.02.06",
+          "guide.02.07",
+          "guide.02.08",
+          "guide.02.09",
+          "guide.02.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_882d499f148da2dabc7fda5390ef7076",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_882d499f148da2dabc7fda5390ef7076",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.03.01",
+          "guide.03.02",
+          "guide.03.03",
+          "guide.03.04",
+          "guide.03.05",
+          "guide.03.06",
+          "guide.03.07",
+          "guide.03.08",
+          "guide.03.09",
+          "guide.03.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.03.01",
+          "guide.03.02",
+          "guide.03.03",
+          "guide.03.04",
+          "guide.03.05",
+          "guide.03.06",
+          "guide.03.07",
+          "guide.03.08",
+          "guide.03.09",
+          "guide.03.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_c5ffbf8f7ebe1ca943cc9c327b0ba6e1",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.04.01",
+          "guide.04.02",
+          "guide.04.03",
+          "guide.04.04",
+          "guide.04.05",
+          "guide.04.06",
+          "guide.04.07",
+          "guide.04.08",
+          "guide.04.09",
+          "guide.04.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.04.01",
+          "guide.04.02",
+          "guide.04.03",
+          "guide.04.04",
+          "guide.04.05",
+          "guide.04.06",
+          "guide.04.07",
+          "guide.04.08",
+          "guide.04.09",
+          "guide.04.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_5b750ae5484533497abbc555c69f3d9b",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.05.01",
+          "guide.05.02",
+          "guide.05.03",
+          "guide.05.04",
+          "guide.05.05",
+          "guide.05.06",
+          "guide.05.07",
+          "guide.05.08",
+          "guide.05.09",
+          "guide.05.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.05.01",
+          "guide.05.02",
+          "guide.05.03",
+          "guide.05.04",
+          "guide.05.05",
+          "guide.05.06",
+          "guide.05.07",
+          "guide.05.08",
+          "guide.05.09",
+          "guide.05.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_0f9048f15ad53911bec892892fbbd3b2",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.06.01",
+          "guide.06.02",
+          "guide.06.03",
+          "guide.06.04",
+          "guide.06.05",
+          "guide.06.06",
+          "guide.06.07",
+          "guide.06.08",
+          "guide.06.09",
+          "guide.06.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.06.01",
+          "guide.06.02",
+          "guide.06.03",
+          "guide.06.04",
+          "guide.06.05",
+          "guide.06.06",
+          "guide.06.07",
+          "guide.06.08",
+          "guide.06.09",
+          "guide.06.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_3b2f3457d36edddaa1a7d650e90ab3b4",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.07.01",
+          "guide.07.02",
+          "guide.07.03",
+          "guide.07.04",
+          "guide.07.05",
+          "guide.07.06",
+          "guide.07.07",
+          "guide.07.08",
+          "guide.07.09",
+          "guide.07.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.07.01",
+          "guide.07.02",
+          "guide.07.03",
+          "guide.07.04",
+          "guide.07.05",
+          "guide.07.06",
+          "guide.07.07",
+          "guide.07.08",
+          "guide.07.09",
+          "guide.07.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_808c2b02195330f00ec4a8ba68f8a043",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.08.01",
+          "guide.08.02",
+          "guide.08.03",
+          "guide.08.04",
+          "guide.08.05",
+          "guide.08.06",
+          "guide.08.07",
+          "guide.08.08",
+          "guide.08.09",
+          "guide.08.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.08.01",
+          "guide.08.02",
+          "guide.08.03",
+          "guide.08.04",
+          "guide.08.05",
+          "guide.08.06",
+          "guide.08.07",
+          "guide.08.08",
+          "guide.08.09",
+          "guide.08.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_3e043e80ab327a08a30016cbb1f5d2fa",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.09.01",
+          "guide.09.02",
+          "guide.09.03",
+          "guide.09.04",
+          "guide.09.05",
+          "guide.09.06",
+          "guide.09.07",
+          "guide.09.08",
+          "guide.09.09",
+          "guide.09.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.09.01",
+          "guide.09.02",
+          "guide.09.03",
+          "guide.09.04",
+          "guide.09.05",
+          "guide.09.06",
+          "guide.09.07",
+          "guide.09.08",
+          "guide.09.09",
+          "guide.09.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_8f2d5f6faf4a385bd2270db78721a30c",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.10.01",
+          "guide.10.02",
+          "guide.10.03",
+          "guide.10.04",
+          "guide.10.05",
+          "guide.10.06",
+          "guide.10.07",
+          "guide.10.08",
+          "guide.10.09",
+          "guide.10.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.10.01",
+          "guide.10.02",
+          "guide.10.03",
+          "guide.10.04",
+          "guide.10.05",
+          "guide.10.06",
+          "guide.10.07",
+          "guide.10.08",
+          "guide.10.09",
+          "guide.10.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_d2e33dae3c8f89a946bcc91fe015bc4e",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.11.01",
+          "guide.11.02",
+          "guide.11.03",
+          "guide.11.04",
+          "guide.11.05",
+          "guide.11.06",
+          "guide.11.07",
+          "guide.11.08",
+          "guide.11.09",
+          "guide.11.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.11.01",
+          "guide.11.02",
+          "guide.11.03",
+          "guide.11.04",
+          "guide.11.05",
+          "guide.11.06",
+          "guide.11.07",
+          "guide.11.08",
+          "guide.11.09",
+          "guide.11.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_7ab780b71977bb1f11ef667fb1df4bc5",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.12.01",
+          "guide.12.02",
+          "guide.12.03",
+          "guide.12.04",
+          "guide.12.05",
+          "guide.12.06",
+          "guide.12.07",
+          "guide.12.08",
+          "guide.12.09",
+          "guide.12.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.12.01",
+          "guide.12.02",
+          "guide.12.03",
+          "guide.12.04",
+          "guide.12.05",
+          "guide.12.06",
+          "guide.12.07",
+          "guide.12.08",
+          "guide.12.09",
+          "guide.12.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_b2d4218fcc994618f330ad22eaf34fc0",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.13.01",
+          "guide.13.02",
+          "guide.13.03",
+          "guide.13.04",
+          "guide.13.05",
+          "guide.13.06",
+          "guide.13.07",
+          "guide.13.08",
+          "guide.13.09",
+          "guide.13.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.13.01",
+          "guide.13.02",
+          "guide.13.03",
+          "guide.13.04",
+          "guide.13.05",
+          "guide.13.06",
+          "guide.13.07",
+          "guide.13.08",
+          "guide.13.09",
+          "guide.13.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+        "lastCompletedSegmentId": ""
+      },
+      {
+        "beatId": "beat_ff75108ec752a06a81d47903b5d7824d",
+        "productId": "product_13b5952dc4e48cf4910147cd15c1a5c3",
+        "factVersion": "sha256:54ea011ce8709f0b951a75752925e12730c6761dfcd8bee70e6a48a90e8245e8",
+        "requiredFactIds": [
+          "guide.14.01",
+          "guide.14.02",
+          "guide.14.03",
+          "guide.14.04",
+          "guide.14.05",
+          "guide.14.06",
+          "guide.14.07",
+          "guide.14.08",
+          "guide.14.09",
+          "guide.14.10"
+        ],
+        "completedFactIds": [],
+        "pendingFactIds": [
+          "guide.14.01",
+          "guide.14.02",
+          "guide.14.03",
+          "guide.14.04",
+          "guide.14.05",
+          "guide.14.06",
+          "guide.14.07",
+          "guide.14.08",
+          "guide.14.09",
+          "guide.14.10"
+        ],
+        "currentSegmentId": "",
+        "nextTargetBeatId": "",
+        "lastCompletedSegmentId": ""
+      }
+    ]
+  },
+  "factCoverageClaim": "NOT_FORMAL_COMPLETE_FACT_COVERAGE",
+  "browserStopRequestedAt": 63912.5,
+  "normalStop": true,
+  "chromeAudioObserved": true,
+  "chromeVideoFrames": 1505,
+  "recordedBytes": 12088001,
+  "status": "OBSERVED_PENDING_INDEPENDENT_SQL_AV_QUALITY_AUDIT",
+  "recordingStorage": {
+    "failed": false,
+    "bytes": 12088001,
+    "sha256": "d12925b08963dcfad7d6aa5b2a40803ab4ca707a1b5b20c33799c6d9354518b9",
+    "chunks": [
+      {
+        "sequence": 0,
+        "bytes": 1341,
+        "sha256": "b2520f3bbfdfa628d755c526486a4c658f6447ac6d476c573783cc3dda345bfc"
+      },
+      {
+        "sequence": 1,
+        "bytes": 1098,
+        "sha256": "5b1b55bf5ef79e5d28cd6bbb7f973a50ec0d8f43de81ee9efc0c10f124ee12d7"
+      },
+      {
+        "sequence": 2,
+        "bytes": 1037,
+        "sha256": "b03049a2ce5fcd362878df62addc0a4c0da0fa7582c1613d12e1a750d97c82e2"
+      },
+      {
+        "sequence": 3,
+        "bytes": 1230,
+        "sha256": "823e35dbd8fdf8353b035e6f4eecc6e0505dba0fea287a27a8de0067fea24cec"
+      },
+      {
+        "sequence": 4,
+        "bytes": 90904,
+        "sha256": "41fa53ee60ad0ae3878ece1121053bf68c5d33c706134d2c91e5b150d5a85d6a"
+      },
+      {
+        "sequence": 5,
+        "bytes": 287026,
+        "sha256": "0f16a67018ce7c163cd9998d82bdb06c052160621cbd584d661ffe5e067162c2"
+      },
+      {
+        "sequence": 6,
+        "bytes": 247500,
+        "sha256": "09da76eab0063444421b0d7ed69a4ac9c5f4049e0bd4a017dd89164dc3e69c26"
+      },
+      {
+        "sequence": 7,
+        "bytes": 240425,
+        "sha256": "aacd81d721e0decdb815645bbaba1e73315b143ae7bce9201971ce31be832616"
+      },
+      {
+        "sequence": 8,
+        "bytes": 184237,
+        "sha256": "20af2e8d9ad9dc76129b8c7bb29bb68f35d096718a7efc77b03094335aa52e2a"
+      },
+      {
+        "sequence": 9,
+        "bytes": 75827,
+        "sha256": "75559fd7a24d2d26755e14a4a19a77b551ec398d08ba7d997c9905e608b56e60"
+      },
+      {
+        "sequence": 10,
+        "bytes": 71272,
+        "sha256": "9130378139b5aed53f48a95e5fecb08773875388c2da100ee2f20edd818b5fbd"
+      },
+      {
+        "sequence": 11,
+        "bytes": 222656,
+        "sha256": "b147f63ec593c8d5ba4c152b8c1e5766565b3b65ebc0f89f9c06ca66341b9a5b"
+      },
+      {
+        "sequence": 12,
+        "bytes": 173232,
+        "sha256": "0935a19b455aa9508a9fdb230cd9712edf076004a5ad1647cb749faff941788a"
+      },
+      {
+        "sequence": 13,
+        "bytes": 282383,
+        "sha256": "3fbf5b185014e207204bc1f98d9adf4a14d5fb207a25949e2d52b6bf45d7aa9a"
+      },
+      {
+        "sequence": 14,
+        "bytes": 244626,
+        "sha256": "399a928fd79f7c6c1a217f361c6067387d9bb8ca03bb476fa104c5fb8b40ce2c"
+      },
+      {
+        "sequence": 15,
+        "bytes": 299076,
+        "sha256": "39202cd48426351dccf7a0667c049e8b2c87d48b792fc5f04d8153071e2966a8"
+      },
+      {
+        "sequence": 16,
+        "bytes": 211769,
+        "sha256": "6957c4e54e04662678028243849d6aa3ce17a1a3beb29fd706595ab2d6a85218"
+      },
+      {
+        "sequence": 17,
+        "bytes": 146454,
+        "sha256": "5bdb6ca04a10fca50d1a85bb9a3f7df7897edb8b4bf1a4ff27be66088d96b65d"
+      },
+      {
+        "sequence": 18,
+        "bytes": 173640,
+        "sha256": "a5526d1881c99e9a426fd3726274eeb868779a8b97bfb159f0e634c3bce69798"
+      },
+      {
+        "sequence": 19,
+        "bytes": 185879,
+        "sha256": "c43bccc0800d7d1d6a7cae324aacba6f8d0f0f34b20423732308c290bb742dc9"
+      },
+      {
+        "sequence": 20,
+        "bytes": 148836,
+        "sha256": "3c9832bf1ed25de39516a3b8b48648dfe895d10c15be9ef8e3f32216e45918be"
+      },
+      {
+        "sequence": 21,
+        "bytes": 138552,
+        "sha256": "d104a3fe12de78836856184f4dac0a65fa5bb08338af190b34ec94841e2885e6"
+      },
+      {
+        "sequence": 22,
+        "bytes": 235356,
+        "sha256": "4487fec6abec8c83b8ec4617c44d4f328f08d59b18e40830d9c2a9cece5f3a45"
+      },
+      {
+        "sequence": 23,
+        "bytes": 321763,
+        "sha256": "4eccfbd07f393c2db29bc4a3eaf0418496b2751fb0a58444ef7b3d0cb961d65c"
+      },
+      {
+        "sequence": 24,
+        "bytes": 285016,
+        "sha256": "64250a7c733b13a0b9f35779d2f433a679e0382a9a96c7fc4aadd17eae5c0c8e"
+      },
+      {
+        "sequence": 25,
+        "bytes": 271774,
+        "sha256": "ed75f6ee74e2ca16c454c4d43d549ff1567fe1983175aa3daedc1b4bca0e7ac2"
+      },
+      {
+        "sequence": 26,
+        "bytes": 320359,
+        "sha256": "92add972f59830ee575db1088f8f2268711b51ae910264f8db02d9d65567ce55"
+      },
+      {
+        "sequence": 27,
+        "bytes": 307998,
+        "sha256": "6538eea950761175170f1e2d2f75c296c4c43eace4f8c8089d054d7725ed870e"
+      },
+      {
+        "sequence": 28,
+        "bytes": 161358,
+        "sha256": "9fe3165238bf96755aa1be2074def460b07b0fcb1b6d54ac4584036b4feb1ff9"
+      },
+      {
+        "sequence": 29,
+        "bytes": 112808,
+        "sha256": "06f380473a73e855caa89d5885d648a71b9dc2b262164eb1b6a38d3e2e44b0d2"
+      },
+      {
+        "sequence": 30,
+        "bytes": 44707,
+        "sha256": "71cd2226a017a018cb1c72570bec05bb32b88ed36708c11ad759654ab8a91b70"
+      },
+      {
+        "sequence": 31,
+        "bytes": 88649,
+        "sha256": "5ae9749ec62eed96c5240d50ccd3cf234258c355db3c283816d2d203cfcb4a65"
+      },
+      {
+        "sequence": 32,
+        "bytes": 204602,
+        "sha256": "955357e6beb3d92d3e38df6e75a1f64db4934f374286dc1b7ab676f77265a66c"
+      },
+      {
+        "sequence": 33,
+        "bytes": 284521,
+        "sha256": "2eb02c4429f4093f9dce9aaa18d04e28a9d1361656998a7303da66dfe10487c3"
+      },
+      {
+        "sequence": 34,
+        "bytes": 317453,
+        "sha256": "02a7244b11c525d88a1e1b239a203a0b387e781ca0a7bcb869fd9635b2f1581e"
+      },
+      {
+        "sequence": 35,
+        "bytes": 394198,
+        "sha256": "99e97ead6d5a6e0b78a4a5d780cbcbd41fc352a7c466f241e53cb0a43843ffad"
+      },
+      {
+        "sequence": 36,
+        "bytes": 385008,
+        "sha256": "bfb973fd126e174b5e2303fb05967cea37125893b59adc123c1c2fca96102e03"
+      },
+      {
+        "sequence": 37,
+        "bytes": 264809,
+        "sha256": "4b9f9c88faf9ccb137df8543d917f076a2a3e17514e1c46b767a3fed8a7405e8"
+      },
+      {
+        "sequence": 38,
+        "bytes": 69525,
+        "sha256": "a8a738143846531b5b6a16241019685f083db535c46268a777a50ffa1b892765"
+      },
+      {
+        "sequence": 39,
+        "bytes": 92560,
+        "sha256": "98864e5ff1d27212d8a31b1121e4ab39165ff9515845bc84a512362c608f2cb5"
+      },
+      {
+        "sequence": 40,
+        "bytes": 35357,
+        "sha256": "d98f5c46b568c9bb46a3600d0b8ba42378b030bc3f70b204c902b7aa8b90feea"
+      },
+      {
+        "sequence": 41,
+        "bytes": 33454,
+        "sha256": "6bcd137c0f915ec1169792db472157848d5695615f89ac2e6fa111e76bdc59db"
+      },
+      {
+        "sequence": 42,
+        "bytes": 115579,
+        "sha256": "f0a27775a4d5c54a35ece5dd13fea16ccc62391a81037d85a19feb4e1b5c95ca"
+      },
+      {
+        "sequence": 43,
+        "bytes": 380427,
+        "sha256": "9c576c08ce906e7ab6ca2e09891940e79b645771a9dbc1b7899bf5f47c1fba4a"
+      },
+      {
+        "sequence": 44,
+        "bytes": 355486,
+        "sha256": "8aa4777673540942069bbc99c2da80ea0ee493418002277333463bef60633069"
+      },
+      {
+        "sequence": 45,
+        "bytes": 373233,
+        "sha256": "68540b0e46e5a706f5081c93da39f24d231a957a8799f825904d9f8ac72acd70"
+      },
+      {
+        "sequence": 46,
+        "bytes": 349815,
+        "sha256": "dc4397d4967a2731ba4a2aeef7c95dd92d8eec0f658793882162d78648f4a624"
+      },
+      {
+        "sequence": 47,
+        "bytes": 384969,
+        "sha256": "fc240c9f13fadd0b10f25c88697268b86d5e54ab518ecbfad8f5c7854155fef8"
+      },
+      {
+        "sequence": 48,
+        "bytes": 229692,
+        "sha256": "d3bd543c17a5a65b0a8e0a45b1b9612accb59207d57f0577c4f991e93a0cb408"
+      },
+      {
+        "sequence": 49,
+        "bytes": 87420,
+        "sha256": "99f1f4ef687e6b9d7c89ac00e4a45bf565a2227b3ec01bcab49a85065258930a"
+      },
+      {
+        "sequence": 50,
+        "bytes": 44429,
+        "sha256": "d557ccad6b4e24c6d6fa5e773b14bd3019a8225785c02ca01fd57cd9d01074c3"
+      },
+      {
+        "sequence": 51,
+        "bytes": 109087,
+        "sha256": "98a572e79a3c200b52f43cdf7911a89109951de963da34945496866dd6fc7d9e"
+      },
+      {
+        "sequence": 52,
+        "bytes": 40632,
+        "sha256": "64f94c2d10fd0b2a056dcd7670df9d732a99728b91de59a89888467a14cd6e30"
+      },
+      {
+        "sequence": 53,
+        "bytes": 41658,
+        "sha256": "92e5cbde107e059b8afcc8b7f818d9f603e267f5a36606809edda03b49045571"
+      },
+      {
+        "sequence": 54,
+        "bytes": 273167,
+        "sha256": "f7335271a4860c607322bd7ccb1fe3a3d6ef70312622f085d73d71244b27e5f2"
+      },
+      {
+        "sequence": 55,
+        "bytes": 380039,
+        "sha256": "c768073132c117001bb12b9e7c103ef1dc664dbd5adc9d7d153d321194560e30"
+      },
+      {
+        "sequence": 56,
+        "bytes": 363734,
+        "sha256": "e4cb1d924e10b3251761e9c12c120165fcd341e2d1a679d77630d480a2c99a58"
+      },
+      {
+        "sequence": 57,
+        "bytes": 361132,
+        "sha256": "d1014d3013c68acef154636ad972157f61e8364bf5842d4ae9a262e58ba480b4"
+      },
+      {
+        "sequence": 58,
+        "bytes": 422173,
+        "sha256": "c0ac28bff918d7d22335046d6e88a76f4733069d3dc8b45287f1d620dcecb1f1"
+      },
+      {
+        "sequence": 59,
+        "bytes": 115054,
+        "sha256": "531db54a9da1ed9f484ba87a0372597abec1a1d492a4fb3dded93f325ef85b7b"
+      }
+    ]
+  }
+}
