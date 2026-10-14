@@ -1,0 +1,61 @@
+test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop (runtime.tests.test_staging_pose_stop.PoseStopTests.test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop) ... ok
+test_cancelled_pose_foreign_ack_still_fences (runtime.tests.test_staging_pose_stop.PoseStopTests.test_cancelled_pose_foreign_ack_still_fences) ... staging_receive_failed {"messageType": "StagePoseConsumedAck", "code": "STAGING_IDENTITY_MISMATCH", "pendingPresent": true, "pendingDone": false, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancelled_pose_missing_ack_keeps_original_five_second_deadline (runtime.tests.test_staging_pose_stop.PoseStopTests.test_cancelled_pose_missing_ack_keeps_original_five_second_deadline) ... ok
+test_cancelled_pose_unknown_ack_still_fences (runtime.tests.test_staging_pose_stop.PoseStopTests.test_cancelled_pose_unknown_ack_still_fences) ... staging_receive_failed {"messageType": "StagePoseConsumedAck", "code": "STAGING_CONFLICT", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancelled_pose_wrong_proof_cannot_claim_cleanup (runtime.tests.test_staging_pose_stop.PoseStopTests.test_cancelled_pose_wrong_proof_cannot_claim_cleanup) ... ok
+test_drained_renewal_ack_does_not_extend_stopped_stage_deadline (runtime.tests.test_staging_renewal_release.RenewalReleaseTests.test_drained_renewal_ack_does_not_extend_stopped_stage_deadline) ... ok
+test_foreign_identity_still_fences (runtime.tests.test_staging_renewal_release.RenewalReleaseTests.test_foreign_identity_still_fences) ... staging_receive_failed {"messageType": "StageRenewAck", "code": "STAGING_IDENTITY_MISMATCH", "pendingPresent": true, "pendingDone": false, "answeredPresent": false, "stageFenced": false, "stageReleased": false}
+ok
+test_missing_renewal_ack_keeps_unknown_and_no_successful_release (runtime.tests.test_staging_renewal_release.RenewalReleaseTests.test_missing_renewal_ack_keeps_unknown_and_no_successful_release) ... ok
+test_pending_renewal_drains_before_release (runtime.tests.test_staging_renewal_release.RenewalReleaseTests.test_pending_renewal_drains_before_release) ... ok
+test_release_stops_sleep_without_new_grant (runtime.tests.test_staging_renewal_release.RenewalReleaseTests.test_release_stops_sleep_without_new_grant) ... ok
+test_stop_during_real_grant_await_never_sends_renew_after_release (runtime.tests.test_staging_renewal_release.RenewalReleaseTests.test_stop_during_real_grant_await_never_sends_renew_after_release) ... ok
+test_unsolicited_sequence_still_fences (runtime.tests.test_staging_renewal_release.RenewalReleaseTests.test_unsolicited_sequence_still_fences) ... staging_receive_failed {"messageType": "StageRenewAck", "code": "STAGING_CONFLICT", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": false, "stageReleased": false}
+ok
+test_full_actual_cpu_h264_decode_padding_and_overlay_hash_domains (runtime.tests.test_staging_runtime.ArtifactTests.test_full_actual_cpu_h264_decode_padding_and_overlay_hash_domains) ... ok
+test_oversized_real_shape_tts_rejects_before_stage_begin (runtime.tests.test_staging_runtime.ArtifactTests.test_oversized_real_shape_tts_rejects_before_stage_begin) ... ok
+test_barcode_crc_and_no_pixels_outside_band_changed (runtime.tests.test_staging_runtime.CaptureTests.test_barcode_crc_and_no_pixels_outside_band_changed) ... ok
+test_disabled_old_capture_and_enabled_exact_only (runtime.tests.test_staging_runtime.CaptureTests.test_disabled_old_capture_and_enabled_exact_only) ... ok
+test_explicit_new_captured_profiles_use_normative_helper_only (runtime.tests.test_staging_runtime.CaptureTests.test_explicit_new_captured_profiles_use_normative_helper_only) ... ok
+test_f_offline_decoder_matches_exact_runtime_barcode (runtime.tests.test_staging_runtime.CaptureTests.test_f_offline_decoder_matches_exact_runtime_barcode) ... ok
+test_startup_profile_absent_defaults_but_explicit_empty_rejects (runtime.tests.test_staging_runtime.CaptureTests.test_startup_profile_absent_defaults_but_explicit_empty_rejects) ... ok
+test_expired_and_failed_stage_never_arm (runtime.tests.test_staging_runtime.ClientTests.test_expired_and_failed_stage_never_arm) ... ok
+test_fresh_sql_barrier_token_and_no_lease_inheritance (runtime.tests.test_staging_runtime.ClientTests.test_fresh_sql_barrier_token_and_no_lease_inheritance) ... ok
+test_pose_exchange_uses_nested_ack_id_and_exact_commit (runtime.tests.test_staging_runtime.ClientTests.test_pose_exchange_uses_nested_ack_id_and_exact_commit) ... ok
+test_release_exact_retry_unknown_not_reusable (runtime.tests.test_staging_runtime.ClientTests.test_release_exact_retry_unknown_not_reusable) ... ok
+test_async_fresh_renewal_during_slow_production (runtime.tests.test_staging_tcp.LocalTCPTests.test_async_fresh_renewal_during_slow_production) ... ok
+test_commit_rejection_never_hands_to_sink_and_unknown (runtime.tests.test_staging_tcp.LocalTCPTests.test_commit_rejection_never_hands_to_sink_and_unknown) ... staging_receive_failed {"messageType": "StageError", "code": "STAGING_COMMIT_UNPROVEN", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": false, "stageReleased": false}
+ok
+test_complete_actual_tcp_and_b_sidecar_order (runtime.tests.test_staging_tcp.LocalTCPTests.test_complete_actual_tcp_and_b_sidecar_order) ... ok
+test_duplicate_produced_after_release_no_rehydration_or_new_effect (runtime.tests.test_staging_tcp.LocalTCPTests.test_duplicate_produced_after_release_no_rehydration_or_new_effect) ... ok
+test_force_fence_after_arm_before_first_sink (runtime.tests.test_staging_tcp.LocalTCPTests.test_force_fence_after_arm_before_first_sink) ... ok
+test_posthandoff_failure_fences_b_queues_before_blocked_native_cleanup (runtime.tests.test_staging_tcp.LocalTCPTests.test_posthandoff_failure_fences_b_queues_before_blocked_native_cleanup) ... ok
+test_simulation_negotiation_rejected_before_any_begin (runtime.tests.test_staging_tcp.LocalTCPTests.test_simulation_negotiation_rejected_before_any_begin) ... ok
+test_actual_wire_simulation_negotiation_rejected_and_binding_cleaned (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_actual_wire_simulation_negotiation_rejected_and_binding_cleaned) ... session_prepare_failed
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/session.py", line 231, in prepare
+    await self.avatar_engine.prepare(self.request.avatar)
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 403, in prepare
+    await self.link.connect()
+  File "/Users/sapiece/innovationProject/AstraLive-agent-c/runtime/app/soulx_staging.py", line 104, in connect
+    raise StagingFailure("STAGING_IDENTITY_MISMATCH")
+app.soulx_staging.StagingFailure: STAGING_IDENTITY_MISMATCH
+ok
+test_real_bound_factory_configure_prepare_start_interrupt_stop (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_real_bound_factory_configure_prepare_start_interrupt_stop) ... ok
+test_start_without_config_and_verified_connection_rejects (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_start_without_config_and_verified_connection_rejects) ... ok
+test_unsupported_session_clock_rejected_before_worker_connection (runtime.tests.test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_unsupported_session_clock_rejected_before_worker_connection) ... ok
+test_actual_B_health_counters_do_not_extend_expired_or_fenced_stage_lease (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_actual_B_health_counters_do_not_extend_expired_or_fenced_stage_lease) ... ok
+test_actual_B_idle_timeout_reproduced_without_control_heartbeat (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_actual_B_idle_timeout_reproduced_without_control_heartbeat) ... staging_receive_failed {"messageType": "OTHER", "code": "OTHER", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": null, "stageReleased": false}
+ok
+test_actual_B_socket_idle_over_five_seconds_stays_ready_without_jobs (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_actual_B_socket_idle_over_five_seconds_stays_ready_without_jobs) ... ok
+test_connection_failure_fences_active_publication_and_pending_waiters_once (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_connection_failure_fences_active_publication_and_pending_waiters_once) ... ok
+test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence (runtime.tests.test_staging_heartbeat.HeartbeatTests.test_health_wrong_nonce_epoch_and_missing_ack_immediately_fence) ... staging_receive_failed {"messageType": "StageHealthAck", "code": "STAGING_CONFLICT", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": null, "stageReleased": false}
+staging_receive_failed {"messageType": "OTHER", "code": "STAGING_IDENTITY_MISMATCH", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": null, "stageReleased": false}
+ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 26.926s
+
+OK

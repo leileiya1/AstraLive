@@ -1,0 +1,41 @@
+test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop) ... ERROR
+
+======================================================================
+ERROR: test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-c-stop-baseline-88-qi3gs2j1/runtime/tests/test_staging_pose_stop.py", line 81, in test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop
+    async def test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop(self):await self.scenario('matching')
+                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-c-stop-baseline-88-qi3gs2j1/runtime/tests/test_staging_pose_stop.py", line 63, in scenario
+    await asyncio.wait_for(cleanup,2);await avatar.stop()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/private/tmp/astralive-c-stop-baseline-88-qi3gs2j1/runtime/app/soulx_staging.py", line 388, in interrupt
+    await self.link.release(stage,reason="FORCE")
+  File "/private/tmp/astralive-c-stop-baseline-88-qi3gs2j1/runtime/app/soulx_staging.py", line 322, in release
+    fenced=await self.exchange(stage.cancel_request,"StageFenced",timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-c-stop-baseline-88-qi3gs2j1/runtime/app/soulx_staging.py", line 88, in exchange
+    return await asyncio.wait_for(future,timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/private/tmp/astralive-c-stop-baseline-88-qi3gs2j1/runtime/app/soulx_staging.py", line 171, in receive_loop
+    if self.answered.get(correlation(header))!=header:raise StagingFailure("STAGING_CONFLICT")
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app.soulx_staging.StagingFailure: STAGING_CONFLICT
+
+----------------------------------------------------------------------
+Ran 1 test in 0.029s
+
+FAILED (errors=1)
