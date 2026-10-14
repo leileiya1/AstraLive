@@ -72,6 +72,21 @@ class ExecutionTests(unittest.IsolatedAsyncioTestCase):
         directory=tempfile.TemporaryDirectory();self.addCleanup(directory.cleanup)
         publisher=DurableEventPublisher(journal,directory.name);self.addAsyncCleanup(publisher.close)
         return publisher
+    async def test_resume_bridge_ready_empty_fact_array_and_null_rejected(self):
+        from pydantic import ValidationError
+        s=await session();j=Journal();self.publisher(j);ex=SegmentExecutor(s,1,j,lambda:None)
+        payload=request("接下来继续讲解使用方法。").model_dump();payload["factIds"]=[]
+        with self.assertRaises(ValidationError):SegmentExecutionRequest.model_validate({**payload,"factIds":None})
+        command={"schemaVersion":"0.5","sessionId":"s","runEpoch":1,"timelineEpoch":1,
+            "segmentId":"bridge-empty-facts","narrationId":"n","commandId":"bridge-command","traceId":"trace",
+            "commandType":"COMMIT_SEGMENT","lane":"RESUME_BRIDGE","payload":payload}
+        command["requestFingerprint"]=fingerprint(command)
+        await ex.begin(command,{});await ex.task
+        self.assertEqual(j.operations[0]["operation"],"SEGMENT_READY")
+        self.assertEqual(j.operations[0]["proof"]["descriptor"]["factIds"],[])
+        self.assertEqual(j.operations[0]["proof"]["descriptor"]["factVersion"],"v1")
+        self.assertEqual(command["payload"]["factIds"],[])
+
     async def test_ready_commit_actual_fixture_consumption(self):
         s=await session();j=Journal();self.publisher(j);ex=SegmentExecutor(s,1,j,lambda:None)
         p=request().model_dump();c={"schemaVersion":"0.5","sessionId":"s","runEpoch":1,
