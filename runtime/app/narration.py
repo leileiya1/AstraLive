@@ -2,6 +2,7 @@
 import asyncio
 import hashlib
 import json
+import logging
 import time
 
 from .durability_client import DurableCommands, JournalError, fingerprint, MAX_INTEGER
@@ -14,6 +15,26 @@ NARRATION_COMMANDS = {"COMMIT_SEGMENT", "SUSPEND_AT_BOUNDARY", "INVALIDATE_AFTER
 
 
 class NarrationCommands(DurableCommands):
+    def _admission_failure(self, command, executor, phase, exc, remaining_ms):
+        # Fixed classifications only: never stringify exceptions, command
+        # payloads, provider text, authentication or lease tokens.
+        run=self.runs.get(command["sessionId"],{})
+        prior=getattr(executor,"task",None)
+        current=getattr(executor.session,"current_task",None)
+        allowed={"LEASE_LOST","RUN_SEALED","STALE_TIMELINE_EPOCH","STALE_GENERATION","COMMAND_CONFLICT","DEPENDENCY_UNAVAILABLE"}
+        code=getattr(exc,"code",None)
+        code=code if code in allowed else "OTHER"
+        if phase=="segment_begin" and isinstance(exc,ValueError):
+            if prior is not None and not prior.done():code="BOUNDARY_ACTIVE_SEGMENT"
+            elif current is not None and not current.done():code="BOUNDARY_ORDINARY_SPEECH"
+        row={"phase":phase,"commandId":command["commandId"],"commandType":command["commandType"],
+            "code":code,"errorType":type(exc).__name__ if type(exc).__name__ in {"RuntimeFailure","JournalError","ValueError","ValidationError","RuntimeError","TimeoutError"} else "OTHER",
+            "previousTaskDone":None if prior is None else prior.done(),"currentTaskIsPrevious":current is not None and current is prior,
+            "runSealed":run.get("sealed") is True,"barrierPending":run.get("barrier_pending") is True,
+            "deadlineExpired":time.monotonic()>=run.get("deadline",0),
+            "startedRemainingMs":remaining_ms if type(remaining_ms) is int else None}
+        logging.getLogger("app").warning("narration_admission_failed %s",json.dumps(row))
+
     async def execute(self, command):
         from .session import RuntimeFailure
         sid, kind, epoch = command["sessionId"], command["commandType"], command["runEpoch"]
@@ -44,9 +65,17 @@ class NarrationCommands(DurableCommands):
                 return started
             self.runs[sid]["deadline"] = time.monotonic() + max(0,
                 started["run"]["remainingMs"] / 1000 - (time.monotonic() - started_at) - .1)
-            self.check(sid, epoch)
+            try:
+                self.check(sid, epoch)
+            except Exception as exc:
+                self._admission_failure(command,executor,"post_start_guard",exc,started["run"].get("remainingMs"))
+                raise
             if kind == "COMMIT_SEGMENT":
-                await executor.begin(command, started)
+                try:
+                    await executor.begin(command, started)
+                except Exception as exc:
+                    self._admission_failure(command,executor,"segment_begin",exc,started["run"].get("remainingMs"))
+                    raise
             elif kind == "SUSPEND_AT_BOUNDARY":
                 await executor.suspend(command)
             elif kind == "INVALIDATE_AFTER":
