@@ -643,7 +643,7 @@ func (d *Document) PrepareBridge(choice int, rev, run int64) error {
 		return ErrConflict
 	}
 	text := choices[choice]
-	d.Bridge = &Segment{ID: stable("bridge", d.Turn.ID+text), Text: text, TextHash: Hash(text), Lane: "RESUME_BRIDGE", Boundary: "SENTENCE_END", Status: "PLANNED"}
+	d.Bridge = &Segment{ID: stable("bridge", d.Turn.ID+text), Text: text, TextHash: Hash(text), FactIDs: []string{}, Lane: "RESUME_BRIDGE", Boundary: "SENTENCE_END", Status: "PLANNED"}
 	d.State = BridgeReady
 	d.Revision++
 	return nil
