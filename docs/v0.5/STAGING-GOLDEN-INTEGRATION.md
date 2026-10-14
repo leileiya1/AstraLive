@@ -2,6 +2,24 @@
 
 Status: IN PROGRESS. Branch `exp/v0.5-soulx-staging-golden`, starting at `d69166461af5cd9f7b75179754ea4c086435e251`. User explicitly authorized completing the additive contract, implementation, real live Golden tests and pushing a new remote branch. No main merge or default enablement.
 
+## Latest pilot11 and source25f5851
+
+At user request F connected to the newly started cloud and started the cached
+Worker to READY. Approved profile, credentials and existing model/release were
+reused. Real pilot11 at `ed69236` failed on a missing first inbound-stats
+baseline before StartNarration. No price/continuation/GPU business claim follows.
+The user subsequently powered off the cloud; further work stayed local.
+
+F acceptance-only fixes at6012868/7756e6d/final25f5851 preserve the1500ms browser
+budget and original failure verdict, and add bounded read-only teardown state
+observation. First two new fixture gates FAILed on valid FK protection and are
+retained. Final25f5851 full module gate PASS plus explicit browser/oracle gates;
+actual CPU Chrome first-report reproduction is old FAIL→fixed PASS, still
+rejecting silence. [Pins, evidence and ownership](BROWSER-AUDIO-PREREQUISITE-REPAIR.md).
+No frozen interface/default/production media change. Next is a fresh real short
+fixture with the cloud available, then independent G1/fault/A/V review; no push
+or default enablement yet.
+
 ## 2026-10-14 local repair checkpoint
 
 Tested source `609ee76cec0924a44d683152d8e3d0285966a4ea` full local regression

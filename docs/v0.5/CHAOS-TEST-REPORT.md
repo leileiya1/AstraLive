@@ -1,6 +1,22 @@
 # v0.5 F chaos and integration-gate report
 
-## Current local repair checkpoint — 2026-10-14
+## Latest actual pilot11 / local followup
+
+Real pilot11 `ed69236` FAILs before narration: initial audio inbound report was
+null although AudioContext and later RTP stats actually advanced. Immediate
+SQL teardown snapshot is STOPPING/run STOPPING/binding unreleased; this is not
+proof that production rejected Stop. No narration/answer/GPU business frame or
+crash/recovery scenario was exercised. User then switched cloud off.
+
+Final local source `25f58511cb6b46e4783a25b018487ebda0237e30` full module
+regression PASS. Twelve explicit browser policy scenarios, actual local
+Chrome/unchanged aiortc first-report FAIL→PASS and64 independent oracle tests
+PASS in their stated scopes. Failure cleanup now waits read-only for existing
+terminal state without retrying commands or modifying SQL/proofs. No new real
+cleanup/GPU/Chrome/RTMP business or fault acceptance is claimed.
+[Raw records, fixture failures, reproducibility and scope](BROWSER-AUDIO-PREREQUISITE-REPAIR.md).
+
+## Previous local repair checkpoint — 2026-10-14
 
 Tested source `609ee76cec0924a44d683152d8e3d0285966a4ea` full local module
 gate PASS, Runtime280 total/12skip, frontend40/build,64 independent oracle tests.

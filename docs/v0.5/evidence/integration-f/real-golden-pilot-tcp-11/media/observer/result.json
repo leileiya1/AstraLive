@@ -1,0 +1,229 @@
+{
+  "scope": "REAL_BOUND_PROVIDER_PUBLIC_API_CHROME_OBSERVER",
+  "commentTransport": "MOCK_REPLAY_ONLY",
+  "humanNaturalness": "NOT_TESTED",
+  "audienceAudible": false,
+  "correlatedAV": "NOT_ANALYSED",
+  "localTransport": "tcp",
+  "mode": "fixture-completion-smoke",
+  "requestedSeconds": 60,
+  "seed": 5012,
+  "fixture": null,
+  "events": [],
+  "preflightProbeTiming": {
+    "clock": "Python time.monotonic",
+    "minimumStartSpacingSeconds": 5.1,
+    "attempts": [
+      {
+        "kind": "LLM",
+        "startedSeconds": 0.0023190000792965293,
+        "spacingFromPreviousSeconds": null,
+        "cooldownWaitSeconds": 2.50060111284256e-07,
+        "status": "PASSED",
+        "durationSeconds": 11.508700040983967
+      },
+      {
+        "kind": "TTS",
+        "startedSeconds": 11.518589250044897,
+        "spacingFromPreviousSeconds": 11.5162702499656,
+        "cooldownWaitSeconds": 9.170034900307655e-07,
+        "status": "PASSED",
+        "durationSeconds": 0.4678926659980789
+      },
+      {
+        "kind": "GPU_WORKER",
+        "startedSeconds": 16.618891958030872,
+        "spacingFromPreviousSeconds": 5.100302707985975,
+        "cooldownWaitSeconds": 4.629012041958049,
+        "status": "PASSED",
+        "durationSeconds": 0.07724058302119374
+      },
+      {
+        "kind": "AVATAR",
+        "startedSeconds": 21.720162625075318,
+        "spacingFromPreviousSeconds": 5.101270667044446,
+        "cooldownWaitSeconds": 5.015472625032999,
+        "status": "PASSED",
+        "durationSeconds": 0.12993433303199708
+      }
+    ]
+  },
+  "sessionId": "session_cc8073e71eca558f263661ab5397b57b",
+  "productId": "product_be5a0a2205c9c9d25ca4843043986ebe",
+  "roomId": "room_3f12f362ba680a5979268b4a737d52b5",
+  "profiles": {
+    "LLM": {
+      "profileId": "profile_edaf6fcb8394e0b237ce44b43b4fd8b6",
+      "kind": "LLM",
+      "name": "Golden LLM",
+      "provider": "deepseek",
+      "config": {
+        "model": "deepseek-flash",
+        "maxTokens": 256
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": true,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-14T03:18:20.626061Z"
+    },
+    "TTS": {
+      "profileId": "profile_b16bde0c5f2ef34bf46b37e8f3bb7f06",
+      "kind": "TTS",
+      "name": "Golden TTS",
+      "provider": "xiaoya",
+      "config": {
+        "speed": 1,
+        "voiceId": "xiao_ya",
+        "modelRef": "xiaoya-default"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-14T03:18:21.100266Z"
+    },
+    "GPU_WORKER": {
+      "profileId": "profile_4ba66003f402ce31dd1de941c630721d",
+      "kind": "GPU_WORKER",
+      "name": "Golden GPU_WORKER",
+      "provider": "soulx",
+      "config": {
+        "workerRef": "soulx-lite-01"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-14T03:18:25.81135Z"
+    },
+    "AVATAR": {
+      "profileId": "profile_9513540fef38edb4b8b892ac70f59637",
+      "kind": "AVATAR",
+      "name": "Golden AVATAR",
+      "provider": "soulx",
+      "config": {
+        "avatarRef": "official-girl",
+        "workerProfileId": "profile_4ba66003f402ce31dd1de941c630721d"
+      },
+      "version": 1,
+      "enabled": true,
+      "isDefault": true,
+      "credentialConfigured": false,
+      "verification": "VERIFIED",
+      "errorCode": "",
+      "health": "UP",
+      "updatedAt": "2026-10-14T03:18:30.964378Z"
+    }
+  },
+  "capturedProviders": {
+    "integrationVersion": "0.4.0",
+    "sessionId": "session_cc8073e71eca558f263661ab5397b57b",
+    "bindingId": "binding_e527de0809dbfcef4995836a59b2a623",
+    "capturedAt": "2026-10-14T03:18:30.982737Z",
+    "expiresAt": "2026-10-15T03:18:30.978902Z",
+    "profiles": [
+      {
+        "profileId": "profile_9513540fef38edb4b8b892ac70f59637",
+        "kind": "AVATAR",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-14T03:18:30.964378Z"
+      },
+      {
+        "profileId": "profile_4ba66003f402ce31dd1de941c630721d",
+        "kind": "GPU_WORKER",
+        "provider": "soulx",
+        "version": 1,
+        "updatedAt": "2026-10-14T03:18:25.81135Z"
+      },
+      {
+        "profileId": "profile_edaf6fcb8394e0b237ce44b43b4fd8b6",
+        "kind": "LLM",
+        "provider": "deepseek",
+        "version": 1,
+        "updatedAt": "2026-10-14T03:18:20.626061Z"
+      },
+      {
+        "profileId": "profile_b16bde0c5f2ef34bf46b37e8f3bb7f06",
+        "kind": "TTS",
+        "provider": "xiaoya",
+        "version": 1,
+        "updatedAt": "2026-10-14T03:18:21.100266Z"
+      }
+    ],
+    "mode": "REAL",
+    "errorCode": "",
+    "workerEpoch": "8aab7fb221af4be1ab74c6acfd6d6874"
+  },
+  "browserAudioPreflight": {
+    "before": {
+      "reason": "preflight_start",
+      "at": 6446.100000023842,
+      "state": "running",
+      "contextTime": 5.674666666666667,
+      "outputContextTime": 5.642057333333334,
+      "outputPerformanceTime": 6443.700000047684,
+      "userActivationActive": true,
+      "userActivationSeen": true,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "isSecureContext": true
+    },
+    "after": {
+      "reason": "preflight_end",
+      "at": 7963.800000071526,
+      "state": "running",
+      "contextTime": 7.1946666666666665,
+      "outputContextTime": 7.162063333333333,
+      "outputPerformanceTime": 7963.700000047684,
+      "userActivationActive": true,
+      "userActivationSeen": true,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "isSecureContext": true
+    },
+    "contextDeltaSeconds": 1.5199999999999996,
+    "performanceDeltaSeconds": 1.5177000000476837,
+    "inboundBefore": null,
+    "inboundAfter": {
+      "at": 7964.100000023842,
+      "packetsReceived": 74,
+      "packetsDiscarded": 0,
+      "totalSamplesReceived": 70080,
+      "totalSamplesDuration": 1.500000000000001,
+      "jitterBufferEmittedCount": 70080,
+      "totalAudioEnergy": 0
+    },
+    "decodedAudioDeltaSeconds": null,
+    "trackLive": true,
+    "trackEnabled": true,
+    "trackMuted": false,
+    "ready": false
+  },
+  "status": "FAIL",
+  "errorType": "GoldenFailure",
+  "reason": "Actual browser audio clock stalled before narration",
+  "browserDiagnosticPending": true,
+  "recordingStorage": {
+    "failed": false,
+    "bytes": 1341,
+    "sha256": "71b6c9b8ee0865551fc8199e603a5b434c074fba4618b989e6fd19969a4992f4",
+    "chunks": [
+      {
+        "sequence": 0,
+        "bytes": 1341,
+        "sha256": "71b6c9b8ee0865551fc8199e603a5b434c074fba4618b989e6fd19969a4992f4"
+      }
+    ]
+  }
+}

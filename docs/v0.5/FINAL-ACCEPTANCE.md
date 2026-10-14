@@ -1,5 +1,28 @@
 # v0.5 F acceptance decision — partial sequential integration
 
+## Latest checkpoint — pilot11 and local browser repair
+
+**Real business acceptance remains FAIL; fixed-source local gate PASS.** Real
+pilot11 at `ed69236` stopped before StartNarration because the observer's first
+RTP stats report was missing. Actual browser clock and received samples advanced;
+the recorded evidence does not establish a clock stall. No narration, answer or
+GPU business segment was exercised, so prior replay/continuation failures are
+not upgraded. The user subsequently switched the cloud off.
+
+F repaired acceptance-only baseline sampling within the unchanged1500ms budget
+and added read-only failed-run terminal-state observation. Source
+`25f58511cb6b46e4783a25b018487ebda0237e30` full Go/race/owned-PG/Runtime280
+total(12skip)/frontend40/build/contracts PASS; explicit12-scenario browser policy
+and64 existing oracle tests PASS. Actual local Chrome/aiortc first-report
+reproduction is old FAIL→fixed PASS; CPU silence still fails real speech. Two
+new test-fixture FK failures remain recorded; no database rule was changed.
+[Exact evidence, ownership and limits](BROWSER-AUDIO-PREREQUISITE-REPAIR.md).
+
+No cloud test occurred after the user switched it off. Next requires one new
+fixed-source complete real short fixture before G1/G2/fault acceptance. No
+audibility, naturalness, complete A/V, Redis-kill recovery or default-enable PASS.
+Experimental defaults remain off; the new remote branch has not been pushed yet.
+
 ## Current local checkpoint — 2026-10-14
 
 **Local repaired-source software gate: PASS. Real live acceptance: FAIL / IN PROGRESS.**

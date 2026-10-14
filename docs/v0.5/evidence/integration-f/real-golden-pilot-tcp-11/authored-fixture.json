@@ -1,0 +1,195 @@
+{
+  "fixtureVersion": "real-golden-smoke-3",
+  "scope": "SHORT_SMOKE_NOT_GOLDEN_TEST_1",
+  "product": {
+    "name": "桌面整理指南",
+    "price": 99,
+    "currency": "CNY",
+    "stock": 20,
+    "sizes": [
+      "电子版"
+    ],
+    "description": "示范SKU电子说明书，提供桌面分类、分区、纸张线缆收纳和日常维护的操作指南。"
+  },
+  "scriptVersion": "desktop-guide-smoke-v3",
+  "plan": {
+    "policy": "AT_BOUNDARY",
+    "style": "自然清楚地逐句讲解桌面整理步骤，每段只讲当前声明的事实。",
+    "beats": [
+      {
+        "title": "短测第1段",
+        "requiredFactIds": [
+          "name"
+        ],
+        "statements": [
+          {
+            "text": "这份电子说明书的名称，叫作{{name}}。",
+            "factIds": [
+              "name"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "短测第2段",
+        "requiredFactIds": [
+          "price"
+        ],
+        "statements": [
+          {
+            "text": "本商品当前标价是人民币{{price}}元。",
+            "factIds": [
+              "price"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "短测第3段",
+        "requiredFactIds": [
+          "stock"
+        ],
+        "statements": [
+          {
+            "text": "当前用于本次演示的商品库存，共有{{stock}}份可供选择。",
+            "factIds": [
+              "stock"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "短测第4段",
+        "requiredFactIds": [
+          "sizes"
+        ],
+        "statements": [
+          {
+            "text": "本商品的规格选项只有{{sizes}}，请按电子资料使用。",
+            "factIds": [
+              "sizes"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "短测第5段",
+        "requiredFactIds": [
+          "guide.01.05"
+        ],
+        "statements": [
+          {
+            "text": "这份指南讨论桌面整理方法，不提供实体收纳工具。",
+            "factIds": [
+              "guide.01.05"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "短测第6段",
+        "requiredFactIds": [
+          "guide.01.06"
+        ],
+        "statements": [
+          {
+            "text": "阅读时先选择最困扰你的桌面问题，再对应查找章节。",
+            "factIds": [
+              "guide.01.06"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "短测第7段",
+        "requiredFactIds": [
+          "guide.01.07"
+        ],
+        "statements": [
+          {
+            "text": "指南按照清空、分类、分区和维护，安排整理的步骤。",
+            "factIds": [
+              "guide.01.07"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "短测第8段",
+        "requiredFactIds": [
+          "guide.01.08"
+        ],
+        "statements": [
+          {
+            "text": "第一次实践可以先处理一小块区域，再逐步扩大范围。",
+            "factIds": [
+              "guide.01.08"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "短测第9段",
+        "requiredFactIds": [
+          "guide.01.09"
+        ],
+        "statements": [
+          {
+            "text": "整理前请记录常见物品的位置，方便之后比较变化。",
+            "factIds": [
+              "guide.01.09"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "短测第10段",
+        "requiredFactIds": [
+          "guide.01.10"
+        ],
+        "statements": [
+          {
+            "text": "每完成一个步骤都检查实际使用，避免只追求外观。",
+            "factIds": [
+              "guide.01.10"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "facts": {
+    "name": "这份电子说明书的名称，叫作{{name}}。",
+    "price": "本商品当前标价是人民币{{price}}元。",
+    "stock": "当前用于本次演示的商品库存，共有{{stock}}份可供选择。",
+    "sizes": "本商品的规格选项只有{{sizes}}，请按电子资料使用。",
+    "guide.01.05": "这份指南讨论桌面整理方法，不提供实体收纳工具。",
+    "guide.01.06": "阅读时先选择最困扰你的桌面问题，再对应查找章节。",
+    "guide.01.07": "指南按照清空、分类、分区和维护，安排整理的步骤。",
+    "guide.01.08": "第一次实践可以先处理一小块区域，再逐步扩大范围。",
+    "guide.01.09": "整理前请记录常见物品的位置，方便之后比较变化。",
+    "guide.01.10": "每完成一个步骤都检查实际使用，避免只追求外观。"
+  },
+  "questions": [
+    "这份指南现在多少钱？"
+  ],
+  "questionsMetadata": [
+    {
+      "id": "comment-price-1",
+      "text": "这份指南现在多少钱？",
+      "priority": 80,
+      "injectAfterSegment": 4,
+      "expectedFactIds": [
+        "price"
+      ]
+    }
+  ],
+  "trustedBuiltinPreview": {
+    "scope": "EXPECTED_FIXED_SKU_TEXT_NOT_CLIENT_AUTHORITY",
+    "name": "桌面整理指南",
+    "price": "99.00",
+    "stock": "20",
+    "sizes": "电子版",
+    "currency": "CNY"
+  }
+}

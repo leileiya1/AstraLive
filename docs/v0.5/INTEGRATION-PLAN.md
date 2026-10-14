@@ -1,5 +1,16 @@
 # AstraLive v0.5 Integration Plan
 
+## Latest source / next execution
+
+Final local repair source `25f58511cb6b46e4783a25b018487ebda0237e30` passes
+full regression. Real pilot11 failed before narration due to missing first RTP
+stats baseline; cloud was then switched off by the user. The acceptance-only
+sampling/cleanup fix and two preserved FK-fixture failures are in
+[the scoped report](BROWSER-AUDIO-PREREQUISITE-REPAIR.md). F owns these test files;
+no production owner files/frozen contracts/defaults were changed.
+Wait for cloud availability to execute a new complete short real business run,
+then G1/G2/fault/A/V gates. Local browser readiness is not live acceptance.
+
 ## Current phase — 2026-10-14
 
 F branch is `exp/v0.5-soulx-staging-golden`; final software source

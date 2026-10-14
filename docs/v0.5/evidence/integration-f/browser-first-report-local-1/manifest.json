@@ -1,0 +1,34 @@
+{
+  "source": "25f58511cb6b46e4783a25b018487ebda0237e30",
+  "beforeSource": "ed692369ed72dd1793056d4afad0f4f8fbaef25d",
+  "scope": "actual Chrome155/unchanged aiortc tracks CPU silence with first inbound report withheld; controlled JS policy cases; no cloud/GPU/speech/Golden acceptance",
+  "controlledPolicyCases": 12,
+  "controlledAfterExit": 0,
+  "nativeBeforeExit": 1,
+  "nativeAfterExit": 0,
+  "oracleRegressionTests": 64,
+  "files": {
+    "controlled-after.log": "35c97c107cd457058aba66182ea3bab3b5bab09dcee0263f15b7259eb185a942",
+    "controlled-after-separate-gate.log": "eb2d0afd834d6672fe2662fc982770c885a9c3429055939054a7f57d658fa3a4",
+    "after.html": "e717826aee44c6a3356089066c26b737c283b6bb37eb6611ba5a530ef2e867af",
+    "native-before.log": "88b8de7ecaba66df0df2919c7f8a1b54dc8c0e74d7ebd1e6cc7a7aecd8733526",
+    "controlled-before.log": "6b81f3c6db767e6360579ddf1f4939522229a11661fe14f9ab16224192fdbe97",
+    "oracle-regression.log": "596ca0579d87cce90790127fa3988dab3be0b23c8e953ce0931b42c7f0367d70",
+    "before.html": "f1671fe832aa078d69682b13bd8ef86c50df8c3548ad7dd121009c924ee1cab4",
+    "native-after.log": "fde0a3cf162bb3c655409d50684100afe911417c914a14653a6c49cd0550d64b",
+    "native-before/ffprobe.json": "c87983e8dce03ea62feeea5e4e3e7bbeaed1766a58b60cc049e716b23c1508ad",
+    "native-before/result.json": "e09231f3a8dc9f5783d4f27a42ce68a0f0ecc0e3ba826a2c6e896a33be32e4e0",
+    "native-before/chrome.json": "1ec599b9bc52e6f966e654ac71014708785d1896a2a4778262723c0eee4e2079",
+    "native-before/chrome.webm": "d8861e3b4fa59961e7f2c937fd0505d7de81be7860ab4a12dee54c88a560c4be",
+    "native-after/ffprobe.json": "4659189e6aafb79a38f387aeff47abc3ef2fcae9e3f205ffc1ae4752445266b9",
+    "native-after/result.json": "0166ae0ef7a7fdd3f176cdbef43eb65158820a4b34700331af0ffe8d8e90767a",
+    "native-after/chrome.json": "8586437d70082ff4b62a8c8baaa84f536b19b3dd83a83a32daafd71e89fc99c4",
+    "native-after/chrome.webm": "8105365e6b841dc605df6aa39995a64ee492d6a5f0d9363c58855cbdf9c5f232"
+  },
+  "sourceFiles": {
+    "runtime/tests/fixtures/golden_browser.html": "e717826aee44c6a3356089066c26b737c283b6bb37eb6611ba5a530ef2e867af",
+    "runtime/tests/golden_audio_preflight_policy.py": "3130d4069034b07d1b0cdc7cac6262a893dce50f764310470e13641f461551b2",
+    "runtime/tests/golden_browser_cpu_diagnostic.py": "2236deda86b70aa53ffc0681bfaea989b3f9ac922f2d4f615b8ce297a0a5994b",
+    "backend/internal/narration/golden_cleanup_test.go": "460eabcfa83412efc56df3d27817ea180cf46ede5a417f9a29b0ec2e852632f8"
+  }
+}

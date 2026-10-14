@@ -1,0 +1,106 @@
+{
+  "scope": "ACTUAL_CHROME_UNCHANGED_B_TRACKS_CPU_SILENCE_ENVIRONMENT_ONLY",
+  "GPU": "NOT_TESTED",
+  "realSpeech": "NOT_TESTED",
+  "multiCodecBlobProbe": {
+    "mimeType": "video/webm;codecs=vp8,opus",
+    "oldPayloadIsCodecFragment": true,
+    "exactPayloadMatchesSource": true,
+    "selectedPayloadRoundTrip": true
+  },
+  "initialAudioStatsIntervention": "FIRST_REPORT_WITHHELD_ONLY_ALL_LATER_STATS_ACTUAL",
+  "storedRecordingBytes": 1741,
+  "storedRecordingSHA256": "8105365e6b841dc605df6aa39995a64ee492d6a5f0d9363c58855cbdf9c5f232",
+  "storedChunks": [
+    {
+      "sequence": 0,
+      "bytes": 1341,
+      "sha256": "2e871e6475ffd81cf9e350f3ec0218dd76d9bc43a27ae55d521c8a4a60edd923"
+    },
+    {
+      "sequence": 1,
+      "bytes": 400,
+      "sha256": "4c750ed0320115485cfd315c6ad5760438d23c1a514c06ff41c6e9c8544937bb"
+    }
+  ],
+  "ffprobeExitCode": 0,
+  "browserVersion": "155.0.8059.40",
+  "audioPreflight": {
+    "started": {
+      "reason": "preflight_start",
+      "at": 1485.7000000476837,
+      "state": "running",
+      "contextTime": 1.2426666666666666,
+      "outputContextTime": 1.0666763333333333,
+      "outputPerformanceTime": 1483,
+      "userActivationActive": true,
+      "userActivationSeen": true,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "isSecureContext": true
+    },
+    "before": {
+      "reason": "preflight_end",
+      "at": 1500.9000000953674,
+      "state": "running",
+      "contextTime": 1.2586666666666666,
+      "outputContextTime": 1.0826663333333335,
+      "outputPerformanceTime": 1498.9000000953674,
+      "userActivationActive": true,
+      "userActivationSeen": true,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "isSecureContext": true
+    },
+    "after": {
+      "reason": "preflight_end",
+      "at": 1608.8000000715256,
+      "state": "running",
+      "contextTime": 1.3653333333333333,
+      "outputContextTime": 1.189356,
+      "outputPerformanceTime": 1605.7000000476837,
+      "userActivationActive": true,
+      "userActivationSeen": true,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "isSecureContext": true
+    },
+    "initialInboundAvailable": false,
+    "baselineWaitMs": 15.200000047683716,
+    "contextDeltaSeconds": 0.10666666666666669,
+    "performanceDeltaSeconds": 0.10789999997615814,
+    "inboundBefore": {
+      "reportId": "IT01A2244177928",
+      "at": 1501.1000000238419,
+      "packetsReceived": 2,
+      "packetsDiscarded": 0,
+      "totalSamplesReceived": 960,
+      "totalSamplesDuration": 0.060000000000000005,
+      "jitterBufferEmittedCount": 960,
+      "totalAudioEnergy": 0
+    },
+    "inboundAfter": {
+      "reportId": "IT01A2244177928",
+      "at": 1608.9000000953674,
+      "packetsReceived": 7,
+      "packetsDiscarded": 0,
+      "totalSamplesReceived": 5760,
+      "totalSamplesDuration": 0.16,
+      "jitterBufferEmittedCount": 5760,
+      "totalAudioEnergy": 0
+    },
+    "decodedAudioDeltaSeconds": 0.1,
+    "trackLive": true,
+    "trackEnabled": true,
+    "trackMuted": false,
+    "ready": true
+  },
+  "recordedBytes": 1741,
+  "recordingChunks": 2,
+  "audioRMSMax": 0,
+  "videoFrames": 29,
+  "runtimeOutputSamples": 65280,
+  "speechGateRejection": "Actual browser decoded speech energy missing",
+  "status": "PASS",
+  "recordingWriterFailed": false
+}

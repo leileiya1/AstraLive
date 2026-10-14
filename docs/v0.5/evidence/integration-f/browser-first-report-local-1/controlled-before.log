@@ -1,0 +1,24 @@
+test_initial_missing_report_and_real_stall_rejection (test_golden_audio_preflight.GoldenAudioPreflightTests.test_initial_missing_report_and_real_stall_rejection) ... 
+  test_initial_missing_report_and_real_stall_rejection (test_golden_audio_preflight.GoldenAudioPreflightTests.test_initial_missing_report_and_real_stall_rejection) (kind='late-first-report') ... FAIL
+  test_initial_missing_report_and_real_stall_rejection (test_golden_audio_preflight.GoldenAudioPreflightTests.test_initial_missing_report_and_real_stall_rejection) (kind='report-replaced') ... FAIL
+
+======================================================================
+FAIL: test_initial_missing_report_and_real_stall_rejection (test_golden_audio_preflight.GoldenAudioPreflightTests.test_initial_missing_report_and_real_stall_rejection) (kind='late-first-report')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-f/runtime/tests/test_golden_audio_preflight.py", line 48, in test_initial_missing_report_and_real_stall_rejection
+    self.assertEqual(result['ready'], expected, json.dumps(result))
+AssertionError: False != True : {"before": {"reason": "preflight_start", "at": 0, "state": "running", "contextTime": 0, "outputContextTime": 0, "outputPerformanceTime": 0, "userActivationActive": true, "userActivationSeen": true, "visibilityState": "visible", "hasFocus": true, "isSecureContext": false}, "after": {"reason": "preflight_end", "at": 1500, "state": "running", "contextTime": 1.5, "outputContextTime": 1.5, "outputPerformanceTime": 1500, "userActivationActive": true, "userActivationSeen": true, "visibilityState": "visible", "hasFocus": true, "isSecureContext": false}, "contextDeltaSeconds": 1.5, "performanceDeltaSeconds": 1.5, "inboundBefore": null, "inboundAfter": {"at": 1500, "packetsReceived": 30, "packetsDiscarded": null, "totalSamplesReceived": null, "totalSamplesDuration": 1.5, "jitterBufferEmittedCount": null, "totalAudioEnergy": null}, "decodedAudioDeltaSeconds": null, "trackLive": true, "trackEnabled": true, "trackMuted": false, "ready": false}
+
+======================================================================
+FAIL: test_initial_missing_report_and_real_stall_rejection (test_golden_audio_preflight.GoldenAudioPreflightTests.test_initial_missing_report_and_real_stall_rejection) (kind='report-replaced')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-f/runtime/tests/test_golden_audio_preflight.py", line 48, in test_initial_missing_report_and_real_stall_rejection
+    self.assertEqual(result['ready'], expected, json.dumps(result))
+AssertionError: True != False : {"before": {"reason": "preflight_start", "at": 0, "state": "running", "contextTime": 0, "outputContextTime": 0, "outputPerformanceTime": 0, "userActivationActive": true, "userActivationSeen": true, "visibilityState": "visible", "hasFocus": true, "isSecureContext": false}, "after": {"reason": "preflight_end", "at": 100, "state": "running", "contextTime": 0.1, "outputContextTime": 0.1, "outputPerformanceTime": 100, "userActivationActive": true, "userActivationSeen": true, "visibilityState": "visible", "hasFocus": true, "isSecureContext": false}, "contextDeltaSeconds": 0.1, "performanceDeltaSeconds": 0.1, "inboundBefore": {"at": 0, "packetsReceived": 0, "packetsDiscarded": null, "totalSamplesReceived": null, "totalSamplesDuration": 0, "jitterBufferEmittedCount": null, "totalAudioEnergy": null}, "inboundAfter": {"at": 100, "packetsReceived": 2, "packetsDiscarded": null, "totalSamplesReceived": null, "totalSamplesDuration": 0.1, "jitterBufferEmittedCount": null, "totalAudioEnergy": null}, "decodedAudioDeltaSeconds": 0.1, "trackLive": true, "trackEnabled": true, "trackMuted": false, "ready": true}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.846s
+
+FAILED (failures=2)

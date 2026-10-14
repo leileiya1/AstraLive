@@ -1,0 +1,86 @@
+{
+  "scope": "ACTUAL_CHROME_UNCHANGED_B_TRACKS_CPU_SILENCE_ENVIRONMENT_ONLY",
+  "GPU": "NOT_TESTED",
+  "realSpeech": "NOT_TESTED",
+  "multiCodecBlobProbe": {
+    "mimeType": "video/webm;codecs=vp8,opus",
+    "oldPayloadIsCodecFragment": true,
+    "exactPayloadMatchesSource": true,
+    "selectedPayloadRoundTrip": true
+  },
+  "initialAudioStatsIntervention": "FIRST_REPORT_WITHHELD_ONLY_ALL_LATER_STATS_ACTUAL",
+  "storedRecordingBytes": 3164,
+  "storedRecordingSHA256": "d8861e3b4fa59961e7f2c937fd0505d7de81be7860ab4a12dee54c88a560c4be",
+  "storedChunks": [
+    {
+      "sequence": 0,
+      "bytes": 1309,
+      "sha256": "e83fac65b960d7f31c3b3596684e652c02b599896c60d89d93969bfdce728958"
+    },
+    {
+      "sequence": 1,
+      "bytes": 1084,
+      "sha256": "9d53cf223cdb25e1ea409ad5d99c59a08cc7ff957e705fd681aafa78d3f436f0"
+    },
+    {
+      "sequence": 2,
+      "bytes": 771,
+      "sha256": "8e3fc8467f130565d28f9ea68ecb6e203716a3518c93f3ab1d9a5f23b71da228"
+    }
+  ],
+  "ffprobeExitCode": 0,
+  "browserVersion": "155.0.8059.40",
+  "audioPreflight": {
+    "before": {
+      "reason": "preflight_start",
+      "at": 1460.4000000953674,
+      "state": "running",
+      "contextTime": 1.232,
+      "outputContextTime": 1.0560116666666666,
+      "outputPerformanceTime": 1459.1000000238419,
+      "userActivationActive": true,
+      "userActivationSeen": true,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "isSecureContext": true
+    },
+    "after": {
+      "reason": "preflight_end",
+      "at": 2975.2000000476837,
+      "state": "running",
+      "contextTime": 2.7466666666666666,
+      "outputContextTime": 2.5706723333333334,
+      "outputPerformanceTime": 2973.8000000715256,
+      "userActivationActive": true,
+      "userActivationSeen": true,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "isSecureContext": true
+    },
+    "contextDeltaSeconds": 1.5146666666666666,
+    "performanceDeltaSeconds": 1.5147999999523163,
+    "inboundBefore": null,
+    "inboundAfter": {
+      "at": 2975.4000000953674,
+      "packetsReceived": 74,
+      "packetsDiscarded": 0,
+      "totalSamplesReceived": 70080,
+      "totalSamplesDuration": 1.5100000000000011,
+      "jitterBufferEmittedCount": 70080,
+      "totalAudioEnergy": 0
+    },
+    "decodedAudioDeltaSeconds": null,
+    "trackLive": true,
+    "trackEnabled": true,
+    "trackMuted": false,
+    "ready": false
+  },
+  "recordedBytes": 3164,
+  "recordingChunks": 3,
+  "audioRMSMax": 0,
+  "videoFrames": 65,
+  "runtimeOutputSamples": 131520,
+  "speechGateRejection": "Actual browser audio clock prerequisite missing",
+  "status": "FAIL",
+  "recordingWriterFailed": false
+}
