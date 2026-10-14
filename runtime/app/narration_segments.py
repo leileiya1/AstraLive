@@ -423,10 +423,19 @@ async def bridge_choice(llm, context, choices):
     """LLM chooses approved language; cannot invent facts or mutate the cursor."""
     staged=getattr(llm,"staging_bridge_enabled",False) is True
     if staged:context=bridge_language_context(context)
-    prompt = LLMRequest(
-        "选择自然的过渡语，只返回选项序号。上下文：" + json.dumps(context, ensure_ascii=False) +
-        "；选项：" + json.dumps(choices, ensure_ascii=False),
-        "你只选择口语过渡，不决定哪些事实已经完成。不重复已讲卖点；必要时选空过渡。", "商品事实只用于理解上下文，禁止自行添加。")
+    if staged:
+        indexed=[{"index":index,"text":choice} for index,choice in enumerate(choices)]
+        permitted=", ".join(str(index) for index in range(len(choices)))
+        prompt=LLMRequest(
+            "选择自然的过渡语。选项索引从0开始，0表示空过渡。只返回一个允许的ASCII索引：" + permitted +
+            "。不要文字、符号、空白或JSON。上下文：" + json.dumps(context,ensure_ascii=False) +
+            "；明确索引选项：" + json.dumps(indexed,ensure_ascii=False),
+            "你只选择口语过渡，不决定哪些事实已经完成。不重复已讲卖点；必要时选索引0的空过渡。", "商品事实只用于理解上下文，禁止自行添加。")
+    else:
+        prompt = LLMRequest(
+            "选择自然的过渡语，只返回选项序号。上下文：" + json.dumps(context, ensure_ascii=False) +
+            "；选项：" + json.dumps(choices, ensure_ascii=False),
+            "你只选择口语过渡，不决定哪些事实已经完成。不重复已讲卖点；必要时选空过渡。", "商品事实只用于理解上下文，禁止自行添加。")
     text = ""
     stream=getattr(llm,"stream_bridge_choice",llm.stream)
     async for token in stream(prompt):
@@ -434,6 +443,10 @@ async def bridge_choice(llm, context, choices):
         if len(text) > 16:
             if staged:raise ValueError("BRIDGE_CHOICE_INVALID")
             return 0
+    if staged:
+        text=text.strip(" \t\n\r\v\f")
+        if text not in {str(index) for index in range(len(choices))}:raise ValueError("BRIDGE_CHOICE_INVALID")
+        return int(text)
     try:
         result = int(text.strip())
         if 0 <= result < len(choices):return result

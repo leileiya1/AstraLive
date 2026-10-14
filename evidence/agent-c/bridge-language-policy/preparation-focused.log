@@ -1,0 +1,30 @@
+test_bridge_provider_failure_stays_unknown_and_has_phase (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_bridge_provider_failure_stays_unknown_and_has_phase) ... ok
+test_guard_failure_and_timeout_classified_without_retry (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_guard_failure_and_timeout_classified_without_retry) ... ok
+test_journal_unknown_exception_redacted (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_journal_unknown_exception_redacted) ... ok
+test_tool_unknown_exception_redacted (runtime.tests.test_narration_preparation_diagnostics.PreparationDiagnosticsTests.test_tool_unknown_exception_redacted) ... ok
+test_frozen_flag_no_alias (runtime.tests.test_narration_segments.ConfigTests.test_frozen_flag_no_alias) ... ok
+test_bound_runtime_rejects_untimed_before_first_after_finish_force (runtime.tests.test_narration_segments.ExecutionTests.test_bound_runtime_rejects_untimed_before_first_after_finish_force) ... {"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"runtime_utterance_accepted\", \"elapsedMs\": 0.000750063918530941, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"llm_started\", \"elapsedMs\": 1.1333751026540995, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"llm_first_token\", \"elapsedMs\": 1.203541993163526, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"first_speakable_segment\", \"elapsedMs\": 1.2994169956073165, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"tts_started\", \"elapsedMs\": 1.3286250177770853, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"tts_first_pcm\", \"elapsedMs\": 1.3853330165147781, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"media_first_audio\", \"elapsedMs\": 1.4595830580219626, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"media output push returned; not browser/speaker playback\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"utterance_completed\", \"elapsedMs\": 1.4935830840840936, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"media drain completed\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+ok
+test_bridge_cannot_invent_fact_or_cursor (runtime.tests.test_narration_segments.ExecutionTests.test_bridge_cannot_invent_fact_or_cursor) ... ok
+test_native_renderer_fail_closed_before_tts (runtime.tests.test_narration_segments.ExecutionTests.test_native_renderer_fail_closed_before_tts) ... ok
+test_position_serialization_has_exact_pts (runtime.tests.test_narration_segments.ExecutionTests.test_position_serialization_has_exact_pts) ... ok
+test_ready_commit_actual_fixture_consumption (runtime.tests.test_narration_segments.ExecutionTests.test_ready_commit_actual_fixture_consumption) ... ok
+test_ready_failure_no_commit_no_output_and_unknown (runtime.tests.test_narration_segments.ExecutionTests.test_ready_failure_no_commit_no_output_and_unknown) ... ok
+test_tts_duration_cap_no_truncation (runtime.tests.test_narration_segments.ExecutionTests.test_tts_duration_cap_no_truncation) ... ok
+test_http_auth_status_distinct_and_error_body_never_persisted (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_http_auth_status_distinct_and_error_body_never_persisted) ... ok
+test_malformed_json_records_static_exception_class_only (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_malformed_json_records_static_exception_class_only) ... ok
+test_reasoning_only_length_finish_is_distinct_without_reasoning_disclosure (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_reasoning_only_length_finish_is_distinct_without_reasoning_disclosure) ... ok
+test_success_unchanged_and_default_off_creates_no_observer (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_success_unchanged_and_default_off_creates_no_observer) ... ok
+test_unknown_finish_reason_and_stream_error_never_dump_upstream_strings (runtime.tests.test_llm_observer_diagnostics.LLMSafeObserverTests.test_unknown_finish_reason_and_stream_error_never_dump_upstream_strings) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.291s
+
+OK

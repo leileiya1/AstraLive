@@ -130,7 +130,7 @@ class BoundDeepSeek(OpenAICompatibleLLMProvider):
                     "durationMs":round((asyncio.get_running_loop().time()-started)*1000),"audienceAudible":False}
                 row["streamDiagnostic"]=stream_diagnostic
                 if bridge and self.staging_bridge_enabled:
-                    row.update(requestPolicyRevision="staging-bridge-language-1",thinking="disabled",requestBytes=len(request.text.encode()))
+                    row.update(requestPolicyRevision="staging-bridge-language-2",thinking="disabled",requestBytes=len(request.text.encode()))
                 with (folder/"llm-calls.jsonl").open("a") as handle:handle.write(json.dumps(row,ensure_ascii=False)+"\n")
 
     async def aclose(self):

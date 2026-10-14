@@ -1,0 +1,32 @@
+{
+  "scope": "ACTUAL_HOUR6_OLD_POLICY_EVIDENCE_NOT_NEW_CANDIDATE_PASS",
+  "originalFileSHA256": "3e1c6a8afb49f8e43c0f1b8c6b277b1004d9ae309b8c07586687b26ac3f74912",
+  "observed": {
+    "role": "bridge_choice",
+    "callSequence": 10,
+    "status": "COMPLETED",
+    "model": "deepseek-flash",
+    "requestHash": "sha256:d5888715ecbb4062e99235fa9ed4c0fc1a10354c30d25cc552bedf7d6e84fea4",
+    "responseHash": "sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+    "responseChars": 1,
+    "durationMs": 902,
+    "streamDiagnostic": {
+      "httpStatus": 200,
+      "dataPackets": 3,
+      "contentDeltaCount": 1,
+      "reasoningDeltaCount": 0,
+      "reasoningChars": 0,
+      "promptTokens": 1579,
+      "completionTokens": 1,
+      "totalTokens": 1580,
+      "finishReason": "stop",
+      "terminalStop": true,
+      "doneObserved": true,
+      "streamOutcome": "COMPLETED"
+    },
+    "requestPolicyRevision": "staging-bridge-language-1",
+    "thinking": "disabled",
+    "requestBytes": 3646
+  },
+  "responseHashMatchesASCII3": true
+}
