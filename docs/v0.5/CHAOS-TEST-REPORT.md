@@ -1,5 +1,20 @@
 # v0.5 F chaos and integration-gate report
 
+## Current local gate — 2026-10-15
+
+F exact production sourcefb9b75d27f21e176afb4d5fdb32f202fc708ce6a PASSes
+the complete software/owned-PG gate: Go/race/contracts/auth/ownership/outage/
+Redis-off, Runtime304 passed+12 skipped, frontend40/build. New bridge-facts
+regression executes twice (normal Go and race), with actual PostgreSQL/A
+admission and production Runtime READY code, labelled CPU fixture providers.
+Constructor-only repair preserves new empty arrays and historical null rows.
+Owner docs merge7b284a9 changes no production files relative to fb9.
+[Exact source/results/log hashes](evidence/integration-f/bridge-empty-facts-f-postmerge-1/result.json).
+
+No new real one-hour run: explicitly deferred by the user. Original hour7
+and full8f artifact failures remain valid; no live crash/recovery claim is
+upgraded by local PASS. Experimental defaults remain off.
+
 ## Latest Stop repair gate
 
 C43771588/delivery451405d normally merged8f04a75, no conflicts. A scoped

@@ -1,5 +1,26 @@
 # v0.5 F acceptance decision — partial sequential integration
 
+## Current checkpoint — 2026-10-15; no new hour test
+
+Final tested production source `fb9b75d27f21e176afb4d5fdb32f202fc708ce6a`
+normally merges C's constructor-only empty-facts repair `ee22e1e`. Owner
+evidence/docs delivery `8ffb595` subsequently merged as `7b284a9`; production
+files are identical to the tested source. F complete exact-source gate PASS:
+Go/race/owned-PG migration/auth/ownership/outage/Redis-off/contracts,
+Runtime316 total (304 passed,12 skipped), frontend40/build. The new bridge
+case actually runs in Go and race suites across PostgreSQL and production
+Runtime code with explicitly labelled CPU providers/sinks. Document, SQL,
+COMMIT and READY all retain `[]`; historical JSON `null` is not rewritten.
+
+The user explicitly deferred another one-hour real test. No new hour is
+started. Actual source88 hour7 remains FAIL; source8f real60-second normal-Stop
+component PASS is retained only in its scope. Final sourcefb9 has no real GPU
+or full-hour acceptance yet. Reference latency exceeds target, and complete
+live crash/Redis-kill/FORCE/product-switch/host/human gates remain outstanding.
+All experimental defaults stay off; main is untouched. Current work is local
+evidence/report delivery, then later real validation when requested.
+[Final exact-source gate](evidence/integration-f/bridge-empty-facts-f-postmerge-1/result.json).
+
 ## Latest decision — Stop repair verified; hour acceptance remains FAIL
 
 Final production source `8f04a7567db2710547da2b313e027d1c76eed02e` normally

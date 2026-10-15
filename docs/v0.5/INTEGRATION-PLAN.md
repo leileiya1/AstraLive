@@ -1,5 +1,18 @@
 # AstraLive v0.5 Integration Plan
 
+## Current execution boundary — 2026-10-15
+
+Final production fb9b75d27f21e176afb4d5fdb32f202fc708ce6a includes Stop ACK
+draining and constructor-only canonical bridge facts. F complete software/
+owned-PG/Runtime316 total12skip/frontend40/build gate PASS. Docs/evidence-only
+owner merge7b284a9 has identical production files. Archive final logs and push
+the authorized F branch; do not merge main or enable defaults.
+
+The user explicitly said not to run another real one-hour test now. Defer that
+run and all dependent acceptance upgrades. Later gates remain full-hour on the
+final source, calibrated latency, live faults/Redis-kill/FORCE/product-switch,
+host/UDS and human A/V review. Existing failed source-pinned evidence is retained.
+
 ## Latest delivery / remaining execution
 
 F final production source8f04a7567db2710547da2b313e027d1c76eed02e normally

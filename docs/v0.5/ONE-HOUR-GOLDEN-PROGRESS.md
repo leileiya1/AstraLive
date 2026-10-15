@@ -229,3 +229,20 @@ immutable rows, commands and oracle rules stay unchanged.
 The new remote branch `exp/v0.5-soulx-staging-golden` was created at `da24925`
 with the original hour evidence. The fix and final evidence are subsequently
 pushed on that branch only. No main merge/force push or default enablement.
+
+## Final local followup — 2026-10-15
+
+C constructor-only productionee22e1e normally merged as
+fb9b75d27f21e176afb4d5fdb32f202fc708ce6a. It initializes new bridge FactIDs
+before first persistence/fingerprinting; save/read/DDL/old rows/oracle unchanged.
+Owner docs8ffb595 merged separately as7b284a9, with identical production files.
+F full exactfb9 gate PASS: Go/race/real owned-PG/auth/fault/Redis-off/contracts,
+Runtime316 total304 passed12 skipped, frontend40/build. New actualPG→GoCOMMIT→
+production Runtime READY→A admission test runs in both Go and race suites;
+explicit CPU fixtures do not substitute for GPU acceptance.
+[Final F regression evidence](evidence/integration-f/bridge-empty-facts-f-postmerge-1/result.json).
+
+The user deferred another real one-hour run. None is started. Final-source
+GPU/full-hour acceptance remains NOT TESTED; original hour7/full8f failures
+remain FAIL, real8f Stop component remains narrowly PASS, and latency remains
+above target in conditional estimates. No experimental default is enabled.
