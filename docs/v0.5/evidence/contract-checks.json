@@ -1,0 +1,37 @@
+{
+  "contractRevision": "durable-live-1",
+  "baseline": "cf6540bdcc788c037929836480812dfaa78362a2",
+  "checkedAt": "2026-10-15T16:50:14.016732+00:00",
+  "checks": [
+    {
+      "name": "schema-validation",
+      "command": "python3 scripts/validate-durable-live-contracts.py",
+      "cwd": ".",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "schema-validation.log"
+    },
+    {
+      "name": "python-contract-tests",
+      "command": "python3 -m unittest tests.test_durable_live_contracts tests.test_contracts -v",
+      "cwd": ".",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "python-contract-tests.log"
+    },
+    {
+      "name": "go-regression",
+      "command": "go test ./...",
+      "cwd": "backend",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "go-regression.log"
+    }
+  ],
+  "notTested": [
+    "PostgreSQL v0.5 migration/concurrency/crash injection (implementation deferred to Agent 2)",
+    "Runtime v0.5 execution/output guardian (not implemented)",
+    "Real GPU / real Chrome / local RTMP / official platform audience"
+  ],
+  "scope": "Architecture/schema delivery; no v0.5 feature or playback acceptance claim"
+}

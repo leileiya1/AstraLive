@@ -1,0 +1,932 @@
+[
+  {
+    "operationId": "CreateBroadcastRun",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "roomId": "room_demo",
+      "idempotencyKey": "create:run_demo",
+      "recoveryPolicy": "MANUAL_ON_UNKNOWN"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "run": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "roomId": "room_demo",
+        "status": "CREATED",
+        "runEpoch": 0,
+        "currentSessionId": null,
+        "currentPlanId": null,
+        "startedAt": null,
+        "updatedAt": "2026-10-16T00:00:00Z",
+        "endedAt": null,
+        "desiredState": "LIVE",
+        "recoveryPolicy": "MANUAL_ON_UNKNOWN",
+        "revision": 1,
+        "stopRevision": 0
+      }
+    }
+  },
+  {
+    "operationId": "ClaimNextTurn",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": 3,
+      "runEpoch": 1,
+      "candidateTurnId": "turn_demo",
+      "expectedSlotVersion": 1,
+      "idempotencyKey": "claim:turn_demo"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "runRevision": 4,
+      "turn": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "turnId": "turn_demo",
+        "planId": "plan_demo",
+        "turnType": "SCRIPT",
+        "sourceSegmentId": "segment_demo",
+        "sourceCommentTraceId": null,
+        "sourceIdentities": [],
+        "priority": 20,
+        "state": "DISPATCHING",
+        "scheduledAt": "2026-10-16T00:00:00Z",
+        "startedAt": null,
+        "finishedAt": null,
+        "expiresAt": null,
+        "inputText": "这款采用纯棉面料，穿着柔软舒适。",
+        "idempotencyKey": "turn:segment_demo:initial",
+        "revision": 2
+      },
+      "attempt": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "attemptId": "attempt_demo",
+        "turnId": "turn_demo",
+        "segmentId": "segment_demo",
+        "sessionId": "session_demo",
+        "utteranceId": "utt_demo",
+        "commandId": "cmd_demo",
+        "runEpoch": 1,
+        "attemptNumber": 1,
+        "executorIncarnation": null,
+        "lastCheckpoint": "PLANNED",
+        "answerTextHash": null,
+        "requiredSinks": [
+          "rtmp_main"
+        ],
+        "createdAt": "2026-10-16T00:00:00Z",
+        "updatedAt": "2026-10-16T00:00:00Z"
+      },
+      "intent": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "intentId": "intent_demo",
+        "attemptId": "attempt_demo",
+        "turnId": "turn_demo",
+        "sessionId": "session_demo",
+        "utteranceId": "utt_demo",
+        "commandId": "cmd_demo",
+        "idempotencyKey": "turn:segment_demo:initial",
+        "runEpoch": 1,
+        "operation": "EXECUTE_TURN",
+        "requestHash": "dc66d88cca91b91a761182d1bcc3214f56faacc5c07ab1f57bb427be5a67c169",
+        "status": "PENDING",
+        "nextAttemptAt": "2026-10-16T00:00:00Z",
+        "claimedBy": null,
+        "leaseExpiresAt": null,
+        "claimVersion": 0,
+        "sendStartedAt": null,
+        "createdAt": "2026-10-16T00:00:00Z",
+        "updatedAt": "2026-10-16T00:00:00Z"
+      },
+      "slot": {
+        "activeAttemptId": "attempt_demo",
+        "boundaryCheckpointId": null,
+        "slotVersion": 2
+      }
+    }
+  },
+  {
+    "operationId": "DispatchTurn",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": 3,
+      "runEpoch": 1,
+      "intentId": "intent_demo",
+      "commandId": "cmd_demo",
+      "idempotencyKey": "dispatch:intent_demo"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "intent": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "intentId": "intent_demo",
+        "attemptId": "attempt_demo",
+        "turnId": "turn_demo",
+        "sessionId": "session_demo",
+        "utteranceId": "utt_demo",
+        "commandId": "cmd_demo",
+        "idempotencyKey": "turn:segment_demo:initial",
+        "runEpoch": 1,
+        "operation": "EXECUTE_TURN",
+        "requestHash": "dc66d88cca91b91a761182d1bcc3214f56faacc5c07ab1f57bb427be5a67c169",
+        "status": "PENDING",
+        "nextAttemptAt": "2026-10-16T00:00:00Z",
+        "claimedBy": null,
+        "leaseExpiresAt": null,
+        "claimVersion": 0,
+        "sendStartedAt": null,
+        "createdAt": "2026-10-16T00:00:00Z",
+        "updatedAt": "2026-10-16T00:00:00Z"
+      }
+    }
+  },
+  {
+    "operationId": "ConfirmCheckpoint",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": null,
+      "checkpoint": {
+        "schemaVersion": "0.5",
+        "contractRevision": "durable-live-1",
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "checkpointId": "checkpoint_demo",
+        "eventId": "event_demo",
+        "attemptId": "attempt_demo",
+        "sessionId": "session_demo",
+        "utteranceId": "utt_demo",
+        "commandId": "cmd_demo",
+        "runEpoch": 1,
+        "producerIncarnation": "runtime_demo",
+        "producerSeq": 5,
+        "state": "LOCAL_MEDIA_DRAINED",
+        "lastKnownState": null,
+        "reasonCode": null,
+        "occurredAt": "2026-10-16T00:00:00Z",
+        "evidence": {
+          "evidenceType": "ALL_REQUIRED_DRAIN",
+          "evidenceRef": "proof_demo",
+          "evidenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "requiredSinks": [
+            "rtmp_main"
+          ],
+          "sinkProofs": [
+            {
+              "sinkId": "rtmp_main",
+              "kind": "RTMP_PIPE_WRITE",
+              "generationId": 7,
+              "firstAudioSample": 0,
+              "finalAudioSampleExclusive": 84000,
+              "audioConsumedThroughExclusive": 84000,
+              "finalVideoFrame": 87,
+              "videoConsumedThroughFrame": 87,
+              "terminal": true
+            }
+          ],
+          "predecessorCheckpointIds": [
+            "checkpoint_playing"
+          ],
+          "audienceVisibility": "UNVERIFIED"
+        }
+      }
+    },
+    "response": {
+      "requestId": "req_demo",
+      "checkpointId": "checkpoint_demo",
+      "applied": true,
+      "runRevision": 4,
+      "completedPrefix": 0,
+      "disposition": "APPLIED"
+    }
+  },
+  {
+    "operationId": "QueryExecutionStatus",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "commandId": "cmd_demo",
+      "runEpoch": 1
+    },
+    "response": {
+      "requestId": "req_demo",
+      "status": {
+        "commandId": "cmd_demo",
+        "requestHash": "dc66d88cca91b91a761182d1bcc3214f56faacc5c07ab1f57bb427be5a67c169",
+        "runEpoch": 1,
+        "attemptId": "attempt_demo",
+        "state": "STARTED",
+        "lastCheckpoint": {
+          "schemaVersion": "0.5",
+          "contractRevision": "durable-live-1",
+          "tenantId": "tenant_demo",
+          "ownerId": "owner_demo",
+          "runId": "run_demo",
+          "checkpointId": "checkpoint_demo",
+          "eventId": "event_demo",
+          "attemptId": "attempt_demo",
+          "sessionId": "session_demo",
+          "utteranceId": "utt_demo",
+          "commandId": "cmd_demo",
+          "runEpoch": 1,
+          "producerIncarnation": "runtime_demo",
+          "producerSeq": 5,
+          "state": "LOCAL_MEDIA_DRAINED",
+          "lastKnownState": null,
+          "reasonCode": null,
+          "occurredAt": "2026-10-16T00:00:00Z",
+          "evidence": {
+            "evidenceType": "ALL_REQUIRED_DRAIN",
+            "evidenceRef": "proof_demo",
+            "evidenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "requiredSinks": [
+              "rtmp_main"
+            ],
+            "sinkProofs": [
+              {
+                "sinkId": "rtmp_main",
+                "kind": "RTMP_PIPE_WRITE",
+                "generationId": 7,
+                "firstAudioSample": 0,
+                "finalAudioSampleExclusive": 84000,
+                "audioConsumedThroughExclusive": 84000,
+                "finalVideoFrame": 87,
+                "videoConsumedThroughFrame": 87,
+                "terminal": true
+              }
+            ],
+            "predecessorCheckpointIds": [
+              "checkpoint_playing"
+            ],
+            "audienceVisibility": "UNVERIFIED"
+          }
+        },
+        "receiptId": "receipt_demo",
+        "executorIncarnation": "runtime_demo",
+        "executorSealed": false,
+        "revision": 5,
+        "evidenceRef": "proof_demo"
+      }
+    }
+  },
+  {
+    "operationId": "ResumeBroadcastRun",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": 3,
+      "idempotencyKey": "resume:decision_demo",
+      "expectedPreviousEpoch": 1,
+      "decisionId": "decision_demo"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "run": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "roomId": "room_demo",
+        "status": "RECOVERING",
+        "runEpoch": 2,
+        "currentSessionId": "session_demo",
+        "currentPlanId": "plan_demo",
+        "startedAt": "2026-10-16T00:00:00Z",
+        "updatedAt": "2026-10-16T00:00:00Z",
+        "endedAt": null,
+        "desiredState": "LIVE",
+        "recoveryPolicy": "MANUAL_ON_UNKNOWN",
+        "revision": 4,
+        "stopRevision": 0
+      },
+      "lease": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "leaseOwner": "backend_demo",
+        "leaseExpiresAt": "2026-10-16T00:00:15Z",
+        "fencingToken": 2,
+        "runEpoch": 2,
+        "leaseVersion": 2,
+        "phase": "PENDING_INSTALL"
+      }
+    }
+  },
+  {
+    "operationId": "StopBroadcastRun",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": 3,
+      "idempotencyKey": "stop:run_demo",
+      "decisionId": "decision_stop",
+      "reasonCode": "OPERATOR_STOP"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "run": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "roomId": "room_demo",
+        "status": "STOPPING",
+        "runEpoch": 1,
+        "currentSessionId": "session_demo",
+        "currentPlanId": "plan_demo",
+        "startedAt": "2026-10-16T00:00:00Z",
+        "updatedAt": "2026-10-16T00:00:00Z",
+        "endedAt": null,
+        "desiredState": "STOPPED",
+        "recoveryPolicy": "MANUAL_ON_UNKNOWN",
+        "revision": 4,
+        "stopRevision": 1
+      },
+      "stopRevision": 1
+    }
+  },
+  {
+    "operationId": "YieldAtSegmentBoundary",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": 3,
+      "runEpoch": 1,
+      "boundaryCheckpointId": "checkpoint_complete",
+      "expectedSlotVersion": 2,
+      "idempotencyKey": "yield:checkpoint_complete"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "state": "YIELDED",
+      "boundaryCheckpointId": "checkpoint_complete",
+      "slot": {
+        "activeAttemptId": null,
+        "boundaryCheckpointId": "checkpoint_complete",
+        "slotVersion": 3
+      },
+      "runRevision": 4
+    }
+  },
+  {
+    "operationId": "RestoreContentPlan",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "snapshot": {
+        "run": {
+          "tenantId": "tenant_demo",
+          "ownerId": "owner_demo",
+          "runId": "run_demo",
+          "roomId": "room_demo",
+          "status": "LIVE",
+          "runEpoch": 1,
+          "currentSessionId": "session_demo",
+          "currentPlanId": "plan_demo",
+          "startedAt": "2026-10-16T00:00:00Z",
+          "updatedAt": "2026-10-16T00:00:00Z",
+          "endedAt": null,
+          "desiredState": "LIVE",
+          "recoveryPolicy": "MANUAL_ON_UNKNOWN",
+          "revision": 3,
+          "stopRevision": 0
+        },
+        "bundle": {
+          "plan": {
+            "tenantId": "tenant_demo",
+            "ownerId": "owner_demo",
+            "runId": "run_demo",
+            "planId": "plan_demo",
+            "productId": "product_demo",
+            "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+            "revision": 1,
+            "segmentOrder": [
+              "segment_demo"
+            ],
+            "generationSource": {
+              "kind": "TEMPLATE",
+              "reference": "template_1",
+              "modelVersion": null,
+              "promptVersion": null
+            },
+            "snapshot": {
+              "productId": "product_demo",
+              "name": "纯棉卫衣",
+              "description": "纯棉面料",
+              "sizes": [
+                "M",
+                "L",
+                "XL"
+              ],
+              "sourceVersion": "product_version_1"
+            },
+            "createdAt": "2026-10-16T00:00:00Z",
+            "updatedAt": "2026-10-16T00:00:00Z"
+          },
+          "segments": [
+            {
+              "tenantId": "tenant_demo",
+              "ownerId": "owner_demo",
+              "runId": "run_demo",
+              "segmentId": "segment_demo",
+              "planId": "plan_demo",
+              "sequence": 1,
+              "content": "这款采用纯棉面料，穿着柔软舒适。",
+              "textHash": "51912a595bdc92deaad2dff0fdd3a0d5e87cbb69dc27abeeff480572504f8aac",
+              "state": "READY",
+              "utteranceId": null,
+              "idempotencyKey": "segment:segment_demo:initial",
+              "checkpointState": "PLANNED",
+              "estimatedDurationMs": 3500,
+              "factDependencies": [],
+              "createdAt": "2026-10-16T00:00:00Z",
+              "updatedAt": "2026-10-16T00:00:00Z"
+            }
+          ]
+        },
+        "completedPrefix": 0,
+        "resumeSequence": 1,
+        "decisions": [],
+        "unresolvedAttempts": [],
+        "slot": {
+          "activeAttemptId": null,
+          "boundaryCheckpointId": null,
+          "slotVersion": 1
+        }
+      }
+    }
+  },
+  {
+    "operationId": "MarkExecutionUnknown",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": 3,
+      "runEpoch": 1,
+      "attemptId": "attempt_demo",
+      "reasonCode": "RUNTIME_CRASH",
+      "lastKnownState": "PLAYING",
+      "evidenceRef": "proof_missing",
+      "idempotencyKey": "unknown:attempt_demo"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "attemptId": "attempt_demo",
+      "checkpointId": "checkpoint_unknown",
+      "runRevision": 4
+    }
+  },
+  {
+    "operationId": "SaveContentPlan",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": 3,
+      "idempotencyKey": "plan:plan_demo",
+      "bundle": {
+        "plan": {
+          "tenantId": "tenant_demo",
+          "ownerId": "owner_demo",
+          "runId": "run_demo",
+          "planId": "plan_demo",
+          "productId": "product_demo",
+          "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+          "revision": 1,
+          "segmentOrder": [
+            "segment_demo"
+          ],
+          "generationSource": {
+            "kind": "TEMPLATE",
+            "reference": "template_1",
+            "modelVersion": null,
+            "promptVersion": null
+          },
+          "snapshot": {
+            "productId": "product_demo",
+            "name": "纯棉卫衣",
+            "description": "纯棉面料",
+            "sizes": [
+              "M",
+              "L",
+              "XL"
+            ],
+            "sourceVersion": "product_version_1"
+          },
+          "createdAt": "2026-10-16T00:00:00Z",
+          "updatedAt": "2026-10-16T00:00:00Z"
+        },
+        "segments": [
+          {
+            "tenantId": "tenant_demo",
+            "ownerId": "owner_demo",
+            "runId": "run_demo",
+            "segmentId": "segment_demo",
+            "planId": "plan_demo",
+            "sequence": 1,
+            "content": "这款采用纯棉面料，穿着柔软舒适。",
+            "textHash": "51912a595bdc92deaad2dff0fdd3a0d5e87cbb69dc27abeeff480572504f8aac",
+            "state": "READY",
+            "utteranceId": null,
+            "idempotencyKey": "segment:segment_demo:initial",
+            "checkpointState": "PLANNED",
+            "estimatedDurationMs": 3500,
+            "factDependencies": [],
+            "createdAt": "2026-10-16T00:00:00Z",
+            "updatedAt": "2026-10-16T00:00:00Z"
+          }
+        ]
+      }
+    },
+    "response": {
+      "requestId": "req_demo",
+      "planId": "plan_demo",
+      "runRevision": 4
+    }
+  },
+  {
+    "operationId": "AdmitTurn",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": 3,
+      "idempotencyKey": "comment:source_receipt_demo",
+      "turn": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "turnId": "turn_comment",
+        "planId": "plan_demo",
+        "turnType": "COMMENT",
+        "sourceSegmentId": null,
+        "sourceCommentTraceId": "trace_comment",
+        "sourceIdentities": [
+          {
+            "sourceReceiptId": "source_receipt_demo",
+            "platform": "mock",
+            "platformRoomId": "mock_room",
+            "sourceEventId": "source_comment_1",
+            "traceId": "trace_comment"
+          }
+        ],
+        "priority": 80,
+        "state": "READY",
+        "scheduledAt": "2026-10-16T00:00:00Z",
+        "startedAt": null,
+        "finishedAt": null,
+        "expiresAt": "2026-10-16T00:00:20Z",
+        "inputText": "这款有哪些尺码？",
+        "idempotencyKey": "comment:source_receipt_demo",
+        "revision": 1
+      }
+    },
+    "response": {
+      "requestId": "req_demo",
+      "turn": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "turnId": "turn_comment",
+        "planId": "plan_demo",
+        "turnType": "COMMENT",
+        "sourceSegmentId": null,
+        "sourceCommentTraceId": "trace_comment",
+        "sourceIdentities": [
+          {
+            "sourceReceiptId": "source_receipt_demo",
+            "platform": "mock",
+            "platformRoomId": "mock_room",
+            "sourceEventId": "source_comment_1",
+            "traceId": "trace_comment"
+          }
+        ],
+        "priority": 80,
+        "state": "READY",
+        "scheduledAt": "2026-10-16T00:00:00Z",
+        "startedAt": null,
+        "finishedAt": null,
+        "expiresAt": "2026-10-16T00:00:20Z",
+        "inputText": "这款有哪些尺码？",
+        "idempotencyKey": "comment:source_receipt_demo",
+        "revision": 1
+      },
+      "runRevision": 4
+    }
+  },
+  {
+    "operationId": "RuntimeExecute",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "commandId": "cmd_demo",
+      "intentId": "intent_demo",
+      "attemptId": "attempt_demo",
+      "turnId": "turn_demo",
+      "utteranceId": "utt_demo",
+      "runEpoch": 1,
+      "leaseVersion": 1,
+      "idempotencyKey": "turn:segment_demo:initial",
+      "traceId": "trace_demo",
+      "createdAt": "2026-10-16T00:00:00Z",
+      "operation": "EXECUTE_TURN",
+      "payload": {
+        "mode": "SCRIPT_TEXT",
+        "text": "这款采用纯棉面料，穿着柔软舒适。",
+        "textHash": "51912a595bdc92deaad2dff0fdd3a0d5e87cbb69dc27abeeff480572504f8aac",
+        "productId": "product_demo",
+        "planId": "plan_demo",
+        "segmentId": "segment_demo",
+        "factDependencies": [],
+        "expiresAt": "2026-10-16T00:00:20Z",
+        "requiredSinks": [
+          "rtmp_main"
+        ]
+      },
+      "requestHash": "dc66d88cca91b91a761182d1bcc3214f56faacc5c07ab1f57bb427be5a67c169"
+    },
+    "response": {
+      "accepted": true,
+      "commandId": "cmd_demo",
+      "receiptId": "receipt_demo",
+      "requestHash": "dc66d88cca91b91a761182d1bcc3214f56faacc5c07ab1f57bb427be5a67c169",
+      "revision": 1,
+      "state": "ACCEPTED"
+    }
+  },
+  {
+    "operationId": "FenceInstall",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": 3,
+      "sessionId": "session_demo",
+      "runEpoch": 2,
+      "expectedPreviousEpoch": 1,
+      "leaseVersion": 2,
+      "producerIncarnation": "runtime_next",
+      "guardianProofRef": "fence_proof",
+      "idempotencyKey": "install:run_demo:2",
+      "commandId": "cmd_fence",
+      "intentId": "intent_fence",
+      "traceId": "trace_fence",
+      "createdAt": "2026-10-16T00:00:00Z",
+      "operation": "INSTALL_FENCE",
+      "requestHash": "cdcab92fcfbc6d4357c2a28831f830ff8a69c81f9d50683c31aff95458ecda9b"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "runEpoch": 2,
+      "phase": "PENDING_INSTALL",
+      "fenceReceiptId": "fence_receipt"
+    }
+  },
+  {
+    "operationId": "JournalAccept",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "command": {
+        "schemaVersion": "0.5",
+        "contractRevision": "durable-live-1",
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "sessionId": "session_demo",
+        "commandId": "cmd_demo",
+        "intentId": "intent_demo",
+        "attemptId": "attempt_demo",
+        "turnId": "turn_demo",
+        "utteranceId": "utt_demo",
+        "runEpoch": 1,
+        "leaseVersion": 1,
+        "idempotencyKey": "turn:segment_demo:initial",
+        "traceId": "trace_demo",
+        "createdAt": "2026-10-16T00:00:00Z",
+        "operation": "EXECUTE_TURN",
+        "payload": {
+          "mode": "SCRIPT_TEXT",
+          "text": "这款采用纯棉面料，穿着柔软舒适。",
+          "textHash": "51912a595bdc92deaad2dff0fdd3a0d5e87cbb69dc27abeeff480572504f8aac",
+          "productId": "product_demo",
+          "planId": "plan_demo",
+          "segmentId": "segment_demo",
+          "factDependencies": [],
+          "expiresAt": "2026-10-16T00:00:20Z",
+          "requiredSinks": [
+            "rtmp_main"
+          ]
+        },
+        "requestHash": "dc66d88cca91b91a761182d1bcc3214f56faacc5c07ab1f57bb427be5a67c169"
+      },
+      "producerIncarnation": "runtime_demo"
+    },
+    "response": {
+      "accepted": true,
+      "commandId": "cmd_demo",
+      "receiptId": "receipt_demo",
+      "requestHash": "dc66d88cca91b91a761182d1bcc3214f56faacc5c07ab1f57bb427be5a67c169",
+      "revision": 1,
+      "state": "ACCEPTED"
+    }
+  },
+  {
+    "operationId": "JournalStart",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "commandId": "cmd_demo",
+      "attemptId": "attempt_demo",
+      "runEpoch": 1,
+      "producerIncarnation": "runtime_demo",
+      "permitId": "permit_demo",
+      "requestHash": "dc66d88cca91b91a761182d1bcc3214f56faacc5c07ab1f57bb427be5a67c169",
+      "expectedInboxRevision": 1
+    },
+    "response": {
+      "requestId": "req_demo",
+      "startAuthorized": true,
+      "state": "STARTED",
+      "revision": 2,
+      "evidenceRef": "start_proof"
+    }
+  },
+  {
+    "operationId": "AcquireOutputPermit",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "runEpoch": 1,
+      "producerIncarnation": "runtime_demo",
+      "guardianId": "guardian_demo"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "permitId": "permit_demo",
+      "runEpoch": 1,
+      "leaseVersion": 1,
+      "ttlMs": 900,
+      "issuedAt": "2026-10-16T00:00:00Z",
+      "expiresAt": "2026-10-16T00:00:00.900Z",
+      "roomId": "room_demo",
+      "outputBindingVersion": 1,
+      "sessionId": "session_demo",
+      "producerIncarnation": "runtime_demo"
+    }
+  },
+  {
+    "operationId": "ConfirmRunFence",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "runEpoch": 2,
+      "producerIncarnation": "runtime_next",
+      "guardianProofRef": "fence_proof",
+      "fenceReceiptId": "fence_receipt",
+      "idempotencyKey": "activate:run_demo:2"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "runRevision": 4,
+      "runEpoch": 2,
+      "phase": "ACTIVE"
+    }
+  },
+  {
+    "operationId": "ConfirmOutputFence",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": 3,
+      "runEpoch": 2,
+      "guardianId": "guardian_demo",
+      "retiredEpoch": 1,
+      "evidenceRef": "fence_proof",
+      "idempotencyKey": "fence:run_demo:1"
+    },
+    "response": {
+      "requestId": "req_demo",
+      "runRevision": 4,
+      "fenceReceiptId": "fence_receipt"
+    }
+  },
+  {
+    "operationId": "RuntimeStop",
+    "request": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "commandId": "cmd_stop",
+      "intentId": "intent_stop",
+      "runEpoch": 1,
+      "idempotencyKey": "stop:run_demo:1",
+      "traceId": "trace_stop",
+      "createdAt": "2026-10-16T00:00:00Z",
+      "operation": "STOP_RUN",
+      "stopRevision": 1,
+      "reasonCode": "OPERATOR_STOP",
+      "requestHash": "e98b2786426822a4d75a089effc090c97ff93b8762bb214dfe21e6a374fa24b3"
+    },
+    "response": {
+      "accepted": true,
+      "commandId": "cmd_stop",
+      "requestHash": "e98b2786426822a4d75a089effc090c97ff93b8762bb214dfe21e6a374fa24b3",
+      "receiptId": "receipt_stop",
+      "revision": 1,
+      "state": "ACCEPTED"
+    }
+  }
+]
