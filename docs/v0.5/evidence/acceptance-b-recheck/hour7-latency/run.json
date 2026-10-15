@@ -1,0 +1,71 @@
+{
+  "toolBaseCommit": "aab062f024fa28202a7255179c5089c1dc9bdbbd",
+  "observedLiveSource": "88a68246d46a3942515d9895247a3ebfe15e2e07",
+  "python": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "tests": {
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "integration/v0.5/tests",
+      "-p",
+      "test_latency_phases.py",
+      "-v"
+    ],
+    "exitCode": 0,
+    "scope": "15 synthetic timing-evidence rejection tests only"
+  },
+  "originalRawRun": {
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "integration/v0.5/latency_phases.py",
+      "--sql",
+      "/private/tmp/astralive-f-real-hour-tcp-7/media/sql-proof.json",
+      "--refs",
+      "/private/tmp/astralive-f-real-hour-tcp-7/media/staged-observer/refs.json",
+      "--metrics",
+      "/private/tmp/astralive-f-hour7-metrics.json",
+      "--llm",
+      "/private/tmp/astralive-f-real-hour-tcp-7/media/staged-observer/llm-calls.jsonl",
+      "--output",
+      "/private/tmp/astralive-b-hour7-latency-final-raw-20261015.json"
+    ],
+    "exitCode": 0
+  },
+  "durableBackupVsOriginal": "identical all report fields excluding inputManifest file paths and compressed byte hashes",
+  "attributedTurns": 25,
+  "rejectedTurns": 0,
+  "phaseSumReconciledAll": true,
+  "noNewNativeOrMedia": "No cloud/provider/GPU/recording decode, no production or existing oracle edits",
+  "historicalToolParserNote": "Initial Python3.9 stdlib ISO fraction-length rejection retained only in /private/tmp/astralive-b-hour7-latency-initial-python39-parser-rejection.json. Final RFC3339 1..9-digit parser covered by rejection/compatibility test; original live FAIL unchanged.",
+  "files": [
+    {
+      "path": "integration/v0.5/latency_phases.py",
+      "bytes": 18402,
+      "sha256": "7152c4f3a6beb8c3499a8738669a3948f8c87fa0380a0be33b27fb788f3b5ac3"
+    },
+    {
+      "path": "integration/v0.5/tests/test_latency_phases.py",
+      "bytes": 10626,
+      "sha256": "a5da8a70bf0af4601d56e09c021a0518dfb3100c5d729d7efc6d1a6d759cf98c"
+    },
+    {
+      "path": "docs/v0.5/evidence/acceptance-b-recheck/hour7-latency/report.json",
+      "bytes": 69606,
+      "sha256": "0993f920e5f0b07177153654719a386c298346fe791f63a083f81353aa3efb12"
+    },
+    {
+      "path": "docs/v0.5/evidence/acceptance-b-recheck/hour7-latency/unit-tests.log",
+      "bytes": 1727,
+      "sha256": "c071c537a0c0ec77a39a499c353f6a25435f66d2348fa077f6f8634eebffa05b"
+    },
+    {
+      "path": "docs/v0.5/evidence/acceptance-b-recheck/hour7-latency/original-raw-run.log",
+      "bytes": 190,
+      "sha256": "1e6c8cfe19e2af60d8384eedffa22127b46ccb9551ff714b177b59f5951017ad"
+    }
+  ]
+}

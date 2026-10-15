@@ -1,0 +1,1785 @@
+{
+  "scope": "CLOSED_METADATA_TIMING_COMPONENT_ONLY",
+  "artifactSource": "88a68246d46a3942515d9895247a3ebfe15e2e07",
+  "originalObserverStatus": "FAIL",
+  "originalAuditStatus": "FAIL",
+  "originalOverallAcceptance": "UNCHANGED_ORIGINAL_GATE; never inferred from component metrics",
+  "unknownAttempts": [
+    {
+      "attemptId": "attempt_d083ab0ef5425f0d8796d81e5246fb8a",
+      "state": "UNKNOWN"
+    }
+  ],
+  "rows": [
+    {
+      "turnId": "turn_af374d3c2fd782889540d3c905fe4e31",
+      "answerCommandId": "cmd_6b00bb8edd73240940764b456ed4667e",
+      "answerAttemptId": "attempt_6d09d58a62c135c0bd3ad3ccec796d3c",
+      "boundarySegmentId": "segment_f4ce14ba3d2371b85e69beffd82ec788",
+      "ordinal": 34,
+      "selectedAt": "2026-10-14T20:36:00.651278+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 150.057861328125
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 4912.448974609375
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 395.547119140625
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 192.3310546875
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 65.891845703125
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 29.359130859375
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.431884765625
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3382.537109375
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.824951171875
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 8.31494140625
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 194.22705078125
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 9340.971923828125
+      },
+      "nativeInferenceMs": 2167.332,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_4100ddc7cbafe056fffdba560673a0c8",
+      "answerCommandId": "cmd_d209449a1fba9f71f239de741bde9b69",
+      "answerAttemptId": "attempt_ae732834c25b20bad1eb915c12df1aa8",
+      "boundarySegmentId": "segment_c12642a8da978f237e930e0cef2c3f70",
+      "ordinal": 49,
+      "selectedAt": "2026-10-14T20:38:32.84645+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 157.39404296875
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 4769.2490234375
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 337.5458984375
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 192.17919921875
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 60.2548828125
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 36.962890625
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 8.80810546875
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 5075.156982421875
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.2099609375
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 8.191162109375
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 191.747802734375
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 10844.699951171875
+      },
+      "nativeInferenceMs": 3798.603,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_56d2782212907f12fff004f3032d84ee",
+      "answerCommandId": "cmd_98ae00295d8243fed8dd18a51eb1c6bc",
+      "answerAttemptId": "attempt_bb1515f2cc99e34fbca7715ee1a866ad",
+      "boundarySegmentId": "segment_0051dd6da7971b772ebcf9d0c67be52f",
+      "ordinal": 57,
+      "selectedAt": "2026-10-14T20:40:00.357911+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 143.460205078125
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3478.8388671875
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 329.928955078125
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 191.623046875
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 60.028076171875
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 36.419921875
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.761962890625
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 2336.30615234375
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.73486328125
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.149169921875
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 198.287841796875
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 6792.5390625
+      },
+      "nativeInferenceMs": 1632.011,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_03970e2a738afadc1a37310d5e18de38",
+      "answerCommandId": "cmd_b22bcd74823daf49bce530d828d7c75f",
+      "answerAttemptId": "attempt_53efb556c95a3b33139deabc4d82831d",
+      "boundarySegmentId": "segment_e4ff37a640690a399fae96386573e1af",
+      "ordinal": 70,
+      "selectedAt": "2026-10-14T20:42:08.849323+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 151.846923828125
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6332.490966796875
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 378.14501953125
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 191.03515625
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 67.036865234375
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 27.326171875
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.18994140625
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3270.950927734375
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.718017578125
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.593994140625
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 210.39306640625
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 10645.72705078125
+      },
+      "nativeInferenceMs": 2165.994,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_da6b3d9fa71d59a0c61d8c93547e546f",
+      "answerCommandId": "cmd_7d722eb1ca8dd99b7864820a800740cd",
+      "answerAttemptId": "attempt_cff895e0d23606505e74e344cd3619c2",
+      "boundarySegmentId": "segment_aac2146c2f044561886c1c3f531c562a",
+      "ordinal": 82,
+      "selectedAt": "2026-10-14T20:44:13.350612+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 149.988037109375
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 5204.6337890625
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 406.113037109375
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 190.93505859375
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 66.443115234375
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 28.364013671875
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 2.82080078125
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 4656.5400390625
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.838134765625
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.531005859375
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 221.93115234375
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 10942.13818359375
+      },
+      "nativeInferenceMs": 3267.35,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_560a324a9455c67129996818ef2e85a9",
+      "answerCommandId": "cmd_dfbf142782bf505a0532236057cf0232",
+      "answerAttemptId": "attempt_8acfd633130df132ae6d04e6df6be66d",
+      "boundarySegmentId": "segment_de338eb3d84cdeee7a4a1efcd3f054ab",
+      "ordinal": 91,
+      "selectedAt": "2026-10-14T20:45:54.090277+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 110.56689453125
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 1544.60595703125
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 366.3291015625
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 190.786865234375
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 67.92919921875
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 26.385986328125
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.130859375
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3371.652099609375
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.1728515625
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.943115234375
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 199.870361328125
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 5895.373291015625
+      },
+      "nativeInferenceMs": 2168.197,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_2769d13f00c2a5cc2b04fc6be5c48a7e",
+      "answerCommandId": "cmd_32912ff0b50a53d8ad7dd0e200ef6d02",
+      "answerAttemptId": "attempt_c9744664ba510b200b462a2db9dc8072",
+      "boundarySegmentId": "segment_e05865e58f154be3012a11efe8f64909",
+      "ordinal": 99,
+      "selectedAt": "2026-10-14T20:47:16.020827+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 180.823974609375
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 5183.378173828125
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 325.659912109375
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 190.968994140625
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 60.876953125
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 34.302001953125
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.628173828125
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 4889.66796875
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.7900390625
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 8.68798828125
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 192.73876953125
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 11078.52294921875
+      },
+      "nativeInferenceMs": 3266.874,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_6f39283c57bad9cb19ad043b69c11104",
+      "answerCommandId": "cmd_b6bdbe006f5382b1ab355e26f0bafbaf",
+      "answerAttemptId": "attempt_d2cfc4e256f38420be6d474bd4dec043",
+      "boundarySegmentId": "segment_510f84581f6415ccf201d044cca33bfe",
+      "ordinal": 112,
+      "selectedAt": "2026-10-14T20:49:39.371065+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 130.947021484375
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3657.43505859375
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 352.823974609375
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 189.613037109375
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 65.35791015625
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 29.739013671875
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.328125
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 2457.3408203125
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.97802734375
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.85302734375
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 204.76904296875
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 7105.18505859375
+      },
+      "nativeInferenceMs": 1617.704,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_227c44a4c7523f5d41fbc3a42c98ddee",
+      "answerCommandId": "cmd_4826dcd0b2ce229cf8781bd2dac942a6",
+      "answerAttemptId": "attempt_e477ca7a1df5cf53b05637286d47ebb7",
+      "boundarySegmentId": "segment_e02d2a4e9360b7981f686dcf3bac4f3d",
+      "ordinal": 125,
+      "selectedAt": "2026-10-14T20:51:58.023216+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 180.093994140625
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 380.762939453125
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 326.0048828125
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 192.373046875
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 65.68017578125
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 29.643798828125
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 2.85107421875
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3385.033935546875
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.7451171875
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 8.361083984375
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 186.98388671875
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 4764.533935546875
+      },
+      "nativeInferenceMs": 2154.345,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_4f1d175bed8a476ed3c45840e729f322",
+      "answerCommandId": "cmd_a9f55150be28e2876c5ff028095cb460",
+      "answerAttemptId": "attempt_879da98701c78f93306efea17bb64335",
+      "boundarySegmentId": "segment_28f47c480fa1e53a17785b9903d0b636",
+      "ordinal": 134,
+      "selectedAt": "2026-10-14T20:53:30.05015+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 151.64111328125
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 5581.44091796875
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 328.1669921875
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 191.5791015625
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 65.493896484375
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 28.14697265625
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.378173828125
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 5166.8330078125
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.48193359375
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.37109375
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 188.76708984375
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 11720.30029296875
+      },
+      "nativeInferenceMs": 3795.818,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_fada2abbc2c8b08e497ade640bcb9475",
+      "answerCommandId": "cmd_956ab581d2dbf5a15b0975f0d5e86466",
+      "answerAttemptId": "attempt_d1ca9fd466773b507098be0abe840817",
+      "boundarySegmentId": "segment_2d346482532226483be71e71b5a4e990",
+      "ordinal": 142,
+      "selectedAt": "2026-10-14T20:55:01.050498+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 152.929931640625
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 5444.923095703125
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 365.19482421875
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 189.52099609375
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 64.943115234375
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 29.49609375
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 2.82080078125
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3205.655029296875
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.005126953125
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.642822265625
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 228.020263671875
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 9697.152099609375
+      },
+      "nativeInferenceMs": 2163.092,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_b4fa6d9438d4002caf2f91baf35a11d3",
+      "answerCommandId": "cmd_b83ebfe4d2c6c941236d5b7619880959",
+      "answerAttemptId": "attempt_4f2b9992584016bee3054ff5b2fd1341",
+      "boundarySegmentId": "segment_7197851b71e3ecbd04115b57e0628a71",
+      "ordinal": 156,
+      "selectedAt": "2026-10-14T20:57:40.857266+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 143.828857421875
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3640.157958984375
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 372.8349609375
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 188.09912109375
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 65.7900390625
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 28.998046875
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.011962890625
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 4651.376953125
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.951904296875
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.4599609375
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 211.974365234375
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 9320.484130859375
+      },
+      "nativeInferenceMs": 3243.881,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_47cd20d9dae4c416902ef44670d0acba",
+      "answerCommandId": "cmd_8a1578f64ec75a3fd432404d390c9d2e",
+      "answerAttemptId": "attempt_036b66984b65ad1c441734bbbcc49958",
+      "boundarySegmentId": "segment_bb6a1efbc643253321854e1d38ad2ae0",
+      "ordinal": 162,
+      "selectedAt": "2026-10-14T20:58:47.151145+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 150.14697265625
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 5840.97509765625
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 371.906005859375
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 189.5
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 67.744873046875
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 26.81396484375
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.580078125
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 2515.427978515625
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.214111328125
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.02001953125
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 193.97607421875
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 9374.30517578125
+      },
+      "nativeInferenceMs": 1619.57,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_12f4c4795d7d06db73a30318230d99a5",
+      "answerCommandId": "cmd_a5c5c83e8d9c100d3c43cbc8fa81a4a1",
+      "answerAttemptId": "attempt_7abea068902579b6a5a942dc4f758f82",
+      "boundarySegmentId": "segment_2d80d52520ec7129ab19ee7af39c0a51",
+      "ordinal": 173,
+      "selectedAt": "2026-10-14T21:00:52.678904+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 139.06396484375
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 226.908935546875
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 367.81396484375
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 189.4560546875
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 57.907958984375
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 37.72900390625
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 2.9521484375
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3381.5830078125
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.56982421875
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 8.503173828125
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 201.35791015625
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 4620.845947265625
+      },
+      "nativeInferenceMs": 2163.855,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_3eeba276298bdb49febbc87d6dfb62ae",
+      "answerCommandId": "cmd_5393a3b5326f576c5287d259c4508f5f",
+      "answerAttemptId": "attempt_62a7bd6f029f63caac3f17fbc50848e4",
+      "boundarySegmentId": "segment_ba36b76f5c2766d1b1927a08e0557598",
+      "ordinal": 185,
+      "selectedAt": "2026-10-14T21:03:01.493029+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 108.123046875
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 5372.0830078125
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 338.65185546875
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 189.18115234375
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 59.8818359375
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 36.504150390625
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.583984375
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 4713.70703125
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.323974609375
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.993896484375
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 240.18701171875
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 11075.220947265625
+      },
+      "nativeInferenceMs": 3249.065,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_bc9e91cd0d8c6879f843079bf6b476c9",
+      "answerCommandId": "cmd_84706608bd3a9b667c43a548c545885e",
+      "answerAttemptId": "attempt_21913f05889739ee6d5f26894a51b206",
+      "boundarySegmentId": "segment_5ecbf1b135df8b6610fc74b171d16ed8",
+      "ordinal": 194,
+      "selectedAt": "2026-10-14T21:04:47.346494+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 155.879150390625
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 2678.25
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 332.031982421875
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 189.051025390625
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 59.7138671875
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 36.878173828125
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.73486328125
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3294.798095703125
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.490966796875
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.322998046875
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 199.10498046875
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 6964.256103515625
+      },
+      "nativeInferenceMs": 2171.875,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_886b1d751ce4e8e89ae8f940648d0f58",
+      "answerCommandId": "cmd_a56cdccee14961533f8ec39b4cd3bd40",
+      "answerAttemptId": "attempt_d29ca3cc87a9569cfa6e46b71c0ecf8f",
+      "boundarySegmentId": "segment_80fead1006dddf7a59e4bae06be7bb08",
+      "ordinal": 203,
+      "selectedAt": "2026-10-14T21:06:31.994993+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 105.8291015625
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 210.994873046875
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 401.09521484375
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 188.02783203125
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 54.570068359375
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 41.405029296875
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.576904296875
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 5082.4931640625
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.30078125
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 8.4912109375
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 195.373046875
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 6299.1572265625
+      },
+      "nativeInferenceMs": 3773.901,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_0692fdc17a21614acd89a82763f60915",
+      "answerCommandId": "cmd_a92437b54de991dd7fc38e72553bc535",
+      "answerAttemptId": "attempt_7b3bf2bd675eeaf83a046ebf9d33f942",
+      "boundarySegmentId": "segment_c893a42566897e49736a5efb7e3161f7",
+      "ordinal": 213,
+      "selectedAt": "2026-10-14T21:08:25.848753+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 152.47705078125
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6871.44091796875
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 341.739013671875
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 187.55517578125
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 58.966796875
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 36.048095703125
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.0029296875
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 2413.7412109375
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.0849609375
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.9208984375
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 194.6201171875
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 10273.59716796875
+      },
+      "nativeInferenceMs": 1615.3,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_795c98359cccf3117e5810670e71aebd",
+      "answerCommandId": "cmd_1313c08ab0ab882606a3fe69adf649c6",
+      "answerAttemptId": "attempt_ca520c6cade103ab92bc9f73fbbc9f33",
+      "boundarySegmentId": "segment_cf535de265db286d2f2376b02eea42d8",
+      "ordinal": 225,
+      "selectedAt": "2026-10-14T21:10:45.04891+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 151.697998046875
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6580.777099609375
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 333.906005859375
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 187.298095703125
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 60.10595703125
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 35.31201171875
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.159912109375
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3342.130126953125
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 8.3818359375
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 8.7509765625
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 239.22021484375
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 10950.740234375
+      },
+      "nativeInferenceMs": 2157.093,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_10ac9cd01342ca84cb17aef1160ec32b",
+      "answerCommandId": "cmd_38e2a5be89250ba891c0ef30a0aee845",
+      "answerAttemptId": "attempt_7055d041f304c8c546bd39285cecb2b8",
+      "boundarySegmentId": "segment_2c4c5d4d6767e7e6225dfee425c97802",
+      "ordinal": 235,
+      "selectedAt": "2026-10-14T21:12:42.649635+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 153.72705078125
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6740.255859375
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 367.39111328125
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 189.992919921875
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 56.47900390625
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 39.066162109375
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.30078125
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 4711.110107421875
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.114990234375
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.074951171875
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 202.60205078125
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 12478.114990234375
+      },
+      "nativeInferenceMs": 3236.232,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_2d0a0a7697dd22fe111eadbeff809de5",
+      "answerCommandId": "cmd_595672ed644f9a6159fdd752a0b04c04",
+      "answerAttemptId": "attempt_8e4f3d7add64ad963e5b972f82798b3f",
+      "boundarySegmentId": "segment_6abb03f0cfafa7fc71367b92eff1dc8a",
+      "ordinal": 240,
+      "selectedAt": "2026-10-14T21:13:49.491599+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 109.5478515625
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 383.43994140625
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 328.7001953125
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 188.52099609375
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 60.1669921875
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 34.704833984375
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.177978515625
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3287.3310546875
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 8.68701171875
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.547119140625
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 202.626953125
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 4614.450927734375
+      },
+      "nativeInferenceMs": 2151.917,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_c6b34bc2c528de8d0b81ce6689623a1a",
+      "answerCommandId": "cmd_305a6951529de7e8d7b96dcfbec0584a",
+      "answerAttemptId": "attempt_dcaf0ec3e8e95e608ab16f98d1b9b20f",
+      "boundarySegmentId": "segment_8fb0df9b674bf4b9f333bb9de82c2dbc",
+      "ordinal": 250,
+      "selectedAt": "2026-10-14T21:15:45.477314+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 123.8759765625
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 2730.260986328125
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 382.22998046875
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 186.10302734375
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 56.22998046875
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 41.0009765625
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.548095703125
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 5058.59912109375
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.7578125
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.461181640625
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 247.368896484375
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 8843.43603515625
+      },
+      "nativeInferenceMs": 3768.785,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_2521a35673617d5c4376acec353a43ac",
+      "answerCommandId": "cmd_271d59c6f1fba7d497f51a7155e73bcc",
+      "answerAttemptId": "attempt_141f89f3948f9b68090d53f61278e73b",
+      "boundarySegmentId": "segment_05c0c4ac459068b0af04a085c59d7aa6",
+      "ordinal": 260,
+      "selectedAt": "2026-10-14T21:17:48.145377+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 155.1689453125
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3157.071044921875
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 359.197021484375
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 185.116943359375
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 57.044189453125
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 38.139892578125
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.468994140625
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 2427.943115234375
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.98095703125
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6.988037109375
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 191.553955078125
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 6588.673095703125
+      },
+      "nativeInferenceMs": 1619.119,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_5a7203023f34ab06a0cf8921da83c1cf",
+      "answerCommandId": "cmd_f73501f2fd42f2c4f68eb20bcd7945e8",
+      "answerAttemptId": "attempt_f96f0db024046b524d3c5b4463c0ea30",
+      "boundarySegmentId": "segment_6ccc43322b1f25e8f20daba4b2b495cc",
+      "ordinal": 271,
+      "selectedAt": "2026-10-14T21:19:52.554657+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 149.404052734375
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 5993.135009765625
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 420.406982421875
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 187.8798828125
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 77.2060546875
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 15.27197265625
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3.80810546875
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 3295.174072265625
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 9.329833984375
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.629150390625
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 204.923095703125
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 10364.168212890625
+      },
+      "nativeInferenceMs": 2157.062,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    },
+    {
+      "turnId": "turn_4c1d3454e268dc9a56594c2c2d558781",
+      "answerCommandId": "cmd_fe94db26f21c5b069c4c7f7050d2db9d",
+      "answerAttemptId": "attempt_8d37759195ee578565fca4f67e147d22",
+      "boundarySegmentId": "segment_1d9e1c4e5b1e456a416a81382d4becaf",
+      "ordinal": 280,
+      "selectedAt": "2026-10-14T21:21:36.750089+08:00",
+      "status": "ATTRIBUTED_METADATA_ONLY",
+      "phases": {
+        "selectedToSuspendRecorded": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 151.388916015625
+        },
+        "suspendToBoundaryCompletedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 6518.48388671875
+        },
+        "boundaryCompletedToAnswerEpochRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 402.56396484375
+        },
+        "answerEpochToAnswerPreparedRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 180.205078125
+        },
+        "answerPreparedToCommitCommandCreated": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 58.6630859375
+        },
+        "commitCommandCreatedToInboxAccepted": {
+          "status": "CONDITIONAL_GO_DB_CLOCK",
+          "valueMs": 36.9619140625
+        },
+        "inboxAcceptedToGeneratingRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 4.27294921875
+        },
+        "generatingToReadyRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 4570.635009765625
+        },
+        "readyToCommitIntentRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 8.136962890625
+        },
+        "commitIntentToInstalledRecorded": {
+          "status": "MEASURED_DB_RECEIPT_INTERVAL",
+          "valueMs": 7.830078125
+        },
+        "installedToChromeCorrelatedAV": {
+          "status": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+          "valueMs": 246.619384765625
+        }
+      },
+      "phaseSumReconcilesWithin001ms": true,
+      "selectedToChromeCorrelatedAV": {
+        "status": "CONDITIONAL_CLOCK_ESTIMATE",
+        "valueMs": 12185.76123046875
+      },
+      "nativeInferenceMs": 3226.113,
+      "nativeInferenceScope": "sum of synchronized native inference calls only; overlaps generatingToReady, not an additive phase",
+      "answerPreparedTextSource": "actual nonempty Go prepared answer; no answer LLM duration inferred"
+    }
+  ],
+  "phaseSummary": {
+    "selectedToSuspendRecorded": {
+      "evidenceClass": "CONDITIONAL_GO_DB_CLOCK",
+      "count": 25,
+      "P50": 150.14697265625,
+      "P95": 175.55400390624993,
+      "P99": 180.648779296875,
+      "max": 180.823974609375,
+      "mean": 144.396357421875,
+      "unit": "ms",
+      "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+    },
+    "suspendToBoundaryCompletedRecorded": {
+      "evidenceClass": "MEASURED_DB_RECEIPT_INTERVAL",
+      "count": 25,
+      "P50": 4912.448974609375,
+      "P95": 6708.360107421875,
+      "P99": 6839.95650390625,
+      "max": 6871.44091796875,
+      "mean": 4137.3776953125,
+      "unit": "ms",
+      "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+    },
+    "boundaryCompletedToAnswerEpochRecorded": {
+      "evidenceClass": "MEASURED_DB_RECEIPT_INTERVAL",
+      "count": 25,
+      "P50": 365.19482421875,
+      "P95": 405.40322265624997,
+      "P99": 416.976435546875,
+      "max": 420.406982421875,
+      "mean": 361.277119140625,
+      "unit": "ms",
+      "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+    },
+    "answerEpochToAnswerPreparedRecorded": {
+      "evidenceClass": "MEASURED_DB_RECEIPT_INTERVAL",
+      "count": 25,
+      "P50": 189.5,
+      "P95": 192.30068359375,
+      "P99": 192.36296875,
+      "max": 192.373046875,
+      "mean": 189.157314453125,
+      "unit": "ms",
+      "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+    },
+    "answerPreparedToCommitCommandCreated": {
+      "evidenceClass": "CONDITIONAL_GO_DB_CLOCK",
+      "count": 25,
+      "P50": 60.2548828125,
+      "P95": 67.892333984375,
+      "P99": 74.97960937499998,
+      "max": 77.2060546875,
+      "mean": 62.41626953125,
+      "unit": "ms",
+      "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+    },
+    "commitCommandCreatedToInboxAccepted": {
+      "evidenceClass": "CONDITIONAL_GO_DB_CLOCK",
+      "count": 25,
+      "P50": 34.704833984375,
+      "P95": 40.61401367187499,
+      "P99": 41.308056640625,
+      "max": 41.405029296875,
+      "mean": 32.839208984375,
+      "unit": "ms",
+      "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+    },
+    "inboxAcceptedToGeneratingRecorded": {
+      "evidenceClass": "MEASURED_DB_RECEIPT_INTERVAL",
+      "count": 25,
+      "P50": 3.378173828125,
+      "P95": 4.179980468749998,
+      "P99": 7.719667968749992,
+      "max": 8.80810546875,
+      "mean": 3.57318359375,
+      "unit": "ms",
+      "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+    },
+    "generatingToReadyRecorded": {
+      "evidenceClass": "MEASURED_DB_RECEIPT_INTERVAL",
+      "count": 25,
+      "P50": 3381.5830078125,
+      "P95": 5081.025927734375,
+      "P99": 5146.5914453125,
+      "max": 5166.8330078125,
+      "mean": 3757.74896484375,
+      "unit": "ms",
+      "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+    },
+    "readyToCommitIntentRecorded": {
+      "evidenceClass": "MEASURED_DB_RECEIPT_INTERVAL",
+      "count": 25,
+      "P50": 7.1728515625,
+      "P95": 8.6259765625,
+      "P99": 9.175556640624999,
+      "max": 9.329833984375,
+      "mean": 7.352998046875,
+      "unit": "ms",
+      "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+    },
+    "commitIntentToInstalledRecorded": {
+      "evidenceClass": "MEASURED_DB_RECEIPT_INTERVAL",
+      "count": 25,
+      "P50": 7.37109375,
+      "P95": 8.651025390625,
+      "P99": 8.735859375,
+      "max": 8.7509765625,
+      "mean": 7.505322265625,
+      "unit": "ms",
+      "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+    },
+    "installedToChromeCorrelatedAV": {
+      "evidenceClass": "CONDITIONAL_DB_GO_CHROME_RECORDING_CLOCK",
+      "count": 25,
+      "P50": 201.35791015625,
+      "P95": 245.33291015625,
+      "P99": 247.189013671875,
+      "max": 247.368896484375,
+      "mean": 207.569775390625,
+      "unit": "ms",
+      "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+    }
+  },
+  "selectedToChromeCorrelatedAV": {
+    "count": 25,
+    "P50": 9374.30517578125,
+    "P95": 12092.669042968748,
+    "P99": 12407.950087890624,
+    "max": 12478.114990234375,
+    "mean": 8911.214208984375,
+    "unit": "ms",
+    "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+  },
+  "nativeInferenceOverlapping": {
+    "count": 25,
+    "P50": 2167.332,
+    "P95": 3791.4346,
+    "P99": 3797.9346,
+    "max": 3798.603,
+    "mean": 2574.04352,
+    "unit": "ms",
+    "method": "linear interpolation at (n-1)*p; marginal quantiles do not add"
+  },
+  "bridgeLLMDurationUnassigned": {
+    "count": 25,
+    "P50": 676.0,
+    "P95": 1141.3999999999994,
+    "P99": 1389.1599999999994,
+    "max": 1453,
+    "mean": 734.84,
+    "unit": "ms",
+    "method": "linear interpolation at (n-1)*p; marginal quantiles do not add",
+    "scope": "bridge only, after answers; no command/turn/absolute-time anchor; never assigned by array order"
+  },
+  "missingAnchors": {
+    "selectedToPhysicalLastNarrationSample": "NOT_VERIFIABLE: receipt completion is post-consumption DB insertion, not last physical sample",
+    "perTurnAnswerLLM": "NOT_VERIFIABLE: no success per-turn LLM timing; nonempty prepared factual answers bypass LLM",
+    "ttsEmbeddingEncodeTransferDecodeOverlaySplit": "NOT_VERIFIABLE: no per-attempt start/end anchors; generating-to-READY bundles these with native inference",
+    "workerToHostClock": "NOT_VERIFIABLE: native elapsed duration only, no calibrated clock mapping"
+  },
+  "clockLimits": [
+    "DB intervals are receipt insertion timestamps, not device or exact effect timestamps; DB wall-clock jumps not independently checked",
+    "Go created/selected UTC to DB clock assumes same host clock; no independent NTP-jump audit",
+    "Chrome estimate is inherited from hash-pinned hour_metrics with same-host UTC/timeOrigin and recording-marker mapping assumptions; audio-device clock uncalibrated"
+  ],
+  "busyCommentSLA": "NOT_VERIFIABLE",
+  "audienceAudible": false,
+  "humanNaturalness": "NOT_TESTED",
+  "inputManifest": [
+    {
+      "path": "docs/v0.5/evidence/integration-f/real-hour-tcp-7/media/sql-proof.json.gz",
+      "bytes": 1964066,
+      "sha256": "3f2079070b3633c0af98ca633fb821bd51f12f91304a96601258ce6421fa9af6",
+      "decodedSHA256": "6f7a4403f35b66edb4805eb002d7e6aaf2ce6883b02760d8bad26c6b7d4a6231"
+    },
+    {
+      "path": "docs/v0.5/evidence/integration-f/real-hour-tcp-7/media/staged-observer/refs.json",
+      "bytes": 472764,
+      "sha256": "8d6b8b89f292c18b1e43b1a236058b15abf9cff3d2d62d9ef600ba025906b57f",
+      "decodedSHA256": "8d6b8b89f292c18b1e43b1a236058b15abf9cff3d2d62d9ef600ba025906b57f"
+    },
+    {
+      "path": "docs/v0.5/evidence/integration-f/real-hour-tcp-7/analysis/astralive-f-hour7-metrics.json",
+      "bytes": 462226,
+      "sha256": "15adf4ea079d99a2f7cf49e81a36ed36941e5cf59f79a3fb218b0a95c373d429",
+      "decodedSHA256": "15adf4ea079d99a2f7cf49e81a36ed36941e5cf59f79a3fb218b0a95c373d429"
+    },
+    {
+      "path": "docs/v0.5/evidence/integration-f/real-hour-tcp-7/media/staged-observer/llm-calls.jsonl",
+      "bytes": 19418,
+      "sha256": "54414fd65b418da8cc770c1ed8ff2cbdd44ed9b11f9bb6e095c23dca76448658",
+      "decodedSHA256": "54414fd65b418da8cc770c1ed8ff2cbdd44ed9b11f9bb6e095c23dca76448658"
+    }
+  ],
+  "toolSHA256": "7152c4f3a6beb8c3499a8738669a3948f8c87fa0380a0be33b27fb788f3b5ac3"
+}
