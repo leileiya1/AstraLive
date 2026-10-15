@@ -1,0 +1,101 @@
+{
+  "command_1": {
+    "schemaVersion": "0.5",
+    "contractRevision": "durable-live-1",
+    "tenantId": "tenant",
+    "ownerId": "owner",
+    "runId": "run",
+    "sessionId": "session",
+    "commandId": "command_1",
+    "intentId": "intent_1",
+    "attemptId": "attempt_1",
+    "turnId": "turn_faacab322de522356231a44a91bfa9ef7968287377d27ef78b204d003fb90d25",
+    "utteranceId": "utterance_1",
+    "runEpoch": 1,
+    "leaseVersion": 1,
+    "idempotencyKey": "turn:segment:seg_fe2fc880ee5a0221fa992d57689cb5f2d3406718f6e0c2a7270734039e920a1e:initial",
+    "traceId": "trace_1",
+    "createdAt": "2026-10-16T00:00:00Z",
+    "operation": "EXECUTE_TURN",
+    "requestHash": "482aa8f9597b2847fde6f514164c99387518a4bb7b3083508a3be67e22f24231",
+    "payload": {
+      "mode": "SCRIPT_TEXT",
+      "text": "第1段介绍纯棉面料。",
+      "textHash": "7fdb77656ab218ea0430605e999e54a6db9f19f362971e82e0e57ad0fce8810c",
+      "productId": "product",
+      "planId": "plan",
+      "segmentId": "seg_fe2fc880ee5a0221fa992d57689cb5f2d3406718f6e0c2a7270734039e920a1e",
+      "factDependencies": [],
+      "expiresAt": "2026-10-16T00:00:20Z",
+      "requiredSinks": [
+        "cpu_sink"
+      ]
+    }
+  },
+  "command_2": {
+    "schemaVersion": "0.5",
+    "contractRevision": "durable-live-1",
+    "tenantId": "tenant",
+    "ownerId": "owner",
+    "runId": "run",
+    "sessionId": "session",
+    "commandId": "command_2",
+    "intentId": "intent_2",
+    "attemptId": "attempt_2",
+    "turnId": "turn_6f1105d4924d931947a9e2e43a5bfb0eb0027036b9f8364bbc46249659a1a0cd",
+    "utteranceId": "utterance_2",
+    "runEpoch": 1,
+    "leaseVersion": 1,
+    "idempotencyKey": "selection:6f1105d4924d931947a9e2e43a5bfb0eb0027036b9f8364bbc46249659a1a0cd",
+    "traceId": "trace_2",
+    "createdAt": "2026-10-16T00:00:03Z",
+    "operation": "EXECUTE_TURN",
+    "requestHash": "f5db0bcd9d1981adee4a21535d515bd206c487625d30bf47e3bf5868dbb9a59e",
+    "payload": {
+      "mode": "COMMENT_QUESTION",
+      "text": "价格多少？",
+      "textHash": "724a54fd88a5d4cc4c7aefe570241fce96a0d47c24db8eb84db0e9e4d0ca7de3",
+      "productId": "product",
+      "planId": "plan",
+      "segmentId": null,
+      "factDependencies": [],
+      "expiresAt": "2026-10-16T00:00:20Z",
+      "requiredSinks": [
+        "cpu_sink"
+      ]
+    }
+  },
+  "command_3": {
+    "schemaVersion": "0.5",
+    "contractRevision": "durable-live-1",
+    "tenantId": "tenant",
+    "ownerId": "owner",
+    "runId": "run",
+    "sessionId": "session",
+    "commandId": "command_3",
+    "intentId": "intent_3",
+    "attemptId": "attempt_3",
+    "turnId": "turn_5ebda1c8cb5ae0a5ae0f97dc77ac159bb80b0606a3e9a533c32a8d955aca498c",
+    "utteranceId": "utterance_3",
+    "runEpoch": 1,
+    "leaseVersion": 1,
+    "idempotencyKey": "turn:segment:seg_1089d07a136cb1b00805bdf7045a777a0ee265ccb073d996c4eda0770fa9091b:initial",
+    "traceId": "trace_3",
+    "createdAt": "2026-10-16T00:00:05Z",
+    "operation": "EXECUTE_TURN",
+    "requestHash": "99a6d16489b8463a77d0885561bf45adb090c2493478ab2d90b64b112471ca5c",
+    "payload": {
+      "mode": "SCRIPT_TEXT",
+      "text": "第2段介绍纯棉面料。",
+      "textHash": "d0ba42029fb94e600f190e051b40da06f162653e2379e6572c436db77020c67b",
+      "productId": "product",
+      "planId": "plan",
+      "segmentId": "seg_1089d07a136cb1b00805bdf7045a777a0ee265ccb073d996c4eda0770fa9091b",
+      "factDependencies": [],
+      "expiresAt": "2026-10-16T00:00:25Z",
+      "requiredSinks": [
+        "cpu_sink"
+      ]
+    }
+  }
+}
