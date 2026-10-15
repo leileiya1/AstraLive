@@ -20,6 +20,7 @@ root=Path(__file__).resolve().parents[2]
 evidence=Path(args.evidence_dir).resolve();evidence.mkdir(parents=True,exist_ok=True)
 for port in (55462,56382):
     with socket.socket() as s:
+        s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
         try:s.bind(('127.0.0.1',port))
         except OSError:raise SystemExit(f'refuse to touch occupied isolated port {port}')
 owned=Path(tempfile.mkdtemp(prefix='astralive-agent2-',dir='/tmp'))
