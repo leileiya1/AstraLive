@@ -49,6 +49,8 @@ class Stage:
     release_request: dict | None = None
     cancel_request: dict | None = None
     release_lock: object = field(default_factory=asyncio.Lock)
+    release_task: object = None
+    release_parameters: object = None
 
 
 class StagingClient:
@@ -328,6 +330,21 @@ class StagingClient:
         stage.pose=packet;return reply
 
     async def release(self,stage,complete=False,reason="STOP"):
+        # A cancelled control caller must not discard an already-sent fence or
+        # physical release ACK. Coalesce only this captured Stage's transaction;
+        # its original exchange deadlines and exact requests remain unchanged.
+        if not complete:
+            stage.fenced=True;stage.renew_stop.set()
+        if stage.released:return stage.released
+        if stage.release_parameters is None:
+            stage.release_parameters=(complete,reason)
+            if stage.control_id is None:stage.control_id=uuid4().hex
+        if stage.release_task is None or stage.release_task.done():
+            stage.release_task=asyncio.create_task(self._release(stage,*stage.release_parameters),name="staging-physical-release")
+            stage.release_task.add_done_callback(lambda task:None if task.cancelled() else task.exception())
+        return await asyncio.shield(stage.release_task)
+
+    async def _release(self,stage,complete=False,reason="STOP"):
         async with stage.release_lock:
             if stage.released:return stage.released
             stage.renew_stop.set()
