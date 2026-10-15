@@ -1,0 +1,15 @@
+{
+  "source": "aab062f024fa28202a7255179c5089c1dc9bdbbd",
+  "scope": "IMMUTABLE_BASE_PLUS_IDENTICAL_TEST_ONLY_OVERLAY_REAL_LOOPBACK_NOT_NATIVE",
+  "overlaySHA256": "0a6fd419351cfc54c10288e4c61f11cff5406a8104f3e7a30d436923e91fc7e2",
+  "command": [
+    "/private/tmp/astralive-f-media-venv-1/bin/python",
+    "-m",
+    "unittest",
+    "test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_repeated_cancel_caller_preserves_inflight_fence_ack",
+    "test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_repeated_cancel_caller_preserves_inflight_release_ack",
+    "-v"
+  ],
+  "exitCode": 1,
+  "expected": "FAIL_2_MATCHING_ACKS_ORPHANED_BY_CALLER_CANCEL"
+}

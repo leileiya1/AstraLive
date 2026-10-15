@@ -1,0 +1,8 @@
+=== RUN   TestPostgresAcceptanceCNoBridgeRestartDuplicate
+    acceptance_c_bridge_postgres_test.go:122: no bridge: exact [] document, zero bridge segment/media, restart+duplicate same response, exactly one correct next narration, changed duplicate rejected, no fabricated fact completion
+--- PASS: TestPostgresAcceptanceCNoBridgeRestartDuplicate (0.11s)
+=== RUN   TestPostgresNewResumeBridgeEmptyFactsCanonical
+    bridge_facts_postgres_test.go:180: actual PG bridge facts/segment document/narration document/COMMIT payload/child Runtime READY/duplicate/reload all []; historical nil remains null; nonempty facts unchanged; no physical GPU claim
+--- PASS: TestPostgresNewResumeBridgeEmptyFactsCanonical (0.28s)
+PASS
+ok  	astralive/backend/internal/narration	2.010s

@@ -1,0 +1,131 @@
+{
+  "baseSource": "aab062f024fa28202a7255179c5089c1dc9bdbbd",
+  "productionFix": "9bb51971e305183c7aa373526619736196ac838b",
+  "scope": "LOCAL_FOCUSED_RECHECK_NOT_GOLDEN_ACCEPTANCE",
+  "python": "/private/tmp/astralive-f-media-venv-1/bin/python",
+  "pythonPath": "runtime:runtime/tests:.",
+  "checks": [
+    {
+      "name": "control-cancellation-guard",
+      "scope": "REAL_LOOPBACK_SOFTWARE_PEER_NO_NATIVE",
+      "tests": 10,
+      "status": "PASS",
+      "seconds": 25.172,
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "test_acceptance_c_control_cancel",
+        "-v"
+      ]
+    },
+    {
+      "name": "bound-session-cleanup",
+      "scope": "PRODUCTION_MANAGER_SESSION_TCP_WITH_FIXTURE_BINDING_TIMELINE_READY_NO_NATIVE",
+      "tests": 2,
+      "status": "PASS",
+      "seconds": 6.069,
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "test_acceptance_c_bound_stop",
+        "-v"
+      ]
+    },
+    {
+      "name": "existing-focused-regressions",
+      "scope": "CPU_PROTOCOL_POLICY_LIFECYCLE_NOT_REAL_MEDIA",
+      "tests": 50,
+      "status": "PASS",
+      "seconds": 8.667,
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "test_staging_pose_stop",
+        "test_staging_renewal_release",
+        "test_staging_runtime",
+        "test_staging_binding_lifecycle",
+        "test_narration_lifecycle",
+        "test_narration_segments",
+        "test_staging_bridge_policy",
+        "-v"
+      ]
+    },
+    {
+      "name": "pg-bridge-and-no-bridge",
+      "scope": "ACTUAL_OWNED_PG_GO_RACE_CHILD_CPU_RUNTIME_READY_NOT_NATIVE",
+      "tests": 2,
+      "status": "PASS",
+      "seconds": 3.795
+    },
+    {
+      "name": "baseline-confirmed-defect",
+      "scope": "IMMUTABLE_AAB_PLUS_IDENTICAL_TEST_ONLY_OVERLAY",
+      "tests": 2,
+      "status": "EXPECTED_OLD_FAIL",
+      "errors": "MATCHING_STAGEFENCED_AND_STAGERELEASED_ACKS_ORPHANED_AFTER_CANCEL"
+    }
+  ],
+  "newGoTestsOnly": "NO_BRIDGE_RESTART_DUPLICATE_NO_NEW_PRODUCTION_BUG",
+  "realGPU": "NOT TESTED",
+  "realChromeRTMP": "NOT TESTED",
+  "originalHour7And8fAudits": "FAIL_PRESERVED",
+  "files": {
+    "bound-session-two-cases.log": {
+      "sha256": "1463966f5b14a39c9a9467fae76256d48456dbb43af70345314e6d6bcce69480",
+      "bytes": 645
+    },
+    "control-ten-guards.log": {
+      "sha256": "f1c1d5ca6da4d5738352cf9d147410618d54b1e74bae856f855d609465525e79",
+      "bytes": 2662
+    },
+    "existing-fifty-regressions.log": {
+      "sha256": "c0432fa417640f9861958dd197deb3eec4573a89185321889916383e914da129",
+      "bytes": 12805
+    },
+    "immutable-old-result.json": {
+      "sha256": "75bd9b275337f9f4696b608638d2eb6fc8d2b3f72404306a74f50109f7df8691",
+      "bytes": 679
+    },
+    "immutable-old-two-fail.log": {
+      "sha256": "25566b895afb6c978e0c2aa3be67770b20e0a94c6bb5addf0b97983a32e77d4e",
+      "bytes": 3731
+    },
+    "initial-control-fixture.log": {
+      "sha256": "4fd6e0e64c5ade74c8257b5000ac5bbcadacd04de8cf5a9c4ea0fc72fba41aed",
+      "bytes": 5791
+    },
+    "postgres-result.json": {
+      "sha256": "a92afd333613c7b24b5caeef2b04eb8aa52f64b6750044c03febe3a42f956df4",
+      "bytes": 374
+    },
+    "postgres-shutdown.log": {
+      "sha256": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+      "bytes": 56
+    },
+    "postgres-two-cases.log": {
+      "sha256": "bbcbdeb5bafb06f8b712886a9732127ab07abfcdb82216bd30e34ce6ad01f78e",
+      "bytes": 765
+    },
+    "worktree-old-two-fail.log": {
+      "sha256": "a720cbd68fa1980482cf0326c4971004ebf7ff831bd4eed7ec396ab5c3cafafc",
+      "bytes": 3751
+    }
+  },
+  "ownedTestSources": {
+    "runtime/tests/test_acceptance_c_control_cancel.py": {
+      "sha256": "0a6fd419351cfc54c10288e4c61f11cff5406a8104f3e7a30d436923e91fc7e2",
+      "bytes": 11056
+    },
+    "runtime/tests/test_acceptance_c_bound_stop.py": {
+      "sha256": "5477278433f3f50b83b707b6a7ce7037251fa4d73b6bb414e8437e3c39b2943d",
+      "bytes": 5741
+    },
+    "backend/internal/narration/acceptance_c_bridge_postgres_test.go": {
+      "sha256": "ad412c90dbdb9ee6be96f805473c0928751402313664526b4b0f3c686f5f1e9c",
+      "bytes": 5936
+    }
+  }
+}

@@ -1,0 +1,31 @@
+# C local acceptance recheck — 2026-10-15
+
+Base: `aab062f`; isolated branch `review/v0.5-acceptance-c`. Production fix: `9bb51971e305183c7aa373526619736196ac838b`. A reviewed this exact source and reported a scoped contract ACK. F merged it as `9d09708b6788868c885c3bfc8bafa1234566ec1e`; F owns the actual merged-source full gate. C did not repeat the full suite or contact cloud, real Providers or GPU.
+
+## Confirmed additional control-cancellation defect
+
+The final base already contains the pose ACK protection (`43771588`) and new-bridge FactIDs constructor fix (`ee22e1e`). A separate repeated-cancellation gap remained: while an already-sent StageCancel or StageRelease awaited its exact ACK, cancelling the caller removed its pending correlation. The real loopback peer then returned the matching StageFenced or StageReleased, and the receiver raised STAGING_CONFLICT with no pending or answered entry. The same two cases fail on an immutable archive of base aab062f plus the identical test-only overlay. These are CPU control-plane socket reproductions, not observations of fresh real GPU packets or upgrades of earlier Golden failures. The initial peer fixture log is retained along with the corrected protocol peer and immutable failure logs.
+
+Only `runtime/app/soulx_staging.py` changes production behavior:17 added lines retain a private captured release task and immutable first complete/reason/controlID. Reentrant callers share that exact transaction; cancellation first fences publication and stops new renewal but does not cancel its pending ACK. Existing pose/renew work drains before control cleanup. No automatic retry is added. After a failed task, an explicit call can only retry the same captured exact control requests, preserving existing idempotency behavior; it never admits new speech/generation. Unknown, foreign, wrong-prefix, expired or transport-failed proofs remain failures. UNKNOWN/nonreusable never becomes media COMPLETED or reusable because a later caller asks for completion. A previously valid Native PROVEN_COMPLETE remains only that original proof when Stop arrives; Stop still fences and no media completion is synthesized.
+
+Original grant2s, writer2s, pose5s, Cancel10s, Release15s, Session interrupt2s/avatar cleanup4s and all other budgets remain unchanged. Tests actually wait the original10s and15s control timeouts across repeated caller cancellations; late exact ACKs after those deadlines are still rejected rather than resurrecting receipts. No Session/service, A durability, B MediaTimeline/sinks, Go controller/model production, frozen DTO/schema, observer/oracle/harness/main, default or feature flag is changed.
+
+## Focused evidence
+
+| Check | Outcome | Scope |
+|---|---|---|
+| Immutable base two matching-ACK cancellation cases | Expected FAIL | StageFenced and StageReleased correlation lost, not unsolicited/foreign packets |
+|10 new control cases | PASS25.172s | Real loopback TCP software peer; repeated cancellation, original deadlines, late/foreign/wrong-prefix/RX failures and Complete/Stop arbitration |
+|2 bound Session cases | PASS6.069s | Actual manager/Session/TCP with fixture bindings, Ready/provenance and fence callback; no actual media/GPU |
+|50 existing focused regressions | PASS8.667s | Pose, renewal, binding, lifecycle, ordinary/default-off, segment and private bridge policy software tests |
+|2 owned PostgreSQL Go race cases | PASS3.795s | Real A journal and SQL plus production child Runtime READY with explicit synthetic TTS/lightweight avatar/sinks/journal |
+
+The Session cases retain binding/reservation while caller cancellation or original Stop budgets leave cleanup uncertain. A late native-safe proof alone does not mark Session ENDED or release its binding; explicit cleanup must finish. The successful repeated-cancel case sends only one StageCancel and one StageRelease, then closes the captured link and releases the binding exactly once. No shared Session or binding implementation was modified to obtain that result.
+
+## Bridge arrays and no-bridge review
+
+No new bridge production defect was found. The existing actual PostgreSQL spoken-bridge test reconfirms[] in document/Segment SQL/COMMIT/child Runtime READY, reload and duplicates, with historical JSON null unchanged and nonempty narration/answer facts intact. The added no-bridge test is coverage only: choice0 keeps an empty[] bridge document, emits no bridge Segment or media command, and after controller restart/duplicate preparation produces exactly one correct next authored segment. Changed same-command preparation is rejected; cursor/facts do not advance merely because the empty bridge is selected. BridgeReady→Resuming and next authored command on the following Drive are the existing two-step scheduling design, not a new bug or a timeout extension. The test bootstrap answer/boundary is controlled state and is not physical answer completion evidence.
+
+## Limits and next verification
+
+[Manifest and raw-log hashes](../../evidence/acceptance-c-recheck/manifest.json) pin code, test-source bytes, commands and original failures. Owned PG was stopped. Full module results belong to F's actual merge gate; these focused results are not a fresh Golden PASS. Original real hour7 and8f strict audits remain FAIL, including historical null bridges; no rows, descriptors or oracle rules were rewritten. Fresh real GPU Stop under repeated cancellation, later exact proof auditing, real Chrome/RTMP, a complete fresh long run, and the busy-comment latency target remain independently required. No performance improvement, naturalness perfection, audience audibility or exactly-once speech is claimed. Rollback reverts the private scheduling fix or disables staging only for a newly authorized Session, without replaying existing UNKNOWN work.

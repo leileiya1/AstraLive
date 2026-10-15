@@ -1,0 +1,17 @@
+{
+  "scope": "ACTUAL_OWNED_PG_GO_RACE_CHILD_CPU_RUNTIME_METADATA_NOT_NATIVE",
+  "command": [
+    "go",
+    "-C",
+    "backend",
+    "test",
+    "-race",
+    "./internal/narration",
+    "-run",
+    "^(TestPostgresAcceptanceCNoBridgeRestartDuplicate|TestPostgresNewResumeBridgeEmptyFactsCanonical)$",
+    "-count=1",
+    "-v"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 3.795
+}
