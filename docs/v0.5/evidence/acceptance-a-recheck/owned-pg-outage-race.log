@@ -1,0 +1,5 @@
+=== RUN   TestOwnedPostgresOutage
+    pg_outage_test.go:55: owned PostgreSQL fast stop/restart: failed closed during outage, durable acceptance restored without duplicate command
+--- PASS: TestOwnedPostgresOutage (0.41s)
+PASS
+ok  	astralive/backend/internal/durability	1.663s

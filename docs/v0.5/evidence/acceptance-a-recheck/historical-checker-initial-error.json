@@ -1,0 +1,14 @@
+{
+  "status": "RUNNER_ERROR",
+  "exception": "KeyError: status",
+  "cause": "Checker initially assumed root status, actual independent audit uses root automatedEvidenceStatus; input unchanged; no evidence verdict assigned",
+  "actualReproducedExitCode": 1,
+  "argv": [
+    "/private/tmp/astralive-f-media-venv-1/bin/python",
+    "docs/v0.5/evidence/acceptance-a-recheck/historical-checker-initial-keyerror.py",
+    "--repo",
+    "/private/tmp/astralive-v05-acceptance-a-20261015-1",
+    "--output",
+    "/private/tmp/astralive-a-initial-checker-no-result.json"
+  ]
+}

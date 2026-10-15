@@ -1,0 +1,9 @@
+=== RUN   TestRuntimeProcessCrashRedisOff
+    runtime_process_test.go:203: CPU_SIMULATION SIGKILL: execution UNKNOWN after restart; same command produced zero additional synthetic sink writes; Redis unreachable
+--- PASS: TestRuntimeProcessCrashRedisOff (1.02s)
+=== RUN   TestPostgresOnlyServerStartup
+    server_startup_test.go:240: actual Go SIGKILL/restart, same Runtime PID: HTTP idempotency stable; one logical utterance; one synthetic sequence start; Stop ended; PostgreSQL event spool flushed
+    server_startup_test.go:242: cmd/server PostgreSQL-only readiness 200 before/after SIGKILL; Redis URL invalid and no Redis client
+--- PASS: TestPostgresOnlyServerStartup (5.77s)
+PASS
+ok  	astralive/backend/internal/durability	8.035s
