@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Opt-in loopback acceptance observer. Forwards original framed TCP bytes.
 
-Records a strict whitelist of validated control metadata, never Auth, audio,
+Records a strict whitelist of validated metadata, never Auth, raw audio,
 video, grants or arbitrary payloads. A wire ACK is not Runtime acceptance,
 durable completion or audible speech. This extra local hop is test topology.
 """
@@ -20,16 +20,18 @@ from gpu_worker import staging_contract as contract
 CAPTURE = frozenset(("StageBegin", "StageBegun", "StageProduced", "StageCommit",
                      "StageCommitAck", "StageCancel", "StageFenced", "StageRelease",
                      "StageReleased", "StageError"))
+FRAME_CAPTURE = frozenset(("StageVideo", "StageReceived", "StageReceivedAck"))
 FIELDS = ("control_id", "request_fingerprint", "descriptor_sha256",
           "commit_proof_fingerprint", "pose_proof_fingerprint", "reason", "state",
           "publication_fenced", "native_safe_boundary", "retained_artifact_bytes",
-          "latest_consumed_sequence", "terminal_disposition", "reusable", "code")
+          "latest_consumed_sequence", "terminal_disposition", "reusable", "code",
+          "frame_sequence", "payload_sha256", "native_rgb_sha256", "storage_receipt_id")
 
 
-def metadata(raw, payload, direction, connection):
+def metadata(raw, payload, direction, connection, frame_metadata=False):
     header = contract.decode_header(raw)
     name = header.get("type")
-    if name not in CAPTURE:
+    if name not in CAPTURE and not (frame_metadata and name in FRAME_CAPTURE):
         return None
     contract.validate_message(header, payload)
     before = time.monotonic_ns()
@@ -50,7 +52,7 @@ def metadata(raw, payload, direction, connection):
     return row
 
 
-async def forward(reader, writer, direction, connection, emit):
+async def forward(reader, writer, direction, connection, emit, frame_metadata=False):
     while True:
         try:
             prefix = await reader.readexactly(8)
@@ -64,20 +66,25 @@ async def forward(reader, writer, direction, connection, emit):
             raise ValueError("FRAME_BUDGET_EXCEEDED")
         raw = await reader.readexactly(size)
         payload = await reader.readexactly(payload_size)
+        read_end = time.monotonic_ns()
         writer.write(prefix + raw + payload)
         await writer.drain()
+        drain_end = time.monotonic_ns()
         try:
-            row = metadata(raw, payload, direction, connection)
+            row = metadata(raw, payload, direction, connection, frame_metadata)
         except (contract.ContractError, ValueError, TypeError, KeyError):
             row = {"scope": "OBSERVER_INVALID_HEADER_NOT_PROOF", "connection": connection,
                    "direction": direction, "code": "HEADER_REJECTED"}
         if row is not None:
+            row.update(readCompleteNs=read_end, forwardDrainCompleteNs=drain_end,
+                       validationCompleteNs=time.monotonic_ns(), payloadBytes=payload_size)
             emit(row)
 
 
 class Observer:
-    def __init__(self, upstream_port, emit):
+    def __init__(self, upstream_port, emit, frame_metadata=False):
         self.upstream_port, self.emit = upstream_port, emit
+        self.frame_metadata = frame_metadata
         self.connections = 0
         self.tasks = set()
 
@@ -92,9 +99,9 @@ class Observer:
             upstream_reader, upstream_writer = await asyncio.open_connection(
                 "127.0.0.1", self.upstream_port)
             tasks = [asyncio.create_task(forward(reader, upstream_writer,
-                         "runtime_to_worker", connection, self.emit)),
+                         "runtime_to_worker", connection, self.emit, self.frame_metadata)),
                      asyncio.create_task(forward(upstream_reader, writer,
-                         "worker_to_runtime", connection, self.emit))]
+                         "worker_to_runtime", connection, self.emit, self.frame_metadata))]
             done, _ = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
             for completed in done:
                 completed.result()
@@ -123,12 +130,13 @@ async def main(args):
         def emit(row):
             output.write(json.dumps(row, separators=(",", ":"), allow_nan=False)+"\n")
             output.flush()
-        observer = Observer(args.upstream_port, emit)
+        observer = Observer(args.upstream_port, emit, args.frame_metadata)
         server = await asyncio.start_server(observer.handle, "127.0.0.1", args.listen_port)
         ready = {"scope": "ACCEPTANCE_ONLY_EXTRA_LOOPBACK_HOP",
                  "listenPort": server.sockets[0].getsockname()[1],
                  "upstreamPort": args.upstream_port, "pid": os.getpid(),
-                 "rawPayloadsRecorded": False, "audienceAudible": False}
+                 "rawPayloadsRecorded": False, "frameMetadataRecorded": args.frame_metadata,
+                 "audienceAudible": False}
         ready_fd = os.open(args.ready_file, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
         with os.fdopen(ready_fd, "w") as ready_out:
             json.dump(ready, ready_out)
@@ -148,6 +156,8 @@ if __name__ == "__main__":
     parser.add_argument("--listen-port", type=int, default=0)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--ready-file", type=Path, required=True)
+    parser.add_argument("--frame-metadata", action="store_true",
+                        help="also log validated frame/credit identity, sequence, hashes and local timing; no raw pixels")
     args = parser.parse_args()
     if not 1 <= args.upstream_port <= 65535 or not 0 <= args.listen_port <= 65535:
         parser.error("invalid loopback port")

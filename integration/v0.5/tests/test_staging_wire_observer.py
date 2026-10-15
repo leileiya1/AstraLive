@@ -90,9 +90,10 @@ class WireObserverTests(unittest.IsolatedAsyncioTestCase):
                 output, rows, error = await self.forward_bytes(packet)
                 self.assertEqual(output, packet)
                 self.assertIsNone(error)
-                self.assertEqual(rows, [{"scope": "OBSERVER_INVALID_HEADER_NOT_PROOF",
-                                        "connection": 1, "direction": "worker_to_runtime",
-                                        "code": "HEADER_REJECTED"}])
+                self.assertEqual(len(rows), 1)
+                self.assertEqual(rows[0]["scope"], "OBSERVER_INVALID_HEADER_NOT_PROOF")
+                self.assertEqual(rows[0]["code"], "HEADER_REJECTED")
+                self.assertNotIn("private-secret", json.dumps(rows))
 
     async def test_partial_prefix_or_payload_never_forges_release(self):
         for data in (b"\x00\x00", frame(released())[:-1], struct.pack("!II", 1, 2) + b"{" + b"x"):
@@ -119,6 +120,30 @@ class WireObserverTests(unittest.IsolatedAsyncioTestCase):
     async def test_clean_disconnect_emits_no_terminal_ack(self):
         output, rows, error = await self.forward_bytes(b"")
         self.assertEqual((output, rows, error), (b"", [], None))
+
+    async def test_optin_frame_metadata_hashes_not_raw_payload_and_clock_bracket(self):
+        payload = b"private-encoded-video-bytes"
+        header = message("StageVideo")
+        header.update(sample_end=640, payload_sha256=observer.contract.bytes_digest(payload))
+        raw = json.dumps(header).encode()
+        self.assertIsNone(observer.metadata(raw, payload, "worker_to_runtime", 1))
+        row = observer.metadata(raw, payload, "worker_to_runtime", 1, True)
+        self.assertEqual(row["type"], "StageVideo")
+        self.assertEqual(row["frame_sequence"], 0)
+        self.assertEqual(row["payload_sha256"], observer.contract.bytes_digest(payload))
+        self.assertNotIn(payload.decode(), json.dumps(row))
+        with self.assertRaises(observer.contract.ContractError):
+            observer.metadata(raw, b"bad-bytes", "worker_to_runtime", 1, True)
+
+    async def test_forward_instrumentation_is_monotonic_and_after_original_bytes_forwarded(self):
+        packet = frame(released())
+        output, rows, error = await self.forward_bytes(packet)
+        self.assertEqual(output, packet); self.assertIsNone(error)
+        row = rows[0]
+        self.assertLessEqual(row["readCompleteNs"], row["forwardDrainCompleteNs"])
+        self.assertLessEqual(row["forwardDrainCompleteNs"], row["monotonicBeforeNs"])
+        self.assertLessEqual(row["monotonicAfterNs"], row["validationCompleteNs"])
+        self.assertEqual(row["payloadBytes"], 0)
 
 
 if __name__ == "__main__":
