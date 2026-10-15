@@ -1,5 +1,23 @@
 # AstraLive v0.5 Integration Plan
 
+## Current authorization and execution — 2026-10-15 recheck
+
+The latest instruction supersedes the earlier hour deferral: F completed local
+full regression at actual merge9d09708 (PASS), then notified the user to enable
+GPU and received explicit power-on confirmation. Cached installation doctor
+PASS; Worker was actually unreachable before owned cached start. Next: current
+source short real bridge/Stop check, preserve/fix any failure in independent
+owner commits and rerun relevant/full gates, then fresh single-session hour.
+No new Golden result exists at this checkpoint.
+
+A evidence1850e15→F7516b7f; B latency/evidence b55355b1→Fe055f25;
+C private cleanup fix9bb51971→F9d09708 after A fixed-pin ACK. No conflict or
+shared-entrypoint edit. F acceptance-only observer c009d89 has6 local tests;
+full integration evidence suite106 PASS. Detailed scope, residual P1 gates,
+UNKNOWN/all-commit distinction, flags and rollback are in
+[current recheck](ACCEPTANCE-RECHECK-2026-10-15.md). Frozen1/defaults/main unchanged.
+Older no-hour instructions below are historical only.
+
 ## Current execution boundary — 2026-10-15
 
 Final production fb9b75d27f21e176afb4d5fdb32f202fc708ce6a includes Stop ACK

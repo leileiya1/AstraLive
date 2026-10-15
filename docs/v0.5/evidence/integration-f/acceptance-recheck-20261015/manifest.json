@@ -1,0 +1,79 @@
+{
+  "scope": "local owned PostgreSQL/CPU software gates and synthetic observer/oracle tests only; no real GPU/Chrome/RTMP acceptance",
+  "baselineSource": "aab062f024fa28202a7255179c5089c1dc9bdbbd",
+  "postmergeSource": "9d09708b6788868c885c3bfc8bafa1234566ec1e",
+  "integrationSuite": {
+    "count": 106,
+    "status": "PASS"
+  },
+  "runtimeSuite": {
+    "total": 326,
+    "passed": 314,
+    "skipped": 12
+  },
+  "files": [
+    {
+      "path": "baseline/faults.log",
+      "sha256": "03dc2b0ef79788e8fcea3d9740266b14d3938b3275cc469825580800304bf77c",
+      "bytes": 109842
+    },
+    {
+      "path": "baseline/frontend-build.log",
+      "sha256": "b3250028c7692e5f7ff18265368b42d91cdaf37fea9426a706131ffa1807b3cd",
+      "bytes": 2407
+    },
+    {
+      "path": "baseline/frontend-test.log",
+      "sha256": "fe91bb48e3b2f0b9ff9e6cd38185268d570bc978a69ceaeafa3208c1083ef5c0",
+      "bytes": 704
+    },
+    {
+      "path": "baseline/result.json",
+      "sha256": "bae036e1b48b6ff8f3462d8fb6b5bfe6877ada3ae69a384eec0a912658225bff",
+      "bytes": 2101
+    },
+    {
+      "path": "baseline/runtime.log",
+      "sha256": "d0d7e4b3838a8d9fc3bc245423223f02a608a5a1a66165b91009862bf8dfd176",
+      "bytes": 470768
+    },
+    {
+      "path": "postmerge/faults.log",
+      "sha256": "101bd531891e63131eeadad506ca4e180b0d7142e19cc143051c60417d254852",
+      "bytes": 109850
+    },
+    {
+      "path": "postmerge/frontend-build.log",
+      "sha256": "8785fd12264eff65c447fc9acf6198fc1c64500a218de6fc2e768a5b42ed274f",
+      "bytes": 2407
+    },
+    {
+      "path": "postmerge/frontend-test.log",
+      "sha256": "5bf8682bd2566f5532a19d01f17398ccfed60335ac70ea127a8cfc21a516b703",
+      "bytes": 705
+    },
+    {
+      "path": "postmerge/result.json",
+      "sha256": "86ab21c765e03da03526103ce50762aed3f2a43987ca5eb7082dc9dea0cba419",
+      "bytes": 2100
+    },
+    {
+      "path": "postmerge/runtime.log",
+      "sha256": "811eb5026d1f71e9ef9e94988e30ced0fe4ee706cc3ed1a3260bccb1e9e3f8d5",
+      "bytes": 473857
+    },
+    {
+      "path": "integration-tests.log",
+      "sha256": "dfd70c29cfc7ce0dcc1f8f95b2310a6e0661ac8092826c55a044c7b48784846e",
+      "bytes": 18589
+    }
+  ],
+  "privateValueScan": {
+    "status": "PASS",
+    "privateInputCount": 3,
+    "filesScanned": 12,
+    "valuesRecorded": false,
+    "scope": "all archived local evidence files including ignored raw logs"
+  },
+  "frozenContractSHA256": "969d2e82d41f20084196d68a77bb3d1a6158a596a9ca63d47de9f6c1a78e8360"
+}

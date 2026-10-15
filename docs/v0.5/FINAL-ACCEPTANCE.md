@@ -1,5 +1,26 @@
 # v0.5 F acceptance decision — partial sequential integration
 
+## Current requested recheck — 2026-10-15
+
+The latest user instruction now authorizes a fresh full hour after complete local
+regression and an explicit GPU power-on notice. C's independently reviewed
+cleanup cancellation fix9bb51971 normally merged as9d09708; that exact merge
+PASSes Go/race/owned PostgreSQL/fault/auth/Redis-off/contracts, Runtime314 passed
++12 skipped, frontend40/build. Integration evidence tests106 PASS. Old failures
+are retained. Latest real Stop/bridge/full-hour/resource gates remain NOT TESTED
+until new data exists; earlier source88 hour7 stays FAIL. The user has now
+confirmed GPU power-on; cached doctor PASS, actual pre-start Worker unreachable,
+cached start in progress. No new Golden result yet.
+[Current matrix, ownership, latency and execution plan](ACCEPTANCE-RECHECK-2026-10-15.md).
+
+Conditional response estimates remain9.374/12.093s, above5/8s targets; calibrated
+busy SLA, full real faults and human quality remain unverified. Normal Stop
+control completion and an UNKNOWN media tail are separate contract outcomes;
+the unchanged strict all-commit artifact oracle can still FAIL the tail. Do
+not silently upgrade it with component PASS. Defaults stay off; main unchanged.
+Sections below are historical source-pinned checkpoints, not current power or
+authorization claims.
+
 ## Current checkpoint — 2026-10-15; no new hour test
 
 Final tested production source `fb9b75d27f21e176afb4d5fdb32f202fc708ce6a`

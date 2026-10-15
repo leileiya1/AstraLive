@@ -1,5 +1,22 @@
 # v0.5 F chaos and integration-gate report
 
+## Current recheck — 2026-10-15
+
+Actual merge9d09708 software gate PASS: Go/race/owned PG migrations/auth/ownership/
+restart/outage/Redis-off/contracts, Runtime326 total (314 passed,12 skipped),
+frontend40/build.106 independent integration metadata/observer tests PASS.
+C's new exact-ACK cleanup caller-cancel bug has two preserved old-code failures
+and10 fixed/negative TCP cases; no timeout, contract or default change. A reviewed
+the exact pin; B independently attributes25 historical response chains. These
+are software/evidence checks, not latest-source real GPU acceptance.
+
+The user has requested a fresh one-hour run and confirmed GPU power-on after
+F's notice. Cached doctor PASS; actual Worker was unreachable before owned
+cached start. Latest real Stop/bridge/hour/resource and full live faults remain
+NOT TESTED; historical full artifact/hour FAIL remains. See the current
+[matrix and reproducible plan](ACCEPTANCE-RECHECK-2026-10-15.md).
+Earlier statements that the user deferred the hour are historical.
+
 ## Current local gate — 2026-10-15
 
 F exact production sourcefb9b75d27f21e176afb4d5fdb32f202fc708ce6a PASSes
