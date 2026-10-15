@@ -1,0 +1,72 @@
+test_repeated_cancel_caller_preserves_inflight_fence_ack (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_repeated_cancel_caller_preserves_inflight_fence_ack) ... staging_receive_failed {"messageType": "OTHER", "code": "OTHER", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ERROR
+test_repeated_cancel_caller_preserves_inflight_release_ack (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_repeated_cancel_caller_preserves_inflight_release_ack) ... staging_receive_failed {"messageType": "StageReleased", "code": "STAGING_CONFLICT", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ERROR
+
+======================================================================
+ERROR: test_repeated_cancel_caller_preserves_inflight_fence_ack (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_repeated_cancel_caller_preserves_inflight_fence_ack)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/tests/test_acceptance_c_control_cancel.py", line 61, in test_repeated_cancel_caller_preserves_inflight_fence_ack
+    async def test_repeated_cancel_caller_preserves_inflight_fence_ack(self):await self.scenario('cancel')
+                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/tests/test_acceptance_c_control_cancel.py", line 48, in scenario
+    answer=await asyncio.wait_for(final,2)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 355, in release
+    reply=await self.exchange(stage.release_request,"StageReleased",timeout=15)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 89, in exchange
+    return await asyncio.wait_for(future,timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+app.soulx_staging.StagingFailure: STAGING_RETIRED
+
+======================================================================
+ERROR: test_repeated_cancel_caller_preserves_inflight_release_ack (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_repeated_cancel_caller_preserves_inflight_release_ack)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/tests/test_acceptance_c_control_cancel.py", line 62, in test_repeated_cancel_caller_preserves_inflight_release_ack
+    async def test_repeated_cancel_caller_preserves_inflight_release_ack(self):await self.scenario('release')
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/tests/test_acceptance_c_control_cancel.py", line 48, in scenario
+    answer=await asyncio.wait_for(final,2)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 346, in release
+    fenced=await self.exchange(stage.cancel_request,"StageFenced",timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 89, in exchange
+    return await asyncio.wait_for(future,timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 173, in receive_loop
+    if self.answered.get(correlation(header))!=header:raise StagingFailure("STAGING_CONFLICT")
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app.soulx_staging.StagingFailure: STAGING_CONFLICT
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.056s
+
+FAILED (errors=2)

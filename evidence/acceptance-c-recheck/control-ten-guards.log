@@ -1,0 +1,19 @@
+test_cancel_ack_missing_and_past_deadline_stays_unknown (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_cancel_ack_missing_and_past_deadline_stays_unknown) ... staging_receive_failed {"messageType": "StageFenced", "code": "STAGING_CONFLICT", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancel_then_complete_caller_does_not_upgrade_unknown (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_cancel_then_complete_caller_does_not_upgrade_unknown) ... ok
+test_complete_then_stop_caller_preserves_original_proof_and_fences (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_complete_then_stop_caller_preserves_original_proof_and_fences) ... ok
+test_foreign_control_ack_never_claims_cleanup (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_foreign_control_ack_never_claims_cleanup) ... staging_receive_failed {"messageType": "OTHER", "code": "STAGING_IDENTITY_MISMATCH", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_receive_failure_never_claims_cleanup (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_receive_failure_never_claims_cleanup) ... staging_receive_failed {"messageType": "OTHER", "code": "OTHER", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_release_ack_missing_and_past_deadline_stays_unknown (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_release_ack_missing_and_past_deadline_stays_unknown) ... staging_receive_failed {"messageType": "StageReleased", "code": "STAGING_CONFLICT", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_repeated_cancel_caller_preserves_inflight_fence_ack (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_repeated_cancel_caller_preserves_inflight_fence_ack) ... ok
+test_repeated_cancel_caller_preserves_inflight_release_ack (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_repeated_cancel_caller_preserves_inflight_release_ack) ... ok
+test_wrong_fence_prefix_never_claims_cleanup (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_wrong_fence_prefix_never_claims_cleanup) ... ok
+test_wrong_release_prefix_never_claims_cleanup (test_acceptance_c_control_cancel.AcceptanceControlCancelTests.test_wrong_release_prefix_never_claims_cleanup) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 25.172s
+
+OK

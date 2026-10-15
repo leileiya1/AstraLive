@@ -1,0 +1,77 @@
+test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop) ... ok
+test_cancelled_pose_foreign_ack_still_fences (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_foreign_ack_still_fences) ... staging_receive_failed {"messageType": "StagePoseConsumedAck", "code": "STAGING_IDENTITY_MISMATCH", "pendingPresent": true, "pendingDone": false, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancelled_pose_missing_ack_keeps_original_five_second_deadline (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_missing_ack_keeps_original_five_second_deadline) ... ok
+test_cancelled_pose_unknown_ack_still_fences (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_unknown_ack_still_fences) ... staging_receive_failed {"messageType": "StagePoseConsumedAck", "code": "STAGING_CONFLICT", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancelled_pose_wrong_proof_cannot_claim_cleanup (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_wrong_proof_cannot_claim_cleanup) ... ok
+test_drained_renewal_ack_does_not_extend_stopped_stage_deadline (test_staging_renewal_release.RenewalReleaseTests.test_drained_renewal_ack_does_not_extend_stopped_stage_deadline) ... ok
+test_foreign_identity_still_fences (test_staging_renewal_release.RenewalReleaseTests.test_foreign_identity_still_fences) ... staging_receive_failed {"messageType": "StageRenewAck", "code": "STAGING_IDENTITY_MISMATCH", "pendingPresent": true, "pendingDone": false, "answeredPresent": false, "stageFenced": false, "stageReleased": false}
+ok
+test_missing_renewal_ack_keeps_unknown_and_no_successful_release (test_staging_renewal_release.RenewalReleaseTests.test_missing_renewal_ack_keeps_unknown_and_no_successful_release) ... ok
+test_pending_renewal_drains_before_release (test_staging_renewal_release.RenewalReleaseTests.test_pending_renewal_drains_before_release) ... ok
+test_release_stops_sleep_without_new_grant (test_staging_renewal_release.RenewalReleaseTests.test_release_stops_sleep_without_new_grant) ... ok
+test_stop_during_real_grant_await_never_sends_renew_after_release (test_staging_renewal_release.RenewalReleaseTests.test_stop_during_real_grant_await_never_sends_renew_after_release) ... ok
+test_unsolicited_sequence_still_fences (test_staging_renewal_release.RenewalReleaseTests.test_unsolicited_sequence_still_fences) ... staging_receive_failed {"messageType": "StageRenewAck", "code": "STAGING_CONFLICT", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": false, "stageReleased": false}
+ok
+test_full_actual_cpu_h264_decode_padding_and_overlay_hash_domains (test_staging_runtime.ArtifactTests.test_full_actual_cpu_h264_decode_padding_and_overlay_hash_domains) ... ok
+test_oversized_real_shape_tts_rejects_before_stage_begin (test_staging_runtime.ArtifactTests.test_oversized_real_shape_tts_rejects_before_stage_begin) ... ok
+test_barcode_crc_and_no_pixels_outside_band_changed (test_staging_runtime.CaptureTests.test_barcode_crc_and_no_pixels_outside_band_changed) ... ok
+test_disabled_old_capture_and_enabled_exact_only (test_staging_runtime.CaptureTests.test_disabled_old_capture_and_enabled_exact_only) ... ok
+test_explicit_new_captured_profiles_use_normative_helper_only (test_staging_runtime.CaptureTests.test_explicit_new_captured_profiles_use_normative_helper_only) ... ok
+test_f_offline_decoder_matches_exact_runtime_barcode (test_staging_runtime.CaptureTests.test_f_offline_decoder_matches_exact_runtime_barcode) ... ok
+test_startup_profile_absent_defaults_but_explicit_empty_rejects (test_staging_runtime.CaptureTests.test_startup_profile_absent_defaults_but_explicit_empty_rejects) ... ok
+test_expired_and_failed_stage_never_arm (test_staging_runtime.ClientTests.test_expired_and_failed_stage_never_arm) ... ok
+test_fresh_sql_barrier_token_and_no_lease_inheritance (test_staging_runtime.ClientTests.test_fresh_sql_barrier_token_and_no_lease_inheritance) ... ok
+test_pose_exchange_uses_nested_ack_id_and_exact_commit (test_staging_runtime.ClientTests.test_pose_exchange_uses_nested_ack_id_and_exact_commit) ... ok
+test_release_exact_retry_unknown_not_reusable (test_staging_runtime.ClientTests.test_release_exact_retry_unknown_not_reusable) ... ok
+test_actual_wire_simulation_negotiation_rejected_and_binding_cleaned (test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_actual_wire_simulation_negotiation_rejected_and_binding_cleaned) ... session_prepare_failed
+Traceback (most recent call last):
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/session.py", line 231, in prepare
+    await self.avatar_engine.prepare(self.request.avatar)
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 420, in prepare
+    await self.link.connect()
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 106, in connect
+    raise StagingFailure("STAGING_IDENTITY_MISMATCH")
+app.soulx_staging.StagingFailure: STAGING_IDENTITY_MISMATCH
+ok
+test_real_bound_factory_configure_prepare_start_interrupt_stop (test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_real_bound_factory_configure_prepare_start_interrupt_stop) ... ok
+test_start_without_config_and_verified_connection_rejects (test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_start_without_config_and_verified_connection_rejects) ... ok
+test_unsupported_session_clock_rejected_before_worker_connection (test_staging_binding_lifecycle.BoundStagingLifecycleTests.test_unsupported_session_clock_rejected_before_worker_connection) ... ok
+test_continuity_cleanup_failure_retains_binding_and_blocks_worker_reuse (test_narration_lifecycle.ContinuityLifecycleTests.test_continuity_cleanup_failure_retains_binding_and_blocks_worker_reuse) ... stop_cleanup_failed sessionId=session_1 component=media errorType=ConnectionError
+ok
+test_continuity_release_failure_retains_worker_reservation (test_narration_lifecycle.ContinuityLifecycleTests.test_continuity_release_failure_retains_worker_reservation) ... ok
+test_frozen_flag_no_alias (test_narration_segments.ConfigTests.test_frozen_flag_no_alias) ... ok
+test_bound_runtime_rejects_untimed_before_first_after_finish_force (test_narration_segments.ExecutionTests.test_bound_runtime_rejects_untimed_before_first_after_finish_force) ... {"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"runtime_utterance_accepted\", \"elapsedMs\": 0.0012079253792762756, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"llm_started\", \"elapsedMs\": 0.5795408505946398, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"llm_first_token\", \"elapsedMs\": 0.6528748199343681, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"first_speakable_segment\", \"elapsedMs\": 0.7620409596711397, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"tts_started\", \"elapsedMs\": 0.7927499245852232, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"tts_first_pcm\", \"elapsedMs\": 0.8570409845560789, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"runtime instrumentation\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"media_first_audio\", \"elapsedMs\": 0.9017910342663527, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"media output push returned; not browser/speaker playback\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+{"level": "INFO", "message": "interaction_trace {\"traceId\": \"trace_legacy\", \"sessionId\": \"ordinary\", \"utteranceId\": \"legacy\", \"stage\": \"utterance_completed\", \"elapsedMs\": 0.9280829690396786, \"clockDomain\": \"runtime_monotonic\", \"boundary\": \"media drain completed\"}", "traceId": null, "sessionId": null, "utteranceId": null, "generationId": null}
+ok
+test_bridge_cannot_invent_fact_or_cursor (test_narration_segments.ExecutionTests.test_bridge_cannot_invent_fact_or_cursor) ... ok
+test_native_renderer_fail_closed_before_tts (test_narration_segments.ExecutionTests.test_native_renderer_fail_closed_before_tts) ... ok
+test_position_serialization_has_exact_pts (test_narration_segments.ExecutionTests.test_position_serialization_has_exact_pts) ... ok
+test_ready_commit_actual_fixture_consumption (test_narration_segments.ExecutionTests.test_ready_commit_actual_fixture_consumption) ... ok
+test_ready_failure_no_commit_no_output_and_unknown (test_narration_segments.ExecutionTests.test_ready_failure_no_commit_no_output_and_unknown) ... ok
+test_resume_bridge_ready_empty_fact_array_and_null_rejected (test_narration_segments.ExecutionTests.test_resume_bridge_ready_empty_fact_array_and_null_rejected) ... ok
+test_tts_duration_cap_no_truncation (test_narration_segments.ExecutionTests.test_tts_duration_cap_no_truncation) ... ok
+test_bundle_factory_uses_captured_staging_scope_only (test_staging_bridge_policy.StagingBridgePolicyTests.test_bundle_factory_uses_captured_staging_scope_only) ... ok
+test_captured_staging_bridge_compact_exact_body_and_command_immutable (test_staging_bridge_policy.StagingBridgePolicyTests.test_captured_staging_bridge_compact_exact_body_and_command_immutable) ... ok
+test_explicit_zero_based_ascii_indices_and_exact_choice_payload (test_staging_bridge_policy.StagingBridgePolicyTests.test_explicit_zero_based_ascii_indices_and_exact_choice_payload) ... ok
+test_finished_empty_next_beat_retains_facts_without_inventing_goal (test_staging_bridge_policy.StagingBridgePolicyTests.test_finished_empty_next_beat_retains_facts_without_inventing_goal) ... ok
+test_flags_off_bridge_keeps_original_context_and_request_body (test_staging_bridge_policy.StagingBridgePolicyTests.test_flags_off_bridge_keeps_original_context_and_request_body) ... ok
+test_invalid_missing_duplicate_stale_goal_fails_before_provider (test_staging_bridge_policy.StagingBridgePolicyTests.test_invalid_missing_duplicate_stale_goal_fails_before_provider) ... ok
+test_legacy_prompt_byte_identity_with_original_array_and_parser (test_staging_bridge_policy.StagingBridgePolicyTests.test_legacy_prompt_byte_identity_with_original_array_and_parser) ... ok
+test_noncanonical_ascii_and_one_based_three_still_rejected (test_staging_bridge_policy.StagingBridgePolicyTests.test_noncanonical_ascii_and_one_based_three_still_rejected) ... ok
+test_staging_http_error_or_missing_terminal_never_defaults_zero (test_staging_bridge_policy.StagingBridgePolicyTests.test_staging_http_error_or_missing_terminal_never_defaults_zero) ... ok
+test_staging_length_finish_still_raises_not_zero_choice (test_staging_bridge_policy.StagingBridgePolicyTests.test_staging_length_finish_still_raises_not_zero_choice) ... ok
+test_staging_long_invalid_or_out_of_range_choice_never_defaults_zero (test_staging_bridge_policy.StagingBridgePolicyTests.test_staging_long_invalid_or_out_of_range_choice_never_defaults_zero) ... ok
+test_staging_ordinary_stream_never_disables_thinking (test_staging_bridge_policy.StagingBridgePolicyTests.test_staging_ordinary_stream_never_disables_thinking) ... ok
+
+----------------------------------------------------------------------
+Ran 50 tests in 8.667s
+
+OK
