@@ -5,6 +5,7 @@ import (
 	"embed"
 	"fmt"
 	"sort"
+	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -13,7 +14,24 @@ import (
 var migrations embed.FS
 
 func Migrate(ctx context.Context, p *pgxpool.Pool) error {
-	_, e := p.Exec(ctx, "CREATE TABLE IF NOT EXISTS schema_migrations (name text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())")
+	// One pinned connection owns the deployment lock across all additive migrations.
+	conn, e := p.Acquire(ctx)
+	if e != nil {
+		return e
+	}
+	defer conn.Release()
+	if _, e = conn.Exec(ctx, "SELECT pg_advisory_lock(7300516001)"); e != nil {
+		return e
+	}
+	defer func() {
+		cleanup, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		if _, err := conn.Exec(cleanup, "SELECT pg_advisory_unlock(7300516001)"); err != nil {
+			_ = conn.Hijack().Close(cleanup) // never return a locked connection to the pool
+		}
+	}()
+
+	_, e = conn.Exec(ctx, "CREATE TABLE IF NOT EXISTS schema_migrations (name text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())")
 	if e != nil {
 		return e
 	}
@@ -28,7 +46,7 @@ func Migrate(ctx context.Context, p *pgxpool.Pool) error {
 		}
 		name := f.Name()
 		var exists bool
-		e = p.QueryRow(ctx, "SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE name=$1)", name).Scan(&exists)
+		e = conn.QueryRow(ctx, "SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE name=$1)", name).Scan(&exists)
 		if e != nil {
 			return e
 		}
@@ -39,7 +57,7 @@ func Migrate(ctx context.Context, p *pgxpool.Pool) error {
 		if e != nil {
 			return e
 		}
-		tx, e := p.Begin(ctx)
+		tx, e := conn.Begin(ctx)
 		if e != nil {
 			return e
 		}
