@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/private/tmp/astralive-v05-acceptance-a-20261015-1/docs/v0.5/evidence/acceptance-a-recheck/historical-checker-initial-keyerror.py", line 64, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-a-20261015-1/docs/v0.5/evidence/acceptance-a-recheck/historical-checker-initial-keyerror.py", line 51, in main
+    check('historical_full_artifact_audit_still_fail', audit['status'] == 'FAIL')
+                                                       ~~~~~^^^^^^^^^^
+KeyError: 'status'

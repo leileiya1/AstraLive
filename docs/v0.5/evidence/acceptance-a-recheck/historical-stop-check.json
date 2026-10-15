@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "scope": "historical SQL consistency ONLY; no new native execution, no proof of live no-replay or physical audibility",
+  "historicalSource": "8f04a7567db2710547da2b313e027d1c76eed02e",
+  "checks": [
+    {
+      "name": "one_session_ended",
+      "pass": true
+    },
+    {
+      "name": "same_run_sealed",
+      "pass": true
+    },
+    {
+      "name": "matching_binding_released",
+      "pass": true
+    },
+    {
+      "name": "narration_stopped_sticky_barrier",
+      "pass": true
+    },
+    {
+      "name": "positive_control_cleanup_receipt_retained",
+      "pass": true
+    },
+    {
+      "name": "six_completed_commits_with_proof_hash",
+      "pass": true
+    },
+    {
+      "name": "one_unknown_tail_without_completion_hash",
+      "pass": true
+    },
+    {
+      "name": "unknown_tail_excluded_from_semantic_cursor",
+      "pass": true
+    },
+    {
+      "name": "same_session_run_media",
+      "pass": true
+    },
+    {
+      "name": "historical_bridge_null_mismatch_not_hidden",
+      "pass": true
+    },
+    {
+      "name": "historical_full_artifact_audit_still_fail",
+      "pass": true
+    },
+    {
+      "name": "historical_real_source_not_reassigned",
+      "pass": true
+    },
+    {
+      "name": "input_bytes_unchanged",
+      "pass": true
+    }
+  ],
+  "retainedBridgeMismatches": [
+    {
+      "segmentId": "bridge_165240988e7be0ffd97b62971df5c2c5",
+      "descriptorFactIds": [],
+      "sqlFactIds": null,
+      "sameProductVersion": true
+    }
+  ],
+  "inputs": {
+    "docs/v0.5/evidence/integration-f/pose-stop-f-postmerge-1/short-stop-component-4/media/sql-proof.json": "f012229a5965179e61b848313b9c6d5708b5d0280beafc2ef688ca09b5fc01d6",
+    "docs/v0.5/evidence/integration-f/pose-stop-f-postmerge-1/short-stop-component-4/result.json": "79a306c7c181dbd87e416040c577bb26a33550be4cc4e46d8865c43d42705052",
+    "docs/v0.5/evidence/integration-f/pose-stop-f-postmerge-1/short-stop-component-4/independent-full-audit.json": "0d353c187f975afc85e0d20841e20adc2724d9723b514148e6171ee026d977d2"
+  }
+}

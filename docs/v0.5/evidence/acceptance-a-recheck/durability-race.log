@@ -1,0 +1,34 @@
+=== RUN   TestAcceptedBeforeLostACK
+--- PASS: TestAcceptedBeforeLostACK (0.20s)
+=== RUN   TestUnknownProbeBudgetAndNoReplay
+--- PASS: TestUnknownProbeBudgetAndNoReplay (0.06s)
+=== RUN   TestTerminalSessionSealsContinuity
+--- PASS: TestTerminalSessionSealsContinuity (0.05s)
+=== RUN   TestPostgresJournalIdempotencyAndFences
+--- PASS: TestPostgresJournalIdempotencyAndFences (0.06s)
+=== RUN   TestTwoDispatchersLeaseExpiryOldAck
+--- PASS: TestTwoDispatchersLeaseExpiryOldAck (0.06s)
+=== RUN   TestRecoveryStopRaceAndOldEpoch
+--- PASS: TestRecoveryStopRaceAndOldEpoch (0.06s)
+=== RUN   TestEventDupConflictReorderAndTerminal
+--- PASS: TestEventDupConflictReorderAndTerminal (0.09s)
+=== RUN   TestControlReceipt
+--- PASS: TestControlReceipt (0.05s)
+=== RUN   TestForceFencesDelayedSpeakAndStopExpiredRun
+--- PASS: TestForceFencesDelayedSpeakAndStopExpiredRun (0.06s)
+=== RUN   TestStopConcurrentWithRecovery
+--- PASS: TestStopConcurrentWithRecovery (0.06s)
+=== RUN   TestMediaAttemptGenerationAndEventFence
+--- PASS: TestMediaAttemptGenerationAndEventFence (0.06s)
+=== RUN   TestPreparingStopUnknownStartupReleasedBinding
+=== RUN   TestPreparingStopUnknownStartupReleasedBinding/anonymous
+=== RUN   TestPreparingStopUnknownStartupReleasedBinding/foreign-session-owner
+=== RUN   TestPreparingStopUnknownStartupReleasedBinding/bad-origin
+--- PASS: TestPreparingStopUnknownStartupReleasedBinding (0.14s)
+    --- PASS: TestPreparingStopUnknownStartupReleasedBinding/anonymous (0.00s)
+    --- PASS: TestPreparingStopUnknownStartupReleasedBinding/foreign-session-owner (0.00s)
+    --- PASS: TestPreparingStopUnknownStartupReleasedBinding/bad-origin (0.00s)
+=== RUN   TestPreparingStopForceRaceRetainsCleanupOnly
+--- PASS: TestPreparingStopForceRaceRetainsCleanupOnly (0.06s)
+PASS
+ok  	astralive/backend/internal/durability	2.530s

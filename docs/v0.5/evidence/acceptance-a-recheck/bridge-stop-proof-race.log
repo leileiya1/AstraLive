@@ -1,0 +1,15 @@
+=== RUN   TestPostgresNewResumeBridgeEmptyFactsCanonical
+    bridge_facts_postgres_test.go:180: actual PG bridge facts/segment document/narration document/COMMIT payload/child Runtime READY/duplicate/reload all []; historical nil remains null; nonempty facts unchanged; no physical GPU claim
+--- PASS: TestPostgresNewResumeBridgeEmptyFactsCanonical (0.29s)
+=== RUN   TestPostgresPrephysicalFailedCreateStopProof
+=== RUN   TestPostgresPrephysicalFailedCreateStopProof/success
+    prephysical_stop_postgres_test.go:118: {"scope": "REAL_GO_HTTP_POSTGRES_EXACT_PREPHYSICAL_CAPTURED_PROVIDER_FIXTURE", "scenario": "success", "bindingReleaseACK": true, "gpu": "NOT_TESTED", "originalBeginReplay": false, "stagingMediaCreated": false}
+        
+=== RUN   TestPostgresPrephysicalFailedCreateStopProof/delete_failure
+    prephysical_stop_postgres_test.go:118: {"scope": "REAL_GO_HTTP_POSTGRES_EXACT_PREPHYSICAL_CAPTURED_PROVIDER_FIXTURE", "scenario": "delete_failure", "bindingReleaseACK": false, "gpu": "NOT_TESTED", "originalBeginReplay": false, "stagingMediaCreated": false}
+        
+--- PASS: TestPostgresPrephysicalFailedCreateStopProof (0.56s)
+    --- PASS: TestPostgresPrephysicalFailedCreateStopProof/success (0.29s)
+    --- PASS: TestPostgresPrephysicalFailedCreateStopProof/delete_failure (0.27s)
+PASS
+ok  	astralive/backend/internal/narration	2.382s
