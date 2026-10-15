@@ -1,0 +1,47 @@
+test_after_cancel_valid_frame_and_duplicate_drain_without_credit (test_acceptance_c_fenced_frames.FencedFrameTests.test_after_cancel_valid_frame_and_duplicate_drain_without_credit) ... ok
+test_cancel_drain_preserves_encoded_artifact_budget (test_acceptance_c_fenced_frames.FencedFrameTests.test_cancel_drain_preserves_encoded_artifact_budget) ... staging_receive_failed {"messageType": "StageVideo", "code": "STAGING_BUDGET_EXCEEDED", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancel_drain_rejects_foreign_identity (test_acceptance_c_fenced_frames.FencedFrameTests.test_cancel_drain_rejects_foreign_identity) ... staging_receive_failed {"messageType": "StageVideo", "code": "STAGING_IDENTITY_MISMATCH", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancel_drain_rejects_gap (test_acceptance_c_fenced_frames.FencedFrameTests.test_cancel_drain_rejects_gap) ... staging_receive_failed {"messageType": "StageVideo", "code": "STAGING_SEQUENCE_GAP", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancel_drain_rejects_payload_hash_mismatch (test_acceptance_c_fenced_frames.FencedFrameTests.test_cancel_drain_rejects_payload_hash_mismatch) ... staging_receive_failed {"messageType": "OTHER", "code": "OTHER", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancel_drain_rejects_provenance_mismatch (test_acceptance_c_fenced_frames.FencedFrameTests.test_cancel_drain_rejects_provenance_mismatch) ... staging_receive_failed {"messageType": "StageVideo", "code": "STAGING_IDENTITY_MISMATCH", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancel_write_lock_precedes_waiting_storage_ack (test_acceptance_c_fenced_frames.FencedFrameTests.test_cancel_write_lock_precedes_waiting_storage_ack) ... ok
+test_local_fence_before_cancel_stores_before_ack_but_never_ready (test_acceptance_c_fenced_frames.FencedFrameTests.test_local_fence_before_cancel_stores_before_ack_but_never_ready) ... ok
+test_worker_fenced_marks_inside_rx_before_next_buffered_frame (test_acceptance_c_fenced_frames.FencedFrameTests.test_worker_fenced_marks_inside_rx_before_next_buffered_frame) ... staging_receive_failed {"messageType": "StageVideo", "code": "STAGING_SEQUENCE_GAP", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_drains_actual_ack_before_interrupt_then_stop) ... ok
+test_cancelled_pose_foreign_ack_still_fences (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_foreign_ack_still_fences) ... staging_receive_failed {"messageType": "StagePoseConsumedAck", "code": "STAGING_IDENTITY_MISMATCH", "pendingPresent": true, "pendingDone": false, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancelled_pose_missing_ack_keeps_original_five_second_deadline (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_missing_ack_keeps_original_five_second_deadline) ... ok
+test_cancelled_pose_unknown_ack_still_fences (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_unknown_ack_still_fences) ... staging_receive_failed {"messageType": "StagePoseConsumedAck", "code": "STAGING_CONFLICT", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ok
+test_cancelled_pose_wrong_proof_cannot_claim_cleanup (test_staging_pose_stop.PoseStopTests.test_cancelled_pose_wrong_proof_cannot_claim_cleanup) ... ok
+test_full_actual_cpu_h264_decode_padding_and_overlay_hash_domains (test_staging_runtime.ArtifactTests.test_full_actual_cpu_h264_decode_padding_and_overlay_hash_domains) ... ok
+test_oversized_real_shape_tts_rejects_before_stage_begin (test_staging_runtime.ArtifactTests.test_oversized_real_shape_tts_rejects_before_stage_begin) ... ok
+test_barcode_crc_and_no_pixels_outside_band_changed (test_staging_runtime.CaptureTests.test_barcode_crc_and_no_pixels_outside_band_changed) ... ok
+test_disabled_old_capture_and_enabled_exact_only (test_staging_runtime.CaptureTests.test_disabled_old_capture_and_enabled_exact_only) ... ok
+test_explicit_new_captured_profiles_use_normative_helper_only (test_staging_runtime.CaptureTests.test_explicit_new_captured_profiles_use_normative_helper_only) ... ok
+test_f_offline_decoder_matches_exact_runtime_barcode (test_staging_runtime.CaptureTests.test_f_offline_decoder_matches_exact_runtime_barcode) ... ok
+test_startup_profile_absent_defaults_but_explicit_empty_rejects (test_staging_runtime.CaptureTests.test_startup_profile_absent_defaults_but_explicit_empty_rejects) ... ok
+test_expired_and_failed_stage_never_arm (test_staging_runtime.ClientTests.test_expired_and_failed_stage_never_arm) ... ok
+test_fresh_sql_barrier_token_and_no_lease_inheritance (test_staging_runtime.ClientTests.test_fresh_sql_barrier_token_and_no_lease_inheritance) ... ok
+test_pose_exchange_uses_nested_ack_id_and_exact_commit (test_staging_runtime.ClientTests.test_pose_exchange_uses_nested_ack_id_and_exact_commit) ... ok
+test_release_exact_retry_unknown_not_reusable (test_staging_runtime.ClientTests.test_release_exact_retry_unknown_not_reusable) ... ok
+test_drained_renewal_ack_does_not_extend_stopped_stage_deadline (test_staging_renewal_release.RenewalReleaseTests.test_drained_renewal_ack_does_not_extend_stopped_stage_deadline) ... ok
+test_foreign_identity_still_fences (test_staging_renewal_release.RenewalReleaseTests.test_foreign_identity_still_fences) ... staging_receive_failed {"messageType": "StageRenewAck", "code": "STAGING_IDENTITY_MISMATCH", "pendingPresent": true, "pendingDone": false, "answeredPresent": false, "stageFenced": false, "stageReleased": false}
+ok
+test_missing_renewal_ack_keeps_unknown_and_no_successful_release (test_staging_renewal_release.RenewalReleaseTests.test_missing_renewal_ack_keeps_unknown_and_no_successful_release) ... ok
+test_pending_renewal_drains_before_release (test_staging_renewal_release.RenewalReleaseTests.test_pending_renewal_drains_before_release) ... ok
+test_release_stops_sleep_without_new_grant (test_staging_renewal_release.RenewalReleaseTests.test_release_stops_sleep_without_new_grant) ... ok
+test_stop_during_real_grant_await_never_sends_renew_after_release (test_staging_renewal_release.RenewalReleaseTests.test_stop_during_real_grant_await_never_sends_renew_after_release) ... ok
+test_unsolicited_sequence_still_fences (test_staging_renewal_release.RenewalReleaseTests.test_unsolicited_sequence_still_fences) ... staging_receive_failed {"messageType": "StageRenewAck", "code": "STAGING_CONFLICT", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": false, "stageReleased": false}
+ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 8.434s
+
+OK

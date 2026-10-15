@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "955bcfeb26f9745703882f78441b58cf3c6dc2bd",
+  "oldSourceCommit": "531f1b9eb55b6f65c0e3eff82ceea4d8cfc93a1a",
+  "realFailedSource": "5b853c9",
+  "oldRuntimeSourceSHA256": "065d45346233c7b35e323a64688c20133b7f156efc6bd0d96d5cd5bfad83f32e",
+  "realFailedRuntimeSourceSHA256": "065d45346233c7b35e323a64688c20133b7f156efc6bd0d96d5cd5bfad83f32e",
+  "sourceFiles": {
+    "runtime/app/soulx_staging.py": "ce3b5eedd311ea11cb60fcda49e4633869a90745718ef729886eaa21e319ddb7",
+    "runtime/tests/test_acceptance_c_fenced_frames.py": "f7179fd44d978ec2e50d251758c737ff35e94abccfd0b1f642ccacf7613d5887"
+  },
+  "command": "PYTHONPATH=runtime:runtime/tests:. /private/tmp/astralive-f-media-venv-1/bin/python -m unittest test_acceptance_c_fenced_frames test_staging_pose_stop test_staging_runtime test_staging_renewal_release -v",
+  "result": {
+    "tests": 32,
+    "seconds": 8.434,
+    "exitCode": 0,
+    "newLoopbackTests": 9
+  },
+  "oldTest": "test_acceptance_c_fenced_frames.FencedFrameTests.test_local_fence_before_cancel_stores_before_ack_but_never_ready",
+  "oldResult": "FAIL: STAGING_SEQUENCE_GAP from actual receive loop on same-stage frame after local fence, before StageCancel",
+  "scope": "Loopback TCP software peer, fixture provenance/Ready, opaque H264 packet bytes. No native decode/auth/inference/provider/GPU/sinks acceptance. No cloud or provider calls.",
+  "evidenceSHA256": {
+    "fixed-focused.log": "d2d25148ed77fbcd7ec4858860dd5477564274945e8814205a4fd31e6d8dbf9a",
+    "old-source-failure.log": "788aea7e0f5d729656dbeaa97eafcbc90a5e99b261b3ff52b5e629bc643dd512"
+  }
+}
