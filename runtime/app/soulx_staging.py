@@ -48,6 +48,9 @@ class Stage:
     control_id: str | None = None
     release_request: dict | None = None
     cancel_request: dict | None = None
+    cancel_written: bool = False
+    worker_fenced: bool = False
+    drain_headers: dict = field(default_factory=dict)
     release_lock: object = field(default_factory=asyncio.Lock)
     release_task: object = None
     release_parameters: object = None
@@ -73,6 +76,12 @@ class StagingClient:
     async def _write(self,header,payload=b""):
         async with self.write_lock:
             c.validate_message(header,payload);data=c.canonical_bytes(header)
+            stage=self.active
+            if stage is not None and header.get("identity")==stage.identity:
+                # Serialize storage credit versus Cancel on the same wire lock.
+                # Never send a new storage ACK after Cancel may reach Worker.
+                if header["type"]=="StageReceived" and stage.cancel_written:return
+                if header["type"]=="StageCancel":stage.cancel_written=True
             self.writer.write(struct.pack("!II",len(data),len(payload))+data+payload)
             await asyncio.wait_for(self.writer.drain(),2)
 
@@ -121,26 +130,34 @@ class StagingClient:
                     raise StagingFailure("STAGING_IDENTITY_MISMATCH")
                 if name=="StageError":raise StagingFailure(header["code"])
                 if name=="StageVideo":
+                    if stage.released or stage.worker_fenced:raise StagingFailure("STAGING_SEQUENCE_GAP")
                     seq=header["frame_sequence"]
                     previous=stage.frame_headers.get(seq)
-                    if previous is not None:
-                        original,receipt=previous
+                    drained=stage.drain_headers.get(seq)
+                    if previous is not None or drained is not None:
+                        original=previous[0] if previous is not None else drained
                         if header!=original:raise StagingFailure("STAGING_CONFLICT")
-                        await self._write({"type":"StageReceived",**self.common(stage),"frame_sequence":seq,
-                            "payload_sha256":header["payload_sha256"],"native_rgb_sha256":header["native_rgb_sha256"],"storage_receipt_id":receipt})
+                        if not stage.cancel_written:
+                            await self._write({"type":"StageReceived",**self.common(stage),"frame_sequence":seq,
+                                "payload_sha256":header["payload_sha256"],"native_rgb_sha256":header["native_rgb_sha256"],"storage_receipt_id":previous[1]})
                         continue
-                    if stage.fenced or stage.released or header["frame_sequence"]!=len(stage.frames) or header["sample_end"]>stage.begin["source_samples"]:
+                    if seq!=len(stage.frames)+len(stage.drain_headers) or header["sample_end"]>stage.begin["source_samples"]:
                         raise StagingFailure("STAGING_SEQUENCE_GAP")
                     if not self.provenance_matches(header["provenance"]):
                         raise StagingFailure("STAGING_IDENTITY_MISMATCH")
                     stage.encoded_bytes+=len(payload)
                     if stage.encoded_bytes>self.ready["selected_limits"]["runtime_artifact_bytes"]:
                         raise StagingFailure("STAGING_BUDGET_EXCEEDED")
-                    receipt=stage.identity["stageId"]+":"+str(header["frame_sequence"])
                     if stage.frames and header["provenance"]!=stage.frames[0][0]["provenance"]:raise StagingFailure("STAGING_IDENTITY_MISMATCH")
+                    if stage.cancel_written:
+                        # Hash/range/identity already validated. Bounded metadata
+                        # tracks contiguous drain, without storage credit/READY.
+                        stage.drain_headers[seq]=copy.deepcopy(header)
+                        continue
+                    receipt=stage.identity["stageId"]+":"+str(seq)
                     stage.frames.append((copy.deepcopy(header),bytes(payload),receipt))
                     stage.frame_headers[seq]=(copy.deepcopy(header),receipt)
-                    await self._write({"type":"StageReceived",**self.common(stage),"frame_sequence":header["frame_sequence"],
+                    await self._write({"type":"StageReceived",**self.common(stage),"frame_sequence":seq,
                         "payload_sha256":header["payload_sha256"],"native_rgb_sha256":header["native_rgb_sha256"],"storage_receipt_id":receipt})
                 elif name=="StageReceivedAck":
                     seq=header["frame_sequence"]
@@ -150,6 +167,7 @@ class StagingClient:
                         raise StagingFailure("STAGING_CONFLICT")
                     stage.storage_acks.add(seq)
                 elif name=="StageProduced":
+                    if stage.worker_fenced and stage.descriptor is None:raise StagingFailure("STAGING_SEQUENCE_GAP")
                     if stage.descriptor is not None:
                         if stage.descriptor!=header:raise StagingFailure("STAGING_CONFLICT")
                         continue
@@ -168,12 +186,19 @@ class StagingClient:
                     if stage.descriptor is not None:
                         if stage.descriptor!=header:raise StagingFailure("STAGING_CONFLICT")
                     else:
-                        stage.descriptor=header;stage.produced.set_result(header)
+                        stage.descriptor=header
+                        if not stage.fenced:stage.produced.set_result(header)
                 else:
                     future=self.pending.get(correlation(header))
                     if future is None or future.done():
                         if self.answered.get(correlation(header))!=header:raise StagingFailure("STAGING_CONFLICT")
                         continue
+                    if name=="StageFenced":
+                        prefix=stage.pose["pose_proof"]["latest_consumed_sequence"] if stage.pose else -1
+                        if (not stage.cancel_written or stage.cancel_request is None or header["control_id"]!=stage.cancel_request["control_id"]
+                                or header["latest_consumed_sequence"]!=prefix):raise StagingFailure("STAGING_POSE_UNPROVEN")
+                        # Mark in RX before another buffered frame can run.
+                        stage.worker_fenced=True
                     self.answered[correlation(header)]=copy.deepcopy(header)
                     if len(self.answered)>256:self.answered.pop(next(iter(self.answered)))
                     future.set_result(header)
