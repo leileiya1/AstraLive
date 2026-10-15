@@ -1,0 +1,47 @@
+# durable-live-1 Durable Execution 合约
+
+独立内部 Schema：`contracts/v0.5/durable-live/schema.json`；路径/方法/角色/请求/响应/状态：`protocol.json`。固定schemaVersion=`0.5`与contractRevision=`durable-live-1`。所有对象 additionalProperties=false；拒绝未知字段、非UTC Z时间、非法枚举、空ID、bool冒充epoch。JSON没有浮点业务数值，金额用十进制字符串。跨对象相等/序列约束由业务验证器与存储事务执行。
+
+## 包与职责
+
+Agent 2 新增 `backend/internal/durablelive/` 提供存储/执行服务。Agent 3 新增 `contentplan/`、`turnmanager/` 使用ClaimNextTurn、DispatchTurn、ConfirmCheckpoint、QueryExecutionStatus、ResumeBroadcastRun、StopBroadcastRun、YieldAtSegmentBoundary、RestoreContentPlan、MarkExecutionUnknown、SaveContentPlan、AdmitTurn。CreateBroadcastRun由受信任Go ingress分配runId后创建epoch=0的CREATED对象；首次Resume进入PREPARING并分配epoch=1，此后Resume按恢复FSM执行。SaveContentPlan一次保存全部有序段，只能在CREATED或已隔离的PAUSED状态切currentPlan；LIVE切商品先暂停。无实现的schema为共享seam，集成Agent负责接到app/httpapi。依赖方向 turnmanager → contract DTO / durablelive interface；durablelive不得回调持有Scheduler锁的策略代码。禁止Scheduler/controller mutex覆盖SQL等待；禁止持SQL事务等待LLM/TTS/GPU/HTTP。所有repo API自行提交短事务后返回，不返回borrowed transaction或可提前发布的内存状态。
+
+## 身份、幂等与事务
+
+发送前生成 runId/planId/segmentId/turnId/attemptId/utteranceId/intentId/commandId/eventId。ClaimNextTurn 的事务锁run，重新核验owner/Room、desiredState、Stop tombstone、active plan、TTL、epoch、lease与slot；创建attempt、既有utterance、PLANNED checkpoint与PENDING Outbox并置Turn DISPATCHING。DispatchTurn是幂等唤醒已建Outbox，不再次创建attempt；响应202只代表持久意图。
+
+命令唯一身份 commandId，全局唯一；语义幂等唯一 `(runId,turnId,operation,idempotencyKey)`，不把epoch变化当允许同一评论再次执行的借口。相同key+hash返回原存储信封；同key/commandId异hash →409 COMMAND_CONFLICT。requestHash=sha256(删除requestHash字段后的完整command JSON规范UTF-8字节)。规范：对象key按Unicode码点排序、紧凑`,`/`:`、Unicode不转义、不转义`/`、不规范化字符串、整数不带前导零、禁止float/nonfinite/重复key；控制字符按JSON标准转义。metadata（包括commandId、createdAt、traceId）也不可变。golden向量见examples，测试重算。textHash单独哈希原文UTF-8。传输重试必须重用原始已存信封；不可重新生成createdAt/commandId。
+
+Claim短事务提交后才发网络。sender在发包前另提交SEND_STARTED及claimVersion；一旦有此marker，崩溃必须先RECONCILING。HTTP202必须引用已提交RuntimeInbox acceptance；Runtime不直接写业务DB，调用 Backend journal-role入口落库后再排队。执行前 `START` journal CAS写executorIncarnation/attempt及STARTED，必须再次验证run lease、Stop、商品和deadline；无journal ACK则不执行。Backend不可用时Runtime只可继续持有效permit的当前段直到permit截止，不能开始新段。
+
+inbox收据和effect-start之间的崩溃仍可能UNKNOWN。QueryExecutionStatus返回 ACCEPTED/STARTED/TERMINAL/NOT_EXECUTED/UNKNOWN。NOT_EXECUTED必须是原子封存旧executor后发出的持久拒绝/取消证明，不是404或内存找不到。JournalStart响应的startAuthorized只有首次CAS成功为true；重复或ACK丢失后的查询/重试返回false及已有状态，不能重放原true授权，Runtime同一存活进程也需一次性消费该授权。收据幂等不等于再次发执行许可。Runtime在旧STARTED记录上不能重新启动音频。202丢失先查询；重送只允许同一存活executor durable接受记录且尚未STARTED、或明确NOT_EXECUTED且旧executor已封存。重复execute对STARTED仅返回状态。Runtime重启后先隔离输出并对账，不扫ACCEPTED直接播放。
+
+确认事务：锁run→lease/slot→turn→attempt→intent→inbox→checkpoint/projection；所有方法同顺序。只读历史对账也遵守此顺序。outbox筛候选可先无锁查询ID，再锁run后 `FOR UPDATE SKIP LOCKED`认领候选，避免dispatcher反向先锁outbox再锁run。重复eventId同hash no-op；新event先存inbox，再验证序号/epoch/证据，投影和消费ACK原子提交。Redis只负责通知；新的v0.5 journal为SQL事实源，不改变v1事件处理语义。
+
+## Run lease 与输出 fencing
+
+lease使用PostgreSQL `clock_timestamp()`，默认15秒TTL、每5秒renew。每次 acquire/takeover `runEpoch=runEpoch+1`，leaseVersion也递增；renew仅leaseVersion+1，必须owner+epoch+version匹配且未过期，过期owner不能renew复活。runEpoch不随重连/segment增加；达到JSON安全整数上限拒绝新任期。
+
+接管有PENDING_INSTALL→ACTIVE两阶段：事务分配新epoch并关闭准入，随后在事务外隔离旧Runtime输出/安装新fence，最后CAS激活。新epoch普通execute不能自行安装fence。安装超时保持RECOVERING，不能认为更大整数就足够安全。Runtime的FenceInstall需要Backend control-role；安装后调用ConfirmRunFence，journal验证已分配epoch、expectedPreviousEpoch、producer绑定及独立guardian隔离证明，未Stop且lease有效才CAS ACTIVE。丢ACK重试该确认是幂等的，取得新permit前不得输出。未来epoch、旧epoch普通命令一律拒绝。所有服务身份含独立进程instanceId；repo从认证进程上下文检查leaseOwner，不接受JSON自报owner接管。
+
+每个Runtime进程绑定producerIncarnation和短期permit（runId/sessionId/runEpoch/leaseOwner/leaseVersion/permitId/ttlMs）。permitId在journal持久，必须绑定receiver进程；ttlMs不能超DB剩余lease且≤1000ms，Runtime从**发起permit请求时**的本机monotonic开始倒计时，扣除往返与100ms安全余量；过期/时钟暂停恢复/owner不匹配关闭输出并停止新effect。每个本地sink handoff重验permit与完整attempt/generation映射。续lease不自动延长已下发permit。
+
+guardian还持久绑定Room→当前run及outputBindingVersion；跨run切换必须增加该version并隔离前run输出，不能比较不同run的runEpoch。FAILED/STOPPED释放Room业务唯一约束不代表旧publisher已隔离，新的run只能创建，未获Room输出独占证明不得LIVE。permit包含roomId/outputBindingVersion/sessionId/producerIncarnation，guardian拒绝旧binding的permit；新版本激活前先撤销旧permit并等其最大有效期或证明旧连接已关闭。若guardian自身状态无法可靠恢复，关闭输出，不接纳新publisher。
+
+**不能仅靠Backend拒绝旧事件来阻止旧GPU发布。** v0.5启用前必须部署唯一受控输出guardian（RTMP publishing连接/凭据与WebRTC peer资源归其所有）或能验证旧进程已物理停止的等价隔离。guardian验证permit并在撤销/到期关闭旧连接；新owner激活前需guardian fence ACK。旧Runtime不得持绕过guardian的直连生产发布权限。GPU Worker仍用既有TCP/session/workerEpoch/generation验证；Runtime边缘丢弃旧frame，不给当前generation credit；无法使旧Runtime/旧GPU失去输出能力时必须PAUSED/RECOVERING并报告OUTPUT_FENCE_UNPROVEN，不启动第二publisher。既有v0.4 Runtime不具备这一能力，不能与新模式同时控制同一run/output。该部署要求是实现与启用验收门槛，不是本PR已实现功能。
+
+Stop事务无须等待当前leaseowner：写stopRevision/tombstone及desiredState=STOPPED，阻止acquire/claim/start/permit续发，持久STOP控制意图并通知guardian。Stop控制允许当前授权管理者清理旧任期资源，但不能借此发SPEAK。Stop与恢复按同run行锁线性化；先Recovery后Stop也必须使其激活CAS失败。已传到平台的媒体可能继续缓冲播放；不承诺瞬时观众静音。
+
+控制Outbox与媒体Outbox共用身份/Dispatch FSM，但不创建虚假turn/segment/utterance。RuntimeStop与FenceInstall分别有独立v0.5 request schema、commandId/intentId/requestHash；与EXECUTE相同规范计算hash。RuntimeStop验证durable stopRevision及目标属于run的历史Session，允许清理已退休任期，无需媒体permit；CREATED尚无Session的Stop由Backend直接完成本地清理，不发无目标Runtime命令。FenceInstall只用于已分配的pending任期；不能借管理例外执行媒体。
+
+dispatcher必须先按operation区分准入：EXECUTE需要ACTIVE lease且未Stop；INSTALL_FENCE需要有效PENDING_INSTALL lease；STOP_RUN在持久tombstone下使用Outbox独立cleanup claim（不晚于15秒），不能被“desiredState必须LIVE”过滤。STOP/FENCE均不执行音频，失ACK可按各自幂等控制语义对账/重送；完成仍需真实隔离/cleanup证明。Stop清理在run FAILED之后也持续，不重新改变终态或续发媒体permit。
+
+响应revision约定：runRevision是run CAS revision；Turn.revision是话轮revision；ExecutionStatus/RuntimeExecute/JournalAccept/JournalStart的revision是command inbox revision；leaseVersion是独立续租CAS。策略/CONTROL请求expectedRevision默认run revision；Stop是审计例外。JournalAccept/AcquireOutputPermit/ConfirmRunFence不要求Runtime读取run revision，服务端锁最新run并验证epoch/producer/Stop。JournalStart使用expectedInboxRevision=接受receipt的revision，在command inbox从ACCEPTED首次CAS；已经STARTED的重复请求无论旧revision均只返回startAuthorized=false。Runtime ConfirmCheckpoint的expectedRevision=null，按eventId/producerSeq去重并在当前锁事务投影；CONTROL的BUSINESS_COMMIT则带run expectedRevision。COMPLETED/BUSINESS_COMMIT仅CONTROL角色可产生，Runtime只提交drain等原始证据；服务端必须校验证据链，角色token本身不能使伪造证据合法。
+
+不可变命令内的leaseVersion是签发时审计快照，不能在正常续租后要求它等于当前leaseVersion；effect权限来自当前epoch、owner与尚有效的permit。AcquireOutputPermit不接收调用者leaseVersion，服务端返回当前值及短期有效期；旧permit不会因此延长。续租CAS仍必须使用当前leaseVersion，只有管理owner能执行，不由Runtime自报版本续租。
+
+## 错误与权限
+
+协议定义401 UNAUTHENTICATED；403 FORBIDDEN；404 RESOURCE_NOT_FOUND；409 STATE_CONFLICT/STALE_RUN_EPOCH/LEASE_LOST/RUN_STOPPED/COMMAND_CONFLICT/PLAN_CHANGED/BOUNDARY_CONFLICT/EVIDENCE_CONFLICT/OUTPUT_FENCE_UNPROVEN；422 INVALID_ARGUMENT/SEGMENT_TOO_LONG；503 DEPENDENCY_UNAVAILABLE/RECOVERY_UNKNOWN；429 OVERLOADED。错误响应只含requestId、静态code、retryable与message，不带token、raw comment、Provider私有配置。retryable=true仅建议重试请求/对账，不自动授予重播媒体。
+
+所有路径仅服务网内TLS/受保护本机连接，精确Bearer角色token，不允许browser cookie、query token或调用者自报tenant授权。CONTROL可从owner认证边界发起run管理与dispatch；RUNTIME_JOURNAL只可对已绑定command/producer写有限证据、query、请求短permit，不能创建plan/turn/恢复/Stop；OUTPUT_GUARDIAN仅写隔离证明。scope从run/command与已登记service principal推导，输入tenantId/ownerId只用于一致性比对；授权必须先于幂等结果返回。新token独立于v1控制/Tool/Binding/GPU token，密钥不进入payload/log/证据。单个请求body≤256KiB，content≤2000 Unicode字符，source identities≤128，query仅单command，批量计划≤1000段且≤256KiB。生产缺角色token拒绝启动新功能。

@@ -1,0 +1,97 @@
+[
+  {
+    "name": "script-unicode",
+    "value": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "commandId": "cmd_demo",
+      "intentId": "intent_demo",
+      "attemptId": "attempt_demo",
+      "turnId": "turn_demo",
+      "utteranceId": "utt_demo",
+      "runEpoch": 1,
+      "leaseVersion": 1,
+      "idempotencyKey": "turn:segment_demo:initial",
+      "traceId": "trace_demo",
+      "createdAt": "2026-10-16T00:00:00Z",
+      "operation": "EXECUTE_TURN",
+      "payload": {
+        "mode": "SCRIPT_TEXT",
+        "text": "这款采用纯棉面料，穿着柔软舒适。",
+        "textHash": "51912a595bdc92deaad2dff0fdd3a0d5e87cbb69dc27abeeff480572504f8aac",
+        "productId": "product_demo",
+        "planId": "plan_demo",
+        "segmentId": "segment_demo",
+        "factDependencies": [],
+        "expiresAt": "2026-10-16T00:00:20Z",
+        "requiredSinks": [
+          "rtmp_main"
+        ]
+      }
+    },
+    "canonicalUtf8": "{\"attemptId\":\"attempt_demo\",\"commandId\":\"cmd_demo\",\"contractRevision\":\"durable-live-1\",\"createdAt\":\"2026-10-16T00:00:00Z\",\"idempotencyKey\":\"turn:segment_demo:initial\",\"intentId\":\"intent_demo\",\"leaseVersion\":1,\"operation\":\"EXECUTE_TURN\",\"ownerId\":\"owner_demo\",\"payload\":{\"expiresAt\":\"2026-10-16T00:00:20Z\",\"factDependencies\":[],\"mode\":\"SCRIPT_TEXT\",\"planId\":\"plan_demo\",\"productId\":\"product_demo\",\"requiredSinks\":[\"rtmp_main\"],\"segmentId\":\"segment_demo\",\"text\":\"这款采用纯棉面料，穿着柔软舒适。\",\"textHash\":\"51912a595bdc92deaad2dff0fdd3a0d5e87cbb69dc27abeeff480572504f8aac\"},\"runEpoch\":1,\"runId\":\"run_demo\",\"schemaVersion\":\"0.5\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\",\"traceId\":\"trace_demo\",\"turnId\":\"turn_demo\",\"utteranceId\":\"utt_demo\"}",
+    "sha256": "dc66d88cca91b91a761182d1bcc3214f56faacc5c07ab1f57bb427be5a67c169"
+  },
+  {
+    "name": "decimal-string-and-control-escape",
+    "value": {
+      "text": "129.90元/件\n尺码 XL、XXL",
+      "amount": "129.90",
+      "count": 2
+    },
+    "canonicalUtf8": "{\"amount\":\"129.90\",\"count\":2,\"text\":\"129.90元/件\\n尺码 XL、XXL\"}",
+    "sha256": "2a5df529606127a2679b6e95e5978690065e50105ab7edb25c940e11cdf87b75"
+  },
+  {
+    "name": "pre-session-stop",
+    "value": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": null,
+      "commandId": "cmd_stop_created",
+      "intentId": "intent_stop_created",
+      "runEpoch": 0,
+      "idempotencyKey": "stop:run_demo:created",
+      "traceId": "trace_stop",
+      "createdAt": "2026-10-16T00:00:00Z",
+      "operation": "STOP_RUN",
+      "stopRevision": 1,
+      "reasonCode": "OPERATOR_STOP"
+    },
+    "canonicalUtf8": "{\"commandId\":\"cmd_stop_created\",\"contractRevision\":\"durable-live-1\",\"createdAt\":\"2026-10-16T00:00:00Z\",\"idempotencyKey\":\"stop:run_demo:created\",\"intentId\":\"intent_stop_created\",\"operation\":\"STOP_RUN\",\"ownerId\":\"owner_demo\",\"reasonCode\":\"OPERATOR_STOP\",\"runEpoch\":0,\"runId\":\"run_demo\",\"schemaVersion\":\"0.5\",\"sessionId\":null,\"stopRevision\":1,\"tenantId\":\"tenant_demo\",\"traceId\":\"trace_stop\"}",
+    "sha256": "4196c88d29de5eb451295e9f8423dde9e3a4d71770026cf0b9b110b3cdaae941"
+  },
+  {
+    "name": "install-fence",
+    "value": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-1",
+      "requestId": "req_demo",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "expectedRevision": 3,
+      "sessionId": "session_demo",
+      "runEpoch": 2,
+      "expectedPreviousEpoch": 1,
+      "leaseVersion": 2,
+      "producerIncarnation": "runtime_next",
+      "guardianProofRef": "fence_proof",
+      "idempotencyKey": "install:run_demo:2",
+      "commandId": "cmd_fence",
+      "intentId": "intent_fence",
+      "traceId": "trace_fence",
+      "createdAt": "2026-10-16T00:00:00Z",
+      "operation": "INSTALL_FENCE"
+    },
+    "canonicalUtf8": "{\"commandId\":\"cmd_fence\",\"contractRevision\":\"durable-live-1\",\"createdAt\":\"2026-10-16T00:00:00Z\",\"expectedPreviousEpoch\":1,\"expectedRevision\":3,\"guardianProofRef\":\"fence_proof\",\"idempotencyKey\":\"install:run_demo:2\",\"intentId\":\"intent_fence\",\"leaseVersion\":2,\"operation\":\"INSTALL_FENCE\",\"ownerId\":\"owner_demo\",\"producerIncarnation\":\"runtime_next\",\"requestId\":\"req_demo\",\"runEpoch\":2,\"runId\":\"run_demo\",\"schemaVersion\":\"0.5\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\",\"traceId\":\"trace_fence\"}",
+    "sha256": "cdcab92fcfbc6d4357c2a28831f830ff8a69c81f9d50683c31aff95458ecda9b"
+  }
+]
