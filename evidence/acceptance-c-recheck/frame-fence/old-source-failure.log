@@ -1,0 +1,122 @@
+test_local_fence_before_cancel_stores_before_ack_but_never_ready (test_acceptance_c_fenced_frames.FencedFrameTests.test_local_fence_before_cancel_stores_before_ack_but_never_ready) ... staging_receive_failed {"messageType": "StageVideo", "code": "STAGING_SEQUENCE_GAP", "pendingPresent": false, "pendingDone": null, "answeredPresent": false, "stageFenced": true, "stageReleased": false}
+ERROR
+
+======================================================================
+ERROR: test_local_fence_before_cancel_stores_before_ack_but_never_ready (test_acceptance_c_fenced_frames.FencedFrameTests.test_local_fence_before_cancel_stores_before_ack_but_never_ready)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/tests/test_acceptance_c_fenced_frames.py", line 68, in test_local_fence_before_cancel_stores_before_ack_but_never_ready
+    answer=await asyncio.wait_for(cleanup,2)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 345, in release
+    return await asyncio.shield(stage.release_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 363, in _release
+    fenced=await self.exchange(stage.cancel_request,"StageFenced",timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 85, in exchange
+    if self.failed:raise self.failed
+                   ^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 133, in receive_loop
+    raise StagingFailure("STAGING_SEQUENCE_GAP")
+app.soulx_staging.StagingFailure: STAGING_SEQUENCE_GAP
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (errors=1)
+Future exception was never retrieved
+future: <Future finished exception=StagingFailure('STAGING_SEQUENCE_GAP') created at /Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:448>
+source_traceback: Object created at (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/__main__.py", line 18, in <module>
+    main(module=None)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/main.py", line 105, in __init__
+    self.runTests()
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/main.py", line 281, in runTests
+    self.result = testRunner.run(self.test)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/runner.py", line 240, in run
+    test(result)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 122, in run
+    test(result)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 122, in run
+    test(result)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/suite.py", line 122, in run
+    test(result)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/case.py", line 690, in __call__
+    return self.run(*args, **kwds)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/async_case.py", line 132, in run
+    return super().run(result)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/case.py", line 634, in run
+    self._callTestMethod(testMethod)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/async_case.py", line 91, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/async_case.py", line 113, in _callMaybeAsync
+    return self._asyncioRunner.run(
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 678, in run_until_complete
+    self.run_forever()
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 645, in run_forever
+    self._run_once()
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 1991, in _run_once
+    handle._run()
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/tests/test_acceptance_c_fenced_frames.py", line 35, in test_local_fence_before_cancel_stores_before_ack_but_never_ready
+    client,stage,frame,data,end=setup_stage();renew_done=asyncio.Event();stored=asyncio.Event();closed=asyncio.Event();wire=[];errors=[]
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/tests/test_acceptance_c_fenced_frames.py", line 30, in setup_stage
+    stage=Stage(copy.deepcopy(request['identity']),request,produced=asyncio.get_running_loop().create_future());client.active=stage
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 448, in create_future
+    return futures.Future(loop=self)
+Traceback (most recent call last):
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/case.py", line 58, in testPartExecutor
+    yield
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/case.py", line 634, in run
+    self._callTestMethod(testMethod)
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/async_case.py", line 91, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/unittest/async_case.py", line 113, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/tests/test_acceptance_c_fenced_frames.py", line 68, in test_local_fence_before_cancel_stores_before_ack_but_never_ready
+    answer=await asyncio.wait_for(cleanup,2)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 345, in release
+    return await asyncio.shield(stage.release_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 363, in _release
+    fenced=await self.exchange(stage.cancel_request,"StageFenced",timeout=10)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 85, in exchange
+    if self.failed:raise self.failed
+                   ^^^^^^^^^^^^^^^^^
+  File "/private/tmp/astralive-v05-acceptance-c-20261015-1/runtime/app/soulx_staging.py", line 133, in receive_loop
+    raise StagingFailure("STAGING_SEQUENCE_GAP")
+app.soulx_staging.StagingFailure: STAGING_SEQUENCE_GAP
