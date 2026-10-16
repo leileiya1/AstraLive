@@ -1,0 +1,31 @@
+--- a/frontend/src/features/live-console/LiveConsole.tsx
++++ b/frontend/src/features/live-console/LiveConsole.tsx
+@@ -7,6 +7,7 @@
+ import { Input, Textarea } from "../../components/ui/input";
+ import { useLiveSessionEvents } from "../../hooks/useLiveSessionEvents";
+ import { useLivePreview } from "../../hooks/useLivePreview";
++import { TurnManagerPanel, type TurnManagerView } from "./TurnManagerPanel";
+ import { InteractionPanel } from "./InteractionPanel";
+ import { ProviderStatus } from "./ProviderStatus";
+ import { useUi } from "../../stores/ui";
+@@ -27,10 +28,12 @@
+   roomId,
+   sessionId,
+   onSession,
++  turnManager,
+ }: {
+   roomId: string | null;
+   sessionId: string | null;
+   onSession: (id: string) => void;
++  turnManager?: { view: TurnManagerView; onReviewRecovery: () => void; busy?: boolean };
+ }) {
+   const qc = useQueryClient();
+   const room = useQuery({
+@@ -168,6 +171,7 @@
+         </div>
+       </div>
+       <ProviderStatus sessionId={sessionId} />
++      {turnManager && <TurnManagerPanel {...turnManager} />}
+       <InteractionPanel sessionId={sessionId} running={["LIVE", "DEGRADED"].includes(shownStatus ?? "")} speechQueue={state.timeline.filter(t => !["COMPLETED", "INTERRUPTED", "CANCELLED", "FAILED"].includes(t.status)).length} />
+       {[create.error, start.error, stop.error].filter(Boolean).map((e, i) => (
+         <ErrorNotice key={i} error={e} />

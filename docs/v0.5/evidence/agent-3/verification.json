@@ -1,0 +1,173 @@
+{
+  "baseMainSHA": "7fe5d24810e2df348c58dd7748e97ffbe5cff384",
+  "contractRevision": "durable-live-1",
+  "acceptanceLayer": "CPU / Mock only; shared production wiring NOT INTEGRATED",
+  "results": [
+    {
+      "name": "go-race",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-race",
+        "-json",
+        "./..."
+      ],
+      "cwd": "backend",
+      "exitCode": 0,
+      "elapsedSeconds": 3.59,
+      "log": "go-race.log"
+    },
+    {
+      "name": "go-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "backend",
+      "exitCode": 0,
+      "elapsedSeconds": 0.315,
+      "log": "go-vet.log"
+    },
+    {
+      "name": "contracts",
+      "command": [
+        "/tmp/astralive-agent3-runtime-venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_durable_live_contracts",
+        "tests.test_contracts",
+        "-v"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "elapsedSeconds": 17.879,
+      "log": "contracts.log"
+    },
+    {
+      "name": "freeze",
+      "command": [
+        "/tmp/astralive-agent3-runtime-venv/bin/python",
+        "scripts/validate-durable-live-contracts.py"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "elapsedSeconds": 0.298,
+      "log": "freeze.log"
+    },
+    {
+      "name": "runtime-regression",
+      "command": [
+        "/tmp/astralive-agent3-runtime-venv/bin/python",
+        "-m",
+        "unittest",
+        "runtime.tests.test_runtime",
+        "runtime.tests.test_interaction_streaming",
+        "runtime.tests.test_interaction_faults",
+        "runtime.tests.test_independent_audit",
+        "-v"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "elapsedSeconds": 3.527,
+      "log": "runtime-regression.log"
+    },
+    {
+      "name": "runtime-helper",
+      "command": [
+        "/tmp/astralive-agent3-runtime-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_durable_live_segments.py",
+        "-v"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "elapsedSeconds": 0.053,
+      "log": "runtime-helper.log"
+    },
+    {
+      "name": "scheduler-patch",
+      "command": [
+        "/tmp/astralive-agent3-runtime-venv/bin/python",
+        "docs/v0.5/agent-3/check-patches.py"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "elapsedSeconds": 3.009,
+      "log": "scheduler-patch.log"
+    },
+    {
+      "name": "frontend-tests",
+      "command": [
+        "bun",
+        "run",
+        "test"
+      ],
+      "cwd": "frontend",
+      "exitCode": 0,
+      "elapsedSeconds": 1.651,
+      "log": "frontend-tests.log"
+    },
+    {
+      "name": "frontend-build",
+      "command": [
+        "bun",
+        "run",
+        "build"
+      ],
+      "cwd": "frontend",
+      "exitCode": 0,
+      "elapsedSeconds": 3.043,
+      "log": "frontend-build.log"
+    },
+    {
+      "name": "export-schema",
+      "command": [
+        "/tmp/astralive-agent3-runtime-venv/bin/python",
+        "backend/internal/contentplan/contract/validate_evidence.py",
+        "/Users/sapiece/innovationProject/AstraLive-agent-3/docs/v0.5/evidence/agent-3"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "elapsedSeconds": 0.05,
+      "log": "export-schema.log"
+    }
+  ],
+  "notTested": [
+    "real PostgreSQL/guardian crash recovery",
+    "real DeepSeek/XiaoYa/SoulX/GPU",
+    "Chrome/WebRTC",
+    "local RTMP",
+    "official audience",
+    "busy 5/8 second SLA",
+    "idle 3/5 second SLA"
+  ],
+  "implementationSHA256": {
+    "backend/internal/contentplan/contract/generate.py": "92aa9835648c072fd86f5030866a4d6b0028fde3c547d090733948b866554cca",
+    "backend/internal/contentplan/contract/roundtrip.gen_test.go": "83c824c18bdd4a77b3bf1d5c0b5eb1ba6085742840c892d48296aed3369ca185",
+    "backend/internal/contentplan/contract/types.gen.go": "47fe4e99ca02f68997776166878b9dbff413c8f92eaaf115c9b6453594de91d2",
+    "backend/internal/contentplan/contract/validate_evidence.py": "1de1de21bd349a3bce58255c001d4e68459b8c8e38d7c6025991862399c84252",
+    "backend/internal/contentplan/hash.go": "61a871225bdce0a877007456ab7f4fed243193a299e9a3c3e5519e5b5c0c44c1",
+    "backend/internal/contentplan/planner.go": "daab3fc68eeaec0ccd45c145965747b5e1995425750bc25efd81cd3748c573cb",
+    "backend/internal/contentplan/planner_test.go": "25a8baa64f7f79f8c57042697b2907d475b876b244f16caae434a9f80bc4c5d2",
+    "backend/internal/contentplan/validate.go": "9a821b49e366ce8759320d2be158d813a5c9ada03cb420a6019d76dcf4e6856f",
+    "backend/internal/turnmanager/fake_test.go": "2bb44bcd490d8b3d106aabe5876a3c06f51714754c6dd0d381523bdc27075fba",
+    "backend/internal/turnmanager/manager.go": "190d54d1c6c1903d2e8b318e5810ae618b95d8405226694be44633a844525d41",
+    "backend/internal/turnmanager/manager_test.go": "6c69d17584ea99f11519a46031440b8c141728d3d8c4eccb858914b771b2543f",
+    "backend/internal/turnmanager/metrics.go": "e08be1562c34388dbadce8c76f26c9a233a6217f547336212e1422844bdf473d",
+    "backend/internal/turnmanager/metrics_test.go": "0d032acec84aae5138e9e0bd660ce7db8715706e3beea969fbf94fc5b62fd8cf",
+    "backend/internal/turnmanager/policy.go": "4c83436b047650e2ffcec9e1145c868dd0a765960b0bad7008b7950fb2d7cd39",
+    "backend/internal/turnmanager/ports.go": "d043c72c9d37d9b16739fd91c885f5951f666be3f93cc7307b39d63b8ee20739",
+    "backend/internal/turnmanager/scheduler.go": "b854d9629e5fd87d800d453d24f649c218770a192370c0bf513ed994f9e7b224",
+    "frontend/src/features/live-console/TurnManagerPanel.test.tsx": "1a6403bcd825239e56e49dd3ef84d9d83718f980415f899be3180cf581517f22",
+    "frontend/src/features/live-console/TurnManagerPanel.tsx": "07f85e23493f706d7cefe22d3e17c8a78241aabb92574aa6b61c12cee209a8a8",
+    "runtime/app/durable_live_segments.py": "ea0220dfa156d4f06443df770b2b494e03211fa9b28ab10c2946f5922daef480",
+    "runtime/tests/test_durable_live_segments.py": "f6e255bc69016554bdbd815ea44dc376ca09d1da3af6180183878be82ba5320c"
+  }
+}

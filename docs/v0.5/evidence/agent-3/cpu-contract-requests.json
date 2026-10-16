@@ -1,0 +1,936 @@
+[
+  {
+    "operation": "RestoreContentPlan",
+    "request": {
+      "contractRevision": "durable-live-1",
+      "ownerId": "owner",
+      "requestId": "req_37a5e3b14a083833237b4ac6c538d85c",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "SaveContentPlan",
+    "request": {
+      "bundle": {
+        "plan": {
+          "createdAt": "2026-10-16T00:00:00Z",
+          "generationSource": {
+            "kind": "TEMPLATE",
+            "modelVersion": null,
+            "promptVersion": null,
+            "reference": "trusted-product-v1"
+          },
+          "ownerId": "owner",
+          "planId": "plan",
+          "productId": "product",
+          "productSnapshotVersion": "9467a7a9a361c9f181ead70fd43996aa54d172d0ceec4215abda77902377b361",
+          "revision": 1,
+          "runId": "run",
+          "segmentOrder": [
+            "seg_fe2fc880ee5a0221fa992d57689cb5f2d3406718f6e0c2a7270734039e920a1e",
+            "seg_1089d07a136cb1b00805bdf7045a777a0ee265ccb073d996c4eda0770fa9091b",
+            "seg_68c007cd460ebfd2057e137f0289c140a98a7d509bad6ae887b2ca4b6a823fc6"
+          ],
+          "snapshot": {
+            "description": "纯棉面料。",
+            "name": "上衣",
+            "productId": "product",
+            "sizes": [],
+            "sourceVersion": "v1"
+          },
+          "tenantId": "tenant",
+          "updatedAt": "2026-10-16T00:00:00Z"
+        },
+        "segments": [
+          {
+            "checkpointState": "PLANNED",
+            "content": "第1段介绍纯棉面料。",
+            "createdAt": "2026-10-16T00:00:00Z",
+            "estimatedDurationMs": 1880,
+            "factDependencies": [],
+            "idempotencyKey": "segment:seg_fe2fc880ee5a0221fa992d57689cb5f2d3406718f6e0c2a7270734039e920a1e:initial",
+            "ownerId": "owner",
+            "planId": "plan",
+            "runId": "run",
+            "segmentId": "seg_fe2fc880ee5a0221fa992d57689cb5f2d3406718f6e0c2a7270734039e920a1e",
+            "sequence": 1,
+            "state": "READY",
+            "tenantId": "tenant",
+            "textHash": "7fdb77656ab218ea0430605e999e54a6db9f19f362971e82e0e57ad0fce8810c",
+            "updatedAt": "2026-10-16T00:00:00Z",
+            "utteranceId": null
+          },
+          {
+            "checkpointState": "PLANNED",
+            "content": "第2段介绍纯棉面料。",
+            "createdAt": "2026-10-16T00:00:00Z",
+            "estimatedDurationMs": 1880,
+            "factDependencies": [],
+            "idempotencyKey": "segment:seg_1089d07a136cb1b00805bdf7045a777a0ee265ccb073d996c4eda0770fa9091b:initial",
+            "ownerId": "owner",
+            "planId": "plan",
+            "runId": "run",
+            "segmentId": "seg_1089d07a136cb1b00805bdf7045a777a0ee265ccb073d996c4eda0770fa9091b",
+            "sequence": 2,
+            "state": "READY",
+            "tenantId": "tenant",
+            "textHash": "d0ba42029fb94e600f190e051b40da06f162653e2379e6572c436db77020c67b",
+            "updatedAt": "2026-10-16T00:00:00Z",
+            "utteranceId": null
+          },
+          {
+            "checkpointState": "PLANNED",
+            "content": "第3段介绍纯棉面料。",
+            "createdAt": "2026-10-16T00:00:00Z",
+            "estimatedDurationMs": 1880,
+            "factDependencies": [],
+            "idempotencyKey": "segment:seg_68c007cd460ebfd2057e137f0289c140a98a7d509bad6ae887b2ca4b6a823fc6:initial",
+            "ownerId": "owner",
+            "planId": "plan",
+            "runId": "run",
+            "segmentId": "seg_68c007cd460ebfd2057e137f0289c140a98a7d509bad6ae887b2ca4b6a823fc6",
+            "sequence": 3,
+            "state": "READY",
+            "tenantId": "tenant",
+            "textHash": "db47eea2704646efa4b3e6f59428c2699b187872e7bd63417450863530f88e72",
+            "updatedAt": "2026-10-16T00:00:00Z",
+            "utteranceId": null
+          }
+        ]
+      },
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 1,
+      "idempotencyKey": "plan:64879f7d6b960a01909762d911a32d4582c20010c5641ee90278b644a9e3b525",
+      "ownerId": "owner",
+      "requestId": "req_3f66c295903d3972e42245fe01310790",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "RestoreContentPlan",
+    "request": {
+      "contractRevision": "durable-live-1",
+      "ownerId": "owner",
+      "requestId": "req_873c85280888a5b664491c75c2397b57",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "AdmitTurn",
+    "request": {
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 2,
+      "idempotencyKey": "turn:segment:seg_fe2fc880ee5a0221fa992d57689cb5f2d3406718f6e0c2a7270734039e920a1e:initial",
+      "ownerId": "owner",
+      "requestId": "req_b1fbf6c84ee47a3651ab3da3cf67adc7",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant",
+      "turn": {
+        "expiresAt": null,
+        "finishedAt": null,
+        "idempotencyKey": "turn:segment:seg_fe2fc880ee5a0221fa992d57689cb5f2d3406718f6e0c2a7270734039e920a1e:initial",
+        "inputText": "第1段介绍纯棉面料。",
+        "ownerId": "owner",
+        "planId": "plan",
+        "priority": 20,
+        "revision": 1,
+        "runId": "run",
+        "scheduledAt": "2026-10-16T00:00:00Z",
+        "sourceCommentTraceId": null,
+        "sourceIdentities": [],
+        "sourceSegmentId": "seg_fe2fc880ee5a0221fa992d57689cb5f2d3406718f6e0c2a7270734039e920a1e",
+        "startedAt": null,
+        "state": "READY",
+        "tenantId": "tenant",
+        "turnId": "turn_faacab322de522356231a44a91bfa9ef7968287377d27ef78b204d003fb90d25",
+        "turnType": "SCRIPT"
+      }
+    }
+  },
+  {
+    "operation": "ClaimNextTurn",
+    "request": {
+      "candidateTurnId": "turn_faacab322de522356231a44a91bfa9ef7968287377d27ef78b204d003fb90d25",
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 3,
+      "expectedSlotVersion": 1,
+      "idempotencyKey": "claim:turn:segment:seg_fe2fc880ee5a0221fa992d57689cb5f2d3406718f6e0c2a7270734039e920a1e:initial",
+      "ownerId": "owner",
+      "requestId": "req_61bbea4d73a5c8872ffdf852f4670ed4",
+      "runEpoch": 1,
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "DispatchTurn",
+    "request": {
+      "commandId": "command_1",
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 4,
+      "idempotencyKey": "dispatch:f4e42889938459fb0d6f2226a36213a938c9ce403e4f35ee1e1200cb2b8e6896",
+      "intentId": "intent_1",
+      "ownerId": "owner",
+      "requestId": "req_0610ad09a759321406989210a846c301",
+      "runEpoch": 1,
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "RestoreContentPlan",
+    "request": {
+      "contractRevision": "durable-live-1",
+      "ownerId": "owner",
+      "requestId": "req_8b7db1e03b9ebfdafe5be4b3e490aca3",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "AdmitTurn",
+    "request": {
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 4,
+      "idempotencyKey": "selection:6f1105d4924d931947a9e2e43a5bfb0eb0027036b9f8364bbc46249659a1a0cd",
+      "ownerId": "owner",
+      "requestId": "req_798dd68f004247c57da886f1c558e4e7",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant",
+      "turn": {
+        "expiresAt": "2026-10-16T00:00:20Z",
+        "finishedAt": null,
+        "idempotencyKey": "selection:6f1105d4924d931947a9e2e43a5bfb0eb0027036b9f8364bbc46249659a1a0cd",
+        "inputText": "价格多少？",
+        "ownerId": "owner",
+        "planId": "plan",
+        "priority": 80,
+        "revision": 1,
+        "runId": "run",
+        "scheduledAt": "2026-10-16T00:00:00Z",
+        "sourceCommentTraceId": "trace_c",
+        "sourceIdentities": [
+          {
+            "platform": "mock",
+            "platformRoomId": "room",
+            "sourceEventId": "c",
+            "sourceReceiptId": "receipt_c",
+            "traceId": "trace_c"
+          }
+        ],
+        "sourceSegmentId": null,
+        "startedAt": null,
+        "state": "WAITING",
+        "tenantId": "tenant",
+        "turnId": "turn_6f1105d4924d931947a9e2e43a5bfb0eb0027036b9f8364bbc46249659a1a0cd",
+        "turnType": "COMMENT"
+      }
+    }
+  },
+  {
+    "operation": "ConfirmCheckpoint",
+    "request": {
+      "checkpoint": {
+        "attemptId": "attempt_1",
+        "checkpointId": "attempt_1_PLAYING",
+        "commandId": "command_1",
+        "contractRevision": "durable-live-1",
+        "eventId": "attempt_1_PLAYING",
+        "evidence": {
+          "audienceVisibility": "UNVERIFIED",
+          "evidenceHash": "dad17554d7bdd1b4845be6b2961b354f65e3f6930471d2a973d05260c2c5324c",
+          "evidenceRef": "cpu_evidence",
+          "evidenceType": "SINK_ADMITTED",
+          "predecessorCheckpointIds": [],
+          "requiredSinks": [
+            "cpu_sink"
+          ],
+          "sinkProofs": [
+            {
+              "audioConsumedThroughExclusive": 16000,
+              "finalAudioSampleExclusive": 16000,
+              "finalVideoFrame": 24,
+              "firstAudioSample": 0,
+              "generationId": 1,
+              "kind": "RTMP_PIPE_WRITE",
+              "sinkId": "cpu_sink",
+              "terminal": true,
+              "videoConsumedThroughFrame": 24
+            }
+          ]
+        },
+        "lastKnownState": null,
+        "occurredAt": "2026-10-16T00:00:00Z",
+        "ownerId": "owner",
+        "producerIncarnation": "cpu_producer",
+        "producerSeq": 1,
+        "reasonCode": null,
+        "runEpoch": 1,
+        "runId": "run",
+        "schemaVersion": "0.5",
+        "sessionId": "session",
+        "state": "PLAYING",
+        "tenantId": "tenant",
+        "utteranceId": "utterance_1"
+      },
+      "contractRevision": "durable-live-1",
+      "expectedRevision": null,
+      "ownerId": "owner",
+      "requestId": "req_cpu",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "ConfirmCheckpoint",
+    "request": {
+      "checkpoint": {
+        "attemptId": "attempt_1",
+        "checkpointId": "attempt_1_LOCAL_MEDIA_DRAINED",
+        "commandId": "command_1",
+        "contractRevision": "durable-live-1",
+        "eventId": "attempt_1_LOCAL_MEDIA_DRAINED",
+        "evidence": {
+          "audienceVisibility": "UNVERIFIED",
+          "evidenceHash": "2c37af89267e6ee42a1c2358d1451bba6f15f40ec7f654b45fadd9064115c304",
+          "evidenceRef": "cpu_evidence",
+          "evidenceType": "ALL_REQUIRED_DRAIN",
+          "predecessorCheckpointIds": [
+            "attempt_1_PLAYING"
+          ],
+          "requiredSinks": [
+            "cpu_sink"
+          ],
+          "sinkProofs": [
+            {
+              "audioConsumedThroughExclusive": 16000,
+              "finalAudioSampleExclusive": 16000,
+              "finalVideoFrame": 24,
+              "firstAudioSample": 0,
+              "generationId": 1,
+              "kind": "RTMP_PIPE_WRITE",
+              "sinkId": "cpu_sink",
+              "terminal": true,
+              "videoConsumedThroughFrame": 24
+            }
+          ]
+        },
+        "lastKnownState": null,
+        "occurredAt": "2026-10-16T00:00:03Z",
+        "ownerId": "owner",
+        "producerIncarnation": "cpu_producer",
+        "producerSeq": 2,
+        "reasonCode": null,
+        "runEpoch": 1,
+        "runId": "run",
+        "schemaVersion": "0.5",
+        "sessionId": "session",
+        "state": "LOCAL_MEDIA_DRAINED",
+        "tenantId": "tenant",
+        "utteranceId": "utterance_1"
+      },
+      "contractRevision": "durable-live-1",
+      "expectedRevision": null,
+      "ownerId": "owner",
+      "requestId": "req_cpu",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "ConfirmCheckpoint",
+    "request": {
+      "checkpoint": {
+        "attemptId": "attempt_1",
+        "checkpointId": "attempt_1_COMPLETED",
+        "commandId": "command_1",
+        "contractRevision": "durable-live-1",
+        "eventId": "attempt_1_COMPLETED",
+        "evidence": {
+          "audienceVisibility": "UNVERIFIED",
+          "evidenceHash": "267f3d96a360d582e4cc75ab1291a5f15f81a7cc5559959282dd9915483ce1cc",
+          "evidenceRef": "cpu_evidence",
+          "evidenceType": "BUSINESS_COMMIT",
+          "predecessorCheckpointIds": [
+            "attempt_1_LOCAL_MEDIA_DRAINED"
+          ],
+          "requiredSinks": [
+            "cpu_sink"
+          ],
+          "sinkProofs": [
+            {
+              "audioConsumedThroughExclusive": 16000,
+              "finalAudioSampleExclusive": 16000,
+              "finalVideoFrame": 24,
+              "firstAudioSample": 0,
+              "generationId": 1,
+              "kind": "RTMP_PIPE_WRITE",
+              "sinkId": "cpu_sink",
+              "terminal": true,
+              "videoConsumedThroughFrame": 24
+            }
+          ]
+        },
+        "lastKnownState": null,
+        "occurredAt": "2026-10-16T00:00:03Z",
+        "ownerId": "owner",
+        "producerIncarnation": "cpu_producer",
+        "producerSeq": 3,
+        "reasonCode": null,
+        "runEpoch": 1,
+        "runId": "run",
+        "schemaVersion": "0.5",
+        "sessionId": "session",
+        "state": "COMPLETED",
+        "tenantId": "tenant",
+        "utteranceId": "utterance_1"
+      },
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 7,
+      "ownerId": "owner",
+      "requestId": "req_cpu",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "RestoreContentPlan",
+    "request": {
+      "contractRevision": "durable-live-1",
+      "ownerId": "owner",
+      "requestId": "req_27c7857886f64aa28e53d9085a1ea92a",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "YieldAtSegmentBoundary",
+    "request": {
+      "boundaryCheckpointId": "attempt_1_COMPLETED",
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 8,
+      "expectedSlotVersion": 5,
+      "idempotencyKey": "yield:ae67b994fc1f4936d885fec8743406545536a80becc010d5f765db4bed4f86be",
+      "ownerId": "owner",
+      "requestId": "req_3038cef6bc7e049a72cc4c744602dd0e",
+      "runEpoch": 1,
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "RestoreContentPlan",
+    "request": {
+      "contractRevision": "durable-live-1",
+      "ownerId": "owner",
+      "requestId": "req_e7e1e71c2e90348a03f591dcc3c78b22",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "ClaimNextTurn",
+    "request": {
+      "candidateTurnId": "turn_6f1105d4924d931947a9e2e43a5bfb0eb0027036b9f8364bbc46249659a1a0cd",
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 9,
+      "expectedSlotVersion": 6,
+      "idempotencyKey": "claim:selection:6f1105d4924d931947a9e2e43a5bfb0eb0027036b9f8364bbc46249659a1a0cd",
+      "ownerId": "owner",
+      "requestId": "req_1bf81693015ab9d4410f5762fa93c1c2",
+      "runEpoch": 1,
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "DispatchTurn",
+    "request": {
+      "commandId": "command_2",
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 10,
+      "idempotencyKey": "dispatch:a6b356328e187ff7cf739f74e5d458156b78ac37ca64286d48aa3cd486e37f38",
+      "intentId": "intent_2",
+      "ownerId": "owner",
+      "requestId": "req_4ddcc684752fe66bbd39ef080eab95f5",
+      "runEpoch": 1,
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "ConfirmCheckpoint",
+    "request": {
+      "checkpoint": {
+        "attemptId": "attempt_2",
+        "checkpointId": "attempt_2_PLAYING",
+        "commandId": "command_2",
+        "contractRevision": "durable-live-1",
+        "eventId": "attempt_2_PLAYING",
+        "evidence": {
+          "audienceVisibility": "UNVERIFIED",
+          "evidenceHash": "99fabaf60b2e106b26a8341a7fad673d0bdf34f90bf7cfc958b17fa466fadd49",
+          "evidenceRef": "cpu_evidence",
+          "evidenceType": "SINK_ADMITTED",
+          "predecessorCheckpointIds": [],
+          "requiredSinks": [
+            "cpu_sink"
+          ],
+          "sinkProofs": [
+            {
+              "audioConsumedThroughExclusive": 16000,
+              "finalAudioSampleExclusive": 16000,
+              "finalVideoFrame": 24,
+              "firstAudioSample": 0,
+              "generationId": 1,
+              "kind": "RTMP_PIPE_WRITE",
+              "sinkId": "cpu_sink",
+              "terminal": true,
+              "videoConsumedThroughFrame": 24
+            }
+          ]
+        },
+        "lastKnownState": null,
+        "occurredAt": "2026-10-16T00:00:03Z",
+        "ownerId": "owner",
+        "producerIncarnation": "cpu_producer",
+        "producerSeq": 1,
+        "reasonCode": null,
+        "runEpoch": 1,
+        "runId": "run",
+        "schemaVersion": "0.5",
+        "sessionId": "session",
+        "state": "PLAYING",
+        "tenantId": "tenant",
+        "utteranceId": "utterance_2"
+      },
+      "contractRevision": "durable-live-1",
+      "expectedRevision": null,
+      "ownerId": "owner",
+      "requestId": "req_cpu",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "ConfirmCheckpoint",
+    "request": {
+      "checkpoint": {
+        "attemptId": "attempt_2",
+        "checkpointId": "attempt_2_LOCAL_MEDIA_DRAINED",
+        "commandId": "command_2",
+        "contractRevision": "durable-live-1",
+        "eventId": "attempt_2_LOCAL_MEDIA_DRAINED",
+        "evidence": {
+          "audienceVisibility": "UNVERIFIED",
+          "evidenceHash": "342c3599b5abbea4df0d2cd43ffbca9e09686547e1e48948c453203f27564013",
+          "evidenceRef": "cpu_evidence",
+          "evidenceType": "ALL_REQUIRED_DRAIN",
+          "predecessorCheckpointIds": [
+            "attempt_2_PLAYING"
+          ],
+          "requiredSinks": [
+            "cpu_sink"
+          ],
+          "sinkProofs": [
+            {
+              "audioConsumedThroughExclusive": 16000,
+              "finalAudioSampleExclusive": 16000,
+              "finalVideoFrame": 24,
+              "firstAudioSample": 0,
+              "generationId": 1,
+              "kind": "RTMP_PIPE_WRITE",
+              "sinkId": "cpu_sink",
+              "terminal": true,
+              "videoConsumedThroughFrame": 24
+            }
+          ]
+        },
+        "lastKnownState": null,
+        "occurredAt": "2026-10-16T00:00:05Z",
+        "ownerId": "owner",
+        "producerIncarnation": "cpu_producer",
+        "producerSeq": 2,
+        "reasonCode": null,
+        "runEpoch": 1,
+        "runId": "run",
+        "schemaVersion": "0.5",
+        "sessionId": "session",
+        "state": "LOCAL_MEDIA_DRAINED",
+        "tenantId": "tenant",
+        "utteranceId": "utterance_2"
+      },
+      "contractRevision": "durable-live-1",
+      "expectedRevision": null,
+      "ownerId": "owner",
+      "requestId": "req_cpu",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "ConfirmCheckpoint",
+    "request": {
+      "checkpoint": {
+        "attemptId": "attempt_2",
+        "checkpointId": "attempt_2_COMPLETED",
+        "commandId": "command_2",
+        "contractRevision": "durable-live-1",
+        "eventId": "attempt_2_COMPLETED",
+        "evidence": {
+          "audienceVisibility": "UNVERIFIED",
+          "evidenceHash": "2968138fdcafe20d985ff4226682b44a4bb57585576aef506829207fc5fc1aca",
+          "evidenceRef": "cpu_evidence",
+          "evidenceType": "BUSINESS_COMMIT",
+          "predecessorCheckpointIds": [
+            "attempt_2_LOCAL_MEDIA_DRAINED"
+          ],
+          "requiredSinks": [
+            "cpu_sink"
+          ],
+          "sinkProofs": [
+            {
+              "audioConsumedThroughExclusive": 16000,
+              "finalAudioSampleExclusive": 16000,
+              "finalVideoFrame": 24,
+              "firstAudioSample": 0,
+              "generationId": 1,
+              "kind": "RTMP_PIPE_WRITE",
+              "sinkId": "cpu_sink",
+              "terminal": true,
+              "videoConsumedThroughFrame": 24
+            }
+          ]
+        },
+        "lastKnownState": null,
+        "occurredAt": "2026-10-16T00:00:05Z",
+        "ownerId": "owner",
+        "producerIncarnation": "cpu_producer",
+        "producerSeq": 3,
+        "reasonCode": null,
+        "runEpoch": 1,
+        "runId": "run",
+        "schemaVersion": "0.5",
+        "sessionId": "session",
+        "state": "COMPLETED",
+        "tenantId": "tenant",
+        "utteranceId": "utterance_2"
+      },
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 12,
+      "ownerId": "owner",
+      "requestId": "req_cpu",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "RestoreContentPlan",
+    "request": {
+      "contractRevision": "durable-live-1",
+      "ownerId": "owner",
+      "requestId": "req_3a320d66717a2934ae07f549f409b2d7",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "YieldAtSegmentBoundary",
+    "request": {
+      "boundaryCheckpointId": "attempt_2_COMPLETED",
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 13,
+      "expectedSlotVersion": 10,
+      "idempotencyKey": "yield:04e63902882fec7f942dfc61998ee4fe3f775df62ab1e82c1bdf261b1285b263",
+      "ownerId": "owner",
+      "requestId": "req_a360ae9ab352c6949d316d3940e1ea57",
+      "runEpoch": 1,
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "RestoreContentPlan",
+    "request": {
+      "contractRevision": "durable-live-1",
+      "ownerId": "owner",
+      "requestId": "req_4f99707879724de4b02166fd7f0a3b71",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "AdmitTurn",
+    "request": {
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 14,
+      "idempotencyKey": "turn:segment:seg_1089d07a136cb1b00805bdf7045a777a0ee265ccb073d996c4eda0770fa9091b:initial",
+      "ownerId": "owner",
+      "requestId": "req_2a3a8d2ee0ced1105b2d4c36b629ad6f",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant",
+      "turn": {
+        "expiresAt": null,
+        "finishedAt": null,
+        "idempotencyKey": "turn:segment:seg_1089d07a136cb1b00805bdf7045a777a0ee265ccb073d996c4eda0770fa9091b:initial",
+        "inputText": "第2段介绍纯棉面料。",
+        "ownerId": "owner",
+        "planId": "plan",
+        "priority": 20,
+        "revision": 1,
+        "runId": "run",
+        "scheduledAt": "2026-10-16T00:00:00Z",
+        "sourceCommentTraceId": null,
+        "sourceIdentities": [],
+        "sourceSegmentId": "seg_1089d07a136cb1b00805bdf7045a777a0ee265ccb073d996c4eda0770fa9091b",
+        "startedAt": null,
+        "state": "READY",
+        "tenantId": "tenant",
+        "turnId": "turn_5ebda1c8cb5ae0a5ae0f97dc77ac159bb80b0606a3e9a533c32a8d955aca498c",
+        "turnType": "SCRIPT"
+      }
+    }
+  },
+  {
+    "operation": "ClaimNextTurn",
+    "request": {
+      "candidateTurnId": "turn_5ebda1c8cb5ae0a5ae0f97dc77ac159bb80b0606a3e9a533c32a8d955aca498c",
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 15,
+      "expectedSlotVersion": 11,
+      "idempotencyKey": "claim:turn:segment:seg_1089d07a136cb1b00805bdf7045a777a0ee265ccb073d996c4eda0770fa9091b:initial",
+      "ownerId": "owner",
+      "requestId": "req_218c060ba6c6f4e758e24f050194f0bf",
+      "runEpoch": 1,
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "DispatchTurn",
+    "request": {
+      "commandId": "command_3",
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 16,
+      "idempotencyKey": "dispatch:5b414511b024975d5d2f144a401b95004677d82292cfee7e8dc542a8896c551c",
+      "intentId": "intent_3",
+      "ownerId": "owner",
+      "requestId": "req_24eba98dc0f77d487ee92d66280fdab4",
+      "runEpoch": 1,
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "ConfirmCheckpoint",
+    "request": {
+      "checkpoint": {
+        "attemptId": "attempt_3",
+        "checkpointId": "attempt_3_PLAYING",
+        "commandId": "command_3",
+        "contractRevision": "durable-live-1",
+        "eventId": "attempt_3_PLAYING",
+        "evidence": {
+          "audienceVisibility": "UNVERIFIED",
+          "evidenceHash": "f03710c4d7b46744c8f221116714a523c0e20d5ddcd93b1cffa9ca90df64df23",
+          "evidenceRef": "cpu_evidence",
+          "evidenceType": "SINK_ADMITTED",
+          "predecessorCheckpointIds": [],
+          "requiredSinks": [
+            "cpu_sink"
+          ],
+          "sinkProofs": [
+            {
+              "audioConsumedThroughExclusive": 16000,
+              "finalAudioSampleExclusive": 16000,
+              "finalVideoFrame": 24,
+              "firstAudioSample": 0,
+              "generationId": 1,
+              "kind": "RTMP_PIPE_WRITE",
+              "sinkId": "cpu_sink",
+              "terminal": true,
+              "videoConsumedThroughFrame": 24
+            }
+          ]
+        },
+        "lastKnownState": null,
+        "occurredAt": "2026-10-16T00:00:05Z",
+        "ownerId": "owner",
+        "producerIncarnation": "cpu_producer",
+        "producerSeq": 1,
+        "reasonCode": null,
+        "runEpoch": 1,
+        "runId": "run",
+        "schemaVersion": "0.5",
+        "sessionId": "session",
+        "state": "PLAYING",
+        "tenantId": "tenant",
+        "utteranceId": "utterance_3"
+      },
+      "contractRevision": "durable-live-1",
+      "expectedRevision": null,
+      "ownerId": "owner",
+      "requestId": "req_cpu",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "ConfirmCheckpoint",
+    "request": {
+      "checkpoint": {
+        "attemptId": "attempt_3",
+        "checkpointId": "attempt_3_LOCAL_MEDIA_DRAINED",
+        "commandId": "command_3",
+        "contractRevision": "durable-live-1",
+        "eventId": "attempt_3_LOCAL_MEDIA_DRAINED",
+        "evidence": {
+          "audienceVisibility": "UNVERIFIED",
+          "evidenceHash": "9993c9c9b4bafdeab70675cd3178831ce9e0a1769798c979737cebb786362bed",
+          "evidenceRef": "cpu_evidence",
+          "evidenceType": "ALL_REQUIRED_DRAIN",
+          "predecessorCheckpointIds": [
+            "attempt_3_PLAYING"
+          ],
+          "requiredSinks": [
+            "cpu_sink"
+          ],
+          "sinkProofs": [
+            {
+              "audioConsumedThroughExclusive": 16000,
+              "finalAudioSampleExclusive": 16000,
+              "finalVideoFrame": 24,
+              "firstAudioSample": 0,
+              "generationId": 1,
+              "kind": "RTMP_PIPE_WRITE",
+              "sinkId": "cpu_sink",
+              "terminal": true,
+              "videoConsumedThroughFrame": 24
+            }
+          ]
+        },
+        "lastKnownState": null,
+        "occurredAt": "2026-10-16T00:00:08Z",
+        "ownerId": "owner",
+        "producerIncarnation": "cpu_producer",
+        "producerSeq": 2,
+        "reasonCode": null,
+        "runEpoch": 1,
+        "runId": "run",
+        "schemaVersion": "0.5",
+        "sessionId": "session",
+        "state": "LOCAL_MEDIA_DRAINED",
+        "tenantId": "tenant",
+        "utteranceId": "utterance_3"
+      },
+      "contractRevision": "durable-live-1",
+      "expectedRevision": null,
+      "ownerId": "owner",
+      "requestId": "req_cpu",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "ConfirmCheckpoint",
+    "request": {
+      "checkpoint": {
+        "attemptId": "attempt_3",
+        "checkpointId": "attempt_3_COMPLETED",
+        "commandId": "command_3",
+        "contractRevision": "durable-live-1",
+        "eventId": "attempt_3_COMPLETED",
+        "evidence": {
+          "audienceVisibility": "UNVERIFIED",
+          "evidenceHash": "a7aa50dabedeec1e72015d3d6abb2dd529f903b0ac2793ed20f31965e78401ad",
+          "evidenceRef": "cpu_evidence",
+          "evidenceType": "BUSINESS_COMMIT",
+          "predecessorCheckpointIds": [
+            "attempt_3_LOCAL_MEDIA_DRAINED"
+          ],
+          "requiredSinks": [
+            "cpu_sink"
+          ],
+          "sinkProofs": [
+            {
+              "audioConsumedThroughExclusive": 16000,
+              "finalAudioSampleExclusive": 16000,
+              "finalVideoFrame": 24,
+              "firstAudioSample": 0,
+              "generationId": 1,
+              "kind": "RTMP_PIPE_WRITE",
+              "sinkId": "cpu_sink",
+              "terminal": true,
+              "videoConsumedThroughFrame": 24
+            }
+          ]
+        },
+        "lastKnownState": null,
+        "occurredAt": "2026-10-16T00:00:08Z",
+        "ownerId": "owner",
+        "producerIncarnation": "cpu_producer",
+        "producerSeq": 3,
+        "reasonCode": null,
+        "runEpoch": 1,
+        "runId": "run",
+        "schemaVersion": "0.5",
+        "sessionId": "session",
+        "state": "COMPLETED",
+        "tenantId": "tenant",
+        "utteranceId": "utterance_3"
+      },
+      "contractRevision": "durable-live-1",
+      "expectedRevision": 18,
+      "ownerId": "owner",
+      "requestId": "req_cpu",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  },
+  {
+    "operation": "StopBroadcastRun",
+    "request": {
+      "contractRevision": "durable-live-1",
+      "decisionId": "stop",
+      "expectedRevision": 1,
+      "idempotencyKey": "stop:6c45cb72a36e63d522aa54ed8adbd7a29a989474f2f77e0458af8800564ef3cb",
+      "ownerId": "owner",
+      "reasonCode": "OPERATOR_STOP",
+      "requestId": "req_c9324d0beca4aa8c26c5be6f46d67b79",
+      "runId": "run",
+      "schemaVersion": "0.5",
+      "tenantId": "tenant"
+    }
+  }
+]
