@@ -23,11 +23,12 @@ for port in (55462,56382):
         s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
         try:s.bind(('127.0.0.1',port))
         except OSError:raise SystemExit(f'refuse to touch occupied isolated port {port}')
+subprocess.run([args.python,'-c','import httpx,jsonschema,pytest,fastapi'],check=True)
 owned=Path(tempfile.mkdtemp(prefix='astralive-agent2-',dir='/tmp'))
 pg=owned/'pg';rd=owned/'redis';rd.mkdir();(rd/'AGENT2_OWNED').touch()
 env={k:v for k,v in os.environ.items() if 'DATABASE' not in k and 'REDIS' not in k and not k.startswith(('DURABLE_LIVE_','RUN_','GPU_','CONFIG_','LLM_','TTS_'))}
 env.update(DURABLE_LIVE_TEST_DATABASE_URL='postgres://127.0.0.1:55462/agent2_acceptance?sslmode=disable',
-           DURABLE_LIVE_TEST_REDIS_URL='redis://127.0.0.1:56382/0',DURABLE_LIVE_TEST_PYTHON=str(Path(args.python).resolve()),
+           DURABLE_LIVE_TEST_REDIS_URL='redis://127.0.0.1:56382/0',DURABLE_LIVE_TEST_PYTHON=str(Path(args.python).absolute()),
            DURABLE_LIVE_ISOLATED_PGDATA=str(pg),DURABLE_LIVE_ISOLATED_REDISDIR=str(rd),PYTHONPATH=str(root/'runtime'))
 commands=[]
 def run(cmd,name,cwd=root):
