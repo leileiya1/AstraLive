@@ -10,6 +10,7 @@ import (
 
 	"astralive/backend/internal/ids"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -77,6 +78,17 @@ func jsonRow(row pgx.Row) (Object, error) {
 	return Decode(b)
 }
 func normErr(e error) error {
+	var pe *pgconn.PgError
+	if errors.As(e, &pe) {
+		switch pe.Code {
+		case "23505":
+			return fault("COMMAND_CONFLICT")
+		case "23503", "23514":
+			return fault("INVALID_ARGUMENT")
+		case "55P03":
+			return fault("OVERLOADED")
+		}
+	}
 	if errors.Is(e, pgx.ErrNoRows) {
 		return fault("RESOURCE_NOT_FOUND")
 	}
@@ -301,7 +313,7 @@ func (s *Store) Call(ctx context.Context, p Principal, name string, raw []byte) 
 		e = fault("RESOURCE_NOT_FOUND")
 	}
 	if e != nil {
-		return nil, e
+		return nil, normErr(e)
 	}
 	if e = validate(name+"Response", out); e != nil {
 		return nil, e

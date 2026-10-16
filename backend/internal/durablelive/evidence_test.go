@@ -421,3 +421,11 @@ func TestPostgresUnsentCannotBecomeUnknownByInventedTransition(t *testing.T) {
 	_, e := f.try(f.p, "MarkExecutionUnknown", Object{"runEpoch": f.epoch, "attemptId": obj(out, "attempt")["attemptId"], "reasonCode": "TEST", "lastKnownState": "PLANNED", "evidenceRef": "test", "idempotencyKey": "unknown"})
 	wantCode(t, e, "STATE_CONFLICT")
 }
+
+func TestPostgresSemanticTurnConflictIsNotRetryableDependencyFailure(t *testing.T) {
+	f := newFixture(t, true)
+	turn := f.turn("OPERATOR", nil, nil)
+	f.call(f.p, "AdmitTurn", Object{"idempotencyKey": "first-request", "turn": turn})
+	_, e := f.try(f.p, "AdmitTurn", Object{"idempotencyKey": "another-request", "turn": turn})
+	wantCode(t, e, "COMMAND_CONFLICT")
+}
