@@ -1,0 +1,134 @@
+{
+  "status": "BLOCKED",
+  "contractRevision": "durable-live-1",
+  "blockers": [
+    "CCR-ADL-001_PENDING",
+    "OUTPUT_FENCE_UNPROVEN",
+    "PRODUCTION_EXECUTOR_NOT_CONNECTED"
+  ],
+  "scenarios": {
+    "idle_fast": {
+      "attempted": 0,
+      "completed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "unselected": 0,
+      "expired": 0,
+      "p50Seconds": null,
+      "p95Seconds": null
+    },
+    "idle_llm": {
+      "attempted": 0,
+      "completed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "unselected": 0,
+      "expired": 0,
+      "p50Seconds": null,
+      "p95Seconds": null
+    },
+    "busy_fast": {
+      "attempted": 0,
+      "completed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "unselected": 0,
+      "expired": 0,
+      "p50Seconds": null,
+      "p95Seconds": null
+    },
+    "busy_llm": {
+      "attempted": 0,
+      "completed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "unselected": 0,
+      "expired": 0,
+      "p50Seconds": null,
+      "p95Seconds": null
+    },
+    "mixed_1ps": {
+      "attempted": 0,
+      "completed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "unselected": 0,
+      "expired": 0,
+      "p50Seconds": null,
+      "p95Seconds": null
+    },
+    "mixed_5ps": {
+      "attempted": 0,
+      "completed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "unselected": 0,
+      "expired": 0,
+      "p50Seconds": null,
+      "p95Seconds": null
+    },
+    "mixed_20ps": {
+      "attempted": 0,
+      "completed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "unselected": 0,
+      "expired": 0,
+      "p50Seconds": null,
+      "p95Seconds": null
+    },
+    "burst_100": {
+      "attempted": 0,
+      "completed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "unselected": 0,
+      "expired": 0,
+      "p50Seconds": null,
+      "p95Seconds": null
+    },
+    "duplicates": {
+      "attempted": 0,
+      "completed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "unselected": 0,
+      "expired": 0,
+      "p50Seconds": null,
+      "p95Seconds": null
+    },
+    "product_switch": {
+      "attempted": 0,
+      "completed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "unselected": 0,
+      "expired": 0,
+      "p50Seconds": null,
+      "p95Seconds": null
+    },
+    "operator_force": {
+      "attempted": 0,
+      "completed": 0,
+      "failed": 0,
+      "timeout": 0,
+      "unselected": 0,
+      "expired": 0,
+      "p50Seconds": null,
+      "p95Seconds": null
+    }
+  },
+  "observations": {
+    "deepseekFirstToken": null,
+    "firstSpeakableSentence": null,
+    "xiaoyaFirstPCM": null,
+    "soulxFirstFrame": null,
+    "chromeFirstCorrelatedAV": null,
+    "localRTMPDecode": null,
+    "boundaryYield": null,
+    "explanationResume": null,
+    "gpuUtilization": null,
+    "gpuMemory": null
+  },
+  "samples": []
+}

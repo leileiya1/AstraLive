@@ -20,7 +20,10 @@ func (s *Store) ObserveLegacyEvent(ctx context.Context, raw []byte) (bool, error
 		return false, fault("INVALID_ARGUMENT")
 	}
 	var runID string
-	e = s.DB.QueryRow(ctx, `SELECT run_id FROM dl05_attempts WHERE session_id=$1 AND utterance_id=$2`, ev["sessionId"], ev["utteranceId"]).Scan(&runID)
+	// Mode is persistent for the entire physical Session, including lifecycle
+	// events and unexpected/late v1 utterances. A v1 SESSION_READY/STARTED must
+	// never trigger legacy auto-start after a durable Stop or epoch change.
+	e = s.DB.QueryRow(ctx, `SELECT run_id FROM dl05_run_sessions WHERE session_id=$1`, ev["sessionId"]).Scan(&runID)
 	if errors.Is(e, pgx.ErrNoRows) {
 		return false, nil
 	}

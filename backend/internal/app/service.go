@@ -11,6 +11,7 @@ import (
 
 	"astralive/backend/generated/dbgen"
 	"astralive/backend/generated/runtimeapi"
+	"astralive/backend/internal/durablelive"
 	"astralive/backend/internal/fsm"
 	"astralive/backend/internal/ids"
 	"astralive/backend/internal/metrics"
@@ -22,6 +23,8 @@ import (
 )
 
 type Service struct {
+	Durable *durablelive.Store // nil keeps legacy behavior
+
 	commands    sync.Mutex
 	Interaction *InteractionController
 	Integration SessionIntegration
@@ -68,6 +71,15 @@ func (s *Service) transitionSession(ctx context.Context, id, to string) error {
 	return nil
 }
 func (s *Service) Start(ctx context.Context, id, trace string) (string, error) {
+	if s.Durable != nil {
+		managed, err := s.Durable.IsManagedSession(ctx, id)
+		if err != nil {
+			return "", err
+		}
+		if managed {
+			return "", ErrConflict
+		}
+	}
 	se, e := s.Q.GetSession(ctx, id)
 	if e != nil {
 		return "", e
@@ -121,6 +133,15 @@ func (s *Service) Start(ctx context.Context, id, trace string) (string, error) {
 	return op.OperationID, e
 }
 func (s *Service) Stop(ctx context.Context, id, trace string) (string, error) {
+	if s.Durable != nil {
+		managed, err := s.Durable.IsManagedSession(ctx, id)
+		if err != nil {
+			return "", err
+		}
+		if managed {
+			return "", ErrConflict
+		}
+	}
 	s.commands.Lock()
 	defer s.commands.Unlock()
 	if e := s.transitionSession(ctx, id, "STOPPING"); e != nil {
@@ -140,6 +161,15 @@ func (s *Service) Stop(ctx context.Context, id, trace string) (string, error) {
 
 // Interrupt shares the command boundary with automatic admission and Stop.
 func (s *Service) Interrupt(ctx context.Context, id, trace, reason string) (runtime.Operation, error) {
+	if s.Durable != nil {
+		managed, err := s.Durable.IsManagedSession(ctx, id)
+		if err != nil {
+			return runtime.Operation{}, err
+		}
+		if managed {
+			return runtime.Operation{}, ErrConflict
+		}
+	}
 	s.commands.Lock()
 	defer s.commands.Unlock()
 	if s.Interaction != nil {
@@ -149,6 +179,15 @@ func (s *Service) Interrupt(ctx context.Context, id, trace, reason string) (runt
 }
 
 func (s *Service) Speak(ctx context.Context, id, text string, priority int32, policy, source, trace string, platform *runtimeapi.PlatformContext) (dbgen.Utterance, error) {
+	if s.Durable != nil {
+		managed, err := s.Durable.IsManagedSession(ctx, id)
+		if err != nil {
+			return dbgen.Utterance{}, err
+		}
+		if managed {
+			return dbgen.Utterance{}, ErrConflict
+		}
+	}
 	s.commands.Lock()
 	defer s.commands.Unlock()
 	if source == "OPERATOR" && s.Interaction != nil {
@@ -158,6 +197,15 @@ func (s *Service) Speak(ctx context.Context, id, text string, priority int32, po
 }
 
 func (s *Service) speak(ctx context.Context, id, text string, priority int32, policy, source, trace string, platform *runtimeapi.PlatformContext) (dbgen.Utterance, error) {
+	if s.Durable != nil {
+		managed, err := s.Durable.IsManagedSession(ctx, id)
+		if err != nil {
+			return dbgen.Utterance{}, err
+		}
+		if managed {
+			return dbgen.Utterance{}, ErrConflict
+		}
+	}
 	se, e := s.Q.GetSession(ctx, id)
 	if e != nil {
 		return dbgen.Utterance{}, e
@@ -220,6 +268,12 @@ func (s *Service) ApplyEvent(ctx context.Context, e Event) (bool, error) {
 		return false, err
 	}
 	b, _ := json.Marshal(e)
+	if s.Durable != nil {
+		managed, err := s.Durable.ObserveLegacyEvent(ctx, b)
+		if err != nil || managed {
+			return managed, err
+		}
+	}
 	tx, err := s.DB.Begin(ctx)
 	if err != nil {
 		return false, err

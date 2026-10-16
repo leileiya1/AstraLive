@@ -219,7 +219,9 @@ class OutputGate:
                 self._permit.check()
             except JournalError:
                 async with self._lock:
+                    self.barrier += 1
                     self._permit = None
+                    self._identity = None
                     await self._close()
                 return
             await asyncio.sleep(.010)
@@ -325,16 +327,27 @@ class ExecutionInbox:
             await self.executor(command, self.gate)
         except JournalError as exc:
             self.last_errors[command["commandId"]] = exc.code
+            while len(self.last_errors) > self.capacity:
+                self.last_errors.pop(next(iter(self.last_errors)))
             await self.gate.revoke()
         except asyncio.CancelledError:
             await self.gate.revoke()
         except Exception as exc:
             self.last_errors[command["commandId"]] = type(exc).__name__
+            while len(self.last_errors) > self.capacity:
+                self.last_errors.pop(next(iter(self.last_errors)))
             await self.gate.revoke()
         finally:
             if renew:
                 renew.cancel()
                 await asyncio.gather(renew, return_exceptions=True)
+            # SQL remains the deduplication authority. Completed local tasks
+            # cannot consume capacity forever; a future duplicate queries the
+            # durable STARTED/TERMINAL/UNKNOWN receipt and cannot re-execute.
+            key = command["commandId"]
+            self._commands.pop(key, None)
+            self._receipts.pop(key, None)
+            self._tasks.pop(key, None)
 
     async def _renew(self, command):
         try:

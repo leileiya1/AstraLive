@@ -86,7 +86,11 @@ func NextSegment(s c.RestoreSnapshot, p Projection) (*c.SpeechSegment, error) {
 	for i := int(prefix); i < len(b.Segments); i++ {
 		seg := b.Segments[i]
 		if seg.State == "COMPLETED" {
-			return nil, fmt.Errorf("RECOVERY_UNKNOWN: noncontiguous completion")
+			// An authorized gap leaves completedPrefix behind permanently. Later
+			// segments may still be genuinely completed. Reaching this row means
+			// every earlier row was a completed segment or a verified gap; never
+			// increment completedPrefix or replay that completed later segment.
+			continue
 		}
 		if id := p.GapDecisions[seg.SegmentId]; id != "" {
 			valid := false

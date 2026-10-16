@@ -41,19 +41,24 @@ func (c Config) Validate() error {
 }
 
 type Selection struct {
-	EstimatedReplyMS int            `json:"estimatedReplyMs"`
-	Event            platform.Event `json:"event"`
-	Topic            string         `json:"topic"`
-	Audience         int            `json:"audience"`
-	Priority         int            `json:"priority"`
-	Policy           string         `json:"policy"`
-	ProductID        string         `json:"productId"`
-	SelectedAt       time.Time      `json:"selectedAt"`
+	// Members retains every normalized source of this one Scheduler selection.
+	Members          []platform.Event `json:"-"`
+	EstimatedReplyMS int              `json:"estimatedReplyMs"`
+	Event            platform.Event   `json:"event"`
+	Topic            string           `json:"topic"`
+	Audience         int              `json:"audience"`
+	Priority         int              `json:"priority"`
+	Policy           string           `json:"policy"`
+	ProductID        string           `json:"productId"`
+	SelectedAt       time.Time        `json:"selectedAt"`
 }
 type Dispatcher interface {
 	Dispatch(context.Context, Selection) (string, error)
 }
 type Gate struct {
+	// SelectionOnly is opt-in for a durable-admission Dispatcher. It permits
+	// selecting during media playback; the Turn Manager still owns media slots.
+	SelectionOnly      bool
 	CurrentSource      string
 	CurrentPriority    int
 	CurrentUtteranceID string
@@ -349,6 +354,12 @@ func (s *Scheduler) Receive(ctx context.Context, e platform.Event) error {
 	}
 	for _, c := range s.queue {
 		if c.selection.Topic == topic && now.Sub(c.selection.Event.ReceivedAt) < s.config.MergeWindow {
+			if len(c.selection.Members) >= 128 {
+				s.counters.Dropped++
+				outcomes.WithLabelValues("dropped").Inc()
+				return nil
+			}
+			c.selection.Members = append(c.selection.Members, e)
 			if len(c.users) < 128 {
 				c.users[e.UserExternalID] = true
 			}
@@ -370,7 +381,7 @@ func (s *Scheduler) Receive(ctx context.Context, e platform.Event) error {
 	if product {
 		priority += 30
 	}
-	selection := Selection{Event: e, Topic: topic, Audience: 1, Priority: priority, Policy: "NONE", ProductID: s.product, EstimatedReplyMS: estimate(topic)}
+	selection := Selection{Members: []platform.Event{e}, Event: e, Topic: topic, Audience: 1, Priority: priority, Policy: "NONE", ProductID: s.product, EstimatedReplyMS: estimate(topic)}
 	s.queue = append(s.queue, &candidate{selection, map[string]bool{e.UserExternalID: true}})
 	s.notify()
 	if len(s.queue) > s.counters.Peak {
@@ -433,7 +444,7 @@ func (s *Scheduler) Tick(ctx context.Context) error {
 	}
 	chosen := s.queue[best].selection
 	preempting := false
-	if gate.Busy {
+	if gate.Busy && !gate.SelectionOnly {
 		if !s.config.AllowPriorityPreemption || s.mode != ProductExplaining || gate.CurrentSource != "AUTO_SCRIPT" || chosen.Priority < 80 || chosen.Audience < 3 || chosen.Priority <= gate.CurrentPriority {
 			return nil
 		}
@@ -520,6 +531,7 @@ func (s *Scheduler) Snapshot() Snapshot {
 	v := Snapshot{Mode: s.mode, Candidates: len(s.queue), Counters: s.counters, Recent: append([]platform.Event{}, s.recent...), UtteranceID: s.utterance, LastError: s.lastError, Stopped: s.stopped}
 	if s.current != nil {
 		c := *s.current
+		c.Members = append([]platform.Event{}, s.current.Members...)
 		v.Current = &c
 		v.Observation = &Observation{ClockDomain: "go_monotonic", ReceiptAgeMS: float64(s.now().Sub(c.Event.ReceivedAt).Microseconds()) / 1000, ReceiveToSelectedMS: float64(c.SelectedAt.Sub(c.Event.ReceivedAt).Microseconds()) / 1000, ReceiveToDispatchAckMS: s.dispatchAckMS}
 	}

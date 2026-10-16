@@ -11,8 +11,9 @@ import (
 type FactVerifier func(context.Context, Principal, ExecutePayload) error
 type factApprovalKey struct{}
 type factApproval struct {
-	hash string
-	at   time.Time
+	hash  string
+	at    time.Time
+	fresh []any
 }
 
 func (s *Store) preflightFacts(ctx context.Context, p Principal, name string, q Object) (context.Context, error) {
@@ -64,7 +65,7 @@ func (s *Store) preflightFacts(ctx context.Context, p Principal, name string, q 
 	default:
 		return ctx, nil
 	}
-	if len(arr(payload, "factDependencies")) == 0 {
+	if len(arr(payload, "factDependencies")) == 0 && (s.Facts == nil || str(payload, "mode") != "SCRIPT_TEXT") {
 		return ctx, nil
 	}
 	if s.Facts == nil {
@@ -77,7 +78,17 @@ func (s *Store) preflightFacts(ctx context.Context, p Principal, name string, q 
 	if e := s.Facts(ctx, p, typed); e != nil {
 		return ctx, e
 	}
-	return context.WithValue(ctx, factApprovalKey{}, factApproval{hash(arr(payload, "factDependencies")), time.Now()}), nil
+	now := time.Now()
+	fresh := make([]any, 0, len(arr(payload, "factDependencies")))
+	for _, value := range arr(payload, "factDependencies") {
+		f := Object{}
+		for k, v := range value.(map[string]any) {
+			f[k] = v
+		}
+		f["validatedAt"], f["expiresAt"] = stamp(now), stamp(now.Add(2*time.Second))
+		fresh = append(fresh, f)
+	}
+	return context.WithValue(ctx, factApprovalKey{}, factApproval{hash: hash(arr(payload, "factDependencies")), at: now, fresh: fresh}), nil
 }
 func mustEncode(v any) []byte {
 	b, e := Canonical(v)

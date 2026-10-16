@@ -7,6 +7,8 @@ import { Card } from "../../components/ui/card";
 import { Input, Textarea } from "../../components/ui/input";
 import { useLiveSessionEvents } from "../../hooks/useLiveSessionEvents";
 import { useLivePreview } from "../../hooks/useLivePreview";
+import { TurnManagerPanel, type TurnManagerView } from "./TurnManagerPanel";
+import { DurableRecovery } from "./DurableRecovery";
 import { InteractionPanel } from "./InteractionPanel";
 import { ProviderStatus } from "./ProviderStatus";
 import { useUi } from "../../stores/ui";
@@ -27,10 +29,12 @@ export function LiveConsole({
   roomId,
   sessionId,
   onSession,
+  turnManager,
 }: {
   roomId: string | null;
   sessionId: string | null;
   onSession: (id: string) => void;
+  turnManager?: { view: TurnManagerView; onReviewRecovery: () => void; busy?: boolean };
 }) {
   const qc = useQueryClient();
   const room = useQuery({
@@ -168,6 +172,8 @@ export function LiveConsole({
         </div>
       </div>
       <ProviderStatus sessionId={sessionId} />
+      {turnManager && <TurnManagerPanel {...turnManager} />}
+      {sessionId && import.meta.env.VITE_DURABLE_RECOVERY_ENABLED === "true" && <DurableRecovery sessionId={sessionId} />}
       <InteractionPanel sessionId={sessionId} running={["LIVE", "DEGRADED"].includes(shownStatus ?? "")} speechQueue={state.timeline.filter(t => !["COMPLETED", "INTERRUPTED", "CANCELLED", "FAILED"].includes(t.status)).length} />
       {[create.error, start.error, stop.error].filter(Boolean).map((e, i) => (
         <ErrorNotice key={i} error={e} />

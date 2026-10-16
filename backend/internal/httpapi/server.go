@@ -31,6 +31,8 @@ import (
 )
 
 type Server struct {
+	DurableHandler http.Handler // already authenticates distinct v0.5 service roles
+
 	Config     *userconfig.Service
 	S          *app.Service
 	Redis      *redis.Client
@@ -124,6 +126,16 @@ func decode(w http.ResponseWriter, r *http.Request, v any) bool {
 }
 func valid(s string) bool { return strings.TrimSpace(s) != "" }
 func (h *Server) Router() http.Handler {
+	legacy := h.legacyRouter()
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasPrefix(r.URL.Path, "/internal/v0.5/") && h.DurableHandler != nil {
+			h.DurableHandler.ServeHTTP(w, r)
+			return
+		}
+		legacy.ServeHTTP(w, r)
+	})
+}
+func (h *Server) legacyRouter() http.Handler {
 	r := chi.NewRouter()
 	r.Use(h.requestContext)
 	r.Use(h.authorization)
@@ -137,6 +149,7 @@ func (h *Server) Router() http.Handler {
 		r.Mount("/internal/v0.3", h.Config.InternalRouter())
 	}
 	r.Mount("/api/v0.4/interaction", h.interactionRouter())
+	r.Mount("/api/v0.5/durable-live", h.durableRouter())
 	r.Get("/health/live", func(w http.ResponseWriter, r *http.Request) {
 		_ = json.NewEncoder(w).Encode(map[string]any{"status": "UP"})
 	})

@@ -34,7 +34,8 @@ func (s *Store) claimTurn(ctx context.Context, tx pgx.Tx, p Principal, r, q Obje
 	if e != nil {
 		return nil, e
 	}
-	if !scopeMatches(r, t) || str(t, "state") != "READY" {
+	waiting := str(t, "turnType") == "COMMENT" && str(t, "state") == "WAITING"
+	if !scopeMatches(r, t) || (str(t, "state") != "READY" && !waiting) {
 		return nil, fault("STATE_CONFLICT")
 	}
 	if t["planId"] != nil && t["planId"] != r["currentPlanId"] {
@@ -47,6 +48,14 @@ func (s *Store) claimTurn(ctx context.Context, tx pgx.Tx, p Principal, r, q Obje
 	}
 	if instant(t["scheduledAt"]).After(now) || (t["expiresAt"] != nil && !instant(t["expiresAt"]).After(now)) {
 		return nil, fault("STATE_CONFLICT")
+	}
+	// A WAITING comment becomes READY only after the unique slot is free and
+	// all epoch/lease/plan/TTL guards above have passed. Both FSM edges and the
+	// attempt/outbox commit share this transaction; failed claims roll it back.
+	if waiting {
+		if _, e = tx.Exec(ctx, `UPDATE dl05_turns SET state='READY',revision=revision+1 WHERE turn_id=$1 AND state='WAITING'`, t["turnId"]); e != nil {
+			return nil, e
+		}
 	}
 	payload := Object{"mode": "OPERATOR_TEXT", "text": t["inputText"], "textHash": textHash(str(t, "inputText")), "productId": nil, "planId": t["planId"], "segmentId": t["sourceSegmentId"], "factDependencies": []any{}, "expiresAt": stamp(now.Add(15 * time.Second)), "requiredSinks": []any{}}
 	var sinks []byte
@@ -77,6 +86,14 @@ func (s *Store) claimTurn(ctx context.Context, tx pgx.Tx, p Principal, r, q Obje
 		payload["factDependencies"], e = decodeArray(facts)
 		if e != nil {
 			return nil, e
+		}
+		// Only an authoritative preflight may refresh timestamps. Preserve every
+		// assertion identity/hash; save fresh dependencies in this new immutable
+		// command, never rewrite the stored plan or an already-issued envelope.
+		if approval, ok := ctx.Value(factApprovalKey{}).(factApproval); ok && approval.hash == hash(arr(payload, "factDependencies")) && time.Since(approval.at) < 2*time.Second {
+			payload["factDependencies"] = approval.fresh
+			approval.hash = hash(approval.fresh)
+			ctx = context.WithValue(ctx, factApprovalKey{}, approval)
 		}
 	case "COMMENT":
 		payload["mode"] = "COMMENT_QUESTION"
@@ -185,16 +202,33 @@ func (s *Store) validatePayload(ctx context.Context, tx pgx.Tx, p Principal, r, 
 		if active != str(payload, "productId") || payload["planId"] != r["currentPlanId"] {
 			return fault("PLAN_CHANGED")
 		}
+		if s.Facts != nil && str(payload, "mode") == "SCRIPT_TEXT" {
+			// Recheck authoritative SQL inside the short transaction too. A
+			// product update between external preflight and CAS cannot reuse a
+			// same-product stale plan (including static description/size facts).
+			current, err := productView(ctx, tx, p, r)
+			if err != nil {
+				return err
+			}
+			var version string
+			if err = tx.QueryRow(ctx, `SELECT product_snapshot_version FROM dl05_plans WHERE plan_id=$1 AND run_id=$2`, payload["planId"], r["runId"]).Scan(&version); err != nil {
+				return err
+			}
+			if current.SnapshotVersion != version {
+				return fault("PLAN_CHANGED")
+			}
+		}
 	}
 	// Dynamic facts need a trusted authoritative revalidation hook. Without one,
 	// their presence closes admission instead of inventing source/hash semantics.
 	for _, v := range arr(payload, "factDependencies") {
 		f := v.(map[string]any)
-		if f["productId"] != payload["productId"] || !instant(f["expiresAt"]).After(now) || instant(f["validatedAt"]).After(now) || now.Sub(instant(f["validatedAt"])) > 2*time.Second {
+		approval, ok := ctx.Value(factApprovalKey{}).(factApproval)
+		freshProof := ok && time.Since(approval.at) < 2*time.Second && approval.hash == hash(arr(payload, "factDependencies"))
+		if f["productId"] != payload["productId"] || (!freshProof && (!instant(f["expiresAt"]).After(now) || instant(f["validatedAt"]).After(now) || now.Sub(instant(f["validatedAt"])) > 2*time.Second)) {
 			return fault("PLAN_CHANGED")
 		}
-		approval, ok := ctx.Value(factApprovalKey{}).(factApproval)
-		if requireFactProof && (!ok || time.Since(approval.at) > 2*time.Second || approval.hash != hash(arr(payload, "factDependencies"))) {
+		if requireFactProof && !freshProof {
 			return fault("DEPENDENCY_UNAVAILABLE")
 		}
 	}

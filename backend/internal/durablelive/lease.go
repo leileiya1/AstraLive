@@ -317,6 +317,13 @@ func (s *Store) runFence(ctx context.Context, tx pgx.Tx, p Principal, r, q Objec
 		return nil, fault("RECOVERY_UNKNOWN")
 	}
 	if phase == "PENDING_INSTALL" {
+		// Historical boundaries remain evidence, but cannot be consumed by a
+		// Yield carrying the new run epoch. The new term starts with its free
+		// slot only after all older attempts have been reconciled above.
+		_, e = tx.Exec(ctx, `UPDATE dl05_run_slots s SET boundary_checkpoint_id=NULL,slot_version=slot_version+1 WHERE s.run_id=$1 AND s.active_attempt_id IS NULL AND EXISTS(SELECT 1 FROM dl05_checkpoints c WHERE c.checkpoint_id=s.boundary_checkpoint_id AND c.run_epoch<$2)`, r["runId"], q["runEpoch"])
+		if e != nil {
+			return nil, e
+		}
 		_, e = tx.Exec(ctx, `UPDATE dl05_run_terms SET phase='ACTIVE',activated_at=clock_timestamp() WHERE run_id=$1 AND run_epoch=$2`, r["runId"], q["runEpoch"])
 		if e != nil {
 			return nil, e

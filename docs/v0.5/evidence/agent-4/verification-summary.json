@@ -1,0 +1,80 @@
+{
+  "conclusion": "ASTRALIVE V0.5 BLOCKED",
+  "evidenceDirectory": "docs/v0.5/evidence/agent-4/verified",
+  "sourceUnchangedDuringVerification": true,
+  "cleanupExitCodes": [
+    0,
+    0
+  ],
+  "commandsAllExitZero": true,
+  "sourceManifestSHA256": "1c866a6d53eacac52ef16df853cbdf4122f2f612abef2db9097d6845350053b2",
+  "go": {
+    "go-test.jsonl": {
+      "pass": 141,
+      "fail": 0,
+      "skip": 3,
+      "skipped": [
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestIsolatedBackendHelper"
+        },
+        {
+          "package": "astralive/backend/internal/turnmanager",
+          "test": "TestExportContractRequests"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestConfigurationBrowserHarness"
+        }
+      ]
+    },
+    "go-race.jsonl": {
+      "pass": 141,
+      "fail": 0,
+      "skip": 3,
+      "skipped": [
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestIsolatedBackendHelper"
+        },
+        {
+          "package": "astralive/backend/internal/turnmanager",
+          "test": "TestExportContractRequests"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestConfigurationBrowserHarness"
+        }
+      ]
+    }
+  },
+  "realGPU": "NOT TESTED",
+  "chrome": "NOT TESTED",
+  "durableWebRTC_RTMP": "BLOCKED",
+  "officialViewer": "NOT TESTED",
+  "runtimeUnittest": {
+    "total": 169,
+    "pass": 158,
+    "skip": 11,
+    "fail": 0
+  },
+  "journalPytest": {
+    "pass": 11,
+    "fail": 0
+  },
+  "contractUnittest": {
+    "pass": 17,
+    "fail": 0
+  },
+  "frontend": {
+    "pass": 45,
+    "fail": 0,
+    "build": "PASS"
+  },
+  "additionalLocalWebRTC": {
+    "pass": 4,
+    "fail": 0,
+    "layer": "legacy in-process aiortc, synthetic providers, no Chrome/GPU",
+    "log": "local-webrtc.log"
+  }
+}

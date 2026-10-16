@@ -13,6 +13,7 @@ import (
 	"astralive/backend/db"
 	"astralive/backend/internal/app"
 	"astralive/backend/internal/config"
+	"astralive/backend/internal/durablelive"
 	"astralive/backend/internal/eventbus"
 	"astralive/backend/internal/httpapi"
 	"astralive/backend/internal/interaction"
@@ -24,6 +25,11 @@ import (
 )
 
 func main() {
+	// Refuse before creating services or touching the database. A durable flag
+	// cannot authorize an unproven production publisher.
+	if e := durablelive.CheckLiveAdmission(os.Getenv("ASTRALIVE_DURABLE_LIVE_ENABLED")); e != nil {
+		panic(e)
+	}
 	c, e := config.Load()
 	if e != nil {
 		panic(e)
@@ -55,6 +61,9 @@ func main() {
 	defer rc.Close()
 	rt := runtime.New(c.RuntimeURL)
 	s := app.New(pool, rt, log)
+	// Always recognize persistent mode membership after restart/rollback. This
+	// store has no sinks/dispatcher; it cannot admit media through legacy paths.
+	s.Durable = durablelive.New(pool, nil)
 	cfg, e := userconfig.FromEnvironment(pool)
 	if e != nil {
 		log.Error("configuration setup failed", "reason", e.Error())

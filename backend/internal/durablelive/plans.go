@@ -88,7 +88,8 @@ func (s *Store) admit(ctx context.Context, tx pgx.Tx, p Principal, r, q Object) 
 		return nil, e
 	}
 	t := obj(q, "turn")
-	if !scopeMatches(r, t) || str(t, "state") != "READY" || t["startedAt"] != nil || t["finishedAt"] != nil || num(t, "revision") != 1 {
+	initial := str(t, "state")
+	if !scopeMatches(r, t) || (initial != "READY" && !(str(t, "turnType") == "COMMENT" && initial == "WAITING")) || t["startedAt"] != nil || t["finishedAt"] != nil || num(t, "revision") != 1 {
 		return nil, fault("INVALID_ARGUMENT")
 	}
 	if t["planId"] != nil && t["planId"] != r["currentPlanId"] {
@@ -133,7 +134,7 @@ func (s *Store) admit(ctx context.Context, tx pgx.Tx, p Principal, r, q Object) 
 			return nil, fault("COMMAND_CONFLICT")
 		}
 	}
-	_, e := tx.Exec(ctx, `INSERT INTO dl05_turns(tenant_id,owner_id,run_id,plan_id,turn_id,turn_type,source_segment_id,source_comment_trace_id,priority,state,scheduled_at,expires_at,input_text,idempotency_key,document) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,'READY',$10,$11,$12,$13,$14)`, p.TenantID, p.OwnerID, r["runId"], t["planId"], t["turnId"], typ, t["sourceSegmentId"], t["sourceCommentTraceId"], t["priority"], t["scheduledAt"], t["expiresAt"], t["inputText"], t["idempotencyKey"], t)
+	_, e := tx.Exec(ctx, `INSERT INTO dl05_turns(tenant_id,owner_id,run_id,plan_id,turn_id,turn_type,source_segment_id,source_comment_trace_id,priority,state,scheduled_at,expires_at,input_text,idempotency_key,document) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$15,$10,$11,$12,$13,$14)`, p.TenantID, p.OwnerID, r["runId"], t["planId"], t["turnId"], typ, t["sourceSegmentId"], t["sourceCommentTraceId"], t["priority"], t["scheduledAt"], t["expiresAt"], t["inputText"], t["idempotencyKey"], t, initial)
 	if e != nil {
 		return nil, e
 	}
