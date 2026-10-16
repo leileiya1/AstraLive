@@ -1,0 +1,99 @@
+=== RUN   TestPostgresCheckpointOrderingDuplicateAndBusinessCommit
+--- PASS: TestPostgresCheckpointOrderingDuplicateAndBusinessCommit (0.24s)
+=== RUN   TestPostgresRejectFakeCompletionAndOldEpochEvent
+--- PASS: TestPostgresRejectFakeCompletionAndOldEpochEvent (0.08s)
+=== RUN   TestPostgresForeignKeysAndImmutableEnvelope
+--- PASS: TestPostgresForeignKeysAndImmutableEnvelope (0.05s)
+=== RUN   TestPostgresConcurrentMigrationRunners
+--- PASS: TestPostgresConcurrentMigrationRunners (0.01s)
+=== RUN   TestPostgresNoSQLTransactionAcrossHTTP
+--- PASS: TestPostgresNoSQLTransactionAcrossHTTP (0.06s)
+=== RUN   TestRedisStreamsDuplicateReclaimAndSQLProjection
+--- PASS: TestRedisStreamsDuplicateReclaimAndSQLProjection (0.09s)
+=== RUN   TestRedisIsolatedDisconnectAndSQLFallback
+redis: 2026/10/16 08:02:48 pool.go:422: redis: connection pool: failed to dial after 1 attempts: dial tcp 127.0.0.1:56382: connect: connection refused
+redis: 2026/10/16 08:02:49 pool.go:422: redis: connection pool: failed to dial after 2 attempts: dial tcp 127.0.0.1:56382: i/o timeout
+--- PASS: TestRedisIsolatedDisconnectAndSQLFallback (0.29s)
+=== RUN   TestPostgresLeaseRenewDoesNotMutateCommandOrReplayStart
+--- PASS: TestPostgresLeaseRenewDoesNotMutateCommandOrReplayStart (0.08s)
+=== RUN   TestPostgresCommentAnswerJournalRequiredBeforeStart
+--- PASS: TestPostgresCommentAnswerJournalRequiredBeforeStart (0.07s)
+=== RUN   TestPostgresSealNoEffectRequiresIndependentFence
+--- PASS: TestPostgresSealNoEffectRequiresIndependentFence (0.07s)
+=== RUN   TestPostgresCrossRunPublisherExclusionAfterFailedRun
+--- PASS: TestPostgresCrossRunPublisherExclusionAfterFailedRun (0.04s)
+=== RUN   TestPostgresCannotAdoptLegacyBusyOrMixSchedulers
+--- PASS: TestPostgresCannotAdoptLegacyBusyOrMixSchedulers (0.05s)
+=== RUN   TestPostgresRoleAuthenticationAndBodyScope
+--- PASS: TestPostgresRoleAuthenticationAndBodyScope (0.03s)
+=== RUN   TestPostgresLeaseKeeperDoesNotReviveStopOrExpiredOwner
+--- PASS: TestPostgresLeaseKeeperDoesNotReviveStopOrExpiredOwner (0.04s)
+=== RUN   TestIsolatedBackendHelper
+    process_test.go:38: owned subprocess helper
+--- SKIP: TestIsolatedBackendHelper (0.00s)
+=== RUN   TestProcessGoSIGKILLWhilePythonPlayingAndReattach
+    process_test.go:183: owned runtime.log: Traceback (most recent call last):
+          File "/Users/sapiece/innovationProject/AstraLive-agent-2/backend/internal/durablelive/../../../scripts/durable-live/runtime_fault_probe.py", line 13, in <module>
+            from runtime.app.durable_live_journal import ExecutionInbox, JournalClient, OutputGate, common, digest
+          File "/Users/sapiece/innovationProject/AstraLive-agent-2/runtime/app/durable_live_journal.py", line 19, in <module>
+            import httpx
+        ModuleNotFoundError: No module named 'httpx'
+    process_test.go:183: owned config.json.backend.log: 
+    process_test.go:183: timeout waiting for playing
+--- FAIL: TestProcessGoSIGKILLWhilePythonPlayingAndReattach (15.16s)
+=== RUN   TestProcessPythonSIGKILLPreservesUnknown
+    process_test.go:242: owned runtime.log: Traceback (most recent call last):
+          File "/Users/sapiece/innovationProject/AstraLive-agent-2/backend/internal/durablelive/../../../scripts/durable-live/runtime_fault_probe.py", line 13, in <module>
+            from runtime.app.durable_live_journal import ExecutionInbox, JournalClient, OutputGate, common, digest
+          File "/Users/sapiece/innovationProject/AstraLive-agent-2/runtime/app/durable_live_journal.py", line 19, in <module>
+            import httpx
+        ModuleNotFoundError: No module named 'httpx'
+    process_test.go:242: owned config.json.backend.log: 
+    process_test.go:242: timeout waiting for playing
+--- FAIL: TestProcessPythonSIGKILLPreservesUnknown (15.20s)
+=== RUN   TestPostgresOwnedConnectionDropRecovery
+    process_test.go:289: terminated only test-owned PostgreSQL connection PID=44351; pool reconnected; stable pending command retained
+--- PASS: TestPostgresOwnedConnectionDropRecovery (0.08s)
+=== RUN   TestPostgresIsolatedServerOutage
+    process_test.go:333: isolated PostgreSQL server stopped/restarted; admission failed closed; persisted pending command recovered
+--- PASS: TestPostgresIsolatedServerOutage (0.30s)
+=== RUN   TestProcessCommitThenGoSIGKILL
+    process_test.go:363: SIGKILL after SQL commit and before dispatch; restarted Go sees exactly one original PENDING intent + attempt + QUEUED utterance; no fabricated execute
+--- PASS: TestProcessCommitThenGoSIGKILL (0.20s)
+=== RUN   TestProcessRealRuntimeLost202
+    process_test.go:381: owned runtime.log: Traceback (most recent call last):
+          File "/Users/sapiece/innovationProject/AstraLive-agent-2/backend/internal/durablelive/../../../scripts/durable-live/runtime_fault_probe.py", line 13, in <module>
+            from runtime.app.durable_live_journal import ExecutionInbox, JournalClient, OutputGate, common, digest
+          File "/Users/sapiece/innovationProject/AstraLive-agent-2/runtime/app/durable_live_journal.py", line 19, in <module>
+            import httpx
+        ModuleNotFoundError: No module named 'httpx'
+    process_test.go:381: owned config.json.backend.log: 
+    process_test.go:381: timeout waiting for runtime-url
+--- FAIL: TestProcessRealRuntimeLost202 (15.18s)
+=== RUN   TestFrozenSchemaAndGoldenVectors
+--- PASS: TestFrozenSchemaAndGoldenVectors (0.04s)
+=== RUN   TestStrictJSON
+--- PASS: TestStrictJSON (0.00s)
+=== RUN   TestPostgresAtomicOutboxCommitAndResponseLoss
+--- PASS: TestPostgresAtomicOutboxCommitAndResponseLoss (0.06s)
+=== RUN   TestPostgresRollbackNoPartialAttempt
+--- PASS: TestPostgresRollbackNoPartialAttempt (0.04s)
+=== RUN   TestPostgresLost202ReattachNoReplay
+--- PASS: TestPostgresLost202ReattachNoReplay (0.08s)
+=== RUN   TestPostgresRuntimeCrashUnknownAndOrphanBusyProjection
+--- PASS: TestPostgresRuntimeCrashUnknownAndOrphanBusyProjection (0.08s)
+=== RUN   TestPostgresMissingInboxIsUnknown
+--- PASS: TestPostgresMissingInboxIsUnknown (0.06s)
+=== RUN   TestPostgresLeaseCompetitionAndOldEpoch
+--- PASS: TestPostgresLeaseCompetitionAndOldEpoch (0.03s)
+=== RUN   TestPostgresStopWinsRecoveryAndUnsentOrphan
+--- PASS: TestPostgresStopWinsRecoveryAndUnsentOrphan (0.06s)
+=== RUN   TestPostgresBindingExpiryAndWorkerUnavailable
+--- PASS: TestPostgresBindingExpiryAndWorkerUnavailable (0.07s)
+=== RUN   TestPostgresNoCrossSessionOrPayloadConflict
+--- PASS: TestPostgresNoCrossSessionOrPayloadConflict (0.05s)
+=== RUN   TestPostgresSkipLockedAndNoCrossRoomWait
+--- PASS: TestPostgresSkipLockedAndNoCrossRoomWait (0.05s)
+FAIL
+FAIL	astralive/backend/internal/durablelive	48.442s
+FAIL

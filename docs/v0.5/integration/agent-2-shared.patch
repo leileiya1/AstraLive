@@ -1,0 +1,162 @@
+--- a/backend/internal/app/service.go
++++ b/backend/internal/app/service.go
+@@ -12,6 +12,7 @@
+ 	"astralive/backend/generated/dbgen"
+ 	"astralive/backend/generated/runtimeapi"
+ 	"astralive/backend/internal/fsm"
++ "astralive/backend/internal/durablelive"
+ 	"astralive/backend/internal/ids"
+ 	"astralive/backend/internal/metrics"
+ 	"astralive/backend/internal/runtime"
+@@ -22,6 +23,8 @@
+ )
+ 
+ type Service struct {
++ Durable *durablelive.Store // nil keeps legacy behavior
++
+ 	commands    sync.Mutex
+ 	Interaction *InteractionController
+ 	Integration SessionIntegration
+@@ -68,6 +71,7 @@
+ 	return nil
+ }
+ func (s *Service) Start(ctx context.Context, id, trace string) (string, error) {
++ if s.Durable!=nil {managed,err:=s.Durable.IsManagedSession(ctx,id);if err!=nil{return "",err};if managed{return "",ErrConflict}}
+ 	se, e := s.Q.GetSession(ctx, id)
+ 	if e != nil {
+ 		return "", e
+@@ -121,6 +125,7 @@
+ 	return op.OperationID, e
+ }
+ func (s *Service) Stop(ctx context.Context, id, trace string) (string, error) {
++ if s.Durable!=nil {managed,err:=s.Durable.IsManagedSession(ctx,id);if err!=nil{return "",err};if managed{return "",ErrConflict}}
+ 	s.commands.Lock()
+ 	defer s.commands.Unlock()
+ 	if e := s.transitionSession(ctx, id, "STOPPING"); e != nil {
+@@ -140,6 +145,7 @@
+ 
+ // Interrupt shares the command boundary with automatic admission and Stop.
+ func (s *Service) Interrupt(ctx context.Context, id, trace, reason string) (runtime.Operation, error) {
++ if s.Durable!=nil {managed,err:=s.Durable.IsManagedSession(ctx,id);if err!=nil{return runtime.Operation{},err};if managed{return runtime.Operation{},ErrConflict}}
+ 	s.commands.Lock()
+ 	defer s.commands.Unlock()
+ 	if s.Interaction != nil {
+@@ -149,6 +155,7 @@
+ }
+ 
+ func (s *Service) Speak(ctx context.Context, id, text string, priority int32, policy, source, trace string, platform *runtimeapi.PlatformContext) (dbgen.Utterance, error) {
++ if s.Durable!=nil {managed,err:=s.Durable.IsManagedSession(ctx,id);if err!=nil{return dbgen.Utterance{},err};if managed{return dbgen.Utterance{},ErrConflict}}
+ 	s.commands.Lock()
+ 	defer s.commands.Unlock()
+ 	if source == "OPERATOR" && s.Interaction != nil {
+@@ -158,6 +165,7 @@
+ }
+ 
+ func (s *Service) speak(ctx context.Context, id, text string, priority int32, policy, source, trace string, platform *runtimeapi.PlatformContext) (dbgen.Utterance, error) {
++ if s.Durable!=nil {managed,err:=s.Durable.IsManagedSession(ctx,id);if err!=nil{return dbgen.Utterance{},err};if managed{return dbgen.Utterance{},ErrConflict}}
+ 	se, e := s.Q.GetSession(ctx, id)
+ 	if e != nil {
+ 		return dbgen.Utterance{}, e
+--- a/backend/internal/eventbus/consumer.go
++++ b/backend/internal/eventbus/consumer.go
+@@ -9,11 +9,14 @@
+ 	"time"
+ 
+ 	"astralive/backend/internal/app"
++ "astralive/backend/internal/durablelive"
+ 	"astralive/backend/internal/metrics"
+ 	"github.com/redis/go-redis/v9"
+ )
+ 
+ type Consumer struct {
++ Durable *durablelive.Store
++
+ 	Redis               *redis.Client
+ 	Service             *app.Service
+ 	Stream, Group, Name string
+@@ -22,7 +25,7 @@
+ }
+ 
+ func New(r *redis.Client, s *app.Service, stream string, l *slog.Logger) *Consumer {
+-	return &Consumer{r, s, stream, "astralive-go", fmt.Sprintf("backend-%d", time.Now().UnixNano()), l, map[string]int{}}
++	return &Consumer{Durable:s.Durable,Redis:r,Service:s,Stream:stream,Group:"astralive-go",Name:fmt.Sprintf("backend-%d",time.Now().UnixNano()),Log:l,failures:map[string]int{}}
+ }
+ func (c *Consumer) Run(ctx context.Context) error {
+ 	e := c.Redis.XGroupCreateMkStream(ctx, c.Stream, c.Group, "0").Err()
+@@ -73,7 +76,9 @@
+ 		if !ev.OccurredAt.IsZero() {
+ 			metrics.RedisEventLag.Set(time.Since(ev.OccurredAt).Seconds())
+ 		}
+-		_, e = c.Service.ApplyEvent(ctx, ev)
++		managed:=false
++  if c.Durable!=nil { if e=ev.Validate();e==nil {managed,e=c.Durable.ObserveLegacyEvent(ctx,raw)} }
++  if e==nil && !managed {_,e=c.Service.ApplyEvent(ctx,ev)}
+ 	}
+ 	if e == nil {
+ 		_ = c.Redis.XAck(ctx, c.Stream, c.Group, m.ID).Err()
+--- a/backend/internal/httpapi/server.go
++++ b/backend/internal/httpapi/server.go
+@@ -31,6 +31,8 @@
+ )
+ 
+ type Server struct {
++ DurableHandler http.Handler // already authenticates distinct v0.5 service roles
++
+ 	Config     *userconfig.Service
+ 	S          *app.Service
+ 	Redis      *redis.Client
+@@ -124,6 +126,13 @@
+ }
+ func valid(s string) bool { return strings.TrimSpace(s) != "" }
+ func (h *Server) Router() http.Handler {
++ legacy:=h.legacyRouter()
++ return http.HandlerFunc(func(w http.ResponseWriter,r *http.Request){
++  if strings.HasPrefix(r.URL.Path,"/internal/v0.5/") && h.DurableHandler!=nil {h.DurableHandler.ServeHTTP(w,r);return}
++  legacy.ServeHTTP(w,r)
++ })
++}
++func (h *Server) legacyRouter() http.Handler {
+ 	r := chi.NewRouter()
+ 	r.Use(h.requestContext)
+ 	r.Use(h.authorization)
+--- a/runtime/app/main.py
++++ b/runtime/app/main.py
+@@ -35,7 +35,10 @@
+         return json.dumps(item, ensure_ascii=False)
+ 
+ 
+-def create_app(settings: Settings | None = None, publisher=None, factories=None) -> FastAPI:
++def create_app(settings: Settings | None = None, publisher=None, factories=None, durable_registration=None) -> FastAPI:
++    durable_enabled = os.getenv("ASTRALIVE_DURABLE_LIVE_ENABLED", "false").lower() == "true"
++    if durable_enabled and durable_registration is None:
++        raise RuntimeError("Durable Live requires registered journal, guardian and exact-text adapters")
+     settings = settings or Settings.from_env()
+     bound = binding_enabled()
+     if os.getenv("APP_ENV") == "production" and not bound:
+@@ -253,6 +256,17 @@
+             outputs.append("rtmp")
+         return {"status": "UP", "runtimeVersion": "0.1.0", "gpu": {"available": gpu_available}, "activeSessions": sum(s.state not in {"ENDED", "FAILED"} for s in manager.sessions.values()), "providers": {"llm": "session-binding" if bound else "mock" if settings.mock_llm else "openai-compatible", "tts": "session-binding" if bound else "mock" if settings.mock_tts else "sherpa-onnx", "avatar": "session-binding" if bound else "mock" if settings.mock_avatar else "lightweight-2d", "media": "+".join(outputs), "events": "redis" if settings.redis_url else "memory"}}
+ 
++    if durable_enabled:
++        for durable_router in durable_registration.routers:
++            app.include_router(durable_router)
++        @app.middleware("http")
++        async def durable_mode_guard(request: Request, call_next):
++            prefix = "/internal/v1/sessions/"
++            if request.url.path.startswith(prefix):
++                sid = request.url.path[len(prefix):].split("/", 1)[0]
++                if durable_registration.owns_session(sid):
++                    return JSONResponse({"detail": "durable Session requires v0.5 control"}, status_code=409)
++            return await call_next(request)
+     return app
+ 
+ 
+--- a/runtime/requirements.txt
++++ b/runtime/requirements.txt
+@@ -3,3 +3,6 @@
+ uvicorn>=0.27,<1
+ httpx>=0.27,<1
+ redis>=5,<7
++
++# v0.5 frozen request/response validation (default-off integration).
++jsonschema>=4,<5
