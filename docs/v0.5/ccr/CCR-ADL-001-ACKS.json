@@ -1,0 +1,34 @@
+{
+  "ccr": "CCR-ADL-001",
+  "candidateRevision": "durable-live-2",
+  "status": "CCR BLOCKED",
+  "allRequiredAcksReceived": false,
+  "reviewBase": "01a752baf79c25d4d268167d016c8c62e754cfdf",
+  "normativeDigest": "aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744",
+  "owners": [
+    {
+      "owner": "Agent 1",
+      "status": "ARCHITECTURE_SELECTED_NOT_FINAL_APPROVAL",
+      "scope": "incremental semantic artifacts with once-only START and unit grants",
+      "evidence": "CCR-ADL-001.md"
+    },
+    {
+      "owner": "Agent 2",
+      "status": "PENDING",
+      "scope": "migration, immutable artifact, transaction and grant semantics",
+      "evidence": null
+    },
+    {
+      "owner": "Agent 3",
+      "status": "PENDING",
+      "scope": "Turn Manager, fact validation and streaming semantics",
+      "evidence": null
+    },
+    {
+      "owner": "Agent 4",
+      "status": "PENDING_EXPANDED_PROPOSAL",
+      "scope": "revision2 wire, executor and guardian integration",
+      "evidence": "Issue7 original proposal ACK only; not valid for expanded decision"
+    }
+  ]
+}

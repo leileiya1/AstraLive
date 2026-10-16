@@ -1,0 +1,5074 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astralive.local/contracts/v0.5/durable-live-2/schema.json",
+  "title": "durable-live-2 CCR-ADL-001 candidate (PENDING OWNER ACK)",
+  "$defs": {
+    "ID": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d(?:\\.\\d{1,9})?Z$"
+    },
+    "Hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "Epoch": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "Revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "BroadcastRun": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "roomId": {
+          "$ref": "#/$defs/ID"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "CREATED",
+            "PREPARING",
+            "LIVE",
+            "RECOVERING",
+            "PAUSED",
+            "STOPPING",
+            "STOPPED",
+            "FAILED"
+          ]
+        },
+        "runEpoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "currentSessionId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currentPlanId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "startedAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "endedAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "desiredState": {
+          "type": "string",
+          "enum": [
+            "LIVE",
+            "PAUSED",
+            "STOPPED"
+          ]
+        },
+        "recoveryPolicy": {
+          "type": "string",
+          "enum": [
+            "MANUAL_ON_UNKNOWN",
+            "SAFE_SCRIPT_NEXT_BOUNDARY"
+          ]
+        },
+        "revision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "stopRevision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "tenantId",
+        "ownerId",
+        "runId",
+        "roomId",
+        "status",
+        "runEpoch",
+        "currentSessionId",
+        "currentPlanId",
+        "startedAt",
+        "updatedAt",
+        "endedAt",
+        "desiredState",
+        "recoveryPolicy",
+        "revision",
+        "stopRevision"
+      ],
+      "additionalProperties": false
+    },
+    "GenerationSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "OPERATOR",
+            "LLM",
+            "TEMPLATE"
+          ]
+        },
+        "reference": {
+          "$ref": "#/$defs/ID"
+        },
+        "modelVersion": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "promptVersion": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "reference",
+        "modelVersion",
+        "promptVersion"
+      ],
+      "additionalProperties": false
+    },
+    "ProductSnapshot": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "$ref": "#/$defs/ID"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "sizes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "minItems": 0,
+          "maxItems": 128
+        },
+        "sourceVersion": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "productId",
+        "name",
+        "description",
+        "sizes",
+        "sourceVersion"
+      ],
+      "additionalProperties": false
+    },
+    "ContentPlan": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "planId": {
+          "$ref": "#/$defs/ID"
+        },
+        "productId": {
+          "$ref": "#/$defs/ID"
+        },
+        "productSnapshotVersion": {
+          "$ref": "#/$defs/Hash"
+        },
+        "revision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "segmentOrder": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ID"
+          },
+          "minItems": 1,
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
+        "generationSource": {
+          "$ref": "#/$defs/GenerationSource"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/ProductSnapshot"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "tenantId",
+        "ownerId",
+        "runId",
+        "planId",
+        "productId",
+        "productSnapshotVersion",
+        "revision",
+        "segmentOrder",
+        "generationSource",
+        "snapshot",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    },
+    "FactDependency": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "PRICE",
+            "STOCK",
+            "AVAILABILITY",
+            "SIZE_OPTIONS",
+            "PROMOTION",
+            "DELIVERY",
+            "SKU_STOCK",
+            "PRODUCT_DETAILS"
+          ]
+        },
+        "productId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sourceVersion": {
+          "$ref": "#/$defs/ID"
+        },
+        "validatedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "expiresAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "valueHash": {
+          "$ref": "#/$defs/Hash"
+        }
+      },
+      "required": [
+        "kind",
+        "productId",
+        "sourceVersion",
+        "validatedAt",
+        "expiresAt",
+        "valueHash"
+      ],
+      "additionalProperties": false
+    },
+    "SpeechSegment": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "segmentId": {
+          "$ref": "#/$defs/ID"
+        },
+        "planId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "content": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "textHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "READY",
+            "ACTIVE",
+            "COMPLETED",
+            "INTERRUPTED",
+            "UNKNOWN",
+            "INVALIDATED"
+          ]
+        },
+        "utteranceId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "checkpointState": {
+          "type": "string",
+          "enum": [
+            "PLANNED",
+            "DISPATCHED",
+            "RUNTIME_ACCEPTED",
+            "PLAYING",
+            "LOCAL_MEDIA_DRAINED",
+            "COMPLETED",
+            "INTERRUPTED",
+            "UNKNOWN"
+          ]
+        },
+        "estimatedDurationMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6000
+        },
+        "factDependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FactDependency"
+          },
+          "minItems": 0,
+          "maxItems": 32
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "tenantId",
+        "ownerId",
+        "runId",
+        "segmentId",
+        "planId",
+        "sequence",
+        "content",
+        "textHash",
+        "state",
+        "utteranceId",
+        "idempotencyKey",
+        "checkpointState",
+        "estimatedDurationMs",
+        "factDependencies",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    },
+    "CommentSource": {
+      "type": "object",
+      "properties": {
+        "sourceReceiptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "platform": {
+          "$ref": "#/$defs/ID"
+        },
+        "platformRoomId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sourceEventId": {
+          "$ref": "#/$defs/ID"
+        },
+        "traceId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "sourceReceiptId",
+        "platform",
+        "platformRoomId",
+        "sourceEventId",
+        "traceId"
+      ],
+      "additionalProperties": false
+    },
+    "Turn": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "turnId": {
+          "$ref": "#/$defs/ID"
+        },
+        "planId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "turnType": {
+          "type": "string",
+          "enum": [
+            "SCRIPT",
+            "COMMENT",
+            "OPERATOR",
+            "SYSTEM"
+          ]
+        },
+        "sourceSegmentId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sourceCommentTraceId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sourceIdentities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CommentSource"
+          },
+          "minItems": 0,
+          "maxItems": 128
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "READY",
+            "WAITING",
+            "DISPATCHING",
+            "PLAYING",
+            "COMPLETED",
+            "INTERRUPTED",
+            "UNKNOWN"
+          ]
+        },
+        "scheduledAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "startedAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "finishedAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expiresAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inputText": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "revision": {
+          "$ref": "#/$defs/Revision"
+        }
+      },
+      "required": [
+        "tenantId",
+        "ownerId",
+        "runId",
+        "turnId",
+        "planId",
+        "turnType",
+        "sourceSegmentId",
+        "sourceCommentTraceId",
+        "sourceIdentities",
+        "priority",
+        "state",
+        "scheduledAt",
+        "startedAt",
+        "finishedAt",
+        "expiresAt",
+        "inputText",
+        "idempotencyKey",
+        "revision"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "turnType": {
+                "const": "SCRIPT"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "sourceSegmentId": {
+                "$ref": "#/$defs/ID"
+              },
+              "sourceCommentTraceId": {
+                "type": "null"
+              },
+              "planId": {
+                "$ref": "#/$defs/ID"
+              },
+              "sourceIdentities": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "turnType": {
+                "const": "COMMENT"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "sourceSegmentId": {
+                "type": "null"
+              },
+              "sourceCommentTraceId": {
+                "$ref": "#/$defs/ID"
+              },
+              "sourceIdentities": {
+                "minItems": 1
+              },
+              "expiresAt": {
+                "$ref": "#/$defs/Timestamp"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "turnType": {
+                "type": "string",
+                "enum": [
+                  "OPERATOR",
+                  "SYSTEM"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "sourceSegmentId": {
+                "type": "null"
+              },
+              "sourceCommentTraceId": {
+                "type": "null"
+              },
+              "sourceIdentities": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SinkProof": {
+      "type": "object",
+      "properties": {
+        "sinkId": {
+          "$ref": "#/$defs/ID"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "WEBRTC_TRACK_RECV",
+            "RTMP_PIPE_WRITE"
+          ]
+        },
+        "generationId": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "firstAudioSample": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "finalAudioSampleExclusive": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "audioConsumedThroughExclusive": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "finalVideoFrame": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "videoConsumedThroughFrame": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "terminal": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "sinkId",
+        "kind",
+        "generationId",
+        "firstAudioSample",
+        "finalAudioSampleExclusive",
+        "audioConsumedThroughExclusive",
+        "finalVideoFrame",
+        "videoConsumedThroughFrame",
+        "terminal"
+      ],
+      "additionalProperties": false
+    },
+    "Evidence": {
+      "type": "object",
+      "properties": {
+        "evidenceType": {
+          "type": "string",
+          "enum": [
+            "PLAN_COMMIT",
+            "SEND_STARTED",
+            "INBOX_COMMIT",
+            "SINK_ADMITTED",
+            "ALL_REQUIRED_DRAIN",
+            "BUSINESS_COMMIT",
+            "FENCE_BARRIER",
+            "KNOWLEDGE_GAP"
+          ]
+        },
+        "evidenceRef": {
+          "$ref": "#/$defs/ID"
+        },
+        "evidenceHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "requiredSinks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ID"
+          },
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true
+        },
+        "sinkProofs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SinkProof"
+          },
+          "minItems": 0,
+          "maxItems": 16
+        },
+        "predecessorCheckpointIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ID"
+          },
+          "minItems": 0,
+          "maxItems": 16,
+          "uniqueItems": true
+        },
+        "audienceVisibility": {
+          "const": "UNVERIFIED"
+        }
+      },
+      "required": [
+        "evidenceType",
+        "evidenceRef",
+        "evidenceHash",
+        "requiredSinks",
+        "sinkProofs",
+        "predecessorCheckpointIds",
+        "audienceVisibility"
+      ],
+      "additionalProperties": false
+    },
+    "PlaybackCheckpoint": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "checkpointId": {
+          "$ref": "#/$defs/ID"
+        },
+        "eventId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "utteranceId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "producerSeq": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "PLANNED",
+            "DISPATCHED",
+            "RUNTIME_ACCEPTED",
+            "PLAYING",
+            "LOCAL_MEDIA_DRAINED",
+            "COMPLETED",
+            "INTERRUPTED",
+            "UNKNOWN"
+          ]
+        },
+        "lastKnownState": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "PLANNED",
+                "DISPATCHED",
+                "RUNTIME_ACCEPTED",
+                "PLAYING",
+                "LOCAL_MEDIA_DRAINED",
+                "COMPLETED",
+                "INTERRUPTED"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reasonCode": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "occurredAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "evidence": {
+          "$ref": "#/$defs/Evidence"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "checkpointId",
+        "eventId",
+        "attemptId",
+        "sessionId",
+        "utteranceId",
+        "commandId",
+        "runEpoch",
+        "producerIncarnation",
+        "producerSeq",
+        "state",
+        "lastKnownState",
+        "reasonCode",
+        "occurredAt",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "PLANNED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "evidenceType": {
+                    "const": "PLAN_COMMIT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "DISPATCHED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "evidenceType": {
+                    "const": "SEND_STARTED"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "RUNTIME_ACCEPTED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "evidenceType": {
+                    "const": "INBOX_COMMIT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "PLAYING"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "evidenceType": {
+                    "const": "SINK_ADMITTED"
+                  },
+                  "sinkProofs": {
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "LOCAL_MEDIA_DRAINED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "evidenceType": {
+                    "const": "ALL_REQUIRED_DRAIN"
+                  },
+                  "sinkProofs": {
+                    "minItems": 1,
+                    "items": {
+                      "properties": {
+                        "terminal": {
+                          "const": true
+                        }
+                      }
+                    }
+                  },
+                  "predecessorCheckpointIds": {
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "COMPLETED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "evidenceType": {
+                    "const": "BUSINESS_COMMIT"
+                  },
+                  "sinkProofs": {
+                    "minItems": 1,
+                    "items": {
+                      "properties": {
+                        "terminal": {
+                          "const": true
+                        }
+                      }
+                    }
+                  },
+                  "predecessorCheckpointIds": {
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "INTERRUPTED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "evidenceType": {
+                    "const": "FENCE_BARRIER"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "UNKNOWN"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "evidenceType": {
+                    "const": "KNOWLEDGE_GAP"
+                  }
+                }
+              },
+              "lastKnownState": {
+                "type": "string",
+                "enum": [
+                  "PLANNED",
+                  "DISPATCHED",
+                  "RUNTIME_ACCEPTED",
+                  "PLAYING",
+                  "LOCAL_MEDIA_DRAINED",
+                  "COMPLETED",
+                  "INTERRUPTED"
+                ]
+              },
+              "reasonCode": {
+                "$ref": "#/$defs/ID"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionAttempt": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "turnId": {
+          "$ref": "#/$defs/ID"
+        },
+        "segmentId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "utteranceId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "attemptNumber": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "executorIncarnation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lastCheckpoint": {
+          "type": "string",
+          "enum": [
+            "PLANNED",
+            "DISPATCHED",
+            "RUNTIME_ACCEPTED",
+            "PLAYING",
+            "LOCAL_MEDIA_DRAINED",
+            "COMPLETED",
+            "INTERRUPTED",
+            "UNKNOWN"
+          ]
+        },
+        "answerTextHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requiredSinks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ID"
+          },
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "tenantId",
+        "ownerId",
+        "runId",
+        "attemptId",
+        "turnId",
+        "segmentId",
+        "sessionId",
+        "utteranceId",
+        "commandId",
+        "runEpoch",
+        "attemptNumber",
+        "executorIncarnation",
+        "lastCheckpoint",
+        "answerTextHash",
+        "requiredSinks",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    },
+    "DispatchIntent": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "intentId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "turnId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sessionId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "utteranceId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "operation": {
+          "type": "string",
+          "enum": [
+            "EXECUTE_TURN",
+            "STOP_RUN",
+            "INSTALL_FENCE"
+          ]
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "PENDING",
+            "CLAIMED",
+            "ACCEPTED",
+            "RECONCILING",
+            "COMPLETED",
+            "FAILED",
+            "UNKNOWN"
+          ]
+        },
+        "nextAttemptAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "claimedBy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "leaseExpiresAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claimVersion": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "sendStartedAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "tenantId",
+        "ownerId",
+        "runId",
+        "intentId",
+        "attemptId",
+        "turnId",
+        "sessionId",
+        "utteranceId",
+        "commandId",
+        "idempotencyKey",
+        "runEpoch",
+        "operation",
+        "requestHash",
+        "status",
+        "nextAttemptAt",
+        "claimedBy",
+        "leaseExpiresAt",
+        "claimVersion",
+        "sendStartedAt",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "CLAIMED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "claimedBy": {
+                "$ref": "#/$defs/ID"
+              },
+              "leaseExpiresAt": {
+                "$ref": "#/$defs/Timestamp"
+              },
+              "claimVersion": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "EXECUTE_TURN"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "attemptId": {
+                "$ref": "#/$defs/ID"
+              },
+              "turnId": {
+                "$ref": "#/$defs/ID"
+              },
+              "sessionId": {
+                "$ref": "#/$defs/ID"
+              },
+              "utteranceId": {
+                "$ref": "#/$defs/ID"
+              },
+              "runEpoch": {
+                "$ref": "#/$defs/Epoch"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "STOP_RUN",
+                  "INSTALL_FENCE"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "attemptId": {
+                "type": "null"
+              },
+              "turnId": {
+                "type": "null"
+              },
+              "utteranceId": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "RunLease": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "leaseOwner": {
+          "$ref": "#/$defs/ID"
+        },
+        "leaseExpiresAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "fencingToken": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "leaseVersion": {
+          "$ref": "#/$defs/Revision"
+        },
+        "phase": {
+          "type": "string",
+          "enum": [
+            "PENDING_INSTALL",
+            "ACTIVE",
+            "SEALED"
+          ]
+        }
+      },
+      "required": [
+        "tenantId",
+        "ownerId",
+        "runId",
+        "leaseOwner",
+        "leaseExpiresAt",
+        "fencingToken",
+        "runEpoch",
+        "leaseVersion",
+        "phase"
+      ],
+      "additionalProperties": false
+    },
+    "RunSession": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runSessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "bindingId": {
+          "$ref": "#/$defs/ID"
+        },
+        "introducedEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "retiredAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outputFencedAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tenantId",
+        "ownerId",
+        "runId",
+        "runSessionId",
+        "sessionId",
+        "bindingId",
+        "introducedEpoch",
+        "retiredAt",
+        "outputFencedAt"
+      ],
+      "additionalProperties": false
+    },
+    "Decision": {
+      "type": "object",
+      "properties": {
+        "decisionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "operatorId": {
+          "$ref": "#/$defs/ID"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "WAIT_FOR_EVIDENCE",
+            "SKIP_WITH_GAP",
+            "CREATE_NEW_TURN"
+          ]
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "decisionId",
+        "operatorId",
+        "action",
+        "attemptId",
+        "reason",
+        "createdAt"
+      ],
+      "additionalProperties": false
+    },
+    "Slot": {
+      "type": "object",
+      "properties": {
+        "activeAttemptId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "boundaryCheckpointId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slotVersion": {
+          "$ref": "#/$defs/Revision"
+        }
+      },
+      "required": [
+        "activeAttemptId",
+        "boundaryCheckpointId",
+        "slotVersion"
+      ],
+      "additionalProperties": false
+    },
+    "PlanBundle": {
+      "type": "object",
+      "properties": {
+        "plan": {
+          "$ref": "#/$defs/ContentPlan"
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SpeechSegment"
+          },
+          "minItems": 1,
+          "maxItems": 1000
+        }
+      },
+      "required": [
+        "plan",
+        "segments"
+      ],
+      "additionalProperties": false
+    },
+    "RestoreSnapshot": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "$ref": "#/$defs/BroadcastRun"
+        },
+        "bundle": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PlanBundle"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "completedPrefix": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "resumeSequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Decision"
+          },
+          "minItems": 0,
+          "maxItems": 1000
+        },
+        "unresolvedAttempts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExecutionAttempt"
+          },
+          "minItems": 0,
+          "maxItems": 1000
+        },
+        "slot": {
+          "$ref": "#/$defs/Slot"
+        }
+      },
+      "required": [
+        "run",
+        "bundle",
+        "completedPrefix",
+        "resumeSequence",
+        "decisions",
+        "unresolvedAttempts",
+        "slot"
+      ],
+      "additionalProperties": false
+    },
+    "ClaimNextTurnRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "candidateTurnId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedSlotVersion": {
+          "$ref": "#/$defs/Revision"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "expectedRevision",
+        "runEpoch",
+        "candidateTurnId",
+        "expectedSlotVersion",
+        "idempotencyKey"
+      ],
+      "additionalProperties": false
+    },
+    "ClaimNextTurnResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "turn": {
+          "$ref": "#/$defs/Turn"
+        },
+        "attempt": {
+          "$ref": "#/$defs/ExecutionAttempt"
+        },
+        "intent": {
+          "$ref": "#/$defs/DispatchIntent"
+        },
+        "slot": {
+          "$ref": "#/$defs/Slot"
+        }
+      },
+      "required": [
+        "requestId",
+        "runRevision",
+        "turn",
+        "attempt",
+        "intent",
+        "slot"
+      ],
+      "additionalProperties": false
+    },
+    "DispatchTurnRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "intentId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "expectedRevision",
+        "runEpoch",
+        "intentId",
+        "commandId",
+        "idempotencyKey"
+      ],
+      "additionalProperties": false
+    },
+    "DispatchTurnResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "intent": {
+          "$ref": "#/$defs/DispatchIntent"
+        }
+      },
+      "required": [
+        "requestId",
+        "intent"
+      ],
+      "additionalProperties": false
+    },
+    "ConfirmCheckpointRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRevision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Revision"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkpoint": {
+          "$ref": "#/$defs/PlaybackCheckpoint"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "expectedRevision",
+        "checkpoint"
+      ],
+      "additionalProperties": false
+    },
+    "ConfirmCheckpointResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "checkpointId": {
+          "$ref": "#/$defs/ID"
+        },
+        "applied": {
+          "type": "boolean"
+        },
+        "runRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "completedPrefix": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "disposition": {
+          "type": "string",
+          "enum": [
+            "APPLIED",
+            "PENDING",
+            "DUPLICATE",
+            "HISTORICAL",
+            "QUARANTINED"
+          ]
+        }
+      },
+      "required": [
+        "requestId",
+        "checkpointId",
+        "applied",
+        "runRevision",
+        "completedPrefix",
+        "disposition"
+      ],
+      "additionalProperties": false
+    },
+    "QueryExecutionStatusRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "runEpoch"
+      ],
+      "additionalProperties": false
+    },
+    "ExecutionStatus": {
+      "type": "object",
+      "properties": {
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACCEPTED",
+            "STARTED",
+            "TERMINAL",
+            "NOT_EXECUTED",
+            "UNKNOWN"
+          ]
+        },
+        "lastCheckpoint": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PlaybackCheckpoint"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receiptId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "executorIncarnation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "executorSealed": {
+          "type": "boolean"
+        },
+        "revision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "evidenceRef": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "commandId",
+        "requestHash",
+        "runEpoch",
+        "attemptId",
+        "state",
+        "lastCheckpoint",
+        "receiptId",
+        "executorIncarnation",
+        "executorSealed",
+        "revision",
+        "evidenceRef"
+      ],
+      "additionalProperties": false
+    },
+    "QueryExecutionStatusResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "status": {
+          "$ref": "#/$defs/ExecutionStatus"
+        }
+      },
+      "required": [
+        "requestId",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "ResumeBroadcastRunRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedPreviousEpoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "decisionId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "expectedRevision",
+        "idempotencyKey",
+        "expectedPreviousEpoch",
+        "decisionId"
+      ],
+      "additionalProperties": false
+    },
+    "ResumeBroadcastRunResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "run": {
+          "$ref": "#/$defs/BroadcastRun"
+        },
+        "lease": {
+          "$ref": "#/$defs/RunLease"
+        }
+      },
+      "required": [
+        "requestId",
+        "run",
+        "lease"
+      ],
+      "additionalProperties": false
+    },
+    "StopBroadcastRunRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "decisionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "reasonCode": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "expectedRevision",
+        "idempotencyKey",
+        "decisionId",
+        "reasonCode"
+      ],
+      "additionalProperties": false
+    },
+    "StopBroadcastRunResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "run": {
+          "$ref": "#/$defs/BroadcastRun"
+        },
+        "stopRevision": {
+          "$ref": "#/$defs/Revision"
+        }
+      },
+      "required": [
+        "requestId",
+        "run",
+        "stopRevision"
+      ],
+      "additionalProperties": false
+    },
+    "YieldAtSegmentBoundaryRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "boundaryCheckpointId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedSlotVersion": {
+          "$ref": "#/$defs/Revision"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "expectedRevision",
+        "runEpoch",
+        "boundaryCheckpointId",
+        "expectedSlotVersion",
+        "idempotencyKey"
+      ],
+      "additionalProperties": false
+    },
+    "YieldAtSegmentBoundaryResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "WAITING",
+            "YIELDED"
+          ]
+        },
+        "boundaryCheckpointId": {
+          "$ref": "#/$defs/ID"
+        },
+        "slot": {
+          "$ref": "#/$defs/Slot"
+        },
+        "runRevision": {
+          "$ref": "#/$defs/Revision"
+        }
+      },
+      "required": [
+        "requestId",
+        "state",
+        "boundaryCheckpointId",
+        "slot",
+        "runRevision"
+      ],
+      "additionalProperties": false
+    },
+    "RestoreContentPlanRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId"
+      ],
+      "additionalProperties": false
+    },
+    "RestoreContentPlanResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/RestoreSnapshot"
+        }
+      },
+      "required": [
+        "requestId",
+        "snapshot"
+      ],
+      "additionalProperties": false
+    },
+    "MarkExecutionUnknownRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "reasonCode": {
+          "$ref": "#/$defs/ID"
+        },
+        "lastKnownState": {
+          "type": "string",
+          "enum": [
+            "PLANNED",
+            "DISPATCHED",
+            "RUNTIME_ACCEPTED",
+            "PLAYING",
+            "LOCAL_MEDIA_DRAINED",
+            "COMPLETED",
+            "INTERRUPTED"
+          ]
+        },
+        "evidenceRef": {
+          "$ref": "#/$defs/ID"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "expectedRevision",
+        "runEpoch",
+        "attemptId",
+        "reasonCode",
+        "lastKnownState",
+        "evidenceRef",
+        "idempotencyKey"
+      ],
+      "additionalProperties": false
+    },
+    "MarkExecutionUnknownResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "checkpointId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runRevision": {
+          "$ref": "#/$defs/Revision"
+        }
+      },
+      "required": [
+        "requestId",
+        "attemptId",
+        "checkpointId",
+        "runRevision"
+      ],
+      "additionalProperties": false
+    },
+    "SaveContentPlanRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "bundle": {
+          "$ref": "#/$defs/PlanBundle"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "expectedRevision",
+        "idempotencyKey",
+        "bundle"
+      ],
+      "additionalProperties": false
+    },
+    "SaveContentPlanResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "planId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runRevision": {
+          "$ref": "#/$defs/Revision"
+        }
+      },
+      "required": [
+        "requestId",
+        "planId",
+        "runRevision"
+      ],
+      "additionalProperties": false
+    },
+    "AdmitTurnRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "turn": {
+          "$ref": "#/$defs/Turn"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "expectedRevision",
+        "idempotencyKey",
+        "turn"
+      ],
+      "additionalProperties": false
+    },
+    "AdmitTurnResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "turn": {
+          "$ref": "#/$defs/Turn"
+        },
+        "runRevision": {
+          "$ref": "#/$defs/Revision"
+        }
+      },
+      "required": [
+        "requestId",
+        "turn",
+        "runRevision"
+      ],
+      "additionalProperties": false
+    },
+    "ExecutePayload": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "SCRIPT_TEXT",
+            "COMMENT_QUESTION",
+            "OPERATOR_TEXT",
+            "SYSTEM_TEXT"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "textHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "productId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "planId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "segmentId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "factDependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FactDependency"
+          },
+          "minItems": 0,
+          "maxItems": 32
+        },
+        "expiresAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "requiredSinks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ID"
+          },
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true
+        },
+        "answerPreparation": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "SEMANTIC_STREAM"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "mode",
+        "text",
+        "textHash",
+        "productId",
+        "planId",
+        "segmentId",
+        "factDependencies",
+        "expiresAt",
+        "requiredSinks",
+        "answerPreparation"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "SCRIPT_TEXT"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "productId": {
+                "$ref": "#/$defs/ID"
+              },
+              "planId": {
+                "$ref": "#/$defs/ID"
+              },
+              "segmentId": {
+                "$ref": "#/$defs/ID"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "COMMENT_QUESTION"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "answerPreparation": {
+                "const": "SEMANTIC_STREAM"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "answerPreparation": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "RuntimeCommand": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "intentId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "turnId": {
+          "$ref": "#/$defs/ID"
+        },
+        "utteranceId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "leaseVersion": {
+          "$ref": "#/$defs/Revision"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "traceId": {
+          "$ref": "#/$defs/ID"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "operation": {
+          "const": "EXECUTE_TURN"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "payload": {
+          "$ref": "#/$defs/ExecutePayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "sessionId",
+        "commandId",
+        "intentId",
+        "attemptId",
+        "turnId",
+        "utteranceId",
+        "runEpoch",
+        "leaseVersion",
+        "idempotencyKey",
+        "traceId",
+        "createdAt",
+        "operation",
+        "requestHash",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "RuntimeExecuteRequest": {
+      "$ref": "#/$defs/RuntimeCommand"
+    },
+    "RuntimeExecuteResponse": {
+      "type": "object",
+      "properties": {
+        "accepted": {
+          "const": true
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "receiptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "revision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACCEPTED",
+            "STARTED",
+            "TERMINAL",
+            "NOT_EXECUTED",
+            "UNKNOWN"
+          ]
+        }
+      },
+      "required": [
+        "accepted",
+        "commandId",
+        "receiptId",
+        "requestHash",
+        "revision",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "FenceInstallRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "expectedPreviousEpoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "leaseVersion": {
+          "$ref": "#/$defs/Revision"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "guardianProofRef": {
+          "$ref": "#/$defs/ID"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "intentId": {
+          "$ref": "#/$defs/ID"
+        },
+        "traceId": {
+          "$ref": "#/$defs/ID"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "operation": {
+          "const": "INSTALL_FENCE"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "expectedRevision",
+        "sessionId",
+        "runEpoch",
+        "expectedPreviousEpoch",
+        "leaseVersion",
+        "producerIncarnation",
+        "guardianProofRef",
+        "idempotencyKey",
+        "commandId",
+        "intentId",
+        "traceId",
+        "createdAt",
+        "requestHash",
+        "operation"
+      ],
+      "additionalProperties": false
+    },
+    "FenceInstallResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "phase": {
+          "type": "string",
+          "enum": [
+            "PENDING_INSTALL",
+            "ACTIVE"
+          ]
+        },
+        "fenceReceiptId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "requestId",
+        "runEpoch",
+        "phase",
+        "fenceReceiptId"
+      ],
+      "additionalProperties": false
+    },
+    "JournalAcceptRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "command": {
+          "$ref": "#/$defs/RuntimeCommand"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "command",
+        "producerIncarnation"
+      ],
+      "additionalProperties": false
+    },
+    "JournalAcceptResponse": {
+      "$ref": "#/$defs/RuntimeExecuteResponse"
+    },
+    "JournalStartRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "permitId": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "expectedInboxRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerArtifactId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "answerArtifactHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expectedAnswerRevision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Revision"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "runEpoch",
+        "producerIncarnation",
+        "permitId",
+        "requestHash",
+        "expectedInboxRevision",
+        "sessionId",
+        "answerArtifactId",
+        "answerArtifactHash",
+        "expectedAnswerRevision"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "answerArtifactId": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "answerArtifactHash": {
+                "type": "null"
+              },
+              "expectedAnswerRevision": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "answerArtifactHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "expectedAnswerRevision": {
+                "$ref": "#/$defs/Revision"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "JournalStartResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "startAuthorized": {
+          "type": "boolean"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "STARTED",
+            "TERMINAL",
+            "NOT_EXECUTED",
+            "UNKNOWN"
+          ]
+        },
+        "revision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "evidenceRef": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerGrant": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AnswerGrant"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "requestId",
+        "startAuthorized",
+        "state",
+        "revision",
+        "evidenceRef",
+        "answerGrant"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "startAuthorized": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "state": {
+                "const": "STARTED"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "startAuthorized": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "answerGrant": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "AcquireOutputPermitRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "guardianId": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerArtifactId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "guardianId",
+        "answerArtifactId"
+      ],
+      "additionalProperties": false
+    },
+    "AcquireOutputPermitResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "permitId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "leaseVersion": {
+          "$ref": "#/$defs/Revision"
+        },
+        "ttlMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "issuedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "expiresAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "roomId": {
+          "$ref": "#/$defs/ID"
+        },
+        "outputBindingVersion": {
+          "$ref": "#/$defs/Revision"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerArtifactId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "factObservationId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "factValidUntil": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "requestId",
+        "permitId",
+        "runEpoch",
+        "leaseVersion",
+        "ttlMs",
+        "issuedAt",
+        "expiresAt",
+        "roomId",
+        "outputBindingVersion",
+        "sessionId",
+        "producerIncarnation",
+        "answerArtifactId",
+        "factObservationId",
+        "factValidUntil"
+      ],
+      "additionalProperties": false
+    },
+    "ConfirmOutputFenceRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "guardianId": {
+          "$ref": "#/$defs/ID"
+        },
+        "retiredEpoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "evidenceRef": {
+          "$ref": "#/$defs/ID"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "expectedRevision",
+        "runEpoch",
+        "guardianId",
+        "retiredEpoch",
+        "evidenceRef",
+        "idempotencyKey"
+      ],
+      "additionalProperties": false
+    },
+    "ConfirmOutputFenceResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "fenceReceiptId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "requestId",
+        "runRevision",
+        "fenceReceiptId"
+      ],
+      "additionalProperties": false
+    },
+    "CreateBroadcastRunRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "roomId": {
+          "$ref": "#/$defs/ID"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "recoveryPolicy": {
+          "type": "string",
+          "enum": [
+            "MANUAL_ON_UNKNOWN",
+            "SAFE_SCRIPT_NEXT_BOUNDARY"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "roomId",
+        "idempotencyKey",
+        "recoveryPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "CreateBroadcastRunResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "run": {
+          "$ref": "#/$defs/BroadcastRun"
+        }
+      },
+      "required": [
+        "requestId",
+        "run"
+      ],
+      "additionalProperties": false
+    },
+    "ConfirmRunFenceRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "guardianProofRef": {
+          "$ref": "#/$defs/ID"
+        },
+        "fenceReceiptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "guardianProofRef",
+        "fenceReceiptId",
+        "idempotencyKey"
+      ],
+      "additionalProperties": false
+    },
+    "ConfirmRunFenceResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "phase": {
+          "const": "ACTIVE"
+        }
+      },
+      "required": [
+        "requestId",
+        "runRevision",
+        "runEpoch",
+        "phase"
+      ],
+      "additionalProperties": false
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "code": {
+          "type": "string",
+          "enum": [
+            "UNAUTHENTICATED",
+            "FORBIDDEN",
+            "RESOURCE_NOT_FOUND",
+            "STATE_CONFLICT",
+            "STALE_RUN_EPOCH",
+            "LEASE_LOST",
+            "RUN_STOPPED",
+            "COMMAND_CONFLICT",
+            "PLAN_CHANGED",
+            "BOUNDARY_CONFLICT",
+            "EVIDENCE_CONFLICT",
+            "OUTPUT_FENCE_UNPROVEN",
+            "INVALID_ARGUMENT",
+            "SEGMENT_TOO_LONG",
+            "DEPENDENCY_UNAVAILABLE",
+            "RECOVERY_UNKNOWN",
+            "OVERLOADED",
+            "CONTRACT_REVISION_MISMATCH",
+            "ANSWER_CONFLICT",
+            "ANSWER_GAP",
+            "ANSWER_WINDOW_FULL",
+            "ANSWER_LIMIT_EXCEEDED",
+            "FACT_EXPIRED",
+            "SEMANTIC_BOUNDARY_INVALID",
+            "ANSWER_NOT_PREPARED",
+            "ANSWER_CLOSED",
+            "BINDING_EXPIRED",
+            "COMMAND_EXPIRED"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "retryable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "requestId",
+        "code",
+        "message",
+        "retryable"
+      ],
+      "additionalProperties": false
+    },
+    "RuntimeStopRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "intentId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "traceId": {
+          "$ref": "#/$defs/ID"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "stopRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "operation": {
+          "const": "STOP_RUN"
+        },
+        "reasonCode": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "sessionId",
+        "commandId",
+        "intentId",
+        "runEpoch",
+        "idempotencyKey",
+        "traceId",
+        "createdAt",
+        "requestHash",
+        "stopRevision",
+        "operation",
+        "reasonCode"
+      ],
+      "additionalProperties": false
+    },
+    "RuntimeStopResponse": {
+      "type": "object",
+      "properties": {
+        "accepted": {
+          "const": true
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "receiptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "revision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACCEPTED",
+            "COMPLETED",
+            "UNKNOWN"
+          ]
+        }
+      },
+      "required": [
+        "accepted",
+        "commandId",
+        "requestHash",
+        "receiptId",
+        "revision",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "StopCommand": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "intentId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "traceId": {
+          "$ref": "#/$defs/ID"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "stopRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "operation": {
+          "const": "STOP_RUN"
+        },
+        "reasonCode": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "sessionId",
+        "commandId",
+        "intentId",
+        "runEpoch",
+        "idempotencyKey",
+        "traceId",
+        "createdAt",
+        "requestHash",
+        "stopRevision",
+        "operation",
+        "reasonCode"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "runEpoch": {
+                "const": 0
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "sessionId": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "AnswerArtifact": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        "previousArtifactHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "answerText": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240
+        },
+        "answerTextHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "productId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "productSnapshotVersion": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "factDependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FactDependency"
+          },
+          "minItems": 0,
+          "maxItems": 32
+        },
+        "assertionKinds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PRICE",
+              "STOCK",
+              "AVAILABILITY",
+              "SIZE_OPTIONS",
+              "PROMOTION",
+              "DELIVERY",
+              "SKU_STOCK",
+              "PRODUCT_DETAILS"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 32,
+          "uniqueItems": true
+        },
+        "semanticBoundary": {
+          "type": "string",
+          "enum": [
+            "COMPLETE_SENTENCE",
+            "TOOL_FACT"
+          ]
+        },
+        "estimatedDurationMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6000
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "requestHash",
+        "answerId",
+        "artifactId",
+        "sequence",
+        "previousArtifactHash",
+        "answerText",
+        "answerTextHash",
+        "artifactHash",
+        "productId",
+        "productSnapshotVersion",
+        "factDependencies",
+        "assertionKinds",
+        "semanticBoundary",
+        "estimatedDurationMs",
+        "createdAt"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "sequence": {
+                "const": 1
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "previousArtifactHash": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "previousArtifactHash": {
+                "$ref": "#/$defs/Hash"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "productId": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "productSnapshotVersion": {
+                "type": "null"
+              },
+              "factDependencies": {
+                "maxItems": 0
+              },
+              "assertionKinds": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "productSnapshotVersion": {
+                "$ref": "#/$defs/Hash"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "AnswerGrant": {
+      "type": "object",
+      "properties": {
+        "grantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        "permitId": {
+          "$ref": "#/$defs/ID"
+        },
+        "factObservationId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "factValidUntil": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issuedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "expiresAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "grantId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "answerId",
+        "artifactId",
+        "artifactHash",
+        "sequence",
+        "permitId",
+        "factObservationId",
+        "factValidUntil",
+        "issuedAt",
+        "expiresAt"
+      ],
+      "additionalProperties": false
+    },
+    "AnswerArtifactStatus": {
+      "type": "object",
+      "properties": {
+        "artifact": {
+          "$ref": "#/$defs/AnswerArtifact"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "PREPARED",
+            "STARTED",
+            "DRAINED",
+            "INTERRUPTED",
+            "UNKNOWN"
+          ]
+        }
+      },
+      "required": [
+        "artifact",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "AnswerStream": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "OPEN",
+            "SEALED",
+            "COMPLETED",
+            "INTERRUPTED",
+            "UNKNOWN"
+          ]
+        },
+        "answerRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "inboxRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "preparedCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        "drainedPrefix": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32
+        },
+        "totalCharacters": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2000
+        },
+        "finalAnswerTextHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "manifestHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnswerArtifactStatus"
+          },
+          "minItems": 1,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "requestHash",
+        "answerId",
+        "state",
+        "answerRevision",
+        "inboxRevision",
+        "preparedCount",
+        "drainedPrefix",
+        "totalCharacters",
+        "finalAnswerTextHash",
+        "manifestHash",
+        "artifacts"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "type": "string",
+                "enum": [
+                  "SEALED",
+                  "COMPLETED"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "finalAnswerTextHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "manifestHash": {
+                "$ref": "#/$defs/Hash"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "JournalPrepareAnswerRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifact": {
+          "$ref": "#/$defs/AnswerArtifact"
+        },
+        "expectedInboxRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "expectedAnswerRevision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "requestHash",
+        "requestId",
+        "artifact",
+        "expectedInboxRevision",
+        "expectedAnswerRevision",
+        "idempotencyKey"
+      ],
+      "additionalProperties": false
+    },
+    "JournalPrepareAnswerResponse": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        "prepared": {
+          "const": true
+        },
+        "receiptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "inboxRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "answerRevision": {
+          "$ref": "#/$defs/Revision"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "commandId",
+        "attemptId",
+        "answerId",
+        "artifactId",
+        "artifactHash",
+        "sequence",
+        "prepared",
+        "receiptId",
+        "inboxRevision",
+        "answerRevision"
+      ],
+      "additionalProperties": false
+    },
+    "JournalStartAnswerSegmentRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "expectedAnswerRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "permitId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "requestHash",
+        "requestId",
+        "answerId",
+        "artifactId",
+        "artifactHash",
+        "expectedAnswerRevision",
+        "permitId"
+      ],
+      "additionalProperties": false
+    },
+    "JournalStartAnswerSegmentResponse": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "segmentStartAuthorized": {
+          "type": "boolean"
+        },
+        "grant": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AnswerGrant"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "STARTED",
+            "DRAINED",
+            "INTERRUPTED",
+            "UNKNOWN"
+          ]
+        },
+        "answerRevision": {
+          "$ref": "#/$defs/Revision"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "commandId",
+        "answerId",
+        "artifactId",
+        "artifactHash",
+        "segmentStartAuthorized",
+        "grant",
+        "state",
+        "answerRevision"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "segmentStartAuthorized": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "grant": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "grant": {
+                "$ref": "#/$defs/AnswerGrant"
+              },
+              "state": {
+                "const": "STARTED"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "JournalConfirmAnswerSegmentRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "expectedAnswerRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "evidence": {
+          "$ref": "#/$defs/Evidence"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "requestHash",
+        "requestId",
+        "answerId",
+        "artifactId",
+        "artifactHash",
+        "expectedAnswerRevision",
+        "idempotencyKey",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "properties": {
+            "evidence": {
+              "properties": {
+                "evidenceType": {
+                  "const": "ALL_REQUIRED_DRAIN"
+                },
+                "sinkProofs": {
+                  "minItems": 1,
+                  "items": {
+                    "properties": {
+                      "terminal": {
+                        "const": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "JournalConfirmAnswerSegmentResponse": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "state": {
+          "const": "DRAINED"
+        },
+        "answerRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "receiptId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "artifactId",
+        "state",
+        "answerRevision",
+        "receiptId"
+      ],
+      "additionalProperties": false
+    },
+    "JournalSealAnswerRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedAnswerRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "sequenceCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        "finalAnswerTextHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "manifestHash": {
+          "$ref": "#/$defs/Hash"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "requestHash",
+        "requestId",
+        "answerId",
+        "expectedAnswerRevision",
+        "idempotencyKey",
+        "sequenceCount",
+        "finalAnswerTextHash",
+        "manifestHash"
+      ],
+      "additionalProperties": false
+    },
+    "JournalSealAnswerResponse": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "SEALED",
+            "COMPLETED"
+          ]
+        },
+        "answerRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "receiptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "finalAnswerTextHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "manifestHash": {
+          "$ref": "#/$defs/Hash"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "answerId",
+        "state",
+        "answerRevision",
+        "receiptId",
+        "finalAnswerTextHash",
+        "manifestHash"
+      ],
+      "additionalProperties": false
+    },
+    "JournalQueryAnswerRequest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "requestHash",
+        "requestId",
+        "answerId"
+      ],
+      "additionalProperties": false
+    },
+    "JournalQueryAnswerResponse": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "answer": {
+          "$ref": "#/$defs/AnswerStream"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractRevision",
+        "requestId",
+        "answer"
+      ],
+      "additionalProperties": false
+    },
+    "AnswerFactObservation": {
+      "type": "object",
+      "properties": {
+        "observationId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "productSnapshotVersion": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "factSetHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "verifiedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "validUntil": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "authorityRevision": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "observationId",
+        "artifactId",
+        "artifactHash",
+        "productSnapshotVersion",
+        "factSetHash",
+        "verifiedAt",
+        "validUntil",
+        "authorityRevision"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/RuntimeCommand"
+}

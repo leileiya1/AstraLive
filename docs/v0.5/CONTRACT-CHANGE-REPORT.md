@@ -29,3 +29,7 @@ Acceptance must prove exact answer body + fact version + SHA256 persisted togeth
 ## Review requested
 
 Agent 1 must ACK the operation, fields, version/compatibility rule and START freshness semantics. Agent 2 must ACK migration/transaction and immutable receipt behavior. Agent 3 must ACK adapter/fact projection impact. Silence or elapsed time is not approval. Continue independent adapter, SQL and legacy work while pending; keep real COMMENT blocked.
+
+## Agent 1 formal review
+
+The original whole-answer proposal is reviewed in [CCR-ADL-001 decision](ccr/CCR-ADL-001.md). Selected candidate: immutable complete semantic units, one command START and one-shot continuation grants, exact `durable-live-2` on isolated paths. This expands the original proposal and requires fresh Agent 2/3/4 ACKs; see [ledger](ccr/CCR-ADL-001-ACKS.json). Status **CCR BLOCKED**; active durable-live-1 and COMMENT fail-closed remain unchanged.

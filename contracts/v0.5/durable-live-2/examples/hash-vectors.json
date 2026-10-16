@@ -1,0 +1,150 @@
+[
+  {
+    "name": "question-command",
+    "value": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-2",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "commandId": "cmd_comment",
+      "intentId": "intent_comment",
+      "attemptId": "attempt_comment",
+      "turnId": "turn_comment",
+      "utteranceId": "utt_comment",
+      "runEpoch": 1,
+      "leaseVersion": 1,
+      "idempotencyKey": "comment:source_demo",
+      "traceId": "trace_comment",
+      "createdAt": "2026-10-16T00:00:00Z",
+      "operation": "EXECUTE_TURN",
+      "payload": {
+        "mode": "COMMENT_QUESTION",
+        "text": "这件衣服是什么面料，有哪些尺码？",
+        "textHash": "83266fa9eb9466b1652aa3c729fd2c31fd0e79609de11bfdd5ba77ada079a766",
+        "productId": "product_demo",
+        "planId": "plan_demo",
+        "segmentId": null,
+        "factDependencies": [],
+        "expiresAt": "2026-10-16T00:00:20Z",
+        "requiredSinks": [
+          "rtmp_main"
+        ],
+        "answerPreparation": "SEMANTIC_STREAM"
+      }
+    },
+    "canonicalUtf8": "{\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"contractRevision\":\"durable-live-2\",\"createdAt\":\"2026-10-16T00:00:00Z\",\"idempotencyKey\":\"comment:source_demo\",\"intentId\":\"intent_comment\",\"leaseVersion\":1,\"operation\":\"EXECUTE_TURN\",\"ownerId\":\"owner_demo\",\"payload\":{\"answerPreparation\":\"SEMANTIC_STREAM\",\"expiresAt\":\"2026-10-16T00:00:20Z\",\"factDependencies\":[],\"mode\":\"COMMENT_QUESTION\",\"planId\":\"plan_demo\",\"productId\":\"product_demo\",\"requiredSinks\":[\"rtmp_main\"],\"segmentId\":null,\"text\":\"这件衣服是什么面料，有哪些尺码？\",\"textHash\":\"83266fa9eb9466b1652aa3c729fd2c31fd0e79609de11bfdd5ba77ada079a766\"},\"runEpoch\":1,\"runId\":\"run_demo\",\"schemaVersion\":\"0.5\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\",\"traceId\":\"trace_comment\",\"turnId\":\"turn_comment\",\"utteranceId\":\"utt_comment\"}",
+    "sha256": "1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c"
+  },
+  {
+    "name": "unit-1",
+    "value": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-2",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "runEpoch": 1,
+      "requestHash": "1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c",
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "sequence": 1,
+      "previousArtifactHash": null,
+      "answerText": "这款采用纯棉面料，穿着柔软舒适。",
+      "answerTextHash": "51912a595bdc92deaad2dff0fdd3a0d5e87cbb69dc27abeeff480572504f8aac",
+      "productId": "product_demo",
+      "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+      "factDependencies": [
+        {
+          "kind": "PRODUCT_DETAILS",
+          "productId": "product_demo",
+          "sourceVersion": "product_version_1",
+          "validatedAt": "2026-10-16T00:00:00Z",
+          "expiresAt": "2026-10-16T00:00:02Z",
+          "valueHash": "ef9022e8edadecad47c9f6e7c25daf3d12199e106607f9cd11ff6fdaaf7106e9"
+        }
+      ],
+      "assertionKinds": [
+        "PRODUCT_DETAILS"
+      ],
+      "semanticBoundary": "COMPLETE_SENTENCE",
+      "estimatedDurationMs": 3500,
+      "createdAt": "2026-10-16T00:00:00Z"
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"answerText\":\"这款采用纯棉面料，穿着柔软舒适。\",\"answerTextHash\":\"51912a595bdc92deaad2dff0fdd3a0d5e87cbb69dc27abeeff480572504f8aac\",\"artifactId\":\"answer_unit_1\",\"assertionKinds\":[\"PRODUCT_DETAILS\"],\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"contractRevision\":\"durable-live-2\",\"createdAt\":\"2026-10-16T00:00:00Z\",\"estimatedDurationMs\":3500,\"factDependencies\":[{\"expiresAt\":\"2026-10-16T00:00:02Z\",\"kind\":\"PRODUCT_DETAILS\",\"productId\":\"product_demo\",\"sourceVersion\":\"product_version_1\",\"validatedAt\":\"2026-10-16T00:00:00Z\",\"valueHash\":\"ef9022e8edadecad47c9f6e7c25daf3d12199e106607f9cd11ff6fdaaf7106e9\"}],\"ownerId\":\"owner_demo\",\"previousArtifactHash\":null,\"producerIncarnation\":\"runtime_demo\",\"productId\":\"product_demo\",\"productSnapshotVersion\":\"df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762\",\"requestHash\":\"1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c\",\"runEpoch\":1,\"runId\":\"run_demo\",\"schemaVersion\":\"0.5\",\"semanticBoundary\":\"COMPLETE_SENTENCE\",\"sequence\":1,\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\"}",
+    "sha256": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671"
+  },
+  {
+    "name": "unit-2",
+    "value": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-2",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "runEpoch": 1,
+      "requestHash": "1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c",
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_2",
+      "sequence": 2,
+      "previousArtifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "answerText": "可选尺码有M、L和XL。",
+      "answerTextHash": "bdc889765d50ea1920dfc02828a6b2e8c6e80707b82be66fa33f9c435033abee",
+      "productId": "product_demo",
+      "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+      "factDependencies": [
+        {
+          "kind": "SIZE_OPTIONS",
+          "productId": "product_demo",
+          "sourceVersion": "product_version_1",
+          "validatedAt": "2026-10-16T00:00:00Z",
+          "expiresAt": "2026-10-16T00:00:02Z",
+          "valueHash": "a72c9bb36512aadc3d0358f7ea4612235b466aa990ca822ece6d07dc16cdf117"
+        }
+      ],
+      "assertionKinds": [
+        "SIZE_OPTIONS"
+      ],
+      "semanticBoundary": "COMPLETE_SENTENCE",
+      "estimatedDurationMs": 3500,
+      "createdAt": "2026-10-16T00:00:00Z"
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"answerText\":\"可选尺码有M、L和XL。\",\"answerTextHash\":\"bdc889765d50ea1920dfc02828a6b2e8c6e80707b82be66fa33f9c435033abee\",\"artifactId\":\"answer_unit_2\",\"assertionKinds\":[\"SIZE_OPTIONS\"],\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"contractRevision\":\"durable-live-2\",\"createdAt\":\"2026-10-16T00:00:00Z\",\"estimatedDurationMs\":3500,\"factDependencies\":[{\"expiresAt\":\"2026-10-16T00:00:02Z\",\"kind\":\"SIZE_OPTIONS\",\"productId\":\"product_demo\",\"sourceVersion\":\"product_version_1\",\"validatedAt\":\"2026-10-16T00:00:00Z\",\"valueHash\":\"a72c9bb36512aadc3d0358f7ea4612235b466aa990ca822ece6d07dc16cdf117\"}],\"ownerId\":\"owner_demo\",\"previousArtifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"producerIncarnation\":\"runtime_demo\",\"productId\":\"product_demo\",\"productSnapshotVersion\":\"df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762\",\"requestHash\":\"1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c\",\"runEpoch\":1,\"runId\":\"run_demo\",\"schemaVersion\":\"0.5\",\"semanticBoundary\":\"COMPLETE_SENTENCE\",\"sequence\":2,\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\"}",
+    "sha256": "acd88e30e2358692fc7f2065d5feb9d05e9214b1ebf5a561783c309d1a03b5ac"
+  },
+  {
+    "name": "sealed-manifest",
+    "value": [
+      {
+        "artifactId": "answer_unit_1",
+        "sequence": 1,
+        "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671"
+      },
+      {
+        "artifactId": "answer_unit_2",
+        "sequence": 2,
+        "artifactHash": "acd88e30e2358692fc7f2065d5feb9d05e9214b1ebf5a561783c309d1a03b5ac"
+      }
+    ],
+    "canonicalUtf8": "[{\"artifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"artifactId\":\"answer_unit_1\",\"sequence\":1},{\"artifactHash\":\"acd88e30e2358692fc7f2065d5feb9d05e9214b1ebf5a561783c309d1a03b5ac\",\"artifactId\":\"answer_unit_2\",\"sequence\":2}]",
+    "sha256": "ec5d97f1aa83e0547a6bfa74971ad626a39603949929c9686693638df7b25a84"
+  },
+  {
+    "name": "unicode-controls",
+    "value": {
+      "text": "价格129.90元/件\n尺码XL、XXL\t<棉> ",
+      "count": 2
+    },
+    "canonicalUtf8": "{\"count\":2,\"text\":\"价格129.90元/件\\n尺码XL、XXL\\t<棉> \"}",
+    "sha256": "cb8ffa84cc3880f41712d2401e97fb08d66a16e02b7667237bf17f9c32efa8f0"
+  }
+]
