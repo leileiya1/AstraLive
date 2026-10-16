@@ -1,16 +1,16 @@
 {
   "conclusion": "ASTRALIVE V0.5 BLOCKED",
-  "evidenceDirectory": "docs/v0.5/evidence/agent-4/verified",
+  "evidenceDirectory": "docs/v0.5/evidence/agent-4/verified-release",
   "sourceUnchangedDuringVerification": true,
   "cleanupExitCodes": [
     0,
     0
   ],
   "commandsAllExitZero": true,
-  "sourceManifestSHA256": "1c866a6d53eacac52ef16df853cbdf4122f2f612abef2db9097d6845350053b2",
+  "sourceManifestSHA256": "f694d0389edb208b2b6b5b6365ac09f85dc14de5b746ff5a39e4358af194d2c8",
   "go": {
     "go-test.jsonl": {
-      "pass": 141,
+      "pass": 142,
       "fail": 0,
       "skip": 3,
       "skipped": [
@@ -29,7 +29,7 @@
       ]
     },
     "go-race.jsonl": {
-      "pass": 141,
+      "pass": 142,
       "fail": 0,
       "skip": 3,
       "skipped": [
@@ -77,6 +77,6 @@
     "layer": "legacy in-process aiortc, synthetic providers, no Chrome/GPU",
     "log": "local-webrtc.log"
   },
-  "testedIntegrationCodeCommit": "5652ad44a77b42e961a31d8613b631935afb3fe9",
+  "testedIntegrationCodeCommit": "597ece2840c9a56b3998739cd86a4c749588bdeb",
   "sourceManifestMatchesCommittedSource": true
 }

@@ -32,3 +32,9 @@ The existing dedicated worktree was clean, on `integration/v05-durable-live`, ex
 | C-003 | No frozen answer-prepared operation | CCR-ADL-001; COMMENT fail-closed pending approval |
 | C-004 | Agent 2 handoff references `integration/agent-2-shared.patch` | Actual tracked file is `docs/v0.5/integration/agent-2-shared.patch` |
 | C-005 | Legacy fanout drain accepts any successful sink; GPU consumption credit uses OR | Preserve legacy behavior; no durable completion inferred from these APIs |
+
+Additional resolved conflicts:
+
+- C-006: Agent 3 admits WAITING comments but Agent 2 only accepted READY. Store now persists WAITING and performs WAITING→READY→DISPATCHING in the same guarded slot/attempt transaction.
+- C-007: Agent 3 source-member cap altered legacy overflow counters. Strict source admission is now opt-in through Controller's PreserveSources=true; legacy continues its prior merge counting while the new member array stays bounded at 128. Both modes have explicit regression coverage.
+- C-008: A retained boundary from the previous epoch caused new-epoch Yield to fail after a legitimate Skip/recovery. Activation clears only that stale free-slot boundary; history remains intact. Manager accepts genuinely completed later segments after an authorized gap without advancing completedPrefix across the gap.
