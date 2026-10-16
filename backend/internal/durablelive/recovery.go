@@ -84,6 +84,9 @@ func (s *Store) recoverRun(ctx context.Context, p Principal, id string) error {
 		return e
 	}
 	if expired {
+		if _, e = tx.Exec(ctx, `UPDATE dl05_run_terms SET phase='SEALED',sealed_at=COALESCE(sealed_at,clock_timestamp()) WHERE run_id=$1 AND run_epoch=$2 AND phase<>'SEALED'`, id, num(r, "runEpoch")); e != nil {
+			return e
+		}
 		_, e = tx.Exec(ctx, `UPDATE dl05_run_leases SET phase='SEALED' WHERE run_id=$1 AND phase<>'SEALED'`, id)
 		if e != nil {
 			return e

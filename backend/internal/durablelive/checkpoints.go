@@ -110,8 +110,14 @@ func (s *Store) checkpoint(ctx context.Context, tx pgx.Tx, p Principal, r, q Obj
 		if q["expectedRevision"] != nil {
 			return nil, fault("INVALID_ARGUMENT")
 		}
-	} else if e = revision(r, q); e != nil {
-		return nil, e
+	} else {
+		if e = revision(r, q); e != nil {
+			return nil, e
+		}
+		state := str(cp, "state")
+		if (state != "COMPLETED" && state != "UNKNOWN" && state != "INTERRUPTED") || str(cp, "producerIncarnation") != p.InstanceID {
+			return nil, fault("FORBIDDEN")
+		}
 	}
 	expectedKind := map[string]string{"PLANNED": "PLAN_COMMIT", "DISPATCHED": "SEND_STARTED", "RUNTIME_ACCEPTED": "INBOX_COMMIT", "PLAYING": "SINK_ADMITTED", "LOCAL_MEDIA_DRAINED": "ALL_REQUIRED_DRAIN", "COMPLETED": "BUSINESS_COMMIT", "INTERRUPTED": "FENCE_BARRIER", "UNKNOWN": "KNOWLEDGE_GAP"}
 	ev := obj(cp, "evidence")
@@ -290,6 +296,16 @@ func (s *Store) projectPending(ctx context.Context, tx pgx.Tx, p Principal, r, a
 func projectCheckpoint(ctx context.Context, tx pgx.Tx, r, a, cp Object) error {
 	state := str(cp, "state")
 	ev := obj(cp, "evidence")
+	if str(a, "lastCheckpoint") == "UNKNOWN" && state != "UNKNOWN" {
+		if _, e := tx.Exec(ctx, `UPDATE dl05_outbox SET status='RECONCILING' WHERE command_id=$1 AND status='UNKNOWN'`, a["commandId"]); e != nil {
+			return e
+		}
+		if state == "PLAYING" || state == "LOCAL_MEDIA_DRAINED" {
+			if _, e := tx.Exec(ctx, `UPDATE dl05_runtime_inbox SET status='STARTED',revision=revision+1 WHERE command_id=$1 AND status='UNKNOWN' AND started_at IS NOT NULL AND executor_sealed_at IS NULL`, a["commandId"]); e != nil {
+				return e
+			}
+		}
+	}
 	_, e := tx.Exec(ctx, `UPDATE dl05_attempts SET last_checkpoint=$2,range_proof=$3,updated_at=clock_timestamp() WHERE attempt_id=$1`, a["attemptId"], state, ev)
 	if e != nil {
 		return e
@@ -406,7 +422,7 @@ func (s *Store) markUnknown(ctx context.Context, tx pgx.Tx, p Principal, r, q Ob
 	if !scopeMatches(r, a) || num(a, "runEpoch") != num(q, "runEpoch") {
 		return nil, fault("STALE_RUN_EPOCH")
 	}
-	if str(a, "lastCheckpoint") == "COMPLETED" || str(a, "lastCheckpoint") == "INTERRUPTED" {
+	if !transition("PlaybackCheckpoint", str(a, "lastCheckpoint"), "UNKNOWN") {
 		return nil, fault("STATE_CONFLICT")
 	}
 	if str(a, "lastCheckpoint") != "UNKNOWN" && str(a, "lastCheckpoint") != str(q, "lastKnownState") {

@@ -414,3 +414,10 @@ func TestPostgresLeaseKeeperDoesNotReviveStopOrExpiredOwner(t *testing.T) {
 		t.Fatal("keeper revived Stop", e)
 	}
 }
+
+func TestPostgresUnsentCannotBecomeUnknownByInventedTransition(t *testing.T) {
+	f := newFixture(t, true)
+	out := f.claim(f.turn("OPERATOR", nil, nil))
+	_, e := f.try(f.p, "MarkExecutionUnknown", Object{"runEpoch": f.epoch, "attemptId": obj(out, "attempt")["attemptId"], "reasonCode": "TEST", "lastKnownState": "PLANNED", "evidenceRef": "test", "idempotencyKey": "unknown"})
+	wantCode(t, e, "STATE_CONFLICT")
+}
