@@ -1,0 +1,12 @@
+{
+  "guardianId": "guardian-room-REGISTERED-ID",
+  "tenantId": "REGISTERED-TENANT", "ownerId": "REGISTERED-OWNER", "roomId": "REGISTERED-ROOM",
+  "dsnFile": "/run/guardian/postgres-dsn",
+  "controlTokenFile": "/run/guardian/control-token",
+  "producers": [{"producerIncarnation": "REGISTERED-PRODUCER", "tokenFile": "/run/guardian/runtime-token-verifier"}],
+  "apiURL": "http://127.0.0.1:9997", "rtmpURL": "rtmp://127.0.0.1:1935",
+  "authPort": 19999, "path": "room",
+  "stateDir": "/state", "recordingDir": "/recordings", "socketPath": "/ipc/guardian.sock",
+  "mediaMTXBinary": "/usr/local/bin/mediamtx", "mediaMTXConfig": "/etc/astralive-guardian/mediamtx.yml",
+  "media": {"width": 720, "height": 1280, "fps": 25, "sample_rate": 16000, "webrtc": false}
+}
