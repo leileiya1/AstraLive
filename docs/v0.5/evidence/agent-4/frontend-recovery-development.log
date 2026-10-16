@@ -1,0 +1,131 @@
+$ vitest run
+
+ RUN  v3.2.7 /Users/sapiece/innovationProject/AstraLive-agent-4/frontend
+
+ ✓ tests/events.test.ts (3 tests) 3ms
+ ✓ tests/api.test.ts (5 tests) 7ms
+ ✓ tests/heartbeat.test.tsx (1 test) 9ms
+ ✓ src/features/live-console/TurnManagerPanel.test.tsx (3 tests) 98ms
+stderr | src/features/live-console/DurableRecovery.test.tsx > DurableRecovery > keeps the same decision identity, revision and body after a lost ACK
+Error: [vitest] No "ApiError" export is defined on the "../../api/client" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///Users/sapiece/innovationProject/AstraLive-agent-4/frontend/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:284:17)
+    at Object.get (file:///Users/sapiece/innovationProject/AstraLive-agent-4/frontend/node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:330:16)
+    at ErrorNotice (/Users/sapiece/innovationProject/AstraLive-agent-4/frontend/src/components/feedback.tsx:4:30)
+    at Object.react_stack_bottom_frame (/Users/sapiece/innovationProject/AstraLive-agent-4/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:28571:20)
+    at renderWithHooks (/Users/sapiece/innovationProject/AstraLive-agent-4/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:8030:22)
+    at updateFunctionComponent (/Users/sapiece/innovationProject/AstraLive-agent-4/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:10569:19)
+    at beginWork (/Users/sapiece/innovationProject/AstraLive-agent-4/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:12205:18)
+    at runWithFiberInDEV (/Users/sapiece/innovationProject/AstraLive-agent-4/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:1048:13)
+    at performUnitOfWork (/Users/sapiece/innovationProject/AstraLive-agent-4/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:19176:22)
+    at workLoopSync (/Users/sapiece/innovationProject/AstraLive-agent-4/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:19004:41) {
+  codeFrame: 'vi.mock(import("../../api/client"), async (importOriginal) => {\n' +
+    '  const actual = await importOriginal()\n' +
+    '  return {\n' +
+    '    ...actual,\n' +
+    '    // your mocked methods\n' +
+    '  }\n' +
+    '})'
+}
+An error occurred in the <ErrorNotice> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+
+ ✓ tests/integration.test.tsx (2 tests) 115ms
+ ✓ tests/rooms.test.tsx (2 tests) 176ms
+ ✓ tests/interaction.test.tsx (3 tests) 161ms
+ ✓ tests/preview.test.tsx (11 tests) 244ms
+ ✓ tests/console.test.tsx (5 tests) 262ms
+ ✓ tests/settings.test.tsx (8 tests) 305ms
+ ❯ src/features/live-console/DurableRecovery.test.tsx (2 tests | 1 failed) 1141ms
+   × DurableRecovery > keeps the same decision identity, revision and body after a lost ACK 1137ms
+     → Unable to find role="button" and name "提交处理决定"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+   ✓ DurableRecovery > does not expose recovery controls for a legacy Session 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/live-console/DurableRecovery.test.tsx > DurableRecovery > keeps the same decision identity, revision and body after a lost ACK
+TestingLibraryElementError: Unable to find role="button" and name "提交处理决定"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/features/live-console/DurableRecovery.test.tsx:19:9
+     17|   fireEvent.click(screen.getByRole("button", { name: "提交处理决定" }));
+     18|   await waitFor(() => expect(api.resolveDurable).toHaveBeenCalledTimes…
+     19|   await waitFor(() => expect(screen.getByRole("button", { name: "提交处理决…
+       |         ^
+     20|   fireEvent.click(screen.getByRole("button", { name: "提交处理决定" }));
+     21|   await screen.findByText("决定已记录，未授权新的口播。");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯⎯ Uncaught Exception ⎯⎯⎯⎯⎯
+Error: [vitest] No "ApiError" export is defined on the "../../api/client" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("../../api/client"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ VitestMocker.createError node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:284:17
+ ❯ Object.get node_modules/vitest/dist/chunks/execute.B7h3T_Hc.js:330:16
+ ❯ ErrorNotice src/components/feedback.tsx:4:30
+
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:28571:20
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom-client.development.js:8030:22
+ ❯ updateFunctionComponent node_modules/react-dom/cjs/react-dom-client.development.js:10569:19
+ ❯ beginWork node_modules/react-dom/cjs/react-dom-client.development.js:12205:18
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:1048:13
+ ❯ performUnitOfWork node_modules/react-dom/cjs/react-dom-client.development.js:19176:22
+ ❯ workLoopSync node_modules/react-dom/cjs/react-dom-client.development.js:19004:41
+
+This error originated in "src/features/live-console/DurableRecovery.test.tsx" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "keeps the same decision identity, revision and body after a lost ACK". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  1 failed | 10 passed (11)
+      Tests  1 failed | 44 passed (45)
+     Errors  1 error
+   Start at  09:21:37
+   Duration  1.80s (transform 514ms, setup 963ms, collect 1.40s, tests 2.52s, environment 3.06s, prepare 479ms)
+
+error: script "test" exited with code 1

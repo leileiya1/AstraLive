@@ -33,3 +33,7 @@ The Go skips are the subprocess helper (exercised by parent crash tests), option
 Local environment: Go 1.27.2 darwin/arm64, Python 3.12.13, PostgreSQL 17.11, Redis 8.10.2, Bun 1.3.14. Go test elapsed 14.446s (child user/system CPU 5.437/2.311s), race elapsed 39.315s (13.307/2.915s). Cumulative child peak RSS across the complete runner, including compile/frontend build, was 494.48 MiB. Resource measurements are local child CPU and cumulative peak RSS, not GPU usage or a steady-state production leak/soak test. Real GPU memory/utilization and real-media samples are NOT TESTED.
 
 No shared Runtime/Worker/DB/Redis or live room was killed, no cloud GPU started and no PR was merged into main. Refer to RELEASE-GATES.md for the 15-item status matrix and the separate acceptance reports for exact limitations.
+
+## Git delivery
+
+Tested integration code commit: `5652ad44a77b42e961a31d8613b631935afb3fe9`. The 360-entry verification manifest matches this commit byte for byte. Original PR #6 and PR #5 delivery SHAs remain ancestors through ordered merge commits. The subsequent delivery metadata commit only records reports and raw logs. PR URL is recorded in the final handoff update.

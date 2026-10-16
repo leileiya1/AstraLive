@@ -26,4 +26,4 @@ The supplied interpreter path is the test environment used here; another host mu
 
 Approve and implement CCR with coordinated contract upgrade and additive answer-fact artifact migration. Build/verify isolated Guardian credential/socket/FFmpeg/WebRTC ownership. Implement trusted principal registration plus complete formal Session/Binding/Worker lifecycle, correct real ingress mapping and production SCRIPT/COMMENT executors with real drain observations. Wire Deployment.Run/Controller only after those gates. Run the full production crash matrix, real GPU/Chrome/RTMP and latency/mixed load. No production credentials or GPU access were used in this integration.
 
-Source/evidence commits, PR URL and final verification summary will be recorded in INTEGRATION-REPORT.md and the PR. Main is not changed by this handoff.
+Tested integration code commit: `5652ad44a77b42e961a31d8613b631935afb3fe9`; its 360 source-file hashes match verified/source-manifest.json. The verification summary records that match. Final evidence/metadata SHA and PR URL are in the PR and final delivery. Main is not changed by this handoff.
