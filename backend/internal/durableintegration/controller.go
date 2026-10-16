@@ -36,6 +36,7 @@ func NewController(ctx context.Context, store *durablelive.Store, p durablelive.
 	if store == nil || p.Role != "CONTROL" || store.Facts == nil {
 		return nil, errors.New("DEPENDENCY_UNAVAILABLE")
 	}
+	cfg.PreserveSources = true
 	a := &Adapter{Store: store, Principal: p}
 	scope := turnmanager.Scope{TenantID: p.TenantID, OwnerID: p.OwnerID, RunID: runID}
 	tc := turnmanager.DefaultConfig()

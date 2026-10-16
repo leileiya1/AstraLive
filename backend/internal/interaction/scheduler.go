@@ -25,6 +25,7 @@ const (
 
 type Config struct {
 	AllowPriorityPreemption                              bool
+	PreserveSources                                      bool // opt-in durable admission; legacy merge counters stay unchanged
 	Capacity                                             int
 	TTL, MergeWindow, UserWindow, Interval, PollInterval time.Duration
 	UserLimit, GlobalLimit, CacheCapacity                int
@@ -355,11 +356,14 @@ func (s *Scheduler) Receive(ctx context.Context, e platform.Event) error {
 	for _, c := range s.queue {
 		if c.selection.Topic == topic && now.Sub(c.selection.Event.ReceivedAt) < s.config.MergeWindow {
 			if len(c.selection.Members) >= 128 {
-				s.counters.Dropped++
-				outcomes.WithLabelValues("dropped").Inc()
-				return nil
+				if s.config.PreserveSources {
+					s.counters.Dropped++
+					outcomes.WithLabelValues("dropped").Inc()
+					return nil
+				}
+			} else {
+				c.selection.Members = append(c.selection.Members, e)
 			}
-			c.selection.Members = append(c.selection.Members, e)
 			if len(c.users) < 128 {
 				c.users[e.UserExternalID] = true
 			}

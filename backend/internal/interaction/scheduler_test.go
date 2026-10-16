@@ -251,3 +251,27 @@ func TestObservationUsesLocalClockAndDispatchAcknowledgement(t *testing.T) {
 		t.Fatalf("invalid local observation: %+v", v.Observation)
 	}
 }
+
+func TestDurableSourceCapPreservesLegacyMergeCounters(t *testing.T) {
+	for _, durable := range []bool{false, true} {
+		t.Run(fmt.Sprint(durable), func(t *testing.T) {
+			s, _, _, _ := fixture(t)
+			s.config.GlobalLimit = 1000
+			s.config.PreserveSources = durable
+			for i := 0; i < 160; i++ {
+				receive(t, s, event(fmt.Sprint(i), fmt.Sprint(i), "有 XL 码吗？"))
+			}
+			snapshot := s.Snapshot()
+			if len(s.queue) != 1 || len(s.queue[0].selection.Members) != 128 {
+				t.Fatal("source memory must stay bounded", snapshot)
+			}
+			merged, dropped := 159, 0
+			if durable {
+				merged, dropped = 127, 32
+			}
+			if snapshot.Counters.Merged != merged || snapshot.Counters.Dropped != dropped {
+				t.Fatal("mode changed merge admission", durable, snapshot)
+			}
+		})
+	}
+}
