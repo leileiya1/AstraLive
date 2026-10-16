@@ -394,3 +394,23 @@ func TestPostgresRoleAuthenticationAndBodyScope(t *testing.T) {
 		t.Fatal("body escalated owner scope", w.Code)
 	}
 }
+
+func TestPostgresLeaseKeeperDoesNotReviveStopOrExpiredOwner(t *testing.T) {
+	f := newFixture(t, true)
+	keeper := LeaseKeeper{f.s, f.p}
+	if e := keeper.Tick(f.ctx); e != nil {
+		t.Fatal(e)
+	}
+	var v int64
+	if e := f.s.DB.QueryRow(f.ctx, `SELECT lease_version FROM dl05_run_leases WHERE run_id=$1`, f.runID).Scan(&v); e != nil || v != 2 {
+		t.Fatal("keeper did not renew", e)
+	}
+	f.call(f.p, "StopBroadcastRun", Object{"idempotencyKey": "stop", "decisionId": freshID("decision"), "reasonCode": "STOP"})
+	if e := keeper.Tick(f.ctx); e != nil {
+		t.Fatal(e)
+	}
+	var phase string
+	if e := f.s.DB.QueryRow(f.ctx, `SELECT phase FROM dl05_run_leases WHERE run_id=$1`, f.runID).Scan(&phase); e != nil || phase != "SEALED" {
+		t.Fatal("keeper revived Stop", e)
+	}
+}

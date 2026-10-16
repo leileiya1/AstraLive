@@ -38,6 +38,7 @@ func (d *Deployment) Run(ctx context.Context) error {
 		seen[p.TenantID+"/"+p.OwnerID+"/"+p.InstanceID] = true
 		group.Go(func() error { return (&Dispatcher{d.Store, p, d.Sender, 16}).Run(ctx, 250*time.Millisecond) })
 		group.Go(func() error { return (&Coordinator{d.Store, p, 32}).Run(ctx, time.Second) })
+		group.Go(func() error { return (&LeaseKeeper{d.Store, p}).Run(ctx) })
 	}
 	return group.Wait()
 }

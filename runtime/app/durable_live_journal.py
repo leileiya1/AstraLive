@@ -253,6 +253,7 @@ class ExecutionInbox:
         self.guardian_id, self.readiness, self.capacity = guardian_id, readiness, capacity
         self._lock = asyncio.Lock()
         self._receipts, self._commands, self._tasks = {}, {}, {}
+        self.last_errors = {}
         self._closed = False
 
     async def accept(self, command):
@@ -322,10 +323,13 @@ class ExecutionInbox:
             permit.check()  # never execute a delayed START response
             renew = asyncio.create_task(self._renew(command))
             await self.executor(command, self.gate)
-        except (JournalError, asyncio.CancelledError):
+        except JournalError as exc:
+            self.last_errors[command["commandId"]] = exc.code
             await self.gate.revoke()
-            # SQL STARTED is intentionally retained. Recovery decides UNKNOWN.
-        except Exception:
+        except asyncio.CancelledError:
+            await self.gate.revoke()
+        except Exception as exc:
+            self.last_errors[command["commandId"]] = type(exc).__name__
             await self.gate.revoke()
         finally:
             if renew:

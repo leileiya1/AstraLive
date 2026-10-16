@@ -112,6 +112,11 @@ func waitPath(t *testing.T, path string, timeout time.Duration) {
 		}
 		time.Sleep(20 * time.Millisecond)
 	}
+	for _, file := range []string{"runtime.log", "config.json.backend.log"} {
+		if b, e := os.ReadFile(filepath.Join(filepath.Dir(path), file)); e == nil {
+			t.Logf("owned %s: %s", file, b)
+		}
+	}
 	t.Fatalf("timeout waiting for %s", filepath.Base(path))
 }
 func startOwned(t *testing.T, cmd *exec.Cmd, logPath string) {

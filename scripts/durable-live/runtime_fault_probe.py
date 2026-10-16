@@ -73,7 +73,11 @@ async def main():
         (directory / "runtime-url").write_text("http://127.0.0.1:" + str(sock.getsockname()[1]))
     else:
         await inbox.accept(cmd)
+    reported = False
     while not (directory / "finish").exists():
+        if inbox.last_errors and not reported:
+            print("executor failure codes:", list(inbox.last_errors.values()), flush=True)
+            reported = True
         if (directory / "duplicate").exists() and not (directory / "duplicate-result").exists():
             response = await inbox.accept(cmd)
             (directory / "duplicate-result").write_text(response["state"])
