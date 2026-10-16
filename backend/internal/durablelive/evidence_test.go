@@ -429,3 +429,21 @@ func TestPostgresSemanticTurnConflictIsNotRetryableDependencyFailure(t *testing.
 	_, e := f.try(f.p, "AdmitTurn", Object{"idempotencyKey": "another-request", "turn": turn})
 	wantCode(t, e, "COMMAND_CONFLICT")
 }
+
+func TestPostgresBoundedRecoveryDoesNotStarveLaterRooms(t *testing.T) {
+	f := newFixture(t, false)
+	room2 := freshID("room")
+	run2 := freshID("run")
+	f.exec(`INSERT INTO live_rooms(id,name,avatar_id,voice_id,system_prompt) SELECT $1,'test',avatar_id,voice_id,'test' FROM live_rooms WHERE id=$2`, room2, f.roomID)
+	f.exec(`INSERT INTO resource_owners(kind,resource_id,tenant_id,user_id) VALUES('room',$1,$2,$3)`, room2, f.p.TenantID, f.p.OwnerID)
+	f.call(f.p, "CreateBroadcastRun", Object{"runId": run2, "roomId": room2, "idempotencyKey": "second", "recoveryPolicy": "MANUAL_ON_UNKNOWN"})
+	coordinator := Coordinator{f.s, f.p, 1}
+	for i := 0; i < 2; i++ {
+		if e := coordinator.Tick(f.ctx); e != nil {
+			t.Fatal(e)
+		}
+	}
+	if f.count(`SELECT count(*) FROM dl05_runs WHERE tenant_id=$1 AND owner_id=$2 AND last_reconciled_at IS NOT NULL`, f.p.TenantID, f.p.OwnerID) != 2 {
+		t.Fatal("bounded scan starved a room")
+	}
+}

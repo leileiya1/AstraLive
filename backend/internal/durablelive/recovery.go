@@ -33,7 +33,7 @@ func (c *Coordinator) Tick(ctx context.Context) error {
 	if n < 1 || n > 64 {
 		return fault("INVALID_ARGUMENT")
 	}
-	rows, e := c.Store.DB.Query(ctx, `SELECT run_id FROM dl05_runs WHERE tenant_id=$1 AND owner_id=$2 AND (status NOT IN ('STOPPED','FAILED') OR EXISTS(SELECT 1 FROM dl05_outbox o WHERE o.run_id=dl05_runs.run_id AND o.operation='STOP_RUN' AND o.status NOT IN ('COMPLETED','FAILED'))) ORDER BY updated_at,run_id LIMIT $3`, c.Principal.TenantID, c.Principal.OwnerID, n)
+	rows, e := c.Store.DB.Query(ctx, `SELECT run_id FROM dl05_runs WHERE tenant_id=$1 AND owner_id=$2 AND (status NOT IN ('STOPPED','FAILED') OR EXISTS(SELECT 1 FROM dl05_outbox o WHERE o.run_id=dl05_runs.run_id AND o.operation='STOP_RUN' AND o.status NOT IN ('COMPLETED','FAILED'))) ORDER BY last_reconciled_at NULLS FIRST,updated_at,run_id LIMIT $3`, c.Principal.TenantID, c.Principal.OwnerID, n)
 	if e != nil {
 		return e
 	}
@@ -252,6 +252,11 @@ func (s *Store) recoverRun(ctx context.Context, p Principal, id string) error {
 		}
 	}
 	if e = s.finishStop(ctx, tx, r); e != nil {
+		return e
+	}
+	// Rotate bounded scans in SQL, including idle/UNKNOWN runs, so a busy or
+	// manually blocked early batch cannot starve later rooms indefinitely.
+	if _, e = tx.Exec(ctx, `UPDATE dl05_runs SET last_reconciled_at=clock_timestamp() WHERE run_id=$1`, id); e != nil {
 		return e
 	}
 	return tx.Commit(ctx)

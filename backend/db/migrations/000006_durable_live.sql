@@ -429,3 +429,6 @@ ALTER TABLE dl05_attempts ADD CHECK(attempt_number<=9007199254740991);
 ALTER TABLE dl05_checkpoints ADD CHECK(producer_seq<=9007199254740991);
 ALTER TABLE dl05_plan_progress ADD CHECK(revision<=9007199254740991 AND resume_sequence<=9007199254740991);
 ALTER TABLE dl05_room_outputs ADD CHECK(output_binding_version<=9007199254740991);
+-- Internal scan cursor, deliberately absent from the frozen business wire DTO.
+ALTER TABLE dl05_runs ADD COLUMN last_reconciled_at timestamptz;
+CREATE INDEX dl05_recovery_scan ON dl05_runs(tenant_id,owner_id,last_reconciled_at,run_id) WHERE status NOT IN ('STOPPED','FAILED');
