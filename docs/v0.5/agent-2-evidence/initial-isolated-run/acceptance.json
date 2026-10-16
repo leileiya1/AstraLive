@@ -1,0 +1,93 @@
+{
+  "contractRevision": "durable-live-1",
+  "baseMain": "7fe5d24810e2df348c58dd7748e97ffbe5cff384",
+  "contractCommit": "ae28144d15afcf0e5f5ea8fa425fc42d27fc047b",
+  "ownedCluster": "/tmp/astralive-agent2-wwrrf4f_",
+  "commands": [
+    {
+      "command": [
+        "initdb",
+        "-D",
+        "/tmp/astralive-agent2-wwrrf4f_/pg",
+        "--auth=trust",
+        "--no-locale",
+        "-E",
+        "UTF8"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "initdb.txt"
+    },
+    {
+      "command": [
+        "pg_ctl",
+        "-D",
+        "/tmp/astralive-agent2-wwrrf4f_/pg",
+        "-l",
+        "/tmp/astralive-agent2-wwrrf4f_/postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 55462 -k /tmp",
+        "-w",
+        "start"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "postgres-start.txt"
+    },
+    {
+      "command": [
+        "createdb",
+        "-h",
+        "127.0.0.1",
+        "-p",
+        "55462",
+        "agent2_acceptance"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "createdb.txt"
+    },
+    {
+      "command": [
+        "redis-server",
+        "--bind",
+        "127.0.0.1",
+        "--port",
+        "56382",
+        "--dir",
+        "/tmp/astralive-agent2-wwrrf4f_/redis",
+        "--save",
+        "",
+        "--appendonly",
+        "no",
+        "--daemonize",
+        "yes",
+        "--pidfile",
+        "/tmp/astralive-agent2-wwrrf4f_/redis/redis.pid",
+        "--logfile",
+        "/tmp/astralive-agent2-wwrrf4f_/redis/redis.log"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "redis-start.txt"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "./internal/durablelive",
+        "-count=1",
+        "-v",
+        "-timeout",
+        "120s"
+      ],
+      "cwd": "backend",
+      "exitCode": 1,
+      "log": "durable-race.txt"
+    }
+  ],
+  "realGPU": "NOT TESTED",
+  "rtmpAudience": "NOT TESTED",
+  "productionGuardian": "NOT TESTED"
+}

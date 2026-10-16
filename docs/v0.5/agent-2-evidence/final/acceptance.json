@@ -1,0 +1,187 @@
+{
+  "contractRevision": "durable-live-1",
+  "baseMain": "7fe5d24810e2df348c58dd7748e97ffbe5cff384",
+  "contractCommit": "ae28144d15afcf0e5f5ea8fa425fc42d27fc047b",
+  "ownedCluster": "/tmp/astralive-agent2-yshe7ghq",
+  "commands": [
+    {
+      "command": [
+        "initdb",
+        "-D",
+        "/tmp/astralive-agent2-yshe7ghq/pg",
+        "--auth=trust",
+        "--no-locale",
+        "-E",
+        "UTF8"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "initdb.txt"
+    },
+    {
+      "command": [
+        "pg_ctl",
+        "-D",
+        "/tmp/astralive-agent2-yshe7ghq/pg",
+        "-l",
+        "/tmp/astralive-agent2-yshe7ghq/postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 55462 -k /tmp",
+        "-w",
+        "start"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "postgres-start.txt"
+    },
+    {
+      "command": [
+        "createdb",
+        "-h",
+        "127.0.0.1",
+        "-p",
+        "55462",
+        "agent2_acceptance"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "createdb.txt"
+    },
+    {
+      "command": [
+        "redis-server",
+        "--bind",
+        "127.0.0.1",
+        "--port",
+        "56382",
+        "--dir",
+        "/tmp/astralive-agent2-yshe7ghq/redis",
+        "--save",
+        "",
+        "--appendonly",
+        "no",
+        "--daemonize",
+        "yes",
+        "--pidfile",
+        "/tmp/astralive-agent2-yshe7ghq/redis/redis.pid",
+        "--logfile",
+        "/tmp/astralive-agent2-yshe7ghq/redis/redis.log"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "redis-start.txt"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "./internal/durablelive",
+        "-count=1",
+        "-v",
+        "-timeout",
+        "120s"
+      ],
+      "cwd": "backend",
+      "exitCode": 0,
+      "log": "durable-race.txt"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "./...",
+        "-count=1"
+      ],
+      "cwd": "backend",
+      "exitCode": 0,
+      "log": "go-regression.txt"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "-m",
+        "pytest",
+        "runtime/tests/test_durable_live_journal.py",
+        "-q"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "python-journal.txt"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "runtime-regression.txt"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "scripts/validate-durable-live-contracts.py"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "frozen-contracts.txt"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_contracts",
+        "tests.test_durable_live_contracts",
+        "-v"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "contract-tests.txt"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "scripts/durable-live/check_integration_patch.py"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "integration-patch.txt"
+    }
+  ],
+  "realGPU": "NOT TESTED",
+  "rtmpAudience": "NOT TESTED",
+  "productionGuardian": "NOT TESTED",
+  "sourceCommit": "26ebe57b06356cbe83b76055583014947f7c043e",
+  "postgresVersion": "postgres (PostgreSQL) 17.11 (Homebrew)",
+  "redisVersion": "Redis server v=8.10.2 sha=00000000:1 malloc=libc bits=64 build=764b3e45065a66fb",
+  "goVersion": "go version go1.27.2 darwin/arm64",
+  "pythonVersion": "Python 3.12.13",
+  "durableTests": {
+    "passed": 35,
+    "failed": 0,
+    "skipped": 1,
+    "skipReason": "subprocess helper only; invoked by parent process tests"
+  },
+  "artifactSha256": {
+    "contract-tests.txt": "9523975d23b2bf2b4bd71870ff8bf8cc67dc96f2f1b621af518fca9d3a852289",
+    "createdb.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "durable-race.txt": "afee6bc952b661c97fd6a693f7fddceaa07b4883a4661a8ef3bb0916a049cb8d",
+    "frozen-contracts.txt": "3df3dfe05a49a4d9dd91ec057a8d20733ec41a21074f8ebcaa7d23d83b7f0a78",
+    "go-regression.txt": "3358c49e806ef4faba928c1973a0761b83f33fd0695305b4a1981a733d246dd9",
+    "initdb.txt": "74e80c3ff7fd514f1900dd168dc39fdf16b8e3475f809e275b4c6791785396c0",
+    "integration-patch.txt": "1efd78c81cfaac64eb23296fbf90666c5c9e9ec0a5cc7478a3adb82335f12efa",
+    "postgres-start.txt": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "python-journal.txt": "b4cf5fa27b26e4dc5f5cb23a53f424e67ce09d580ef46740ff53639acac198c3",
+    "redis-start.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runtime-regression.txt": "93c3b1b92bb8cd011a035538232b1878a8b97ef6374fa1c2ec0b39128bd0c773"
+  }
+}
