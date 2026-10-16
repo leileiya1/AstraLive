@@ -1,6 +1,6 @@
 # Agent 4 handoff
 
-Final conclusion: **ASTRALIVE V0.5 BLOCKED**. Integration branch: `integration/v05-durable-live`. Do not merge/enable as accepted v0.5.
+Final conclusion: **ASTRALIVE V0.5 BLOCKED**. Integration branch: `integration/v05-durable-live`. Draft PR: https://github.com/leileiya1/AstraLive/pull/8. Do not merge/enable as accepted v0.5.
 
 Read INTEGRATION-REPORT.md, RELEASE-GATES.md and CONTRACT-CHANGE-REPORT.md first. CCR-ADL-001 is submitted to Agent 1/affected owners at https://github.com/leileiya1/AstraLive/issues/7; pending explicit ACK, keep durable-live-1 unchanged and COMMENT fail-closed.
 
@@ -26,4 +26,4 @@ The supplied interpreter path is the test environment used here; another host mu
 
 Approve and implement CCR with coordinated contract upgrade and additive answer-fact artifact migration. Build/verify isolated Guardian credential/socket/FFmpeg/WebRTC ownership. Implement trusted principal registration plus complete formal Session/Binding/Worker lifecycle, correct real ingress mapping and production SCRIPT/COMMENT executors with real drain observations. Wire Deployment.Run/Controller only after those gates. Run the full production crash matrix, real GPU/Chrome/RTMP and latency/mixed load. No production credentials or GPU access were used in this integration.
 
-Tested integration code commit: `597ece2840c9a56b3998739cd86a4c749588bdeb`; its 360 source-file hashes match verified-release/source-manifest.json. The verification summary records that match. Final evidence/metadata SHA and PR URL are in the PR and final delivery. Main is not changed by this handoff.
+Tested integration code commit: `597ece2840c9a56b3998739cd86a4c749588bdeb`; its 360 source-file hashes match verified-release/source-manifest.json. The verification summary records that match. Verified-release evidence commit: `ea6d53ef9e66615d0d3dad8ad75b3bad6f85734a`. Final branch HEAD is delivered separately and is visible on Draft PR #8. Main is not changed by this handoff.

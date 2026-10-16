@@ -36,4 +36,4 @@ No shared Runtime/Worker/DB/Redis or live room was killed, no cloud GPU started 
 
 ## Git delivery
 
-Tested integration code commit: `597ece2840c9a56b3998739cd86a4c749588bdeb`. The 360-entry verification manifest matches this commit byte for byte. Original PR #6 and PR #5 delivery SHAs remain ancestors through ordered merge commits. The subsequent delivery metadata commit only records reports and raw logs. PR URL is recorded in the final handoff update.
+Tested integration code commit: `597ece2840c9a56b3998739cd86a4c749588bdeb`. The 360-entry verification manifest matches this commit byte for byte. Original PR #6 and PR #5 delivery SHAs remain ancestors through ordered merge commits. The subsequent delivery metadata commit only records reports and raw logs. Verified-release evidence commit: `ea6d53ef9e66615d0d3dad8ad75b3bad6f85734a`. Draft integration PR: https://github.com/leileiya1/AstraLive/pull/8. No auto-merge is configured or performed.
