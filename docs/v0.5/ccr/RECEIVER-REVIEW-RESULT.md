@@ -1,5 +1,7 @@
 # Receiver-1 contract repair result
 
+Historical8bca277/607c receiver-interface report. Agent4 and Agent3 subsequently ACKed that exact pin; Agent2 then blocked its Stop A/B/C model defects. The [current Stop repair result](STOP-REPAIR-RESULT.md) supersedes this report for current status/digest.
+
 **CCR BLOCKED — final Agent4 interface ACK pending.** Agent4's [DIRECTION ACCEPTED](https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227939254) permits this candidate freeze and does not approve implementation. The [minimal direction request](https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227780199) was posted before final normative submission. This repair targets only the [round2 Receiver gap](https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227620414).
 
 Normative digest: `607c0dd00755556bb2b6daec75f19fda41642fd6bac7472523ca3c048118b81b`, covering21 files in [manifest](../../../contracts/v0.5/durable-live-2/manifest.json). Prior candidate `283f3b4578e8d8c98357ffb38301c959e5664509` / `54d5d5e2fa4d1c135d186c1031f68e657f03c332e2473c61c6527be23d8bef57` remains the historical Agent2/3 ACK pin, not approval of these changed bytes.

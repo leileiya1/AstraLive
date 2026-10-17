@@ -666,7 +666,7 @@
         {
           "fromState": "CONSUMED",
           "toState": "UNKNOWN",
-          "guard": "ACK_OR_PROCESS_KNOWLEDGE_LOST"
+          "guard": "COMMITTED_LATCH_ACK_TRUNCATED_BY_LOCAL_STOP_OR_OTHER_ACK_PROCESS_KNOWLEDGE_LOSS"
         },
         {
           "fromState": "CONSUMED",
@@ -698,17 +698,17 @@
         {
           "fromState": "FENCED",
           "toState": "STAGED_CLOSED",
-          "guard": "TRUSTED_CLOSED_INSTALL_AND_STAGE"
+          "guard": "FRESH_TRUSTED_CLOSED_INSTALL_STAGE_NO_RUN_TOMBSTONE_NO_OLD_REGISTRATION_REARM"
         },
         {
           "fromState": "STAGED_CLOSED",
           "toState": "ACTIVE_UNIT",
-          "guard": "FRESH_BACKEND_LATCH_AND_LOCAL_FSYNC_NO_STOP"
+          "guard": "FRESH_BACKEND_LATCH_FSYNC_FINAL_PROOF_AND_STOP_GATE_ACK_ATOMIC_NO_TOMBSTONE"
         },
         {
           "fromState": "ACTIVE_UNIT",
           "toState": "STAGED_CLOSED",
-          "guard": "TRUSTED_ALL_REQUIRED_UNIT_DRAIN_KEEP_CLOCKS"
+          "guard": "TRUSTED_CURRENT_UNIT_DRAIN_FINAL_STOP_GATE_CLOSE_SLOT_INCREMENT_BARRIER_NO_RUN_STOP"
         },
         {
           "fromState": "STAGED_CLOSED",
@@ -760,5 +760,26 @@
     "renewalMayGrantStart": false,
     "bindingImmutable": true,
     "unknownMayResume": false
+  },
+  "receiverStopRule": {
+    "localRunTombstoneIrreversible": true,
+    "stopDependsOnBackendCommit": false,
+    "finalCheckAndCommitSameLocalGate": true,
+    "externalWaitUnderLocalGate": false,
+    "barrierIncrementsOn": [
+      "STAGE",
+      "STOP",
+      "FINISH",
+      "GUARDIAN_RESTART"
+    ],
+    "rejectedAdmissionStates": [
+      "FENCED",
+      "CLOSING",
+      "UNKNOWN"
+    ],
+    "consumeWinnerState": "STAGED_CLOSED",
+    "ongoingExecutionState": "ACTIVE_UNIT",
+    "truncatedConsumedAck": "KEEP_BACKEND_LATCH_AND_UNKNOWN_LOCAL_AUDIT_NO_REARM",
+    "normalFinishIsRunStop": false
   }
 }

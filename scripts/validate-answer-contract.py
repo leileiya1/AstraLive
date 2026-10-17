@@ -145,7 +145,9 @@ def check_receiver():
     import base64
     protocol=load('receiver-protocol.json');ops={x['operationId']:x for x in protocol['operations']}
     assert len(ops)==13 and protocol['productionEnabled'] is False
-    assert protocol['approvalStatus']=='DIRECTION_ACCEPTED_PENDING_FINAL_AGENT4_ACK'
+    assert protocol['approvalStatus']=='PENDING_AGENT2_STOP_REPAIR_FINAL_ACK'
+    sync=protocol['localSynchronization']
+    assert sync['trace']=='examples/receiver-stop-trace.json'
     assert len({(o['target'],o['path']) for o in ops.values()})==len(ops)
     assert all(o['path'].startswith(('/internal/v0.5/durable-live-2/receiver/','/guardian/durable-live-2/','/registrar/receiver-1/')) for o in ops.values())
     def closure(name,seen):
@@ -200,9 +202,51 @@ def check_receiver():
     assert len(latched)==2 and names.count('JournalStart')==1
     return dict(privateOperations=len(ops),reachableDefinitions=len(reachable),messages=len(messages))
 
+def check_receiver_stop_trace():
+    """Verify typed Stop examples and the local commit order, not live sinks."""
+    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+    import base64
+    trace=load('examples/receiver-stop-trace.json')
+    assert trace['contractRevision']==REVISION and trace['receiverRevision']=='receiver-1'
+    expected={'A_LOCAL_STOP_BEFORE_BACKEND':('ACTIVE',0),
+              'B_STOP_DURING_MEDIA_QUERY':('REVOKED',1),
+              'C_STOP_DURING_LAST_CONSUME_QUERY':('REVOKED',1)}
+    assert {s['scenario'] for s in trace['scenarios']}==expected.keys() and len(trace['scenarios'])==3
+    for row in trace['scenarios']:
+        assert row['initialAuthority']==dict(registered=False,generationId=None,guardianIncarnation=None)
+        stage,register=row['bootstrapMessages']
+        assert stage['operationId']=='ReceiverStage' and register['operationId']=='RegisterReceiverBootstrap'
+        for message in (stage,register):
+            for side in ('request','response'):validate(message['operationId']+side.title(),message[side])
+        registration=register['response']['registration'];binding=registration['binding'];receipt=stage['response']['receipt']
+        assert binding==stage['request']['binding'] and digest(binding)==registration['registrationHash']==receipt['bindingHash']
+        assert stage['request']['challenge']==receipt['challenge']
+        for key,value in row['physicalInstallation'].items():
+            if key in binding:assert binding[key]==value
+        public=Ed25519PublicKey.from_public_bytes(base64.b64decode(row['trustedPublicKeys'][receipt['keyId']]))
+        public.verify(base64.b64decode(receipt['signature']),canonical({k:v for k,v in receipt.items() if k!='signature'}))
+        stop,denied=row['operations']
+        assert stop['operationId']=='ReceiverStop' and stop['request']['runId']==binding['runId']
+        for side in ('request','response'):validate('ReceiverStop'+side.title(),stop[side])
+        assert stop['response']['state']=='CLOSED_FENCED'
+        validate(denied['operationId']+'Request',denied['request']);validate('ReceiverErrorResponse',denied['error'])
+        assert 'response' not in denied and denied['request']['requestId']==denied['error']['requestId']
+        assert denied['error']['code'] in ('RUN_STOPPED','CONSUMPTION_UNKNOWN')
+        commits=row['linearized'];stop_at=next(i for i,e in enumerate(commits) if e['kind']=='STOP')
+        assert not any(e['kind'] in ('MEDIA','RENEW','FINISH','CONSUME_ACK') for e in commits[stop_at+1:])
+        assert [e['barrierRevision'] for e in commits]==sorted(e['barrierRevision'] for e in commits)
+        out=row['outcome'];state,count=expected[row['scenario']]
+        assert out['barrierState']=='FENCED' and out['backendRegistrationState']==state and out['latchCount']==count
+        assert out['ttsBefore']==out['ttsAfter'] and out['acceptedMediaBefore']==out['acceptedMediaAfter']==0
+        assert out['localAuditStates']==(['UNKNOWN'] if count else [])
+        if row['scenario'].startswith('A'):assert out['ttsAfter']==0 and denied['error']['code']=='RUN_STOPPED'
+        if row['scenario'].startswith('C'):assert out['ttsAfter']==0 and not any(e['kind']=='CONSUME_ACK' for e in commits)
+    return len(trace['scenarios'])
+
 def check_all():
     Draft202012Validator.check_schema(SCHEMA)
     receiver=check_receiver()
+    stop_scenarios=check_receiver_stop_trace()
     ops={o['operationId']:o for o in PROTOCOL['operations']}
     assert len(ops)==len(PROTOCOL['operations'])==25
     assert PROTOCOL['approvalStatus']=='PENDING_OWNER_ACK' and PROTOCOL['productionEnabled'] is False
@@ -247,7 +291,7 @@ def check_all():
     acks=parse((ROOT/'docs/v0.5/ccr/CCR-ADL-001-ACKS.json').read_text())
     assert acks['normativeDigest']==manifest['normativeDigest']
     assert acks['status']=='CCR BLOCKED' and acks['allRequiredAcksReceived'] is False
-    return dict(definitions=len(SCHEMA['$defs']),privateOperations=receiver['privateOperations'],machines=len(load('state-machines.json')['machines']),operations=len(ops),goldenVectors=len(load('examples/hash-vectors.json')),protectedFiles=len(load('protected-files.json')['files']))
+    return dict(stopScenarios=stop_scenarios,definitions=len(SCHEMA['$defs']),privateOperations=receiver['privateOperations'],machines=len(load('state-machines.json')['machines']),operations=len(ops),goldenVectors=len(load('examples/hash-vectors.json')),protectedFiles=len(load('protected-files.json')['files']))
 
 if __name__=='__main__':
     print('PASS '+json.dumps(check_all(),sort_keys=True))

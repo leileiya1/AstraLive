@@ -1,7 +1,7 @@
 {
   "contractRevision": "durable-live-2",
   "receiverRevision": "receiver-1",
-  "approvalStatus": "DIRECTION_ACCEPTED_PENDING_FINAL_AGENT4_ACK",
+  "approvalStatus": "PENDING_AGENT2_STOP_REPAIR_FINAL_ACK",
   "productionEnabled": false,
   "schemaFile": "schema.json",
   "transport": "AF_UNIX peer-credential bound process credentials for Guardian IPC; authenticated private service transport for Backend Authority. No public/browser path. Exact revisions mandatory.",
@@ -289,7 +289,7 @@
       "requestSchema": "#/$defs/ReceiverConsumeRequest",
       "responseSchema": "#/$defs/ReceiverConsumeResponse",
       "successStatus": 200,
-      "semantics": "Independently query Backend, commit latch, fsync deny replay, recheck barrier/deadlines and ACK exact authenticated live channel. Duplicate false/null. Only first ACK can permit one TTS.",
+      "semantics": "Independently query Backend, commit latch, fsync deny replay, recheck barrier/deadlines and ACK exact authenticated live channel. Duplicate false/null. Only first ACK can permit one TTS. Locally stopped/FENCED/CLOSING/UNKNOWN runs deny; snapshot/fsync never rearm. Final fresh ACK and activation linearize under the Stop gate after last proof; consumed-but-truncated remains UNKNOWN audit.",
       "errorSchema": "#/$defs/ReceiverErrorResponse",
       "errorCodes": [
         "ACTIVE_UNIT_CONFLICT",
@@ -343,7 +343,7 @@
       "requestSchema": "#/$defs/ReceiverRenewRequest",
       "responseSchema": "#/$defs/ReceiverRenewResponse",
       "successStatus": 200,
-      "semantics": "Query fresh current authority for same consumed execution; update proof only, never invoke TTS or consume again.",
+      "semantics": "Query fresh current authority for same consumed execution; update proof only, never invoke TTS or consume again. ACTIVE_UNIT only; final Stop/barrier/identity/proof recheck and proof update share a short gate; RPC stays outside.",
       "errorSchema": "#/$defs/ReceiverErrorResponse",
       "errorCodes": [
         "ACTIVE_UNIT_CONFLICT",
@@ -451,7 +451,7 @@
       "requestSchema": "#/$defs/ReceiverMediaRequest",
       "responseSchema": "#/$defs/ReceiverMediaResponse",
       "successStatus": 200,
-      "semantics": "Require local known active execution, matching authenticated channel, current proof and continuous media identity; no Worker wire/PTS/Credit changes.",
+      "semantics": "Require local known active execution, matching authenticated channel, current proof and continuous media identity; no Worker wire/PTS/Credit changes. Final recheck and actual bounded nonblocking handoff/sequence commit share the Stop gate after RPC; no accepted result from an old snapshot.",
       "errorSchema": "#/$defs/ReceiverErrorResponse",
       "errorCodes": [
         "ACTIVE_UNIT_CONFLICT",
@@ -505,7 +505,7 @@
       "requestSchema": "#/$defs/ReceiverFinishUnitRequest",
       "responseSchema": "#/$defs/ReceiverFinishUnitResponse",
       "successStatus": 200,
-      "semantics": "Registered observer proves full continuous ranges for active unit; do not retire Attempt/Generation or reset clocks between units.",
+      "semantics": "Registered observer proves full continuous ranges for active unit; do not retire Attempt/Generation or reset clocks between units. Observer/RPC outside gate; final guarded closure increments barrier and clears only unit slot; Stop winning cannot reopen STAGED_CLOSED.",
       "errorSchema": "#/$defs/ReceiverErrorResponse",
       "errorCodes": [
         "ACTIVE_UNIT_CONFLICT",
@@ -559,7 +559,7 @@
       "requestSchema": "#/$defs/ReceiverStopRequest",
       "responseSchema": "#/$defs/ReceiverStopResponse",
       "successStatus": 200,
-      "semantics": "Persist tombstone and increment barrier before await; close real outputs. A past Run cannot close a different current Run.",
+      "semantics": "Persist tombstone and increment barrier before await; close real outputs. A past Run cannot close a different current Run. Local irreversible Run tombstone is independent of Backend Stop; serialize with final admission, never wait for external operations. Already committed latches remain consumed/UNKNOWN.",
       "errorSchema": "#/$defs/ReceiverErrorResponse",
       "errorCodes": [
         "ACTIVE_UNIT_CONFLICT",
@@ -752,5 +752,16 @@
     "ACTIVE_UNIT_CONFLICT": 409,
     "STALE_EXECUTION": 409
   },
-  "directionEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227939254"
+  "directionEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227939254",
+  "stopDirectionEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6230806802",
+  "localSynchronization": {
+    "gate": "same bounded local mutex/serial admission gate for Stop, Finish, Stage, Restart and final Consume/Renew/Media commits",
+    "capture": "guardian incarnation/barrier revision + immutable registration/Run/epoch/execution/Artifact/authenticated process/channel",
+    "externalWork": "Authority RPC/fsync/Observer/network/backpressure waits outside local gate",
+    "recheck": "after every external result and at final atomic bounded ACK enqueue/media handoff/proof update/unit closure",
+    "runStop": "irreversible local runId tombstone independent of Backend Stop; no old-registration reopen",
+    "backendLatch": "consumed latch retained; truncated ACK is UNKNOWN audit, never another true ACK",
+    "normalFinish": "increment barrier; close only execution; STAGED_CLOSED allows legitimate Unit2 after trusted Backend drain",
+    "trace": "examples/receiver-stop-trace.json"
+  }
 }

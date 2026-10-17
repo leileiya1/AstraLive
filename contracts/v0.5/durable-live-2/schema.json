@@ -6449,7 +6449,8 @@
         "expectedRegistrationRevision",
         "consumeTicket"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Exact existing wire fields. Local stopped/FENCED/CLOSING/UNKNOWN Run admission is denied before RPC; new Grant winner requires STAGED_CLOSED and final guarded commit. Runtime identity comes from peer, never JSON."
     },
     "ReceiverConsumeResponse": {
       "type": "object",
@@ -6522,7 +6523,8 @@
             }
           }
         }
-      ]
+      ],
+      "description": "A true response exists only at the first local ACK enqueue atomic with final Stop/barrier/registration/execution/channel/proof checks after all RPC/fsync work. Lost or Stop-truncated ACK is not reconstructed."
     },
     "ReceiverRenewRequest": {
       "type": "object",
@@ -6586,7 +6588,8 @@
         "observation",
         "timing"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Proof-only update for current ACTIVE_UNIT; RPC outside local gate, final identity/deadline/Stop check and update inside. Never TTS authority."
     },
     "ReceiverQueryConsumptionRequest": {
       "type": "object",
@@ -6712,7 +6715,8 @@
         "requestId",
         "accepted"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "accepted=true linearizes only with actual bounded nonblocking handoff under the final local Stop/barrier/execution/channel/proof/sequence gate, never from a stale Authority snapshot."
     },
     "ReceiverFinishUnitRequest": {
       "type": "object",
@@ -6776,7 +6780,8 @@
         "artifactHash",
         "evidence"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Trusted observer/current-proof acceptance and unit closure linearize under the Stop gate after callbacks. Increment barrier, preserve clocks, no Run tombstone; Stop winning forbids STAGED_CLOSED reopening."
     },
     "ReceiverStopRequest": {
       "type": "object",
@@ -6820,7 +6825,8 @@
         "state",
         "runId"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "CLOSED_FENCED revokes the Run locally independently of Backend Stop. Run tombstone is irreversible; Stop shares final admission gate and does not wait for RPC/fsync/Observer. Mock state is not physical fencing evidence."
     },
     "QueryReceiverConsumptionRequest": {
       "type": "object",
@@ -7042,7 +7048,8 @@
       "required": [
         "state"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "FENCED/CLOSING/UNKNOWN never reactivate an old registration. Fresh trusted stage must not erase a Run Stop; normal trusted unit Finish only returns STAGED_CLOSED with higher barrier revision."
     }
   },
   "$ref": "#/$defs/RuntimeCommand"

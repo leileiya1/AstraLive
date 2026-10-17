@@ -521,5 +521,106 @@ class ReceiverStopInterleavingTests(unittest.TestCase):
         self.assertEqual(x.b.registration['state'], 'ACTIVE')
         self.unknown_latch()
 
+
+
+    def test_thirty_two_identical_consume_requests_have_one_positive_ack(self):
+        from concurrent.futures import ThreadPoolExecutor
+        x = self.x
+        q, _ = x.ready()
+        with ThreadPoolExecutor(8) as pool:
+            acks = list(pool.map(lambda _: x.g.consume(x.r.peer, q), range(32)))
+        winners = [a for a in acks if a['consumeAuthorized']]
+        self.assertEqual(len(winners), 1)
+        self.assertEqual(len(x.b.latches), 1)
+        self.assertTrue(all(a['consumption'] is None for a in acks if not a['consumeAuthorized']))
+        self.assertTrue(x.r.accept_ack(q, winners[0]))
+        self.assert_no_new_output(1, 0)
+
+    def test_thirty_two_identical_media_ordinals_have_one_handoff(self):
+        from concurrent.futures import ThreadPoolExecutor
+        x = self.x
+        q, execution = self.start()
+        request = x.r.execution_request(execution, q['references']['permitId'], True)
+        def send(_):
+            try:
+                return x.g.media(x.r.peer, request)['accepted']
+            except ValueError as e:
+                self.assertEqual(str(e), 'BOUNDARY_CONFLICT')
+                return False
+        with ThreadPoolExecutor(8) as pool:
+            self.assertEqual(sum(pool.map(send, range(32))), 1)
+        self.assert_no_new_output(1, 1)
+
+    def test_closed_and_unknown_execution_states_deny_every_output_path(self):
+        for state in ('FENCED', 'CLOSING', 'UNKNOWN'):
+            with self.subTest(state=state):
+                self.setUp()
+                x = self.x
+                q, execution = self.start()
+                x.g.barrier_state = state
+                for action in (lambda: x.r.renew(execution, q['references']['permitId']),
+                               lambda: x.r.push_media(execution, q['references']['permitId']),
+                               lambda: x.g.finish_unit(x.r.peer, x.r.execution_request(execution))):
+                    with self.assertRaises(ValueError):
+                        action()
+                self.assert_no_new_output(1, 0)
+
+    def test_proof_expiry_at_final_handoff_rejects_media(self):
+        x = self.x
+        q, execution = self.start()
+        def expire():
+            x.j.now += 1.1
+        x.g.before_handoff = expire
+        with self.assertRaisesRegex(ValueError, 'LEASE_LOST'):
+            x.r.push_media(execution, q['references']['permitId'])
+        self.assert_no_new_output(1, 0)
+
+    def race_stop_with_ongoing_commit(self, kind):
+        from concurrent.futures import ThreadPoolExecutor
+        from threading import Barrier
+        for _ in range(12):
+            self.setUp()
+            x = self.x
+            if kind == 'FINISH':
+                q, execution, request = self.finish_ready()
+                action = lambda: x.g.finish_unit(x.r.peer, request)
+                baseline_media = 1
+            else:
+                q, execution = self.start()
+                action = lambda: x.r.renew(execution, q['references']['permitId'])
+                baseline_media = 0
+            barrier = Barrier(2)
+            def perform():
+                barrier.wait()
+                try:
+                    action()
+                    return True
+                except ValueError:
+                    return False
+            def stop():
+                barrier.wait()
+                return self.local_stop()
+            with ThreadPoolExecutor(2) as pool:
+                a, b = pool.submit(perform), pool.submit(stop)
+                accepted, stopped = a.result(timeout=2), b.result(timeout=2)
+            kinds = [e['kind'] for e in x.g.linearized]
+            # start() already installed Runtime's initial RENEW before the race.
+            race_events = kinds[kinds.index('CONSUME_ACK') + 2:]
+            if kind == 'FINISH':
+                race_events = race_events[race_events.index('MEDIA') + 1:]
+            self.assertEqual(race_events.count(kind), int(accepted))
+            if accepted:
+                self.assertLess(race_events.index(kind), race_events.index('STOP'))
+            self.assertFalse(any(k in ('RENEW', 'FINISH', 'MEDIA', 'CONSUME_ACK')
+                                 for k in race_events[race_events.index('STOP') + 1:]))
+            self.assertEqual(x.g.barrier_state, 'FENCED')
+            self.assert_no_new_output(1, baseline_media)
+
+    def test_concurrent_stop_renew_has_no_commit_after_stop(self):
+        self.race_stop_with_ongoing_commit('RENEW')
+
+    def test_concurrent_stop_finish_has_no_reopen_after_stop(self):
+        self.race_stop_with_ongoing_commit('FINISH')
+
 if __name__ == '__main__':
     unittest.main()

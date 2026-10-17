@@ -3,6 +3,14 @@
 // Existing answer documents use RawMessage here; generate full production DTOs
 // from the same schema only after approval. Principal comes from authenticated
 // Context, never from caller JSON. Do not log or persist plaintext tickets.
+// Receiver local Stop ordering is part of these interfaces: all final Consume
+// ACK/renew/media/finish commits share a bounded gate with Stop/Finish/Restart.
+// RPC, fsync, Observer and transport/backpressure waits occur outside that gate.
+// Recheck captured barrier + full registration/execution/channel/proof after
+// each external result and atomically with actual nonblocking handoff/ACK.
+// Run Stop tombstones cannot be erased by stage or an Authority snapshot.
+// Consumed-but-truncated ACK retains Backend latch + UNKNOWN local audit;
+// ordinary unit Finish increments barrier without a Run Stop, allowing Unit2.
 package receivercontract
 
 import (

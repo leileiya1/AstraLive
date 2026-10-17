@@ -1,6 +1,8 @@
 # Stop repair preview — not a frozen candidate
 
-**CCR BLOCKED.** This is a review draft, not a normative freeze. Agent2's required targeted feedback has not yet arrived. The current WIP changes intentionally do not match the old607c manifest; no final99-test/validator pass or new normative digest is claimed. Only after concrete feedback will the final specification, manifest, ACK ledger and full regression be published.
+**Historical WIP preview.** This text records what was submitted for targeted review before final freeze. Agent2 later [accepted the direction](https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6230806802). See [final repair result](STOP-REPAIR-RESULT.md) for the new candidate digest, full validation and pending final ACKs.
+
+Original WIP status at publication: **CCR BLOCKED.** This is a review draft, not a normative freeze. Agent2's required targeted feedback has not yet arrived. The current WIP changes intentionally do not match the old607c manifest; no final99-test/validator pass or new normative digest is claimed. Only after concrete feedback will the final specification, manifest, ACK ledger and full regression be published.
 
 - Blocking report: https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6230628836
 - Minimal repair pre-review: https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6230750761

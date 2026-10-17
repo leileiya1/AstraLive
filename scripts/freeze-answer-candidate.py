@@ -4,7 +4,7 @@ import hashlib,json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 BASE=ROOT/'contracts/v0.5/durable-live-2'
-paths=[BASE/n for n in ['schema.json','protocol.json','state-machines.json','examples/protocol.json','examples/objects.json','examples/comment-start.json','examples/hash-vectors.json','examples/go/canonical.go','examples/python/canonical.py','examples/python/reference.py','examples/go/lifecycle.go','examples/grant-renewal-trace.json','receiver-protocol.json','examples/receiver-protocol.json','examples/receiver-trace.json','examples/python/receiver.py','examples/go/receiver/interfaces.go']]
+paths=[BASE/n for n in ['schema.json','protocol.json','state-machines.json','examples/protocol.json','examples/objects.json','examples/comment-start.json','examples/hash-vectors.json','examples/go/canonical.go','examples/python/canonical.py','examples/python/reference.py','examples/go/lifecycle.go','examples/grant-renewal-trace.json','receiver-protocol.json','examples/receiver-protocol.json','examples/receiver-trace.json','examples/receiver-stop-trace.json','examples/python/receiver.py','examples/go/receiver/interfaces.go']]
 paths += [ROOT/'docs/v0.5/ccr'/n for n in ['CCR-ADL-001.md','ANSWER-PREPARATION-CONTRACT.md','CCR-ADL-001-HANDOFF.md','RECEIVER-BOOTSTRAP-CONTRACT.md']]
 files={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 digest=hashlib.sha256(json.dumps(files,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
