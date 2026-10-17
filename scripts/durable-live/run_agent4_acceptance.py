@@ -46,7 +46,7 @@ env.update(DURABLE_LIVE_TEST_DATABASE_URL='postgres://127.0.0.1:55462/agent2_age
            DURABLE_LIVE_ISOLATED_PGDATA=str(pg), DURABLE_LIVE_ISOLATED_REDISDIR=str(redis_dir),
            PYTHONPATH=str(root / 'runtime') + ':' + str(root / 'runtime/tests'), NO_COLOR='1')
 def source_manifest():
-    paths = subprocess.check_output(['git', 'ls-files', '-co', '--exclude-standard', '--', 'backend', 'runtime', 'frontend', 'contracts', 'tests', 'scripts'], cwd=root).decode().splitlines()
+    paths = subprocess.check_output(['git', 'ls-files', '-co', '--exclude-standard', '--', 'backend', 'runtime', 'frontend', 'contracts', 'tests', 'scripts', 'output_guardian', 'infra/guardian'], cwd=root).decode().splitlines()
     return {name: hashlib.sha256((root/name).read_bytes()).hexdigest() for name in sorted(set(paths)) if (root/name).is_file()}
 
 initial_manifest = source_manifest()

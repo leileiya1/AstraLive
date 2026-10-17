@@ -12,7 +12,7 @@ Overall **BLOCKED** for the production Session/media lifecycle. Component Postgr
 | PostgreSQL pause/recovery | TestPostgresIsolatedServerOutage: marker-owned cluster; connection-drop probe | Component test only |
 | Two Coordinators / owner competition | Real PG lease/CAS/SKIP LOCKED tests | Physical publishers BLOCKED |
 | Late old Epoch | SQL rejection/history + Python local Gate | Real output BLOCKED |
-| Guardian restart | No deployed independent Guardian | BLOCKED |
+| Guardian restart | PR10 local component: three actual SIGKILL/restarts passed after documented zombie-group cleanup fix; no production deployment | BLOCKED |
 | Output Permit expires | Real Python timer/Gate + Go/Python file-sink crash probe | Real WebRTC/RTMP BLOCKED |
 | Stop concurrent with Recovery | Real SQL Stop tombstone race; old lifecycle-event isolation | Physical mute BLOCKED |
 | Product switch vs old work | SQL context checks; authoritative product version changes deny claim/start | Actual live product switch NOT TESTED |
@@ -27,3 +27,5 @@ Go Backend, Python Runtime, PostgreSQL and Redis probes kill/stop only owned tes
 The new SQL-backed completion coordinator only commits a current-epoch, currently owned slot whose LOCAL_MEDIA_DRAINED chain is already applied and whose run is still LIVE/not stopped. It never completes PLAYING/UNKNOWN or accepts a 202 as playback. Older Session lifecycle events are observation-only in Service.ApplyEvent, including direct calls outside Redis, so SESSION_READY cannot launch legacy Start after Stop.
 
 Whole-machine boot reconciliation, actual new Provider Binding capture + physical LiveSession creation, trusted Runtime registration, guardian shutdown/stop callbacks and production sink observations remain unimplemented/unvalidated integration gates. Main installs persistent legacy-mode exclusion and authenticated manual recovery, but does not start the blocked durable deployment.
+
+2026-10-17 disabled Guardian stage adds actual dedicated local RTMP/Peer/permit/process isolation evidence (25 PASS); full production crash recovery remains BLOCKED. One first post-merge SIGKILL test failed with conservative exit74 and was diagnosed/fixed without relaxing the guard or expectation. See PR-9-10-REVIEW.md and retained raw logs.

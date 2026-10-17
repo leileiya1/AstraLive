@@ -33,3 +33,7 @@ Agent 1 must ACK the operation, fields, version/compatibility rule and START fre
 ## Agent 1 formal review
 
 The original whole-answer proposal is reviewed in [CCR-ADL-001 decision](ccr/CCR-ADL-001.md). Selected candidate: immutable complete semantic units, one command START and one-shot continuation grants, exact `durable-live-2` on isolated paths. This expands the original proposal and requires fresh Agent 2/3/4 ACKs; see [ledger](ccr/CCR-ADL-001-ACKS.json). Status **CCR BLOCKED**; active durable-live-1 and COMMENT fail-closed remain unchanged.
+
+## 2026-10-17 Agent 4 candidate review
+
+PR #9 head `4f4c95278e581bccc025323ed8534d0b2db1023e`, normative digest `aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744`, was independently verified and reviewed. **Agent 4 ACK withheld**: drain-before-next-prepare rejects valid slow LLM ordering; consumed Grant lifetime across Permit/fact renewal is underspecified. [Explicit blocking review](https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227008824). See PR-9-10-REVIEW.md for reproduction, version compatibility and tests. No PR9 merge, v2 migration/DTO/route activation or contract meaning change occurred. The initial whole-answer proposal above is historical; it does not approve the expanded incremental candidate.

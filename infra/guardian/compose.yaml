@@ -1,0 +1,45 @@
+name: astralive-output-guardian
+services:
+  # Ingest is a separate namespace-sharing container so recordings are writable
+  # only by the server. Production integration must prove this exact boundary.
+  mediamtx:
+    image: bluenviron/mediamtx:1.21.1
+    network_mode: service:guardian
+    user: '22006:22006'
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    read_only: true
+    volumes:
+      - ./mediamtx.yml:/mediamtx.yml:ro
+      - ${GUARDIAN_RECORDINGS:?set dedicated server recording directory}:/recordings:rw
+    depends_on: [guardian]
+    restart: 'no'
+  guardian:
+    build: {context: ../.., dockerfile: infra/guardian/Dockerfile}
+    # Separate-container ingest is supervised by the deployment manager; bypass
+    # the bundled single-cgroup supervisor for this arrangement.
+    entrypoint: [python, -m, output_guardian, --config, /run/guardian/config.json]
+    user: '22005:22005'
+    init: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    read_only: true
+    tmpfs: [/tmp]
+    volumes:
+      - ${GUARDIAN_CONFIG_DIR:?set protected config directory}:/run/guardian:ro
+      - ${GUARDIAN_STATE_DIR:?set dedicated guardian state}:/state:rw
+      - ${GUARDIAN_IPC_DIR:?set dedicated IPC directory}:/ipc:rw
+      - ${GUARDIAN_RECORDINGS:?set dedicated server recording directory}:/recordings:ro
+    restart: 'no'
+    # No published ingest/API/IPC ports. Only Guardian owns a network namespace.
+  runtime-isolation-probe:
+    image: python:3.12-slim
+    profiles: [acceptance]
+    network_mode: none
+    user: '22004:22004'
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    read_only: true
+    volumes:
+      - ${GUARDIAN_IPC_DIR:?set dedicated IPC directory}:/ipc:ro
+    command: [python, -c, 'import socket; s=socket.socket(); assert s.connect_ex(("127.0.0.1",1935)) != 0; print("isolated ingress")']

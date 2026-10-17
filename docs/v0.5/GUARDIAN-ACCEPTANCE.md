@@ -2,11 +2,15 @@
 
 `OUTPUT_FENCE_UNPROVEN`. Durable LIVE admission is closed in both actual production entrypoints, independent of any supplied registration object. `ASTRALIVE_DURABLE_LIVE_ENABLED` defaults to false; true is rejected before service creation. Unknown flag values reject configuration. There is no environment override that asserts fencing is proven.
 
+## 2026-10-17 disabled stage update
+
+Agent 5 PR #10 is integrated at `84738b37c2ee39cc4b8f3a1d449802171ba0a7e0`, followed by the reviewed zombie-only group cleanup fix. Final local dedicated PG/MediaMTX/CPU Guardian suite: 25 PASS. Real local retained-publisher kick, Peer closure, RTMP decoding and SIGKILL/restart are now component evidence. Linux/container/credential isolation, continuous short-segment timeline, trusted WebRTC completion, formal Session bridge and v2 artifact/grant adaptation remain BLOCKED. No production Guardian PASS or LIVE enablement follows. See [review and original failed/repaired regression](PR-9-10-REVIEW.md).
+
 ## Source inspection
 
 `runtime/app/session_binding.py:bundle_factories` creates the original BoundConsumptionMediaOutput around Runtime-owned outputs. `runtime/app/main.py` creates WebRTC and FFmpeg/RTMP providers. The process can retain direct publisher resources. `media_fanout.py:drain` accepts any successful sink; `bound_media.py` releases GPU consumption credit on WebRTC OR RTMP. These semantics are intentionally preserved. They are not all-required durable completion evidence.
 
-Agent 2's SQL lease/Room binding/short permit and OutputGate are implemented. Agent 4 adds permit-expiry barrier invalidation so an in-flight renewal cannot re-enable the expired local attempt, and bounds completed local task retention. Local expiry/epoch/generation tests are CPU evidence only. No real production Guardian has been deployed, and no actual retained publisher has been physically isolated in this task.
+Agent 2's SQL lease/Room binding/short permit and OutputGate are implemented. Agent 4 adds permit-expiry barrier invalidation so an in-flight renewal cannot re-enable the expired local attempt, and bounds completed local task retention. Local expiry/epoch/generation tests are CPU evidence only. No real production Guardian has been deployed, at the original integration baseline. The later disabled-stage local retained-publisher tests are documented above; production publisher isolation remains unproven.
 
 ## Compatibility proposal before changing credential/process ownership
 

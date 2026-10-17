@@ -38,3 +38,7 @@ Additional resolved conflicts:
 - C-006: Agent 3 admits WAITING comments but Agent 2 only accepted READY. Store now persists WAITING and performs WAITING→READY→DISPATCHING in the same guarded slot/attempt transaction.
 - C-007: Agent 3 source-member cap altered legacy overflow counters. Strict source admission is now opt-in through Controller's PreserveSources=true; legacy continues its prior merge counting while the new member array stays bounded at 128. Both modes have explicit regression coverage.
 - C-008: A retained boundary from the previous epoch caused new-epoch Yield to fail after a legitimate Skip/recovery. Activation clears only that stale free-slot boundary; history remains intact. Manager accepts genuinely completed later segments after an authorized gap without advancing completedPrefix across the gap.
+
+## 2026-10-17 follow-up
+
+Keep current worktree. Pin/review PR9 `4f4c95278e581bccc025323ed8534d0b2db1023e` and normative digest; post explicit Agent4 blocking opinion, no merge. Review/pin PR10 `84738b37c2ee39cc4b8f3a1d449802171ba0a7e0`, run pre-merge isolated tests, merge disabled, preserve original ancestor, run post-merge Guardian/full regression and preserve failures. Correct the observed zombie-only process-group EPERM using a conservative full census; retain exit74 when any live/unknown member remains. Update Draft PR8 only; main/LIVE/GPU boundaries stay unchanged. Detailed outcome: PR-9-10-REVIEW.md.

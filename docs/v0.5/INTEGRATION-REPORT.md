@@ -8,7 +8,11 @@ Implemented: real 11-operation Store adapter; authorized consistent policy proje
 
 Not implemented/accepted: production Guardian owning isolated publishing resources; full physical LiveSession/Binding lifecycle and registered service-principal composition; real SCRIPT TTS/avatar executor and all-required observers; approved cross-process COMMENT answer preparation; actual GPU/Chrome/RTMP latency and production crash recovery. These are explicit blockers, not tests skipped and declared PASS.
 
-## Evidence
+## 2026-10-17 review and stage update
+
+PR #9 was reviewed at full head `4f4c95278e581bccc025323ed8534d0b2db1023e` / digest `aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744`; Agent 4 withheld ACK and posted two blocking findings. It is not merged. PR #10 original head `84738b37c2ee39cc4b8f3a1d449802171ba0a7e0` was merged **disabled** with a separate conservative process-group cleanup fix. Guardian suite is 25 PASS after one retained failed run; full regression repeats Go/race 142 PASS each, Runtime 158 PASS/11 SKIP, Journal 11 PASS, contracts 17 PASS and frontend 45 PASS/build. Final tested source is `5fb16e6315b56ad8c5398e4417456b21d4c7eaff`; latest evidence is `evidence/agent-4/pr-review-2026-10-17/`. See [review report](PR-9-10-REVIEW.md) for exact gates and source/command manifests. Source integration is not production Guardian acceptance. Both LIVE guards remain closed; real GPU/Chrome/busy latency remain untested.
+
+## Baseline evidence (2026-10-16)
 
 Stage Agent 2: `evidence/agent-4/stage-agent2/acceptance.json`, all recorded commands exit 0, dedicated PG/Redis services stopped. Stage Agent 3: `stage-agent3-*` logs, Go/race/vet, Runtime/Journal/contract and frontend test/build exit 0 before shared changes.
 
@@ -34,6 +38,6 @@ Local environment: Go 1.27.2 darwin/arm64, Python 3.12.13, PostgreSQL 17.11, Red
 
 No shared Runtime/Worker/DB/Redis or live room was killed, no cloud GPU started and no PR was merged into main. Refer to RELEASE-GATES.md for the 15-item status matrix and the separate acceptance reports for exact limitations.
 
-## Git delivery
+## Baseline Git delivery (2026-10-16)
 
 Tested integration code commit: `597ece2840c9a56b3998739cd86a4c749588bdeb`. The 360-entry verification manifest matches this commit byte for byte. Original PR #6 and PR #5 delivery SHAs remain ancestors through ordered merge commits. The subsequent delivery metadata commit only records reports and raw logs. Verified-release evidence commit: `ea6d53ef9e66615d0d3dad8ad75b3bad6f85734a`. Draft integration PR: https://github.com/leileiya1/AstraLive/pull/8. No auto-merge is configured or performed.
