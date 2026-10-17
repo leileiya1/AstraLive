@@ -1,0 +1,35 @@
+# NOT installed/enabled. Agent4 must replace the closed launcher after the
+# approved DTO/Authority/Registrar/production output adapters pass acceptance.
+[Unit]
+Description=AstraLive receiver-1 Guardian (closed assembly gate)
+ConditionPathExists=/etc/astralive-guardian/v2/approved-assembly
+
+[Service]
+Type=simple
+User=astralive-guardian
+Group=astralive-guardian
+SupplementaryGroups=astralive-producer-ipc astralive-control-ipc
+ExecStart=/opt/astralive/.venv/bin/python -m output_guardian.v2
+WorkingDirectory=/opt/astralive
+Restart=no
+KillMode=control-group
+TimeoutStopSec=3
+SendSIGKILL=yes
+StateDirectory=astralive-guardian-v2
+StateDirectoryMode=0700
+RuntimeDirectory=astralive-guardian-v2
+RuntimeDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+RestrictNamespaces=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadWritePaths=/var/lib/astralive-guardian-v2 /run/astralive-guardian-v2
+# Do not hide other UIDs' PID creation metadata from Guardian: it must verify
+# kernel peer PID/start-time. Runtime gets the asymmetric /proc protection.
+
+[Install]
+WantedBy=multi-user.target
