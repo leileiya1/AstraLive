@@ -81,3 +81,37 @@ async def test_enqueue_or_observer_counter_does_not_supply_required_proofs(domai
         await d.r.finish(d.runtime, q)
     assert d.r.gate.state == "UNKNOWN" and not d.r.finished
     assert d.x.j.units[0]["state"] == "STARTED"  # no business drain/cursor advance
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("phase", [1, 2])
+async def test_actual_os_fsync_ebadf_never_authorizes(domain, monkeypatch, phase):
+    """Real fsync syscall failure after fd fault; not a simulated disk EIO.
+
+    File and directory fsync both hit the actual kernel with an invalidated
+    descriptor. Hardware power loss/media corruption is still NOT TESTED.
+    """
+    import errno
+    import os
+
+    d = domain
+    original, calls, observed = os.fsync, [], []
+
+    def invalidate_then_fsync(fd):
+        calls.append(fd)
+        if len(calls) == phase:
+            os.close(fd)
+            try:
+                original(fd)  # actual OS syscall, must return EBADF
+            except OSError as exc:
+                observed.append(exc.errno)
+                raise
+            raise AssertionError("kernel accepted invalid descriptor")
+        original(fd)
+
+    monkeypatch.setattr(os, "fsync", invalidate_then_fsync)
+    with pytest.raises(Closed):
+        await d.r.consume(d.runtime, d.q)
+    assert observed == [errno.EBADF]
+    assert len(d.x.b.latches) == 1 and d.r.gate.active is None
+    assert not d.r.gate.acks and d.r.audit[d.q["references"]["grantId"]] == "UNKNOWN"
