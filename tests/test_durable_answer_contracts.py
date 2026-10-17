@@ -47,7 +47,7 @@ class AnswerContractTests(unittest.TestCase):
     def test_schema_examples_states_protected_files_and_pending_ack(self):
         result=c.check_all()
         self.assertEqual(result['operations'],25)
-        self.assertEqual(result['definitions'],84)
+        self.assertEqual(result['definitions'],91)
 
     def test_same_prepare_receipt_never_authorizes_start_or_changes_revision(self):
         first=self.j.prepare(self.prepare)

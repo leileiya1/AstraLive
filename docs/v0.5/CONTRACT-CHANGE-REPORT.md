@@ -37,3 +37,7 @@ The original whole-answer proposal is reviewed in [CCR-ADL-001 decision](ccr/CCR
 ## 2026-10-17 Agent 4 candidate review
 
 PR #9 head `4f4c95278e581bccc025323ed8534d0b2db1023e`, normative digest `aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744`, was independently verified and reviewed. **Agent 4 ACK withheld**: drain-before-next-prepare rejects valid slow LLM ordering; consumed Grant lifetime across Permit/fact renewal is underspecified. [Explicit blocking review](https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227008824). See PR-9-10-REVIEW.md for reproduction, version compatibility and tests. No PR9 merge, v2 migration/DTO/route activation or contract meaning change occurred. The initial whole-answer proposal above is historical; it does not approve the expanded incremental candidate.
+
+## Agent1 PR9 repair follow-up (2026-10-17)
+
+Latest disabled Guardian integration `546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7` was merged normally into the CCR branch. Both earlier report sections are retained. Candidate-only durable-live-2 boundary, receipt and Grant-lifecycle repairs are documented in [PR9 repair result](ccr/REPAIR-2026-10-17.md). Active v1 contracts and all Guardian/Backend/Runtime/Worker source files are unchanged from that integration baseline. **CCR BLOCKED / PENDING Agent2/3/4 re-review**; source compatibility does not authorize v2 production execution.

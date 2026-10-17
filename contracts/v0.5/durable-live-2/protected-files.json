@@ -1,5 +1,5 @@
 {
-  "baseline": "01a752baf79c25d4d268167d016c8c62e754cfdf",
+  "baseline": "546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7",
   "files": {
     "backend/.env.example": "cd9fe06e65850b0acd64336a8ccca82e3d2d6a289e0ba5651e03fe967c5d2b08",
     "backend/.gitignore": "61cbc6ad40fd8b32093bdbc2b435202b6ffd2150e771c77fd9bc848995eec2d0",
@@ -262,6 +262,26 @@
     "gpu_worker/validated/resample.py": "429687a2832478b0e6f667b2c4f59656c67ee6b9baec3e58b45220af73ee3f0c",
     "gpu_worker/validated/runtime_avatar.py": "b69e875cd453d30a5c6f82f8648db9884501cac57981980461543c9a671a191a",
     "gpu_worker/validated/wire.py": "2547791fc3a420824c3bdace9f7353effe24330e52493c7734557dbf646736b2",
+    "output_guardian/README.md": "df496af0c9dad954570c50a8de58fbb8a3e8aa22d2e37ae9a38c8ce51fca59a0",
+    "output_guardian/__init__.py": "5281dba38d49161abb5749d64fa8015d19622a3cc2fcd4c9d645a3d77b5f7a81",
+    "output_guardian/__main__.py": "83dc7afedc1a011a6a4d77a0f479663bdc04095286f45d19595829059383d9eb",
+    "output_guardian/authority.py": "0213629ba96bf4e994b451ffcefe5b6d63796fef66b1ba4873f3ca3dbbff494b",
+    "output_guardian/codec.py": "e6a013c7633e690606d81e5e3dcc0ea5216913cf47de2a25d24cf2798a337580",
+    "output_guardian/ingest.py": "0b8055d3c140d8189ac3e0f1af372918b3a8b65b5e0f91e1d919b05b530692cb",
+    "output_guardian/model.py": "b957bc1d7bc6904c3cfa165189df38e27f5a10ca6ce8486c40132c38e079f7c3",
+    "output_guardian/observe.py": "233dc14e22c7157e9f3870348fdc7d6493938114a8e40eba006179e851fe1817",
+    "output_guardian/process.py": "5d95a661471d1f13415efae4b6ce35fb0fed23d961d45bceab35de9526f5b4d3",
+    "output_guardian/publisher.py": "171e32b1144d8923f62ef71bc698fd1d5bad24ba1ebe2dc7ea9ad75990156109",
+    "output_guardian/receiver.py": "ea77e8e94ee017dd3c40272b215b6a697c7b49af1349822cc446159f27d99f41",
+    "output_guardian/requirements-test.txt": "1b86a54ed81d963c82ab7e74cfa82831244301f7beb03bb9e7f839846be2cde3",
+    "output_guardian/requirements.txt": "76492416fdf201ce2f43baa3116fa2383cb20ed9ab8bb694af258ce2d29e992e",
+    "output_guardian/rtmp_proxy.py": "a65359bc71fb843e0ce610dcd05852d1a02c692f1658d18b3c122663d2a83708",
+    "output_guardian/service.py": "12b5225dffcfad095bf4f07140d30c907325a8ccf244aa124b80d3153fc76e52",
+    "output_guardian/supervisor.py": "50ba40adec5fd59d06770ba7a0f273d13e0e756f864e8dfe0de7bbb9d0f3ecdb",
+    "output_guardian/tests/conftest.py": "7c2643a5b33452ca37dfd000d5cce0ffb80bbe3776224dae98dd09e737e0bea5",
+    "output_guardian/tests/test_guardian.py": "854cc7389868f92f5d6331b2b3fa68e7b49d77d19707467eaf425d6a3145170a",
+    "output_guardian/tests/test_supervisor_cleanup.py": "cc5fcd7e70feb6e97f0f03b16a54e3874fcd389444aa6dc63f695f45ad5166cf",
+    "output_guardian/webrtc.py": "376d4352046ec538ce8a08c3a0e65f8ea9b034a3d5b7f44b5d75b90bc7ad0505",
     "runtime/app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "runtime/app/bound_media.py": "664939f0bddc7395187f1d690783dfd1d905fe0be9b36539e250eb5d5348294b",
     "runtime/app/config.py": "b7f63424effe8ec2791643c83e4d6bc67b1d05c1fe9b0583517b0619b803d92c",
@@ -271,6 +291,7 @@
     "runtime/app/durable_live_segments.py": "ea0220dfa156d4f06443df770b2b494e03211fa9b28ab10c2946f5922daef480",
     "runtime/app/events.py": "f28f5b3457e42a7c4789a9a6258882547a0cb711058fb8857ee41c51e4b148e7",
     "runtime/app/fact_answer.py": "58c7b02903803bb93e4c32e4e1b5e7ac7d78d5f9b67bc0cb99b8a9a3934190ac",
+    "runtime/app/guardian_media.py": "506c44c8bfc8ff8262641abfa182d37ec18f0ee89921bb9b96417372945d54df",
     "runtime/app/interaction_trace.py": "ff4cb1410ac21ffcd20e0c4192dec35f17ebe4e11059b7291b98fc9a4ebe134e",
     "runtime/app/lightweight_avatar.py": "e42200afd5b8bd5c4267a053fdbae2e2a7e61d48a5c8347e6280e7883e4daa92",
     "runtime/app/main.py": "fd5c4825ac09210add58318aadcf33e84167a0da2361ded58743928ac14abca6",
@@ -293,5 +314,6 @@
     "runtime/app/voice_evaluation.py": "13baca323ea39483299629afa18fd561c0d393fe4124f24829d425ff069707b5",
     "runtime/app/voice_stream.py": "39c58e3c89cef5e540e43e2cef908074e496ada4bfd2681e1099eb9ba04f088b",
     "runtime/app/webrtc_media.py": "546a18b84a6b2f001fe1844321ebd0cae7e34c1d69d54ca23a2a727071240137"
-  }
+  },
+  "previousBaseline": "01a752baf79c25d4d268167d016c8c62e754cfdf"
 }

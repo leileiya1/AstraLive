@@ -33,7 +33,8 @@
     "ANSWER_NOT_PREPARED": 409,
     "ANSWER_CLOSED": 409,
     "BINDING_EXPIRED": 409,
-    "COMMAND_EXPIRED": 409
+    "COMMAND_EXPIRED": 409,
+    "GRANT_EXPIRED": 409
   },
   "operations": [
     {
@@ -76,7 +77,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -119,7 +121,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -162,7 +165,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -206,7 +210,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -250,7 +255,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -293,7 +299,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -336,7 +343,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -379,7 +387,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -422,7 +431,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -465,7 +475,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -508,7 +519,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -551,7 +563,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -594,7 +607,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -637,7 +651,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -680,7 +695,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -694,7 +710,7 @@
       "requestSchema": "#/$defs/JournalStartRequest",
       "responseSchema": "#/$defs/JournalStartResponse",
       "successStatus": 200,
-      "semantics": "Single command CAS; COMMENT atomically claims unit1 and returns its one-shot answerGrant. Repeats return false/null even after ACK loss. No blanket future-unit authorization.",
+      "semantics": "Single command CAS mints unit1 consume-once grant. expiresAt limits first consumption only. Repeats false/null. Consumed binding plus renewed same-identity permits/facts controls output; renewal never authorizes a new start.",
       "errorCodes": [
         "UNAUTHENTICATED",
         "FORBIDDEN",
@@ -723,7 +739,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -737,7 +754,7 @@
       "requestSchema": "#/$defs/AcquireOutputPermitRequest",
       "responseSchema": "#/$defs/AcquireOutputPermitResponse",
       "successStatus": 200,
-      "semantics": "Artifact-bound COMMENT permit; revalidate answer facts and cap TTL by fact/Binding/lease/deadline. No media authority without one-shot unit grant.",
+      "semantics": "Renew proof for exact artifact/attempt/producer/epoch; Generation is fixed by trusted consumption binding in outer adapter. May refresh immutable same-value observation. No new consume/START authority, including after grant expiry.",
       "errorCodes": [
         "UNAUTHENTICATED",
         "FORBIDDEN",
@@ -766,7 +783,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -809,7 +827,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -852,7 +871,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -895,7 +915,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -909,7 +930,7 @@
       "requestSchema": "#/$defs/JournalPrepareAnswerRequest",
       "responseSchema": "#/$defs/JournalPrepareAnswerResponse",
       "successStatus": 200,
-      "semantics": "Atomically persist immutable complete unit + hash + product/facts + receipt; no execution grant. First prepare increments inbox revision once.",
+      "semantics": "OPEN answer, authorized STARTED command: next prepare accepts predecessor STARTED or trusted DRAINED. Alias keys are atomically reserved to immutable descriptor/receipt before successful readback; no grant.",
       "errorCodes": [
         "UNAUTHENTICATED",
         "FORBIDDEN",
@@ -938,8 +959,10 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
-      ]
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
+      ],
+      "idempotencyIdentity": "scoped(operation,key) -> exact AnswerArtifact descriptor and original receipt; aliases have immutable unique bindings"
     },
     {
       "operationId": "JournalStartAnswerSegment",
@@ -952,7 +975,7 @@
       "requestSchema": "#/$defs/JournalStartAnswerSegmentRequest",
       "responseSchema": "#/$defs/JournalStartAnswerSegmentResponse",
       "successStatus": 200,
-      "semantics": "Continue existing STARTED command; one-shot next-unit CAS after prior drain, never another Turn or global START; duplicate false/null.",
+      "semantics": "Next unit grant requires trusted predecessor DRAINED; one grant per unit within same command/Turn, consume-once before expiry. No regrant on renew/query/ACK loss.",
       "errorCodes": [
         "UNAUTHENTICATED",
         "FORBIDDEN",
@@ -981,7 +1004,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -995,7 +1019,7 @@
       "requestSchema": "#/$defs/JournalConfirmAnswerSegmentRequest",
       "responseSchema": "#/$defs/JournalConfirmAnswerSegmentResponse",
       "successStatus": 200,
-      "semantics": "Validate registered all-required sink ranges for this unit; no global completion or script cursor advance.",
+      "semantics": "Trusted all-required drain; exact AnswerDrainIdentity fingerprint includes answer/artifact/hash/execution identity/evidence. Same key with any changed stable field conflicts; no global completion.",
       "errorCodes": [
         "UNAUTHENTICATED",
         "FORBIDDEN",
@@ -1024,8 +1048,10 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
-      ]
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
+      ],
+      "idempotencyIdentity": "#/$defs/AnswerDrainIdentity; excludes only requestId and expectedAnswerRevision"
     },
     {
       "operationId": "JournalSealAnswer",
@@ -1067,7 +1093,8 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     },
     {
@@ -1111,12 +1138,13 @@
         "ANSWER_NOT_PREPARED",
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
-        "COMMAND_EXPIRED"
+        "COMMAND_EXPIRED",
+        "GRANT_EXPIRED"
       ]
     }
   ],
   "approvalStatus": "PENDING_OWNER_ACK",
   "productionEnabled": false,
-  "integrationBaseline": "01a752baf79c25d4d268167d016c8c62e754cfdf",
+  "integrationBaseline": "546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7",
   "predecessorRevision": "durable-live-1"
 }

@@ -6,6 +6,7 @@ import importlib.util
 import json
 from pathlib import Path
 import sys
+from datetime import datetime
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -47,6 +48,53 @@ def validate_artifact(artifact):
 
 def command_hash(command):
     return digest({k:v for k,v in command.items() if k!='requestHash'})
+
+def drain_identity(request):
+    return {'operation':'JournalConfirmAnswerSegment',**{
+        k:v for k,v in request.items() if k not in ('requestId','expectedAnswerRevision')}}
+
+def validate_lifecycle_trace(trace):
+    """Trusted fixture cross-language timing check, not live authorization."""
+    validate('AnswerLifecycleTrace',trace)
+    def when(value):return datetime.fromisoformat(value.replace('Z','+00:00'))
+    grant,binding=trace['grant'],trace['consumption']
+    issued,consume,deadline=map(when,(grant['issuedAt'],binding['consumedAt'],grant['expiresAt']))
+    if not issued<=consume<deadline:raise ValueError('GRANT_EXPIRED')
+    keys=('tenantId','ownerId','runId','commandId','attemptId','sessionId','runEpoch',
+          'producerIncarnation','answerId','artifactId','artifactHash','generationId')
+    for key in keys:
+        if key in grant and grant[key]!=binding[key]:raise ValueError('grant identity mismatch')
+    if grant['grantId']!=binding['grantId']:raise ValueError('grant mismatch')
+    def unique(rows,key):
+        result={r[key]:r for r in rows}
+        if len(result)!=len(rows):raise ValueError('duplicate proof ID')
+        return result
+    observations=unique(trace['observations'],'observationId')
+    permits=unique(trace['permits'],'permitId')
+    first_observation=observations[grant['factObservationId']]
+    previous=consume
+    def proof(permit,at):
+        observation=observations[permit['factObservationId']]
+        for row in (permit,observation):
+            if any(row[k]!=binding[k] for k in keys):raise ValueError('renewed proof identity mismatch')
+        if permit['guardianIncarnation']!=binding['guardianIncarnation']:raise ValueError('guardian restart')
+        if not when(permit['issuedAt'])<=at<when(permit['expiresAt']):raise ValueError('permit expired')
+        if (when(permit['expiresAt'])-when(permit['issuedAt'])).total_seconds()>1:raise ValueError('unbounded permit')
+        if not when(observation['verifiedAt'])<=at<when(observation['validUntil']):raise ValueError('FACT_EXPIRED')
+        if (when(observation['validUntil'])-when(observation['verifiedAt'])).total_seconds()>2:raise ValueError('unbounded fact proof')
+        for key in ('productSnapshotVersion','factSetHash'):
+            if observation[key]!=first_observation[key]:raise ValueError('changed answer facts')
+        return observation
+    proof(permits[grant['permitId']],consume)
+    for handoff in trace['handoffs']:
+        at=when(handoff['at'])
+        if at<previous or handoff['executionId']!=binding['executionId']:raise ValueError('execution changed')
+        observation=proof(permits[handoff['permitId']],at)
+        if observation['observationId']!=handoff['factObservationId']:raise ValueError('observation mismatch')
+        previous=at
+    return dict(handoffs=len(trace['handoffs']),lastOffsetMs=round((previous-issued).total_seconds()*1000),
+                initialConsumeWindowMs=round((deadline-issued).total_seconds()*1000),
+                globalStartCount=trace['globalStartCount'],unitGrantCount=trace['unitGrantCount'])
 
 def validate_command(command):
     validate('RuntimeCommand', command)
@@ -96,6 +144,8 @@ def check_all():
         if row['operationId']=='RuntimeExecute':validate_command(row['request'])
         if row['operationId']=='JournalPrepareAnswer':validate_artifact(row['request']['artifact'])
         if row['operationId']=='JournalQueryAnswer':validate_stream(row['response']['answer'])
+        if row['operationId']=='JournalConfirmAnswerSegment':
+            assert row['response']['drainIdentityHash']==digest(drain_identity(row['request']))
     for obj in load('examples/objects.json'):
         validate(obj['schemaRef'].split('/')[-1],obj['value'])
         if obj['name'].startswith('AnswerUnit'):validate_artifact(obj['value'])
@@ -103,6 +153,7 @@ def check_all():
     start=load('examples/comment-start.json')
     validate('JournalStartRequest',start['request'])
     for key in ('response','duplicateResponse'):validate('JournalStartResponse',start[key])
+    validate_lifecycle_trace(load('examples/grant-renewal-trace.json'))
     for vector in load('examples/hash-vectors.json'):
         assert canonical(vector['value']).decode()==vector['canonicalUtf8']
         assert digest(vector['value'])==vector['sha256']

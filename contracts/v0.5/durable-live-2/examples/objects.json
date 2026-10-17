@@ -592,5 +592,72 @@
         }
       ]
     }
+  },
+  {
+    "name": "PrepareAliasBinding",
+    "schemaRef": "#/$defs/AnswerPrepareKeyBinding",
+    "value": {
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "sessionId": "session_demo",
+      "runEpoch": 1,
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "operation": "JournalPrepareAnswer",
+      "idempotencyKey": "alias_key",
+      "descriptorHash": "5cb87369dc485aad61649ea6f3d6f048344c64489d3a9de20457756a85031a12",
+      "receiptId": "prepare_receipt_1"
+    }
+  },
+  {
+    "name": "ConsumedAnswerExecution",
+    "schemaRef": "#/$defs/AnswerExecutionBinding",
+    "value": {
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "sessionId": "session_demo",
+      "runEpoch": 1,
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "executionId": "execution_grant_1",
+      "grantId": "grant_1",
+      "generationId": 7,
+      "guardianIncarnation": "guardian_process_demo",
+      "consumedAt": "2026-10-16T00:00:00.100Z"
+    }
+  },
+  {
+    "name": "FreshAnswerObservation",
+    "schemaRef": "#/$defs/AnswerFactObservation",
+    "value": {
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "sessionId": "session_demo",
+      "runEpoch": 1,
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "observationId": "observation_4",
+      "generationId": 7,
+      "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+      "factSetHash": "5111b14472da855d30e3263eb0a138f134637fa05d48923e01746a093cd5a7fa",
+      "verifiedAt": "2026-10-16T00:00:04.500Z",
+      "validUntil": "2026-10-16T00:00:06.500Z",
+      "authorityRevision": "authority_demo"
+    }
   }
 ]

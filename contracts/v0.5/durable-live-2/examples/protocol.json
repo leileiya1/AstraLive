@@ -1032,7 +1032,7 @@
       "artifactId": "answer_unit_2",
       "artifactHash": "acd88e30e2358692fc7f2065d5feb9d05e9214b1ebf5a561783c309d1a03b5ac",
       "expectedAnswerRevision": 4,
-      "permitId": "permit_answer"
+      "permitId": "permit_answer_2"
     },
     "response": {
       "schemaVersion": "0.5",
@@ -1054,11 +1054,12 @@
         "artifactId": "answer_unit_2",
         "artifactHash": "acd88e30e2358692fc7f2065d5feb9d05e9214b1ebf5a561783c309d1a03b5ac",
         "sequence": 2,
-        "permitId": "permit_answer",
+        "permitId": "permit_answer_2",
         "factObservationId": "fact_observation_2",
         "factValidUntil": "2026-10-16T00:00:02Z",
         "issuedAt": "2026-10-16T00:00:00Z",
-        "expiresAt": "2026-10-16T00:00:00.800Z"
+        "expiresAt": "2026-10-16T00:00:00.800Z",
+        "authorizationScope": "UNIT_START_ONCE"
       },
       "state": "STARTED",
       "answerRevision": 5
@@ -1117,7 +1118,10 @@
       "artifactId": "answer_unit_1",
       "state": "DRAINED",
       "answerRevision": 4,
-      "receiptId": "drain_receipt_1"
+      "receiptId": "drain_receipt_1",
+      "answerId": "answer_demo",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "drainIdentityHash": "581bc8ce4be53e26879505b6c811b8e2c10170be5f9d4d11d04b466af7283195"
     }
   },
   {

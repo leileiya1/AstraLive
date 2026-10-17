@@ -1,21 +1,24 @@
 {
   "ccr": "CCR-ADL-001",
   "contractRevision": "durable-live-2",
-  "analysisBase": "01a752baf79c25d4d268167d016c8c62e754cfdf",
+  "analysisBase": "546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7",
   "digestAlgorithm": "SHA256(canonical sorted path-to-file-sha256 map)",
-  "normativeDigest": "aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744",
+  "normativeDigest": "54d5d5e2fa4d1c135d186c1031f68e657f03c332e2473c61c6527be23d8bef57",
   "files": {
-    "contracts/v0.5/durable-live-2/schema.json": "edca516da6d2e3e46b11538d1a2465ee3a08dbd8b1788f5cf030c14c98f96dcc",
-    "contracts/v0.5/durable-live-2/protocol.json": "fb5ce1efa5832ad6833cf34c1205a9131011df8909158633f19db619ba427c04",
-    "contracts/v0.5/durable-live-2/state-machines.json": "814b089a7121532d31f83999f128e300567ef8cee930b4f2ce5136dd51ffdd40",
-    "contracts/v0.5/durable-live-2/examples/protocol.json": "3fe1ed41ee2cfb874ba85a6ed3a4a506fa0de63896cb208a11d85f9409a23edb",
-    "contracts/v0.5/durable-live-2/examples/objects.json": "89a582b83d1161fbeaedfbba3782a673799e7e02f7dfec627c1f12948c733a45",
-    "contracts/v0.5/durable-live-2/examples/comment-start.json": "031228ce66ac1f1d87f0e0350ee61c82073f446abcdbdeabe381b0832895a85d",
-    "contracts/v0.5/durable-live-2/examples/hash-vectors.json": "a44bf8e26119fb08367c82c87d25d8d2f9bfafab51b7e3f6118495672aaac71b",
+    "contracts/v0.5/durable-live-2/schema.json": "b3698b61f0d2e7fbd3d6432f69a3e025bc4bc7d2160a1cd40f07f18db0514594",
+    "contracts/v0.5/durable-live-2/protocol.json": "a1e92d00928e43623e2076d6297c6856d64e5772170fac295ca9d624ede2b780",
+    "contracts/v0.5/durable-live-2/state-machines.json": "1f9c53163a16bac901d31938b78bd6a51702b25860cd3fcffca052be96ce6f61",
+    "contracts/v0.5/durable-live-2/examples/protocol.json": "0304f980c48e76a5edb12bb8167d37ff3f7c3184afb7bd983017ab93d69a5df2",
+    "contracts/v0.5/durable-live-2/examples/objects.json": "d77fe759b5fa3b0d9f667bcd7a05d2048458e593b833e4245b23f22c70fc1de9",
+    "contracts/v0.5/durable-live-2/examples/comment-start.json": "1260b8b919914e4b59977df9282678da02ed0969fab705d736d3b3cda74bdb7d",
+    "contracts/v0.5/durable-live-2/examples/hash-vectors.json": "71d1d047804687885ef602a474d51268ffa6f2b663b255031ecd8b01a9d8af8b",
     "contracts/v0.5/durable-live-2/examples/go/canonical.go": "048a8621cf1cc27a138e57037b4ad57144dfb218ff7c669c8422fbe43365a73a",
-    "contracts/v0.5/durable-live-2/examples/python/canonical.py": "3502cf53e1ee9c633c1663a23ee48ee7cdf077b2e86ae1f9e96c397a5009df7b",
-    "docs/v0.5/ccr/CCR-ADL-001.md": "498968f313ba6151beab4871bb50ebe4952da654c4d479f2100e5bc931b4a1a5",
-    "docs/v0.5/ccr/ANSWER-PREPARATION-CONTRACT.md": "69008ab1ef707582f17d9834a329d4d21fce36fedb30eacbf5da991d8386752c",
-    "docs/v0.5/ccr/CCR-ADL-001-HANDOFF.md": "d1b18952b5be468ffb6559e307eb1e53a8b5638233dc59c233ade7cfc1564fd5"
+    "contracts/v0.5/durable-live-2/examples/python/canonical.py": "9f249f498e80f8615168e70b8ada5c9e6ee73a7e34e2734730298af1982fe382",
+    "contracts/v0.5/durable-live-2/examples/python/reference.py": "acc3b43c0e19b6d37caf782ea7a86621d5fe03ae841fec3644a4cf3d31d58890",
+    "contracts/v0.5/durable-live-2/examples/go/lifecycle.go": "e5f0ff3a6e9e39fcde6914dfea15ff9ab097f084a3d80c2ad452a370dd51815e",
+    "contracts/v0.5/durable-live-2/examples/grant-renewal-trace.json": "9873658926d76360228831fc21c31b931aca8cd5ad89b117e49e141768079065",
+    "docs/v0.5/ccr/CCR-ADL-001.md": "ab45eb1a48c37d09cd29d98086a9c5112c0d7797ad511de4d17f2874479815e9",
+    "docs/v0.5/ccr/ANSWER-PREPARATION-CONTRACT.md": "7b6389a37b3880e15f7b16489d5b3e38e0574de719b812e11ce5c10827dcb554",
+    "docs/v0.5/ccr/CCR-ADL-001-HANDOFF.md": "6869be2475ac07611c46b50c7e2ba565957db20031b46ff485516024cc652321"
   }
 }

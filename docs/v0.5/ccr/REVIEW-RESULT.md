@@ -1,5 +1,9 @@
 # CCR-ADL-001 review result
 
+**2026-10-17: superseded by the [PR9 repair result](REPAIR-2026-10-17.md).** The old counts, commit and digest below are retained as historical review evidence; they do not describe the repaired candidate. Current owner status remains **CCR BLOCKED / PENDING RE-REVIEW**.
+
+## Historical pre-repair result
+
 **CCR BLOCKED. Required owner ACKs have not been received.** Agent 1 selected the incremental semantic-artifact candidate; Agent 2/3 ACKs and Agent 4's ACK of the expanded wire remain pending. The previous whole-answer proposal ACK is not approval for this design.
 
 Normative candidate code: `c2f8c65304ece65f2818cdd828f38091b787e552` on `design/ccr-adl-001-answer-contract`, based on PR8 `01a752baf79c25d4d268167d016c8c62e754cfdf`; Draft PR9 targets integration/v05-durable-live. Subsequent evidence-only commits preserve normative digest `aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744`.

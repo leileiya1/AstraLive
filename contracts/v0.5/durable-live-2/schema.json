@@ -3666,7 +3666,8 @@
             "ANSWER_NOT_PREPARED",
             "ANSWER_CLOSED",
             "BINDING_EXPIRED",
-            "COMMAND_EXPIRED"
+            "COMMAND_EXPIRED",
+            "GRANT_EXPIRED"
           ]
         },
         "message": {
@@ -4144,7 +4145,8 @@
           "maximum": 32
         },
         "permitId": {
-          "$ref": "#/$defs/ID"
+          "$ref": "#/$defs/ID",
+          "description": "Historical bootstrap permit at issuance, not the ID required after successful consumption and renewal."
         },
         "factObservationId": {
           "anyOf": [
@@ -4154,7 +4156,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Historical issuance observation. Current same-identity observations may replace it for ongoing output, never to regrant START."
         },
         "factValidUntil": {
           "anyOf": [
@@ -4170,7 +4173,11 @@
           "$ref": "#/$defs/Timestamp"
         },
         "expiresAt": {
-          "$ref": "#/$defs/Timestamp"
+          "$ref": "#/$defs/Timestamp",
+          "description": "Exclusive first-consumption deadline; not the deadline of an already consumed active execution. Immutable."
+        },
+        "authorizationScope": {
+          "const": "UNIT_START_ONCE"
         }
       },
       "required": [
@@ -4188,7 +4195,8 @@
         "factObservationId",
         "factValidUntil",
         "issuedAt",
-        "expiresAt"
+        "expiresAt",
+        "authorizationScope"
       ],
       "additionalProperties": false
     },
@@ -4795,6 +4803,15 @@
         },
         "receiptId": {
           "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "drainIdentityHash": {
+          "$ref": "#/$defs/Hash"
         }
       },
       "required": [
@@ -4804,7 +4821,10 @@
         "artifactId",
         "state",
         "answerRevision",
-        "receiptId"
+        "receiptId",
+        "answerId",
+        "artifactHash",
+        "drainIdentityHash"
       ],
       "additionalProperties": false
     },
@@ -5055,6 +5075,36 @@
         },
         "authorityRevision": {
           "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "generationId": {
+          "$ref": "#/$defs/Epoch"
         }
       },
       "required": [
@@ -5065,7 +5115,434 @@
         "factSetHash",
         "verifiedAt",
         "validUntil",
-        "authorityRevision"
+        "authorityRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "answerId",
+        "generationId"
+      ],
+      "additionalProperties": false
+    },
+    "AnswerDrainIdentity": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "const": "JournalConfirmAnswerSegment"
+        },
+        "schemaVersion": {
+          "const": "0.5"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "requestHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "evidence": {
+          "$ref": "#/$defs/Evidence"
+        }
+      },
+      "required": [
+        "operation",
+        "schemaVersion",
+        "contractRevision",
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "requestHash",
+        "answerId",
+        "artifactId",
+        "artifactHash",
+        "idempotencyKey",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "AnswerPrepareKeyBinding": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "operation": {
+          "const": "JournalPrepareAnswer"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/ID"
+        },
+        "descriptorHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "receiptId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "answerId",
+        "artifactId",
+        "artifactHash",
+        "operation",
+        "idempotencyKey",
+        "descriptorHash",
+        "receiptId"
+      ],
+      "additionalProperties": false
+    },
+    "AnswerExecutionBinding": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "executionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "grantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "generationId": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "guardianIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "consumedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "answerId",
+        "artifactId",
+        "artifactHash",
+        "executionId",
+        "grantId",
+        "generationId",
+        "guardianIncarnation",
+        "consumedAt"
+      ],
+      "additionalProperties": false
+    },
+    "AnswerGrantStatus": {
+      "type": "object",
+      "properties": {
+        "grantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ISSUED",
+            "CONSUMED",
+            "EXPIRED",
+            "REVOKED",
+            "UNKNOWN"
+          ]
+        }
+      },
+      "required": [
+        "grantId",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "AnswerExecutionStatus": {
+      "type": "object",
+      "properties": {
+        "executionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "DRAINED",
+            "FENCED",
+            "UNKNOWN"
+          ]
+        }
+      },
+      "required": [
+        "executionId",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "AnswerPlaybackPermit": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "permitId": {
+          "$ref": "#/$defs/ID"
+        },
+        "generationId": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "guardianIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "factObservationId": {
+          "$ref": "#/$defs/ID"
+        },
+        "issuedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "expiresAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "tenantId",
+        "ownerId",
+        "runId",
+        "commandId",
+        "attemptId",
+        "sessionId",
+        "runEpoch",
+        "producerIncarnation",
+        "answerId",
+        "artifactId",
+        "artifactHash",
+        "permitId",
+        "generationId",
+        "guardianIncarnation",
+        "factObservationId",
+        "issuedAt",
+        "expiresAt"
+      ],
+      "additionalProperties": false
+    },
+    "AnswerLifecycleTrace": {
+      "type": "object",
+      "properties": {
+        "scenario": {
+          "const": "consume-once-renew-proofs"
+        },
+        "grant": {
+          "$ref": "#/$defs/AnswerGrant"
+        },
+        "consumption": {
+          "$ref": "#/$defs/AnswerExecutionBinding"
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnswerFactObservation"
+          },
+          "minItems": 2,
+          "maxItems": 32
+        },
+        "permits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnswerPlaybackPermit"
+          },
+          "minItems": 2,
+          "maxItems": 32
+        },
+        "handoffs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "at": {
+                "$ref": "#/$defs/Timestamp"
+              },
+              "executionId": {
+                "$ref": "#/$defs/ID"
+              },
+              "permitId": {
+                "$ref": "#/$defs/ID"
+              },
+              "factObservationId": {
+                "$ref": "#/$defs/ID"
+              }
+            },
+            "required": [
+              "at",
+              "executionId",
+              "permitId",
+              "factObservationId"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 2,
+          "maxItems": 32
+        },
+        "globalStartCount": {
+          "const": 1
+        },
+        "unitGrantCount": {
+          "const": 1
+        },
+        "finalState": {
+          "const": "DRAINED"
+        }
+      },
+      "required": [
+        "scenario",
+        "grant",
+        "consumption",
+        "observations",
+        "permits",
+        "handoffs",
+        "globalStartCount",
+        "unitGrantCount",
+        "finalState"
       ],
       "additionalProperties": false
     }

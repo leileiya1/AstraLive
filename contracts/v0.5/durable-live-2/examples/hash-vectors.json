@@ -146,5 +146,123 @@
     },
     "canonicalUtf8": "{\"count\":2,\"text\":\"价格129.90元/件\\n尺码XL、XXL\\t<棉> \"}",
     "sha256": "cb8ffa84cc3880f41712d2401e97fb08d66a16e02b7667237bf17f9c32efa8f0"
+  },
+  {
+    "name": "drain-identity-unit1",
+    "value": {
+      "operation": "JournalConfirmAnswerSegment",
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-2",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "runEpoch": 1,
+      "requestHash": "1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c",
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "idempotencyKey": "drain:answer_demo:1",
+      "evidence": {
+        "evidenceType": "ALL_REQUIRED_DRAIN",
+        "evidenceRef": "proof_demo",
+        "evidenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredSinks": [
+          "rtmp_main"
+        ],
+        "sinkProofs": [
+          {
+            "sinkId": "rtmp_main",
+            "kind": "RTMP_PIPE_WRITE",
+            "generationId": 7,
+            "firstAudioSample": 0,
+            "finalAudioSampleExclusive": 84000,
+            "audioConsumedThroughExclusive": 84000,
+            "finalVideoFrame": 87,
+            "videoConsumedThroughFrame": 87,
+            "terminal": true
+          }
+        ],
+        "predecessorCheckpointIds": [
+          "checkpoint_playing"
+        ],
+        "audienceVisibility": "UNVERIFIED"
+      }
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"artifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"artifactId\":\"answer_unit_1\",\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"contractRevision\":\"durable-live-2\",\"evidence\":{\"audienceVisibility\":\"UNVERIFIED\",\"evidenceHash\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"evidenceRef\":\"proof_demo\",\"evidenceType\":\"ALL_REQUIRED_DRAIN\",\"predecessorCheckpointIds\":[\"checkpoint_playing\"],\"requiredSinks\":[\"rtmp_main\"],\"sinkProofs\":[{\"audioConsumedThroughExclusive\":84000,\"finalAudioSampleExclusive\":84000,\"finalVideoFrame\":87,\"firstAudioSample\":0,\"generationId\":7,\"kind\":\"RTMP_PIPE_WRITE\",\"sinkId\":\"rtmp_main\",\"terminal\":true,\"videoConsumedThroughFrame\":87}]},\"idempotencyKey\":\"drain:answer_demo:1\",\"operation\":\"JournalConfirmAnswerSegment\",\"ownerId\":\"owner_demo\",\"producerIncarnation\":\"runtime_demo\",\"requestHash\":\"1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c\",\"runEpoch\":1,\"runId\":\"run_demo\",\"schemaVersion\":\"0.5\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\"}",
+    "sha256": "581bc8ce4be53e26879505b6c811b8e2c10170be5f9d4d11d04b466af7283195"
+  },
+  {
+    "name": "prepare-alias-binding",
+    "value": {
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "sessionId": "session_demo",
+      "runEpoch": 1,
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "operation": "JournalPrepareAnswer",
+      "idempotencyKey": "alias_key",
+      "descriptorHash": "5cb87369dc485aad61649ea6f3d6f048344c64489d3a9de20457756a85031a12",
+      "receiptId": "prepare_receipt_1"
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"artifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"artifactId\":\"answer_unit_1\",\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"descriptorHash\":\"5cb87369dc485aad61649ea6f3d6f048344c64489d3a9de20457756a85031a12\",\"idempotencyKey\":\"alias_key\",\"operation\":\"JournalPrepareAnswer\",\"ownerId\":\"owner_demo\",\"producerIncarnation\":\"runtime_demo\",\"receiptId\":\"prepare_receipt_1\",\"runEpoch\":1,\"runId\":\"run_demo\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\"}",
+    "sha256": "636b3c39a6beca792adb7a15d556248b7bb2035a971d70fe2d2826782034445b"
+  },
+  {
+    "name": "consumed-answer-execution",
+    "value": {
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "sessionId": "session_demo",
+      "runEpoch": 1,
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "executionId": "execution_grant_1",
+      "grantId": "grant_1",
+      "generationId": 7,
+      "guardianIncarnation": "guardian_process_demo",
+      "consumedAt": "2026-10-16T00:00:00.100Z"
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"artifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"artifactId\":\"answer_unit_1\",\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"consumedAt\":\"2026-10-16T00:00:00.100Z\",\"executionId\":\"execution_grant_1\",\"generationId\":7,\"grantId\":\"grant_1\",\"guardianIncarnation\":\"guardian_process_demo\",\"ownerId\":\"owner_demo\",\"producerIncarnation\":\"runtime_demo\",\"runEpoch\":1,\"runId\":\"run_demo\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\"}",
+    "sha256": "7e7672a32459e017e1edcbd0fe68e21321b70da446064b82361eb7710a6e43d1"
+  },
+  {
+    "name": "refreshed-answer-observation",
+    "value": {
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "sessionId": "session_demo",
+      "runEpoch": 1,
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "observationId": "observation_4",
+      "generationId": 7,
+      "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+      "factSetHash": "5111b14472da855d30e3263eb0a138f134637fa05d48923e01746a093cd5a7fa",
+      "verifiedAt": "2026-10-16T00:00:04.500Z",
+      "validUntil": "2026-10-16T00:00:06.500Z",
+      "authorityRevision": "authority_demo"
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"artifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"artifactId\":\"answer_unit_1\",\"attemptId\":\"attempt_comment\",\"authorityRevision\":\"authority_demo\",\"commandId\":\"cmd_comment\",\"factSetHash\":\"5111b14472da855d30e3263eb0a138f134637fa05d48923e01746a093cd5a7fa\",\"generationId\":7,\"observationId\":\"observation_4\",\"ownerId\":\"owner_demo\",\"producerIncarnation\":\"runtime_demo\",\"productSnapshotVersion\":\"df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762\",\"runEpoch\":1,\"runId\":\"run_demo\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\",\"validUntil\":\"2026-10-16T00:00:06.500Z\",\"verifiedAt\":\"2026-10-16T00:00:04.500Z\"}",
+    "sha256": "f9cacaef2d6f768f07c96fb0f813e3c783883863525a00248dd658c525eccce0"
   }
 ]

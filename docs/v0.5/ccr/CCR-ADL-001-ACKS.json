@@ -3,8 +3,8 @@
   "candidateRevision": "durable-live-2",
   "status": "CCR BLOCKED",
   "allRequiredAcksReceived": false,
-  "reviewBase": "01a752baf79c25d4d268167d016c8c62e754cfdf",
-  "normativeDigest": "aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744",
+  "reviewBase": "546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7",
+  "normativeDigest": "54d5d5e2fa4d1c135d186c1031f68e657f03c332e2473c61c6527be23d8bef57",
   "owners": [
     {
       "owner": "Agent 1",
@@ -14,26 +14,34 @@
     },
     {
       "owner": "Agent 2",
-      "status": "PENDING",
+      "status": "PENDING_RE_REVIEW",
       "scope": "migration, immutable artifact, transaction and grant semantics",
-      "evidence": null
+      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227027243",
+      "previousCandidateStatus": "BLOCKED_ACK_WITHHELD",
+      "ackRequiredFor": "new repair commit and normative digest; previous candidate rejected"
     },
     {
       "owner": "Agent 3",
-      "status": "PENDING",
+      "status": "PENDING_RE_REVIEW",
       "scope": "Turn Manager, fact validation and streaming semantics",
-      "evidence": null
+      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227007221",
+      "previousCandidateStatus": "BLOCKED_ACK_WITHHELD",
+      "ackRequiredFor": "new repair commit and normative digest; previous candidate rejected"
     },
     {
       "owner": "Agent 4",
-      "status": "PENDING_EXPANDED_PROPOSAL",
+      "status": "PENDING_RE_REVIEW",
       "scope": "revision2 wire, executor and guardian integration",
-      "evidence": "Issue7 original proposal ACK only; not valid for expanded decision"
+      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227008824",
+      "previousCandidateStatus": "BLOCKED_ACK_WITHHELD",
+      "ackRequiredFor": "new repair commit and normative digest; previous candidate rejected"
     }
   ],
-  "lastCheckedAt": "2026-10-16T14:15:23.354016Z",
+  "lastCheckedAt": "2026-10-17T00:35:58.885079+00:00",
   "ackEvidenceSnapshots": [
     "evidence/issue7-final-comments.json",
-    "evidence/pr9-ack-snapshot.json"
-  ]
+    "evidence/pr9-ack-snapshot.json",
+    "evidence/repair-2026-10-17/reviews-before.json"
+  ],
+  "previousNormativeDigest": "aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744"
 }
