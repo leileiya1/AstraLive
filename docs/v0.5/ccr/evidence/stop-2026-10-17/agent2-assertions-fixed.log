@@ -1,0 +1,20 @@
+test_01_unregistered_prepare_is_atomic_denial (__main__.FinalReceiverReview.test_01_unregistered_prepare_is_atomic_denial) ... ok
+test_02_registration_cas_failure_can_retry_original_receipt (__main__.FinalReceiverReview.test_02_registration_cas_failure_can_retry_original_receipt) ... ok
+test_03_bad_ticket_has_no_partial_consume (__main__.FinalReceiverReview.test_03_bad_ticket_has_no_partial_consume) ... ok
+test_04_bad_consume_cas_does_not_reserve_nonce (__main__.FinalReceiverReview.test_04_bad_consume_cas_does_not_reserve_nonce) ... ok
+test_05_thirty_two_identical_commits_have_one_true (__main__.FinalReceiverReview.test_05_thirty_two_identical_commits_have_one_true) ... ok
+test_06_nonce_cannot_be_reassigned_to_unit2 (__main__.FinalReceiverReview.test_06_nonce_cannot_be_reassigned_to_unit2) ... ok
+test_07_old_epoch_generation_install_or_revoke_cannot_consume (__main__.FinalReceiverReview.test_07_old_epoch_generation_install_or_revoke_cannot_consume) ... ok
+test_08_ticket_not_available_in_authority_or_journal_retry (__main__.FinalReceiverReview.test_08_ticket_not_available_in_authority_or_journal_retry) ... ok
+test_09_late_backend_positive_cannot_arm_guardian (__main__.FinalReceiverReview.test_09_late_backend_positive_cannot_arm_guardian) ... ok
+test_10_fsync_loss_does_not_regrant_consumed_latch (__main__.FinalReceiverReview.test_10_fsync_loss_does_not_regrant_consumed_latch) ... ok
+test_11_stop_between_authority_query_and_backend_commit (__main__.FinalReceiverReview.test_11_stop_between_authority_query_and_backend_commit) ... ok
+test_12_five_second_renewal_stays_one_execution (__main__.FinalReceiverReview.test_12_five_second_renewal_stays_one_execution) ... ok
+test_13_local_stop_tombstone_prevents_new_consume (__main__.FinalReceiverReview.test_13_local_stop_tombstone_prevents_new_consume) ... ok
+test_14_stop_during_media_proof_fetch_prevents_handoff (__main__.FinalReceiverReview.test_14_stop_during_media_proof_fetch_prevents_handoff) ... ok
+test_15_stop_during_last_consume_proof_fetch_prevents_positive_ack (__main__.FinalReceiverReview.test_15_stop_during_last_consume_proof_fetch_prevents_positive_ack) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.064s
+
+OK

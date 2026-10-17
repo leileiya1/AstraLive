@@ -6,7 +6,7 @@ Runtime has no reference to Backend storage or control credentials.
 """
 import base64
 import copy
-from collections import namedtuple
+from collections import namedtuple, deque
 import threading
 import uuid
 import hmac
@@ -247,7 +247,7 @@ class GuardianReceiver:
         self.observer_fixture=None;self.before_fsync=None;self.after_commit=None
         self.before_consume_ack=None;self.before_handoff=None;self.before_renew_commit=None;self.before_finish_commit=None
         self.media_count=0;self.unit_media={};self.active_execution_id=None;self.barrier_state='FENCED';self.stops=set();self.finished_units=set();self.last_media_sequence=-1
-        self.linearized=[]
+        self.linearized=deque(maxlen=256)  # bounded test-only metadata, never media payloads
 
     def _event(self,kind,execution=None):
         # Called only under self.lock; a bounded mock of the handoff/audit edge.
