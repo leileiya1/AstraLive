@@ -1,0 +1,22 @@
+{
+  "layer": "real current v1 Runtime ASGI handler, CPU, no journal/media callbacks allowed",
+  "results": [
+    {
+      "path": "/internal/v0.5/durable-live/sessions/session_demo/commands",
+      "status": 422,
+      "body": {
+        "requestId": "runtime",
+        "code": "INVALID_ARGUMENT",
+        "message": "INVALID_ARGUMENT",
+        "retryable": false
+      }
+    },
+    {
+      "path": "/internal/v0.5/durable-live-2/sessions/session_demo/commands",
+      "status": 404,
+      "body": {
+        "detail": "Not Found"
+      }
+    }
+  ]
+}

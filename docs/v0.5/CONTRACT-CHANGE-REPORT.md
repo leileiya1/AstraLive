@@ -29,3 +29,7 @@ Acceptance must prove exact answer body + fact version + SHA256 persisted togeth
 ## Review requested
 
 Agent 1 must ACK the operation, fields, version/compatibility rule and START freshness semantics. Agent 2 must ACK migration/transaction and immutable receipt behavior. Agent 3 must ACK adapter/fact projection impact. Silence or elapsed time is not approval. Continue independent adapter, SQL and legacy work while pending; keep real COMMENT blocked.
+
+## 2026-10-17 Agent 4 candidate review
+
+PR #9 head `4f4c95278e581bccc025323ed8534d0b2db1023e`, normative digest `aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744`, was independently verified and reviewed. **Agent 4 ACK withheld**: drain-before-next-prepare rejects valid slow LLM ordering; consumed Grant lifetime across Permit/fact renewal is underspecified. [Explicit blocking review](https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227008824). See PR-9-10-REVIEW.md for reproduction, version compatibility and tests. No PR9 merge, v2 migration/DTO/route activation or contract meaning change occurred. The initial whole-answer proposal above is historical; it does not approve the expanded incremental candidate.

@@ -1,0 +1,47 @@
+{
+  "testedIntegrationCodeCommit": "5fb16e6315b56ad8c5398e4417456b21d4c7eaff",
+  "conclusion": "ASTRALIVE V0.5 BLOCKED",
+  "pr9": "Agent 4 ACK withheld; candidate not merged",
+  "pr10": "original source merged disabled; conservative cleanup fix added",
+  "go": {
+    "go-test.jsonl": {
+      "pass": 142,
+      "fail": 0,
+      "skip": 3
+    },
+    "go-race.jsonl": {
+      "pass": 142,
+      "fail": 0,
+      "skip": 3
+    }
+  },
+  "guardianFinal": {
+    "pass": 25,
+    "fail": 0,
+    "skip": 0
+  },
+  "pr9ContractTests": 36,
+  "runtime": {
+    "pass": 158,
+    "skip": 11
+  },
+  "journal": 11,
+  "contracts": 17,
+  "frontend": {
+    "pass": 45,
+    "build": "PASS"
+  },
+  "all20RegressionCommandsExitZero": true,
+  "sourceManifestMatchesCommittedSource": true,
+  "sourceFiles": 388,
+  "guardianSourceFiles": 28,
+  "sourceUnchangedDuringVerification": true,
+  "ownedServicesCleanupExitCodes": [
+    0,
+    0
+  ],
+  "failureRetained": "pr10-after-merge.log:21 passed/1 failed, supervisor zombie-group EPERM; diagnosis and conservative fix separate",
+  "durableLiveEnabled": false,
+  "productionGuardian": "BLOCKED",
+  "gpuChrome": "NOT TESTED"
+}

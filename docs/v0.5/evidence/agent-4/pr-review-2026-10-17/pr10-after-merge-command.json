@@ -1,0 +1,35 @@
+{
+  "command": [
+    "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+    "-m",
+    "pytest",
+    "output_guardian/tests",
+    "-q",
+    "-s",
+    "--junitxml=/Users/sapiece/innovationProject/AstraLive-agent-4/docs/v0.5/evidence/agent-4/pr-review-2026-10-17/pr10-after-merge.xml"
+  ],
+  "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+  "sourceSHA": "d511302caea1c1dff5c90f4757eca4a46eeff1f9",
+  "exitCode": 1,
+  "elapsedSeconds": 29.525441667065024,
+  "resource": [
+    5.516157,
+    3.239062,
+    135593984,
+    0,
+    0,
+    0,
+    477709,
+    375,
+    0,
+    0,
+    0,
+    19253,
+    25627,
+    557,
+    16856,
+    92774
+  ],
+  "sourceUnchanged": true,
+  "scope": "dedicated local PG/MediaMTX, synthetic CPU, no GPU/Chrome/production"
+}
