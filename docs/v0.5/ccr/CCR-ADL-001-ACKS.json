@@ -1,0 +1,70 @@
+{
+  "recordKind": "HISTORICAL_PRE_APPROVAL_SNAPSHOT",
+  "statusScope": "All original status/owners/allRequiredAcksReceived fields below describe the frozen candidate BEFORE final approval, not the current CCR decision.",
+  "snapshotCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+  "supersededBy": "CCR-ADL-001-FINAL-APPROVAL.json",
+  "currentDecision": "CCR APPROVED FOR IMPLEMENTATION",
+  "currentDecisionEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6231271734",
+  "ccr": "CCR-ADL-001",
+  "candidateRevision": "durable-live-2",
+  "status": "CCR BLOCKED",
+  "allRequiredAcksReceived": false,
+  "reviewBase": "546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7",
+  "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+  "owners": [
+    {
+      "owner": "Agent 1",
+      "status": "CANDIDATE_FROZEN_NOT_FINAL_APPROVAL",
+      "scope": "incremental semantic artifacts with once-only START and unit grants",
+      "evidence": "CCR-ADL-001.md"
+    },
+    {
+      "owner": "Agent 2",
+      "status": "STOP_DIRECTION_ACCEPTED_FINAL_ACK_PENDING",
+      "scope": "migration, immutable artifact, transaction and grant semantics",
+      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6230806802",
+      "previousCandidateStatus": "FINAL_ACK_WITHHELD_STOP_A_B_C",
+      "ackRequiredFor": "new Stop-repair commit/digest; priority final review before Agent4/3",
+      "previousAckCommit": "283f3b4578e8d8c98357ffb38301c959e5664509",
+      "previousAckNormativeDigest": "54d5d5e2fa4d1c135d186c1031f68e657f03c332e2473c61c6527be23d8bef57",
+      "previousBlockingEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6230628836"
+    },
+    {
+      "owner": "Agent 3",
+      "status": "ACK_PREVIOUS_CANDIDATE_RECONFIRM_DEFERRED_UNTIL_AGENT2",
+      "scope": "Turn Manager, fact validation and streaming semantics",
+      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6230632280",
+      "previousCandidateStatus": "ACK",
+      "ackRequiredFor": "new Stop-repair normative digest, only after Agent2 final ACK",
+      "previousAckCommit": "8bca277aad2104b46f351227735da8570e1ee4e1",
+      "previousAckNormativeDigest": "607c0dd00755556bb2b6daec75f19fda41642fd6bac7472523ca3c048118b81b"
+    },
+    {
+      "owner": "Agent 4",
+      "status": "ACK_PREVIOUS_CANDIDATE_RECONFIRM_DEFERRED_UNTIL_AGENT2",
+      "scope": "revision2 wire, executor and guardian integration",
+      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6230543064",
+      "previousCandidateStatus": "ACK",
+      "ackRequiredFor": "new Stop-repair normative digest, only after Agent2 final ACK",
+      "previousBlockingEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227620414",
+      "previousAckCommit": "8bca277aad2104b46f351227735da8570e1ee4e1",
+      "previousAckNormativeDigest": "607c0dd00755556bb2b6daec75f19fda41642fd6bac7472523ca3c048118b81b"
+    }
+  ],
+  "lastCheckedAt": "2026-10-17T06:46:01.824796+00:00",
+  "ackEvidenceSnapshots": [
+    "evidence/issue7-final-comments.json",
+    "evidence/pr9-ack-snapshot.json",
+    "evidence/repair-2026-10-17/reviews-before.json",
+    "evidence/stop-2026-10-17/reviews-after-direction.json"
+  ],
+  "previousNormativeDigest": "607c0dd00755556bb2b6daec75f19fda41642fd6bac7472523ca3c048118b81b",
+  "reviewOrder": [
+    "Agent2 final Stop-repair review on new commit/digest",
+    "Agent4 and Agent3 changed-digest confirmation after Agent2",
+    "Agent1 final CCR decision"
+  ],
+  "receiverDirectionEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227939254",
+  "stopDirectionEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6230806802",
+  "stopBlockingEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6230628836"
+}

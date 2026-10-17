@@ -1,0 +1,364 @@
+[
+  {
+    "name": "question-command",
+    "value": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-2",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "commandId": "cmd_comment",
+      "intentId": "intent_comment",
+      "attemptId": "attempt_comment",
+      "turnId": "turn_comment",
+      "utteranceId": "utt_comment",
+      "runEpoch": 1,
+      "leaseVersion": 1,
+      "idempotencyKey": "comment:source_demo",
+      "traceId": "trace_comment",
+      "createdAt": "2026-10-16T00:00:00Z",
+      "operation": "EXECUTE_TURN",
+      "payload": {
+        "mode": "COMMENT_QUESTION",
+        "text": "这件衣服是什么面料，有哪些尺码？",
+        "textHash": "83266fa9eb9466b1652aa3c729fd2c31fd0e79609de11bfdd5ba77ada079a766",
+        "productId": "product_demo",
+        "planId": "plan_demo",
+        "segmentId": null,
+        "factDependencies": [],
+        "expiresAt": "2026-10-16T00:00:20Z",
+        "requiredSinks": [
+          "rtmp_main"
+        ],
+        "answerPreparation": "SEMANTIC_STREAM"
+      }
+    },
+    "canonicalUtf8": "{\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"contractRevision\":\"durable-live-2\",\"createdAt\":\"2026-10-16T00:00:00Z\",\"idempotencyKey\":\"comment:source_demo\",\"intentId\":\"intent_comment\",\"leaseVersion\":1,\"operation\":\"EXECUTE_TURN\",\"ownerId\":\"owner_demo\",\"payload\":{\"answerPreparation\":\"SEMANTIC_STREAM\",\"expiresAt\":\"2026-10-16T00:00:20Z\",\"factDependencies\":[],\"mode\":\"COMMENT_QUESTION\",\"planId\":\"plan_demo\",\"productId\":\"product_demo\",\"requiredSinks\":[\"rtmp_main\"],\"segmentId\":null,\"text\":\"这件衣服是什么面料，有哪些尺码？\",\"textHash\":\"83266fa9eb9466b1652aa3c729fd2c31fd0e79609de11bfdd5ba77ada079a766\"},\"runEpoch\":1,\"runId\":\"run_demo\",\"schemaVersion\":\"0.5\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\",\"traceId\":\"trace_comment\",\"turnId\":\"turn_comment\",\"utteranceId\":\"utt_comment\"}",
+    "sha256": "1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c"
+  },
+  {
+    "name": "unit-1",
+    "value": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-2",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "runEpoch": 1,
+      "requestHash": "1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c",
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "sequence": 1,
+      "previousArtifactHash": null,
+      "answerText": "这款采用纯棉面料，穿着柔软舒适。",
+      "answerTextHash": "51912a595bdc92deaad2dff0fdd3a0d5e87cbb69dc27abeeff480572504f8aac",
+      "productId": "product_demo",
+      "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+      "factDependencies": [
+        {
+          "kind": "PRODUCT_DETAILS",
+          "productId": "product_demo",
+          "sourceVersion": "product_version_1",
+          "validatedAt": "2026-10-16T00:00:00Z",
+          "expiresAt": "2026-10-16T00:00:02Z",
+          "valueHash": "ef9022e8edadecad47c9f6e7c25daf3d12199e106607f9cd11ff6fdaaf7106e9"
+        }
+      ],
+      "assertionKinds": [
+        "PRODUCT_DETAILS"
+      ],
+      "semanticBoundary": "COMPLETE_SENTENCE",
+      "estimatedDurationMs": 3500,
+      "createdAt": "2026-10-16T00:00:00Z"
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"answerText\":\"这款采用纯棉面料，穿着柔软舒适。\",\"answerTextHash\":\"51912a595bdc92deaad2dff0fdd3a0d5e87cbb69dc27abeeff480572504f8aac\",\"artifactId\":\"answer_unit_1\",\"assertionKinds\":[\"PRODUCT_DETAILS\"],\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"contractRevision\":\"durable-live-2\",\"createdAt\":\"2026-10-16T00:00:00Z\",\"estimatedDurationMs\":3500,\"factDependencies\":[{\"expiresAt\":\"2026-10-16T00:00:02Z\",\"kind\":\"PRODUCT_DETAILS\",\"productId\":\"product_demo\",\"sourceVersion\":\"product_version_1\",\"validatedAt\":\"2026-10-16T00:00:00Z\",\"valueHash\":\"ef9022e8edadecad47c9f6e7c25daf3d12199e106607f9cd11ff6fdaaf7106e9\"}],\"ownerId\":\"owner_demo\",\"previousArtifactHash\":null,\"producerIncarnation\":\"runtime_demo\",\"productId\":\"product_demo\",\"productSnapshotVersion\":\"df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762\",\"requestHash\":\"1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c\",\"runEpoch\":1,\"runId\":\"run_demo\",\"schemaVersion\":\"0.5\",\"semanticBoundary\":\"COMPLETE_SENTENCE\",\"sequence\":1,\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\"}",
+    "sha256": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671"
+  },
+  {
+    "name": "unit-2",
+    "value": {
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-2",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "runEpoch": 1,
+      "requestHash": "1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c",
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_2",
+      "sequence": 2,
+      "previousArtifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "answerText": "可选尺码有M、L和XL。",
+      "answerTextHash": "bdc889765d50ea1920dfc02828a6b2e8c6e80707b82be66fa33f9c435033abee",
+      "productId": "product_demo",
+      "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+      "factDependencies": [
+        {
+          "kind": "SIZE_OPTIONS",
+          "productId": "product_demo",
+          "sourceVersion": "product_version_1",
+          "validatedAt": "2026-10-16T00:00:00Z",
+          "expiresAt": "2026-10-16T00:00:02Z",
+          "valueHash": "a72c9bb36512aadc3d0358f7ea4612235b466aa990ca822ece6d07dc16cdf117"
+        }
+      ],
+      "assertionKinds": [
+        "SIZE_OPTIONS"
+      ],
+      "semanticBoundary": "COMPLETE_SENTENCE",
+      "estimatedDurationMs": 3500,
+      "createdAt": "2026-10-16T00:00:00Z"
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"answerText\":\"可选尺码有M、L和XL。\",\"answerTextHash\":\"bdc889765d50ea1920dfc02828a6b2e8c6e80707b82be66fa33f9c435033abee\",\"artifactId\":\"answer_unit_2\",\"assertionKinds\":[\"SIZE_OPTIONS\"],\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"contractRevision\":\"durable-live-2\",\"createdAt\":\"2026-10-16T00:00:00Z\",\"estimatedDurationMs\":3500,\"factDependencies\":[{\"expiresAt\":\"2026-10-16T00:00:02Z\",\"kind\":\"SIZE_OPTIONS\",\"productId\":\"product_demo\",\"sourceVersion\":\"product_version_1\",\"validatedAt\":\"2026-10-16T00:00:00Z\",\"valueHash\":\"a72c9bb36512aadc3d0358f7ea4612235b466aa990ca822ece6d07dc16cdf117\"}],\"ownerId\":\"owner_demo\",\"previousArtifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"producerIncarnation\":\"runtime_demo\",\"productId\":\"product_demo\",\"productSnapshotVersion\":\"df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762\",\"requestHash\":\"1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c\",\"runEpoch\":1,\"runId\":\"run_demo\",\"schemaVersion\":\"0.5\",\"semanticBoundary\":\"COMPLETE_SENTENCE\",\"sequence\":2,\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\"}",
+    "sha256": "acd88e30e2358692fc7f2065d5feb9d05e9214b1ebf5a561783c309d1a03b5ac"
+  },
+  {
+    "name": "sealed-manifest",
+    "value": [
+      {
+        "artifactId": "answer_unit_1",
+        "sequence": 1,
+        "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671"
+      },
+      {
+        "artifactId": "answer_unit_2",
+        "sequence": 2,
+        "artifactHash": "acd88e30e2358692fc7f2065d5feb9d05e9214b1ebf5a561783c309d1a03b5ac"
+      }
+    ],
+    "canonicalUtf8": "[{\"artifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"artifactId\":\"answer_unit_1\",\"sequence\":1},{\"artifactHash\":\"acd88e30e2358692fc7f2065d5feb9d05e9214b1ebf5a561783c309d1a03b5ac\",\"artifactId\":\"answer_unit_2\",\"sequence\":2}]",
+    "sha256": "ec5d97f1aa83e0547a6bfa74971ad626a39603949929c9686693638df7b25a84"
+  },
+  {
+    "name": "unicode-controls",
+    "value": {
+      "text": "价格129.90元/件\n尺码XL、XXL\t<棉> ",
+      "count": 2
+    },
+    "canonicalUtf8": "{\"count\":2,\"text\":\"价格129.90元/件\\n尺码XL、XXL\\t<棉> \"}",
+    "sha256": "cb8ffa84cc3880f41712d2401e97fb08d66a16e02b7667237bf17f9c32efa8f0"
+  },
+  {
+    "name": "drain-identity-unit1",
+    "value": {
+      "operation": "JournalConfirmAnswerSegment",
+      "schemaVersion": "0.5",
+      "contractRevision": "durable-live-2",
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "runEpoch": 1,
+      "requestHash": "1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c",
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "idempotencyKey": "drain:answer_demo:1",
+      "evidence": {
+        "evidenceType": "ALL_REQUIRED_DRAIN",
+        "evidenceRef": "proof_demo",
+        "evidenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredSinks": [
+          "rtmp_main"
+        ],
+        "sinkProofs": [
+          {
+            "sinkId": "rtmp_main",
+            "kind": "RTMP_PIPE_WRITE",
+            "generationId": 7,
+            "firstAudioSample": 0,
+            "finalAudioSampleExclusive": 84000,
+            "audioConsumedThroughExclusive": 84000,
+            "finalVideoFrame": 87,
+            "videoConsumedThroughFrame": 87,
+            "terminal": true
+          }
+        ],
+        "predecessorCheckpointIds": [
+          "checkpoint_playing"
+        ],
+        "audienceVisibility": "UNVERIFIED"
+      }
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"artifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"artifactId\":\"answer_unit_1\",\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"contractRevision\":\"durable-live-2\",\"evidence\":{\"audienceVisibility\":\"UNVERIFIED\",\"evidenceHash\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"evidenceRef\":\"proof_demo\",\"evidenceType\":\"ALL_REQUIRED_DRAIN\",\"predecessorCheckpointIds\":[\"checkpoint_playing\"],\"requiredSinks\":[\"rtmp_main\"],\"sinkProofs\":[{\"audioConsumedThroughExclusive\":84000,\"finalAudioSampleExclusive\":84000,\"finalVideoFrame\":87,\"firstAudioSample\":0,\"generationId\":7,\"kind\":\"RTMP_PIPE_WRITE\",\"sinkId\":\"rtmp_main\",\"terminal\":true,\"videoConsumedThroughFrame\":87}]},\"idempotencyKey\":\"drain:answer_demo:1\",\"operation\":\"JournalConfirmAnswerSegment\",\"ownerId\":\"owner_demo\",\"producerIncarnation\":\"runtime_demo\",\"requestHash\":\"1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c\",\"runEpoch\":1,\"runId\":\"run_demo\",\"schemaVersion\":\"0.5\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\"}",
+    "sha256": "581bc8ce4be53e26879505b6c811b8e2c10170be5f9d4d11d04b466af7283195"
+  },
+  {
+    "name": "prepare-alias-binding",
+    "value": {
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "sessionId": "session_demo",
+      "runEpoch": 1,
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "operation": "JournalPrepareAnswer",
+      "idempotencyKey": "alias_key",
+      "descriptorHash": "5cb87369dc485aad61649ea6f3d6f048344c64489d3a9de20457756a85031a12",
+      "receiptId": "prepare_receipt_1"
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"artifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"artifactId\":\"answer_unit_1\",\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"descriptorHash\":\"5cb87369dc485aad61649ea6f3d6f048344c64489d3a9de20457756a85031a12\",\"idempotencyKey\":\"alias_key\",\"operation\":\"JournalPrepareAnswer\",\"ownerId\":\"owner_demo\",\"producerIncarnation\":\"runtime_demo\",\"receiptId\":\"prepare_receipt_1\",\"runEpoch\":1,\"runId\":\"run_demo\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\"}",
+    "sha256": "636b3c39a6beca792adb7a15d556248b7bb2035a971d70fe2d2826782034445b"
+  },
+  {
+    "name": "consumed-answer-execution",
+    "value": {
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "sessionId": "session_demo",
+      "runEpoch": 1,
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "executionId": "execution_grant_1",
+      "grantId": "grant_1",
+      "generationId": 7,
+      "guardianIncarnation": "guardian_process_demo",
+      "consumedAt": "2026-10-16T00:00:00.100Z"
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"artifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"artifactId\":\"answer_unit_1\",\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"consumedAt\":\"2026-10-16T00:00:00.100Z\",\"executionId\":\"execution_grant_1\",\"generationId\":7,\"grantId\":\"grant_1\",\"guardianIncarnation\":\"guardian_process_demo\",\"ownerId\":\"owner_demo\",\"producerIncarnation\":\"runtime_demo\",\"runEpoch\":1,\"runId\":\"run_demo\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\"}",
+    "sha256": "7e7672a32459e017e1edcbd0fe68e21321b70da446064b82361eb7710a6e43d1"
+  },
+  {
+    "name": "refreshed-answer-observation",
+    "value": {
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "commandId": "cmd_comment",
+      "attemptId": "attempt_comment",
+      "sessionId": "session_demo",
+      "runEpoch": 1,
+      "producerIncarnation": "runtime_demo",
+      "answerId": "answer_demo",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "observationId": "observation_4",
+      "generationId": 7,
+      "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+      "factSetHash": "5111b14472da855d30e3263eb0a138f134637fa05d48923e01746a093cd5a7fa",
+      "verifiedAt": "2026-10-16T00:00:04.500Z",
+      "validUntil": "2026-10-16T00:00:06.500Z",
+      "authorityRevision": "authority_demo"
+    },
+    "canonicalUtf8": "{\"answerId\":\"answer_demo\",\"artifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"artifactId\":\"answer_unit_1\",\"attemptId\":\"attempt_comment\",\"authorityRevision\":\"authority_demo\",\"commandId\":\"cmd_comment\",\"factSetHash\":\"5111b14472da855d30e3263eb0a138f134637fa05d48923e01746a093cd5a7fa\",\"generationId\":7,\"observationId\":\"observation_4\",\"ownerId\":\"owner_demo\",\"producerIncarnation\":\"runtime_demo\",\"productSnapshotVersion\":\"df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762\",\"runEpoch\":1,\"runId\":\"run_demo\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\",\"validUntil\":\"2026-10-16T00:00:06.500Z\",\"verifiedAt\":\"2026-10-16T00:00:04.500Z\"}",
+    "sha256": "f9cacaef2d6f768f07c96fb0f813e3c783883863525a00248dd658c525eccce0"
+  },
+  {
+    "name": "receiver-bootstrap-binding",
+    "value": {
+      "tenantId": "tenant_demo",
+      "ownerId": "owner_demo",
+      "runId": "run_demo",
+      "sessionId": "session_demo",
+      "producerIncarnation": "runtime_demo",
+      "attemptId": "attempt_comment",
+      "commandId": "cmd_comment",
+      "turnId": "turn_comment",
+      "utteranceId": "utt_comment",
+      "runEpoch": 1,
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+      "roomId": "room_demo",
+      "guardianId": "guardian_demo",
+      "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+      "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+      "runtimeIncarnation": "process_e9fb3bff30e34f0dbbb1c1a157820389",
+      "physicalInstallProofRef": "physical_install_0d2311c2f07546bdbb3397f28b35cb24",
+      "generationId": 1,
+      "outputBindingVersion": 1
+    },
+    "canonicalUtf8": "{\"attemptId\":\"attempt_comment\",\"bootstrapId\":\"bootstrap_7686119de77343169a8a38775ac4ccfe\",\"commandId\":\"cmd_comment\",\"contractRevision\":\"durable-live-2\",\"generationId\":1,\"guardianId\":\"guardian_demo\",\"guardianIncarnation\":\"process_90935561ca74448aae0abc6a61035c6b\",\"outputBindingVersion\":1,\"ownerId\":\"owner_demo\",\"physicalInstallProofRef\":\"physical_install_0d2311c2f07546bdbb3397f28b35cb24\",\"producerIncarnation\":\"runtime_demo\",\"receiverRevision\":\"receiver-1\",\"roomId\":\"room_demo\",\"runEpoch\":1,\"runId\":\"run_demo\",\"runtimeIncarnation\":\"process_e9fb3bff30e34f0dbbb1c1a157820389\",\"runtimePrincipalId\":\"principal_7b83296bd47c49e6b58179e7248bddc2\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\",\"turnId\":\"turn_comment\",\"utteranceId\":\"utt_comment\"}",
+    "sha256": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7"
+  },
+  {
+    "name": "receiver-stage-unsigned",
+    "value": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "installationRevision": 1,
+      "stageReceiptId": "stage_ee8f0639722d45ec8c863d049f61a53c",
+      "challenge": "challenge_a84cd794d1f545e29ab15247827a59c6",
+      "guardianPrincipalId": "principal_a22dac6c7e7d4bb9848e35bda0f9a5e1",
+      "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+      "keyId": "key_ceacd1e0e82f439da8191a80ae1d3fb5",
+      "bindingHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7",
+      "authorityIssuedAt": "2026-10-16T00:00:00.000Z",
+      "validUntil": "2026-10-16T00:00:01Z",
+      "state": "CLOSED_STAGED"
+    },
+    "canonicalUtf8": "{\"authorityIssuedAt\":\"2026-10-16T00:00:00.000Z\",\"bindingHash\":\"c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7\",\"challenge\":\"challenge_a84cd794d1f545e29ab15247827a59c6\",\"contractRevision\":\"durable-live-2\",\"guardianIncarnation\":\"process_90935561ca74448aae0abc6a61035c6b\",\"guardianPrincipalId\":\"principal_a22dac6c7e7d4bb9848e35bda0f9a5e1\",\"installationRevision\":1,\"keyId\":\"key_ceacd1e0e82f439da8191a80ae1d3fb5\",\"receiverRevision\":\"receiver-1\",\"stageReceiptId\":\"stage_ee8f0639722d45ec8c863d049f61a53c\",\"state\":\"CLOSED_STAGED\",\"validUntil\":\"2026-10-16T00:00:01Z\"}",
+    "sha256": "580b344deea40afaf7624489d038a0b0e0568e7e8fd8d59a0645ffe4695ac120"
+  },
+  {
+    "name": "receiver-consumption",
+    "value": {
+      "runtimeIncarnation": "process_e9fb3bff30e34f0dbbb1c1a157820389",
+      "consumeIdentityHash": "7a17b1d500663c069d9974512728e70178bcba91a8c7ae2e1eaf7f5030fd761c",
+      "receiptId": "consume_receipt_8837534755504022a30f1d203db85697",
+      "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+      "consumeRequestId": "consume_05a75effe58c4633889abfc2c3b5b2bb",
+      "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+      "guardianPrincipalId": "principal_a22dac6c7e7d4bb9848e35bda0f9a5e1",
+      "channelBinding": "67cc381a9fc99e6dfa59b6b7857e77052e5eb5392f0391ccd6b7f581d530a1eb",
+      "registrationHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7",
+      "registrationRevision": 1,
+      "binding": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "commandId": "cmd_comment",
+        "attemptId": "attempt_comment",
+        "sessionId": "session_demo",
+        "runEpoch": 1,
+        "producerIncarnation": "runtime_demo",
+        "answerId": "answer_demo",
+        "artifactId": "answer_unit_1",
+        "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+        "executionId": "execution_grant_1",
+        "grantId": "grant_1",
+        "generationId": 1,
+        "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+        "consumedAt": "2026-10-16T00:00:00.100Z"
+      }
+    },
+    "canonicalUtf8": "{\"binding\":{\"answerId\":\"answer_demo\",\"artifactHash\":\"abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671\",\"artifactId\":\"answer_unit_1\",\"attemptId\":\"attempt_comment\",\"commandId\":\"cmd_comment\",\"consumedAt\":\"2026-10-16T00:00:00.100Z\",\"executionId\":\"execution_grant_1\",\"generationId\":1,\"grantId\":\"grant_1\",\"guardianIncarnation\":\"process_90935561ca74448aae0abc6a61035c6b\",\"ownerId\":\"owner_demo\",\"producerIncarnation\":\"runtime_demo\",\"runEpoch\":1,\"runId\":\"run_demo\",\"sessionId\":\"session_demo\",\"tenantId\":\"tenant_demo\"},\"bootstrapId\":\"bootstrap_7686119de77343169a8a38775ac4ccfe\",\"channelBinding\":\"67cc381a9fc99e6dfa59b6b7857e77052e5eb5392f0391ccd6b7f581d530a1eb\",\"consumeIdentityHash\":\"7a17b1d500663c069d9974512728e70178bcba91a8c7ae2e1eaf7f5030fd761c\",\"consumeRequestId\":\"consume_05a75effe58c4633889abfc2c3b5b2bb\",\"guardianPrincipalId\":\"principal_a22dac6c7e7d4bb9848e35bda0f9a5e1\",\"receiptId\":\"consume_receipt_8837534755504022a30f1d203db85697\",\"registrationHash\":\"c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7\",\"registrationRevision\":1,\"runtimeIncarnation\":\"process_e9fb3bff30e34f0dbbb1c1a157820389\",\"runtimePrincipalId\":\"principal_7b83296bd47c49e6b58179e7248bddc2\"}",
+    "sha256": "920ac183808e2bc22360311e8d9ee3f4edaf39eb31745db4b157faf2c839874c"
+  },
+  {
+    "name": "receiver-consume-ticket-verifier",
+    "value": {
+      "domain": "receiver-consume-ticket-1",
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "grantId": "grant_1",
+      "registrationHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7",
+      "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+      "ticket": "YAPkcy7na_bgPOfXNWjfxwkl96UHxkxjhbyLMB5gmAM"
+    },
+    "canonicalUtf8": "{\"contractRevision\":\"durable-live-2\",\"domain\":\"receiver-consume-ticket-1\",\"grantId\":\"grant_1\",\"receiverRevision\":\"receiver-1\",\"registrationHash\":\"c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7\",\"runtimePrincipalId\":\"principal_7b83296bd47c49e6b58179e7248bddc2\",\"ticket\":\"YAPkcy7na_bgPOfXNWjfxwkl96UHxkxjhbyLMB5gmAM\"}",
+    "sha256": "62be28d065739b7f4578336b9659e162826bc70a0f686179ec43226565b5fb98"
+  }
+]

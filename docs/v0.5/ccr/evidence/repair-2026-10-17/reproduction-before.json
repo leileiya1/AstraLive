@@ -1,0 +1,17 @@
+{
+  "oracleAtReproduction": "4f4c95278e581bccc025323ed8534d0b2db1023e (unchanged oracle after integration merge, before repairs)",
+  "command": [
+    "/tmp/astralive-agent2-python/bin/python",
+    "-m",
+    "unittest",
+    "tests.test_answer_contract_repairs.AnswerRepairTests.test_delayed_unit2_after_trusted_drain",
+    "tests.test_answer_contract_repairs.AnswerRepairTests.test_prepare_alias_key_cannot_be_reassigned",
+    "tests.test_answer_contract_repairs.AnswerRepairTests.test_drain_receipt_cannot_cross_artifacts",
+    "tests.test_answer_contract_repairs.AnswerRepairTests.test_grant_models_consume_deadline_instead_of_opaque_string",
+    "-v"
+  ],
+  "observedSummary": "Ran 4 tests; FAILED (failures=3, errors=1)",
+  "rawLog": "reproduction-before.log",
+  "rawLogSha256": "87b42e050890801c6cc3278d338b448090daf2893aaf759ded237b51b526b4fb",
+  "scope": "synthetic contract regression, not production SQL/media fault"
+}

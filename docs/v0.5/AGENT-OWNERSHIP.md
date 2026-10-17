@@ -1,5 +1,7 @@
 # durable-live-1 Agent Ownership / ARCHITECTURE HANDOFF
 
+> CCR-ADL-001 review at PR8 `01a752baf79c25d4d268167d016c8c62e754cfdf`: active durable-live-1 is preserved. [durable-live-2 incremental answer candidate](ccr/CCR-ADL-001.md) and [migration/owner handoff](ccr/CCR-ADL-001-HANDOFF.md) are PENDING OWNER ACK; this historical v1 freeze does not approve that upgrade.
+
 **契约设计冻结，可允许 Agent 2 与 Agent 3 在 main `cf6540b` + 本PR交付提交上并行开发。** 该许可是接口/数据模型准备完成，不是v0.5功能上线或P0验收通过；不授权集成实验分支或自动merge。两Agent开工均需记录完整交付SHA、contractRevision=durable-live-1并回复ACK；禁止使用浮动main或另行发明Schema。
 
 | Owner | 独占实现范围 | 不得自行修改 |

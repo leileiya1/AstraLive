@@ -1,0 +1,73 @@
+{
+  "recordKind": "AUTHORITATIVE_FINAL_CCR_DECISION",
+  "ccr": "CCR-ADL-001",
+  "status": "CCR APPROVED FOR IMPLEMENTATION",
+  "allRequiredAcksReceived": true,
+  "approvedFrozenCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+  "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+  "normativeFileCount": 22,
+  "versions": {
+    "contractRevision": "durable-live-2",
+    "receiverRevision": "receiver-1"
+  },
+  "approvedManifest": "contracts/v0.5/durable-live-2/manifest.json",
+  "approvedManifestSha256": "34931c2f539a4ca13f77e79356baac2d0bb9793c06a14fce3911dcf92979a1ad",
+  "decisionBy": "Agent 1",
+  "decisionAt": "2026-10-17T07:35:18Z",
+  "decisionEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6231271734",
+  "issueDecisionEvidence": "https://github.com/leileiya1/AstraLive/issues/7#issuecomment-6231275931",
+  "ownerAcks": [
+    {
+      "owner": "Agent 2",
+      "status": "ACK",
+      "reviewedCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+      "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+      "source": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6231052237",
+      "createdAt": "2026-10-17T07:10:20Z"
+    },
+    {
+      "owner": "Agent 3",
+      "status": "ACK",
+      "reviewedCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+      "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+      "source": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6231130146",
+      "createdAt": "2026-10-17T07:19:20Z"
+    },
+    {
+      "owner": "Agent 4",
+      "status": "ACK",
+      "reviewedCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+      "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+      "source": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6231145490",
+      "createdAt": "2026-10-17T07:20:57Z"
+    }
+  ],
+  "scope": "architecture contract design only; no production implementation or acceptance in this turn",
+  "implementationPermission": "CCR design gate cleared. Subsequent v2 implementation on integration/v05-durable-live may be scheduled by Agent4 against the approved pin; PR9 integration review/merge remains Agent4 responsibility.",
+  "thisTurn": {
+    "approvalAndHandoffOnly": true,
+    "startDevelopment": false,
+    "merge": false,
+    "changeMain": false,
+    "enableDurableLive": false,
+    "startGpu": false
+  },
+  "preserved": {
+    "frozenV11": true,
+    "durableLive1": true,
+    "productionDefaultOff": true,
+    "gpuBinaryWire": true,
+    "ptsAndCredit": true
+  },
+  "productionAcceptance": "NOT TESTED: real PostgreSQL/OS/IPC/fsync/Guardian/Publisher/Decoder/Sink/media lineage/Providers/GPU/Chrome/WebRTC/RTMP/audience/latency SLA",
+  "historicalSnapshot": "CCR-ADL-001-ACKS.json",
+  "implementationHandoff": "CCR-ADL-001-FINAL-HANDOFF.md",
+  "verificationEvidence": "evidence/final-approval-2026-10-17/verification.json",
+  "subsequentCommitPolicy": "Only non-normative approval records follow the approved frozen commit. Their separate PR HEAD and exact diff are published on GitHub; owner ACKs are not claimed for new code. No normative edits are permitted without new affected-owner review.",
+  "approvalRecordFiles": [
+    "docs/v0.5/ccr/CCR-ADL-001-ACKS.json",
+    "docs/v0.5/ccr/CCR-ADL-001-FINAL-APPROVAL.json",
+    "docs/v0.5/ccr/CCR-ADL-001-FINAL-HANDOFF.md",
+    "docs/v0.5/ccr/evidence/final-approval-2026-10-17/verification.json"
+  ]
+}

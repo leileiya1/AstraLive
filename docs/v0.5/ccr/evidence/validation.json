@@ -1,0 +1,50 @@
+{
+  "ccr": "CCR-ADL-001",
+  "analysisBase": "01a752baf79c25d4d268167d016c8c62e754cfdf",
+  "candidateCodeCommit": "c2f8c65304ece65f2818cdd828f38091b787e552",
+  "normativeDigest": "aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744",
+  "checkedAt": "2026-10-16T14:12:29.749685Z",
+  "checks": [
+    {
+      "name": "candidate-schema",
+      "command": "python3 scripts/validate-answer-contract.py",
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "candidate-schema.log"
+    },
+    {
+      "name": "v1-schema",
+      "command": "python3 scripts/validate-durable-live-contracts.py",
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "v1-schema.log"
+    },
+    {
+      "name": "python-contracts",
+      "command": "python3 -m unittest tests.test_durable_answer_contracts tests.test_durable_live_contracts tests.test_contracts -v",
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "python-contracts.log"
+    },
+    {
+      "name": "python-journal",
+      "command": "python3 -m pytest runtime/tests/test_durable_live_journal.py -q",
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "python-journal.log"
+    },
+    {
+      "name": "go-regression",
+      "command": "go test ./...",
+      "cwd": "backend",
+      "exitCode": 0,
+      "log": "go-regression.log"
+    }
+  ],
+  "approval": "CCR BLOCKED",
+  "notTested": [
+    "Revision2 PostgreSQL migration/transaction/crash/ACK fault tests (owner implementation pending)",
+    "Production revision2 Python/Go executor and output Guardian",
+    "Real DeepSeek/TTS/GPU/Chrome/RTMP/audience latency"
+  ]
+}

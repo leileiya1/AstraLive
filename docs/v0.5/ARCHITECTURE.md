@@ -1,5 +1,7 @@
 # AstraLive v0.5 Durable Live Architecture
 
+> CCR-ADL-001 review at PR8 `01a752baf79c25d4d268167d016c8c62e754cfdf`: active durable-live-1 is preserved. [durable-live-2 incremental answer candidate](ccr/CCR-ADL-001.md) and [migration/owner handoff](ccr/CCR-ADL-001-HANDOFF.md) are PENDING OWNER ACK; this historical v1 freeze does not approve that upgrade.
+
 契约版本 **durable-live-1**；角色 Agent 1；基线 `cf6540bdcc788c037929836480812dfaa78362a2`。
 2026-10-16 执行 `git fetch origin main`，远程 main 与此 SHA 一致，原工作区干净。交付分支 `design/v0.5-durable-live-contracts`。本文中的 MUST 是待实现要求，不是已有功能或验收结果。
 

@@ -1,5 +1,7 @@
 # durable-live-1 Segment / Turn 合约
 
+> CCR-ADL-001 review at PR8 `01a752baf79c25d4d268167d016c8c62e754cfdf`: active durable-live-1 is preserved. [durable-live-2 incremental answer candidate](ccr/CCR-ADL-001.md) and [migration/owner handoff](ccr/CCR-ADL-001-HANDOFF.md) are PENDING OWNER ACK; this historical v1 freeze does not approve that upgrade.
+
 Agent 3 在新增 `backend/internal/contentplan/`、`backend/internal/turnmanager/` 实现策略；复用 `interaction.Scheduler` 选评/去重/TTL/限流，不新建第二个 Comment Scheduler。持久化仅通过 Agent 2 的 `backend/internal/durablelive/` seam，所有字段以独立机器 Schema 为准。编译 DTO 可由 Schema生成或在最终集成时加入无实现的 `backend/internal/livecontract/`；不能各自手写不一致 DTO。
 
 ## 计划与分段
