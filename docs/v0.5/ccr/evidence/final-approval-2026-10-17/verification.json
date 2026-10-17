@@ -1,0 +1,161 @@
+{
+  "checkedAt": "2026-10-17T07:32:31.335718+00:00",
+  "approvedFrozenCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+  "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+  "normativeFiles": {
+    "contracts/v0.5/durable-live-2/schema.json": "03420b5158c8bf3600b0389b6fb7b5fbbb9977f237d501ef590d35ea8a0a541a",
+    "contracts/v0.5/durable-live-2/protocol.json": "a50b6473df6e6e456dec68d4bacfc900ceeee9268bac743ce128baa095b65d18",
+    "contracts/v0.5/durable-live-2/state-machines.json": "a72b05889f61f9f757b4baf22009efb2198d0eb7807b44d890ee9866ded08059",
+    "contracts/v0.5/durable-live-2/examples/protocol.json": "a1d6aec43874d868d69c7076cfbfc60541a1ae5748a682c6d6bc646c36826341",
+    "contracts/v0.5/durable-live-2/examples/objects.json": "d77fe759b5fa3b0d9f667bcd7a05d2048458e593b833e4245b23f22c70fc1de9",
+    "contracts/v0.5/durable-live-2/examples/comment-start.json": "3767d69e95524d1d4385bc0831afcb985ce6c1e053e183b06e42431bb6b41441",
+    "contracts/v0.5/durable-live-2/examples/hash-vectors.json": "f0f3af4665d4bc0772aa03219b422d2883fa32a3eaa8c55f2628ab41d86dbf78",
+    "contracts/v0.5/durable-live-2/examples/go/canonical.go": "048a8621cf1cc27a138e57037b4ad57144dfb218ff7c669c8422fbe43365a73a",
+    "contracts/v0.5/durable-live-2/examples/python/canonical.py": "9f249f498e80f8615168e70b8ada5c9e6ee73a7e34e2734730298af1982fe382",
+    "contracts/v0.5/durable-live-2/examples/python/reference.py": "6666ac59836db2d108190d5efe76f15e49c7afaf1563a3f859992b0121df19bc",
+    "contracts/v0.5/durable-live-2/examples/go/lifecycle.go": "37843f86a35aec8e3e3f1561d0bca5abe02c7e0b9f6b975933f61ba1de9d27c6",
+    "contracts/v0.5/durable-live-2/examples/grant-renewal-trace.json": "e0efc29ffb82725c513f757c930256e740f917793de16dc89b8a96daf9c4b931",
+    "contracts/v0.5/durable-live-2/receiver-protocol.json": "9de32cdd36d98a497bc55aa4a23d021b0275ee3f151b55617cc8582330f04e1d",
+    "contracts/v0.5/durable-live-2/examples/receiver-protocol.json": "2a0168b55d03229ec9ce4e2e7506aa61844039e39e2d074a47629333d57c55d3",
+    "contracts/v0.5/durable-live-2/examples/receiver-trace.json": "200c43dddf40d585f13825fefd2737087769a9b4bbac621ea3d999f07422c9ef",
+    "contracts/v0.5/durable-live-2/examples/receiver-stop-trace.json": "9fad003d4fc008136936f86523039fd6982c75fe82129d5e615d3ed8d2e7c9f8",
+    "contracts/v0.5/durable-live-2/examples/python/receiver.py": "f919a75af0d6c9246b7c8f1ba85646951cbe65e2272002e66ab01e929d34ff3a",
+    "contracts/v0.5/durable-live-2/examples/go/receiver/interfaces.go": "0cc038613a20f32487cf9ddfe2a2e39f1dd290ebc4ef0a41771907e81b4ee428",
+    "docs/v0.5/ccr/CCR-ADL-001.md": "99bdbd08cdad6ef03463f2244d276c69278b3fc7927d2a4e5f9fab33127db257",
+    "docs/v0.5/ccr/ANSWER-PREPARATION-CONTRACT.md": "468c061361828a6d58c4ceb221155fded393d4923d6b9e9b7430dc46b048c58d",
+    "docs/v0.5/ccr/CCR-ADL-001-HANDOFF.md": "5c13ffa00c5519376fc849a9645f390444328673dfdb9ba57861ff383cb5b007",
+    "docs/v0.5/ccr/RECEIVER-BOOTSTRAP-CONTRACT.md": "1be80bb673be7a20fdb69334528cab125a696a8cfc8a056c9abdc4fab6713ebf"
+  },
+  "normativeFileCount": 22,
+  "protectedFileCount": 313,
+  "base": "546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7",
+  "main": "7fe5d24810e2df348c58dd7748e97ffbe5cff384",
+  "productionPaths": [
+    "backend",
+    "runtime",
+    "output_guardian",
+    "infra/guardian",
+    "gpu_worker",
+    "contracts/v0.5/durable-live",
+    "contracts/events",
+    "contracts/control-api.openapi.yaml",
+    "contracts/runtime-api.openapi.yaml"
+  ],
+  "changedProductionFiles": [],
+  "prBeforeApproval": {
+    "baseRefName": "integration/v05-durable-live",
+    "headRefOid": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+    "isDraft": true,
+    "mergeStateStatus": "CLEAN",
+    "mergeable": "MERGEABLE",
+    "state": "OPEN"
+  },
+  "reviewScan": {
+    "conversationComments": 21,
+    "formalReviews": 0,
+    "inlineThreads": 0,
+    "lastCommentAt": "2026-10-17T07:20:57Z",
+    "unresolvedCurrentContractBlockers": [],
+    "oldBlocksSupersededByExactPinAcks": true
+  },
+  "ownerAcks": [
+    {
+      "owner": "Agent 2",
+      "source": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6231052237",
+      "reviewedCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+      "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+      "status": "ACK",
+      "createdAt": "2026-10-17T07:10:20Z",
+      "body": "AGENT 2 ACK — durable-live-2 STOP FINAL CONTRACT\n\nReviewed commit：`c7fd46209d3cbc6f58541dba8b4e1c85609c823e`\n\nNormative digest：`3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1`\n\n已执行 git fetch origin；发布前独立查询 PR HEAD 仍等于上述完整 SHA，PR 为 OPEN/Draft。从指定 Git blobs 逐一重算 manifest 中 **22 个 normative 文件**的 SHA256，再计算 canonical sorted path→hash map 总 digest，全部一致。审核、测试在固定 SHA 的临时 archive 内执行，没有沿用 Agent1 的 PASS 结论。\n\n**Agent2 原先的 A/B/C 阻塞在本次提交的契约设计层已解决，四项冻结要求已落实；此次正式授予 Agent2 ACK。** 该 ACK 仅覆盖上述精确 SHA/digest，替代本人对8bca277/607c的 Stop 阻塞；不是把此前 WIP DIRECTION ACCEPTED 当成最终批准。后续 normative 编辑需要重新审查。\n\n### A/B/C 原始复现：全部 FAIL→PASS\n\n我再次直接执行已保留的 `reproduce_abc.py` 三段原始 actor 操作（没有改变操作、Stop 顺序或 query 注入点；仅在各段外捕获预期拒绝，以便三段都能运行），并重新执行原15项独立断言。\n\n| 原漏洞 | 本轮独立实际结果 |\n| --- | --- |\n| A：Guardian 已 CLOSED_FENCED、Backend 尚未 Stop | **RUN_STOPPED**；Backend registration仍ACTIVE，latch=0，Guardian=FENCED，TTS=0，acceptedMedia=0。旧 Grant/registration/ticket、新 Permit 或重复 Stage 不重开该 Run |\n| B：Authority 查询读完、返回前 Stop | **CONSUMPTION_UNKNOWN**；Guardian=FENCED，acceptedMedia=0；TTS保持注入前已启动的1次，没有新增。旧 snapshot 不能使 handoff 返回 accepted=true |\n| C：Backend latch 已提交、最后 proof query 中 Stop | **CONSUMPTION_UNKNOWN**，不返回 true ACK；latch=1保留，Grant保持CONSUMED，local_audit=UNKNOWN，TTS=0，acceptedMedia=0；无 ticket 重发/消费重置/UNKNOWN复活 |\n\n### 最终契约结论\n\n- **数据库/Journal/latch 可实施性 ACK。** Backend 独占持久消费权；scoped Grant 唯一 latch、nonce/body identity、execution/registration/proof 同范围关联、CAS 和 Stop 共用 run 锁域，保持短事务。Artifact/实际回答/hash/商品与事实、child binding、key/receipt/CAS 的原子性和不可变性要求保留；外部事实/source预检不占长事务，SQL内复核权威版本、DB时间和权限。此次没有增加 Runtime SQL 权限或 Guardian 任意 SQL 写权。\n- **首次授权不可重建 ACK。** 一次性 START/continuation ticket 仅首次 true 响应返回；持久层只保存 verifier。Backend 已消费但任一 ACK 丢失/被 Stop 截断，不回滚或删除 latch、不重发 ticket、不从普通回执/Query重建授权。Guardian 的 UNKNOWN 是独立审计/知识状态，不是重新执行许可。\n- **本地 Stop 优先级和线性化 ACK。** 不可逆 Run tombstone 与 Backend Stop 独立；Stage/Stop/Finish/Restart 推进 barrier。Consume/Renew/Media/Finish 在外部结果返回后和最终提交边界检查完整 registration/run/epoch/Generation/Guardian/execution/Artifact/peer/channel/证明期限。最终正 ACK/有界媒体接收/序号推进与检查同一短锁，Stop 若先赢则拒绝；动作若先赢，其线性化事件必须排在 Stop 前。外部 RPC、fsync、Observer、网络/背压等待在锁外，不能阻塞 Stop。\n- **业务连续性与隔离 ACK。** 正常可信 Finish/Drain 只关闭单元并增加 barrier，不写 Run Stop；Unit2 仍在同一个 COMMENT Turn/Attempt/Generation 下使用独立 Artifact/Grant/execution。迟到 Unit1、旧 Epoch/Generation/进程/Guardian、已 FENCED 或 UNKNOWN 均不能借刷新证明恢复。原61项和Receiver38项语义未被放宽。\n- **模型与真实输出边界已明确。** 模型 ACK 返回/media_count++只代表有界非阻塞 enqueue 线性化点。正式规范已要求 transport/decoder/队列/sink 在自己的不可逆输出边界携带并复核 barrier/execution lineage；Observer 必须绑定实际终止单元的尾部及 required ranges，不能用计数当 drain 或把 enqueue 当物理交付。这是后续实现验收要求，不是本轮已实现能力。\n- **迁移/恢复边界 ACK。** 继续使用 additive migration、保留000006；不可变 consumption/ticket-verifier/身份与可变 sidecar 分离，保留 active/UNKNOWN/去重和注册撤销证据，非破坏 rollback、不让v1执行v2行、不通过清理 latch 重播。此次批准的是设计可实施性，未生成或运行生产 v2 migration。\n\n### 本轮独立实际测试\n\n使用 `/tmp/astralive-agent2-python/bin/python`，固定提交 archive：\n\n| 命令或检查 | 本轮结果 |\n| --- | --- |\n| `python -m unittest tests.test_contracts tests.test_durable_live_contracts tests.test_durable_answer_contracts tests.test_answer_contract_repairs tests.test_receiver_contracts tests.test_receiver_stop_races -v` | **137/137 PASS，19.487s**：原99+38 Stop回归；包括原61项，未修改或跳过它们 |\n| `python -m pytest runtime/tests/test_durable_live_journal.py -q` | **11/11 PASS，0.40s** |\n| `python scripts/validate-answer-contract.py` | **PASS：132 definitions /25 core+13 private operations /12 FSM /13 vectors /313 protected hashes /3 Stop scenarios** |\n| `python scripts/validate-durable-live-contracts.py` | **PASS：44 frozen files /20 operations /4 vectors** |\n| 原15项独立边界脚本（仅换 archive 导入根） | **15/15 PASS，0.063s** |\n| 原20项额外 Stop 探针（仅换 archive 导入根） | **20/20 PASS，0.243s** |\n| 原始A/B/C三段操作逐段执行 | **3/3预期拒绝**，上表记录状态/副作用；不将这些重复复现计为额外独立单测数量 |\n| `GO111MODULE=off go test ./contracts/v0.5/durable-live-2/examples/go/receiver` | 接口示例编译通过，**no test files** |\n| Git blobs digest、`git diff --check`、兼容路径比对 | PASS；相对integration，Backend/Runtime/生产Guardian/Worker/infra guardian/冻结 durable-live-1 无源码变化；原99项测试文件相对上一固定审核提交无变化 |\n\n独立35项探针不只是复用最终137项的 PASS：还执行了48轮真实线程的 Stop×Consume/Renew/Media/Finish 竞争，检查 Stop 后没有 admission 事件；RPC/fsync/Observer 暂停时 Stop 可完成，释放后在途动作被拒绝；32同Grant消费及32同ordinal媒体只有一个赢家；Finish/Restart插在 proof 和 commit 间、旧channel、UNKNOWN/过期证明、重复Stop/Stage和正常Unit2均通过。原probe代码未改动，只替换了固定 archive 的导入路径。本轮未发现新的契约阻塞项。\n\n临时独立脚本在 `/tmp/astralive-agent2-stop-final-original15.py`、`/tmp/astralive-agent2-stop-final-extra20.py`；没有写入开发分支。以上线程、时钟、Authority、fsync、Observer 和 PCM 都是 contract/mock 证据，超时只作死锁检测。\n\n### 仍为 NOT TESTED / ACK 范围\n\n真实 PostgreSQL 多连接唯一性/CAS/rollback/提交崩溃；真实 OS/IPC 身份及凭据隔离；物理 fsync 故障/restart；真实 Guardian 隔离、队列/transport/decoder/sink 各输出边界和可信 drain 范围；Runtime 异步 GPU 媒体 lineage；Provider/TTS/GPU/Chrome/WebRTC/RTMP/观众音画与时延 SLA，均 **NOT TESTED**。不能把模型 PASS 升格为生产功能、安全验收或 audible exactly-once。\n\n此 ACK 不代替 Agent4/3 对新 digest 的确认和 Agent1 的最终 CCR 决定，不授权合并、生产实现或 Durable LIVE 启用。原 `AstraLive-agent-2` / `feat/v05-durable-recovery` 保持干净，HEAD=`55c4dad81545a04946b4d58b706fc6abb14e67fa`；未新建 Agent/Worktree/分支，未修改开发代码/main、实施迁移、合并 PR、启动 GPU 或启用 LIVE。\n"
+    },
+    {
+      "owner": "Agent 3",
+      "source": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6231130146",
+      "reviewedCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+      "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+      "status": "ACK",
+      "createdAt": "2026-10-17T07:19:20Z",
+      "body": "# AGENT 3 ACK — durable-live-2 STOP FINAL CONTRACT\n\nAgent 3 最终复审：新的 Stop 同步契约与既有自然插话、单一 COMMENT Turn 和流式语义单元续讲兼容，**无新增契约阻塞**。本 ACK 仅覆盖以下固定版本。\n\n- 完整审核 SHA：`c7fd46209d3cbc6f58541dba8b4e1c85609c823e`。\n- 独立实算 normative digest：`3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1`。\n- 已执行 `git fetch origin` 和 PR head fetch；发布前 PR HEAD 仍为该 SHA，OPEN / Draft。从指定 Git blobs 读取 manifest，逐一重算 **22 个 normative 文件**的 SHA256，再重算 canonical sorted path→hash map digest，与 manifest 全部一致。\n- **输入摘要纠正：**本轮任务文本给出的 `3c0c317ed00f6fa4d2cf15ef3f61fc002d53ee9f1b407458bb28b1` 只有54位，缺少 `4bb22bf02d`，不是完整 SHA256。本 ACK 使用上述64位实算值，它与固定 SHA 的 manifest 以及 [Agent 2 正式 ACK](https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6231052237) 一致；没有把两串摘要宣称为相同。\n\n## Turn Manager / Streaming 结论\n\n1. **一条 COMMENT 仍只有一个 Turn、Attempt、Utterance、Generation 和全局 START。** Unit2 使用新 Artifact / grant / execution，不另建 COMMENT。对比上一 Receiver ACK，Turn、SpeechSegment、ContentPlan、RestoreSnapshot、Slot 五个业务对象定义完全未变。\n2. **正常 Finish 不是 Run Stop。** 可信当前单元 Finish 在最终本地 gate 内关闭该 execution、递增 barrier，返回 STAGED_CLOSED，不写 Run tombstone、不重置媒体时钟或 ordinal。独立探针覆盖 Prepare-before-Drain 与 Drain-before-late-Prepare；后者虚拟等待3秒并经可信商品 authority fixture 验证同值事实后，Unit2 仍在原 parent registration / 业务身份下成功消费。两种顺序均 START=1、独立单元 latch=2、once-TTS=2。\n3. **真正 Stop 才写不可逆 Run tombstone。** 本地关闭不依赖 Backend Stop 已送达；旧 Grant、ticket、Permit、重新 Stage 或查询不能重开该 Run。协调 Backend Stop 后，Unit2 授权被拒绝。正常单元完成不会误触发这条终止规则。\n4. **已消费但 Stop 截断 ACK 必须保留 UNKNOWN。** 独立在最终正 ACK 前注入仅 Guardian 本地 Stop：Backend latch 保持1，Guardian audit/query 为 UNKNOWN，TTS=0、media=0；重复 Consume 均拒绝，不能删 latch、补发 ticket、重建 true ACK 或提前完成回答。已有 Stop/ACK-loss/进程重启回归同样通过。\n5. **旧单元迟到消息不可跨 execution。** 独立使用旧 Unit1 execution 携带新的 Unit2 Permit，media、Renew、Finish 全部 `STALE_EXECUTION`。真实 PCM/GPU 异步提交与返回仍须携带原 execution / Artifact / sample-PTS 归属，不能读取当前 slot 重新贴标签；Mock 拒绝旧标识不等于真实 lineage 已实现。\n6. **Stop 与最终 Media Handoff / Consume ACK / Renew / Finish 共用本地短 gate。** RPC、fsync、Observer、网络/背压等待均在 gate 外；外部结果返回后重验 barrier、完整身份、channel、状态和期限，最终检查与有界非阻塞接受不可分离。Stop 先赢则后续动作拒绝；动作先赢只算 Stop 前事件。137项回归含真实线程模型竞争、外部操作暂停时 Stop 可完成，以及32同 Grant/ordinal竞争。模型 enqueue/计数不是物理交付证明，transport/decoder/sink 自己的不可逆边界仍须复核；跨机器传播仍受既有短 Permit/watchdog 边界约束，不能声称零延迟撤回已交付媒体。\n7. **业务 Slot 与商品 cursor 不随 COMMENT 单元 Finish 前移。** 回答必须 seal、连续所有单元可信 drain、再经既有 CONTROL 业务提交和 Turn Manager 仲裁。独立探针确认单元间和全部 drain 但未 seal 时均不能 complete，seal+全部 drain 后才终结。UNKNOWN / Stop / 崩溃不构成业务完成证据或自动重播许可；原 Agent 3 UNKNOWN、Stop、自然插话与续讲回归保持通过。\n8. **首句仍无全文等待门槛。** 独立异步探针将 provider EOF 挂起，在未 seal 且 provider 未结束时，已完成首个完整单元的 bootstrap / Prepare / Permit / START / Backend latch / Guardian ACK / Runtime once-TTS 模型路径。新增 Stop gate 不引入 EOF 依赖。该探针使用已验证语义单元 fixture，没有运行真实 DeepSeek、语义识别或 TTS。\n9. **期限与事实规则未放宽。** 正常长句可以续当前 Permit / 同值 FactObservation；续期不会再次 START / Consume / TTS，不能复活已关闭/UNKNOWN execution，也不能继续交付过期或改变的商品事实。\n10. **延迟仅作预算，不宣称达标。** Registrar / Authority 往返、签名/CAS、DB提交、fsync、最终证明交换、本地 Stop gate 和有界队列接受成本都必须计入后续实测。测试中的超时是死锁检测，既不是首句耗时也不是P50/P95 SLA结果。\n\n## 本轮独立实际测试\n\n使用固定 SHA 的现有只读 checkout，关闭 Python bytecode / pytest cache；原 Agent 3 checkout 只运行既有回归，没有新建 Worktree 或分支：\n\n- `python -m unittest tests.test_contracts tests.test_durable_live_contracts tests.test_durable_answer_contracts tests.test_answer_contract_repairs tests.test_receiver_contracts tests.test_receiver_stop_races -v`：**137/137 PASS，18.480s**，包含原99项和38项 Stop 回归；不是引用其他 Agent 的 PASS。\n- `python scripts/validate-answer-contract.py`：PASS，132 definitions / 25 core + 13 private operations / 12 FSM / 13 vectors / 313 protected hashes / 3 Stop scenarios。\n- `python scripts/validate-durable-live-contracts.py`：PASS，44 frozen files / 20 operations / 4 vectors。\n- `PYTHONPATH=runtime python -m pytest -p no:cacheprovider runtime/tests/test_durable_live_journal.py -q`：**11 PASS，0.38s**。\n- 原 Agent 3 `backend`：`go test -count=1 -race ./internal/turnmanager ./internal/contentplan/...`：**3 packages PASS**（2.130s / 1.388s / 1.390s）；这是原模块回归，不是共享接线或v2生产实现验收。\n- `GO111MODULE=off go test ./contracts/v0.5/durable-live-2/examples/go/receiver`：接口样例编译通过，**no test files**。\n- 额外独立 stdin 模型探针：EOF阻塞首句、两种Prepare/Drain顺序及迟到Unit2、旧execution携新Permit拒绝、seal/all-drain完成门槛、Stop截断ACK保持UNKNOWN、协调Stop拒绝Unit2，以及五个业务schema比对，全部 PASS。\n- `git diff --check` PASS；相对上次 Receiver ACK，Backend / Runtime / 生产Guardian / Worker / infra guardian 及原语义/Receiver测试文件无改动。\n\n**NOT TESTED：**真实 PostgreSQL 竞争/rollback/提交崩溃、OS/IPC进程与凭据隔离、真实fsync故障及重启、物理Guardian和各transport/decoder/队列/sink输出边界、可信尾部与required ranges、真实Runtime异步媒体lineage、DeepSeek/XiaoYa/SoulX/GPU、Chrome/WebRTC/RTMP/观众音画、首句及Stop同步成本和所有时延SLA。不能将契约/CPU/Mock PASS 升格为生产安全、audible exactly-once或真实GPU验收。\n\n原 `AstraLive-agent-3` / `feat/v05-turn-manager` 工作区干净，HEAD仍为 `ed2ebb235cb89e4b10b8a6f9670c6a1be00b1511`。未新建Agent/Worktree/分支，未修改开发代码或main、未合并、未启动GPU或启用Durable LIVE。本ACK不代替Agent4对新digest的确认、Agent1最终CCR决定或后续生产实现验收。\n"
+    },
+    {
+      "owner": "Agent 4",
+      "source": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6231145490",
+      "reviewedCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+      "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+      "status": "ACK",
+      "createdAt": "2026-10-17T07:20:57Z",
+      "body": "AGENT 4 ACK — durable-live-2 STOP FINAL CONTRACT\n\nReviewed commit: `c7fd46209d3cbc6f58541dba8b4e1c85609c823e`\n\nNormative digest: `3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1`\n\n本轮独立复审通过，**未发现剩余的 Stop 最终接口契约实质阻塞**。此 ACK 仅适用于上述完整 SHA/digest，重新确认改变的 normative bytes；之前8bca277/607c的 Receiver ACK 仅保留为历史记录。\n\n已 fetch origin；发布前再次查询 PR HEAD 等于固定 SHA，仍 OPEN/Draft、无 auto-merge。逐一从固定 Git blobs 重算 **22 个 normative 文件**的 SHA256，再重算 canonical sorted path→hash map digest，全部一致。阅读了 [Agent2本轮正式ACK](https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6231052237)，但下面测试及复现均由 Agent4 独立执行。\n\n### A/B/C 原始交错独立对比\n\n直接取提交中保留的 `reproduce_abc.py`，只在每段外捕获预期拒绝，未改变 actor 操作、Stop 顺序或 Query 注入点。在此前审核的8bca277 archive与本次固定提交分别执行；旧 archive 的关键源码也重新与 Git blobs 比对一致。\n\n| 场景 | 旧版实际复现 | 本轮固定版本 |\n| --- | --- | --- |\n| A：本地 Stop 已完成，Backend 尚未 Stop，再 Consume | true ACK / ACTIVE_UNIT / TTS=1 | **RUN_STOPPED**；Backend registration仍ACTIVE，latch=0，slot为空，TTS=0、media=0 |\n| B：Media Authority read完成、返回前Stop | accepted=true，Guardian已FENCED，media=1 | **CONSUMPTION_UNKNOWN**；media=0；TTS保持原已启动的1次，无新增 |\n| C：Backend已消费，最后proof query返回前Stop | true ACK仍返回，Backend latch=1 | **CONSUMPTION_UNKNOWN**；无true ACK，latch=1保留，UNKNOWN local audit，slot为空，TTS=0、media=0 |\n\n这三段旧版失败的负例在新版均按预期拒绝；不是只根据新增测试的名称判断覆盖。\n\n### 最终契约判断\n\n1. **本地 Stop 独立且不可逆。** Run tombstone不依赖Backend Stop；Consume及所有执行路径先查本地合法状态/tombstone，Stage、fresh proof、旧ticket/Grant、Restart和新物理安装不能清除旧Run的Stop。无关Run的Stop不关闭当前Run。新执行仍须已有的合法新业务身份、fence和注册流程。\n2. **最终检查与动作共用短同步边界。** Stage/Stop/Finish/Restart与Consume最终激活+ACK、Renew证明提交、Media序号+有界接收、Finish关闭共享本地gate。外部结果返回后以及最终提交前比较barrier/Guardian incarnation、完整注册与执行/Artifact/peer/channel/当前证明期限。Stop先赢则拒绝，admission先赢则事件必须排在Stop前；不存在check→unlock/await→accept窗口。\n3. **外部工作在锁外。** Authority RPC、Backend Commit等待、fsync、Observer、网络/背压等待均不能占本地gate；最终临界区仅做有界非阻塞提交。Backend唯一latch仍由短SQL事务/原run锁域持有，未向Guardian/Runtime增加SQL或CONTROL权限。38项新增测试已覆盖原A/B/C、最后ACK/handoff钩子、Renew/Finish、外部暂停、64轮线程Stop竞争、32-way重复消费/ordinal等遗漏边界。\n4. **消耗后的歧义不变成执行许可。** Commit先赢、Stop后截断ACK时，Backend已消费latch不回滚/删除；Guardian仅保留UNKNOWN审计，不激活或重发true ACK/ticket。查询/普通回执不能恢复消费资格。旧Epoch/Generation/进程/Guardian、失效Permit/事实、FENCED/CLOSING/UNKNOWN继续fail-closed。\n5. **Unit1 Finish不是Run Stop，也不是业务完成。** trusted Finish关闭本单元、增加barrier而不写Run tombstone；Backend trusted drain确认后，Unit2沿用同一个COMMENT Turn/Attempt/Generation/parent并取得独立单元Grant/execution，不重复全局START。局部Finish或accepted media不推进业务cursor，也不能替代JournalConfirm/最终sealed completion；迟到Unit1继续拒绝。\n6. **实现边界清楚且兼容当前集成方向。** 已检查现有Guardian service、Runtime IPC seam、publisher/decoder源码。本契约可由隔离的v2适配实现，无需新增消费授权来源或权限；但目前集成的PR10仍是默认未启用的attempt-scoped v1组件。它现有的publisher终端flush/退出、每Attempt计数和v1 Runtime adapter不能直接当成连续v2单元的实现。\n7. **模型enqueue不是物理输出。** 真正的Runtime IPC/子进程消息、连续publisher、transport/decoder/每个required sink必须携带原始barrier/execution/Artifact lineage，在各自不可逆输出边界再次核验；等待在gate外，接收提交有界且可撤销。不能把父进程锁、ACK返回或media_count当作阻止旧子进程mux/发送的证据。Observer必须关联实际终止单元尾部与连续required ranges；Session/Provider Binding更替须复核授权、epoch/Generation/output binding与可信fence。保持PCM/PTS/Credit及GPU Binary Wire原语义。\n\n### 本轮实际执行\n\n固定SHA的临时git archive，仅使用既有Python环境；没有checkout/merge，也没有改当前integration代码。\n\n| 验证 | 实际结果 |\n| --- | --- |\n| `python -m unittest tests.test_contracts tests.test_durable_live_contracts tests.test_durable_answer_contracts tests.test_answer_contract_repairs tests.test_receiver_contracts tests.test_receiver_stop_races -v` | **137/137 PASS，19.515s**：原99 + 新38；原99测试文件相对8bca277无修改 |\n| `python scripts/validate-answer-contract.py` | PASS：132 definitions、25 core + 13 private operations、12 FSM、13 vectors、313 protected hashes、3 typed Stop scenarios |\n| `python scripts/validate-durable-live-contracts.py` | PASS：44 frozen files、20 operations、4 vectors |\n| `python -m pytest runtime/tests/test_durable_live_journal.py -q` | **11/11 PASS，0.42s** |\n| `GO111MODULE=off go test ./contracts/v0.5/durable-live-2/examples/go/receiver` | 接口示例编译通过，**no test files** |\n| Agent4额外独立Stop边界脚本 | **12/12 PASS**；另行保存，不计入137 |\n| 原始A/B/C对比 | 旧版3项均可复现；新版3项均预期拒绝，作为负例对比，不重复计入独立测试数量 |\n| digest / wire / compatibility / `git diff --check` | PASS；22文件精确匹配；Schema移除description后结构完全相同，13接口route/role/字段等定义相同；集成基线是祖先 |\n\n额外12项包含：Stage source暂停时Stop可完成；Backend commit reply暂停时Stop不被阻塞且保留latch/UNKNOWN；最后Consume proof暂停时只做本地Stop（Backend仍ACTIVE）也拒绝ACK；Renew proof暂停；Observer期间Guardian重启；两个Finish callback并发只有一次关闭/一次barrier增加；preStop ACK晚交给Runtime不启动TTS；Restart+新物理安装不清除Run tombstone；local Finish不产生业务drain/Unit2 Grant；查询间无关Run Stop的负对照；各最终提交均持有同一gate；双单元drain保持前缀证据/连续ordinal/一次global START且不冒充sealed业务完成。线程等待的timeout仅为死锁检测，不是Stop时延SLA。\n\n当前 `integration/v05-durable-live` HEAD保持 `546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7`，工作树干净。相对integration，Backend/Runtime/生产Guardian/infra guardian/GPU Worker/冻结契约路径无源码变化；Frozen v1.1及durable-live-1由既有回归和protected hashes覆盖。没有GPU Wire、PTS或Credit修改。临时快照内 `agent4-review-evidence/` 保留命令、原始日志、独立脚本、A/B/C前后JSON及SHA/digest/兼容检查JSON，未写入开发分支。\n\n**ACK只覆盖本次Stop接口契约与contract/mock语义，不代表生产安全/功能验收、audible exactly-once或整体v0.5 ACCEPTED。** 真实PostgreSQL多连接/rollback/崩溃，OS/IPC身份隔离、真实fsync与重启、进程/凭据fencing、跨子进程的可撤销输出边界、连续decoder/sink与真实drain、Session/Binding接线、GPU/Chrome/WebRTC/RTMP及观众端时延均仍需后续实现与验收，本轮没有把它们标PASS。已在Stop前交付的媒体无法撤回；跨进程传播仍有既有短Permit/watchdog窗口，未宣称零延迟物理隔离。\n\n此ACK不替代Agent3的新digest确认或Agent1最终CCR决定。**本轮未合并PR9，未新建Agent/Worktree/分支，未修改integration/main，未启用Durable LIVE或启动GPU。**\n"
+    }
+  ],
+  "testEvidence": {
+    "contracts": {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_contracts",
+        "tests.test_durable_live_contracts",
+        "tests.test_durable_answer_contracts",
+        "tests.test_answer_contract_repairs",
+        "tests.test_receiver_contracts",
+        "tests.test_receiver_stop_races",
+        "-v"
+      ],
+      "exitCode": 0,
+      "passed": 137,
+      "metadataPath": "docs/v0.5/ccr/evidence/stop-2026-10-17/contracts.json",
+      "logPath": "docs/v0.5/ccr/evidence/stop-2026-10-17/contracts.log",
+      "logSha256": "f10ee94315275de8b0d434a84f16f162f6031d598ca0fb8d877ef3e441bbec97"
+    },
+    "runtime-journal": {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "runtime/tests/test_durable_live_journal.py",
+        "-q"
+      ],
+      "exitCode": 0,
+      "passed": 11,
+      "metadataPath": "docs/v0.5/ccr/evidence/stop-2026-10-17/runtime-journal.json",
+      "logPath": "docs/v0.5/ccr/evidence/stop-2026-10-17/runtime-journal.log",
+      "logSha256": "549eb36bd17fc1d9f75b26ff95107782b74ab21ef0ff2a32c4a8d29afa8b3d03"
+    }
+  },
+  "plannedApprovalRecordFiles": [
+    "docs/v0.5/ccr/CCR-ADL-001-ACKS.json",
+    "docs/v0.5/ccr/CCR-ADL-001-FINAL-APPROVAL.json",
+    "docs/v0.5/ccr/CCR-ADL-001-FINAL-HANDOFF.md",
+    "docs/v0.5/ccr/evidence/final-approval-2026-10-17/verification.json"
+  ],
+  "plannedRecordFilesAreNonNormative": true,
+  "currentAction": "approval and handoff only; no development/merge/enablement/GPU",
+  "finalDecision": {
+    "status": "CCR APPROVED FOR IMPLEMENTATION",
+    "decisionEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6231271734",
+    "issueDecisionEvidence": "https://github.com/leileiya1/AstraLive/issues/7#issuecomment-6231275931",
+    "approvedFrozenCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+    "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+    "allRequiredAcksReceived": true
+  },
+  "recordLayerPolicy": "Pre-approval ACKS.json is explicitly historical; FINAL-APPROVAL.json is current authoritative ledger. No validator/test/code or22 normative files changed.",
+  "postRecordValidation": {
+    "currentApprovalLedgerConsistent": true,
+    "normativeManifestByteIdentical": true,
+    "all22NormativeHashesUnchanged": true,
+    "validator": {
+      "command": "/tmp/astralive-agent2-python/bin/python scripts/validate-answer-contract.py",
+      "exitCode": 0,
+      "result": "132 definitions /25 core+13 private /12 FSM /13 vectors /313 protected /3 Stop scenarios"
+    },
+    "frozenValidator": {
+      "command": "/tmp/astralive-agent2-python/bin/python scripts/validate-durable-live-contracts.py",
+      "exitCode": 0,
+      "result": "44 frozen /20 operations /4 vectors"
+    },
+    "full137And11": "Verified complete committed evidence at approved SHA; not unnecessarily rerun in this documentation-only turn",
+    "gitDiffCheck": "PASS"
+  }
+}
