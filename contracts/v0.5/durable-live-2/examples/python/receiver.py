@@ -235,104 +235,227 @@ class BackendAuthority:
             return dict(requestId=q['requestId'],registration=copy.deepcopy(self.registration))
 
 class GuardianReceiver:
+    """Local lock serializes ONLY bounded state commits, never RPC/fsync/observer.
+
+    Returning an ACK / incrementing media_count models nonblocking enqueue at
+    that locked linearization point, not delivery over a real transport.
+    """
     def __init__(self,authority,c,supervisor,clock):
         self.clock=clock;self.suspend_clock=clock;self.authority=authority;self.c=c;self.supervisor=supervisor;self.peer=supervisor.start_peer('OUTPUT_GUARDIAN')
         self.key=Ed25519PrivateKey.generate();self.key_id=ident('key');supervisor.keys[self.key_id]=self.key.public_key();supervisor.key_owners[self.key_id]=self.peer.principalId
-        self.lock=threading.RLock();self.barrier=0;self.staged=None;self.local={};self.observer_fixture=None;self.before_fsync=None;self.after_commit=None;self.media_count=0;self.unit_media={};self.active_execution_id=None;self.barrier_state='FENCED';self.stops=set();self.finished_units=set();self.last_media_sequence=-1
+        self.lock=threading.Lock();self.barrier=0;self.staged=None;self.local={};self.local_audit={};self.proof_refs={}
+        self.observer_fixture=None;self.before_fsync=None;self.after_commit=None
+        self.before_consume_ack=None;self.before_handoff=None;self.before_renew_commit=None;self.before_finish_commit=None
+        self.media_count=0;self.unit_media={};self.active_execution_id=None;self.barrier_state='FENCED';self.stops=set();self.finished_units=set();self.last_media_sequence=-1
+        self.linearized=[]
+
+    def _event(self,kind,execution=None):
+        # Called only under self.lock; a bounded mock of the handoff/audit edge.
+        self.linearized.append(dict(kind=kind,barrierRevision=self.barrier,
+                                    runId=self.staged['runId'] if self.staged else None,executionId=execution))
+
+    def _admit(self,runtime,barrier=None):
+        # A captured barrier is invalid after Stop, Finish, Stage or Restart.
+        if barrier is not None:require(barrier==self.barrier,'CONSUMPTION_UNKNOWN')
+        require(self.staged is not None,'BOOTSTRAP_REQUIRED')
+        require(self.staged['runId'] not in self.stops,'RUN_STOPPED')
+        require(self.barrier_state in ('STAGED_CLOSED','ACTIVE_UNIT'),'CONSUMPTION_UNKNOWN')
+        self.supervisor.check(self.peer,'OUTPUT_GUARDIAN');self.supervisor.check(runtime,'REGISTERED_RUNTIME')
+        b=self.staged
+        require(runtime.principalId==b['runtimePrincipalId'] and runtime.incarnation==b['runtimeIncarnation'],'FORBIDDEN')
+        require(self.peer.incarnation==b['guardianIncarnation'],'GUARDIAN_INCARNATION_MISMATCH')
+        return b
+
+    def _consume_admission(self,runtime,q,barrier=None):
+        b=self._admit(runtime,barrier)
+        require(q['references']['bootstrapId']==b['bootstrapId'],'BOOTSTRAP_REQUIRED')
+        require(q['expectedGenerationId']==b['generationId'],'GENERATION_MISMATCH')
+        require(q['expectedGuardianIncarnation']==b['guardianIncarnation'],'GUARDIAN_INCARNATION_MISMATCH')
+        if self.barrier_state=='ACTIVE_UNIT':
+            record=self.local.get(self.active_execution_id);require(record is not None,'CONSUMPTION_UNKNOWN')
+            require(record['binding']['grantId']==q['references']['grantId'],'ACTIVE_UNIT_CONFLICT')
+        return b
+
+    def _execution_request(self,runtime,q,barrier=None):
+        self._admit(runtime,barrier)
+        record=self.local.get(q['executionId']);require(record is not None,'CONSUMPTION_UNKNOWN')
+        require(q['executionId']==self.active_execution_id and q['executionId'] not in self.finished_units,'STALE_EXECUTION')
+        require(self.barrier_state=='ACTIVE_UNIT','STALE_EXECUTION')
+        require(q['artifactId']==record['binding']['artifactId'] and q['artifactHash']==record['binding']['artifactHash'],'ANSWER_CONFLICT')
+        require(record['runtimePrincipalId']==runtime.principalId and record['runtimeIncarnation']==runtime.incarnation and record['channelBinding']==runtime.channelBinding,'FORBIDDEN')
+        require(record['registrationHash']==self.c.digest(self.staged),'CONSUMPTION_UNKNOWN')
+        return record
+
+    def _check_snapshot(self,snap,refs,revision,record=None):
+        # Authority transport supplies this document, never Runtime JSON. Pure
+        # comparisons only: safe to repeat at each local final commit boundary.
+        r=snap['registration'];b=r['binding']
+        require(r['state']=='ACTIVE' and b==self.staged and r['registrationHash']==self.c.digest(b),'REGISTRATION_REVOKED')
+        require(r['revision']==revision,'STATE_CONFLICT')
+        require(refs['bootstrapId']==b['bootstrapId'],'BOOTSTRAP_REQUIRED')
+        for key in ('artifactId','artifactHash'):
+            require(snap['artifact'][key]==refs[key] and snap['artifactRegistration'][key]==refs[key],'ANSWER_CONFLICT')
+        require(snap['artifactRegistration']['bindingHash']==r['registrationHash'],'ANSWER_CONFLICT')
+        require(snap['grant']['grantId']==refs['grantId'] and snap['permit']['permitId']==refs['permitId'],'ANSWER_CONFLICT')
+        for row in (snap['artifact'],snap['grant'],snap['permit'],snap['observation']):
+            for key,value in b.items():
+                if key in row:require(row[key]==value,'GENERATION_MISMATCH' if key=='generationId' else 'ANSWER_CONFLICT')
+        if record is not None:
+            require(snap['consumption']==dict(state='CONSUMED',receiptId=record['receiptId']),'CONSUMPTION_UNKNOWN')
+            for key,value in record['binding'].items():
+                for row in (snap['grant'],snap['permit'],snap['observation']):
+                    if key in row:require(row[key]==value,'ANSWER_CONFLICT')
+
     def stage(self,control,q):
         self.c.validate('ReceiverStageRequest',q);self.supervisor.check(control,'CONTROL_REGISTRAR');b=q['binding']
-        observed=self.supervisor.read_installation(self.peer,wire(self.c,physicalInstallProofRef=b['physicalInstallProofRef'],expectedBindingHash=self.c.digest(b)))['installation']
-        require(observed['guardianPrincipalId']==self.peer.principalId,'GUARDIAN_INCARNATION_MISMATCH')
-        require(b['runId'] not in self.stops,'RUN_STOPPED')
-        require(not self.local,'STATE_CONFLICT')
-        if self.staged is not None:
-            require(self.staged==b,'STATE_CONFLICT')
-        self.barrier+=1;self.barrier_state='STAGED_CLOSED'
-        self.staged=copy.deepcopy(b);self.audit_runtime_principal=b['runtimePrincipalId']
-        from datetime import datetime,timezone
-        now=self.clock()
-        receipt=dict(contractRevision='durable-live-2',receiverRevision='receiver-1',installationRevision=observed['installationRevision'],stageReceiptId=ident('stage'),challenge=q['challenge'],guardianPrincipalId=self.peer.principalId,guardianIncarnation=self.peer.incarnation,keyId=self.key_id,bindingHash=self.c.digest(b),authorityIssuedAt=q['challengeIssuedAt'],validUntil=q['challengeExpiresAt'],state='CLOSED_STAGED')
-        receipt['signature']=base64.b64encode(self.key.sign(self.c.canonical(receipt))).decode()
-        return dict(requestId=q['requestId'],receipt=receipt)
-    def consume(self,runtime,q):
-        self.c.validate('ReceiverConsumeRequest',q);self.supervisor.check(runtime,'REGISTERED_RUNTIME')
+        with self.lock:barrier=self.barrier;guardian=self.peer
+        observed=self.supervisor.read_installation(guardian,wire(self.c,physicalInstallProofRef=b['physicalInstallProofRef'],expectedBindingHash=self.c.digest(b)))['installation']
         with self.lock:
-            barrier=self.barrier;snap=self.authority.snapshot(self.peer,wire(self.c,references=q['references']))['snapshot'];b=snap['registration']['binding']
-            require(runtime.principalId==b['runtimePrincipalId'],'FORBIDDEN')
-            require(q['expectedGenerationId']==b['generationId'],'GENERATION_MISMATCH')
-            require(q['expectedGuardianIncarnation']==self.peer.incarnation==b['guardianIncarnation'],'GUARDIAN_INCARNATION_MISMATCH')
-            if self.barrier_state=='ACTIVE_UNIT' and self.active_execution_id in self.local:
-                require(self.local[self.active_execution_id]['binding']['grantId']==q['references']['grantId'],'ACTIVE_UNIT_CONFLICT')
-            sent_mono,sent_suspend=self.clock(),self.suspend_clock()
-            out=self.authority.commit(self.peer,wire(self.c,consumeTicket=q['consumeTicket'],references=q['references'],consumeRequestId=q['consumeRequestId'],runtimeIncarnation=runtime.incarnation,runtimePrincipalId=runtime.principalId,channelBinding=runtime.channelBinding,expectedRegistrationRevision=q['expectedRegistrationRevision']))
-            if not out['consumeAuthorized']:return dict(out,requestId=q['requestId'])
-            deadline=Deadline(out['consumeTiming'],sent_mono,sent_suspend);deadline.check(self.clock,self.suspend_clock)
-            if self.before_fsync:self.before_fsync()
-            record=out['consumption'];self.local[record['binding']['executionId']]=copy.deepcopy(record)  # models fsync before ACK
-            self.active_execution_id=record['binding']['executionId'];self.barrier_state='ACTIVE_UNIT'
-            if self.after_commit:self.after_commit()
-            require(barrier==self.barrier,'CONSUMPTION_UNKNOWN')
-            self.authority.snapshot(self.peer,wire(self.c,references=q['references']))
-            deadline.check(self.clock,self.suspend_clock)
-            remaining=deadline.remaining(self.clock,self.suspend_clock)
-            return dict(out,requestId=q['requestId'],consumeTiming=dict(remainingGrantMs=remaining,remainingProofMs=remaining,safetyMarginMs=100))
-    def renewal(self,runtime,execution_id,permit_id):
-        self.supervisor.check(runtime,'REGISTERED_RUNTIME')
-        record=self.local.get(execution_id);require(record is not None,'CONSUMPTION_UNKNOWN')
-        require(execution_id==self.active_execution_id and execution_id not in self.finished_units,'STALE_EXECUTION')
-        require(record['runtimePrincipalId']==runtime.principalId and record['channelBinding']==runtime.channelBinding,'FORBIDDEN')
-        a=record['binding'];refs=dict(bootstrapId=record['bootstrapId'],artifactId=a['artifactId'],artifactHash=a['artifactHash'],grantId=a['grantId'],permitId=permit_id)
+            require(barrier==self.barrier and guardian==self.peer,'CONSUMPTION_UNKNOWN')
+            require(observed['guardianPrincipalId']==self.peer.principalId,'GUARDIAN_INCARNATION_MISMATCH')
+            require(b['runId'] not in self.stops,'RUN_STOPPED')
+            require(not self.local and self.barrier_state in ('FENCED','STAGED_CLOSED'),'STATE_CONFLICT')
+            if self.staged is not None:
+                require(self.barrier_state=='STAGED_CLOSED' and self.staged==b,'STATE_CONFLICT')
+            self.barrier+=1;self.barrier_state='STAGED_CLOSED'
+            self.staged=copy.deepcopy(b);self.audit_runtime_principal=b['runtimePrincipalId']
+            receipt=dict(contractRevision='durable-live-2',receiverRevision='receiver-1',installationRevision=observed['installationRevision'],stageReceiptId=ident('stage'),challenge=q['challenge'],guardianPrincipalId=self.peer.principalId,guardianIncarnation=self.peer.incarnation,keyId=self.key_id,bindingHash=self.c.digest(b),authorityIssuedAt=q['challengeIssuedAt'],validUntil=q['challengeExpiresAt'],state='CLOSED_STAGED')
+            receipt['signature']=base64.b64encode(self.key.sign(self.c.canonical(receipt))).decode()
+            return dict(requestId=q['requestId'],receipt=receipt)
+
+    def consume(self,runtime,q):
+        self.c.validate('ReceiverConsumeRequest',q)
+        with self.lock:
+            self._consume_admission(runtime,q);barrier=self.barrier;guardian=self.peer
+        snap=self.authority.snapshot(guardian,wire(self.c,references=q['references']))['snapshot']
+        with self.lock:
+            self._consume_admission(runtime,q,barrier)
+            self._check_snapshot(snap,q['references'],q['expectedRegistrationRevision'])
+        sent_mono,sent_suspend=self.clock(),self.suspend_clock()
+        out=self.authority.commit(guardian,wire(self.c,consumeTicket=q['consumeTicket'],references=q['references'],consumeRequestId=q['consumeRequestId'],runtimeIncarnation=runtime.incarnation,runtimePrincipalId=runtime.principalId,channelBinding=runtime.channelBinding,expectedRegistrationRevision=q['expectedRegistrationRevision']))
+        if not out['consumeAuthorized']:
+            with self.lock:
+                self._consume_admission(runtime,q,barrier)
+                return dict(out,requestId=q['requestId'])
+        record=out['consumption'];execution=record['binding']['executionId'];grant=record['binding']['grantId']
+        # Keep audit even if Stop won during Commit. This never arms execution,
+        # deletes Backend's latch or stores the plaintext consumeTicket.
+        with self.lock:
+            self.local_audit[grant]=dict(consumption=copy.deepcopy(record),state='UNKNOWN',fsynced=False)
+            self._consume_admission(runtime,q,barrier)
+        deadline=Deadline(out['consumeTiming'],sent_mono,sent_suspend);deadline.check(self.clock,self.suspend_clock)
+        if self.before_fsync:self.before_fsync()  # external/fsync phase: no local lock
+        with self.lock:
+            self.local_audit[grant]['fsynced']=True
+            self._consume_admission(runtime,q,barrier)
+        if self.after_commit:self.after_commit()
+        with self.lock:self._consume_admission(runtime,q,barrier)
         sent=self.clock(),self.suspend_clock()
-        snap=self.authority.snapshot(self.peer,wire(self.c,references=refs))['snapshot']
-        proof_deadline=Deadline(snap['timing'],*sent,grant=False);proof_deadline.check(self.clock,self.suspend_clock,'LEASE_LOST')
-        require(snap['consumption']['state']=='CONSUMED','CONSUMPTION_UNKNOWN')
-        return dict(requestId=ident('req'),state='PROOF_UPDATED',permit=snap['permit'],observation=snap['observation'],timing=dict(remainingGrantMs=0,remainingProofMs=proof_deadline.remaining(self.clock,self.suspend_clock),safetyMarginMs=100))
-    def _execution_request(self,runtime,q):
-        self.supervisor.check(runtime,'REGISTERED_RUNTIME')
-        record=self.local.get(q['executionId']);require(record is not None,'CONSUMPTION_UNKNOWN')
-        require(q['executionId']==self.active_execution_id and q['executionId'] not in self.finished_units,'STALE_EXECUTION')
-        require(q['artifactId']==record['binding']['artifactId'] and q['artifactHash']==record['binding']['artifactHash'],'ANSWER_CONFLICT')
-        return record
+        final=self.authority.snapshot(guardian,wire(self.c,references=q['references']))['snapshot']
+        proof=Deadline(final['timing'],*sent,grant=False)
+        if self.before_consume_ack:self.before_consume_ack()
+        with self.lock:
+            self._consume_admission(runtime,q,barrier)
+            self._check_snapshot(final,q['references'],q['expectedRegistrationRevision'],record)
+            require(self.barrier_state=='STAGED_CLOSED' and self.active_execution_id is None,'ACTIVE_UNIT_CONFLICT')
+            deadline.check(self.clock,self.suspend_clock);proof.check(self.clock,self.suspend_clock,'LEASE_LOST')
+            self.local[execution]=copy.deepcopy(record);self.proof_refs[execution]=copy.deepcopy(q['references'])
+            self.active_execution_id=execution;self.barrier_state='ACTIVE_UNIT';self.local_audit[grant]['state']='CONSUMED'
+            remaining=min(deadline.remaining(self.clock,self.suspend_clock),proof.remaining(self.clock,self.suspend_clock))
+            self._event('CONSUME_ACK',execution)
+            return dict(out,requestId=q['requestId'],consumeTiming=dict(remainingGrantMs=remaining,remainingProofMs=remaining,safetyMarginMs=100))
+
+    def _ongoing_proof(self,runtime,q):
+        with self.lock:
+            record=copy.deepcopy(self._execution_request(runtime,q));barrier=self.barrier;guardian=self.peer
+        a=record['binding'];refs=dict(bootstrapId=record['bootstrapId'],artifactId=a['artifactId'],artifactHash=a['artifactHash'],grantId=a['grantId'],permitId=q['permitId'])
+        sent=self.clock(),self.suspend_clock()
+        snap=self.authority.snapshot(guardian,wire(self.c,references=refs))['snapshot']
+        proof=Deadline(snap['timing'],*sent,grant=False)
+        with self.lock:self._final_execution(runtime,q,barrier,record,refs,snap,proof)
+        return barrier,record,refs,snap,proof
+
+    def _final_execution(self,runtime,q,barrier,record,refs,snap,proof):
+        require(self._execution_request(runtime,q,barrier)==record,'CONSUMPTION_UNKNOWN')
+        self._check_snapshot(snap,refs,record['registrationRevision'],record)
+        proof.check(self.clock,self.suspend_clock,'LEASE_LOST')
+
+    def renewal(self,runtime,execution_id,permit_id):
+        with self.lock:
+            record=self.local.get(execution_id);require(record is not None,'CONSUMPTION_UNKNOWN')
+            q=wire(self.c,executionId=execution_id,artifactId=record['binding']['artifactId'],artifactHash=record['binding']['artifactHash'],permitId=permit_id)
+        return self.renew(runtime,q)
+
     def renew(self,runtime,q):
-        self.c.validate('ReceiverRenewRequest',q);self._execution_request(runtime,q)
-        return dict(self.renewal(runtime,q['executionId'],q['permitId']),requestId=q['requestId'])
+        self.c.validate('ReceiverRenewRequest',q)
+        barrier,record,refs,snap,proof=self._ongoing_proof(runtime,q)
+        if self.before_renew_commit:self.before_renew_commit()
+        with self.lock:
+            self._final_execution(runtime,q,barrier,record,refs,snap,proof)
+            self.proof_refs[q['executionId']]=copy.deepcopy(refs);self._event('RENEW',q['executionId'])
+            return dict(requestId=q['requestId'],state='PROOF_UPDATED',permit=snap['permit'],observation=snap['observation'],timing=dict(remainingGrantMs=0,remainingProofMs=proof.remaining(self.clock,self.suspend_clock),safetyMarginMs=100))
+
     def media(self,runtime,q):
-        self.c.validate('ReceiverMediaRequest',q);self._execution_request(runtime,q)
-        require(q['sequence']==self.last_media_sequence+1,'BOUNDARY_CONFLICT')
-        self.renewal(runtime,q['executionId'],q['permitId']);self.media_count+=1
-        self.unit_media[q['executionId']]=self.unit_media.get(q['executionId'],0)+1;self.last_media_sequence=q['sequence']
-        return dict(requestId=q['requestId'],accepted=True)
+        self.c.validate('ReceiverMediaRequest',q)
+        barrier,record,refs,snap,proof=self._ongoing_proof(runtime,q)
+        if self.before_handoff:self.before_handoff()
+        with self.lock:
+            self._final_execution(runtime,q,barrier,record,refs,snap,proof)
+            require(q['sequence']==self.last_media_sequence+1,'BOUNDARY_CONFLICT')
+            # Nonblocking bounded handoff COMMIT is inside this same lock. A
+            # real sink waits/decodes outside it and rechecks at its own edge.
+            self.media_count+=1;self.unit_media[q['executionId']]=self.unit_media.get(q['executionId'],0)+1
+            self.last_media_sequence=q['sequence'];self.proof_refs[q['executionId']]=copy.deepcopy(refs)
+            self._event('MEDIA',q['executionId'])
+            return dict(requestId=q['requestId'],accepted=True)
+
     def finish_unit(self,runtime,q):
-        self.c.validate('ReceiverFinishUnitRequest',q);self.supervisor.check(runtime,'REGISTERED_RUNTIME')
-        record=self.local.get(q['executionId']);require(record is not None,'CONSUMPTION_UNKNOWN')
-        require(q['executionId']==self.active_execution_id and q['executionId'] not in self.finished_units,'STALE_EXECUTION')
-        require(q['artifactId']==record['binding']['artifactId'] and q['artifactHash']==record['binding']['artifactHash'],'ANSWER_CONFLICT')
-        self.supervisor.check(runtime,'REGISTERED_RUNTIME')
-        require(record['runtimePrincipalId']==runtime.principalId and record['channelBinding']==runtime.channelBinding,'FORBIDDEN')
-        require(self.unit_media.get(q['executionId'],0)>0,'CONSUMPTION_UNKNOWN')
-        # A separately injected trusted Observer mock supplies genuine proof in
-        # the contract fixture. A media count/PCM buffer alone cannot supply it.
-        require(self.observer_fixture is not None,'CONSUMPTION_UNKNOWN')
-        evidence=self.observer_fixture(copy.deepcopy(record['binding']))
+        self.c.validate('ReceiverFinishUnitRequest',q)
+        with self.lock:
+            record=copy.deepcopy(self._execution_request(runtime,q))
+            refs=self.proof_refs[q['executionId']];proof_q=dict(q,permitId=refs['permitId'])
+        barrier,record,refs,snap,proof=self._ongoing_proof(runtime,proof_q)
+        with self.lock:
+            self._final_execution(runtime,proof_q,barrier,record,refs,snap,proof)
+            require(self.unit_media.get(q['executionId'],0)>0,'CONSUMPTION_UNKNOWN');observer=self.observer_fixture
+            require(observer is not None,'CONSUMPTION_UNKNOWN')
+        evidence=observer(copy.deepcopy(record['binding']))  # trusted callback, outside lock
         require(evidence is not None,'CONSUMPTION_UNKNOWN')
-        self.finished_units.add(q['executionId']);self.barrier_state='STAGED_CLOSED'
-        return dict(requestId=q['requestId'],state='LOCAL_MEDIA_DRAINED',executionId=q['executionId'],artifactId=record['binding']['artifactId'],artifactHash=record['binding']['artifactHash'],evidence=evidence)
+        if self.before_finish_commit:self.before_finish_commit()
+        with self.lock:
+            self._final_execution(runtime,proof_q,barrier,record,refs,snap,proof)
+            self.finished_units.add(q['executionId']);self.active_execution_id=None
+            self.barrier+=1;self.barrier_state='STAGED_CLOSED'
+            self.local_audit[record['binding']['grantId']]['state']='DRAINED';self._event('FINISH',q['executionId'])
+            return dict(requestId=q['requestId'],state='LOCAL_MEDIA_DRAINED',executionId=q['executionId'],artifactId=record['binding']['artifactId'],artifactHash=record['binding']['artifactHash'],evidence=evidence)
+
     def query_consumption(self,runtime,q):
         self.c.validate('ReceiverQueryConsumptionRequest',q);self.supervisor.check(runtime,'REGISTERED_RUNTIME')
         require(runtime.principalId==getattr(self,'audit_runtime_principal',None),'FORBIDDEN')
         out=self.authority.consumption_summary(self.peer,wire(self.c,bootstrapId=q['bootstrapId'],grantId=q['grantId']))
-        # Metadata cannot recreate a lost local fsynced latch or Runtime ACK.
-        if out['summary']['state']=='CONSUMED' and not any(r['binding']['grantId']==q['grantId'] for r in self.local.values()):out['summary']['state']='UNKNOWN'
-        return dict(out,requestId=q['requestId'])
+        with self.lock:
+            if out['summary']['state']=='CONSUMED' and not any(r['binding']['grantId']==q['grantId'] for r in self.local.values()):out['summary']['state']='UNKNOWN'
+            return dict(out,requestId=q['requestId'])
+
     def stop(self,control,q):
         self.c.validate('ReceiverStopRequest',q);self.supervisor.check(control,'CONTROL_REGISTRAR')
-        self.stops.add(q['runId'])
-        if self.staged is None or q['runId']==self.staged['runId']:
-            self.barrier+=1;self.barrier_state='CLOSING';self.local.clear();self.barrier_state='FENCED'
-        return dict(requestId=q['requestId'],state='CLOSED_FENCED',runId=q['runId'])
+        with self.lock:
+            self.stops.add(q['runId'])  # irreversible for this Run, even before Backend Stop
+            if self.staged is None or q['runId']==self.staged['runId']:
+                self.barrier+=1;self.barrier_state='CLOSING'
+                for row in self.local_audit.values():
+                    if row['state']!='DRAINED':row['state']='UNKNOWN'
+                self.local.clear();self.proof_refs.clear();self.active_execution_id=None
+                self.barrier_state='FENCED';self._event('STOP')
+            return dict(requestId=q['requestId'],state='CLOSED_FENCED',runId=q['runId'])
+
     def restart(self):
-        self.barrier+=1;self.local.clear();self.staged=None;self.supervisor.retire(self.peer)
-        self.peer=self.supervisor.start_peer('OUTPUT_GUARDIAN')
+        with self.lock:
+            self.barrier+=1;self.local.clear();self.proof_refs.clear();self.active_execution_id=None;self.barrier_state='FENCED'
+            for row in self.local_audit.values():
+                if row['state']!='DRAINED':row['state']='UNKNOWN'
+            self._event('RESTART');self.staged=None;self.supervisor.retire(self.peer)
+            self.peer=self.supervisor.start_peer('OUTPUT_GUARDIAN')
 
 class RuntimeActor:
     def __init__(self,c,supervisor,guardian,producer,clock,peer=None):
