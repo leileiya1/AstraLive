@@ -5,6 +5,7 @@ supervisor at a shared/existing ingest server: it owns the configured instance.
 """
 
 import argparse
+import errno
 import fcntl
 import json
 import os
@@ -13,6 +14,32 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+
+import psutil
+
+
+def group_is_quiescent(pgid):
+    """Prove no live group member after EPERM; an unreadable census is unknown.
+
+    Darwin can return EPERM for a group containing only unreaped zombies.
+    Zombies cannot publish or fork. Never infer this from errno alone, and
+    never signal individual PIDs discovered by the census.
+    """
+    try:
+        for process in psutil.process_iter(["pid"]):
+            try:
+                if (
+                    os.getpgid(process.pid) == pgid
+                    and process.status() != psutil.STATUS_ZOMBIE
+                ):
+                    return False
+            except (ProcessLookupError, psutil.NoSuchProcess):
+                continue
+            except (OSError, psutil.Error):
+                return False
+    except (OSError, psutil.Error):
+        return False
+    return True
 
 
 def main():
@@ -65,11 +92,12 @@ def main():
             except ProcessLookupError:
                 pass
             except OSError as exc:
-                cleanup_unproven = True
-                print(
-                    "OUTPUT_FENCE_UNPROVEN: group cleanup errno=" + str(exc.errno),
-                    file=sys.stderr,
-                )
+                if exc.errno != errno.EPERM or not group_is_quiescent(p.pid):
+                    cleanup_unproven = True
+                    print(
+                        "OUTPUT_FENCE_UNPROVEN: group cleanup errno=" + str(exc.errno),
+                        file=sys.stderr,
+                    )
         for p in children:
             try:
                 p.wait(timeout=1)
