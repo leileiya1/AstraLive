@@ -1,0 +1,13 @@
+import os,sys
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+os.environ.pop("ASTRALIVE_DURABLE_LIVE_ENABLED",None)
+from tests.test_contracts import real_app
+from runtime.app.events import MemoryEventPublisher
+app=real_app(MemoryEventPublisher())
+assert not any("durable-live-2" in getattr(route,"path","") or "receiver-1" in getattr(route,"path","") for route in app.routes)
+os.environ["ASTRALIVE_DURABLE_LIVE_ENABLED"]="true"
+try:real_app(MemoryEventPublisher())
+except RuntimeError as e:assert "OUTPUT_FENCE_UNPROVEN" in str(e)
+else:raise AssertionError("Durable LIVE was enabled")
+print("PASS: default legacy app, no v2 routes; true rejected OUTPUT_FENCE_UNPROVEN")

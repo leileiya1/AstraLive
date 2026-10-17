@@ -1,0 +1,6 @@
+package durablelive
+import "testing"
+func TestAgent4BaselineDefaultOff(t *testing.T) {
+ for _, s := range []string{"", "false"} { if err := CheckLiveAdmission(s); err != nil { t.Fatal(err) } }
+ if err := CheckLiveAdmission("true"); err == nil || err.Error() != "OUTPUT_FENCE_UNPROVEN" { t.Fatalf("unexpected enable outcome: %v", err) }
+}

@@ -1,0 +1,84 @@
+[
+  {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_contracts",
+      "tests.test_durable_live_contracts",
+      "tests.test_durable_answer_contracts",
+      "tests.test_answer_contract_repairs",
+      "tests.test_receiver_contracts",
+      "tests.test_receiver_stop_races",
+      "-v"
+    ],
+    "cwd": "/tmp/astralive-agent4-approved-baseline-dxsmd7l8",
+    "envAdditions": {},
+    "log": "contracts-137.txt",
+    "exitCode": 0,
+    "elapsedSeconds": 19.822
+  },
+  {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/validate-answer-contract.py"
+    ],
+    "cwd": "/tmp/astralive-agent4-approved-baseline-dxsmd7l8",
+    "envAdditions": {},
+    "log": "candidate-validator.txt",
+    "exitCode": 0,
+    "elapsedSeconds": 0.22
+  },
+  {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/validate-durable-live-contracts.py"
+    ],
+    "cwd": "/tmp/astralive-agent4-approved-baseline-dxsmd7l8",
+    "envAdditions": {},
+    "log": "frozen-validator.txt",
+    "exitCode": 0,
+    "elapsedSeconds": 0.124
+  },
+  {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "pytest",
+      "runtime/tests/test_durable_live_journal.py",
+      "-q"
+    ],
+    "cwd": "/tmp/astralive-agent4-approved-baseline-dxsmd7l8",
+    "envAdditions": {},
+    "log": "journal-11.txt",
+    "exitCode": 0,
+    "elapsedSeconds": 0.532
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./contracts/v0.5/durable-live-2/examples/go/receiver"
+    ],
+    "cwd": "/tmp/astralive-agent4-approved-baseline-dxsmd7l8",
+    "envAdditions": {
+      "GO111MODULE": "off"
+    },
+    "log": "receiver-go.txt",
+    "exitCode": 0,
+    "elapsedSeconds": 0.09
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./..."
+    ],
+    "cwd": "/tmp/astralive-agent4-approved-baseline-dxsmd7l8/backend",
+    "envAdditions": {},
+    "log": "backend-go.txt",
+    "exitCode": 0,
+    "elapsedSeconds": 2.646
+  }
+]

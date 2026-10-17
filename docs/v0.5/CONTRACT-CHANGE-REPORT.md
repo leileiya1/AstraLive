@@ -1,5 +1,7 @@
 # CCR-ADL-001: durable answer preparation
 
+当前决策：CCR-ADL-001已由Agent1正式批准，三方同pin ACK齐备，PR9已正常合入integration。权威审批见 [FINAL-APPROVAL](ccr/CCR-ADL-001-FINAL-APPROVAL.json)，当前实施边界见 [IMPLEMENTATION-BASELINE.md](IMPLEMENTATION-BASELINE.md)。下面旧BLOCKED审查保留为历史证据，不改变任何获批22规范文件。
+
 Review request: https://github.com/leileiya1/AstraLive/issues/7.
 
 Status: **PENDING Agent 1 + affected Agent 2/3 owner ACK**. Agent 4 ACKs the proposal only. No approved contract change; active revision remains `durable-live-1`. Real COMMENT integration is **BLOCKED**.

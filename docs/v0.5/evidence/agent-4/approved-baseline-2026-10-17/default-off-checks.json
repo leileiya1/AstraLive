@@ -1,0 +1,29 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/durablelive",
+      "-run",
+      "^TestAgent4BaselineDefaultOff$",
+      "-count=1",
+      "-v"
+    ],
+    "cwd": "/tmp/astralive-agent4-approved-baseline-dxsmd7l8/backend",
+    "exitCode": 0,
+    "log": "go-default-off.txt",
+    "elapsedSeconds": 1.37,
+    "scope": "isolated temporary test; calls unchanged production admission function; no services"
+  },
+  {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "agent4-review-evidence/check_flag.py"
+    ],
+    "cwd": "/tmp/astralive-agent4-approved-baseline-dxsmd7l8",
+    "exitCode": 0,
+    "log": "python-default-off.txt",
+    "elapsedSeconds": 0.222,
+    "scope": "isolated temporary test; calls unchanged production admission function; no services"
+  }
+]

@@ -1,8 +1,10 @@
 # Agent 4 handoff
 
+本轮最新状态：CCR-ADL-001已获批且PR9经正常merge `0eed2d030c3440cd8770568d9317fca5dc981bf0` 合入integration。当前开发约束/唯一开工pin发布方式、DTO归属、000007迁移预约、Agent2/3/5任务包见 [IMPLEMENTATION-BASELINE.md](IMPLEMENTATION-BASELINE.md)。以下早期PR9 BLOCKED/未合并及旧测试结果为历史记录，不再表示当前审批状态；生产实现/验收仍BLOCKED，LIVE拒绝保持。
+
 Final conclusion: **ASTRALIVE V0.5 BLOCKED**. Integration branch: `integration/v05-durable-live`. Draft PR: https://github.com/leileiya1/AstraLive/pull/8. Do not merge/enable as accepted v0.5.
 
-Read PR-9-10-REVIEW.md, INTEGRATION-REPORT.md, RELEASE-GATES.md and CONTRACT-CHANGE-REPORT.md first. CCR-ADL-001 is submitted to Agent 1/affected owners at https://github.com/leileiya1/AstraLive/issues/7; Agent4 has posted an explicit BLOCKED review of PR9 (not an ACK); keep durable-live-1 unchanged and COMMENT fail-closed.
+Read IMPLEMENTATION-BASELINE.md and the current FINAL-APPROVAL ledger first. Earlier blocking reviews remain in PR-9-10-REVIEW.md as historical evidence; Agent4's final Stop ACK and Agent1 approval supersede those candidate blocks. Keep durable-live-1 unchanged and production COMMENT fail-closed until approved v2 implementation and acceptance.
 
 ## Implemented entrypoints
 
@@ -24,8 +26,8 @@ The supplied interpreter path is the test environment used here; another host mu
 
 ## Outstanding work
 
-Approve and implement CCR with coordinated contract upgrade and additive answer-fact artifact migration. Complete/verify the staged Guardian credential/socket/FFmpeg/WebRTC ownership at the Linux/container and real Session boundary. Implement trusted principal registration plus complete formal Session/Binding/Worker lifecycle, correct real ingress mapping and production SCRIPT/COMMENT executors with real drain observations. Wire Deployment.Run/Controller only after those gates. Run the full production crash matrix, real GPU/Chrome/RTMP and latency/mixed load. No production credentials or GPU access were used in this integration.
+Implement the approved CCR with isolated v2 DTOs, clients and additive answer-fact artifact migration. Complete/verify the staged Guardian credential/socket/FFmpeg/WebRTC ownership at the Linux/container and real Session boundary. Implement trusted principal registration plus complete formal Session/Binding/Worker lifecycle, correct real ingress mapping and production SCRIPT/COMMENT executors with real drain observations. Wire Deployment.Run/Controller only after those gates. Run the full production crash matrix, real GPU/Chrome/RTMP and latency/mixed load. No production credentials or GPU access were used in this integration.
 
 Tested integration code commit: `597ece2840c9a56b3998739cd86a4c749588bdeb`; its 360 source-file hashes match verified-release/source-manifest.json. The verification summary records that match. Verified-release evidence commit: `ea6d53ef9e66615d0d3dad8ad75b3bad6f85734a`. Final branch HEAD is delivered separately and is visible on Draft PR #8. Main is not changed by this handoff.
 
-Current tested source after disabled PR10 merge and conservative cleanup repair: `5fb16e6315b56ad8c5398e4417456b21d4c7eaff`. Original PR10 head remains an ancestor; PR9 is not merged. Latest raw results/source manifests and reviewed digest/comment link are in `evidence/agent-4/pr-review-2026-10-17/`. Real production Guardian, v2 executor/approval, short continuous segments/WebRTC evidence and formal Session integration remain blockers.
+Historical tested production source after disabled PR10 merge and conservative cleanup repair: `5fb16e6315b56ad8c5398e4417456b21d4c7eaff`. Original PR10 head remains an ancestor; PR9 is now merged at the new baseline above. Latest raw results/source manifests and reviewed digest/comment link are in `evidence/agent-4/pr-review-2026-10-17/`. Real production Guardian, v2 executor implementation, short continuous segments/WebRTC evidence and formal Session integration remain blockers; architecture approval is complete.

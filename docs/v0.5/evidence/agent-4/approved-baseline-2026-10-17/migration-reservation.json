@@ -1,0 +1,79 @@
+{
+  "scannedRefs": [
+    {
+      "ref": "origin/main",
+      "sha": "7fe5d24810e2df348c58dd7748e97ffbe5cff384",
+      "paths": [
+        "backend/db/migrations/000001_init.sql",
+        "backend/db/migrations/000002_live_room_active_product.sql",
+        "backend/db/migrations/000003_user_configuration.sql",
+        "backend/db/migrations/000004_session_integration.sql",
+        "backend/db/migrations/000005_interaction_receipts.sql"
+      ]
+    },
+    {
+      "ref": "origin/integration/v05-durable-live",
+      "sha": "0eed2d030c3440cd8770568d9317fca5dc981bf0",
+      "paths": [
+        "backend/db/migrations/000001_init.sql",
+        "backend/db/migrations/000002_live_room_active_product.sql",
+        "backend/db/migrations/000003_user_configuration.sql",
+        "backend/db/migrations/000004_session_integration.sql",
+        "backend/db/migrations/000005_interaction_receipts.sql",
+        "backend/db/migrations/000006_durable_live.sql"
+      ]
+    },
+    {
+      "ref": "origin/design/ccr-adl-001-answer-contract",
+      "sha": "c14085c67368c295eee53a6e4b01ac68ba3cd4a6",
+      "paths": [
+        "backend/db/migrations/000001_init.sql",
+        "backend/db/migrations/000002_live_room_active_product.sql",
+        "backend/db/migrations/000003_user_configuration.sql",
+        "backend/db/migrations/000004_session_integration.sql",
+        "backend/db/migrations/000005_interaction_receipts.sql",
+        "backend/db/migrations/000006_durable_live.sql"
+      ]
+    },
+    {
+      "ref": "origin/feat/v05-durable-recovery",
+      "sha": "55c4dad81545a04946b4d58b706fc6abb14e67fa",
+      "paths": [
+        "backend/db/migrations/000001_init.sql",
+        "backend/db/migrations/000002_live_room_active_product.sql",
+        "backend/db/migrations/000003_user_configuration.sql",
+        "backend/db/migrations/000004_session_integration.sql",
+        "backend/db/migrations/000005_interaction_receipts.sql",
+        "backend/db/migrations/000006_durable_live.sql"
+      ]
+    },
+    {
+      "ref": "origin/feat/v05-turn-manager",
+      "sha": "ed2ebb235cb89e4b10b8a6f9670c6a1be00b1511",
+      "paths": [
+        "backend/db/migrations/000001_init.sql",
+        "backend/db/migrations/000002_live_room_active_product.sql",
+        "backend/db/migrations/000003_user_configuration.sql",
+        "backend/db/migrations/000004_session_integration.sql",
+        "backend/db/migrations/000005_interaction_receipts.sql"
+      ]
+    },
+    {
+      "ref": "origin/feat/v05-output-guardian",
+      "sha": "84738b37c2ee39cc4b8f3a1d449802171ba0a7e0",
+      "paths": [
+        "backend/db/migrations/000001_init.sql",
+        "backend/db/migrations/000002_live_room_active_product.sql",
+        "backend/db/migrations/000003_user_configuration.sql",
+        "backend/db/migrations/000004_session_integration.sql",
+        "backend/db/migrations/000005_interaction_receipts.sql",
+        "backend/db/migrations/000006_durable_live.sql"
+      ]
+    }
+  ],
+  "reservedPath": "backend/db/migrations/000007_answer_stream.sql",
+  "owner": "Agent 2",
+  "created": false,
+  "applied": false,
+  "excludedChain": "exp/v0.5-soulx-staging-golden has incompatible 000006-000008; never imported"
+}

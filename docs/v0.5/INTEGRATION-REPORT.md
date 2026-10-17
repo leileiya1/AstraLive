@@ -1,5 +1,7 @@
 # Agent 4 integration report
 
+2026-10-17获批后集成：PR9已合并为 `0eed2d030c3440cd8770568d9317fca5dc981bf0`，22规范文件/digest保持获批原字节；本轮实际测试与开发分工见 [IMPLEMENTATION-BASELINE.md](IMPLEMENTATION-BASELINE.md)。契约门槛已解除；生产v2 DTO/SQL/IPC/媒体实现验收未完成。以下审批未完成/PR9未合并文字与更早实测属于各自历史阶段。
+
 **ASTRALIVE V0.5 BLOCKED**. This is a reviewable integration with implemented SQL adapters and conservative production entrypoints, not a completed real-media v0.5 deployment.
 
 Fresh remote baseline and ordered merge strategy: INTEGRATION-PLAN.md. Original Agent 2 and Agent 3 commits are merge ancestors. Frozen durable-live-1, v1.1 DTOs/contracts, legacy migrations and Worker/media protocol files remain unchanged. CCR request: https://github.com/leileiya1/AstraLive/issues/7 (no approval recorded at initial publication).

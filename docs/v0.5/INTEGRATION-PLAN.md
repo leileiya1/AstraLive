@@ -1,5 +1,7 @@
 # Agent 4 integration plan
 
+2026-10-17获批后基线：PR9已正常merge至integration，冻结SHA/digest未变。下一阶段按 [IMPLEMENTATION-BASELINE.md](IMPLEMENTATION-BASELINE.md) 与任务包执行；以下原顺序/CCR未批准的描述保留为历史规划，不再表示当前审批阻塞。生产接线与实测尚未完成。
+
 Baseline verified by fresh `git fetch origin --prune` and GitHub PR queries on 2026-10-16.
 
 | Source | Full SHA | Verified state |

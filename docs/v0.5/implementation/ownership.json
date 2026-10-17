@@ -1,0 +1,53 @@
+{
+  "baselineId": "v05-ccr-adl-001-approved-20261017",
+  "contractMergeCommit": "0eed2d030c3440cd8770568d9317fca5dc981bf0",
+  "frozenCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+  "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+  "productionEnabled": false,
+  "dispatchStatus": "TASK_PACKAGES_PREPARED_NOT_STARTED",
+  "migrationReservation": {
+    "path": "backend/db/migrations/000007_answer_stream.sql",
+    "owner": "Agent 2",
+    "scope": "formal integration migration chain only",
+    "sqlCreated": false,
+    "sqlApplied": false,
+    "highestExisting": "000006_durable_live.sql"
+  },
+  "owners": {
+    "Agent 2": [
+      "backend/db/migrations/000007_answer_stream.sql",
+      "backend/internal/durablelivev2/authority/**",
+      "backend/internal/durablelive/** except v1 generated wire/spec"
+    ],
+    "Agent 3": [
+      "backend/internal/contentplan/**",
+      "backend/internal/turnmanager/**"
+    ],
+    "Agent 5": [
+      "output_guardian/**",
+      "infra/guardian/**"
+    ],
+    "Agent 4": [
+      "scripts/durable-live/generate_v2_wire.py",
+      "backend/internal/durablelivev2/wire/**",
+      "astralive_contracts/durable_live_v2/**",
+      "backend/internal/durableintegration/**",
+      "backend/internal/app/** shared wiring",
+      "backend/internal/httpapi/** shared wiring",
+      "backend/cmd/server/main.go",
+      "backend/internal/eventbus/consumer.go",
+      "backend/internal/interaction/scheduler.go",
+      "runtime/app/main.py",
+      "runtime/app/session.py",
+      "runtime/app/session_binding.py",
+      "runtime/app/bound_media.py",
+      "runtime/app/media_fanout.py",
+      "runtime/app/guardian_media.py",
+      "runtime/app/durable_live_journal.py",
+      "runtime/app/durable_live_segments.py",
+      "runtime/app/production_launcher.py"
+    ]
+  },
+  "rule": "Other owners submit shared-file patches for Agent4 integration; no direct edits to another worktree or frozen normative files.",
+  "dtoStatus": "RESERVED_PLAN_ONLY_NOT_IMPLEMENTED"
+}
