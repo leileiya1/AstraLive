@@ -1,5 +1,7 @@
 # CCR-ADL-001 review result
 
+Current receiver-1 follow-up: [Receiver review result](RECEIVER-REVIEW-RESULT.md). It supersedes earlier candidate digests; final Agent4 ACK is pending.
+
 **2026-10-17: superseded by the [PR9 repair result](REPAIR-2026-10-17.md).** The old counts, commit and digest below are retained as historical review evidence; they do not describe the repaired candidate. Current owner status remains **CCR BLOCKED / PENDING RE-REVIEW**.
 
 ## Historical pre-repair result

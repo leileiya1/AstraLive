@@ -831,7 +831,9 @@
       "state": "STARTED",
       "revision": 2,
       "evidenceRef": "start_proof",
-      "answerGrant": null
+      "answerGrant": null,
+      "consumeTicket": null,
+      "consumeTiming": null
     }
   },
   {
@@ -1062,7 +1064,13 @@
         "authorizationScope": "UNIT_START_ONCE"
       },
       "state": "STARTED",
-      "answerRevision": 5
+      "answerRevision": 5,
+      "consumeTicket": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "consumeTiming": {
+        "remainingGrantMs": 800,
+        "remainingProofMs": 800,
+        "safetyMarginMs": 100
+      }
     }
   },
   {

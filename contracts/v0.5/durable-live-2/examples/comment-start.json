@@ -41,6 +41,12 @@
       "issuedAt": "2026-10-16T00:00:00Z",
       "expiresAt": "2026-10-16T00:00:00.800Z",
       "authorizationScope": "UNIT_START_ONCE"
+    },
+    "consumeTicket": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "consumeTiming": {
+      "remainingGrantMs": 800,
+      "remainingProofMs": 800,
+      "safetyMarginMs": 100
     }
   },
   "duplicateResponse": {
@@ -49,6 +55,8 @@
     "state": "STARTED",
     "revision": 3,
     "evidenceRef": "start_receipt",
-    "answerGrant": null
+    "answerGrant": null,
+    "consumeTicket": null,
+    "consumeTiming": null
   }
 }

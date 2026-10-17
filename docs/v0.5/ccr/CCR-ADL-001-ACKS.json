@@ -4,44 +4,55 @@
   "status": "CCR BLOCKED",
   "allRequiredAcksReceived": false,
   "reviewBase": "546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7",
-  "normativeDigest": "54d5d5e2fa4d1c135d186c1031f68e657f03c332e2473c61c6527be23d8bef57",
+  "normativeDigest": "607c0dd00755556bb2b6daec75f19fda41642fd6bac7472523ca3c048118b81b",
   "owners": [
     {
       "owner": "Agent 1",
-      "status": "ARCHITECTURE_SELECTED_NOT_FINAL_APPROVAL",
+      "status": "CANDIDATE_FROZEN_NOT_FINAL_APPROVAL",
       "scope": "incremental semantic artifacts with once-only START and unit grants",
       "evidence": "CCR-ADL-001.md"
     },
     {
       "owner": "Agent 2",
-      "status": "PENDING_RE_REVIEW",
+      "status": "ACK_PREVIOUS_CANDIDATE_RECONFIRM_DEFERRED_UNTIL_AGENT4",
       "scope": "migration, immutable artifact, transaction and grant semantics",
-      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227027243",
-      "previousCandidateStatus": "BLOCKED_ACK_WITHHELD",
-      "ackRequiredFor": "new repair commit and normative digest; previous candidate rejected"
+      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227591856",
+      "previousCandidateStatus": "ACK",
+      "ackRequiredFor": "new receiver-1 normative digest, only after Agent4 final interface ACK",
+      "previousAckCommit": "283f3b4578e8d8c98357ffb38301c959e5664509",
+      "previousAckNormativeDigest": "54d5d5e2fa4d1c135d186c1031f68e657f03c332e2473c61c6527be23d8bef57"
     },
     {
       "owner": "Agent 3",
-      "status": "PENDING_RE_REVIEW",
+      "status": "ACK_PREVIOUS_CANDIDATE_RECONFIRM_DEFERRED_UNTIL_AGENT4",
       "scope": "Turn Manager, fact validation and streaming semantics",
-      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227007221",
-      "previousCandidateStatus": "BLOCKED_ACK_WITHHELD",
-      "ackRequiredFor": "new repair commit and normative digest; previous candidate rejected"
+      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227581614",
+      "previousCandidateStatus": "ACK",
+      "ackRequiredFor": "new receiver-1 normative digest, only after Agent4 final interface ACK",
+      "previousAckCommit": "283f3b4578e8d8c98357ffb38301c959e5664509",
+      "previousAckNormativeDigest": "54d5d5e2fa4d1c135d186c1031f68e657f03c332e2473c61c6527be23d8bef57"
     },
     {
       "owner": "Agent 4",
-      "status": "PENDING_RE_REVIEW",
+      "status": "DIRECTION_ACCEPTED_FINAL_ACK_PENDING",
       "scope": "revision2 wire, executor and guardian integration",
-      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227008824",
+      "evidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227939254",
       "previousCandidateStatus": "BLOCKED_ACK_WITHHELD",
-      "ackRequiredFor": "new repair commit and normative digest; previous candidate rejected"
+      "ackRequiredFor": "full new commit/digest: registration, original ticket, two-hop ACK, slot and private authority interfaces",
+      "previousBlockingEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227620414"
     }
   ],
-  "lastCheckedAt": "2026-10-17T00:35:58.885079+00:00",
+  "lastCheckedAt": "2026-10-17T05:49:58.927017+00:00",
   "ackEvidenceSnapshots": [
     "evidence/issue7-final-comments.json",
     "evidence/pr9-ack-snapshot.json",
     "evidence/repair-2026-10-17/reviews-before.json"
   ],
-  "previousNormativeDigest": "aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744"
+  "previousNormativeDigest": "54d5d5e2fa4d1c135d186c1031f68e657f03c332e2473c61c6527be23d8bef57",
+  "reviewOrder": [
+    "Agent4 final receiver-interface ACK",
+    "Agent2 and Agent3 new-digest confirmation after Agent4",
+    "Agent1 final CCR decision"
+  ],
+  "receiverDirectionEvidence": "https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227939254"
 }

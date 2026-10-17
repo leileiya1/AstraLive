@@ -15,6 +15,8 @@ P=ROOT/'contracts/v0.5/durable-live-2/examples/python/reference.py'
 spec=importlib.util.spec_from_file_location('answer_oracle',P)
 r=importlib.util.module_from_spec(spec);spec.loader.exec_module(r)
 c=r.c
+receiver_spec=importlib.util.spec_from_file_location('receiver_mock',P.parent/'receiver.py')
+receiver=importlib.util.module_from_spec(receiver_spec);receiver_spec.loader.exec_module(receiver)
 
 class AnswerContractTests(unittest.TestCase):
     def setUp(self):
@@ -22,6 +24,8 @@ class AnswerContractTests(unittest.TestCase):
         self.command=objects['CommentCommand']
         self.artifacts=[objects['AnswerUnit1'],objects['AnswerUnit2']]
         self.j=r.JournalOracle(self.command,self.artifacts)
+        self.participants=receiver.Participants(self.j,c)
+        self.participants.bootstrap()
         self.rows={x['operationId']:x for x in c.load('examples/protocol.json')}
         self.prepare=copy.deepcopy(self.rows['JournalPrepareAnswer']['request'])
         self.start=copy.deepcopy(c.load('examples/comment-start.json')['request'])
@@ -47,7 +51,7 @@ class AnswerContractTests(unittest.TestCase):
     def test_schema_examples_states_protected_files_and_pending_ack(self):
         result=c.check_all()
         self.assertEqual(result['operations'],25)
-        self.assertEqual(result['definitions'],91)
+        self.assertEqual(result['definitions'],132)
 
     def test_same_prepare_receipt_never_authorizes_start_or_changes_revision(self):
         first=self.j.prepare(self.prepare)

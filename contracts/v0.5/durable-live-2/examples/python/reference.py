@@ -7,6 +7,7 @@ import copy
 import importlib.util
 from pathlib import Path
 import threading
+import secrets
 from datetime import datetime, timezone
 
 ROOT=Path(__file__).resolve().parents[5]
@@ -54,7 +55,9 @@ class JournalOracle:
         self.grant_states={};self.executions={};self.execution_states={}
         self.observations={};self.current_observations={}
         self.permits={};self.current_permits={}
-        self.generation_id=7;self.guardian_incarnation='guardian_process_demo'
+        self.generation_id=None;self.guardian_incarnation=None
+        self.registration_record=None;self.ticket_verifiers={}
+        self.registration_id=None  # populated only by trusted CONTROL stage/register
         self.runtime_alive=True
 
     def guard(self,q):
@@ -69,6 +72,7 @@ class JournalOracle:
         if self.lease_until<=self.now:fail('LEASE_LOST')
         if timestamp(self.command['payload']['expiresAt'])<=self.now:fail('COMMAND_EXPIRED')
         if self.units and self.units[0]['artifact']['productSnapshotVersion']!=self.snapshot:fail('PLAN_CHANGED')
+        if self.registration_id is None:fail('BOOTSTRAP_REQUIRED')
 
     def _identity(self,a):
         return {k:a[k] for k in ('tenantId','ownerId','runId','commandId','attemptId',
@@ -238,18 +242,36 @@ class JournalOracle:
         self.grant_states[grant['grantId']]='ISSUED'
         return copy.deepcopy(grant)
 
+    def consume_timing(self,grant,permit):
+        proof_end=min(timestamp(permit['expiresAt']),self.binding_until,self.lease_until,
+                      timestamp(self.command['payload']['expiresAt']))
+        return dict(remainingGrantMs=max(0,min(1000,round((timestamp(grant['expiresAt'])-self.now)*1000))),
+                    remainingProofMs=max(0,min(1000,round((proof_end-self.now)*1000))),safetyMarginMs=100)
+
+    def ticket_hash(self,grant,ticket):
+        b=self.registration_record
+        return c.digest(dict(domain='receiver-consume-ticket-1',contractRevision='durable-live-2',
+                             receiverRevision='receiver-1',grantId=grant['grantId'],
+                             registrationHash=b['registrationHash'],
+                             runtimePrincipalId=b['binding']['runtimePrincipalId'],ticket=ticket))
+
+    def mint_ticket(self,grant):
+        ticket=secrets.token_urlsafe(32)
+        self.ticket_verifiers[grant['grantId']]=self.ticket_hash(grant,ticket)
+        return ticket
+
     def start(self,q):
         c.validate('JournalStartRequest',q)
         with self._lock:
             self.guard(q)
-            if self.state!='ACCEPTED':return dict(startAuthorized=False,answerGrant=None,revision=self.inbox_revision)
+            if self.state!='ACCEPTED':return dict(startAuthorized=False,answerGrant=None,consumeTicket=None,consumeTiming=None,revision=self.inbox_revision)
             if not self.units:fail('ANSWER_NOT_PREPARED')
             u=self.units[0];a=u['artifact']
             if q['answerArtifactId']!=a['artifactId'] or q['answerArtifactHash']!=a['artifactHash']:fail('ANSWER_CONFLICT')
             if q['expectedInboxRevision']!=self.inbox_revision or q['expectedAnswerRevision']!=self.answer_revision:fail('STATE_CONFLICT')
             grant=self._grant(u,q['permitId'])
             self.state='STARTED';self.inbox_revision+=1;self.command_start_count+=1
-            return dict(startAuthorized=True,answerGrant=grant,revision=self.inbox_revision)
+            return dict(startAuthorized=True,answerGrant=grant,consumeTicket=self.mint_ticket(grant),consumeTiming=self.consume_timing(grant,self.permits[grant['permitId']]),revision=self.inbox_revision)
 
     def start_segment(self,q):
         c.validate('JournalStartAnswerSegmentRequest',q)
@@ -257,12 +279,13 @@ class JournalOracle:
             self.guard(q)
             u=self._unit(q['artifactId']);a=u['artifact']
             if q['artifactHash']!=a['artifactHash'] or q['answerId']!=a['answerId']:fail('ANSWER_CONFLICT')
-            if u['state']!='PREPARED':return dict(segmentStartAuthorized=False,grant=None)
+            if u['state']!='PREPARED':return dict(segmentStartAuthorized=False,grant=None,consumeTicket=None,consumeTiming=None)
             if self.state!='STARTED' or a['sequence']==1:fail('STATE_CONFLICT')
             if self.units[a['sequence']-2]['state']!='DRAINED':fail('ANSWER_GAP')
             if self.units[a['sequence']-2]['artifact']['artifactId'] not in self.drains:fail('EVIDENCE_CONFLICT')
             if q['expectedAnswerRevision']!=self.answer_revision:fail('STATE_CONFLICT')
-            return dict(segmentStartAuthorized=True,grant=self._grant(u,q['permitId']))
+            grant=self._grant(u,q['permitId'])
+            return dict(segmentStartAuthorized=True,grant=grant,consumeTicket=self.mint_ticket(grant),consumeTiming=self.consume_timing(grant,self.permits[grant['permitId']]))
 
     def _consume(self,artifact_id,grant):
         u=self._unit(artifact_id);a=u['artifact'];self.guard(a);self._live_execution(a)

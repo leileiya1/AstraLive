@@ -3216,6 +3216,26 @@
               "type": "null"
             }
           ]
+        },
+        "consumeTicket": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReceiverConsumeTicket"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "consumeTiming": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReceiverTiming"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -3224,7 +3244,9 @@
         "state",
         "revision",
         "evidenceRef",
-        "answerGrant"
+        "answerGrant",
+        "consumeTicket",
+        "consumeTiming"
       ],
       "additionalProperties": false,
       "allOf": [
@@ -3255,6 +3277,38 @@
           "then": {
             "properties": {
               "answerGrant": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "startAuthorized": {
+                "const": true
+              },
+              "answerGrant": {
+                "type": "object"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "consumeTicket": {
+                "$ref": "#/$defs/ReceiverConsumeTicket"
+              },
+              "consumeTiming": {
+                "$ref": "#/$defs/ReceiverTiming"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "consumeTicket": {
+                "type": "null"
+              },
+              "consumeTiming": {
                 "type": "null"
               }
             }
@@ -4632,6 +4686,26 @@
         },
         "answerRevision": {
           "$ref": "#/$defs/Revision"
+        },
+        "consumeTicket": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReceiverConsumeTicket"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "consumeTiming": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReceiverTiming"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -4645,7 +4719,9 @@
         "segmentStartAuthorized",
         "grant",
         "state",
-        "answerRevision"
+        "answerRevision",
+        "consumeTicket",
+        "consumeTiming"
       ],
       "additionalProperties": false,
       "allOf": [
@@ -4671,6 +4747,35 @@
               },
               "state": {
                 "const": "STARTED"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "segmentStartAuthorized": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "consumeTicket": {
+                "$ref": "#/$defs/ReceiverConsumeTicket"
+              },
+              "consumeTiming": {
+                "$ref": "#/$defs/ReceiverTiming"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "consumeTicket": {
+                "type": "null"
+              },
+              "consumeTiming": {
+                "type": "null"
               }
             }
           }
@@ -5531,6 +5636,9 @@
         },
         "finalState": {
           "const": "DRAINED"
+        },
+        "registration": {
+          "$ref": "#/$defs/ReceiverRegistration"
         }
       },
       "required": [
@@ -5542,7 +5650,1397 @@
         "handoffs",
         "globalStartCount",
         "unitGrantCount",
-        "finalState"
+        "finalState",
+        "registration"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverBootstrapBinding": {
+      "type": "object",
+      "properties": {
+        "bootstrapId": {
+          "$ref": "#/$defs/ID"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "roomId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "producerIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "commandId": {
+          "$ref": "#/$defs/ID"
+        },
+        "turnId": {
+          "$ref": "#/$defs/ID"
+        },
+        "utteranceId": {
+          "$ref": "#/$defs/ID"
+        },
+        "guardianId": {
+          "$ref": "#/$defs/ID"
+        },
+        "guardianIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "runtimePrincipalId": {
+          "$ref": "#/$defs/ID"
+        },
+        "physicalInstallProofRef": {
+          "$ref": "#/$defs/ID"
+        },
+        "runEpoch": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "generationId": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "outputBindingVersion": {
+          "$ref": "#/$defs/Revision"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "runtimeIncarnation": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "bootstrapId",
+        "tenantId",
+        "ownerId",
+        "roomId",
+        "runId",
+        "sessionId",
+        "producerIncarnation",
+        "attemptId",
+        "commandId",
+        "turnId",
+        "utteranceId",
+        "guardianId",
+        "guardianIncarnation",
+        "runtimePrincipalId",
+        "physicalInstallProofRef",
+        "runEpoch",
+        "generationId",
+        "outputBindingVersion",
+        "contractRevision",
+        "receiverRevision",
+        "runtimeIncarnation"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverBootstrapState": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "enum": [
+            "ACTIVE",
+            "REVOKED"
+          ]
+        }
+      },
+      "required": [
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverStageReceipt": {
+      "type": "object",
+      "properties": {
+        "stageReceiptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "challenge": {
+          "$ref": "#/$defs/ID"
+        },
+        "guardianPrincipalId": {
+          "$ref": "#/$defs/ID"
+        },
+        "guardianIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "keyId": {
+          "$ref": "#/$defs/ID"
+        },
+        "bindingHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "validUntil": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "state": {
+          "const": "CLOSED_STAGED"
+        },
+        "signature": {
+          "type": "string",
+          "contentEncoding": "base64",
+          "minLength": 80,
+          "maxLength": 96
+        },
+        "authorityIssuedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "installationRevision": {
+          "$ref": "#/$defs/Revision"
+        }
+      },
+      "required": [
+        "stageReceiptId",
+        "challenge",
+        "guardianPrincipalId",
+        "guardianIncarnation",
+        "keyId",
+        "bindingHash",
+        "validUntil",
+        "state",
+        "signature",
+        "authorityIssuedAt",
+        "contractRevision",
+        "receiverRevision",
+        "installationRevision"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverRegistration": {
+      "type": "object",
+      "properties": {
+        "binding": {
+          "$ref": "#/$defs/ReceiverBootstrapBinding"
+        },
+        "registrationHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "revision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "state": {
+          "enum": [
+            "ACTIVE",
+            "REVOKED"
+          ]
+        },
+        "registeredAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "stageReceiptId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "binding",
+        "registrationHash",
+        "revision",
+        "state",
+        "registeredAt",
+        "stageReceiptId"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverArtifactRegistration": {
+      "type": "object",
+      "properties": {
+        "bootstrapId": {
+          "$ref": "#/$defs/ID"
+        },
+        "answerId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "bindingHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "bootstrapId",
+        "answerId",
+        "artifactId",
+        "artifactHash",
+        "bindingHash",
+        "sequence",
+        "createdAt"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverReferences": {
+      "type": "object",
+      "properties": {
+        "bootstrapId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "grantId": {
+          "$ref": "#/$defs/ID"
+        },
+        "permitId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        }
+      },
+      "required": [
+        "bootstrapId",
+        "artifactId",
+        "grantId",
+        "permitId",
+        "artifactHash"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverConsumption": {
+      "type": "object",
+      "properties": {
+        "receiptId": {
+          "$ref": "#/$defs/ID"
+        },
+        "bootstrapId": {
+          "$ref": "#/$defs/ID"
+        },
+        "consumeRequestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runtimePrincipalId": {
+          "$ref": "#/$defs/ID"
+        },
+        "guardianPrincipalId": {
+          "$ref": "#/$defs/ID"
+        },
+        "channelBinding": {
+          "$ref": "#/$defs/Hash"
+        },
+        "registrationHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "registrationRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "binding": {
+          "$ref": "#/$defs/AnswerExecutionBinding"
+        },
+        "consumeIdentityHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "runtimeIncarnation": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "receiptId",
+        "bootstrapId",
+        "consumeRequestId",
+        "runtimePrincipalId",
+        "guardianPrincipalId",
+        "channelBinding",
+        "registrationHash",
+        "registrationRevision",
+        "binding",
+        "consumeIdentityHash",
+        "runtimeIncarnation"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverConsumptionState": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "enum": [
+            "UNCONSUMED",
+            "CONSUMED",
+            "DRAINED",
+            "UNKNOWN",
+            "FENCED"
+          ]
+        }
+      },
+      "required": [
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverConsumptionSummary": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "enum": [
+            "UNCONSUMED",
+            "CONSUMED",
+            "DRAINED",
+            "UNKNOWN",
+            "FENCED"
+          ]
+        },
+        "receiptId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "state",
+        "receiptId"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverAuthoritySnapshot": {
+      "type": "object",
+      "properties": {
+        "registration": {
+          "$ref": "#/$defs/ReceiverRegistration"
+        },
+        "artifactRegistration": {
+          "$ref": "#/$defs/ReceiverArtifactRegistration"
+        },
+        "artifact": {
+          "$ref": "#/$defs/AnswerArtifact"
+        },
+        "grant": {
+          "$ref": "#/$defs/AnswerGrant"
+        },
+        "grantState": {
+          "enum": [
+            "ISSUED",
+            "CONSUMED",
+            "EXPIRED",
+            "REVOKED",
+            "UNKNOWN"
+          ]
+        },
+        "permit": {
+          "$ref": "#/$defs/AnswerPlaybackPermit"
+        },
+        "observation": {
+          "$ref": "#/$defs/AnswerFactObservation"
+        },
+        "consumption": {
+          "$ref": "#/$defs/ReceiverConsumptionSummary"
+        },
+        "authorityTime": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "validUntil": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "timing": {
+          "$ref": "#/$defs/ReceiverTiming"
+        }
+      },
+      "required": [
+        "registration",
+        "artifactRegistration",
+        "artifact",
+        "grant",
+        "grantState",
+        "permit",
+        "observation",
+        "consumption",
+        "authorityTime",
+        "validUntil",
+        "timing"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverStageRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "binding": {
+          "$ref": "#/$defs/ReceiverBootstrapBinding"
+        },
+        "challenge": {
+          "$ref": "#/$defs/ID"
+        },
+        "challengeIssuedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "challengeExpiresAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "binding",
+        "challenge",
+        "challengeIssuedAt",
+        "challengeExpiresAt"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverStageResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "receipt": {
+          "$ref": "#/$defs/ReceiverStageReceipt"
+        }
+      },
+      "required": [
+        "requestId",
+        "receipt"
+      ],
+      "additionalProperties": false
+    },
+    "RegisterReceiverBootstrapRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "binding": {
+          "$ref": "#/$defs/ReceiverBootstrapBinding"
+        },
+        "receipt": {
+          "$ref": "#/$defs/ReceiverStageReceipt"
+        },
+        "expectedRegistrationRevision": {
+          "const": 0
+        },
+        "expectedRunRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "expectedLeaseVersion": {
+          "$ref": "#/$defs/Revision"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "binding",
+        "receipt",
+        "expectedRegistrationRevision",
+        "expectedRunRevision",
+        "expectedLeaseVersion"
+      ],
+      "additionalProperties": false
+    },
+    "RegisterReceiverBootstrapResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "registration": {
+          "$ref": "#/$defs/ReceiverRegistration"
+        }
+      },
+      "required": [
+        "requestId",
+        "registration"
+      ],
+      "additionalProperties": false
+    },
+    "RevokeReceiverBootstrapRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "bootstrapId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRegistrationRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "reason": {
+          "enum": [
+            "STOP",
+            "OLD_EPOCH",
+            "SESSION_REPLACED",
+            "RUNTIME_RESTART",
+            "GUARDIAN_RESTART",
+            "AUTHORITY_LOST"
+          ]
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "bootstrapId",
+        "expectedRegistrationRevision",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "RevokeReceiverBootstrapResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "registration": {
+          "$ref": "#/$defs/ReceiverRegistration"
+        }
+      },
+      "required": [
+        "requestId",
+        "registration"
+      ],
+      "additionalProperties": false
+    },
+    "QueryReceiverAuthorityRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "references": {
+          "$ref": "#/$defs/ReceiverReferences"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "references"
+      ],
+      "additionalProperties": false
+    },
+    "QueryReceiverAuthorityResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/ReceiverAuthoritySnapshot"
+        }
+      },
+      "required": [
+        "requestId",
+        "snapshot"
+      ],
+      "additionalProperties": false
+    },
+    "CommitReceiverConsumeRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "references": {
+          "$ref": "#/$defs/ReceiverReferences"
+        },
+        "consumeRequestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runtimePrincipalId": {
+          "$ref": "#/$defs/ID"
+        },
+        "channelBinding": {
+          "$ref": "#/$defs/Hash"
+        },
+        "expectedRegistrationRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "consumeTicket": {
+          "$ref": "#/$defs/ReceiverConsumeTicket"
+        },
+        "runtimeIncarnation": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "references",
+        "consumeRequestId",
+        "runtimePrincipalId",
+        "channelBinding",
+        "expectedRegistrationRevision",
+        "consumeTicket",
+        "runtimeIncarnation"
+      ],
+      "additionalProperties": false
+    },
+    "CommitReceiverConsumeResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "consumeAuthorized": {
+          "type": "boolean"
+        },
+        "consumption": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReceiverConsumption"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "summary": {
+          "$ref": "#/$defs/ReceiverConsumptionSummary"
+        },
+        "consumeTiming": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReceiverTiming"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "requestId",
+        "consumeAuthorized",
+        "consumption",
+        "summary",
+        "consumeTiming"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "consumeAuthorized": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "consumption": {
+                "$ref": "#/$defs/ReceiverConsumption"
+              },
+              "consumeTiming": {
+                "$ref": "#/$defs/ReceiverTiming"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "consumption": {
+                "type": "null"
+              },
+              "consumeTiming": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ReceiverConsumeRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "references": {
+          "$ref": "#/$defs/ReceiverReferences"
+        },
+        "consumeRequestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedGenerationId": {
+          "$ref": "#/$defs/Epoch"
+        },
+        "expectedGuardianIncarnation": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedRegistrationRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "consumeTicket": {
+          "$ref": "#/$defs/ReceiverConsumeTicket"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "references",
+        "consumeRequestId",
+        "expectedGenerationId",
+        "expectedGuardianIncarnation",
+        "expectedRegistrationRevision",
+        "consumeTicket"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverConsumeResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "consumeAuthorized": {
+          "type": "boolean"
+        },
+        "consumption": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReceiverConsumption"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "summary": {
+          "$ref": "#/$defs/ReceiverConsumptionSummary"
+        },
+        "consumeTiming": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReceiverTiming"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "requestId",
+        "consumeAuthorized",
+        "consumption",
+        "summary",
+        "consumeTiming"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "consumeAuthorized": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "consumption": {
+                "$ref": "#/$defs/ReceiverConsumption"
+              },
+              "consumeTiming": {
+                "$ref": "#/$defs/ReceiverTiming"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "consumption": {
+                "type": "null"
+              },
+              "consumeTiming": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ReceiverRenewRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "executionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "permitId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "executionId",
+        "permitId",
+        "artifactId",
+        "artifactHash"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverRenewResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "state": {
+          "const": "PROOF_UPDATED"
+        },
+        "permit": {
+          "$ref": "#/$defs/AnswerPlaybackPermit"
+        },
+        "observation": {
+          "$ref": "#/$defs/AnswerFactObservation"
+        },
+        "timing": {
+          "$ref": "#/$defs/ReceiverTiming"
+        }
+      },
+      "required": [
+        "requestId",
+        "state",
+        "permit",
+        "observation",
+        "timing"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverQueryConsumptionRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "bootstrapId": {
+          "$ref": "#/$defs/ID"
+        },
+        "grantId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "bootstrapId",
+        "grantId"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverQueryConsumptionResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "summary": {
+          "$ref": "#/$defs/ReceiverConsumptionSummary"
+        }
+      },
+      "required": [
+        "requestId",
+        "summary"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverMediaRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "executionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "permitId": {
+          "$ref": "#/$defs/ID"
+        },
+        "kind": {
+          "enum": [
+            "audio",
+            "video"
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ptsUs": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload": {
+          "type": "string",
+          "contentEncoding": "base64",
+          "maxLength": 9433088
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "executionId",
+        "permitId",
+        "kind",
+        "sequence",
+        "ptsUs",
+        "payload",
+        "artifactId",
+        "artifactHash"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverMediaResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "accepted": {
+          "const": true
+        }
+      },
+      "required": [
+        "requestId",
+        "accepted"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverFinishUnitRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "executionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "executionId",
+        "artifactId",
+        "artifactHash"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverFinishUnitResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "state": {
+          "const": "LOCAL_MEDIA_DRAINED"
+        },
+        "executionId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactId": {
+          "$ref": "#/$defs/ID"
+        },
+        "artifactHash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "evidence": {
+          "$ref": "#/$defs/Evidence"
+        }
+      },
+      "required": [
+        "requestId",
+        "state",
+        "executionId",
+        "artifactId",
+        "artifactHash",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverStopRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "runId"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverStopResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "state": {
+          "const": "CLOSED_FENCED"
+        },
+        "runId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "requestId",
+        "state",
+        "runId"
+      ],
+      "additionalProperties": false
+    },
+    "QueryReceiverConsumptionRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "bootstrapId": {
+          "$ref": "#/$defs/ID"
+        },
+        "grantId": {
+          "$ref": "#/$defs/ID"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "bootstrapId",
+        "grantId"
+      ],
+      "additionalProperties": false
+    },
+    "QueryReceiverConsumptionResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "summary": {
+          "$ref": "#/$defs/ReceiverConsumptionSummary"
+        }
+      },
+      "required": [
+        "requestId",
+        "summary"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverConsumeTicket": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{43}$",
+      "description": "256-bit opaque capability, ONLY first START/continuation response. Example fixtures only; never log production tickets or persist plaintext."
+    },
+    "ReceiverTiming": {
+      "type": "object",
+      "properties": {
+        "remainingGrantMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "remainingProofMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "safetyMarginMs": {
+          "const": 100
+        }
+      },
+      "required": [
+        "remainingGrantMs",
+        "remainingProofMs",
+        "safetyMarginMs"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverPhysicalInstallation": {
+      "type": "object",
+      "properties": {
+        "binding": {
+          "$ref": "#/$defs/ReceiverBootstrapBinding"
+        },
+        "installationRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "observedByPrincipalId": {
+          "$ref": "#/$defs/ID"
+        },
+        "guardianPrincipalId": {
+          "$ref": "#/$defs/ID"
+        },
+        "closedFenceProofRef": {
+          "$ref": "#/$defs/ID"
+        },
+        "state": {
+          "const": "CLOSED_INSTALLED"
+        }
+      },
+      "required": [
+        "binding",
+        "installationRevision",
+        "observedByPrincipalId",
+        "guardianPrincipalId",
+        "closedFenceProofRef",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "ReadReceiverPhysicalInstallationRequest": {
+      "type": "object",
+      "properties": {
+        "contractRevision": {
+          "const": "durable-live-2"
+        },
+        "receiverRevision": {
+          "const": "receiver-1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "physicalInstallProofRef": {
+          "$ref": "#/$defs/ID"
+        },
+        "expectedBindingHash": {
+          "$ref": "#/$defs/Hash"
+        }
+      },
+      "required": [
+        "contractRevision",
+        "receiverRevision",
+        "requestId",
+        "physicalInstallProofRef",
+        "expectedBindingHash"
+      ],
+      "additionalProperties": false
+    },
+    "ReadReceiverPhysicalInstallationResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "installation": {
+          "$ref": "#/$defs/ReceiverPhysicalInstallation"
+        }
+      },
+      "required": [
+        "requestId",
+        "installation"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverErrorResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/ID"
+        },
+        "code": {
+          "enum": [
+            "ACTIVE_UNIT_CONFLICT",
+            "ANSWER_CLOSED",
+            "ANSWER_CONFLICT",
+            "ANSWER_GAP",
+            "ANSWER_LIMIT_EXCEEDED",
+            "ANSWER_NOT_PREPARED",
+            "ANSWER_WINDOW_FULL",
+            "BINDING_EXPIRED",
+            "BOOTSTRAP_REQUIRED",
+            "BOUNDARY_CONFLICT",
+            "COMMAND_CONFLICT",
+            "COMMAND_EXPIRED",
+            "CONSUMPTION_CONFLICT",
+            "CONSUMPTION_UNKNOWN",
+            "CONTRACT_REVISION_MISMATCH",
+            "DEPENDENCY_UNAVAILABLE",
+            "EVIDENCE_CONFLICT",
+            "FACT_EXPIRED",
+            "FORBIDDEN",
+            "GENERATION_MISMATCH",
+            "GRANT_EXPIRED",
+            "GRANT_TICKET_INVALID",
+            "GUARDIAN_INCARNATION_MISMATCH",
+            "INVALID_ARGUMENT",
+            "LEASE_LOST",
+            "OUTPUT_FENCE_UNPROVEN",
+            "OVERLOADED",
+            "PLAN_CHANGED",
+            "RECOVERY_UNKNOWN",
+            "REGISTRATION_REVOKED",
+            "RESOURCE_NOT_FOUND",
+            "RUN_STOPPED",
+            "SEGMENT_TOO_LONG",
+            "SEMANTIC_BOUNDARY_INVALID",
+            "STALE_EXECUTION",
+            "STALE_RUN_EPOCH",
+            "STATE_CONFLICT",
+            "UNAUTHENTICATED"
+          ]
+        }
+      },
+      "required": [
+        "requestId",
+        "code"
+      ],
+      "additionalProperties": false
+    },
+    "ReceiverBarrierState": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "enum": [
+            "FENCED",
+            "STAGED_CLOSED",
+            "ACTIVE_UNIT",
+            "CLOSING",
+            "UNKNOWN"
+          ]
+        }
+      },
+      "required": [
+        "state"
       ],
       "additionalProperties": false
     }

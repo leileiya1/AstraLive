@@ -34,7 +34,9 @@
     "ANSWER_CLOSED": 409,
     "BINDING_EXPIRED": 409,
     "COMMAND_EXPIRED": 409,
-    "GRANT_EXPIRED": 409
+    "GRANT_EXPIRED": 409,
+    "BOOTSTRAP_REQUIRED": 409,
+    "REGISTRATION_REVOKED": 409
   },
   "operations": [
     {
@@ -710,7 +712,7 @@
       "requestSchema": "#/$defs/JournalStartRequest",
       "responseSchema": "#/$defs/JournalStartResponse",
       "successStatus": 200,
-      "semantics": "Single command CAS mints unit1 consume-once grant. expiresAt limits first consumption only. Repeats false/null. Consumed binding plus renewed same-identity permits/facts controls output; renewal never authorizes a new start.",
+      "semantics": "Single command CAS mints unit1 consume-once grant. expiresAt limits first consumption only. Repeats false/null. Consumed binding plus renewed same-identity permits/facts controls output; renewal never authorizes a new start. For COMMENT, the first true reply alone carries opaque consumeTicket plus DB remaining-time proof; persist only verifier. Duplicate/query/lost ACK never returns a ticket.",
       "errorCodes": [
         "UNAUTHENTICATED",
         "FORBIDDEN",
@@ -740,7 +742,9 @@
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
         "COMMAND_EXPIRED",
-        "GRANT_EXPIRED"
+        "GRANT_EXPIRED",
+        "BOOTSTRAP_REQUIRED",
+        "REGISTRATION_REVOKED"
       ]
     },
     {
@@ -754,7 +758,7 @@
       "requestSchema": "#/$defs/AcquireOutputPermitRequest",
       "responseSchema": "#/$defs/AcquireOutputPermitResponse",
       "successStatus": 200,
-      "semantics": "Renew proof for exact artifact/attempt/producer/epoch; Generation is fixed by trusted consumption binding in outer adapter. May refresh immutable same-value observation. No new consume/START authority, including after grant expiry.",
+      "semantics": "Require ACTIVE trusted pre-consumption ReceiverRegistration and immutable Artifact sub-binding. Generation/Guardian come only from that registration, never Runtime assertions or a post-START latch. Current same-binding permit/fact renewal cannot grant START or reconsume; receiver-protocol.json defines authority.",
       "errorCodes": [
         "UNAUTHENTICATED",
         "FORBIDDEN",
@@ -784,7 +788,9 @@
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
         "COMMAND_EXPIRED",
-        "GRANT_EXPIRED"
+        "GRANT_EXPIRED",
+        "BOOTSTRAP_REQUIRED",
+        "REGISTRATION_REVOKED"
       ]
     },
     {
@@ -930,7 +936,7 @@
       "requestSchema": "#/$defs/JournalPrepareAnswerRequest",
       "responseSchema": "#/$defs/JournalPrepareAnswerResponse",
       "successStatus": 200,
-      "semantics": "OPEN answer, authorized STARTED command: next prepare accepts predecessor STARTED or trusted DRAINED. Alias keys are atomically reserved to immutable descriptor/receipt before successful readback; no grant.",
+      "semantics": "OPEN answer, authorized STARTED command: next prepare accepts predecessor STARTED or trusted DRAINED. Alias keys are atomically reserved to immutable descriptor/receipt before successful readback; no grant. Require ACTIVE pre-consumption receiver registration in ACCEPTED (unit1) or STARTED; atomically write exact Artifact child binding and registered-Generation observation with the immutable descriptor/receipt.",
       "errorCodes": [
         "UNAUTHENTICATED",
         "FORBIDDEN",
@@ -960,7 +966,9 @@
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
         "COMMAND_EXPIRED",
-        "GRANT_EXPIRED"
+        "GRANT_EXPIRED",
+        "BOOTSTRAP_REQUIRED",
+        "REGISTRATION_REVOKED"
       ],
       "idempotencyIdentity": "scoped(operation,key) -> exact AnswerArtifact descriptor and original receipt; aliases have immutable unique bindings"
     },
@@ -975,7 +983,7 @@
       "requestSchema": "#/$defs/JournalStartAnswerSegmentRequest",
       "responseSchema": "#/$defs/JournalStartAnswerSegmentResponse",
       "successStatus": 200,
-      "semantics": "Next unit grant requires trusted predecessor DRAINED; one grant per unit within same command/Turn, consume-once before expiry. No regrant on renew/query/ACK loss.",
+      "semantics": "Next unit grant requires trusted predecessor DRAINED; one grant per unit within same command/Turn, consume-once before expiry. No regrant on renew/query/ACK loss. First true reply alone carries a new unit consumeTicket plus timing. Ticket/Grant is never recovered via Query; receiver-protocol.json defines consumption.",
       "errorCodes": [
         "UNAUTHENTICATED",
         "FORBIDDEN",
@@ -1005,7 +1013,9 @@
         "ANSWER_CLOSED",
         "BINDING_EXPIRED",
         "COMMAND_EXPIRED",
-        "GRANT_EXPIRED"
+        "GRANT_EXPIRED",
+        "BOOTSTRAP_REQUIRED",
+        "REGISTRATION_REVOKED"
       ]
     },
     {
@@ -1146,5 +1156,6 @@
   "approvalStatus": "PENDING_OWNER_ACK",
   "productionEnabled": false,
   "integrationBaseline": "546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7",
-  "predecessorRevision": "durable-live-1"
+  "predecessorRevision": "durable-live-1",
+  "privateReceiverProtocol": "receiver-protocol.json"
 }

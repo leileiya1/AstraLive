@@ -58,6 +58,12 @@ def validate_lifecycle_trace(trace):
     validate('AnswerLifecycleTrace',trace)
     def when(value):return datetime.fromisoformat(value.replace('Z','+00:00'))
     grant,binding=trace['grant'],trace['consumption']
+    registration=trace['registration']
+    if registration['state']!='ACTIVE':raise ValueError('REGISTRATION_REVOKED')
+    if digest(registration['binding'])!=registration['registrationHash']:raise ValueError('registration hash mismatch')
+    for key,value in registration['binding'].items():
+        if key in binding and binding[key]!=value:raise ValueError('bootstrap binding mismatch')
+    if when(registration['registeredAt'])>when(binding['consumedAt']):raise ValueError('BOOTSTRAP_REQUIRED')
     issued,consume,deadline=map(when,(grant['issuedAt'],binding['consumedAt'],grant['expiresAt']))
     if not issued<=consume<deadline:raise ValueError('GRANT_EXPIRED')
     keys=('tenantId','ownerId','runId','commandId','attemptId','sessionId','runEpoch',
@@ -128,8 +134,75 @@ def validate_stream(answer):
     if answer['state']=='COMPLETED' and prefix != len(artifacts):
         raise ValueError('cannot complete undrained answer')
 
+def receiver_ticket_verifier(registration,grant_id,ticket):
+    return digest(dict(domain='receiver-consume-ticket-1',contractRevision=REVISION,
+                       receiverRevision='receiver-1',grantId=grant_id,
+                       registrationHash=registration['registrationHash'],
+                       runtimePrincipalId=registration['binding']['runtimePrincipalId'],ticket=ticket))
+
+def check_receiver():
+    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+    import base64
+    protocol=load('receiver-protocol.json');ops={x['operationId']:x for x in protocol['operations']}
+    assert len(ops)==13 and protocol['productionEnabled'] is False
+    assert protocol['approvalStatus']=='DIRECTION_ACCEPTED_PENDING_FINAL_AGENT4_ACK'
+    assert len({(o['target'],o['path']) for o in ops.values()})==len(ops)
+    assert all(o['path'].startswith(('/internal/v0.5/durable-live-2/receiver/','/guardian/durable-live-2/','/registrar/receiver-1/')) for o in ops.values())
+    def closure(name,seen):
+        if name in seen:return
+        seen.add(name)
+        def walk(v):
+            if isinstance(v,dict):
+                if '$ref' in v:closure(v['$ref'].split('/')[-1],seen)
+                for value in v.values():walk(value)
+            elif isinstance(v,list):
+                for value in v:walk(value)
+        walk(SCHEMA['$defs'][name])
+    reachable=set()
+    for op in ops.values():
+        for side in ('requestSchema','responseSchema'):closure(op[side].split('/')[-1],reachable)
+    assert {'AnswerExecutionBinding','AnswerFactObservation','AnswerPlaybackPermit','ReceiverBootstrapBinding'}<=reachable
+    fixtures=load('examples/receiver-protocol.json')
+    assert {f['operationId'] for f in fixtures}==ops.keys() and len(fixtures)==len(ops)
+    for f in fixtures:
+        op=ops[f['operationId']]
+        for side in ('request','response'):validate(op[side+'Schema'].split('/')[-1],f[side])
+    trace=load('examples/receiver-trace.json')
+    assert trace['initialAuthority']==dict(registered=False,generationId=None,guardianIncarnation=None)
+    all_ops={**{o['operationId']:o for o in PROTOCOL['operations']},**ops}
+    messages=trace['messages'];names=[m['operationId'] for m in messages]
+    assert names.index('ReceiverStage')<names.index('RegisterReceiverBootstrap')<names.index('JournalPrepareAnswer')<names.index('AcquireOutputPermit')<names.index('JournalStart')<names.index('CommitReceiverConsume')<names.index('ReceiverConsume')<names.index('ReceiverMedia')<names.index('JournalConfirmAnswerSegment')<names.index('JournalStartAnswerSegment')
+    registration=next(m['response']['registration'] for m in messages if m['operationId']=='RegisterReceiverBootstrap')
+    assert digest(registration['binding'])==registration['registrationHash']
+    stage=next(m for m in messages if m['operationId']=='ReceiverStage');receipt=stage['response']['receipt']
+    assert stage['request']['binding']==registration['binding'] and receipt['bindingHash']==registration['registrationHash']
+    assert stage['request']['challenge']==receipt['challenge']
+    public=Ed25519PublicKey.from_public_bytes(base64.b64decode(trace['trustedPublicKeys'][receipt['keyId']]))
+    public.verify(base64.b64decode(receipt['signature']),canonical({k:v for k,v in receipt.items() if k!='signature'}))
+    grants={};latched=set()
+    for m in messages:
+        op=all_ops[m['operationId']]
+        for side in ('request','response'):validate(op[side+'Schema'].split('/')[-1],m[side])
+        name=m['operationId'];out=m['response'];request=m['request']
+        if name in ('JournalStart','JournalStartAnswerSegment'):
+            grant=out.get('answerGrant',out.get('grant'));assert out['consumeTicket']
+            grants[grant['grantId']]=out['consumeTicket']
+        if name=='QueryReceiverAuthority':
+            snapshot=out['snapshot'];assert 'consumeTicket' not in snapshot and 'consumeTicket' not in snapshot['grant']
+            validate_artifact(snapshot['artifact'])
+            assert snapshot['registration']['registrationHash']==registration['registrationHash']
+        if name=='CommitReceiverConsume' and out['consumeAuthorized']:
+            record=out['consumption'];grant_id=request['references']['grantId']
+            assert grant_id not in latched and grants[grant_id]==request['consumeTicket'];latched.add(grant_id)
+            verifier=receiver_ticket_verifier(registration,grant_id,request['consumeTicket'])
+            identity=digest(dict(domain='receiver-consume-identity-1',guardianPrincipalId=record['guardianPrincipalId'],request={k:v for k,v in request.items() if k not in ('requestId','consumeTicket')},ticketVerifier=verifier))
+            assert identity==record['consumeIdentityHash']
+    assert len(latched)==2 and names.count('JournalStart')==1
+    return dict(privateOperations=len(ops),reachableDefinitions=len(reachable),messages=len(messages))
+
 def check_all():
     Draft202012Validator.check_schema(SCHEMA)
+    receiver=check_receiver()
     ops={o['operationId']:o for o in PROTOCOL['operations']}
     assert len(ops)==len(PROTOCOL['operations'])==25
     assert PROTOCOL['approvalStatus']=='PENDING_OWNER_ACK' and PROTOCOL['productionEnabled'] is False
@@ -174,7 +247,7 @@ def check_all():
     acks=parse((ROOT/'docs/v0.5/ccr/CCR-ADL-001-ACKS.json').read_text())
     assert acks['normativeDigest']==manifest['normativeDigest']
     assert acks['status']=='CCR BLOCKED' and acks['allRequiredAcksReceived'] is False
-    return dict(definitions=len(SCHEMA['$defs']),operations=len(ops),goldenVectors=len(load('examples/hash-vectors.json')),protectedFiles=len(load('protected-files.json')['files']))
+    return dict(definitions=len(SCHEMA['$defs']),privateOperations=receiver['privateOperations'],machines=len(load('state-machines.json')['machines']),operations=len(ops),goldenVectors=len(load('examples/hash-vectors.json')),protectedFiles=len(load('protected-files.json')['files']))
 
 if __name__=='__main__':
     print('PASS '+json.dumps(check_all(),sort_keys=True))

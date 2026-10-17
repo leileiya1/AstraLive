@@ -618,6 +618,124 @@
           "guard": "INDEPENDENT_BARRIER_NO_RESTART"
         }
       ]
+    },
+    "ReceiverBootstrapState": {
+      "states": [
+        "ACTIVE",
+        "REVOKED"
+      ],
+      "initialState": "ACTIVE",
+      "transitions": [
+        {
+          "fromState": "ACTIVE",
+          "toState": "REVOKED",
+          "guard": "STOP_EPOCH_SESSION_BINDING_OR_PROCESS_REPLACEMENT_OR_AUTHORITY_LOSS"
+        }
+      ]
+    },
+    "ReceiverConsumptionState": {
+      "states": [
+        "UNCONSUMED",
+        "CONSUMED",
+        "DRAINED",
+        "UNKNOWN",
+        "FENCED"
+      ],
+      "initialState": "UNCONSUMED",
+      "transitions": [
+        {
+          "fromState": "UNCONSUMED",
+          "toState": "CONSUMED",
+          "guard": "BACKEND_UNIQUE_GRANT_LATCH_CAS_WITH_CURRENT_AUTHORITY"
+        },
+        {
+          "fromState": "UNCONSUMED",
+          "toState": "UNKNOWN",
+          "guard": "START_OR_CONSUMPTION_ACK_AMBIGUITY"
+        },
+        {
+          "fromState": "UNCONSUMED",
+          "toState": "FENCED",
+          "guard": "STOP_OR_REVOKED"
+        },
+        {
+          "fromState": "CONSUMED",
+          "toState": "DRAINED",
+          "guard": "TRUSTED_UNIT_DRAIN_NO_TTS_RESTART"
+        },
+        {
+          "fromState": "CONSUMED",
+          "toState": "UNKNOWN",
+          "guard": "ACK_OR_PROCESS_KNOWLEDGE_LOST"
+        },
+        {
+          "fromState": "CONSUMED",
+          "toState": "FENCED",
+          "guard": "STOP_OR_REGISTRATION_REVOKED"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "DRAINED",
+          "guard": "HISTORICAL_TRUSTED_EVIDENCE_ONLY"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "FENCED",
+          "guard": "INDEPENDENT_PHYSICAL_BARRIER"
+        }
+      ]
+    },
+    "ReceiverBarrierState": {
+      "states": [
+        "FENCED",
+        "STAGED_CLOSED",
+        "ACTIVE_UNIT",
+        "CLOSING",
+        "UNKNOWN"
+      ],
+      "initialState": "FENCED",
+      "transitions": [
+        {
+          "fromState": "FENCED",
+          "toState": "STAGED_CLOSED",
+          "guard": "TRUSTED_CLOSED_INSTALL_AND_STAGE"
+        },
+        {
+          "fromState": "STAGED_CLOSED",
+          "toState": "ACTIVE_UNIT",
+          "guard": "FRESH_BACKEND_LATCH_AND_LOCAL_FSYNC_NO_STOP"
+        },
+        {
+          "fromState": "ACTIVE_UNIT",
+          "toState": "STAGED_CLOSED",
+          "guard": "TRUSTED_ALL_REQUIRED_UNIT_DRAIN_KEEP_CLOCKS"
+        },
+        {
+          "fromState": "STAGED_CLOSED",
+          "toState": "CLOSING",
+          "guard": "STOP_EPOCH_IDENTITY_OR_PROOF_REVOCATION_BARRIER_FIRST"
+        },
+        {
+          "fromState": "ACTIVE_UNIT",
+          "toState": "CLOSING",
+          "guard": "STOP_EPOCH_IDENTITY_OR_PROOF_REVOCATION_BARRIER_FIRST"
+        },
+        {
+          "fromState": "CLOSING",
+          "toState": "FENCED",
+          "guard": "INDEPENDENT_PHYSICAL_CLEANUP_PROOF"
+        },
+        {
+          "fromState": "CLOSING",
+          "toState": "UNKNOWN",
+          "guard": "CLEANUP_UNPROVEN_NO_REOPEN"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "FENCED",
+          "guard": "INDEPENDENT_BARRIER_ONLY_NO_EXECUTION_RESTORE"
+        }
+      ]
     }
   },
   "approvalStatus": "PENDING_OWNER_ACK",

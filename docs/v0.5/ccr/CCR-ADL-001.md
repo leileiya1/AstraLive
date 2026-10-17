@@ -63,3 +63,10 @@ Approval requires Agent 1 decision plus explicit **Agent 2 ACK** (migration, art
 ## 2026-10-17 owner-review repair
 
 Agent2/3/4 withheld ACK on head `4f4c95278e581bccc025323ed8534d0b2db1023e`. The repaired candidate allows trusted drain-before-prepare, reserves Prepare aliases transactionally, fingerprints complete Drain identity and separates consume-once Grant expiry from ongoing proof renewal. Grant, Observation, immutable execution binding and the5second renewal trace are now typed examples. The latest integration basis is `546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7`; historical review basis above remains evidence, not the current merge target. The new digest invalidates all earlier candidate review pins. Re-review is required; status remains CCR BLOCKED/PENDING.
+
+
+## Receiver authority seam (post-direction review)
+
+The receiver seam is frozen in [Receiver Bootstrap/Authority/Consumption](RECEIVER-BOOTSTRAP-CONTRACT.md), following [Agent4's direction acceptance and eight required details](https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227939254). Registered physical Generation/incarnation precede Prepare/Permit/START. First-response-only consume tickets prevent reference/query reconstruction of a lost START ACK. Restricted private Authority RPCs keep durable latch writes in Backend; Guardian never gets business SQL write permission. Unit2 switches execution/Artifact identity in the same Attempt/Generation and rejects old traffic.
+
+Latency term C includes Query→Commit→fsync→current-proof/barrier→first ACK plus the Runtime's final proof/deadline exchange; trusted install read/challenge/stage/register also costs time when not already ready. Count every RPC/DB commit/signature/verification and any overlapped preflight; do not present these extra calls as free or claim3second SLA. Real authority/SQL/process/media acceptance remains future work. Final Agent4 ACK is still pending; after it, Agent2/3 must re-confirm the new digest before Agent1 approval.
