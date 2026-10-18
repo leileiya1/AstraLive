@@ -1,0 +1,18 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_real_decode_unit1_finish_unit2_same_process_clocks ____________
+output_guardian/tests/v2/test_cpu.py:63: in test_real_decode_unit1_finish_unit2_same_process_clocks
+    cpu = await setup_cpu(d)
+          ^^^^^^^^^^^^^^^^^^
+output_guardian/tests/v2/test_cpu.py:31: in setup_cpu
+    await cpu.start()
+infra/guardian/v2/review/ag5_cold_probe.py:36: in startup
+    out = await start(self, *a, **kw)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/v2/cpu.py:310: in start
+    self.gate.compare_locked(captured)
+                             ^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'captured' where it is not associated with a value
+=========================== short test summary info ============================
+FAILED output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks
+1 failed in 0.06s

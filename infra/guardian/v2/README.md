@@ -1,5 +1,12 @@
 # receiver-1 isolated implementation
 
+## Current owner review
+
+The 2026-10-18 receiver-1 dependency review supersedes dependency availability
+notes below: see [owner review](OWNER-REVIEW-20261018.md) and
+[physical source handoff](PHYSICAL-SOURCE-HANDOFF.md).
+Production remains **OUTPUT GUARDIAN BLOCKED**; no deployment was enabled.
+
 Baseline `e98d8cf53d1aa5518f9c908785b7a5feae5117f8`; frozen normative digest
 `3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1`.
 Production admission remains **OUTPUT_FENCE_UNPROVEN**. This is an additive

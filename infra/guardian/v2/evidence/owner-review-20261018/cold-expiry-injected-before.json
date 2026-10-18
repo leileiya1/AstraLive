@@ -1,0 +1,54 @@
+{
+  "exit": 1,
+  "events": [
+    {
+      "phase": "cpu_start",
+      "at": 1277277.199922708
+    },
+    {
+      "phase": "cpu_start_return",
+      "at": 1277277.202836291,
+      "pid": 46059
+    },
+    {
+      "phase": "consume_start",
+      "at": 1277277.202844291
+    },
+    {
+      "phase": "rpc",
+      "at": 1277277.204228583,
+      "operation": "QueryReceiverAuthority",
+      "seconds": 0.001032250002026558
+    },
+    {
+      "phase": "rpc",
+      "at": 1277277.206028416,
+      "operation": "CommitReceiverConsume",
+      "seconds": 0.0008316659368574619
+    },
+    {
+      "phase": "rpc",
+      "at": 1277277.207973083,
+      "operation": "QueryReceiverAuthority",
+      "seconds": 0.0009707501158118248
+    },
+    {
+      "phase": "consume_return",
+      "at": 1277277.208942416,
+      "mono_left": 0.6980487077962607,
+      "suspend_left": 0.6980490416754037
+    },
+    {
+      "phase": "av_unit_entry",
+      "at": 1277277.208958916
+    },
+    {
+      "phase": "media_entry",
+      "at": 1277278.035656416,
+      "kind": "audio",
+      "sequence": 120,
+      "mono_left": -0.12866025022231042,
+      "suspend_left": -0.1286636251024902
+    }
+  ]
+}

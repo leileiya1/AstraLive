@@ -1,0 +1,140 @@
+{
+  "implementationCommit": "be0d81f2dd3079b8fb990826970cd5341f61f98e",
+  "production": "OUTPUT GUARDIAN BLOCKED",
+  "suiteRunnerExit": 1,
+  "passingCases": {
+    "v1": 25,
+    "v2Original": 69,
+    "v2Extended": 82,
+    "v2LinuxSkipped": 1,
+    "officialWireAdapter": 21,
+    "journal": 11,
+    "nativeAuthorityTopLevel": 14,
+    "nativeFailures": 0,
+    "nativeSkips": 0,
+    "coldIndependent": 20,
+    "delayedReadyRepeated": 6,
+    "delayedReadinessCasesPerRun": 5
+  },
+  "blockedChecks": [
+    {
+      "name": "contracts-137",
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_contracts",
+        "tests.test_durable_live_contracts",
+        "tests.test_durable_answer_contracts",
+        "tests.test_answer_contract_repairs",
+        "tests.test_receiver_contracts",
+        "tests.test_receiver_stop_races",
+        "-v"
+      ],
+      "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+      "exitCode": 1,
+      "seconds": 18.804812540998682,
+      "userSeconds": 2.0018659999999997,
+      "systemSeconds": 0.7720580000000004,
+      "peakRSSBytes": 136282112
+    },
+    {
+      "name": "validator-v2",
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+        "scripts/validate-answer-contract.py"
+      ],
+      "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+      "exitCode": 1,
+      "seconds": 0.2479672080371529,
+      "userSeconds": 0.2233409999999978,
+      "systemSeconds": 0.01900999999999975,
+      "peakRSSBytes": 184369152
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+      "exitCode": 2,
+      "seconds": 0.01455270778387785,
+      "userSeconds": 0.005691999999999808,
+      "systemSeconds": 0.013695999999999486,
+      "peakRSSBytes": 184369152
+    }
+  ],
+  "cpuMockBoundary": "Mock Authority/installation/evidence envelope; real IPC/libav/decoded sinks/fsync/processes",
+  "nativeMockBoundary": "Real Go/Python/SQL/CONTROL/producer IPC, physical installation and outputs explicit test fixtures",
+  "cold": {
+    "before": {
+      "runs": 12,
+      "passes": 12,
+      "startupMs": {
+        "min": 2.792416838929057,
+        "max": 3.3471251372247934
+      },
+      "ackToMediaMs": {
+        "min": 10.163000086322427,
+        "max": 11.04100001975894
+      },
+      "firstMonoBudgetMs": {
+        "min": 686.8166669737548,
+        "max": 687.8174999728799
+      },
+      "firstSuspendBudgetMs": {
+        "min": 686.8150418158621,
+        "max": 687.8162501379848
+      },
+      "maxRPCMs": {
+        "min": 1.0342500172555447,
+        "max": 1.216040924191475
+      }
+    },
+    "after": {
+      "runs": 20,
+      "passes": 20,
+      "startupMs": {
+        "min": 100.0875411555171,
+        "max": 125.41045807301998
+      },
+      "ackToMediaMs": {
+        "min": 10.712875053286552,
+        "max": 14.091958058997989
+      },
+      "firstMonoBudgetMs": {
+        "min": 684.6882079262286,
+        "max": 688.1725830025971
+      },
+      "firstSuspendBudgetMs": {
+        "min": 684.6862914972007,
+        "max": 688.1713748443872
+      },
+      "maxRPCMs": {
+        "min": 0.8244581986218691,
+        "max": 1.012749969959259
+      }
+    }
+  },
+  "failureHistory": [
+    "Agent4 original first run 68 PASS/1 LEASE_LOST retained; unique root cause unproven",
+    "Prepatch v1 4 PASS/21 ERROR; exact revision field restores candidate25",
+    "Injected real 800ms post-ACK stall correctly LEASE_LOST; negative regression continues rejecting",
+    "Initial native test attempt refused owned DB marker/name; reruns use mandated safety marker/name",
+    "Development final/v1-25.txt:24 PASS/1 RTMP decoded-tail denial; no assertions changed; committed-final25PASS does not establish flake-free media/SLA",
+    "Development final/cold-after-15..19: transient UnboundLocalError during an incorrectly placed cleanup edit while runner active; fixed before be0d81f and all20 repeated on immutable committed source; raw failures kept",
+    "137 suite:136 PASS/1 protected fixture hash failure and validator-v2 FAIL; no governance bypass",
+    "Documentation diff check caught extra EOF blank lines during doc preparation; corrected and final doc diff audit passed without rewriting raw failed log"
+  ],
+  "finalDocDiffCheck": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "originalDiffCheck": "retained in committed-final/diff-check.txt; only two extra EOF blanks, corrected"
+  }
+}

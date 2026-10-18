@@ -1,5 +1,12 @@
 # Agent4 integration handoff — receiver-1 domain increment
 
+## 2026-10-18 dependency update
+
+Consume the fixed receiver-1 official ports and native identity transport using
+the [current owner review](OWNER-REVIEW-20261018.md) and
+[physical source handoff](PHYSICAL-SOURCE-HANDOFF.md). The original baseline
+handoff below is retained as history. Production installation remains blocked.
+
 **OUTPUT GUARDIAN BLOCKED** for production. Base is
 `e98d8cf53d1aa5518f9c908785b7a5feae5117f8` on existing
 `feat/v05-output-guardian`; new incremental PR targets

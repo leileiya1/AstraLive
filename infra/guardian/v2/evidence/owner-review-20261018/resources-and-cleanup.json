@@ -1,0 +1,33 @@
+{
+  "ownedTemporaryRoots": [
+    {
+      "path": "/tmp/ag5-native-ua79xqhz",
+      "removed": true,
+      "priorEvidence": "native-cleanup.json"
+    },
+    {
+      "path": "/tmp/ag5-native-iwjjdg74",
+      "removed": true,
+      "priorEvidence": "native-runs/second/native-cleanup.json"
+    },
+    {
+      "path": "/tmp/ag5-native-d6kgu1i7",
+      "removed": true,
+      "priorEvidence": "native-runs/committed-final/native-cleanup.json"
+    },
+    {
+      "path": "/tmp/ag5-source-g1k1fb8y",
+      "removed": true,
+      "kind": "disposable source archive"
+    }
+  ],
+  "ownedProcessCandidates": [],
+  "mediaDatabaseProcessCensus": [],
+  "sharedServicesSignalled": false,
+  "gpuUsed": false,
+  "externalPublishingUsed": false,
+  "platform": "Darwin",
+  "docker": null,
+  "podman": null,
+  "note": "Read-only census; no argv/environment retained, unrelated processes untouched. Test fixtures kill/join owned CPU children and stop/drop owned SQL/MediaMTX/FFmpeg. First cleanup check refused the initial run marker mismatch; inspected original exact marker before scoped deletion."
+}

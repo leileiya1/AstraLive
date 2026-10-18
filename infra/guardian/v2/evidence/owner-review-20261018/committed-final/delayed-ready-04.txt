@@ -1,0 +1,15 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.13, pytest-9.1.1, pluggy-1.7.0 -- /Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/sapiece/innovationProject/AstraLive-agent-5
+plugins: asyncio-1.4.0, anyio-4.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 5 items
+
+output_guardian/tests/v2/test_readiness.py::test_startup_delayed_before_grant_two_units_remain_continuous PASSED [ 20%]
+output_guardian/tests/v2/test_readiness.py::test_consume_before_native_ready_never_queries_authority PASSED [ 40%]
+output_guardian/tests/v2/test_readiness.py::test_ready_timeout_kills_child_and_does_not_open_gate PASSED [ 60%]
+output_guardian/tests/v2/test_readiness.py::test_stop_immediately_after_native_spawn_reaps_child PASSED [ 80%]
+output_guardian/tests/v2/test_readiness.py::test_actual_expiry_during_event_loop_stall_still_rejects PASSED [100%]
+
+============================== 5 passed in 2.27s ===============================

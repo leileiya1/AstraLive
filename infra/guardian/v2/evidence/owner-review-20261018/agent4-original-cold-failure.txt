@@ -1,0 +1,49 @@
+F....................................................................    [100%]
+=================================== FAILURES ===================================
+___________ test_real_decode_unit1_finish_unit2_same_process_clocks ____________
+
+domain = namespace(x=<tests.test_receiver_contracts.ReceiverContractTests testMethod=runTest>, r=<output_guardian.v2.receiver.R...1_finish_0'), execution=<function domain.<locals>.execution at 0x10d9b2de0>, ipc_dir=PosixPath('/tmp/ag5-v2-fdodpbqh'))
+
+    @pytest.mark.asyncio
+    async def test_real_decode_unit1_finish_unit2_same_process_clocks(domain):
+        d = domain
+        # Trusted Session origins, not rewritten zero-origin media.
+        d.r.gate.audio_end, d.r.gate.video_end, d.r.gate.sequence = 48000, 2960000, 119
+        d.r.gate.video_frames = 75
+        cpu = await setup_cpu(d)
+        ack, q = await acknowledge(d)
+        publisher_pid = cpu.process.pid
+        renewer = asyncio.create_task(renew(d, q))
+        try:
+>           await av_unit(d, q, 120, 3000000)
+
+output_guardian/tests/v2/test_cpu.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+output_guardian/tests/v2/test_cpu.py:46: in av_unit
+    await media(d, q, sequence=start_sequence + index * 2, payload=pcm)
+output_guardian/tests/v2/conftest.py:198: in media
+    return await d.r.media(
+output_guardian/v2/receiver.py:516: in media
+    lineage = self._execution_locked(peer, q)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/v2/receiver.py:192: in _execution_locked
+    self.gate.execution_locked(lineage)
+output_guardian/v2/gate.py:184: in execution_locked
+    self.edge.check_locked(lineage)
+output_guardian/v2/gate.py:130: in check_locked
+    Budget(*self.deadlines).check()
+output_guardian/v2/gate.py:46: in check
+    require(time.monotonic() < self.mono and clock() < self.suspend, "LEASE_LOST")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, code = 'LEASE_LOST'
+
+    def require(condition, code="CONSUMPTION_UNKNOWN"):
+        if not condition:
+>           raise Closed(code)
+E           output_guardian.model.Closed: LEASE_LOST
+
+output_guardian/v2/gate.py:23: Closed
+=========================== short test summary info ============================
+FAILED output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks
+1 failed, 68 passed in 4.25s
