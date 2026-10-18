@@ -329,6 +329,14 @@ class Receiver:
             self.gate.denied.add(grant)
             self.audit[grant] = "UNKNOWN"
         try:
+            # Existing closed output fixtures have no codec startup phase.
+            # Real CPU adapters independently complete their native READY edge
+            # before any Authority query; this never extends a Grant/proof.
+            check_ready = getattr(self.outputs, "check_ready", None)
+            if check_ready is not None:
+                check_ready()
+            with self.gate.lock:
+                self._consume_locked(peer, q, captured)
             snap = await self.authority.query_receiver_authority(
                 envelope(references=copy.deepcopy(q["references"]))
             )

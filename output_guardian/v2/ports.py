@@ -1,8 +1,8 @@
 """Restricted, injected dependencies; no invented Authority transport/DTO.
 
-Agent 4's sole DTO package must implement Wire and TrustedInstallation. Agent 2
-must supply Authority using the three frozen operation signatures. Only tests
-provide mocks today. Neither interface grants SQL mutation or CONTROL powers.
+Agent4's receiver1 ports implement Wire/TrustedInstallation and the three fixed
+Authority operations, consumed via official.py. Unit tests also provide explicit
+transport mocks. Neither interface grants SQL mutation or CONTROL powers.
 """
 
 import asyncio

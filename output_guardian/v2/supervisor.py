@@ -40,5 +40,7 @@ class Supervisor:
 def main():
     # No option may turn absent DTO/Authority/Registrar/output adapters into an
     # enabled service. Agent4 owns the final trusted launcher/assembly patch.
-    print("OUTPUT_FENCE_UNPROVEN: receiver-1 requires Agent4 trusted assembly")
+    print(
+        "OUTPUT_FENCE_UNPROVEN: receiver-1 requires trusted physical installation and output isolation"
+    )
     return 78

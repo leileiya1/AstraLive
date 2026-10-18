@@ -11,6 +11,7 @@ import json
 import multiprocessing
 import os
 import pickle
+import secrets
 import select
 import socket
 import stat
@@ -77,7 +78,19 @@ def _receive(sock, edge=None, stop=None):
     return pickle.loads(read(length))
 
 
-def _child(sock, edge, sample_rate, width, height, pauses):
+def _child(
+    sock,
+    edge,
+    sample_rate,
+    width,
+    height,
+    pauses,
+    ready,
+    nonce,
+    startup_barrier,
+    installed_binding,
+    origins,
+):
     sock.setblocking(False)
     done = threading.Event()
 
@@ -93,6 +106,9 @@ def _child(sock, edge, sample_rate, width, height, pauses):
 
     threading.Thread(target=watchdog, daemon=True).start()
     try:
+        if startup_barrier is not None:
+            startup_barrier[0].set()
+            startup_barrier[1].wait()  # initialization wait, never inside gate
         import av
         import numpy as np
 
@@ -107,14 +123,49 @@ def _child(sock, edge, sample_rate, width, height, pauses):
             "bgr0",
         )
         video_decoder.extradata = video.extradata
+        video_decoder.open()
         audio = av.CodecContext.create("pcm_s16le", "w")
         audio.sample_rate, audio.layout, audio.format = sample_rate, "mono", "s16"
         audio.time_base = Fraction(1, sample_rate)
         audio.open()
         audio_decoder = av.CodecContext.create("pcm_s16le", "r")
         audio_decoder.sample_rate, audio_decoder.layout = sample_rate, "mono"
+        audio_decoder.open()
+        if installed_binding is not None:
+            from astralive_contracts import durable_live_v2 as dto
+
+            installed = dto.decode("ReceiverBootstrapBinding", installed_binding)
+            binding_hash = hashlib.sha256(installed_binding).hexdigest()
+            generation = installed.generationId
+        else:
+            binding_hash, generation = None, None
+        # A private, challenge-bound native child readiness acknowledgement.
+        # No frame, Permit, media clock or Credit is consumed during startup.
+        with edge.lock:
+            require(not any(edge.tag), "OUTPUT_FENCE_UNPROVEN")
+        ready.send(
+            dict(
+                kind="CPU_CODEC_READY",
+                nonce=nonce,
+                pid=os.getpid(),
+                parent=os.getppid(),
+                rate=sample_rate,
+                width=width,
+                height=height,
+                bindingHash=binding_hash,
+                generation=generation,
+                origins=origins,
+            )
+        )
+        ready.close()
         while True:
             item = _receive(sock, edge)
+            if installed_binding is not None:
+                registration = json.loads(item.lineage.identity)["registration"]
+                require(
+                    dto.canonical_json(registration) == installed_binding,
+                    "STALE_EXECUTION",
+                )
             # Immutable owner travels through queued transport, child, encoder,
             # decoder and decoded output. No read of a 'current execution'.
             edge.check(item.lineage)
@@ -197,11 +248,24 @@ class CPUMedia:
         height=64,
         evidence_builder=None,
         pauses=None,
+        startup_barrier=None,
+        startup_timeout=2.0,
+        installed_binding=None,
     ):
         self.gate, self.edge = gate, gate.edge
         self.state_dir, self.required_sinks = Path(state_dir), frozenset(required_sinks)
         self.rate, self.width, self.height = sample_rate, width, height
         self.evidence_builder, self.pauses = evidence_builder, pauses
+        require(0 < startup_timeout <= 5, "INVALID_ARGUMENT")
+        self.startup_barrier, self.startup_timeout = startup_barrier, startup_timeout
+        self.ready = False
+        self.readiness = None
+        self.installed_binding = None
+        if installed_binding is not None:
+            from astralive_contracts import durable_live_v2 as dto
+
+            self.installed_binding = dto.canonical_json(installed_binding)
+            dto.decode("ReceiverBootstrapBinding", self.installed_binding)
         self.process, self.socket, self.tasks = None, None, []
         self.stopping = threading.Event()
         self.sink_queues = {name: asyncio.Queue(8) for name in self.required_sinks}
@@ -246,17 +310,39 @@ class CPUMedia:
                 self.gate.state in {"FENCED", "STAGED_CLOSED"}
                 and self.gate.active is None
             )
+            captured = self.gate.capture_locked()
+            origins = (
+                self.gate.audio_end,
+                self.gate.video_end,
+                self.gate.video_frames,
+                self.gate.sequence,
+            )
         await asyncio.to_thread(self.recover)
         ctx = multiprocessing.get_context("spawn")
         parent, child = socket.socketpair()
         parent.setblocking(False)
         self.socket = parent
+        reader, writer = ctx.Pipe(duplex=False)
+        nonce = secrets.token_hex(32)
         self.process = ctx.Process(
             target=_child,
-            args=(child, self.edge, self.rate, self.width, self.height, self.pauses),
+            args=(
+                child,
+                self.edge,
+                self.rate,
+                self.width,
+                self.height,
+                self.pauses,
+                writer,
+                nonce,
+                self.startup_barrier,
+                self.installed_binding,
+                origins,
+            ),
         )
         self.process.start()
         child.close()
+        writer.close()
         # No media/config secret is handed to the child before the parent
         # independently records ownership. Gate is closed at this point.
         require(
@@ -283,9 +369,41 @@ class CPUMedia:
 
         try:
             await asyncio.to_thread(persist)
+
+            def receive_ready():
+                require(reader.poll(self.startup_timeout), "OUTPUT_FENCE_UNPROVEN")
+                return reader.recv()
+
+            observation = await asyncio.to_thread(receive_ready)
+            require(
+                observation
+                == dict(
+                    kind="CPU_CODEC_READY",
+                    nonce=nonce,
+                    pid=self.process.pid,
+                    parent=os.getpid(),
+                    rate=self.rate,
+                    width=self.width,
+                    height=self.height,
+                    bindingHash=hashlib.sha256(self.installed_binding).hexdigest()
+                    if self.installed_binding
+                    else None,
+                    generation=json.loads(self.installed_binding)["generationId"]
+                    if self.installed_binding
+                    else None,
+                    origins=origins,
+                )
+            )
+            require(self.process.is_alive(), "OUTPUT_FENCE_UNPROVEN")
+            with self.gate.lock:
+                self.gate.compare_locked(captured)
+                require(not any(self.edge.tag), "OUTPUT_FENCE_UNPROVEN")
+                self.readiness, self.ready = observation, True
         except BaseException:
             await self.close()
             raise Closed() from None
+        finally:
+            reader.close()
         self.tasks = [
             asyncio.create_task(self._pump()),
             asyncio.create_task(self._read()),
@@ -293,6 +411,14 @@ class CPUMedia:
         self.tasks += [
             asyncio.create_task(self._sink(name)) for name in self.required_sinks
         ]
+
+    def check_ready(self):
+        # Called outside the admission gate. A real initialized child, not its
+        # mere spawn/persistent PID, is a precondition before a Consume RPC.
+        require(
+            self.ready and self.process is not None and self.process.is_alive(),
+            "OUTPUT_FENCE_UNPROVEN",
+        )
 
     async def _pump(self):
         try:
@@ -436,6 +562,7 @@ class CPUMedia:
         return ObservedDrain(tail, self.required_sinks, evidence)
 
     async def close(self):
+        self.ready = False
         self.stopping.set()
         try:
             with self.gate.lock:

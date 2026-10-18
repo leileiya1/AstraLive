@@ -1,8 +1,8 @@
-"""Explicit contract MOCK Authority/Registrar/sole-codec port.
+"""Official sole codec with explicit contract MOCK Authority/Registrar.
 
 No production dependency imports these fixtures. Local gate, filesystem,
 process/socket and libav operations under test are real; SQL/Registrar/evidence
-registration in this fixture are mocks until Agent2/4 deliver their modules.
+registration in this fixture remain mocks; separate native SQL tests cover official ports.
 """
 
 import asyncio
@@ -11,6 +11,7 @@ import hashlib
 import json
 import shutil
 import tempfile
+from contextlib import asynccontextmanager
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -19,29 +20,8 @@ import pytest_asyncio
 from output_guardian.v2.ipc import Peer
 from output_guardian.v2.journal import DenyJournal
 from output_guardian.v2.receiver import ObservedDrain, Receiver, envelope
+from runtime.app.receiver1.wire import GuardianWire
 from tests import test_receiver_contracts as contract
-
-
-class MockWire:
-    def __init__(self, c):
-        self.c = c
-
-    def decode(self, schema, raw):
-        value = self.c.parse(raw.decode())
-        self.validate(schema, value)
-        return value
-
-    def validate(self, name, value):
-        self.c.validate(name, value)
-
-    def canonical(self, value):
-        return self.c.canonical(value)
-
-    def digest(self, value):
-        return self.c.digest(value)
-
-    def validate_artifact(self, value):
-        self.c.validate_artifact(value)
 
 
 class MockAuthority:
@@ -62,6 +42,8 @@ class MockAuthority:
         return out
 
     async def commit_receiver_consume(self, q):
+        # Test Backend oracle consumes wire JSON, exactly as native transport.
+        q = json.loads(GuardianWire().canonical(q))
         out = self.x.b.commit(self.x.g.peer, q)
         await self._pause("commit")
         if self.drop_ack:
@@ -110,11 +92,15 @@ def peer(p):
     )
 
 
-@pytest_asyncio.fixture
-async def domain(tmp_path):
+@asynccontextmanager
+async def domain_source(tmp_path, issue=True):
     x = contract.ReceiverContractTests()
     x.setUp()
-    request, grant = x.ready()
+    if issue:
+        request, grant = x.ready()
+    else:
+        x.bootstrap()
+        request, grant = None, None
     scope = tuple(
         x.b.registration["binding"][k] for k in ("tenantId", "ownerId", "roomId")
     )
@@ -140,7 +126,7 @@ async def domain(tmp_path):
     outputs = MockOutputs(evidence)
     journal = DenyJournal(tmp_path / "deny")
     r = Receiver(
-        MockWire(x.c),
+        GuardianWire(),
         authority,
         MockInstall(x),
         outputs,
@@ -184,6 +170,18 @@ async def domain(tmp_path):
         await r.restart()
         journal.close()
         shutil.rmtree(d.ipc_dir)
+
+
+@pytest_asyncio.fixture
+async def domain(tmp_path):
+    async with domain_source(tmp_path) as d:
+        yield d
+
+
+@pytest_asyncio.fixture
+async def closed_domain(tmp_path):
+    async with domain_source(tmp_path, issue=False) as d:
+        yield d
 
 
 async def acknowledge(d):
