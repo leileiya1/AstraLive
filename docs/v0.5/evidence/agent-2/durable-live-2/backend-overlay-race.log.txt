@@ -1,0 +1,620 @@
+?   	astralive/backend/cmd/comment-load	[no test files]
+?   	astralive/backend/cmd/config-bootstrap	[no test files]
+?   	astralive/backend/cmd/operator-bootstrap	[no test files]
+?   	astralive/backend/cmd/server	[no test files]
+?   	astralive/backend/db	[no test files]
+?   	astralive/backend/generated/dbgen	[no test files]
+?   	astralive/backend/generated/openapi	[no test files]
+?   	astralive/backend/generated/runtimeapi	[no test files]
+=== RUN   TestEventValidation
+--- PASS: TestEventValidation (0.00s)
+=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock
+    interaction_audit_test.go:28: explicit disposable SQL required
+--- SKIP: TestAuditSelectionExpiresWhileWaitingForCommandLock (0.00s)
+=== RUN   TestStartStopInvalidState
+--- PASS: TestStartStopInvalidState (0.00s)
+=== RUN   TestStartSendsRoomContext
+--- PASS: TestStartSendsRoomContext (0.00s)
+PASS
+ok  	astralive/backend/internal/app	1.405s
+?   	astralive/backend/internal/config	[no test files]
+=== RUN   TestTrustedPlanStableIdentity
+--- PASS: TestTrustedPlanStableIdentity (0.00s)
+=== RUN   TestNaturalAtomicText
+=== RUN   TestNaturalAtomicText/目前价格为129.90元。
+=== RUN   TestNaturalAtomicText/规格为500毫升。
+=== RUN   TestNaturalAtomicText/尺码有_XL、XXL、2XL。
+=== RUN   TestNaturalAtomicText/型号是AB-2XL-Pro。
+=== RUN   TestNaturalAtomicText/长度20_cm，容量5_L。
+=== RUN   TestNaturalAtomicText/满199减20，活动以工具为准。
+=== RUN   TestNaturalAtomicText/不是纯棉，而是混纺。
+=== RUN   TestNaturalAtomicText/不是所有尺码都有货。
+=== RUN   TestNaturalAtomicText/这款不是纯棉。
+=== RUN   TestNaturalAtomicText/如果选择XL，就按尺码表选购。
+=== RUN   TestNaturalAtomicText/只有符合条件，才支持优惠。
+=== RUN   TestNaturalAtomicText/这款不包邮，请确认地址。
+=== RUN   TestNaturalAtomicText/型号为V2.5-Pro。
+=== RUN   TestNaturalAtomicText/价格129,990.50元，数量2件。
+--- PASS: TestNaturalAtomicText (0.00s)
+    --- PASS: TestNaturalAtomicText/目前价格为129.90元。 (0.00s)
+    --- PASS: TestNaturalAtomicText/规格为500毫升。 (0.00s)
+    --- PASS: TestNaturalAtomicText/尺码有_XL、XXL、2XL。 (0.00s)
+    --- PASS: TestNaturalAtomicText/型号是AB-2XL-Pro。 (0.00s)
+    --- PASS: TestNaturalAtomicText/长度20_cm，容量5_L。 (0.00s)
+    --- PASS: TestNaturalAtomicText/满199减20，活动以工具为准。 (0.00s)
+    --- PASS: TestNaturalAtomicText/不是纯棉，而是混纺。 (0.00s)
+    --- PASS: TestNaturalAtomicText/不是所有尺码都有货。 (0.00s)
+    --- PASS: TestNaturalAtomicText/这款不是纯棉。 (0.00s)
+    --- PASS: TestNaturalAtomicText/如果选择XL，就按尺码表选购。 (0.00s)
+    --- PASS: TestNaturalAtomicText/只有符合条件，才支持优惠。 (0.00s)
+    --- PASS: TestNaturalAtomicText/这款不包邮，请确认地址。 (0.00s)
+    --- PASS: TestNaturalAtomicText/型号为V2.5-Pro。 (0.00s)
+    --- PASS: TestNaturalAtomicText/价格129,990.50元，数量2件。 (0.00s)
+=== RUN   TestShortJoinAndLongReject
+--- PASS: TestShortJoinAndLongReject (0.00s)
+=== RUN   TestDynamicClaimsFailClosed
+--- PASS: TestDynamicClaimsFailClosed (0.00s)
+=== RUN   TestFactExpiryAndUnsupportedTools
+--- PASS: TestFactExpiryAndUnsupportedTools (0.00s)
+=== RUN   TestBundleRejectsTampering
+--- PASS: TestBundleRejectsTampering (0.00s)
+=== RUN   TestCanonicalGoldenVectors
+=== RUN   TestCanonicalGoldenVectors/script-unicode
+=== RUN   TestCanonicalGoldenVectors/decimal-string-and-control-escape
+=== RUN   TestCanonicalGoldenVectors/pre-session-stop
+=== RUN   TestCanonicalGoldenVectors/install-fence
+--- PASS: TestCanonicalGoldenVectors (0.00s)
+    --- PASS: TestCanonicalGoldenVectors/script-unicode (0.00s)
+    --- PASS: TestCanonicalGoldenVectors/decimal-string-and-control-escape (0.00s)
+    --- PASS: TestCanonicalGoldenVectors/pre-session-stop (0.00s)
+    --- PASS: TestCanonicalGoldenVectors/install-fence (0.00s)
+=== RUN   TestCanonicalLiteralUnicodeAndBackslashes
+--- PASS: TestCanonicalLiteralUnicodeAndBackslashes (0.00s)
+=== RUN   TestLengthBudgetNeverCutsOrPadsFacts
+--- PASS: TestLengthBudgetNeverCutsOrPadsFacts (0.00s)
+=== RUN   TestPlannerRejectsInvalidScalarShapes
+--- PASS: TestPlannerRejectsInvalidScalarShapes (0.00s)
+PASS
+ok  	astralive/backend/internal/contentplan	1.311s
+=== RUN   TestProtocolExampleRoundTrips
+=== RUN   TestProtocolExampleRoundTrips/CreateBroadcastRun
+=== RUN   TestProtocolExampleRoundTrips/ClaimNextTurn
+=== RUN   TestProtocolExampleRoundTrips/DispatchTurn
+=== RUN   TestProtocolExampleRoundTrips/ConfirmCheckpoint
+=== RUN   TestProtocolExampleRoundTrips/QueryExecutionStatus
+=== RUN   TestProtocolExampleRoundTrips/ResumeBroadcastRun
+=== RUN   TestProtocolExampleRoundTrips/StopBroadcastRun
+=== RUN   TestProtocolExampleRoundTrips/YieldAtSegmentBoundary
+=== RUN   TestProtocolExampleRoundTrips/RestoreContentPlan
+=== RUN   TestProtocolExampleRoundTrips/MarkExecutionUnknown
+=== RUN   TestProtocolExampleRoundTrips/SaveContentPlan
+=== RUN   TestProtocolExampleRoundTrips/AdmitTurn
+=== RUN   TestProtocolExampleRoundTrips/RuntimeExecute
+=== RUN   TestProtocolExampleRoundTrips/FenceInstall
+=== RUN   TestProtocolExampleRoundTrips/JournalAccept
+=== RUN   TestProtocolExampleRoundTrips/JournalStart
+=== RUN   TestProtocolExampleRoundTrips/AcquireOutputPermit
+=== RUN   TestProtocolExampleRoundTrips/ConfirmRunFence
+=== RUN   TestProtocolExampleRoundTrips/ConfirmOutputFence
+=== RUN   TestProtocolExampleRoundTrips/RuntimeStop
+--- PASS: TestProtocolExampleRoundTrips (0.02s)
+    --- PASS: TestProtocolExampleRoundTrips/CreateBroadcastRun (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/ClaimNextTurn (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/DispatchTurn (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/ConfirmCheckpoint (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/QueryExecutionStatus (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/ResumeBroadcastRun (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/StopBroadcastRun (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/YieldAtSegmentBoundary (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/RestoreContentPlan (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/MarkExecutionUnknown (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/SaveContentPlan (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/AdmitTurn (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/RuntimeExecute (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/FenceInstall (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/JournalAccept (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/JournalStart (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/AcquireOutputPermit (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/ConfirmRunFence (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/ConfirmOutputFence (0.00s)
+    --- PASS: TestProtocolExampleRoundTrips/RuntimeStop (0.00s)
+PASS
+ok  	astralive/backend/internal/contentplan/contract	1.764s
+=== RUN   TestPostgresManagerBoundaryCommentResume
+--- PASS: TestPostgresManagerBoundaryCommentResume (0.61s)
+=== RUN   TestPostgresProjectionAuthorizationRevisionAndProduct
+--- PASS: TestPostgresProjectionAuthorizationRevisionAndProduct (0.11s)
+=== RUN   TestPostgresUnknownGapAndStopPriority
+--- PASS: TestPostgresUnknownGapAndStopPriority (0.39s)
+=== RUN   TestLiveAdmissionCannotBeEnabledByEnvironment
+--- PASS: TestLiveAdmissionCannotBeEnabledByEnvironment (0.00s)
+=== RUN   TestPostgresManagedSessionLateLifecycleCannotAutoStart
+--- PASS: TestPostgresManagedSessionLateLifecycleCannotAutoStart (0.10s)
+=== RUN   TestPostgresLegacyMigrationUpgradePreservesData
+--- PASS: TestPostgresLegacyMigrationUpgradePreservesData (0.18s)
+=== RUN   TestPostgresRealSchedulerSelectsMergedCommentsDuringScript
+--- PASS: TestPostgresRealSchedulerSelectsMergedCommentsDuringScript (0.20s)
+=== RUN   TestPostgresFairnessBudgetSurvivesManagerRestart
+--- PASS: TestPostgresFairnessBudgetSurvivesManagerRestart (0.45s)
+PASS
+ok  	astralive/backend/internal/durableintegration	3.446s
+=== RUN   TestPostgresCheckpointOrderingDuplicateAndBusinessCommit
+--- PASS: TestPostgresCheckpointOrderingDuplicateAndBusinessCommit (0.24s)
+=== RUN   TestPostgresRejectFakeCompletionAndOldEpochEvent
+--- PASS: TestPostgresRejectFakeCompletionAndOldEpochEvent (0.10s)
+=== RUN   TestPostgresForeignKeysAndImmutableEnvelope
+--- PASS: TestPostgresForeignKeysAndImmutableEnvelope (0.06s)
+=== RUN   TestPostgresConcurrentMigrationRunners
+--- PASS: TestPostgresConcurrentMigrationRunners (0.01s)
+=== RUN   TestPostgresNoSQLTransactionAcrossHTTP
+--- PASS: TestPostgresNoSQLTransactionAcrossHTTP (0.07s)
+=== RUN   TestRedisStreamsDuplicateReclaimAndSQLProjection
+--- PASS: TestRedisStreamsDuplicateReclaimAndSQLProjection (0.13s)
+=== RUN   TestRedisIsolatedDisconnectAndSQLFallback
+redis: 2026/10/18 08:11:13 pool.go:422: redis: connection pool: failed to dial after 1 attempts: dial tcp 127.0.0.1:56382: connect: connection refused
+redis: 2026/10/18 08:11:13 pool.go:422: redis: connection pool: failed to dial after 1 attempts: dial tcp 127.0.0.1:56382: connect: connection refused
+--- PASS: TestRedisIsolatedDisconnectAndSQLFallback (0.30s)
+=== RUN   TestPostgresLeaseRenewDoesNotMutateCommandOrReplayStart
+--- PASS: TestPostgresLeaseRenewDoesNotMutateCommandOrReplayStart (0.09s)
+=== RUN   TestPostgresCommentAnswerJournalRequiredBeforeStart
+--- PASS: TestPostgresCommentAnswerJournalRequiredBeforeStart (0.10s)
+=== RUN   TestPostgresSealNoEffectRequiresIndependentFence
+--- PASS: TestPostgresSealNoEffectRequiresIndependentFence (0.09s)
+=== RUN   TestPostgresCrossRunPublisherExclusionAfterFailedRun
+--- PASS: TestPostgresCrossRunPublisherExclusionAfterFailedRun (0.05s)
+=== RUN   TestPostgresCannotAdoptLegacyBusyOrMixSchedulers
+--- PASS: TestPostgresCannotAdoptLegacyBusyOrMixSchedulers (0.07s)
+=== RUN   TestPostgresRoleAuthenticationAndBodyScope
+--- PASS: TestPostgresRoleAuthenticationAndBodyScope (0.04s)
+=== RUN   TestPostgresLeaseKeeperDoesNotReviveStopOrExpiredOwner
+--- PASS: TestPostgresLeaseKeeperDoesNotReviveStopOrExpiredOwner (0.11s)
+=== RUN   TestPostgresUnsentCannotBecomeUnknownByInventedTransition
+--- PASS: TestPostgresUnsentCannotBecomeUnknownByInventedTransition (0.06s)
+=== RUN   TestPostgresSemanticTurnConflictIsNotRetryableDependencyFailure
+--- PASS: TestPostgresSemanticTurnConflictIsNotRetryableDependencyFailure (0.05s)
+=== RUN   TestPostgresBoundedRecoveryDoesNotStarveLaterRooms
+--- PASS: TestPostgresBoundedRecoveryDoesNotStarveLaterRooms (0.02s)
+=== RUN   TestIsolatedBackendHelper
+    process_test.go:38: owned subprocess helper
+--- SKIP: TestIsolatedBackendHelper (0.00s)
+=== RUN   TestProcessGoSIGKILLWhilePythonPlayingAndReattach
+    process_test.go:228: real Go child SIGKILL; Python survived; watchdog closed local sink; restarted Go reconciled UNKNOWN; one synthetic sink execution; no replay
+--- PASS: TestProcessGoSIGKILLWhilePythonPlayingAndReattach (1.96s)
+=== RUN   TestProcessPythonSIGKILLPreservesUnknown
+    process_test.go:264: real Python child SIGKILL; SQL retains uncertain playback as UNKNOWN; no re-dispatch
+--- PASS: TestProcessPythonSIGKILLPreservesUnknown (1.34s)
+=== RUN   TestPostgresOwnedConnectionDropRecovery
+    process_test.go:289: terminated only test-owned PostgreSQL connection PID=6536; pool reconnected; stable pending command retained
+--- PASS: TestPostgresOwnedConnectionDropRecovery (0.07s)
+=== RUN   TestPostgresIsolatedServerOutage
+    process_test.go:295: owned cluster path required
+--- SKIP: TestPostgresIsolatedServerOutage (0.00s)
+=== RUN   TestProcessCommitThenGoSIGKILL
+    process_test.go:363: SIGKILL after SQL commit and before dispatch; restarted Go sees exactly one original PENDING intent + attempt + QUEUED utterance; no fabricated execute
+--- PASS: TestProcessCommitThenGoSIGKILL (0.19s)
+=== RUN   TestProcessRealRuntimeLost202
+    process_test.go:416: real Python v0.5 HTTP received command and played synthetic local sink; 202 delayed beyond Go timeout; SQL reconciliation and duplicate execute produced one effect
+--- PASS: TestProcessRealRuntimeLost202 (0.86s)
+=== RUN   TestFrozenSchemaAndGoldenVectors
+--- PASS: TestFrozenSchemaAndGoldenVectors (0.03s)
+=== RUN   TestStrictJSON
+--- PASS: TestStrictJSON (0.00s)
+=== RUN   TestPostgresAtomicOutboxCommitAndResponseLoss
+--- PASS: TestPostgresAtomicOutboxCommitAndResponseLoss (0.06s)
+=== RUN   TestPostgresRollbackNoPartialAttempt
+--- PASS: TestPostgresRollbackNoPartialAttempt (0.04s)
+=== RUN   TestPostgresLost202ReattachNoReplay
+--- PASS: TestPostgresLost202ReattachNoReplay (0.08s)
+=== RUN   TestPostgresRuntimeCrashUnknownAndOrphanBusyProjection
+--- PASS: TestPostgresRuntimeCrashUnknownAndOrphanBusyProjection (0.08s)
+=== RUN   TestPostgresMissingInboxIsUnknown
+--- PASS: TestPostgresMissingInboxIsUnknown (0.07s)
+=== RUN   TestPostgresLeaseCompetitionAndOldEpoch
+--- PASS: TestPostgresLeaseCompetitionAndOldEpoch (0.03s)
+=== RUN   TestPostgresStopWinsRecoveryAndUnsentOrphan
+--- PASS: TestPostgresStopWinsRecoveryAndUnsentOrphan (0.08s)
+=== RUN   TestPostgresBindingExpiryAndWorkerUnavailable
+--- PASS: TestPostgresBindingExpiryAndWorkerUnavailable (0.08s)
+=== RUN   TestPostgresNoCrossSessionOrPayloadConflict
+--- PASS: TestPostgresNoCrossSessionOrPayloadConflict (0.06s)
+=== RUN   TestPostgresSkipLockedAndNoCrossRoomWait
+--- PASS: TestPostgresSkipLockedAndNoCrossRoomWait (0.05s)
+PASS
+ok  	astralive/backend/internal/durablelive	8.054s
+=== RUN   TestConcurrentConsumeOneLatch
+--- PASS: TestConcurrentConsumeOneLatch (0.33s)
+=== RUN   TestRollbackAtResponseValidation
+=== RUN   TestRollbackAtResponseValidation/JournalPrepareAnswer
+=== RUN   TestRollbackAtResponseValidation/JournalStart
+=== RUN   TestRollbackAtResponseValidation/CommitReceiverConsume
+--- PASS: TestRollbackAtResponseValidation (0.33s)
+    --- PASS: TestRollbackAtResponseValidation/JournalPrepareAnswer (0.06s)
+    --- PASS: TestRollbackAtResponseValidation/JournalStart (0.15s)
+    --- PASS: TestRollbackAtResponseValidation/CommitReceiverConsume (0.11s)
+=== RUN   TestStopCommitBothOrdersAndCompetition
+=== RUN   TestStopCommitBothOrdersAndCompetition/stop-first
+=== RUN   TestStopCommitBothOrdersAndCompetition/commit-first
+=== RUN   TestStopCommitBothOrdersAndCompetition/race
+--- PASS: TestStopCommitBothOrdersAndCompetition (0.30s)
+    --- PASS: TestStopCommitBothOrdersAndCompetition/stop-first (0.10s)
+    --- PASS: TestStopCommitBothOrdersAndCompetition/commit-first (0.10s)
+    --- PASS: TestStopCommitBothOrdersAndCompetition/race (0.10s)
+=== RUN   TestUnknownDurableAuditAndNotification
+--- PASS: TestUnknownDurableAuditAndNotification (0.11s)
+=== RUN   TestPrepareAliasAndDrainScopeUnit2
+--- PASS: TestPrepareAliasAndDrainScopeUnit2 (0.20s)
+=== RUN   TestScopeRolesAndCurrentIdentity
+=== RUN   TestScopeRolesAndCurrentIdentity/tenant
+=== RUN   TestScopeRolesAndCurrentIdentity/owner
+=== RUN   TestScopeRolesAndCurrentIdentity/room
+=== RUN   TestScopeRolesAndCurrentIdentity/incarnation
+=== RUN   TestScopeRolesAndCurrentIdentity/producer
+=== RUN   TestScopeRolesAndCurrentIdentity/role
+--- PASS: TestScopeRolesAndCurrentIdentity (0.10s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/tenant (0.00s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/owner (0.00s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/room (0.00s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/incarnation (0.00s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/producer (0.00s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/role (0.00s)
+=== RUN   TestChangedFactsBindingEpochAndExpiry
+=== RUN   TestChangedFactsBindingEpochAndExpiry/fact
+=== RUN   TestChangedFactsBindingEpochAndExpiry/binding
+=== RUN   TestChangedFactsBindingEpochAndExpiry/lease
+=== RUN   TestChangedFactsBindingEpochAndExpiry/epoch
+=== RUN   TestChangedFactsBindingEpochAndExpiry/generation
+=== RUN   TestChangedFactsBindingEpochAndExpiry/permit
+=== RUN   TestChangedFactsBindingEpochAndExpiry/sealed
+=== RUN   TestChangedFactsBindingEpochAndExpiry/run-failed
+=== RUN   TestChangedFactsBindingEpochAndExpiry/run-paused
+--- PASS: TestChangedFactsBindingEpochAndExpiry (1.57s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/fact (0.09s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/binding (0.09s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/lease (0.08s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/epoch (0.08s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/generation (0.09s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/permit (0.93s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/sealed (0.08s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/run-failed (0.07s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/run-paused (0.07s)
+=== RUN   TestRenewAfterGrantExpiryDoesNotReauthorize
+--- PASS: TestRenewAfterGrantExpiryDoesNotReauthorize (0.95s)
+=== RUN   TestExternalPreflightDoesNotBlockStop
+--- PASS: TestExternalPreflightDoesNotBlockStop (0.07s)
+=== RUN   TestSQLTombstonesCannotBeRewritten
+--- PASS: TestSQLTombstonesCannotBeRewritten (0.07s)
+=== RUN   TestExpiredRecoveryIsIdempotent
+--- PASS: TestExpiredRecoveryIsIdempotent (0.08s)
+=== RUN   TestOwnedCommitCrashChild
+    acceptance_test.go:412: owned subprocess helper
+--- SKIP: TestOwnedCommitCrashChild (0.00s)
+=== RUN   TestCommitThenSIGKILLFreshBackendDoesNotReplay
+    acceptance_test.go:477: owned child SIGKILL after commit; new backend returned consumeAuthorized=false; immutable latch=1
+--- PASS: TestCommitThenSIGKILLFreshBackendDoesNotReplay (0.13s)
+=== RUN   TestSealedAllDrainControlCompletionAndNoEarlyRelease
+--- PASS: TestSealedAllDrainControlCompletionAndNoEarlyRelease (0.11s)
+=== RUN   TestStopRegisterAndUntrustedBootstrap
+--- PASS: TestStopRegisterAndUntrustedBootstrap (0.03s)
+=== RUN   TestAtomicFactMismatchPrepareAndBadTicket
+--- PASS: TestAtomicFactMismatchPrepareAndBadTicket (0.07s)
+=== RUN   TestOriginalFactAndGrantExpiryFreshProofOnly
+=== RUN   TestOriginalFactAndGrantExpiryFreshProofOnly/false
+=== RUN   TestOriginalFactAndGrantExpiryFreshProofOnly/true
+--- PASS: TestOriginalFactAndGrantExpiryFreshProofOnly (4.38s)
+    --- PASS: TestOriginalFactAndGrantExpiryFreshProofOnly/false (2.18s)
+    --- PASS: TestOriginalFactAndGrantExpiryFreshProofOnly/true (2.20s)
+=== RUN   TestNoVerifierNoAuthority
+--- PASS: TestNoVerifierNoAuthority (0.04s)
+=== RUN   TestLateValidationCannotReturnExpiredPositive
+--- PASS: TestLateValidationCannotReturnExpiredPositive (0.92s)
+=== RUN   TestStopFirstRegistrationActualCompetition
+--- PASS: TestStopFirstRegistrationActualCompetition (0.27s)
+=== RUN   TestConcurrentPrepareCASAndOriginalReceipt
+--- PASS: TestConcurrentPrepareCASAndOriginalReceipt (0.10s)
+=== RUN   TestStopStaleCASPersistsOneStopIntent
+--- PASS: TestStopStaleCASPersistsOneStopIntent (0.06s)
+=== RUN   TestSQLRejectsCrossTenantMirrorAndArtifact
+--- PASS: TestSQLRejectsCrossTenantMirrorAndArtifact (0.09s)
+=== RUN   TestSQLLatencyEvidence
+    acceptance_test.go:724: SQL_LATENCY {"backend_consume":{"p50Microseconds":8872,"p95Microseconds":9316,"samples":12},"prepare_permit_start":{"p50Microseconds":19122,"p95Microseconds":20272,"samples":12}}
+--- PASS: TestSQLLatencyEvidence (0.77s)
+=== RUN   TestLostStartACKExpiresWithoutRegrant
+--- PASS: TestLostStartACKExpiresWithoutRegrant (0.92s)
+=== RUN   TestUnknownRequiresIndependentFenceToReleaseSlot
+--- PASS: TestUnknownRequiresIndependentFenceToReleaseSlot (0.09s)
+=== RUN   TestMigrationUpgradeRepeatConcurrentPreservesV1
+    migration_test.go:105: 000006 -> 000007; original v1 product bytes preserved; 4 concurrent runners; migrations=7
+    migration_test.go:130: restricted SQL denied: SELECT * FROM dl05_receiver_consumptions
+    migration_test.go:130: restricted SQL denied: INSERT INTO dl05_v2_grant_state VALUES('bad','ISSUED')
+--- PASS: TestMigrationUpgradeRepeatConcurrentPreservesV1 (0.18s)
+=== RUN   TestMigrationAndNormalConsume
+--- PASS: TestMigrationAndNormalConsume (0.08s)
+=== RUN   TestOfficialWireAdapterConsumptionAndStrictAdmission
+--- PASS: TestOfficialWireAdapterConsumptionAndStrictAdmission (0.08s)
+=== RUN   TestOfficialWireMetadataRolesAndHashes
+--- PASS: TestOfficialWireMetadataRolesAndHashes (0.06s)
+PASS
+ok  	astralive/backend/internal/durablelivev2/authority	13.744s
+=== RUN   TestRequiredNullClearsAndFailedDecodeIsAtomic
+--- PASS: TestRequiredNullClearsAndFailedDecodeIsAtomic (0.00s)
+=== RUN   TestSecretDiagnostics
+--- PASS: TestSecretDiagnostics (0.00s)
+=== RUN   TestOperationDescriptorsAreCopies
+--- PASS: TestOperationDescriptorsAreCopies (0.00s)
+=== RUN   TestMalformedEscapesAndLexemes
+--- PASS: TestMalformedEscapesAndLexemes (0.00s)
+=== RUN   TestStructuredLogsRedact
+--- PASS: TestStructuredLogsRedact (0.00s)
+=== RUN   TestNullableZeroAndReaderBounds
+--- PASS: TestNullableZeroAndReaderBounds (0.00s)
+=== RUN   TestReaderRejectsWrongEndpointBeforeRead
+--- PASS: TestReaderRejectsWrongEndpointBeforeRead (0.00s)
+=== RUN   TestEncodeRejectsForeignEmbeddedMessage
+--- PASS: TestEncodeRejectsForeignEmbeddedMessage (0.00s)
+PASS
+ok  	astralive/backend/internal/durablelivev2/wire	1.336s
+?   	astralive/backend/internal/eventbus	[no test files]
+=== RUN   TestSessionTransitions
+--- PASS: TestSessionTransitions (0.00s)
+=== RUN   TestUtteranceTransitions
+--- PASS: TestUtteranceTransitions (0.00s)
+PASS
+ok  	astralive/backend/internal/fsm	1.693s
+=== RUN   TestProductAuthorizationAndPinnedBindings
+    authorization_integration_test.go:28: explicit disposable DB required
+--- SKIP: TestProductAuthorizationAndPinnedBindings (0.00s)
+=== RUN   TestFrozenOpenAPIValidation
+--- PASS: TestFrozenOpenAPIValidation (0.09s)
+=== RUN   TestDurableRecoveryAlwaysRequiresProductAuthentication
+--- PASS: TestDurableRecoveryAlwaysRequiresProductAuthentication (0.00s)
+=== RUN   TestPostgresDurableRecoveryOwnerCSRFAndStop
+--- PASS: TestPostgresDurableRecoveryOwnerCSRFAndStop (0.23s)
+=== RUN   TestInteractionFormalCPU
+    interaction_integration_test.go:39: RUN_INTERACTION_CPU=1 and disposable SQL/Redis required
+--- SKIP: TestInteractionFormalCPU (0.00s)
+=== RUN   TestWebRTCOfferRouting
+=== RUN   TestWebRTCOfferRouting/missing
+=== RUN   TestWebRTCOfferRouting/READY
+=== RUN   TestWebRTCOfferRouting/LIVE
+=== RUN   TestWebRTCOfferRouting/DEGRADED
+--- PASS: TestWebRTCOfferRouting (0.01s)
+    --- PASS: TestWebRTCOfferRouting/missing (0.00s)
+    --- PASS: TestWebRTCOfferRouting/READY (0.00s)
+    --- PASS: TestWebRTCOfferRouting/LIVE (0.00s)
+    --- PASS: TestWebRTCOfferRouting/DEGRADED (0.00s)
+=== RUN   TestHeartbeatFrame
+--- PASS: TestHeartbeatFrame (0.00s)
+=== RUN   TestDevCommentNoRunningSession
+--- PASS: TestDevCommentNoRunningSession (0.00s)
+=== RUN   TestDevCommentQueuesPlatformUtterance
+--- PASS: TestDevCommentQueuesPlatformUtterance (0.00s)
+=== RUN   TestProductToolAuthorizationAndStock
+--- PASS: TestProductToolAuthorizationAndStock (0.00s)
+=== RUN   TestProductToolAllRoutes
+--- PASS: TestProductToolAllRoutes (0.00s)
+=== RUN   TestConfigurationRouteIsAuthenticatedAndSeparate
+--- PASS: TestConfigurationRouteIsAuthenticatedAndSeparate (0.00s)
+PASS
+ok  	astralive/backend/internal/httpapi	2.178s
+?   	astralive/backend/internal/ids	[no test files]
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/XL_和_XXL_库存多少？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/2XL_库存多少？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/180码库存多少？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/商品价格和库存多少？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/商品材质和库存多少？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/价格多少，怎么搭配？
+=== RUN   TestAuditDistinctQuestionIntentsDoNotMerge/商品名称和价格多少？
+--- PASS: TestAuditDistinctQuestionIntentsDoNotMerge (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/XL_和_XXL_库存多少？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/2XL_库存多少？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/180码库存多少？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/商品价格和库存多少？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/商品材质和库存多少？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/价格多少，怎么搭配？ (0.00s)
+    --- PASS: TestAuditDistinctQuestionIntentsDoNotMerge/商品名称和价格多少？ (0.00s)
+=== RUN   TestAuditCancelDuringReceiveLockWait
+--- PASS: TestAuditCancelDuringReceiveLockWait (0.00s)
+=== RUN   TestFastPollDoesNotIncreaseAutomaticSpeechFrequency
+--- PASS: TestFastPollDoesNotIncreaseAutomaticSpeechFrequency (0.00s)
+=== RUN   TestDedupMergeAndStockSeparation
+--- PASS: TestDedupMergeAndStockSeparation (0.00s)
+=== RUN   TestDirectedRequestSelectedButAmbientStatementFiltered
+--- PASS: TestDirectedRequestSelectedButAmbientStatementFiltered (0.00s)
+=== RUN   TestTTLRateCapacityAndStop
+--- PASS: TestTTLRateCapacityAndStop (0.01s)
+=== RUN   TestUserLimitAndGlobalLimit
+--- PASS: TestUserLimitAndGlobalLimit (0.00s)
+=== RUN   TestPriorityFairnessOperatorProductSwitchAndBoundary
+--- PASS: TestPriorityFairnessOperatorProductSwitchAndBoundary (0.00s)
+=== RUN   TestFairness
+--- PASS: TestFairness (0.00s)
+=== RUN   TestFailureNoRetryAndSessionIsolation
+--- PASS: TestFailureNoRetryAndSessionIsolation (0.00s)
+=== RUN   TestConcurrentDeliveryDedup
+--- PASS: TestConcurrentDeliveryDedup (0.00s)
+=== RUN   TestOptInControlledPreemption
+--- PASS: TestOptInControlledPreemption (0.00s)
+=== RUN   TestTwoRoomsShareLimiterWithoutEventMix
+--- PASS: TestTwoRoomsShareLimiterWithoutEventMix (0.00s)
+=== RUN   TestObservationUsesLocalClockAndDispatchAcknowledgement
+--- PASS: TestObservationUsesLocalClockAndDispatchAcknowledgement (0.00s)
+=== RUN   TestDurableSourceCapPreservesLegacyMergeCounters
+=== RUN   TestDurableSourceCapPreservesLegacyMergeCounters/false
+=== RUN   TestDurableSourceCapPreservesLegacyMergeCounters/true
+--- PASS: TestDurableSourceCapPreservesLegacyMergeCounters (0.03s)
+    --- PASS: TestDurableSourceCapPreservesLegacyMergeCounters/false (0.01s)
+    --- PASS: TestDurableSourceCapPreservesLegacyMergeCounters/true (0.01s)
+PASS
+ok  	astralive/backend/internal/interaction	1.367s
+?   	astralive/backend/internal/metrics	[no test files]
+=== RUN   TestSharedDTOsAndPublicSecretExclusion
+=== RUN   TestSharedDTOsAndPublicSecretExclusion/VoiceProfile
+=== RUN   TestSharedDTOsAndPublicSecretExclusion/Job
+=== RUN   TestSharedDTOsAndPublicSecretExclusion/PersonalBinding
+=== RUN   TestSharedDTOsAndPublicSecretExclusion/Asset
+=== RUN   TestSharedDTOsAndPublicSecretExclusion/AvatarProfile
+--- PASS: TestSharedDTOsAndPublicSecretExclusion (0.17s)
+    --- PASS: TestSharedDTOsAndPublicSecretExclusion/VoiceProfile (0.00s)
+    --- PASS: TestSharedDTOsAndPublicSecretExclusion/Job (0.00s)
+    --- PASS: TestSharedDTOsAndPublicSecretExclusion/PersonalBinding (0.00s)
+    --- PASS: TestSharedDTOsAndPublicSecretExclusion/Asset (0.00s)
+    --- PASS: TestSharedDTOsAndPublicSecretExclusion/AvatarProfile (0.00s)
+=== RUN   TestUploadAndProviderSchemaNegativeCases
+=== RUN   TestUploadAndProviderSchemaNegativeCases/valid
+=== RUN   TestUploadAndProviderSchemaNegativeCases/oversize
+=== RUN   TestUploadAndProviderSchemaNegativeCases/svg
+=== RUN   TestUploadAndProviderSchemaNegativeCases/derivative_injection
+=== RUN   TestUploadAndProviderSchemaNegativeCases/consent_false
+=== RUN   TestUploadAndProviderSchemaNegativeCases/scope_injection
+=== RUN   TestUploadAndProviderSchemaNegativeCases/path_injection
+--- PASS: TestUploadAndProviderSchemaNegativeCases (0.17s)
+    --- PASS: TestUploadAndProviderSchemaNegativeCases/valid (0.00s)
+    --- PASS: TestUploadAndProviderSchemaNegativeCases/oversize (0.00s)
+    --- PASS: TestUploadAndProviderSchemaNegativeCases/svg (0.00s)
+    --- PASS: TestUploadAndProviderSchemaNegativeCases/derivative_injection (0.00s)
+    --- PASS: TestUploadAndProviderSchemaNegativeCases/consent_false (0.00s)
+    --- PASS: TestUploadAndProviderSchemaNegativeCases/scope_injection (0.00s)
+    --- PASS: TestUploadAndProviderSchemaNegativeCases/path_injection (0.00s)
+=== RUN   TestEveryRouteHasExplicitAuthorizationAndImplementationState
+--- PASS: TestEveryRouteHasExplicitAuthorizationAndImplementationState (0.18s)
+=== RUN   TestProviderCapabilitiesEnforced
+--- PASS: TestProviderCapabilitiesEnforced (0.00s)
+=== RUN   TestSimulationAndMismatchedReadinessCannotPass
+--- PASS: TestSimulationAndMismatchedReadinessCannotPass (0.00s)
+=== RUN   TestInternalProcessorDTOsMatchSharedSchema
+--- PASS: TestInternalProcessorDTOsMatchSharedSchema (0.18s)
+PASS
+ok  	astralive/backend/internal/personalconfig	2.444s
+=== RUN   TestNormalize
+--- PASS: TestNormalize (0.00s)
+PASS
+ok  	astralive/backend/internal/platform	1.711s
+=== RUN   TestAuditReplayStopWaitsForInFlightDelivery
+--- PASS: TestAuditReplayStopWaitsForInFlightDelivery (0.05s)
+=== RUN   TestReplayReconnectDuplicateAndStop
+--- PASS: TestReplayReconnectDuplicateAndStop (0.00s)
+=== RUN   TestCancelAndLimits
+--- PASS: TestCancelAndLimits (0.00s)
+=== RUN   TestReplayFixtureThroughScheduler
+--- PASS: TestReplayFixtureThroughScheduler (0.00s)
+PASS
+ok  	astralive/backend/internal/platform/mock	1.809s
+=== RUN   TestRuntimeClientCreateSessionWithHTTPStub
+--- PASS: TestRuntimeClientCreateSessionWithHTTPStub (0.00s)
+=== RUN   TestV11RuntimePayloadsAndWebRTC
+--- PASS: TestV11RuntimePayloadsAndWebRTC (0.00s)
+=== RUN   TestRuntimeErrors
+--- PASS: TestRuntimeErrors (0.05s)
+PASS
+ok  	astralive/backend/internal/runtime	1.829s
+=== RUN   TestHub
+--- PASS: TestHub (0.00s)
+PASS
+ok  	astralive/backend/internal/sse	1.721s
+=== RUN   TestTenSegmentsWithoutComments
+--- PASS: TestTenSegmentsWithoutComments (0.09s)
+=== RUN   TestNaturalCommentBoundaryAndResume
+--- PASS: TestNaturalCommentBoundaryAndResume (0.02s)
+=== RUN   TestFairnessBudgetsAndRestart
+--- PASS: TestFairnessBudgetsAndRestart (0.04s)
+=== RUN   TestOccupancyAndMaxScriptWait
+=== RUN   TestOccupancyAndMaxScriptWait/occupancy
+=== RUN   TestOccupancyAndMaxScriptWait/script-wait
+--- PASS: TestOccupancyAndMaxScriptWait (0.04s)
+    --- PASS: TestOccupancyAndMaxScriptWait/occupancy (0.02s)
+    --- PASS: TestOccupancyAndMaxScriptWait/script-wait (0.02s)
+=== RUN   TestTTLNeverResetByWaitingOrRestart
+--- PASS: TestTTLNeverResetByWaitingOrRestart (0.01s)
+=== RUN   TestUnknownAndOldEpochFailClosed
+--- PASS: TestUnknownAndOldEpochFailClosed (0.01s)
+=== RUN   TestUnknownWithoutSlotStillBlocksCursor
+--- PASS: TestUnknownWithoutSlotStillBlocksCursor (0.00s)
+=== RUN   TestStopDoesNotRestartAndLateEvidenceCannotResume
+--- PASS: TestStopDoesNotRestartAndLateEvidenceCannotResume (0.01s)
+=== RUN   TestForceRequiresExplicitResumeAndFence
+--- PASS: TestForceRequiresExplicitResumeAndFence (0.01s)
+=== RUN   TestProductSwitchDoesNotReuseOldFactsOrTurns
+--- PASS: TestProductSwitchDoesNotReuseOldFactsOrTurns (0.01s)
+=== RUN   TestFailureStagesNeverCompleteSegment
+=== RUN   TestFailureStagesNeverCompleteSegment/LLM_FAILED
+=== RUN   TestFailureStagesNeverCompleteSegment/TTS_FAILED
+=== RUN   TestFailureStagesNeverCompleteSegment/WORKER_DEGRADED
+--- PASS: TestFailureStagesNeverCompleteSegment (0.01s)
+    --- PASS: TestFailureStagesNeverCompleteSegment/LLM_FAILED (0.00s)
+    --- PASS: TestFailureStagesNeverCompleteSegment/TTS_FAILED (0.00s)
+    --- PASS: TestFailureStagesNeverCompleteSegment/WORKER_DEGRADED (0.00s)
+=== RUN   TestCommentFailureCanResumeAfterProvenBarrier
+--- PASS: TestCommentFailureCanResumeAfterProvenBarrier (0.01s)
+=== RUN   TestDegradedProviderAndLostAck
+--- PASS: TestDegradedProviderAndLostAck (0.00s)
+=== RUN   TestDrainProofRequiredAndEvidenceConflict
+--- PASS: TestDrainProofRequiredAndEvidenceConflict (0.01s)
+=== RUN   TestConcurrentManagersDoNotDoubleDispatch
+--- PASS: TestConcurrentManagersDoNotDoubleDispatch (0.02s)
+=== RUN   TestDecideRejectsInconsistentProjectionAndScope
+--- PASS: TestDecideRejectsInconsistentProjectionAndScope (0.00s)
+=== RUN   TestFactRefreshCannotChangeAssertion
+--- PASS: TestFactRefreshCannotChangeAssertion (0.00s)
+=== RUN   TestSchedulerContinuousBurstUsesExistingAlgorithms
+    manager_test.go:466: all receipts=200 duplicate=100 merged=0 selected=3 dropped=40 expired=0 script_completed=10
+--- PASS: TestSchedulerContinuousBurstUsesExistingAlgorithms (0.13s)
+=== RUN   TestSegmentThreeMergedSizesAndRepeatedSelection
+--- PASS: TestSegmentThreeMergedSizesAndRepeatedSelection (0.03s)
+=== RUN   TestGapRequiresExplicitDurableDecision
+--- PASS: TestGapRequiresExplicitDurableDecision (0.00s)
+=== RUN   TestConfigRelationship
+--- PASS: TestConfigRelationship (0.00s)
+=== RUN   TestExportContractRequests
+    manager_test.go:530: set ASTRALIVE_DIRECTOR_EVIDENCE for schema/evidence export
+--- SKIP: TestExportContractRequests (0.00s)
+=== RUN   TestRealSchedulerMergesSizeQuestionsAtSegmentThree
+--- PASS: TestRealSchedulerMergesSizeQuestionsAtSegmentThree (0.03s)
+=== RUN   TestIdentityBridgeAndNonForceAdmission
+--- PASS: TestIdentityBridgeAndNonForceAdmission (0.00s)
+=== RUN   TestSustainedCommentsNeverStarveExplanation
+--- PASS: TestSustainedCommentsNeverStarveExplanation (0.38s)
+=== RUN   TestFractionalTimestampsPreserveFairnessOrder
+--- PASS: TestFractionalTimestampsPreserveFairnessOrder (0.02s)
+=== RUN   TestMetricsRetainSlowSamplesAndSeparatePopulations
+--- PASS: TestMetricsRetainSlowSamplesAndSeparatePopulations (0.00s)
+PASS
+ok  	astralive/backend/internal/turnmanager	2.249s
+=== RUN   TestConfigurationBrowserHarness
+    browser_harness_test.go:23: browser harness opt-in
+--- SKIP: TestConfigurationBrowserHarness (0.00s)
+=== RUN   TestConfigurationSpecification
+--- PASS: TestConfigurationSpecification (0.08s)
+=== RUN   TestPostgresConfigurationLifecycle
+    postgres_test.go:23: CONFIG_TEST_DATABASE_URL not set
+--- SKIP: TestPostgresConfigurationLifecycle (0.00s)
+=== RUN   TestLocalProviderProbesScopedAndVersioned
+    provider_probe_test.go:22: explicit disposable DB required
+--- SKIP: TestLocalProviderProbesScopedAndVersioned (0.00s)
+=== RUN   TestVaultTamperIsolationAndRotation
+--- PASS: TestVaultTamperIsolationAndRotation (0.00s)
+=== RUN   TestEndpointAndAddressPolicy
+--- PASS: TestEndpointAndAddressPolicy (0.00s)
+=== RUN   TestProviderSpecificValidation
+--- PASS: TestProviderSpecificValidation (0.00s)
+=== RUN   TestProviderFailuresAreSanitized
+--- PASS: TestProviderFailuresAreSanitized (0.00s)
+=== RUN   TestNoSessionAndNoServiceTokenFailClosed
+--- PASS: TestNoSessionAndNoServiceTokenFailClosed (0.00s)
+=== RUN   TestMixedDNSAndPinnedDial
+--- PASS: TestMixedDNSAndPinnedDial (0.00s)
+=== RUN   TestRuntimeIntegrationFaultProjection
+--- PASS: TestRuntimeIntegrationFaultProjection (0.00s)
+=== RUN   TestWorkerProbeProjectionAndPrivateAuth
+--- PASS: TestWorkerProbeProjectionAndPrivateAuth (0.00s)
+=== RUN   TestWorkerStatusScopeAndAuthentication
+--- PASS: TestWorkerStatusScopeAndAuthentication (0.00s)
+=== RUN   TestOwnProfileCannotProbeForeignPhysicalWorker
+--- PASS: TestOwnProfileCannotProbeForeignPhysicalWorker (0.00s)
+PASS
+ok  	astralive/backend/internal/userconfig	1.449s
+=== RUN   TestEventDedupAndStateUpdateWithPostgres
+    integration_test.go:45: DATABASE_URL not set
+--- SKIP: TestEventDedupAndStateUpdateWithPostgres (0.00s)
+PASS
+ok  	astralive/backend/tests	1.387s

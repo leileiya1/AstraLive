@@ -1,0 +1,34 @@
+{
+  "frozen": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+  "normativeCount": 22,
+  "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+  "originalMigrationHashes": {
+    "backend/db/migrations/000001_init.sql": "f39efce5acdf9c39f0b91a1dac4e99131348bc474ff99653083ccdafbc80597b",
+    "backend/db/migrations/000002_live_room_active_product.sql": "a3de02fc9c767e380626c6f892ed6ab381b55b502bf25a472b4eb2b29bc56e30",
+    "backend/db/migrations/000003_user_configuration.sql": "60bbe82d59abf5df2decb01b9725109960cf18ff5b14af9cb54bad7a438d8af3",
+    "backend/db/migrations/000004_session_integration.sql": "3a3db0853c318bac95dee5379ea9e409bfea4ba812aaa2087b7045cdd2407ef1",
+    "backend/db/migrations/000005_interaction_receipts.sql": "b40a4aae20ba9bfc1f16ff3f0ee56d19c564e753c23d5ff5d875acef16dd3872",
+    "backend/db/migrations/000006_durable_live.sql": "934fe2904e00e011297d21eb55963e45815544716d9ed5baf24b5f7062d9fdea"
+  },
+  "v2MigrationHash": "2c77dd37eeca99406e13a84f9c012f126fb1bd842a87d82e04d6ec31307b5cf5",
+  "officialDTOSHA": "e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565",
+  "officialWireImports": "Agent4 Go wire package imported, production HTTP/IPC unmounted",
+  "liveEnabled": false,
+  "sourceHashes": {
+    "backend/internal/durablelivev2/authority/wire_test.go": "5ed95b4a693c88e06f89db28629e9326f936d9bb6bfbe4e8140fb4083b67455f",
+    "backend/internal/durablelivev2/authority/answer.go": "0cf7e00eb9f71572802a682acb7c7c990d292834e080aba0934e00d777b5165b",
+    "backend/internal/durablelivev2/authority/store_test.go": "a43f52aadaf4ab3b7a7a2b218cc3a19e8f07c8a12fc3559f0a2644f323238861",
+    "backend/internal/durablelivev2/authority/store.go": "3bc396ca10fb1a46f835c777b1e5625fca8505f4fa1fe8bff07bde31732072d7",
+    "backend/internal/durablelivev2/authority/bootstrap.go": "13a503b66570fa017b1fca8bf7a2c79a123121a5441cd672cc00d21bd33632f3",
+    "backend/internal/durablelivev2/authority/checkpoints.go": "7f25e1c3168d7bf9ef879f83bf33f5047f014ac8b7db00a969e03826dd6c6a70",
+    "backend/internal/durablelivev2/authority/README.md": "a664b7eabd0500ecbc9cef3f8737f36999e5e5ddde6baf3a5032bb034c3b5b17",
+    "backend/internal/durablelivev2/authority/migration_test.go": "0038a3d4775ab3f8b1ba79b2c892891acec361039e22097ca3621bde6edcf042",
+    "backend/internal/durablelivev2/authority/wire.go": "a15b2355467274086bf1fe1c123370e4bc1e994c5d70869c5f0c338329669fe8",
+    "backend/internal/durablelivev2/authority/run_postgres_acceptance.py": "5aa11882ad6c2622015f41a4a7d307d88bffcdeba9942f3ef7329a6b84a82305",
+    "backend/internal/durablelivev2/authority/consume.go": "877adfb93f6ce7d13b67eed9ff7fd74b593c298bc1bc7e1b0bb7561de0a67d06",
+    "backend/internal/durablelivev2/authority/acceptance_test.go": "7d1be2be41026740adb15b84aaaec7fae4db8a1daa6c3bbae8620186883b99e8",
+    "backend/internal/durablelivev2/authority/progress.go": "16bef4c5e97824cbb8ca1fa5c63b4d50d7ab7593d41dc46299b9858c9d40a5f4"
+  },
+  "developmentBaseline": "e98d8cf53d1aa5518f9c908785b7a5feae5117f8",
+  "dependencyBaseline": "e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565"
+}

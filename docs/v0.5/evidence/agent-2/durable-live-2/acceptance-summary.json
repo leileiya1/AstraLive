@@ -1,0 +1,33 @@
+{
+  "postgres-authority": {
+    "pass": 29,
+    "fail": 0,
+    "skip": 1,
+    "skippedTests": [
+      "TestOwnedCommitCrashChild"
+    ]
+  },
+  "backend-overlay-race": {
+    "pass": 172,
+    "fail": 0,
+    "skip": 11,
+    "skippedTests": [
+      "TestAuditSelectionExpiresWhileWaitingForCommandLock",
+      "TestIsolatedBackendHelper",
+      "TestPostgresIsolatedServerOutage",
+      "TestOwnedCommitCrashChild",
+      "TestProductAuthorizationAndPinnedBindings",
+      "TestInteractionFormalCPU",
+      "TestExportContractRequests",
+      "TestConfigurationBrowserHarness",
+      "TestPostgresConfigurationLifecycle",
+      "TestLocalProviderProbesScopedAndVersioned",
+      "TestEventDedupAndStateUpdateWithPostgres"
+    ]
+  },
+  "officialDTOSHA": "e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565",
+  "officialWire": "official Go strict Handle adapter + actual SQL tested; public HTTP/IPC not mounted",
+  "originalUnpatchedFullGo": "FAIL: shared migration-count assertion expects 6; standalone patch tested using overlay",
+  "runtime": "169 passed,11 opt-in skipped,50 subtests passed",
+  "contracts": "137 passed;11 Journal passed;13 official wire cross-language tests passed;both validators passed"
+}

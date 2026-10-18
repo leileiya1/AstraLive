@@ -1,0 +1,45 @@
+2026-10-18 08:11:11.091 CST [6146] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-18 08:11:11.091 CST [6146] LOG:  listening on IPv4 address "127.0.0.1", port 53585
+2026-10-18 08:11:11.091 CST [6146] LOG:  listening on Unix socket "/tmp/astralive-agent2-v2-acceptance.w95fg19i/sockets/.s.PGSQL.53585"
+2026-10-18 08:11:11.094 CST [6149] LOG:  database system was shut down at 2026-10-18 08:11:11 CST
+2026-10-18 08:11:11.096 CST [6146] LOG:  database system is ready to accept connections
+2026-10-18 08:11:16.867 CST [6513] ERROR:  immutable v2 evidence
+2026-10-18 08:11:16.867 CST [6513] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:11:16.867 CST [6513] STATEMENT:  DELETE FROM dl05_receiver_consumptions WHERE command_id=$1
+2026-10-18 08:11:16.868 CST [6513] ERROR:  immutable v2 evidence
+2026-10-18 08:11:16.868 CST [6513] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:11:16.868 CST [6513] STATEMENT:  UPDATE dl05_receiver_consumptions SET consume_identity='changed' WHERE command_id=$1
+2026-10-18 08:11:16.868 CST [6513] ERROR:  immutable v2 evidence
+2026-10-18 08:11:16.868 CST [6513] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:11:16.868 CST [6513] STATEMENT:  DELETE FROM dl05_answer_grants WHERE command_id=$1
+2026-10-18 08:11:16.868 CST [6513] ERROR:  immutable v2 evidence
+2026-10-18 08:11:16.868 CST [6513] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:11:16.868 CST [6513] STATEMENT:  UPDATE dl05_answer_segments SET answer_text='changed' WHERE command_id=$1
+2026-10-18 08:11:16.868 CST [6513] ERROR:  immutable durable field command_id
+2026-10-18 08:11:16.868 CST [6513] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 08:11:16.868 CST [6513] STATEMENT:  UPDATE dl05_v2_execution_state SET command_id='other' WHERE command_id=$1
+2026-10-18 08:11:16.868 CST [6513] ERROR:  v2 state cannot reauthorize
+2026-10-18 08:11:16.868 CST [6513] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 08:11:16.868 CST [6513] STATEMENT:  UPDATE dl05_v2_grant_state SET state='ISSUED' WHERE grant_id=$1
+2026-10-18 08:11:16.874 CST [6513] ERROR:  v2 state cannot reauthorize
+2026-10-18 08:11:16.874 CST [6513] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 08:11:16.874 CST [6513] STATEMENT:  UPDATE dl05_v2_registration_state SET state='ACTIVE',revoked_at=NULL WHERE bootstrap_id=$1
+2026-10-18 08:11:23.196 CST [6646] ERROR:  receiver principal scope mismatch
+2026-10-18 08:11:23.196 CST [6646] CONTEXT:  PL/pgSQL function dl05_v2_mirror_scope() line 9 at RAISE
+2026-10-18 08:11:23.196 CST [6646] STATEMENT:  INSERT INTO dl05_v2_installations(proof_id,command_id,binding,binding_hash,installation_revision,runtime_principal,guardian_principal,observed_by,fence_ref) VALUES($1,$2,'{}',$3,1,$4,$5,'test','test')
+2026-10-18 08:11:23.198 CST [6646] ERROR:  artifact scope mismatch
+2026-10-18 08:11:23.198 CST [6646] CONTEXT:  PL/pgSQL function dl05_v2_artifact_scope() line 9 at RAISE
+2026-10-18 08:11:23.198 CST [6646] STATEMENT:  INSERT INTO dl05_answer_segments(artifact_id,command_id,answer_id,sequence,descriptor,artifact_hash,answer_text,text_hash,previous_hash,product_id,snapshot_version,facts,prepare_receipt) VALUES($1,$2,$3,2,$4,$5,$6,$7,$8,$9,$10,$11,'{}')
+2026-10-18 08:11:25.086 CST [6690] ERROR:  permission denied for table dl05_receiver_consumptions
+2026-10-18 08:11:25.086 CST [6690] STATEMENT:  SELECT * FROM dl05_receiver_consumptions
+2026-10-18 08:11:25.086 CST [6690] ERROR:  permission denied for table dl05_v2_grant_state
+2026-10-18 08:11:25.086 CST [6690] STATEMENT:  INSERT INTO dl05_v2_grant_state VALUES('bad','ISSUED')
+2026-10-18 08:11:25.087 CST [6147] LOG:  checkpoint starting: immediate force wait
+2026-10-18 08:11:25.141 CST [6147] LOG:  checkpoint complete: wrote 1701 buffers (10.4%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.039 s, sync=0.015 s, total=0.054 s; sync files=683, longest=0.001 s, average=0.001 s; distance=17116 kB, estimate=17116 kB; lsn=0/25D19D0, redo lsn=0/25D1978
+2026-10-18 08:11:26.425 CST [6146] LOG:  received fast shutdown request
+2026-10-18 08:11:26.425 CST [6146] LOG:  aborting any active transactions
+2026-10-18 08:11:26.425 CST [6146] LOG:  background worker "logical replication launcher" (PID 6152) exited with exit code 1
+2026-10-18 08:11:26.426 CST [6147] LOG:  shutting down
+2026-10-18 08:11:26.426 CST [6147] LOG:  checkpoint starting: shutdown immediate
+2026-10-18 08:11:26.434 CST [6147] LOG:  checkpoint complete: wrote 181 buffers (1.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.005 s, total=0.009 s; sync files=138, longest=0.001 s, average=0.001 s; distance=808 kB, estimate=15485 kB; lsn=0/269B9C8, redo lsn=0/269B9C8
+2026-10-18 08:11:26.436 CST [6146] LOG:  database system is shut down
