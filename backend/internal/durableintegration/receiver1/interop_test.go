@@ -194,6 +194,15 @@ type physicalFixture struct{ registrar, guardian string }
 func (p physicalFixture) Observe(_ context.Context, b wire.ReceiverBootstrapBinding, r, g Identity) (wire.ReceiverPhysicalInstallation, error) {
 	return wire.ReceiverPhysicalInstallation{Binding: b, InstallationRevision: 1, ObservedByPrincipalID: wire.ID(p.registrar), GuardianPrincipalID: wire.ID(p.guardian), ClosedFenceProofRef: "fixture-closed-fence", State: "CLOSED_INSTALLED"}, nil
 }
+
+// Test-only immutable source. Production has no positive PhysicalSource.
+func (p physicalFixture) InstallationGate(ctx context.Context, b wire.ReceiverBootstrapBinding, r, g Identity) (*InstallationGate, error) {
+	v, e := p.Observe(ctx, b, r, g)
+	if e != nil {
+		return nil, e
+	}
+	return NewInstallationGate(v)
+}
 func newInterop(t *testing.T) *interop {
 	t.Helper()
 	dsn := os.Getenv("AGENT4_RECEIVER1_DATABASE_URL")

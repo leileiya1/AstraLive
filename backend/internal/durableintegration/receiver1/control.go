@@ -70,6 +70,21 @@ func (c *ControlChannel) Stage(ctx context.Context, path string, guardian *Pin, 
 	if e != nil || native != c.identity || guardian == nil || !guardian.Alive() || guardian.actor.Role != "OUTPUT_GUARDIAN" || c.actor.Tenant != guardian.actor.Tenant || c.actor.Owner != guardian.actor.Owner || c.actor.Room != guardian.actor.Room {
 		return nil, denied()
 	}
+	in := guardian.installation
+	if in == nil || in.registrar != c.actor || bindingHash(q.Binding) != bindingHash(in.binding) {
+		return nil, fault("BOOTSTRAP_REQUIRED")
+	}
+	release, e := in.gate.acquire(ctx)
+	if e != nil {
+		return nil, e
+	}
+	defer release()
+	if _, e = in.registry.observe(ctx, in); e != nil {
+		return nil, e
+	}
+	if e = in.registry.checkMirror(ctx, in); e != nil {
+		return nil, e
+	}
 	parent, e := os.Lstat(filepath.Dir(path))
 	if e != nil || !parent.IsDir() || parent.Mode().Perm() != 0700 || !ownedDirectory(parent) {
 		return nil, denied()
@@ -128,6 +143,12 @@ func (c *ControlChannel) Stage(ctx context.Context, path string, guardian *Pin, 
 	out := decoded.(*wire.ReceiverStageResponse)
 	if out.RequestID != q.RequestID {
 		return nil, fault("CONSUMPTION_UNKNOWN")
+	}
+	if _, e = in.registry.observe(ctx, in); e != nil {
+		return nil, e
+	}
+	if !in.gate.valid() || out.Receipt.InstallationRevision != in.gate.snapshot.InstallationRevision || out.Receipt.GuardianPrincipalID != wire.ID(guardian.actor.ID) || out.Receipt.KeyID != wire.ID(guardian.keyID) || out.Receipt.BindingHash != wire.Hash(bindingHash(in.binding)) {
+		return nil, fault("EVIDENCE_CONFLICT")
 	}
 	return out, nil
 }

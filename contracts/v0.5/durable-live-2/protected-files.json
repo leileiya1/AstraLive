@@ -278,7 +278,7 @@
     "output_guardian/rtmp_proxy.py": "a65359bc71fb843e0ce610dcd05852d1a02c692f1658d18b3c122663d2a83708",
     "output_guardian/service.py": "12b5225dffcfad095bf4f07140d30c907325a8ccf244aa124b80d3153fc76e52",
     "output_guardian/supervisor.py": "50ba40adec5fd59d06770ba7a0f273d13e0e756f864e8dfe0de7bbb9d0f3ecdb",
-    "output_guardian/tests/conftest.py": "7c2643a5b33452ca37dfd000d5cce0ffb80bbe3776224dae98dd09e737e0bea5",
+    "output_guardian/tests/conftest.py": "101add95bf76d9a6d0fe317572e20d69b72248547fb8eea9d3cfc150ad377525",
     "output_guardian/tests/test_guardian.py": "854cc7389868f92f5d6331b2b3fa68e7b49d77d19707467eaf425d6a3145170a",
     "output_guardian/tests/test_supervisor_cleanup.py": "cc5fcd7e70feb6e97f0f03b16a54e3874fcd389444aa6dc63f695f45ad5166cf",
     "output_guardian/webrtc.py": "376d4352046ec538ce8a08c3a0e65f8ea9b034a3d5b7f44b5d75b90bc7ad0505",
@@ -322,6 +322,12 @@
       "preimageSHA256": "4319b70c98d9e9f5100f6d9692b1c139eb732bae8c8137581e940e84d93865bd",
       "postimageSHA256": "d35857602e3c88c880db91242dae10d30a5b6cc41d5395b594eaa2be78197fa5",
       "auditRecord": "docs/v0.5/implementation/protection-changes/PR13-MIGRATION-TEST.json"
+    },
+    {
+      "path": "output_guardian/tests/conftest.py",
+      "preimageSHA256": "7c2643a5b33452ca37dfd000d5cce0ffb80bbe3776224dae98dd09e737e0bea5",
+      "postimageSHA256": "101add95bf76d9a6d0fe317572e20d69b72248547fb8eea9d3cfc150ad377525",
+      "auditRecord": "docs/v0.5/implementation/protection-changes/RECEIVER1-GUARDIAN-FIXTURE.json"
     }
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "candidateOnly": true,
+  "tests": [
+    {
+      "path": "output_guardian/tests/conftest.py",
+      "expectedSHA256": "101add95bf76d9a6d0fe317572e20d69b72248547fb8eea9d3cfc150ad377525",
+      "mutationSHA256": "ed43ccbae469e6861a302f4ebf0c5a6a156ce9dd40858977047cdeafe12735e6",
+      "exitCode": 1,
+      "rejectedAtExpectedProtectedPath": true
+    },
+    {
+      "path": "runtime/app/models.py",
+      "expectedSHA256": "db539830e84cc905028eae18d4659ddc6dd4e20d34f88e4458ff7e28c095f197",
+      "mutationSHA256": "474bed4d97502bffe52fd22405e919383be7dc8ccb97cd34999c50c075821918",
+      "exitCode": 1,
+      "rejectedAtExpectedProtectedPath": true
+    }
+  ],
+  "restoredValidatorExitCode": 0,
+  "protectedCount": 313,
+  "changedExpectationPaths": [
+    "output_guardian/tests/conftest.py"
+  ],
+  "validatorSourceUnchanged": true
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/private/tmp/agent4-r1-drift-candidate/scripts/validate-answer-contract.py", line 297, in <module>
+    print('PASS '+json.dumps(check_all(),sort_keys=True))
+                             ^^^^^^^^^^^
+  File "/private/tmp/agent4-r1-drift-candidate/scripts/validate-answer-contract.py", line 286, in check_all
+    assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==expected,path
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: output_guardian/tests/conftest.py

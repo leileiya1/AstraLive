@@ -43,13 +43,14 @@ func InspectProcess(pid int) (Identity, error) { return processIdentity(pid) }
 // Pin is a deployment-created process capability. Its secret is never exported,
 // logged, in argv/env or accepted from the wire. Fresh process = fresh pin/key.
 type Pin struct {
-	actor    authority.Actor
-	identity Identity
-	binding  wire.ReceiverBootstrapBinding
-	digest   [32]byte
-	retired  atomic.Bool
-	public   ed25519.PublicKey
-	keyID    string
+	actor        authority.Actor
+	identity     Identity
+	binding      wire.ReceiverBootstrapBinding
+	digest       [32]byte
+	retired      atomic.Bool
+	public       ed25519.PublicKey
+	keyID        string
+	installation *installation
 }
 
 func (p *Pin) Actor() authority.Actor { return p.actor }

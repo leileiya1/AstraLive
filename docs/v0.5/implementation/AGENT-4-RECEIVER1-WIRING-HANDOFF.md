@@ -1,5 +1,14 @@
 # Agent4 receiver-1 foundation wiring — plan1–3
 
+**Later revision-drift repair:** the source below is historical `0a67a35` evidence.
+Agent2 found P1 R1-INSTALLATION-REVISION-DRIFT; fix `58cbc59042c70f9010a368f963257fdad5154b91`
+and exact fixture/protection delivery `08af1049250d2657d7afb5e303d97a02e9761570` are
+[documented separately](AGENT-4-R1-REVISION-DRIFT-FIX.md). Final full runner now
+passes on committed source; original failures below remain retained. Agent2
+[layer A FINAL ACK is received](AGENT-4-R1-FINAL-ACK-RECEIPT.json); production
+PhysicalSource remains missing and LIVE stays closed. PR11 is separately blocked
+by the new cgroup kill-scope review.
+
 **ASTRALIVE V0.5 BLOCKED.** This delivery implements the official mapping, private native process-authenticated Authority transport, and co-located CONTROL Registrar APIs. Native Stage→Register and consumption authorization are exercised on real processes/SQL, with an explicitly injected physical-installation fixture. Production registration remains **BLOCKED: PHYSICAL_INSTALLATION_SOURCE_UNAVAILABLE / OUTPUT_FENCE_UNPROVEN**. The existing shared Session launcher cannot independently prove installed Generation and old-output isolation. No default-success source is provided. No v2 public route, Session dispatcher, media, TTS or GPU entrypoint is enabled.
 
 Starting integration is `274ef9a044544b4ce5df5e55014b5cb0c9b79c38`; streaming source `3a7cc1a447eeed060ef01d4713ebdc13be2e822b`; Authority `a4a57fcc0effd5dd5ea9689b355a963b007c20f3`. Fixed PR11 `d8eb05e79661b859547242575e0ac6d1d7303aa1` is read/tested only through disposable git archives; no PR11 merge or core edit. The implementation commit and final audit SHA are published in PR8, avoiding self-referential SHA in this document.

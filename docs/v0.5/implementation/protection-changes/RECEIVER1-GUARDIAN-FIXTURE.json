@@ -1,0 +1,25 @@
+{
+  "path": "output_guardian/tests/conftest.py",
+  "preimageSHA256": "7c2643a5b33452ca37dfd000d5cce0ffb80bbe3776224dae98dd09e737e0bea5",
+  "postimageSHA256": "101add95bf76d9a6d0fe317572e20d69b72248547fb8eea9d3cfc150ad377525",
+  "preimageCommit": "eb00428eeb1f0506e9b71eea47480ba4d982c7db",
+  "owner": "Agent 5",
+  "ownerApproval": "https://github.com/leileiya1/AstraLive/pull/11#issuecomment-6249468824",
+  "ownerPatchCommit": "b77f5385bbdea45d4f1f9b3ee583c0304268950e",
+  "reviewedPr11Head": "9b969d099b7a3b6b85f3595d26c36fb953d47263",
+  "approvalSource": {
+    "kind": "explicit user instruction in this R1-INSTALLATION-REVISION-DRIFT task",
+    "quote": "只允许在受控集成候选中针对这一个已由Agent5认可的fixture修复登记精确postimage。",
+    "scope": "Exact owner-approved fixture plus its one protection expectation, no PR11 merge"
+  },
+  "policyBasis": "Non-normative approved-implementation inventory per README/prior Agent4 governance; explicit user authorizes this one item. Unchanged validator checks all313 hashes.",
+  "inventoryPreimageSHA256": "4e2be1aa06c207669177277e0486e19d01cc8e3333c77ce31fa5f25f4698da70",
+  "inventoryPostimageSHA256": "f97ea1ea0ed9ea9b048daef86c2502defc708f6370387d2000534bfb1d7559ea",
+  "otherProtectedHashesChanged": 0,
+  "protectedFiles": 313,
+  "normativeFilesChanged": 0,
+  "migrationOrProductionProtocolChanged": false,
+  "applicationRule": "Fixture and exact inventory registration committed together only after full isolated candidate PASS; no Guardian core/PR11 merge",
+  "negativeMutationTests": "docs/v0.5/evidence/agent-4/receiver1-revision-drift-2026-10-18/agent4-r1-drift-negative/summary.json",
+  "evidenceDirectory": "docs/v0.5/evidence/agent-4/receiver1-revision-drift-2026-10-18/fixture-governance"
+}

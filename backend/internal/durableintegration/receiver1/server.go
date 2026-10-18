@@ -222,8 +222,11 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		s.replyError(w, op, string(requestID), "FORBIDDEN")
 		return
 	}
+	var installation *installation
 	if op.ID != wire.OpQueryReceiverConsumption {
-		if e = s.Installations.eligible(ctx, pin); e != nil {
+		var release func()
+		installation, release, e = s.Installations.holdPin(ctx, pin)
+		if e != nil {
 			code := "DEPENDENCY_UNAVAILABLE"
 			var ae *authority.Error
 			if errors.As(e, &ae) {
@@ -232,7 +235,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			s.replyError(w, op, string(requestID), code)
 			return
 		}
+		defer release()
 	}
+
 	var out wire.Message
 	if op.ID == wire.OpReadReceiverPhysicalInstallation {
 		if s.Installations == nil {
@@ -251,6 +256,14 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		s.replyError(w, op, string(requestID), code)
 		return
+	}
+	// A closed admission never emits a positive proof/ACK, even if a SQL
+	// latch committed just before retirement. History remains consumed/UNKNOWN.
+	if installation != nil {
+		if _, err := s.Installations.observe(ctx, installation); err != nil {
+			s.replyError(w, op, string(requestID), "CONSUMPTION_UNKNOWN")
+			return
+		}
 	}
 	body, e := wire.EncodeResponse(op.ID, op.SuccessStatus, out)
 	// DB Commit may already have happened. Never replace a lost/late response by
