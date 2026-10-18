@@ -1,0 +1,89 @@
+[
+  {
+    "label": "postgres-inventory",
+    "command": [
+      "psql",
+      "postgres://agent3_owner@127.0.0.1:54868/agent3_streaming_owned?sslmode=disable",
+      "-c",
+      "SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+    "exitCode": 0,
+    "elapsedSeconds": 0.018,
+    "childUserSeconds": 0.007292999999999994,
+    "childSystemSeconds": 0.004018999999999995,
+    "childPeakRSSBytes": 49872896
+  },
+  {
+    "label": "receiver1-pg-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durableintegration/receiver1",
+      "-run",
+      "^TestPostgres"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 15.023,
+    "childUserSeconds": 9.481959999999999,
+    "childSystemSeconds": 2.039241,
+    "childPeakRSSBytes": 334839808
+  },
+  {
+    "label": "agent2-original-revision-repeat3",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=3",
+      "./internal/durableintegration/receiver1",
+      "-run",
+      "^TestAgent2ReviewCurrentPhysicalRevision"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 4.045,
+    "childUserSeconds": 2.2831960000000002,
+    "childSystemSeconds": 0.6798790000000001,
+    "childPeakRSSBytes": 334839808
+  },
+  {
+    "label": "agent2-owner-probes",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durableintegration/receiver1",
+      "-run",
+      "^TestAgent2Review"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 8.918,
+    "childUserSeconds": 6.053765,
+    "childSystemSeconds": 1.3442319999999999,
+    "childPeakRSSBytes": 335347712
+  },
+  {
+    "label": "migration-count",
+    "command": [
+      "psql",
+      "postgres://agent3_owner@127.0.0.1:54868/agent4_receiver1_owned?sslmode=disable",
+      "-c",
+      "SELECT * FROM schema_migrations ORDER BY 1"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+    "exitCode": 0,
+    "elapsedSeconds": 0.03,
+    "childUserSeconds": 0.012018000000001194,
+    "childSystemSeconds": 0.008402000000000243,
+    "childPeakRSSBytes": 335347712
+  }
+]

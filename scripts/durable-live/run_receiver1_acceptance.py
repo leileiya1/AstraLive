@@ -6,7 +6,7 @@ Authority, contract, Journal and official wire regressions on seven migrations.
 import argparse,json,os,pathlib,resource,socket,subprocess,tempfile,time
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--full',action='store_true');ap.add_argument('--output');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--full',action='store_true');ap.add_argument('--output');ap.add_argument('--git-source',type=pathlib.Path);ap.add_argument('--owner-guardian-commit');args=ap.parse_args()
     repo=pathlib.Path(__file__).resolve().parents[2]
     out=pathlib.Path(args.output).resolve() if args.output else pathlib.Path(tempfile.mkdtemp(prefix='agent3-pg-evidence-'))
     out.mkdir(parents=True,exist_ok=True)
@@ -15,7 +15,7 @@ def main():
     data=root/'data';sock=root/'sockets';sock.mkdir()
     with socket.socket() as s:s.bind(('127.0.0.1',0));port=s.getsockname()[1]
     env={k:os.environ[k]for k in ('PATH','HOME','TMPDIR','GOCACHE','GOPATH')if k in os.environ};env.update(PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=str(repo),GOMAXPROCS='4',LC_ALL='C')
-    archive=root/'pr11';archive.mkdir();subprocess.run(['git','archive','d8eb05e79661b859547242575e0ac6d1d7303aa1','--output',str(root/'pr11.tar')],cwd=repo,check=True);subprocess.run(['tar','-xf',str(root/'pr11.tar'),'-C',str(archive)],check=True)
+    archive=root/'pr11';archive.mkdir();subprocess.run(['git','archive','d8eb05e79661b859547242575e0ac6d1d7303aa1','--output',str(root/'pr11.tar')],cwd=args.git_source or repo,check=True);subprocess.run(['tar','-xf',str(root/'pr11.tar'),'-C',str(archive)],check=True)
     started=False;records=[];databases=['agent3_streaming_owned','agent2_v2_agent3_owned','agent2_v1_agent3_owned','agent4_receiver1_owned'];created=[]
     def run(label,cmd,cwd=repo):
         start=time.monotonic();before=resource.getrusage(resource.RUSAGE_CHILDREN)
@@ -30,6 +30,8 @@ def main():
         env.update(AGENT4_RECEIVER1_PYTHON='/tmp/astralive-agent4-receiver1-python/bin/python',AGENT4_RECEIVER1_DATABASE_URL=dsn(databases[3]),AGENT4_RECEIVER1_OWNED_ROOT=str(root),AGENT4_PR11_ARCHIVE=str(archive),AGENT3_PG_OWNED_ROOT=str(root),AGENT3_STREAM_DATABASE_URL=dsn(databases[0]),DURABLE_V2_TEST_DATABASE_URL=dsn(databases[1]),DURABLE_LIVE_TEST_DATABASE_URL=dsn(databases[2]),DURABLE_LIVE_TEST_PYTHON='/tmp/astralive-agent4-receiver1-python/bin/python')
         run('postgres-inventory',['psql',dsn(databases[0]),'-c',"SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"])
         result=run('receiver1-pg-race',['go','test','-race','-json','-count=1','./internal/durableintegration/receiver1','-run','^TestPostgres'],repo/'backend')
+        run('agent2-original-revision-repeat3',['go','test','-race','-json','-count=3','./internal/durableintegration/receiver1','-run','^TestAgent2ReviewCurrentPhysicalRevision'],repo/'backend')
+        run('agent2-owner-probes',['go','test','-race','-json','-count=1','./internal/durableintegration/receiver1','-run','^TestAgent2Review'],repo/'backend')
         if args.full:
             run('streaming-pg-race',['go','test','-race','-json','-count=1','./internal/turnmanager/answerstream','-run','^TestPostgres'],repo/'backend')
             run('go-test',['go','test','-p','2','-json','-count=1','./...'],repo/'backend')
@@ -44,6 +46,15 @@ def main():
             run('guardian-v1',[py,'-m','pytest','-p','no:cacheprovider','output_guardian/tests','-q'])
             env['PYTHONPATH']=str(archive)
             run('guardian-v2-fixed-pr11',[py,'-m','pytest','-p','no:cacheprovider','output_guardian/tests/v2','-q'],archive)
+            if args.owner_guardian_commit:
+                import re
+                if not re.fullmatch(r'[0-9a-f]{40}',args.owner_guardian_commit):raise ValueError('full owner SHA required')
+                owner=root/'owner-pr11';owner.mkdir()
+                subprocess.run(['git','archive',args.owner_guardian_commit,'--output',str(root/'owner-pr11.tar')],cwd=args.git_source or repo,check=True)
+                subprocess.run(['tar','-xf',str(root/'owner-pr11.tar'),'-C',str(owner)],check=True)
+                env['PYTHONPATH']=str(repo)+os.pathsep+str(owner)
+                run('guardian-owner-extended',[py,'-m','pytest','-p','no:cacheprovider','output_guardian/tests/v2','-q'],owner)
+                run('guardian-owner-cold-ready',[py,'-m','pytest','-p','no:cacheprovider','output_guardian/tests/v2/test_readiness.py','-q'],owner)
             env['PYTHONPATH']=str(repo)
             run('wire13',[py,'-m','unittest','tests.test_durable_live_v2_wire','-v'])
             for label,path in [('validator-v1','scripts/validate-durable-live-contracts.py'),('validator-v2','scripts/validate-answer-contract.py')]:run(label,[py,path])

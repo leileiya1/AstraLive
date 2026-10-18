@@ -77,8 +77,11 @@ type installation struct {
 	binding           wire.ReceiverBootstrapBinding
 	runtime, guardian *Pin
 	source            PhysicalSource
+	gate              *InstallationGate
+	registry          *Registry
 	registrar         authority.Actor
 	settled           atomic.Bool
+	mirrored          atomic.Bool
 }
 
 // Registry is the single command-dispatched InstallationSource on a Store.
@@ -146,7 +149,20 @@ func (r *Registry) Install(ctx context.Context, p authority.Actor, runtime, guar
 	b.RuntimePrincipalID = wire.ID(runtime.actor.ID)
 	b.RuntimeIncarnation = wire.ID(runtime.actor.Incarnation)
 	b.GuardianIncarnation = wire.ID(guardian.actor.Incarnation)
-	in := &installation{binding: b, runtime: runtime, guardian: guardian, source: source, registrar: p}
+	coordinated, ok := source.(CoordinatedPhysicalSource)
+	if !ok {
+		return b, fault("OUTPUT_FENCE_UNPROVEN")
+	}
+	gate, e := coordinated.InstallationGate(ctx, b, runtime.identity, guardian.identity)
+	if e != nil || gate == nil {
+		return b, fault("OUTPUT_FENCE_UNPROVEN")
+	}
+	release, e := gate.acquire(ctx)
+	if e != nil {
+		return b, e
+	}
+	defer release()
+	in := &installation{binding: b, runtime: runtime, guardian: guardian, source: source, registrar: p, gate: gate, registry: r}
 	// Observe before mirroring process/install rows, and again from RecordInstallation.
 	if _, e := r.observe(ctx, in); e != nil {
 		return b, fmt.Errorf("initial independent observation: %w", e)
@@ -165,27 +181,42 @@ func (r *Registry) Install(ctx context.Context, p authority.Actor, runtime, guar
 	// The process pins are not exposed by a listener until Install returns.
 	runtime.binding = b
 	guardian.binding = b
+	guardian.installation = in
+	runtime.installation = in
 	if e := r.Provision(ctx, p, runtime, guardian); e != nil {
 		return b, e
 	}
 	if e := r.Store.RecordInstallation(ctx, p, mustDocument(&b)); e != nil {
 		return b, fmt.Errorf("record installation: %w", e)
 	}
+	in.mirrored.Store(true)
+	if !gate.valid() {
+		return b, fault("REGISTRATION_REVOKED")
+	}
 	return b, nil
 }
 func mustDocument(m wire.Message) authority.Document { v, _ := document(m); return v }
 func (r *Registry) observe(ctx context.Context, in *installation) (wire.ReceiverPhysicalInstallation, error) {
-	if in.settled.Load() || !in.runtime.Alive() || !in.guardian.Alive() {
+	if in.settled.Load() || !in.gate.valid() || !in.runtime.Alive() || !in.guardian.Alive() {
 		return wire.ReceiverPhysicalInstallation{}, fault("REGISTRATION_REVOKED")
 	}
 	actual, e := in.source.Observe(ctx, in.binding, in.runtime.identity, in.guardian.identity)
 	if e != nil {
+		in.gate.CloseAdmission()
 		return actual, e
 	}
 	if _, e = wire.Encode(&actual); e != nil {
+		in.gate.CloseAdmission()
 		return actual, fault("OUTPUT_FENCE_UNPROVEN")
 	}
 	if bindingHash(actual.Binding) != bindingHash(in.binding) || actual.GuardianPrincipalID != wire.ID(in.guardian.actor.ID) || actual.ObservedByPrincipalID != wire.ID(in.registrar.ID) || actual.State != "CLOSED_INSTALLED" {
+		in.gate.CloseAdmission()
+		return actual, fault("OUTPUT_FENCE_UNPROVEN")
+	}
+	// Compare the ENTIRE immutable observation, not merely Binding. Revision,
+	// closed-fence provenance and Guardian/observer identity are all authoritative.
+	if physicalHash(actual) != physicalHash(in.gate.snapshot) {
+		in.gate.CloseAdmission()
 		return actual, fault("OUTPUT_FENCE_UNPROVEN")
 	}
 	// Read current durable Session/Binding/term independently of the source.
@@ -209,7 +240,11 @@ func (r *Registry) observe(ctx context.Context, in *installation) (wire.Receiver
 		return actual, e
 	}
 	if !valid || !in.runtime.Alive() || !in.guardian.Alive() {
+		in.gate.CloseAdmission()
 		return actual, fault("OUTPUT_FENCE_UNPROVEN")
+	}
+	if !in.gate.valid() {
+		return actual, fault("REGISTRATION_REVOKED")
 	}
 	return actual, nil
 }
@@ -239,6 +274,11 @@ func (r *Registry) VerifyInstallation(ctx context.Context, p authority.Actor, b 
 	if e != nil {
 		return nil, e
 	}
+	if in.mirrored.Load() {
+		if e = r.checkMirror(ctx, in); e != nil {
+			return nil, e
+		}
+	}
 	return document(&actual)
 }
 func (r *Registry) Read(ctx context.Context, pin *Pin, q *wire.ReadReceiverPhysicalInstallationRequest) (wire.Message, error) {
@@ -254,8 +294,16 @@ func (r *Registry) Read(ctx context.Context, pin *Pin, q *wire.ReadReceiverPhysi
 	if in == nil || pin != in.guardian || q.ExpectedBindingHash != wire.Hash(bindingHash(in.binding)) {
 		return nil, denied()
 	}
+	release, e := in.gate.acquire(ctx)
+	if e != nil {
+		return nil, e
+	}
+	defer release()
 	actual, e := r.observe(ctx, in)
 	if e != nil {
+		return nil, e
+	}
+	if e = r.checkMirror(ctx, in); e != nil {
 		return nil, e
 	}
 	return &wire.ReadReceiverPhysicalInstallationResponse{RequestID: q.RequestID, Installation: actual}, nil
@@ -264,11 +312,22 @@ func (r *Registry) Read(ctx context.Context, pin *Pin, q *wire.ReadReceiverPhysi
 // Register accepts the signed closed-stage receipt, not any new identity/key.
 // On ACK ambiguity the caller uses Confirm only, never regenerates a bootstrap.
 func (r *Registry) Register(ctx context.Context, p authority.Actor, b wire.ReceiverBootstrapBinding, receipt wire.ReceiverStageReceipt) (wire.Message, error) {
+	in, release, e := r.hold(ctx, p, b)
+	if e != nil {
+		return nil, e
+	}
+	defer release()
+	if receipt.InstallationRevision != in.gate.snapshot.InstallationRevision || receipt.GuardianPrincipalID != in.gate.snapshot.GuardianPrincipalID || receipt.KeyID != wire.ID(in.guardian.keyID) || receipt.GuardianIncarnation != b.GuardianIncarnation || receipt.BindingHash != wire.Hash(bindingHash(b)) {
+		return nil, fault("EVIDENCE_CONFLICT")
+	}
+	if e = r.checkMirror(ctx, in); e != nil {
+		return nil, e
+	}
 	if _, e := r.VerifyInstallation(ctx, p, mustDocument(&b)); e != nil {
 		return nil, e
 	}
 	var rev, lease int64
-	e := r.Store.DB.QueryRow(ctx, `SELECT r.state_revision,l.lease_version FROM dl05_runs r JOIN dl05_run_leases l USING(run_id) WHERE r.run_id=$1 AND r.tenant_id=$2 AND r.owner_id=$3 AND r.room_id=$4`, string(b.RunID), p.Tenant, p.Owner, p.Room).Scan(&rev, &lease)
+	e = r.Store.DB.QueryRow(ctx, `SELECT r.state_revision,l.lease_version FROM dl05_runs r JOIN dl05_run_leases l USING(run_id) WHERE r.run_id=$1 AND r.tenant_id=$2 AND r.owner_id=$3 AND r.room_id=$4`, string(b.RunID), p.Tenant, p.Owner, p.Room).Scan(&rev, &lease)
 	if e != nil {
 		return nil, e
 	}
@@ -279,10 +338,25 @@ func (r *Registry) Register(ctx context.Context, p authority.Actor, b wire.Recei
 	if e != nil {
 		return nil, e
 	}
-	return r.Store.Handle(ctx, p, op.ID, wc, raw)
+	out, e := r.Store.Handle(ctx, p, op.ID, wc, raw)
+	if e == nil {
+		_, e = r.observe(ctx, in)
+	}
+	if e == nil && !in.gate.valid() {
+		return nil, fault("REGISTRATION_REVOKED")
+	}
+	return out, e
 }
 
 func (r *Registry) StageRequest(ctx context.Context, p authority.Actor, b wire.ReceiverBootstrapBinding) (*wire.ReceiverStageRequest, error) {
+	in, release, err := r.hold(ctx, p, b)
+	if err != nil {
+		return nil, err
+	}
+	defer release()
+	if err = r.checkMirror(ctx, in); err != nil {
+		return nil, err
+	}
 	if _, e := r.VerifyInstallation(ctx, p, mustDocument(&b)); e != nil {
 		return nil, e
 	}
@@ -306,6 +380,9 @@ func (r *Registry) StageRequest(ctx context.Context, p authority.Actor, b wire.R
 	m, e := wire.Decode("ReceiverStageRequest", raw)
 	if e != nil {
 		return nil, e
+	}
+	if !in.gate.valid() {
+		return nil, fault("REGISTRATION_REVOKED")
 	}
 	return m.(*wire.ReceiverStageRequest), nil
 }
@@ -343,62 +420,12 @@ func (r *Registry) ReconcileDead(ctx context.Context, command string) error {
 	if !in.guardian.Alive() {
 		in.guardian.Retire()
 	}
-	registration, e := r.Store.ReadRegistration(ctx, in.registrar, string(in.binding.BootstrapID))
-	if e != nil {
-		return e
-	}
-	if registration["state"] == "REVOKED" {
-		in.settled.Store(true)
-		return nil
-	}
-	n, ok := registration["revision"].(int64)
-	if !ok {
-		return fault("DEPENDENCY_UNAVAILABLE")
-	}
-	q := &wire.RevokeReceiverBootstrapRequest{ContractRevision: "durable-live-2", ReceiverRevision: "receiver-1", RequestID: wire.ID(fresh("revoke_")), BootstrapID: in.binding.BootstrapID, ExpectedRegistrationRevision: wire.Revision(n), Reason: "SESSION_REPLACED"}
-	op, _ := wire.LookupOperation(wire.OpRevokeReceiverBootstrap)
-	wc := wire.RequestContext{Role: wire.RoleControlRegistrar, Target: op.Target, Method: op.Method, RouteTemplate: op.Path}
-	raw, e := wire.EncodeRequest(op.ID, wc, q)
-	if e != nil {
-		return e
-	}
-	_, e = r.Store.Handle(ctx, in.registrar, op.ID, wc, raw)
-	if e != nil {
-		// Concurrent supervisors may lose CAS; accept only durable revoked knowledge.
-		known, readErr := r.Store.ReadRegistration(ctx, in.registrar, string(in.binding.BootstrapID))
-		if readErr == nil && known["state"] == "REVOKED" {
-			in.settled.Store(true)
-			return nil
-		}
-	} else {
-		in.settled.Store(true)
-	}
-	return e
+	return r.RetireInstallation(ctx, in.registrar, command)
 }
 
-func (r *Registry) eligible(ctx context.Context, pin *Pin) error {
-	r.mu.RLock()
-	var in *installation
-	for _, v := range r.records {
-		if v.guardian == pin {
-			in = v
-			break
-		}
-	}
-	r.mu.RUnlock()
-	if in == nil {
-		return fault("BOOTSTRAP_REQUIRED")
-	}
-	if !in.runtime.Alive() || !in.guardian.Alive() {
-		_ = r.ReconcileDead(ctx, string(in.binding.CommandID))
-		return fault("REGISTRATION_REVOKED")
-	}
-	_, e := r.observe(ctx, in)
-	return e
-}
-
-// Supervise is owned by the private server lifetime. It only reconciles dead
-// managed pins using the existing CAS revoke, without touching shared processes.
+// Supervise is owned by the private server lifetime. It observes trusted
+// sources and Session eligibility, and reconciles closed/dead installations
+// through immutable retirement and existing CAS revoke. No shared process is killed.
 // SQL failure leaves local admission closed and the next bounded poll retries.
 func (r *Registry) supervise(ctx context.Context) {
 	ticker := time.NewTicker(100 * time.Millisecond)
@@ -419,11 +446,19 @@ func (r *Registry) supervise(ctx context.Context) {
 			if ctx.Err() != nil {
 				return
 			}
-			if in.settled.Load() || in.runtime.Alive() && in.guardian.Alive() {
+			if in.settled.Load() {
 				continue
 			}
 			one, cancel := context.WithTimeout(ctx, 200*time.Millisecond)
-			_ = r.ReconcileDead(one, string(in.binding.CommandID))
+			if !in.runtime.Alive() || !in.guardian.Alive() {
+				in.gate.CloseAdmission()
+			}
+			if in.gate.valid() {
+				_, _ = r.observe(one, in)
+			}
+			if !in.gate.valid() {
+				_ = r.RetireInstallation(one, in.registrar, string(in.binding.CommandID))
+			}
 			cancel()
 		}
 	}

@@ -104,6 +104,10 @@ async def main():
                     sock.sendall(b'POST '+op.path.encode()+b' HTTP/1.1\r\nHost: private\r\nAuthorization: Bearer '+credential._raw+b'\r\nContent-Type: application/json\r\nContent-Length: '+str(len(body)).encode()+b'\r\n\r\n'+body)
                     await asyncio.sleep(0.05)
                 result={'responseDiscarded':True}
+            elif q['action']=='mixed_authority':
+                calls=[('QueryReceiverAuthority',q['query']),('CommitReceiverConsume',q['consume'])]*2
+                replies=await asyncio.gather(*(asyncio.to_thread(transport._call,op,doc) for op,doc in calls),return_exceptions=True)
+                result={'positiveResponses':sum(isinstance(v,dict) for v in replies),'true':sum(isinstance(v,dict) and v.get('consumeAuthorized') is True for v in replies),'errors':sum(isinstance(v,BaseException) for v in replies)}
             elif q['action']=='concurrent':
                 replies=await asyncio.gather(*(asyncio.to_thread(transport._call,'CommitReceiverConsume',q['document']) for _ in range(4)),return_exceptions=True)
                 result={'true':sum(isinstance(v,dict) and v.get('consumeAuthorized') is True for v in replies),'false':sum(isinstance(v,dict) and v.get('consumeAuthorized') is False for v in replies),'errors':sum(isinstance(v,BaseException) for v in replies)}
