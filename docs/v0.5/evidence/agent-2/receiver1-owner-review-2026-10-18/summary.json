@@ -1,0 +1,76 @@
+{
+  "decision": "BLOCKED",
+  "severity": "P1",
+  "issue": "R1-INSTALLATION-REVISION-DRIFT",
+  "implementationSHA": "0a67a35e5815031d4d0d0a4ca4da89882e31e079",
+  "integrationSHA": "eb00428eeb1f0506e9b71eea47480ba4d982c7db",
+  "postgres": "17.11, newly initialized owned loopback cluster; fsync/synchronous_commit/full_page_writes ON",
+  "originalReceiver1": {
+    "counts": {
+      "top_pass": 14,
+      "sub_pass": 6
+    },
+    "failedTests": []
+  },
+  "finalCombined": {
+    "counts": {
+      "top_pass": 27,
+      "sub_pass": 13,
+      "top_fail": 2
+    },
+    "failedTests": [
+      "TestAgent2ReviewCurrentPhysicalRevisionBeforeRegister",
+      "TestAgent2ReviewCurrentPhysicalRevisionAfterRegister"
+    ]
+  },
+  "independentTopLevelTests": 15,
+  "independentPass": 13,
+  "independentFail": 2,
+  "independentSubtestsPass": 7,
+  "repeatTwoVariantsThreeTimes": {
+    "counts": {
+      "top_fail": 6
+    },
+    "failedTests": [
+      "TestAgent2ReviewCurrentPhysicalRevisionBeforeRegister",
+      "TestAgent2ReviewCurrentPhysicalRevisionAfterRegister",
+      "TestAgent2ReviewCurrentPhysicalRevisionBeforeRegister",
+      "TestAgent2ReviewCurrentPhysicalRevisionAfterRegister",
+      "TestAgent2ReviewCurrentPhysicalRevisionBeforeRegister",
+      "TestAgent2ReviewCurrentPhysicalRevisionAfterRegister"
+    ]
+  },
+  "allFinalGoSkips": [],
+  "raceDetectorWarnings": false,
+  "additionalChecks": {
+    "contracts": 137,
+    "journal": 11,
+    "officialWire": 13,
+    "adapterResource": 8,
+    "validators": 2,
+    "generatedCheck": "PASS",
+    "focusedGoVet": "PASS"
+  },
+  "unknownOrStopLatch": "Original Stop race and new concurrent CAS revoke/lost-ACK tests pass; consumed latch never deleted/reset by review",
+  "multiScope": "Two tenants/rooms/runs on one Store/Registry and real native Authority servers PASS; test-only Assertions dispatch explicitly injected. No production multi-room Assertions root is delivered.",
+  "physicalSource": "Explicit initially injected mutable fixtures, stable object identity throughout final tests. Same source starts revision1; only its atomic observed revision becomes2. Registrar records/pins/production code unchanged. Nil source denies.",
+  "expected": "Current source revision mismatch must deny new registration/current proofs/first Consume; old immutable mirror must not vouch for new physical revision",
+  "actual": "Both before Register and after legitimate Register: source2 vs staged/mirror1 remains eligible and real Go/Python/SQL Commit returns true, one latch per case",
+  "productionCodeModified": false,
+  "evidenceOnlyInAgent2Branch": true,
+  "notTested": [
+    "Full Go suite/race (focused package only this review)",
+    "Guardian v1 regression (Agent4 historical 4 PASS/21 setup errors remains unresolved here)",
+    "Linux execution, UID/group/socket/network/cgroup isolation, malicious same-host process isolation",
+    "Real physical Session/Generation/old publisher isolation; production PhysicalSource does not exist",
+    "Actual PID reuse, whole-host restart or credentials recovery",
+    "Production Runtime once-TTS, Guardian physical output/fsync/lost ACK durability, actual media/Worker/GPU/RTMP/WebRTC/audience/SLA",
+    "Redis or whole PostgreSQL outage"
+  ],
+  "harnessCorrections": [
+    "Initial PG startup socket pathname too long: retained server log; corrected own socket directory before baseline14 tests",
+    "Initial new CAS probe ignored pgx error for wire.ID parameter: corrected string conversion and checked Scan error. Initial fail retained; final CAS passes",
+    "Exploratory source-pointer replacement tests replaced by stronger final initially-injected stable source object, without changing Registry entries",
+    "Owned-cluster restarts initially omitted explicit -o and used own PG default port5432 while test DSN expected53580: raw connection-refused runs retained as harness failures; final explicit loopback port/socket + inventory before tests. No shared PG modified."
+  ]
+}

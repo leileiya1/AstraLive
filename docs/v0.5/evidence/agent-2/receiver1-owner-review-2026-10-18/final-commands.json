@@ -1,0 +1,107 @@
+[
+  {
+    "label": "receiver1-plus-owner-probes-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "120s",
+      "./internal/durableintegration/receiver1"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source/backend",
+    "exitCode": 1,
+    "elapsedSeconds": 17.248
+  },
+  {
+    "label": "receiver1-vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/durableintegration/receiver1"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 0.552
+  },
+  {
+    "label": "contracts137",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_contracts",
+      "tests.test_durable_live_contracts",
+      "tests.test_durable_answer_contracts",
+      "tests.test_answer_contract_repairs",
+      "tests.test_receiver_contracts",
+      "tests.test_receiver_stop_races",
+      "-v"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source",
+    "exitCode": 0,
+    "elapsedSeconds": 20.106
+  },
+  {
+    "label": "wire13-adapter8",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_durable_live_v2_wire",
+      "tests.test_receiver1_wiring",
+      "-v"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source",
+    "exitCode": 0,
+    "elapsedSeconds": 2.671
+  },
+  {
+    "label": "journal11",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "runtime/tests/test_durable_live_journal.py",
+      "-q"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source",
+    "exitCode": 0,
+    "elapsedSeconds": 0.817
+  },
+  {
+    "label": "validator-v1",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "scripts/validate-durable-live-contracts.py"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source",
+    "exitCode": 0,
+    "elapsedSeconds": 0.126
+  },
+  {
+    "label": "validator-v2",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "scripts/validate-answer-contract.py"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source",
+    "exitCode": 0,
+    "elapsedSeconds": 0.228
+  },
+  {
+    "label": "generated-check",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "scripts/durable-live/generate_v2_wire.py",
+      "--check"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source",
+    "exitCode": 0,
+    "elapsedSeconds": 0.051
+  }
+]

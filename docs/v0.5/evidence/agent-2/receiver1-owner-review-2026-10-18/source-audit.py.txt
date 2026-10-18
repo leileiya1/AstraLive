@@ -1,0 +1,19 @@
+import pathlib,json,subprocess,hashlib,tarfile,io,collections,shutil
+m=json.load(open('/tmp/agent2-receiver1-review-current.json'));root=pathlib.Path(m['root']);src=pathlib.Path(m['source']);out=root/'evidence';repo=pathlib.Path('/Users/sapiece/innovationProject/AstraLive-agent-2');sha=m['sha'];freeze='c7fd46209d3cbc6f58541dba8b4e1c85609c823e';base='eb00428eeb1f0506e9b71eea47480ba4d982c7db'
+raw=subprocess.check_output(['git','archive',sha],cwd=repo);t=tarfile.open(fileobj=io.BytesIO(raw));modified=[];hashes={};codecount=0
+for item in t:
+ if not item.isfile() or not item.name.endswith(('.go','.py','.sql')):continue
+ before=t.extractfile(item).read();current=(src/item.name).read_bytes();codecount+=1
+ if before!=current:modified.append(item.name)
+ if item.name.startswith(('backend/internal/durableintegration/receiver1/','runtime/app/receiver1/','backend/internal/durablelivev2/authority/','backend/db/migrations/')):hashes[item.name]=hashlib.sha256(current).hexdigest()
+assert not modified,modified
+manifestPath='contracts/v0.5/durable-live-2/manifest.json';manifest=json.loads((src/manifestPath).read_text());files={}
+for name,digest in manifest['files'].items():
+ b=(src/name).read_bytes();assert b==subprocess.check_output(['git','show',freeze+':'+name],cwd=repo);files[name]=hashlib.sha256(b).hexdigest();assert files[name]==digest
+assert (src/manifestPath).read_bytes()==subprocess.check_output(['git','show',freeze+':'+manifestPath],cwd=repo)
+digest=hashlib.sha256(json.dumps(files,sort_keys=True,separators=(',',':')).encode()).hexdigest();assert digest==manifest['normativeDigest']
+changes=subprocess.check_output(['git','diff','--name-only',sha,base],cwd=repo,text=True).splitlines();assert all(n.startswith('docs/') for n in changes)
+probe=src/'backend/internal/durableintegration/receiver1/agent2_owner_review_test.go';shutil.copyfile(probe,out/'agent2-owner-review_test.go.txt')
+for name,path in [('owned-setup.py.txt','/tmp/agent2_receiver1_setup.py'),('initial-probe-generator.py.txt','/tmp/agent2_receiver1_write_probes.py'),('supplemental-runs.py.txt','/tmp/agent2_receiver1_review_runs.py')]:shutil.copyfile(path,out/name)
+(out/'source-audit.json').write_text(json.dumps({'implementationSHA':sha,'integrationSHA':base,'pr8HeadAtReview':base,'agent2HEADUnchangedBeforeEvidence':'7140881c5103e6bc0a33b743f6e726c4b1b7b474','sourceMethod':'git archive of immutable SHA, no worktree/branch creation','trackedCodeFilesCompared':codecount,'trackedSourceModifications':modified,'testOnlyAddition':str(probe.relative_to(src)),'testOnlySHA256':hashlib.sha256(probe.read_bytes()).hexdigest(),'codeHashes':hashes,'integrationChangesAfterImplementation':changes,'freezeSHA':freeze,'normativeFilesCompared':len(files),'normativeDigest':digest,'manifestUnchanged':True,'migrationsUnchanged':len(list((src/'backend/db/migrations').glob('*.sql')))},indent=2))
+print('SOURCE AUDIT',codecount,'original code files unchanged; freeze',digest)
