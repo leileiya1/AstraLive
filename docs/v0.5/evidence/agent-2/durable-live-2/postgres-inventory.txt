@@ -1,0 +1,52 @@
+                                                            version
+-------------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+(1 row)
+
+ fsync
+-------
+ on
+(1 row)
+
+                name
+-------------------------------------
+ 000001_init.sql
+ 000002_live_room_active_product.sql
+ 000003_user_configuration.sql
+ 000004_session_integration.sql
+ 000005_interaction_receipts.sql
+ 000006_durable_live.sql
+ 000007_answer_stream.sql
+(7 rows)
+
+ contract_revision | count
+-------------------+-------
+ durable-live-2    |   106
+(1 row)
+
+ consumed_latches
+------------------
+               50
+(1 row)
+
+  state  | count
+---------+-------
+ UNKNOWN |     8
+ DRAINED |     6
+ ACTIVE  |    36
+(3 rows)
+
+  state   | count
+----------+-------
+ ISSUED   |    26
+ CONSUMED |    50
+ REVOKED  |     8
+(3 rows)
+
+       reason       | count
+--------------------+-------
+ STOP               |    26
+ ACK_LOST           |     4
+ AUTHORITY_LOST     |     4
+ BUSINESS_COMPLETED |     2
+(4 rows)

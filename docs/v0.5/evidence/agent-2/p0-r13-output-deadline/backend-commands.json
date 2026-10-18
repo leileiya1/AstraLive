@@ -1,0 +1,70 @@
+{
+  "full-go-test": {
+    "command": [
+      "go",
+      "test",
+      "./...",
+      "-count=1",
+      "-timeout=120s",
+      "-json"
+    ],
+    "exitCode": 1,
+    "seconds": 17.535392208,
+    "topLevel": {
+      "pass": 187,
+      "fail": 1,
+      "skip": 13
+    },
+    "failingTests": [
+      {
+        "package": "astralive/backend/internal/durableintegration",
+        "test": "TestPostgresLegacyMigrationUpgradePreservesData"
+      }
+    ],
+    "noSharedFileEdits": true,
+    "noMigrationOverlay": true
+  },
+  "full-go-race": {
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "./...",
+      "-count=1",
+      "-timeout=120s",
+      "-json"
+    ],
+    "exitCode": 1,
+    "seconds": 21.586118875000004,
+    "topLevel": {
+      "pass": 187,
+      "fail": 1,
+      "skip": 13
+    },
+    "failingTests": [
+      {
+        "package": "astralive/backend/internal/durableintegration",
+        "test": "TestPostgresLegacyMigrationUpgradePreservesData"
+      }
+    ],
+    "noSharedFileEdits": true,
+    "noMigrationOverlay": true
+  },
+  "vet": {
+    "command": [
+      "go",
+      "vet",
+      "./..."
+    ],
+    "exitCode": 0,
+    "seconds": 0.20609300000000275,
+    "topLevel": {
+      "pass": 0,
+      "fail": 0,
+      "skip": 0
+    },
+    "failingTests": [],
+    "noSharedFileEdits": true,
+    "noMigrationOverlay": true
+  }
+}

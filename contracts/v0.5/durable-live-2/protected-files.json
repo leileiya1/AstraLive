@@ -52,7 +52,7 @@
     "backend/internal/durableintegration/adapter.go": "40a72827e48dc1cc7c61468820e6da20fe09b9b8af79281c009d0c8feb798cb6",
     "backend/internal/durableintegration/controller.go": "1293b2871b19bbbef89529c2fed180b2b765735d3c98a7d4606374758b32e9de",
     "backend/internal/durableintegration/facts.go": "29f0d6507a437009e6ed08585b291c20fd4115d247352a32d8a4c3b1bdab8a16",
-    "backend/internal/durableintegration/integration_test.go": "4319b70c98d9e9f5100f6d9692b1c139eb732bae8c8137581e940e84d93865bd",
+    "backend/internal/durableintegration/integration_test.go": "d35857602e3c88c880db91242dae10d30a5b6cc41d5395b594eaa2be78197fa5",
     "backend/internal/durablelive/admission.go": "b10c3f088f4b63a93538abc5a1ae57dee00c9e9dddf53e58dc96e0de85c04ac3",
     "backend/internal/durablelive/checkpoints.go": "e0b91c70659336d25457877ee4b5d6ec4a88633987667813d510e1c1b2150434",
     "backend/internal/durablelive/completion.go": "3cdf37919f8b84aa1ea0a34badd8053da5dc00b3831b3b266237214c7e08c926",
@@ -315,5 +315,13 @@
     "runtime/app/voice_stream.py": "39c58e3c89cef5e540e43e2cef908074e496ada4bfd2681e1099eb9ba04f088b",
     "runtime/app/webrtc_media.py": "546a18b84a6b2f001fe1844321ebd0cae7e34c1d69d54ca23a2a727071240137"
   },
-  "previousBaseline": "01a752baf79c25d4d268167d016c8c62e754cfdf"
+  "previousBaseline": "01a752baf79c25d4d268167d016c8c62e754cfdf",
+  "authorizedImplementationChanges": [
+    {
+      "path": "backend/internal/durableintegration/integration_test.go",
+      "preimageSHA256": "4319b70c98d9e9f5100f6d9692b1c139eb732bae8c8137581e940e84d93865bd",
+      "postimageSHA256": "d35857602e3c88c880db91242dae10d30a5b6cc41d5395b594eaa2be78197fa5",
+      "auditRecord": "docs/v0.5/implementation/protection-changes/PR13-MIGRATION-TEST.json"
+    }
+  ]
 }

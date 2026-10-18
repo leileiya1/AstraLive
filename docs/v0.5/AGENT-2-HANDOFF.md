@@ -62,3 +62,9 @@ Claim 由 Agent 3 提供 candidateTurnId，Agent 2 只做持久资格/CAS，不�
 
 
 最终验收源码：`26ebe57b06356cbe83b76055583014947f7c043e`。隔离 PostgreSQL 17.11、Redis 8.10.2、真实 Go/Python 子进程与文件 sink。Durable Go race：35 PASS、0 FAIL、1 helper SKIP；该 helper 已由父进程测试调用。Python Journal 11 PASS；既有 Runtime 159 项，148 PASS、11 opt-in SKIP；冻结 v1.1/v0.5 契约 unittest 17 PASS；全 Go 回归、44 文件 hash validator、临时快照共享补丁检查均退出 0。
+
+## durable-live-2 additive implementation（2026-10-18）
+
+以上为 durable-live-1 历史交付。获批 CCR 后新增的 `000007_answer_stream.sql`、隔离 Backend Authority、真实 PostgreSQL/崩溃验收和当前接线依赖，详见 [AGENT-2-V2-HANDOFF](implementation/AGENT-2-V2-HANDOFF.md)。已消费 Agent4 唯一 DTO `e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565` 并实现隔离 typed adapter；公共入口未接线，增量 PR 保持 Draft 并由 Agent4 审核；SQL 测试通过不表示 Durable LIVE 或真实媒体已验收。原始迁移/公共 app/runtime/v1 协议保持不变。
+
+P0-R13-OUTPUT-DEADLINE 的本轮修复与复审请求见 [独立交接](implementation/AGENT-2-P0-R13-OUTPUT-DEADLINE.md)；修复候选不代表 Agent4 已解除阻塞。共享迁移计数断言及保护哈希仍由 Agent4 负责。

@@ -1,0 +1,116 @@
+=== RUN   TestConcurrentConsumeOneLatch
+--- PASS: TestConcurrentConsumeOneLatch (0.30s)
+=== RUN   TestRollbackAtResponseValidation
+=== RUN   TestRollbackAtResponseValidation/JournalPrepareAnswer
+=== RUN   TestRollbackAtResponseValidation/JournalStart
+=== RUN   TestRollbackAtResponseValidation/CommitReceiverConsume
+--- PASS: TestRollbackAtResponseValidation (0.25s)
+    --- PASS: TestRollbackAtResponseValidation/JournalPrepareAnswer (0.05s)
+    --- PASS: TestRollbackAtResponseValidation/JournalStart (0.12s)
+    --- PASS: TestRollbackAtResponseValidation/CommitReceiverConsume (0.07s)
+=== RUN   TestStopCommitBothOrdersAndCompetition
+=== RUN   TestStopCommitBothOrdersAndCompetition/stop-first
+=== RUN   TestStopCommitBothOrdersAndCompetition/commit-first
+=== RUN   TestStopCommitBothOrdersAndCompetition/race
+--- PASS: TestStopCommitBothOrdersAndCompetition (0.22s)
+    --- PASS: TestStopCommitBothOrdersAndCompetition/stop-first (0.07s)
+    --- PASS: TestStopCommitBothOrdersAndCompetition/commit-first (0.08s)
+    --- PASS: TestStopCommitBothOrdersAndCompetition/race (0.07s)
+=== RUN   TestUnknownDurableAuditAndNotification
+--- PASS: TestUnknownDurableAuditAndNotification (0.08s)
+=== RUN   TestPrepareAliasAndDrainScopeUnit2
+--- PASS: TestPrepareAliasAndDrainScopeUnit2 (0.15s)
+=== RUN   TestScopeRolesAndCurrentIdentity
+=== RUN   TestScopeRolesAndCurrentIdentity/tenant
+=== RUN   TestScopeRolesAndCurrentIdentity/owner
+=== RUN   TestScopeRolesAndCurrentIdentity/room
+=== RUN   TestScopeRolesAndCurrentIdentity/incarnation
+=== RUN   TestScopeRolesAndCurrentIdentity/producer
+=== RUN   TestScopeRolesAndCurrentIdentity/role
+--- PASS: TestScopeRolesAndCurrentIdentity (0.08s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/tenant (0.00s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/owner (0.00s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/room (0.00s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/incarnation (0.00s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/producer (0.00s)
+    --- PASS: TestScopeRolesAndCurrentIdentity/role (0.00s)
+=== RUN   TestChangedFactsBindingEpochAndExpiry
+=== RUN   TestChangedFactsBindingEpochAndExpiry/fact
+=== RUN   TestChangedFactsBindingEpochAndExpiry/binding
+=== RUN   TestChangedFactsBindingEpochAndExpiry/lease
+=== RUN   TestChangedFactsBindingEpochAndExpiry/epoch
+=== RUN   TestChangedFactsBindingEpochAndExpiry/generation
+=== RUN   TestChangedFactsBindingEpochAndExpiry/permit
+=== RUN   TestChangedFactsBindingEpochAndExpiry/sealed
+=== RUN   TestChangedFactsBindingEpochAndExpiry/run-failed
+=== RUN   TestChangedFactsBindingEpochAndExpiry/run-paused
+--- PASS: TestChangedFactsBindingEpochAndExpiry (1.43s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/fact (0.06s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/binding (0.06s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/lease (0.06s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/epoch (0.06s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/generation (0.06s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/permit (0.92s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/sealed (0.08s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/run-failed (0.06s)
+    --- PASS: TestChangedFactsBindingEpochAndExpiry/run-paused (0.06s)
+=== RUN   TestRenewAfterGrantExpiryDoesNotReauthorize
+--- PASS: TestRenewAfterGrantExpiryDoesNotReauthorize (0.96s)
+=== RUN   TestExternalPreflightDoesNotBlockStop
+--- PASS: TestExternalPreflightDoesNotBlockStop (0.07s)
+=== RUN   TestSQLTombstonesCannotBeRewritten
+--- PASS: TestSQLTombstonesCannotBeRewritten (0.08s)
+=== RUN   TestExpiredRecoveryIsIdempotent
+--- PASS: TestExpiredRecoveryIsIdempotent (0.08s)
+=== RUN   TestOwnedCommitCrashChild
+    acceptance_test.go:412: owned subprocess helper
+--- SKIP: TestOwnedCommitCrashChild (0.00s)
+=== RUN   TestCommitThenSIGKILLFreshBackendDoesNotReplay
+    acceptance_test.go:477: owned child SIGKILL after commit; new backend returned consumeAuthorized=false; immutable latch=1
+--- PASS: TestCommitThenSIGKILLFreshBackendDoesNotReplay (0.13s)
+=== RUN   TestSealedAllDrainControlCompletionAndNoEarlyRelease
+--- PASS: TestSealedAllDrainControlCompletionAndNoEarlyRelease (0.12s)
+=== RUN   TestStopRegisterAndUntrustedBootstrap
+--- PASS: TestStopRegisterAndUntrustedBootstrap (0.03s)
+=== RUN   TestAtomicFactMismatchPrepareAndBadTicket
+--- PASS: TestAtomicFactMismatchPrepareAndBadTicket (0.07s)
+=== RUN   TestOriginalFactAndGrantExpiryFreshProofOnly
+=== RUN   TestOriginalFactAndGrantExpiryFreshProofOnly/false
+=== RUN   TestOriginalFactAndGrantExpiryFreshProofOnly/true
+--- PASS: TestOriginalFactAndGrantExpiryFreshProofOnly (4.41s)
+    --- PASS: TestOriginalFactAndGrantExpiryFreshProofOnly/false (2.20s)
+    --- PASS: TestOriginalFactAndGrantExpiryFreshProofOnly/true (2.21s)
+=== RUN   TestNoVerifierNoAuthority
+--- PASS: TestNoVerifierNoAuthority (0.05s)
+=== RUN   TestLateValidationCannotReturnExpiredPositive
+--- PASS: TestLateValidationCannotReturnExpiredPositive (0.92s)
+=== RUN   TestStopFirstRegistrationActualCompetition
+--- PASS: TestStopFirstRegistrationActualCompetition (0.27s)
+=== RUN   TestConcurrentPrepareCASAndOriginalReceipt
+--- PASS: TestConcurrentPrepareCASAndOriginalReceipt (0.10s)
+=== RUN   TestStopStaleCASPersistsOneStopIntent
+--- PASS: TestStopStaleCASPersistsOneStopIntent (0.07s)
+=== RUN   TestSQLRejectsCrossTenantMirrorAndArtifact
+--- PASS: TestSQLRejectsCrossTenantMirrorAndArtifact (0.09s)
+=== RUN   TestSQLLatencyEvidence
+    acceptance_test.go:724: SQL_LATENCY {"backend_consume":{"p50Microseconds":9267,"p95Microseconds":9591,"samples":12},"prepare_permit_start":{"p50Microseconds":20991,"p95Microseconds":21578,"samples":12}}
+--- PASS: TestSQLLatencyEvidence (0.82s)
+=== RUN   TestLostStartACKExpiresWithoutRegrant
+--- PASS: TestLostStartACKExpiresWithoutRegrant (0.94s)
+=== RUN   TestUnknownRequiresIndependentFenceToReleaseSlot
+--- PASS: TestUnknownRequiresIndependentFenceToReleaseSlot (0.10s)
+=== RUN   TestMigrationUpgradeRepeatConcurrentPreservesV1
+    migration_test.go:105: 000006 -> 000007; original v1 product bytes preserved; 4 concurrent runners; migrations=7
+    migration_test.go:130: restricted SQL denied: SELECT * FROM dl05_receiver_consumptions
+    migration_test.go:130: restricted SQL denied: INSERT INTO dl05_v2_grant_state VALUES('bad','ISSUED')
+--- PASS: TestMigrationUpgradeRepeatConcurrentPreservesV1 (0.16s)
+=== RUN   TestMigrationAndNormalConsume
+--- PASS: TestMigrationAndNormalConsume (0.07s)
+=== RUN   TestOfficialWireAdapterConsumptionAndStrictAdmission
+--- PASS: TestOfficialWireAdapterConsumptionAndStrictAdmission (0.08s)
+=== RUN   TestOfficialWireMetadataRolesAndHashes
+--- PASS: TestOfficialWireMetadataRolesAndHashes (0.06s)
+=== RUN   TestRegistrarHistoricalReadbackAfterLostRegistrationACK
+--- PASS: TestRegistrarHistoricalReadbackAfterLostRegistrationACK (0.05s)
+PASS
+ok  	astralive/backend/internal/durablelivev2/authority	13.805s

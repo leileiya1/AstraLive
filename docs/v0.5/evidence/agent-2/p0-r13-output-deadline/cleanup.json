@@ -1,0 +1,17 @@
+{
+  "command": [
+    "pg_ctl",
+    "-D",
+    "/tmp/astralive-agent2-p0-output.kczpw5d8/data",
+    "-m",
+    "fast",
+    "-w",
+    "stop"
+  ],
+  "exitCode": 0,
+  "output": "waiting for server to shut down.... done\nserver stopped\n",
+  "ownedMarkerChecked": true,
+  "dataAndLogsRetained": true,
+  "redisStarted": false,
+  "gpuStarted": false
+}

@@ -1,0 +1,25 @@
+{
+  "path": "backend/internal/durableintegration/integration_test.go",
+  "preimageSHA256": "4319b70c98d9e9f5100f6d9692b1c139eb732bae8c8137581e940e84d93865bd",
+  "postimageSHA256": "d35857602e3c88c880db91242dae10d30a5b6cc41d5395b594eaa2be78197fa5",
+  "preimageCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+  "candidateAuthoritySHA": "7140881c5103e6bc0a33b743f6e726c4b1b7b474",
+  "owner": "Agent 4",
+  "approvalSource": {
+    "kind": "explicit user instruction in current Agent4 PR13 final review",
+    "requirements": [
+      "继续采用你之前准备的明确七个迁移文件名集合校验，不仅修改6→7。",
+      "对授权的测试增强记录精确 postimage、文件差异及审批来源，按已有保护机制处理兼容性。"
+    ],
+    "scope": "only shared migration test assertion and its exact non-normative protection registration"
+  },
+  "policyBasis": "durable-live-2 README describes protected-files.json as design-PR preservation inventory; excluded from22-file normative manifest; validator unchanged, all313 entries remain checked",
+  "diffEvidence": "docs/v0.5/evidence/agent-4/pr13-review-2026-10-18/agent4-migration-versions.patch",
+  "frozenManifestUnchanged": true,
+  "otherProtectedHashesChanged": 0,
+  "applicationRule": "apply atomically with migration000007; no old baseline standalone application",
+  "inventoryPreimageSHA256": "dff40316c847885046a11c970de8f6df048def89a350a831c7bb8323347e5076",
+  "inventoryPostimageSHA256": "4e2be1aa06c207669177277e0486e19d01cc8e3333c77ce31fa5f25f4698da70",
+  "preimageEvidence": "docs/v0.5/evidence/agent-4/pr13-final-2026-10-18/migration-test.preimage.go.txt",
+  "postimageEvidence": "docs/v0.5/evidence/agent-4/pr13-final-2026-10-18/migration-test.postimage.go.txt"
+}

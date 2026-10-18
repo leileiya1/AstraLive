@@ -1,0 +1,56 @@
+=== RUN   TestAgent4OutputExpiryBeforeConsumeCommit
+--- PASS: TestAgent4OutputExpiryBeforeConsumeCommit (0.30s)
+=== RUN   TestAgent4AuthorityBudgetCappedByOutputExpiry
+--- PASS: TestAgent4AuthorityBudgetCappedByOutputExpiry (0.09s)
+=== RUN   TestAgent4PermitCappedByOutputExpiry
+--- PASS: TestAgent4PermitCappedByOutputExpiry (0.05s)
+=== RUN   TestOutputDeadlineEqualDatabaseNow
+--- PASS: TestOutputDeadlineEqualDatabaseNow (0.06s)
+=== RUN   TestOutputDeadlineExpiresDuringPublication
+=== RUN   TestOutputDeadlineExpiresDuringPublication/AcquireOutputPermit
+=== RUN   TestOutputDeadlineExpiresDuringPublication/QueryReceiverAuthority
+=== RUN   TestOutputDeadlineExpiresDuringPublication/CommitReceiverConsume
+--- PASS: TestOutputDeadlineExpiresDuringPublication (0.90s)
+    --- PASS: TestOutputDeadlineExpiresDuringPublication/AcquireOutputPermit (0.27s)
+    --- PASS: TestOutputDeadlineExpiresDuringPublication/QueryReceiverAuthority (0.32s)
+    --- PASS: TestOutputDeadlineExpiresDuringPublication/CommitReceiverConsume (0.31s)
+=== RUN   TestOutputDeadlineQueryBudgetUsesFinalDatabaseTime
+--- PASS: TestOutputDeadlineQueryBudgetUsesFinalDatabaseTime (0.25s)
+=== RUN   TestOutputDeadlineShorteningTransactionWins
+=== RUN   TestOutputDeadlineShorteningTransactionWins/QueryReceiverAuthority
+=== RUN   TestOutputDeadlineShorteningTransactionWins/CommitReceiverConsume
+--- PASS: TestOutputDeadlineShorteningTransactionWins (0.39s)
+    --- PASS: TestOutputDeadlineShorteningTransactionWins/QueryReceiverAuthority (0.09s)
+    --- PASS: TestOutputDeadlineShorteningTransactionWins/CommitReceiverConsume (0.30s)
+=== RUN   TestOutputDeadlineWriterCannotCrossFinalPublication
+=== RUN   TestOutputDeadlineWriterCannotCrossFinalPublication/AcquireOutputPermit
+=== RUN   TestOutputDeadlineWriterCannotCrossFinalPublication/QueryReceiverAuthority
+=== RUN   TestOutputDeadlineWriterCannotCrossFinalPublication/CommitReceiverConsume
+--- PASS: TestOutputDeadlineWriterCannotCrossFinalPublication (0.25s)
+    --- PASS: TestOutputDeadlineWriterCannotCrossFinalPublication/AcquireOutputPermit (0.08s)
+    --- PASS: TestOutputDeadlineWriterCannotCrossFinalPublication/QueryReceiverAuthority (0.08s)
+    --- PASS: TestOutputDeadlineWriterCannotCrossFinalPublication/CommitReceiverConsume (0.09s)
+=== RUN   TestOutputDeadlineConcurrentConsumeAndRevocation
+=== RUN   TestOutputDeadlineConcurrentConsumeAndRevocation/true
+=== RUN   TestOutputDeadlineConcurrentConsumeAndRevocation/false
+--- PASS: TestOutputDeadlineConcurrentConsumeAndRevocation (0.23s)
+    --- PASS: TestOutputDeadlineConcurrentConsumeAndRevocation/true (0.12s)
+    --- PASS: TestOutputDeadlineConcurrentConsumeAndRevocation/false (0.11s)
+=== RUN   TestOutputDeadlineLostACKKeepsLatchAndUnknown
+--- PASS: TestOutputDeadlineLostACKKeepsLatchAndUnknown (0.09s)
+=== RUN   TestOutputDeadlineUnit2StillUsesIndependentGrant
+--- PASS: TestOutputDeadlineUnit2StillUsesIndependentGrant (0.11s)
+=== RUN   TestOutputDeadlineConsumedLongUnitCanRefreshProof
+--- PASS: TestOutputDeadlineConsumedLongUnitCanRefreshProof (0.95s)
+=== RUN   TestOutputDeadlineStopUnknownAndEpochRemainClosed
+=== RUN   TestOutputDeadlineStopUnknownAndEpochRemainClosed/Stop
+=== RUN   TestOutputDeadlineStopUnknownAndEpochRemainClosed/Unknown
+=== RUN   TestOutputDeadlineStopUnknownAndEpochRemainClosed/Epoch
+--- PASS: TestOutputDeadlineStopUnknownAndEpochRemainClosed (0.23s)
+    --- PASS: TestOutputDeadlineStopUnknownAndEpochRemainClosed/Stop (0.08s)
+    --- PASS: TestOutputDeadlineStopUnknownAndEpochRemainClosed/Unknown (0.08s)
+    --- PASS: TestOutputDeadlineStopUnknownAndEpochRemainClosed/Epoch (0.07s)
+=== RUN   TestOutputDeadlineRegistrationMustRemainCurrentAtCommit
+--- PASS: TestOutputDeadlineRegistrationMustRemainCurrentAtCommit (0.26s)
+PASS
+ok  	astralive/backend/internal/durablelivev2/authority	5.700s

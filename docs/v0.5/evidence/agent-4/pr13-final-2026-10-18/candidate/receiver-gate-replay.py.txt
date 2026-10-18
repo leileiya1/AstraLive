@@ -1,0 +1,34 @@
+"""Replay an actual SQL Authority document through official Python DTO and
+PR11's real local admission gate. Not an authenticated transport/media test.
+Relative time is intentionally replayed; no live SQL/network latency claim.
+"""
+import sys,json,time,hashlib
+from pathlib import Path
+sys.path.insert(0,'/tmp/astralive-agent4-pr11-review-qc9p3pjq')
+sys.path.insert(1,'/tmp/astralive-agent4-pr13-final-30secxzh')
+from astralive_contracts import durable_live_v2 as wire
+from output_guardian.v2.gate import Budget,Gate,Lineage,sent_now
+from output_guardian.model import Closed
+raw=Path(sys.argv[1]).read_bytes();obj=wire.decode_response('QueryReceiverAuthority',raw,status=200)
+v=json.loads(wire.encode(obj));snap=v['snapshot']
+recordraw=Path(sys.argv[1]+'.consumption.json').read_bytes();wire.decode('ReceiverConsumption',recordraw);record=json.loads(recordraw)
+assert snap['consumption']==dict(state='CONSUMED',receiptId=record['receiptId'])
+assert snap['validUntil']<snap['permit']['expiresAt']
+sent=sent_now();budget=Budget.received(snap['timing'],sent)
+gate=Gate();identity=wire.canonical_json(dict(registration=snap['registration'],consumption=record))
+lineage=Lineage(record['binding']['runId'],record['binding']['executionId'],record['binding']['artifactId'],record['binding']['artifactHash'],identity,1)
+with gate.lock:
+ gate.run_id=lineage.run_id;gate.state='ACTIVE_UNIT';gate.active=lineage;gate.edge.arm_locked(lineage,budget);gate.execution_locked(lineage)
+# Current SQL budget is <=300ms; old immutable Permit remains longer. Wait
+# beyond current budget, then verify final execution/handoff edge stays closed.
+time.sleep(snap['timing']['remainingProofMs']/1000)
+rejected=False
+try:
+ with gate.lock:gate.execution_locked(lineage)
+except Closed:rejected=True
+assert rejected
+replayed=False
+try:Budget.received(snap['timing'],sent)
+except Closed:replayed=True
+assert replayed
+print(json.dumps(dict(result='PASS',officialPythonDTO='e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565',guardianGateSHA='d8eb05e79661b859547242575e0ac6d1d7303aa1',currentProofMs=snap['timing']['remainingProofMs'],validUntil=snap['validUntil'],immutablePermitExpiresAt=snap['permit']['expiresAt'],finalGateRejectedExpiredProof=True,originalSentAnchorReplayRejected=True,scope='real SQL document replay + real local gate only; not production IPC/Receiver assembly/media')))
