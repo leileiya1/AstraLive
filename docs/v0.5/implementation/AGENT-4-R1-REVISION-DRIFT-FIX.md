@@ -116,3 +116,54 @@ production PhysicalSource/Session assembly, once-TTS and media remain NOT TESTED
 or BLOCKED. The existing sources can deny all production admission; this fix
 cannot create a physical output proof. Agent2 must independently review the new
 exact SHA before P1 is declared resolved.
+
+## Final committed integration validation
+
+Registrar fix: `58cbc59042c70f9010a368f963257fdad5154b91`.
+Exact Agent5 fixture/protection change: `08af1049250d2657d7afb5e303d97a02e9761570`.
+The original worktree was clean for the full no-overlay committed-source run on
+that latter SHA. All command exit codes are0. Real dedicated PostgreSQL17.11
+used fsync/synchronous_commit/full_page_writes on; all four owned databases were
+dropped and the instance stopped. No shared service was touched.
+
+| Check | Committed-source actual result |
+| --- | --- |
+| Receiver1 native/real PostgreSQL race |22 PASS,0 SKIP |
+| Original revision probes x3 |6 PASS (before:6 FAIL) |
+| Original Agent2 owner probes |15 PASS |
+| Streaming PostgreSQL race |18 PASS |
+| Full Go test / race |Each267 top-level PASS,0 FAIL,13 SKIP |
+| Go vet |PASS |
+| Contracts / Journal / official wire / adapter |137 /11 /13 /8 PASS |
+| Both validators / generator --check |PASS |
+| Original Guardian v1 / fixed PR11 v2 CPU candidate |25 /69 PASS,0 SKIP |
+| Latest PR11 extended CPU / READY group |82 PASS,1 Linux SKIP /5 PASS |
+| Linux amd64 compile |PASS, compile only |
+
+[Exact postcommit results/all SKIP reasons](../evidence/agent-4/receiver1-revision-drift-2026-10-18/postcommit-summary.json)
+and [frozen/source/ownership audit](../evidence/agent-4/receiver1-revision-drift-2026-10-18/final-source-audit.json)
+remain separate from the earlier archive candidate. All22 frozen files and the
+manifest/digest retain original bytes; all seven migrations, official DTO trees,
+validators, Authority/Agent3 source and public production entrypoints are unchanged.
+Of313 protection expectations, only the explicitly approved Agent5 fixture entry
+changes. Its pre/post bytes, owner approval, exact diff and user authorization
+are retained in [the governance record](protection-changes/RECEIVER1-GUARDIAN-FIXTURE.json).
+Both deliberate mutations (approved postimage and unrelated protected model)
+are rejected by the unchanged validator; restoration passes all313 checks.
+
+PR11 itself remains Draft/unmerged. Only its exact approved v1 fixture is copied,
+with owner commit provenance, never its unreviewed Guardian core. Its fixed
+`9b969d099b7a3b6b85f3595d26c36fb953d47263` code is tested as an isolated archive.
+The source gate coordinates SQL eligibility, not physical media output; no
+production PhysicalSource, Linux isolation or media acceptance is implied.
+**Formal Agent2 security re-review and ACK are still pending.**
+
+A further20 fresh pytest/native CPU child processes independently passed the
+900ms pre-Grant startup/two-unit continuity test at fixed PR11 `9b969d0`.
+[Every iteration and resources](../evidence/agent-4/receiver1-revision-drift-2026-10-18/cold20/summary.json)
+are retained. This is CPU/Mock Authority evidence only; it does not explain away
+the original LEASE_LOST or intermittent RTMP-tail failure or establish a production
+SLA. The real host source must keep the physical tuple unchanged through the
+retirement barrier; queued/in-flight network responses are not proof that an old
+physical output remains current. Receiver final checks and real sink fencing
+remain separate mandatory later work.

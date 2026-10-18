@@ -1,0 +1,179 @@
+{
+  "ownerCommit": "9b969d099b7a3b6b85f3595d26c36fb953d47263",
+  "command": [
+    "/tmp/astralive-agent4-receiver1-python/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "output_guardian/tests/v2/test_readiness.py::test_startup_delayed_before_grant_two_units_remain_continuous",
+    "-q"
+  ],
+  "cwd": "/tmp/astralive-agent4-receiver1-pg-v07juvz4/owner-pr11",
+  "freshPytestProcesses": true,
+  "productionAuthority": "MOCK / physical source FIXTURE",
+  "productionAccepted": false,
+  "originalLeaseLostAndRtmpFailuresRetained": true,
+  "records": [
+    {
+      "iteration": 1,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6547169589903206,
+      "childUserSeconds": 0.623958,
+      "childSystemSeconds": 0.105668,
+      "childPeakRSSBytes": 104955904
+    },
+    {
+      "iteration": 2,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6520844590850174,
+      "childUserSeconds": 0.6280539999999999,
+      "childSystemSeconds": 0.11018499999999999,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 3,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6371144170407206,
+      "childUserSeconds": 0.6306580000000002,
+      "childSystemSeconds": 0.09272099999999997,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 4,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6262242081575096,
+      "childUserSeconds": 0.6231059999999999,
+      "childSystemSeconds": 0.09081500000000003,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 5,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6292622911278158,
+      "childUserSeconds": 0.6239249999999998,
+      "childSystemSeconds": 0.09247299999999997,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 6,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6364295829553157,
+      "childUserSeconds": 0.6248110000000002,
+      "childSystemSeconds": 0.09359400000000001,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 7,
+      "exitCode": 0,
+      "elapsedSeconds": 1.627828124910593,
+      "childUserSeconds": 0.62608,
+      "childSystemSeconds": 0.09129600000000004,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 8,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6277785839047283,
+      "childUserSeconds": 0.6238520000000003,
+      "childSystemSeconds": 0.09186599999999989,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 9,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6263276250101626,
+      "childUserSeconds": 0.6232069999999998,
+      "childSystemSeconds": 0.09286100000000008,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 10,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6309957089833915,
+      "childUserSeconds": 0.6243619999999996,
+      "childSystemSeconds": 0.09112799999999999,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 11,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6275421669706702,
+      "childUserSeconds": 0.6213899999999999,
+      "childSystemSeconds": 0.09131599999999995,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 12,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6264045839197934,
+      "childUserSeconds": 0.6264580000000004,
+      "childSystemSeconds": 0.09044200000000013,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 13,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6412137921433896,
+      "childUserSeconds": 0.633985,
+      "childSystemSeconds": 0.09315499999999988,
+      "childPeakRSSBytes": 105021440
+    },
+    {
+      "iteration": 14,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6539139170199633,
+      "childUserSeconds": 0.6434759999999997,
+      "childSystemSeconds": 0.09506799999999993,
+      "childPeakRSSBytes": 105086976
+    },
+    {
+      "iteration": 15,
+      "exitCode": 0,
+      "elapsedSeconds": 1.627749624894932,
+      "childUserSeconds": 0.6235649999999993,
+      "childSystemSeconds": 0.09280300000000019,
+      "childPeakRSSBytes": 105086976
+    },
+    {
+      "iteration": 16,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6252816249616444,
+      "childUserSeconds": 0.6230660000000015,
+      "childSystemSeconds": 0.09182499999999982,
+      "childPeakRSSBytes": 105086976
+    },
+    {
+      "iteration": 17,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6269136250484735,
+      "childUserSeconds": 0.6246460000000003,
+      "childSystemSeconds": 0.09228600000000009,
+      "childPeakRSSBytes": 105086976
+    },
+    {
+      "iteration": 18,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6260596250649542,
+      "childUserSeconds": 0.6206689999999995,
+      "childSystemSeconds": 0.09083400000000008,
+      "childPeakRSSBytes": 105086976
+    },
+    {
+      "iteration": 19,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6446998331230134,
+      "childUserSeconds": 0.6418119999999998,
+      "childSystemSeconds": 0.09323499999999996,
+      "childPeakRSSBytes": 105299968
+    },
+    {
+      "iteration": 20,
+      "exitCode": 0,
+      "elapsedSeconds": 1.6219292499590665,
+      "childUserSeconds": 0.6277860000000004,
+      "childSystemSeconds": 0.09051199999999993,
+      "childPeakRSSBytes": 105299968
+    }
+  ]
+}
