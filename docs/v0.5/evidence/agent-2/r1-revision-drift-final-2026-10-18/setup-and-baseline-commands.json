@@ -1,0 +1,161 @@
+[
+  {
+    "label": "initdb",
+    "cmd": [
+      "/opt/homebrew/opt/postgresql@17/bin/initdb",
+      "-D",
+      "/tmp/a2-r1-final-bs8ul5af/data",
+      "-A",
+      "trust",
+      "-U",
+      "agent2_review",
+      "--no-locale",
+      "-E",
+      "UTF8"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af",
+    "exitCode": 0,
+    "elapsedSeconds": 0.37
+  },
+  {
+    "label": "start",
+    "cmd": [
+      "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+      "-D",
+      "/tmp/a2-r1-final-bs8ul5af/data",
+      "-l",
+      "/tmp/a2-r1-final-bs8ul5af/evidence/postgres.txt",
+      "-o",
+      "-h 127.0.0.1 -p 49741 -k /tmp/a2-r1-final-bs8ul5af/sockets",
+      "-w",
+      "start"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af",
+    "exitCode": 0,
+    "elapsedSeconds": 0.121
+  },
+  {
+    "label": "create-agent4_receiver1_review",
+    "cmd": [
+      "/opt/homebrew/opt/postgresql@17/bin/createdb",
+      "-h",
+      "127.0.0.1",
+      "-p",
+      "49741",
+      "-U",
+      "agent2_review",
+      "agent4_receiver1_review"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af",
+    "exitCode": 0,
+    "elapsedSeconds": 0.05
+  },
+  {
+    "label": "create-agent3_streaming_owned",
+    "cmd": [
+      "/opt/homebrew/opt/postgresql@17/bin/createdb",
+      "-h",
+      "127.0.0.1",
+      "-p",
+      "49741",
+      "-U",
+      "agent2_review",
+      "agent3_streaming_owned"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af",
+    "exitCode": 0,
+    "elapsedSeconds": 0.039
+  },
+  {
+    "label": "create-agent2_v2_agent3_owned",
+    "cmd": [
+      "/opt/homebrew/opt/postgresql@17/bin/createdb",
+      "-h",
+      "127.0.0.1",
+      "-p",
+      "49741",
+      "-U",
+      "agent2_review",
+      "agent2_v2_agent3_owned"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af",
+    "exitCode": 0,
+    "elapsedSeconds": 0.041
+  },
+  {
+    "label": "create-agent2_v1_agent3_owned",
+    "cmd": [
+      "/opt/homebrew/opt/postgresql@17/bin/createdb",
+      "-h",
+      "127.0.0.1",
+      "-p",
+      "49741",
+      "-U",
+      "agent2_review",
+      "agent2_v1_agent3_owned"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af",
+    "exitCode": 0,
+    "elapsedSeconds": 0.039
+  },
+  {
+    "label": "pg-inventory",
+    "cmd": [
+      "/opt/homebrew/opt/postgresql@17/bin/psql",
+      "postgres://agent2_review@127.0.0.1:49741/agent4_receiver1_review?sslmode=disable",
+      "-c",
+      "SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af",
+    "exitCode": 0,
+    "elapsedSeconds": 0.019
+  },
+  {
+    "label": "original-revision-repeat3",
+    "cmd": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=3",
+      "-run",
+      "^TestAgent2ReviewCurrentPhysicalRevision",
+      "./internal/durableintegration/receiver1"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af/source/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 6.188
+  },
+  {
+    "label": "original-owner15",
+    "cmd": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "-run",
+      "^TestAgent2Review",
+      "./internal/durableintegration/receiver1"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af/source/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 9.48
+  },
+  {
+    "label": "receiver1-latest22",
+    "cmd": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "-run",
+      "^TestPostgres",
+      "./internal/durableintegration/receiver1"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af/source/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 16.74
+  }
+]

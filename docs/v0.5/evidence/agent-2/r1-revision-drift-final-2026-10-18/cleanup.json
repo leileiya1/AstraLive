@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+    "-D",
+    "/tmp/a2-r1-final-bs8ul5af/data",
+    "-m",
+    "fast",
+    "-w",
+    "stop"
+  ],
+  "stopExitCode": 0,
+  "ownedRoot": "/tmp/a2-r1-final-bs8ul5af",
+  "port": 49741,
+  "postgresStopped": true,
+  "ownedDatabases": [
+    "agent4_receiver1_review",
+    "agent3_streaming_owned",
+    "agent2_v2_agent3_owned",
+    "agent2_v1_agent3_owned"
+  ],
+  "dataAndLogsRetained": true,
+  "sharedServicesTouched": false,
+  "gpuOrLiveEnabled": false,
+  "sigkill": "only owned test Go child; exact signal and native PID+birth cleanup asserted"
+}

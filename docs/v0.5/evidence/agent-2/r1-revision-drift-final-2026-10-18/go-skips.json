@@ -1,0 +1,54 @@
+[
+  {
+    "test": "TestAuditSelectionExpiresWhileWaitingForCommandLock",
+    "diagnostic": "=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock\n    interaction_audit_test.go:28: explicit disposable SQL required\n--- SKIP: TestAuditSelectionExpiresWhileWaitingForCommandLock (0.00s)\n"
+  },
+  {
+    "test": "TestRedisStreamsDuplicateReclaimAndSQLProjection",
+    "diagnostic": "=== RUN   TestRedisStreamsDuplicateReclaimAndSQLProjection\n    evidence_test.go:176: isolated Redis required\n--- SKIP: TestRedisStreamsDuplicateReclaimAndSQLProjection (0.00s)\n"
+  },
+  {
+    "test": "TestRedisIsolatedDisconnectAndSQLFallback",
+    "diagnostic": "=== RUN   TestRedisIsolatedDisconnectAndSQLFallback\n    evidence_test.go:240: owned Redis required\n--- SKIP: TestRedisIsolatedDisconnectAndSQLFallback (0.00s)\n"
+  },
+  {
+    "test": "TestIsolatedBackendHelper",
+    "diagnostic": "=== RUN   TestIsolatedBackendHelper\n    process_test.go:38: owned subprocess helper\n--- SKIP: TestIsolatedBackendHelper (0.00s)\n"
+  },
+  {
+    "test": "TestPostgresIsolatedServerOutage",
+    "diagnostic": "=== RUN   TestPostgresIsolatedServerOutage\n    process_test.go:295: owned cluster path required\n--- SKIP: TestPostgresIsolatedServerOutage (0.00s)\n"
+  },
+  {
+    "test": "TestOwnedCommitCrashChild",
+    "diagnostic": "=== RUN   TestOwnedCommitCrashChild\n    acceptance_test.go:412: owned subprocess helper\n--- SKIP: TestOwnedCommitCrashChild (0.00s)\n"
+  },
+  {
+    "test": "TestProductAuthorizationAndPinnedBindings",
+    "diagnostic": "=== RUN   TestProductAuthorizationAndPinnedBindings\n    authorization_integration_test.go:28: explicit disposable DB required\n--- SKIP: TestProductAuthorizationAndPinnedBindings (0.00s)\n"
+  },
+  {
+    "test": "TestInteractionFormalCPU",
+    "diagnostic": "=== RUN   TestInteractionFormalCPU\n    interaction_integration_test.go:39: RUN_INTERACTION_CPU=1 and disposable SQL/Redis required\n--- SKIP: TestInteractionFormalCPU (0.00s)\n"
+  },
+  {
+    "test": "TestExportContractRequests",
+    "diagnostic": "=== RUN   TestExportContractRequests\n    manager_test.go:530: set ASTRALIVE_DIRECTOR_EVIDENCE for schema/evidence export\n--- SKIP: TestExportContractRequests (0.00s)\n"
+  },
+  {
+    "test": "TestConfigurationBrowserHarness",
+    "diagnostic": "=== RUN   TestConfigurationBrowserHarness\n    browser_harness_test.go:23: browser harness opt-in\n--- SKIP: TestConfigurationBrowserHarness (0.00s)\n"
+  },
+  {
+    "test": "TestPostgresConfigurationLifecycle",
+    "diagnostic": "=== RUN   TestPostgresConfigurationLifecycle\n    postgres_test.go:23: CONFIG_TEST_DATABASE_URL not set\n--- SKIP: TestPostgresConfigurationLifecycle (0.00s)\n"
+  },
+  {
+    "test": "TestLocalProviderProbesScopedAndVersioned",
+    "diagnostic": "=== RUN   TestLocalProviderProbesScopedAndVersioned\n    provider_probe_test.go:22: explicit disposable DB required\n--- SKIP: TestLocalProviderProbesScopedAndVersioned (0.00s)\n"
+  },
+  {
+    "test": "TestEventDedupAndStateUpdateWithPostgres",
+    "diagnostic": "=== RUN   TestEventDedupAndStateUpdateWithPostgres\n    integration_test.go:45: DATABASE_URL not set\n--- SKIP: TestEventDedupAndStateUpdateWithPostgres (0.00s)\n"
+  }
+]

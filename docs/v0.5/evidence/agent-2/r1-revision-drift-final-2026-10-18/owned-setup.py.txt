@@ -1,0 +1,16 @@
+import json,pathlib,subprocess,os,socket,time
+m=json.load(open('/tmp/a2-r1-final-current.json'));p=pathlib.Path(m['root']);out=p/'evidence';pg='/opt/homebrew/opt/postgresql@17/bin/';(p/'sockets').mkdir();(p/'AGENT4_RECEIVER1_OWNED').write_text('Agent4 dedicated receiver1 PostgreSQL\n');(p/'AGENT3_OWNED').write_text('agent3 isolated streaming acceptance\n')
+with socket.socket() as s:s.bind(('127.0.0.1',0));port=s.getsockname()[1]
+records=[]
+def run(label,cmd,cwd=None,env=None):
+ t=time.monotonic()
+ with (out/(label+'.txt')).open('w') as f:r=subprocess.run(cmd,cwd=cwd,env=env,stdout=f,stderr=subprocess.STDOUT)
+ records.append({'label':label,'cmd':cmd,'cwd':str(cwd or p),'exitCode':r.returncode,'elapsedSeconds':round(time.monotonic()-t,3)});(out/'setup-and-baseline-commands.json').write_text(json.dumps(records,indent=2));print(label,r.returncode,flush=True);return r.returncode
+assert run('initdb',[pg+'initdb','-D',str(p/'data'),'-A','trust','-U','agent2_review','--no-locale','-E','UTF8'])==0
+assert run('start',[pg+'pg_ctl','-D',str(p/'data'),'-l',str(out/'postgres.txt'),'-o',f'-h 127.0.0.1 -p {port} -k {p}/sockets','-w','start'])==0
+names=['agent4_receiver1_review','agent3_streaming_owned','agent2_v2_agent3_owned','agent2_v1_agent3_owned']
+for name in names:assert run('create-'+name,[pg+'createdb','-h','127.0.0.1','-p',str(port),'-U','agent2_review',name])==0
+dsn=lambda name:f'postgres://agent2_review@127.0.0.1:{port}/{name}?sslmode=disable'
+env={k:os.environ[k] for k in ('PATH','HOME','TMPDIR','GOCACHE','GOPATH')if k in os.environ};env.update(PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=str(p/'source'),GOMAXPROCS='4',LC_ALL='C',AGENT4_RECEIVER1_PYTHON='/tmp/astralive-agent4-receiver1-python/bin/python',AGENT4_RECEIVER1_DATABASE_URL=dsn(names[0]),AGENT4_RECEIVER1_OWNED_ROOT=str(p),AGENT4_PR11_ARCHIVE=str(p/'pr11'),AGENT3_PG_OWNED_ROOT=str(p),AGENT3_STREAM_DATABASE_URL=dsn(names[1]),DURABLE_V2_TEST_DATABASE_URL=dsn(names[2]),DURABLE_LIVE_TEST_DATABASE_URL=dsn(names[3]),DURABLE_LIVE_TEST_PYTHON='/tmp/astralive-agent4-receiver1-python/bin/python')
+(p/'env.json').write_text(json.dumps(env));m.update(port=port,databases=names,dsn=dsn(names[0]));pathlib.Path('/tmp/a2-r1-final-current.json').write_text(json.dumps(m));assert run('pg-inventory',[pg+'psql',dsn(names[0]),'-c','SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;'])==0
+for label,args in [('original-revision-repeat3',['-count=3','-run','^TestAgent2ReviewCurrentPhysicalRevision']),('original-owner15',['-count=1','-run','^TestAgent2Review']),('receiver1-latest22',['-count=1','-run','^TestPostgres'])]:run(label,['go','test','-race','-json']+args+['./internal/durableintegration/receiver1'],p/'source/backend',env)

@@ -1,0 +1,230 @@
+2026-10-18 21:19:52.514 CST [56009] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-18 21:19:52.515 CST [56009] LOG:  listening on IPv4 address "127.0.0.1", port 49741
+2026-10-18 21:19:52.515 CST [56009] LOG:  listening on Unix socket "/tmp/a2-r1-final-bs8ul5af/sockets/.s.PGSQL.49741"
+2026-10-18 21:19:52.518 CST [56012] LOG:  database system was shut down at 2026-10-18 21:19:52 CST
+2026-10-18 21:19:52.520 CST [56009] LOG:  database system is ready to accept connections
+2026-10-18 21:24:52.518 CST [56010] LOG:  checkpoint starting: time
+2026-10-18 21:25:52.085 CST [56499] ERROR:  canceling statement due to user request
+2026-10-18 21:25:52.085 CST [56499] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:25:52.085 CST [56499] LOG:  could not send data to client: Broken pipe
+2026-10-18 21:25:52.085 CST [56499] FATAL:  connection to client lost
+2026-10-18 21:25:52.085 CST [56494] ERROR:  canceling statement due to user request
+2026-10-18 21:25:52.085 CST [56494] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:25:52.086 CST [56512] ERROR:  canceling statement due to user request
+2026-10-18 21:25:52.086 CST [56512] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:25:56.600 CST [56559] ERROR:  owned-test-revoke-failure
+2026-10-18 21:25:56.600 CST [56559] CONTEXT:  PL/pgSQL function int4_ec93b69caab8a43a84cf4714b85adb93ed8c842d8b019927revoke_fai() line 1 at RAISE
+2026-10-18 21:25:56.600 CST [56559] STATEMENT:  UPDATE dl05_v2_registration_state SET state='REVOKED',revision=revision+1,reason=$2,revoked_at=clock_timestamp() WHERE bootstrap_id=$1 AND state='ACTIVE'
+2026-10-18 21:25:57.123 CST [56009] LOG:  received fast shutdown request
+2026-10-18 21:25:57.123 CST [56009] LOG:  aborting any active transactions
+2026-10-18 21:25:57.123 CST [56564] FATAL:  terminating connection due to administrator command
+2026-10-18 21:25:57.124 CST [56009] LOG:  background worker "logical replication launcher" (PID 56015) exited with exit code 1
+2026-10-18 21:25:57.307 CST [56010] LOG:  checkpoint complete: wrote 4500 buffers (27.5%); 0 WAL file(s) added, 0 removed, 1 recycled; write=64.753 s, sync=0.035 s, total=64.789 s; sync files=1575, longest=0.001 s, average=0.001 s; distance=23265 kB, estimate=23265 kB; lsn=0/2D40B40, redo lsn=0/2BD3008
+2026-10-18 21:25:57.309 CST [56010] LOG:  shutting down
+2026-10-18 21:25:57.309 CST [56010] LOG:  checkpoint starting: shutdown immediate
+2026-10-18 21:25:57.312 CST [56010] LOG:  checkpoint complete: wrote 61 buffers (0.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.003 s; sync files=43, longest=0.001 s, average=0.001 s; distance=1462 kB, estimate=21085 kB; lsn=0/2D40BB8, redo lsn=0/2D40BB8
+2026-10-18 21:25:57.313 CST [56009] LOG:  database system is shut down
+2026-10-18 21:25:57.368 CST [56572] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-18 21:25:57.369 CST [56572] LOG:  listening on IPv4 address "127.0.0.1", port 49741
+2026-10-18 21:25:57.369 CST [56572] LOG:  listening on Unix socket "/tmp/a2-r1-final-bs8ul5af/sockets/.s.PGSQL.49741"
+2026-10-18 21:25:57.373 CST [56575] LOG:  database system was shut down at 2026-10-18 21:25:57 CST
+2026-10-18 21:25:57.376 CST [56572] LOG:  database system is ready to accept connections
+2026-10-18 21:27:37.009 CST [56794] ERROR:  immutable durable field envelope
+2026-10-18 21:27:37.009 CST [56794] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 21:27:37.009 CST [56794] STATEMENT:  UPDATE dl05_outbox SET envelope=envelope || '{"traceId":"changed"}' WHERE command_id=$1
+2026-10-18 21:27:37.009 CST [56794] ERROR:  immutable durable field session_id
+2026-10-18 21:27:37.009 CST [56794] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 21:27:37.009 CST [56794] STATEMENT:  UPDATE dl05_attempts SET session_id='other' WHERE command_id=$1
+2026-10-18 21:27:37.010 CST [56794] ERROR:  insert or update on table "dl05_run_slots" violates foreign key constraint "dl05_run_slots_tenant_id_owner_id_run_id_active_attempt_id_fkey"
+2026-10-18 21:27:37.010 CST [56794] DETAIL:  Key (tenant_id, owner_id, run_id, active_attempt_id)=(test_35e0fdd24a3d0f80df207268a73758eetenant, test_35e0fdd24a3d0f80df207268a73758eeowner, test_35e0fdd24a3d0f80df207268a73758eerun, not-an-attempt) is not present in table "dl05_attempts".
+2026-10-18 21:27:37.010 CST [56794] STATEMENT:  UPDATE dl05_run_slots SET active_attempt_id='not-an-attempt' WHERE run_id=$1
+2026-10-18 21:27:37.199 CST [56805] ERROR:  durable Session requires atomic attempt/outbox
+2026-10-18 21:27:37.199 CST [56805] CONTEXT:  PL/pgSQL function dl05_utterance_mode() line 5 at RAISE
+2026-10-18 21:27:37.305 CST [56811] ERROR:  duplicate key value violates unique constraint "dl05_turns_pkey"
+2026-10-18 21:27:37.305 CST [56811] DETAIL:  Key (turn_id)=(turn_a91027714e941323774485faf0c61561) already exists.
+2026-10-18 21:27:37.305 CST [56811] STATEMENT:  INSERT INTO dl05_turns(tenant_id,owner_id,run_id,plan_id,turn_id,turn_type,source_segment_id,source_comment_trace_id,priority,state,scheduled_at,expires_at,input_text,idempotency_key,document) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$15,$10,$11,$12,$13,$14)
+2026-10-18 21:27:40.557 CST [56868] FATAL:  terminating connection due to administrator command
+2026-10-18 21:27:45.729 CST [57025] ERROR:  immutable v2 evidence
+2026-10-18 21:27:45.729 CST [57025] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 21:27:45.729 CST [57025] STATEMENT:  DELETE FROM dl05_receiver_consumptions WHERE command_id=$1
+2026-10-18 21:27:45.730 CST [57025] ERROR:  immutable v2 evidence
+2026-10-18 21:27:45.730 CST [57025] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 21:27:45.730 CST [57025] STATEMENT:  UPDATE dl05_receiver_consumptions SET consume_identity='changed' WHERE command_id=$1
+2026-10-18 21:27:45.730 CST [57025] ERROR:  immutable v2 evidence
+2026-10-18 21:27:45.730 CST [57025] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 21:27:45.730 CST [57025] STATEMENT:  DELETE FROM dl05_answer_grants WHERE command_id=$1
+2026-10-18 21:27:45.730 CST [57025] ERROR:  immutable v2 evidence
+2026-10-18 21:27:45.730 CST [57025] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 21:27:45.730 CST [57025] STATEMENT:  UPDATE dl05_answer_segments SET answer_text='changed' WHERE command_id=$1
+2026-10-18 21:27:45.730 CST [57025] ERROR:  immutable durable field command_id
+2026-10-18 21:27:45.730 CST [57025] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 21:27:45.730 CST [57025] STATEMENT:  UPDATE dl05_v2_execution_state SET command_id='other' WHERE command_id=$1
+2026-10-18 21:27:45.730 CST [57025] ERROR:  v2 state cannot reauthorize
+2026-10-18 21:27:45.730 CST [57025] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 21:27:45.730 CST [57025] STATEMENT:  UPDATE dl05_v2_grant_state SET state='ISSUED' WHERE grant_id=$1
+2026-10-18 21:27:45.734 CST [57025] ERROR:  v2 state cannot reauthorize
+2026-10-18 21:27:45.734 CST [57025] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 21:27:45.734 CST [57025] STATEMENT:  UPDATE dl05_v2_registration_state SET state='ACTIVE',revoked_at=NULL WHERE bootstrap_id=$1
+2026-10-18 21:27:51.601 CST [57117] ERROR:  receiver principal scope mismatch
+2026-10-18 21:27:51.601 CST [57117] CONTEXT:  PL/pgSQL function dl05_v2_mirror_scope() line 9 at RAISE
+2026-10-18 21:27:51.601 CST [57117] STATEMENT:  INSERT INTO dl05_v2_installations(proof_id,command_id,binding,binding_hash,installation_revision,runtime_principal,guardian_principal,observed_by,fence_ref) VALUES($1,$2,'{}',$3,1,$4,$5,'test','test')
+2026-10-18 21:27:51.601 CST [57117] ERROR:  artifact scope mismatch
+2026-10-18 21:27:51.601 CST [57117] CONTEXT:  PL/pgSQL function dl05_v2_artifact_scope() line 9 at RAISE
+2026-10-18 21:27:51.601 CST [57117] STATEMENT:  INSERT INTO dl05_answer_segments(artifact_id,command_id,answer_id,sequence,descriptor,artifact_hash,answer_text,text_hash,previous_hash,product_id,snapshot_version,facts,prepare_receipt) VALUES($1,$2,$3,2,$4,$5,$6,$7,$8,$9,$10,$11,'{}')
+2026-10-18 21:27:53.191 CST [57158] ERROR:  permission denied for table dl05_receiver_consumptions
+2026-10-18 21:27:53.191 CST [57158] STATEMENT:  SELECT * FROM dl05_receiver_consumptions
+2026-10-18 21:27:53.192 CST [57158] ERROR:  permission denied for table dl05_v2_grant_state
+2026-10-18 21:27:53.192 CST [57158] STATEMENT:  INSERT INTO dl05_v2_grant_state VALUES('bad','ISSUED')
+2026-10-18 21:27:53.193 CST [56573] LOG:  checkpoint starting: immediate force wait
+2026-10-18 21:27:53.246 CST [56573] LOG:  checkpoint complete: wrote 2591 buffers (15.8%); 0 WAL file(s) added, 0 removed, 2 recycled; write=0.021 s, sync=0.032 s, total=0.053 s; sync files=1426, longest=0.001 s, average=0.001 s; distance=26405 kB, estimate=26405 kB; lsn=0/470A0D0, redo lsn=0/470A078
+2026-10-18 21:28:19.665 CST [57592] ERROR:  immutable durable field envelope
+2026-10-18 21:28:19.665 CST [57592] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 21:28:19.665 CST [57592] STATEMENT:  UPDATE dl05_outbox SET envelope=envelope || '{"traceId":"changed"}' WHERE command_id=$1
+2026-10-18 21:28:19.665 CST [57592] ERROR:  immutable durable field session_id
+2026-10-18 21:28:19.665 CST [57592] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 21:28:19.665 CST [57592] STATEMENT:  UPDATE dl05_attempts SET session_id='other' WHERE command_id=$1
+2026-10-18 21:28:19.666 CST [57592] ERROR:  insert or update on table "dl05_run_slots" violates foreign key constraint "dl05_run_slots_tenant_id_owner_id_run_id_active_attempt_id_fkey"
+2026-10-18 21:28:19.666 CST [57592] DETAIL:  Key (tenant_id, owner_id, run_id, active_attempt_id)=(test_093d96bb6b955b33afc65576bad5c22atenant, test_093d96bb6b955b33afc65576bad5c22aowner, test_093d96bb6b955b33afc65576bad5c22arun, not-an-attempt) is not present in table "dl05_attempts".
+2026-10-18 21:28:19.666 CST [57592] STATEMENT:  UPDATE dl05_run_slots SET active_attempt_id='not-an-attempt' WHERE run_id=$1
+2026-10-18 21:28:20.055 CST [57605] ERROR:  durable Session requires atomic attempt/outbox
+2026-10-18 21:28:20.055 CST [57605] CONTEXT:  PL/pgSQL function dl05_utterance_mode() line 5 at RAISE
+2026-10-18 21:28:20.260 CST [57612] ERROR:  duplicate key value violates unique constraint "dl05_turns_pkey"
+2026-10-18 21:28:20.260 CST [57612] DETAIL:  Key (turn_id)=(turn_b2c05f3798d34a71874a2409bbba94dc) already exists.
+2026-10-18 21:28:20.260 CST [57612] STATEMENT:  INSERT INTO dl05_turns(tenant_id,owner_id,run_id,plan_id,turn_id,turn_type,source_segment_id,source_comment_trace_id,priority,state,scheduled_at,expires_at,input_text,idempotency_key,document) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$15,$10,$11,$12,$13,$14)
+2026-10-18 21:28:23.850 CST [57667] FATAL:  terminating connection due to administrator command
+2026-10-18 21:28:32.082 CST [57834] ERROR:  immutable v2 evidence
+2026-10-18 21:28:32.082 CST [57834] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 21:28:32.082 CST [57834] STATEMENT:  DELETE FROM dl05_receiver_consumptions WHERE command_id=$1
+2026-10-18 21:28:32.083 CST [57834] ERROR:  immutable v2 evidence
+2026-10-18 21:28:32.083 CST [57834] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 21:28:32.083 CST [57834] STATEMENT:  UPDATE dl05_receiver_consumptions SET consume_identity='changed' WHERE command_id=$1
+2026-10-18 21:28:32.083 CST [57834] ERROR:  immutable v2 evidence
+2026-10-18 21:28:32.083 CST [57834] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 21:28:32.083 CST [57834] STATEMENT:  DELETE FROM dl05_answer_grants WHERE command_id=$1
+2026-10-18 21:28:32.083 CST [57834] ERROR:  immutable v2 evidence
+2026-10-18 21:28:32.083 CST [57834] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 21:28:32.083 CST [57834] STATEMENT:  UPDATE dl05_answer_segments SET answer_text='changed' WHERE command_id=$1
+2026-10-18 21:28:32.083 CST [57834] ERROR:  immutable durable field command_id
+2026-10-18 21:28:32.083 CST [57834] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 21:28:32.083 CST [57834] STATEMENT:  UPDATE dl05_v2_execution_state SET command_id='other' WHERE command_id=$1
+2026-10-18 21:28:32.084 CST [57834] ERROR:  v2 state cannot reauthorize
+2026-10-18 21:28:32.084 CST [57834] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 21:28:32.084 CST [57834] STATEMENT:  UPDATE dl05_v2_grant_state SET state='ISSUED' WHERE grant_id=$1
+2026-10-18 21:28:32.090 CST [57834] ERROR:  v2 state cannot reauthorize
+2026-10-18 21:28:32.090 CST [57834] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 21:28:32.090 CST [57834] STATEMENT:  UPDATE dl05_v2_registration_state SET state='ACTIVE',revoked_at=NULL WHERE bootstrap_id=$1
+2026-10-18 21:28:38.615 CST [57923] ERROR:  receiver principal scope mismatch
+2026-10-18 21:28:38.615 CST [57923] CONTEXT:  PL/pgSQL function dl05_v2_mirror_scope() line 9 at RAISE
+2026-10-18 21:28:38.615 CST [57923] STATEMENT:  INSERT INTO dl05_v2_installations(proof_id,command_id,binding,binding_hash,installation_revision,runtime_principal,guardian_principal,observed_by,fence_ref) VALUES($1,$2,'{}',$3,1,$4,$5,'test','test')
+2026-10-18 21:28:38.616 CST [57923] ERROR:  artifact scope mismatch
+2026-10-18 21:28:38.616 CST [57923] CONTEXT:  PL/pgSQL function dl05_v2_artifact_scope() line 9 at RAISE
+2026-10-18 21:28:38.616 CST [57923] STATEMENT:  INSERT INTO dl05_answer_segments(artifact_id,command_id,answer_id,sequence,descriptor,artifact_hash,answer_text,text_hash,previous_hash,product_id,snapshot_version,facts,prepare_receipt) VALUES($1,$2,$3,2,$4,$5,$6,$7,$8,$9,$10,$11,'{}')
+2026-10-18 21:28:40.649 CST [57964] ERROR:  permission denied for table dl05_receiver_consumptions
+2026-10-18 21:28:40.649 CST [57964] STATEMENT:  SELECT * FROM dl05_receiver_consumptions
+2026-10-18 21:28:40.650 CST [57964] ERROR:  permission denied for table dl05_v2_grant_state
+2026-10-18 21:28:40.650 CST [57964] STATEMENT:  INSERT INTO dl05_v2_grant_state VALUES('bad','ISSUED')
+2026-10-18 21:28:40.651 CST [56573] LOG:  checkpoint starting: immediate force wait
+2026-10-18 21:28:40.751 CST [56573] LOG:  checkpoint complete: wrote 3601 buffers (22.0%); 0 WAL file(s) added, 0 removed, 2 recycled; write=0.064 s, sync=0.036 s, total=0.100 s; sync files=1410, longest=0.001 s, average=0.001 s; distance=32492 kB, estimate=32492 kB; lsn=0/66F6720, redo lsn=0/66C5110
+2026-10-18 21:31:15.650 CST [58609] ERROR:  canceling statement due to user request
+2026-10-18 21:31:15.650 CST [58609] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:31:15.651 CST [58605] ERROR:  canceling statement due to user request
+2026-10-18 21:31:15.651 CST [58605] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:31:15.657 CST [58604] ERROR:  canceling statement due to user request
+2026-10-18 21:31:15.657 CST [58604] CONTEXT:  while locking tuple (8,16) in relation "dl05_runs"
+2026-10-18 21:31:15.657 CST [58604] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:31:15.658 CST [58614] ERROR:  canceling statement due to user request
+2026-10-18 21:31:15.658 CST [58614] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:31:19.984 CST [58662] ERROR:  owned-test-revoke-failure
+2026-10-18 21:31:19.984 CST [58662] CONTEXT:  PL/pgSQL function int4_7f594c69670bdb7659450662a2c437ba484b2d2038eccf7frevoke_fai() line 1 at RAISE
+2026-10-18 21:31:19.984 CST [58662] STATEMENT:  UPDATE dl05_v2_registration_state SET state='REVOKED',revision=revision+1,reason=$2,revoked_at=clock_timestamp() WHERE bootstrap_id=$1 AND state='ACTIVE'
+2026-10-18 21:31:20.525 CST [56572] LOG:  received fast shutdown request
+2026-10-18 21:31:20.526 CST [56572] LOG:  aborting any active transactions
+2026-10-18 21:31:20.526 CST [58673] FATAL:  terminating connection due to administrator command
+2026-10-18 21:31:20.526 CST [58668] FATAL:  terminating connection due to administrator command
+2026-10-18 21:31:20.529 CST [56572] LOG:  background worker "logical replication launcher" (PID 56578) exited with exit code 1
+2026-10-18 21:31:20.529 CST [56573] LOG:  shutting down
+2026-10-18 21:31:20.529 CST [56573] LOG:  checkpoint starting: shutdown immediate
+2026-10-18 21:31:20.635 CST [56573] LOG:  checkpoint complete: wrote 3751 buffers (22.9%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.084 s, sync=0.022 s, total=0.106 s; sync files=709, longest=0.001 s, average=0.001 s; distance=19294 kB, estimate=31172 kB; lsn=0/799CAA0, redo lsn=0/799CAA0
+2026-10-18 21:31:20.640 CST [56572] LOG:  database system is shut down
+2026-10-18 21:31:20.781 CST [58677] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-18 21:31:20.781 CST [58677] LOG:  listening on IPv4 address "127.0.0.1", port 49741
+2026-10-18 21:31:20.782 CST [58677] LOG:  listening on Unix socket "/tmp/a2-r1-final-bs8ul5af/sockets/.s.PGSQL.49741"
+2026-10-18 21:31:20.786 CST [58680] LOG:  database system was shut down at 2026-10-18 21:31:20 CST
+2026-10-18 21:31:20.790 CST [58677] LOG:  database system is ready to accept connections
+2026-10-18 21:31:26.300 CST [58748] ERROR:  canceling statement due to user request
+2026-10-18 21:31:26.300 CST [58748] CONTEXT:  while locking tuple (9,9) in relation "dl05_runs"
+2026-10-18 21:31:26.300 CST [58748] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:31:26.301 CST [58746] ERROR:  canceling statement due to user request
+2026-10-18 21:31:26.301 CST [58746] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:31:26.304 CST [58744] ERROR:  canceling statement due to user request
+2026-10-18 21:31:26.304 CST [58744] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:31:26.308 CST [58733] ERROR:  canceling statement due to user request
+2026-10-18 21:31:26.308 CST [58733] CONTEXT:  while locking tuple (9,9) in relation "dl05_runs"
+2026-10-18 21:31:26.308 CST [58733] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:31:29.520 CST [58783] ERROR:  canceling statement due to user request
+2026-10-18 21:31:29.520 CST [58783] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:31:32.647 CST [58830] ERROR:  canceling statement due to user request
+2026-10-18 21:31:32.647 CST [58830] CONTEXT:  while locking tuple (9,28) in relation "dl05_runs"
+2026-10-18 21:31:32.647 CST [58830] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:33:42.118 CST [59264] ERROR:  canceling statement due to user request
+2026-10-18 21:33:42.118 CST [59264] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:33:46.118 CST [59314] ERROR:  owned-test-revoke-failure
+2026-10-18 21:33:46.118 CST [59314] CONTEXT:  PL/pgSQL function int4_38a18e07f43a468f96c3dfec43205f1a2a3165c542fd5cb3revoke_fai() line 1 at RAISE
+2026-10-18 21:33:46.118 CST [59314] STATEMENT:  UPDATE dl05_v2_registration_state SET state='REVOKED',revision=revision+1,reason=$2,revoked_at=clock_timestamp() WHERE bootstrap_id=$1 AND state='ACTIVE'
+2026-10-18 21:33:46.604 CST [58677] LOG:  received fast shutdown request
+2026-10-18 21:33:46.604 CST [58677] LOG:  aborting any active transactions
+2026-10-18 21:33:46.604 CST [59319] FATAL:  terminating connection due to administrator command
+2026-10-18 21:33:46.605 CST [58677] LOG:  background worker "logical replication launcher" (PID 58683) exited with exit code 1
+2026-10-18 21:33:46.606 CST [58678] LOG:  shutting down
+2026-10-18 21:33:46.606 CST [58678] LOG:  checkpoint starting: shutdown immediate
+2026-10-18 21:33:46.617 CST [58678] LOG:  checkpoint complete: wrote 855 buffers (5.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.006 s, total=0.012 s; sync files=215, longest=0.001 s, average=0.001 s; distance=5201 kB, estimate=5201 kB; lsn=0/7EB1000, redo lsn=0/7EB1000
+2026-10-18 21:33:46.619 CST [58677] LOG:  database system is shut down
+2026-10-18 21:33:46.749 CST [59327] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-18 21:33:46.750 CST [59327] LOG:  listening on IPv4 address "127.0.0.1", port 49741
+2026-10-18 21:33:46.750 CST [59327] LOG:  listening on Unix socket "/tmp/a2-r1-final-bs8ul5af/sockets/.s.PGSQL.49741"
+2026-10-18 21:33:46.754 CST [59330] LOG:  database system was shut down at 2026-10-18 21:33:46 CST
+2026-10-18 21:33:46.758 CST [59327] LOG:  database system is ready to accept connections
+2026-10-18 21:33:52.762 CST [59388] ERROR:  canceling statement due to user request
+2026-10-18 21:33:52.762 CST [59388] CONTEXT:  while locking tuple (10,25) in relation "dl05_runs"
+2026-10-18 21:33:52.762 CST [59388] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:33:55.654 CST [59428] ERROR:  canceling statement due to user request
+2026-10-18 21:33:55.654 CST [59428] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:33:55.657 CST [59445] ERROR:  canceling statement due to user request
+2026-10-18 21:33:55.657 CST [59445] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:33:55.659 CST [59441] ERROR:  canceling statement due to user request
+2026-10-18 21:33:55.659 CST [59441] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:33:55.659 CST [59444] ERROR:  canceling statement due to user request
+2026-10-18 21:33:55.659 CST [59444] CONTEXT:  while locking tuple (11,3) in relation "dl05_runs"
+2026-10-18 21:33:55.659 CST [59444] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:33:58.574 CST [59491] ERROR:  canceling statement due to user request
+2026-10-18 21:33:58.574 CST [59491] CONTEXT:  while locking tuple (11,13) in relation "dl05_runs"
+2026-10-18 21:33:58.574 CST [59491] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:33:58.579 CST [59483] ERROR:  canceling statement due to user request
+2026-10-18 21:33:58.579 CST [59483] CONTEXT:  while locking tuple (11,13) in relation "dl05_runs"
+2026-10-18 21:33:58.579 CST [59483] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:35:32.127 CST [59572] ERROR:  canceling statement due to user request
+2026-10-18 21:35:32.127 CST [59572] STATEMENT:  SELECT desired_state,contract_revision,status,stop_revision,run_epoch,room_id,COALESCE(current_session_id,''),clock_timestamp() FROM dl05_runs WHERE run_id=$1 AND tenant_id=$2 AND owner_id=$3 FOR UPDATE
+2026-10-18 21:35:36.076 CST [59617] ERROR:  owned-test-revoke-failure
+2026-10-18 21:35:36.076 CST [59617] CONTEXT:  PL/pgSQL function int4_8b63832fccdc7da1980ee3cf230c36a290891ae006e79254revoke_fai() line 1 at RAISE
+2026-10-18 21:35:36.076 CST [59617] STATEMENT:  UPDATE dl05_v2_registration_state SET state='REVOKED',revision=revision+1,reason=$2,revoked_at=clock_timestamp() WHERE bootstrap_id=$1 AND state='ACTIVE'
+2026-10-18 21:35:36.563 CST [59327] LOG:  received fast shutdown request
+2026-10-18 21:35:36.563 CST [59327] LOG:  aborting any active transactions
+2026-10-18 21:35:36.563 CST [59624] FATAL:  terminating connection due to administrator command
+2026-10-18 21:35:36.563 CST [59630] FATAL:  terminating connection due to administrator command
+2026-10-18 21:35:36.564 CST [59327] LOG:  background worker "logical replication launcher" (PID 59333) exited with exit code 1
+2026-10-18 21:35:36.564 CST [59328] LOG:  shutting down
+2026-10-18 21:35:36.564 CST [59328] LOG:  checkpoint starting: shutdown immediate
+2026-10-18 21:35:36.575 CST [59328] LOG:  checkpoint complete: wrote 878 buffers (5.4%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.006 s, sync=0.006 s, total=0.011 s; sync files=214, longest=0.001 s, average=0.001 s; distance=5319 kB, estimate=5319 kB; lsn=0/83E2C20, redo lsn=0/83E2C20
+2026-10-18 21:35:36.577 CST [59327] LOG:  database system is shut down
+2026-10-18 21:35:36.706 CST [59634] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-18 21:35:36.706 CST [59634] LOG:  listening on IPv4 address "127.0.0.1", port 49741
+2026-10-18 21:35:36.706 CST [59634] LOG:  listening on Unix socket "/tmp/a2-r1-final-bs8ul5af/sockets/.s.PGSQL.49741"
+2026-10-18 21:35:36.710 CST [59637] LOG:  database system was shut down at 2026-10-18 21:35:36 CST
+2026-10-18 21:35:36.714 CST [59634] LOG:  database system is ready to accept connections
+2026-10-18 21:36:38.404 CST [59634] LOG:  received fast shutdown request
+2026-10-18 21:36:38.404 CST [59634] LOG:  aborting any active transactions
+2026-10-18 21:36:38.404 CST [59634] LOG:  background worker "logical replication launcher" (PID 59640) exited with exit code 1
+2026-10-18 21:36:38.404 CST [59635] LOG:  shutting down
+2026-10-18 21:36:38.404 CST [59635] LOG:  checkpoint starting: shutdown immediate
+2026-10-18 21:36:38.416 CST [59635] LOG:  checkpoint complete: wrote 623 buffers (3.8%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.006 s, total=0.012 s; sync files=181, longest=0.001 s, average=0.001 s; distance=3311 kB, estimate=3311 kB; lsn=0/871EB88, redo lsn=0/871EB88
+2026-10-18 21:36:38.418 CST [59634] LOG:  database system is shut down

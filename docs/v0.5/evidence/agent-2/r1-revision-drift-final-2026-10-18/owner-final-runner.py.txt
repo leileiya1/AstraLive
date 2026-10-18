@@ -1,0 +1,9 @@
+import json,pathlib,subprocess,time
+m=json.load(open('/tmp/a2-r1-final-current.json'));p=pathlib.Path(m['root']);src=pathlib.Path(m['source']);env=json.load(open(p/'env.json'));subprocess.run(['gofmt','-w',str(src/'backend/internal/durableintegration/receiver1/agent2_gate_adversarial_test.go')],check=True);records=[]
+for label,extra in [('owner-adversarial-final',['-count=1','-run','^TestAgent2Final']),('owner-races-repeat3',['-count=3','-run','^TestAgent2Final(FortyNative|RetireBeforeConsume|DelayedBackendACK|CASConflict)'])]:
+ cmd=['go','test','-tags=agent2r1review','-race','-json','-timeout','180s']+extra+['./internal/durableintegration/receiver1'];t=time.monotonic()
+ with (p/'evidence'/f'{label}.txt').open('w') as f:r=subprocess.run(cmd,cwd=src/'backend',env=env,stdout=f,stderr=subprocess.STDOUT)
+ records.append({'label':label,'cmd':cmd,'cwd':str(src/'backend'),'exitCode':r.returncode,'elapsedSeconds':round(time.monotonic()-t,3)});(p/'evidence/owner-final-commands.json').write_text(json.dumps(records,indent=2));print(label,r.returncode,flush=True)
+cmd=['go','vet','-tags=agent2r1review','./internal/durableintegration/receiver1']
+with (p/'evidence/owner-vet.txt').open('w') as f:r=subprocess.run(cmd,cwd=src/'backend',env=env,stdout=f,stderr=subprocess.STDOUT)
+print('OWNER VET',r.returncode,flush=True)
