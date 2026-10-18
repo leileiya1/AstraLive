@@ -1,0 +1,43 @@
+package authority
+
+import (
+ "testing"
+ "time"
+ "os"
+)
+
+func TestAgent4IndependentRollbackOnExpiredOutput(t *testing.T) {
+ f:=newFixture(t,true); f.ready()
+ f.exec("UPDATE dl05_room_outputs SET expires_at=clock_timestamp()+interval '150 milliseconds' WHERE room_id=$1",f.control.Room)
+ f.s.Validate=func(n string,v Document) error {if n=="CommitReceiverConsumeResponse" {time.Sleep(220*time.Millisecond)};return OfficialValidate(n,v)}
+ out,e:=f.s.Call(f.ctx,f.guardian,"CommitReceiverConsume",f.consumeQ)
+ if e==nil {t.Fatal("expired request returned success",out["consumeAuthorized"])}
+ if f.count("dl05_receiver_consumptions")!=0 || f.count("dl05_v2_execution_state")!=0 {t.Fatal("partial consumption/execution committed")}
+ var state string
+ if e=f.s.DB.QueryRow(f.ctx,"SELECT state FROM dl05_v2_grant_state WHERE grant_id=$1",f.grant["grantId"]).Scan(&state);e!=nil||state!="ISSUED" {t.Fatal("grant did not roll back",state,e)}
+}
+func TestAgent4IndependentFinalConsumeBudget(t *testing.T) {
+ f:=newFixture(t,true);f.ready()
+ var until,afterValidation time.Time
+ if e:=f.s.DB.QueryRow(f.ctx,"UPDATE dl05_room_outputs SET expires_at=clock_timestamp()+interval '400 milliseconds' WHERE room_id=$1 RETURNING expires_at",f.control.Room).Scan(&until);e!=nil {t.Fatal(e)}
+ f.s.Validate=func(n string,v Document) error {
+  if n=="CommitReceiverConsumeResponse" {time.Sleep(100*time.Millisecond);if e:=f.s.DB.QueryRow(f.ctx,"SELECT clock_timestamp()").Scan(&afterValidation);e!=nil{return e}}
+  return OfficialValidate(n,v)
+ }
+ out:=f.call(f.guardian,"CommitReceiverConsume",f.consumeQ)
+ tm:=obj(out,"consumeTiming");upper:=until.Sub(afterValidation).Milliseconds()
+ if out["consumeAuthorized"]!=true||number(tm,"remainingProofMs")>upper||number(tm,"remainingGrantMs")>upper||number(tm,"remainingProofMs")<=100 {t.Fatal("invalid final bounded budget",tm,"upper",upper)}
+ if f.count("dl05_receiver_consumptions")!=1 {t.Fatal("lost latch")}
+}
+func TestAgent4IndependentSQLSnapshotForReceiverGate(t *testing.T) {
+ f:=newFixture(t,true);f.ready();consumed:=f.call(f.guardian,"CommitReceiverConsume",f.consumeQ)
+ var until time.Time
+ if e:=f.s.DB.QueryRow(f.ctx,"UPDATE dl05_room_outputs SET expires_at=clock_timestamp()+interval '300 milliseconds' WHERE room_id=$1 RETURNING expires_at",f.control.Room).Scan(&until);e!=nil {t.Fatal(e)}
+ q:=f.private(Document{"references":clone(obj(f.consumeQ,"references"))})
+ out:=f.call(f.guardian,"QueryReceiverAuthority",q);snap:=obj(out,"snapshot")
+ if date(snap,"validUntil").After(until)||number(obj(snap,"timing"),"remainingProofMs")>300 {t.Fatal("snapshot not output capped")}
+ if !date(obj(snap,"permit"),"expiresAt").After(date(snap,"validUntil")) {t.Fatal("fixture did not retain longer original Permit")}
+ path:=os.Getenv("AGENT4_SQL_SNAPSHOT_PATH");if path=="" {t.Fatal("missing owned evidence output")}
+ if e:=os.WriteFile(path,canon(out),0600);e!=nil {t.Fatal(e)}
+ if e:=os.WriteFile(path+".consumption.json",canon(obj(consumed,"consumption")),0600);e!=nil {t.Fatal(e)}
+}

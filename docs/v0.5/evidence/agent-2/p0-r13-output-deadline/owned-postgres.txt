@@ -1,0 +1,272 @@
+2026-10-18 08:50:29.401 CST [11356] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-18 08:50:29.402 CST [11356] LOG:  listening on IPv4 address "127.0.0.1", port 58787
+2026-10-18 08:50:29.402 CST [11356] LOG:  listening on Unix socket "/tmp/astralive-agent2-p0-output.kczpw5d8/socket/.s.PGSQL.58787"
+2026-10-18 08:50:29.404 CST [11359] LOG:  database system was shut down at 2026-10-18 08:50:29 CST
+2026-10-18 08:50:29.407 CST [11356] LOG:  database system is ready to accept connections
+2026-10-18 08:55:29.405 CST [11357] LOG:  checkpoint starting: time
+2026-10-18 08:57:17.836 CST [11846] ERROR:  immutable v2 evidence
+2026-10-18 08:57:17.836 CST [11846] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:57:17.836 CST [11846] STATEMENT:  DELETE FROM dl05_receiver_consumptions WHERE command_id=$1
+2026-10-18 08:57:17.836 CST [11846] ERROR:  immutable v2 evidence
+2026-10-18 08:57:17.836 CST [11846] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:57:17.836 CST [11846] STATEMENT:  UPDATE dl05_receiver_consumptions SET consume_identity='changed' WHERE command_id=$1
+2026-10-18 08:57:17.836 CST [11846] ERROR:  immutable v2 evidence
+2026-10-18 08:57:17.836 CST [11846] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:57:17.836 CST [11846] STATEMENT:  DELETE FROM dl05_answer_grants WHERE command_id=$1
+2026-10-18 08:57:17.836 CST [11846] ERROR:  immutable v2 evidence
+2026-10-18 08:57:17.836 CST [11846] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:57:17.836 CST [11846] STATEMENT:  UPDATE dl05_answer_segments SET answer_text='changed' WHERE command_id=$1
+2026-10-18 08:57:17.836 CST [11846] ERROR:  immutable durable field command_id
+2026-10-18 08:57:17.836 CST [11846] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 08:57:17.836 CST [11846] STATEMENT:  UPDATE dl05_v2_execution_state SET command_id='other' WHERE command_id=$1
+2026-10-18 08:57:17.837 CST [11846] ERROR:  v2 state cannot reauthorize
+2026-10-18 08:57:17.837 CST [11846] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 08:57:17.837 CST [11846] STATEMENT:  UPDATE dl05_v2_grant_state SET state='ISSUED' WHERE grant_id=$1
+2026-10-18 08:57:17.841 CST [11846] ERROR:  v2 state cannot reauthorize
+2026-10-18 08:57:17.841 CST [11846] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 08:57:17.841 CST [11846] STATEMENT:  UPDATE dl05_v2_registration_state SET state='ACTIVE',revoked_at=NULL WHERE bootstrap_id=$1
+2026-10-18 08:57:24.273 CST [11880] ERROR:  receiver principal scope mismatch
+2026-10-18 08:57:24.273 CST [11880] CONTEXT:  PL/pgSQL function dl05_v2_mirror_scope() line 9 at RAISE
+2026-10-18 08:57:24.273 CST [11880] STATEMENT:  INSERT INTO dl05_v2_installations(proof_id,command_id,binding,binding_hash,installation_revision,runtime_principal,guardian_principal,observed_by,fence_ref) VALUES($1,$2,'{}',$3,1,$4,$5,'test','test')
+2026-10-18 08:57:24.274 CST [11880] ERROR:  artifact scope mismatch
+2026-10-18 08:57:24.274 CST [11880] CONTEXT:  PL/pgSQL function dl05_v2_artifact_scope() line 9 at RAISE
+2026-10-18 08:57:24.274 CST [11880] STATEMENT:  INSERT INTO dl05_answer_segments(artifact_id,command_id,answer_id,sequence,descriptor,artifact_hash,answer_text,text_hash,previous_hash,product_id,snapshot_version,facts,prepare_receipt) VALUES($1,$2,$3,2,$4,$5,$6,$7,$8,$9,$10,$11,'{}')
+2026-10-18 08:57:26.330 CST [11900] ERROR:  permission denied for table dl05_receiver_consumptions
+2026-10-18 08:57:26.330 CST [11900] STATEMENT:  SELECT * FROM dl05_receiver_consumptions
+2026-10-18 08:57:26.331 CST [11900] ERROR:  permission denied for table dl05_v2_grant_state
+2026-10-18 08:57:26.331 CST [11900] STATEMENT:  INSERT INTO dl05_v2_grant_state VALUES('bad','ISSUED')
+2026-10-18 08:57:26.352 CST [11357] LOG:  checkpoint complete: wrote 1574 buffers (9.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=116.933 s, sync=0.014 s, total=116.948 s; sync files=693, longest=0.001 s, average=0.001 s; distance=8891 kB, estimate=8891 kB; lsn=0/2AC8C18, redo lsn=0/1DC9880
+2026-10-18 08:57:26.354 CST [11357] LOG:  checkpoint starting: immediate force wait
+2026-10-18 08:57:26.363 CST [11357] LOG:  checkpoint complete: wrote 639 buffers (3.9%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.005 s, sync=0.004 s, total=0.010 s; sync files=136, longest=0.001 s, average=0.001 s; distance=13309 kB, estimate=13309 kB; lsn=0/2AC8CE8, redo lsn=0/2AC8C90
+2026-10-18 08:58:10.142 CST [12377] ERROR:  immutable durable field envelope
+2026-10-18 08:58:10.142 CST [12377] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 08:58:10.142 CST [12377] STATEMENT:  UPDATE dl05_outbox SET envelope=envelope || '{"traceId":"changed"}' WHERE command_id=$1
+2026-10-18 08:58:10.142 CST [12377] ERROR:  immutable durable field session_id
+2026-10-18 08:58:10.142 CST [12377] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 08:58:10.142 CST [12377] STATEMENT:  UPDATE dl05_attempts SET session_id='other' WHERE command_id=$1
+2026-10-18 08:58:10.142 CST [12377] ERROR:  insert or update on table "dl05_run_slots" violates foreign key constraint "dl05_run_slots_tenant_id_owner_id_run_id_active_attempt_id_fkey"
+2026-10-18 08:58:10.142 CST [12377] DETAIL:  Key (tenant_id, owner_id, run_id, active_attempt_id)=(test_e4074770d8a7837a912267a5ac86024btenant, test_e4074770d8a7837a912267a5ac86024bowner, test_e4074770d8a7837a912267a5ac86024brun, not-an-attempt) is not present in table "dl05_attempts".
+2026-10-18 08:58:10.142 CST [12377] STATEMENT:  UPDATE dl05_run_slots SET active_attempt_id='not-an-attempt' WHERE run_id=$1
+2026-10-18 08:58:10.318 CST [12392] ERROR:  durable Session requires atomic attempt/outbox
+2026-10-18 08:58:10.318 CST [12392] CONTEXT:  PL/pgSQL function dl05_utterance_mode() line 5 at RAISE
+2026-10-18 08:58:10.447 CST [12401] ERROR:  duplicate key value violates unique constraint "dl05_turns_pkey"
+2026-10-18 08:58:10.447 CST [12401] DETAIL:  Key (turn_id)=(turn_ae6533bbfd197ea6cc092281f7a15060) already exists.
+2026-10-18 08:58:10.447 CST [12401] STATEMENT:  INSERT INTO dl05_turns(tenant_id,owner_id,run_id,plan_id,turn_id,turn_type,source_segment_id,source_comment_trace_id,priority,state,scheduled_at,expires_at,input_text,idempotency_key,document) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$15,$10,$11,$12,$13,$14)
+2026-10-18 08:58:12.360 CST [12421] ERROR:  immutable v2 evidence
+2026-10-18 08:58:12.360 CST [12421] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:58:12.360 CST [12421] STATEMENT:  DELETE FROM dl05_receiver_consumptions WHERE command_id=$1
+2026-10-18 08:58:12.360 CST [12421] ERROR:  immutable v2 evidence
+2026-10-18 08:58:12.360 CST [12421] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:58:12.360 CST [12421] STATEMENT:  UPDATE dl05_receiver_consumptions SET consume_identity='changed' WHERE command_id=$1
+2026-10-18 08:58:12.360 CST [12421] ERROR:  immutable v2 evidence
+2026-10-18 08:58:12.360 CST [12421] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:58:12.360 CST [12421] STATEMENT:  DELETE FROM dl05_answer_grants WHERE command_id=$1
+2026-10-18 08:58:12.360 CST [12421] ERROR:  immutable v2 evidence
+2026-10-18 08:58:12.360 CST [12421] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:58:12.360 CST [12421] STATEMENT:  UPDATE dl05_answer_segments SET answer_text='changed' WHERE command_id=$1
+2026-10-18 08:58:12.361 CST [12421] ERROR:  immutable durable field command_id
+2026-10-18 08:58:12.361 CST [12421] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 08:58:12.361 CST [12421] STATEMENT:  UPDATE dl05_v2_execution_state SET command_id='other' WHERE command_id=$1
+2026-10-18 08:58:12.361 CST [12421] ERROR:  v2 state cannot reauthorize
+2026-10-18 08:58:12.361 CST [12421] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 08:58:12.361 CST [12421] STATEMENT:  UPDATE dl05_v2_grant_state SET state='ISSUED' WHERE grant_id=$1
+2026-10-18 08:58:12.364 CST [12421] ERROR:  v2 state cannot reauthorize
+2026-10-18 08:58:12.364 CST [12421] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 08:58:12.364 CST [12421] STATEMENT:  UPDATE dl05_v2_registration_state SET state='ACTIVE',revoked_at=NULL WHERE bootstrap_id=$1
+2026-10-18 08:58:13.398 CST [12432] FATAL:  terminating connection due to administrator command
+2026-10-18 08:58:18.201 CST [12484] ERROR:  receiver principal scope mismatch
+2026-10-18 08:58:18.201 CST [12484] CONTEXT:  PL/pgSQL function dl05_v2_mirror_scope() line 9 at RAISE
+2026-10-18 08:58:18.201 CST [12484] STATEMENT:  INSERT INTO dl05_v2_installations(proof_id,command_id,binding,binding_hash,installation_revision,runtime_principal,guardian_principal,observed_by,fence_ref) VALUES($1,$2,'{}',$3,1,$4,$5,'test','test')
+2026-10-18 08:58:18.201 CST [12484] ERROR:  artifact scope mismatch
+2026-10-18 08:58:18.201 CST [12484] CONTEXT:  PL/pgSQL function dl05_v2_artifact_scope() line 9 at RAISE
+2026-10-18 08:58:18.201 CST [12484] STATEMENT:  INSERT INTO dl05_answer_segments(artifact_id,command_id,answer_id,sequence,descriptor,artifact_hash,answer_text,text_hash,previous_hash,product_id,snapshot_version,facts,prepare_receipt) VALUES($1,$2,$3,2,$4,$5,$6,$7,$8,$9,$10,$11,'{}')
+2026-10-18 08:58:19.672 CST [12504] ERROR:  permission denied for table dl05_receiver_consumptions
+2026-10-18 08:58:19.672 CST [12504] STATEMENT:  SELECT * FROM dl05_receiver_consumptions
+2026-10-18 08:58:19.672 CST [12504] ERROR:  permission denied for table dl05_v2_grant_state
+2026-10-18 08:58:19.672 CST [12504] STATEMENT:  INSERT INTO dl05_v2_grant_state VALUES('bad','ISSUED')
+2026-10-18 08:58:19.673 CST [11357] LOG:  checkpoint starting: immediate force wait
+2026-10-18 08:58:19.743 CST [11357] LOG:  checkpoint complete: wrote 3129 buffers (19.1%); 0 WAL file(s) added, 0 removed, 2 recycled; write=0.044 s, sync=0.026 s, total=0.071 s; sync files=1224, longest=0.001 s, average=0.001 s; distance=27950 kB, estimate=27950 kB; lsn=0/4614890, redo lsn=0/4614838
+2026-10-18 08:58:25.308 CST [12698] ERROR:  immutable durable field envelope
+2026-10-18 08:58:25.308 CST [12698] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 08:58:25.308 CST [12698] STATEMENT:  UPDATE dl05_outbox SET envelope=envelope || '{"traceId":"changed"}' WHERE command_id=$1
+2026-10-18 08:58:25.309 CST [12698] ERROR:  immutable durable field session_id
+2026-10-18 08:58:25.309 CST [12698] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 08:58:25.309 CST [12698] STATEMENT:  UPDATE dl05_attempts SET session_id='other' WHERE command_id=$1
+2026-10-18 08:58:25.309 CST [12698] ERROR:  insert or update on table "dl05_run_slots" violates foreign key constraint "dl05_run_slots_tenant_id_owner_id_run_id_active_attempt_id_fkey"
+2026-10-18 08:58:25.309 CST [12698] DETAIL:  Key (tenant_id, owner_id, run_id, active_attempt_id)=(test_999bacb5b52c9640550d7921561e460etenant, test_999bacb5b52c9640550d7921561e460eowner, test_999bacb5b52c9640550d7921561e460erun, not-an-attempt) is not present in table "dl05_attempts".
+2026-10-18 08:58:25.309 CST [12698] STATEMENT:  UPDATE dl05_run_slots SET active_attempt_id='not-an-attempt' WHERE run_id=$1
+2026-10-18 08:58:25.654 CST [12713] ERROR:  durable Session requires atomic attempt/outbox
+2026-10-18 08:58:25.654 CST [12713] CONTEXT:  PL/pgSQL function dl05_utterance_mode() line 5 at RAISE
+2026-10-18 08:58:25.816 CST [12720] ERROR:  duplicate key value violates unique constraint "dl05_turns_pkey"
+2026-10-18 08:58:25.816 CST [12720] DETAIL:  Key (turn_id)=(turn_b662dfd4da1503e2326e86d785883b79) already exists.
+2026-10-18 08:58:25.816 CST [12720] STATEMENT:  INSERT INTO dl05_turns(tenant_id,owner_id,run_id,plan_id,turn_id,turn_type,source_segment_id,source_comment_trace_id,priority,state,scheduled_at,expires_at,input_text,idempotency_key,document) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$15,$10,$11,$12,$13,$14)
+2026-10-18 08:58:28.536 CST [12753] ERROR:  immutable v2 evidence
+2026-10-18 08:58:28.536 CST [12753] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:58:28.536 CST [12753] STATEMENT:  DELETE FROM dl05_receiver_consumptions WHERE command_id=$1
+2026-10-18 08:58:28.536 CST [12753] ERROR:  immutable v2 evidence
+2026-10-18 08:58:28.536 CST [12753] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:58:28.536 CST [12753] STATEMENT:  UPDATE dl05_receiver_consumptions SET consume_identity='changed' WHERE command_id=$1
+2026-10-18 08:58:28.536 CST [12753] ERROR:  immutable v2 evidence
+2026-10-18 08:58:28.536 CST [12753] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:58:28.536 CST [12753] STATEMENT:  DELETE FROM dl05_answer_grants WHERE command_id=$1
+2026-10-18 08:58:28.537 CST [12753] ERROR:  immutable v2 evidence
+2026-10-18 08:58:28.537 CST [12753] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:58:28.537 CST [12753] STATEMENT:  UPDATE dl05_answer_segments SET answer_text='changed' WHERE command_id=$1
+2026-10-18 08:58:28.537 CST [12753] ERROR:  immutable durable field command_id
+2026-10-18 08:58:28.537 CST [12753] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 08:58:28.537 CST [12753] STATEMENT:  UPDATE dl05_v2_execution_state SET command_id='other' WHERE command_id=$1
+2026-10-18 08:58:28.537 CST [12753] ERROR:  v2 state cannot reauthorize
+2026-10-18 08:58:28.537 CST [12753] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 08:58:28.537 CST [12753] STATEMENT:  UPDATE dl05_v2_grant_state SET state='ISSUED' WHERE grant_id=$1
+2026-10-18 08:58:28.542 CST [12753] ERROR:  v2 state cannot reauthorize
+2026-10-18 08:58:28.542 CST [12753] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 08:58:28.542 CST [12753] STATEMENT:  UPDATE dl05_v2_registration_state SET state='ACTIVE',revoked_at=NULL WHERE bootstrap_id=$1
+2026-10-18 08:58:29.067 CST [12764] FATAL:  terminating connection due to administrator command
+2026-10-18 08:58:35.007 CST [12820] ERROR:  receiver principal scope mismatch
+2026-10-18 08:58:35.007 CST [12820] CONTEXT:  PL/pgSQL function dl05_v2_mirror_scope() line 9 at RAISE
+2026-10-18 08:58:35.007 CST [12820] STATEMENT:  INSERT INTO dl05_v2_installations(proof_id,command_id,binding,binding_hash,installation_revision,runtime_principal,guardian_principal,observed_by,fence_ref) VALUES($1,$2,'{}',$3,1,$4,$5,'test','test')
+2026-10-18 08:58:35.008 CST [12820] ERROR:  artifact scope mismatch
+2026-10-18 08:58:35.008 CST [12820] CONTEXT:  PL/pgSQL function dl05_v2_artifact_scope() line 9 at RAISE
+2026-10-18 08:58:35.008 CST [12820] STATEMENT:  INSERT INTO dl05_answer_segments(artifact_id,command_id,answer_id,sequence,descriptor,artifact_hash,answer_text,text_hash,previous_hash,product_id,snapshot_version,facts,prepare_receipt) VALUES($1,$2,$3,2,$4,$5,$6,$7,$8,$9,$10,$11,'{}')
+2026-10-18 08:58:36.981 CST [12840] ERROR:  permission denied for table dl05_receiver_consumptions
+2026-10-18 08:58:36.981 CST [12840] STATEMENT:  SELECT * FROM dl05_receiver_consumptions
+2026-10-18 08:58:36.981 CST [12840] ERROR:  permission denied for table dl05_v2_grant_state
+2026-10-18 08:58:36.981 CST [12840] STATEMENT:  INSERT INTO dl05_v2_grant_state VALUES('bad','ISSUED')
+2026-10-18 08:58:36.982 CST [11357] LOG:  checkpoint starting: immediate force wait
+2026-10-18 08:58:37.012 CST [11357] LOG:  checkpoint complete: wrote 2386 buffers (14.6%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.012 s, sync=0.018 s, total=0.030 s; sync files=779, longest=0.001 s, average=0.001 s; distance=22933 kB, estimate=27449 kB; lsn=0/5C79E08, redo lsn=0/5C79DB0
+2026-10-18 08:59:52.420 CST [12995] ERROR:  immutable v2 evidence
+2026-10-18 08:59:52.420 CST [12995] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:59:52.420 CST [12995] STATEMENT:  DELETE FROM dl05_receiver_consumptions WHERE command_id=$1
+2026-10-18 08:59:52.420 CST [12995] ERROR:  immutable v2 evidence
+2026-10-18 08:59:52.420 CST [12995] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:59:52.420 CST [12995] STATEMENT:  UPDATE dl05_receiver_consumptions SET consume_identity='changed' WHERE command_id=$1
+2026-10-18 08:59:52.420 CST [12995] ERROR:  immutable v2 evidence
+2026-10-18 08:59:52.420 CST [12995] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:59:52.420 CST [12995] STATEMENT:  DELETE FROM dl05_answer_grants WHERE command_id=$1
+2026-10-18 08:59:52.421 CST [12995] ERROR:  immutable v2 evidence
+2026-10-18 08:59:52.421 CST [12995] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 08:59:52.421 CST [12995] STATEMENT:  UPDATE dl05_answer_segments SET answer_text='changed' WHERE command_id=$1
+2026-10-18 08:59:52.421 CST [12995] ERROR:  immutable durable field command_id
+2026-10-18 08:59:52.421 CST [12995] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 08:59:52.421 CST [12995] STATEMENT:  UPDATE dl05_v2_execution_state SET command_id='other' WHERE command_id=$1
+2026-10-18 08:59:52.421 CST [12995] ERROR:  v2 state cannot reauthorize
+2026-10-18 08:59:52.421 CST [12995] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 08:59:52.421 CST [12995] STATEMENT:  UPDATE dl05_v2_grant_state SET state='ISSUED' WHERE grant_id=$1
+2026-10-18 08:59:52.426 CST [12995] ERROR:  v2 state cannot reauthorize
+2026-10-18 08:59:52.426 CST [12995] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 08:59:52.426 CST [12995] STATEMENT:  UPDATE dl05_v2_registration_state SET state='ACTIVE',revoked_at=NULL WHERE bootstrap_id=$1
+2026-10-18 08:59:58.816 CST [13029] ERROR:  receiver principal scope mismatch
+2026-10-18 08:59:58.816 CST [13029] CONTEXT:  PL/pgSQL function dl05_v2_mirror_scope() line 9 at RAISE
+2026-10-18 08:59:58.816 CST [13029] STATEMENT:  INSERT INTO dl05_v2_installations(proof_id,command_id,binding,binding_hash,installation_revision,runtime_principal,guardian_principal,observed_by,fence_ref) VALUES($1,$2,'{}',$3,1,$4,$5,'test','test')
+2026-10-18 08:59:58.817 CST [13029] ERROR:  artifact scope mismatch
+2026-10-18 08:59:58.817 CST [13029] CONTEXT:  PL/pgSQL function dl05_v2_artifact_scope() line 9 at RAISE
+2026-10-18 08:59:58.817 CST [13029] STATEMENT:  INSERT INTO dl05_answer_segments(artifact_id,command_id,answer_id,sequence,descriptor,artifact_hash,answer_text,text_hash,previous_hash,product_id,snapshot_version,facts,prepare_receipt) VALUES($1,$2,$3,2,$4,$5,$6,$7,$8,$9,$10,$11,'{}')
+2026-10-18 09:00:00.780 CST [13050] ERROR:  permission denied for table dl05_receiver_consumptions
+2026-10-18 09:00:00.780 CST [13050] STATEMENT:  SELECT * FROM dl05_receiver_consumptions
+2026-10-18 09:00:00.780 CST [13050] ERROR:  permission denied for table dl05_v2_grant_state
+2026-10-18 09:00:00.780 CST [13050] STATEMENT:  INSERT INTO dl05_v2_grant_state VALUES('bad','ISSUED')
+2026-10-18 09:00:00.781 CST [11357] LOG:  checkpoint starting: immediate force wait
+2026-10-18 09:00:00.796 CST [11357] LOG:  checkpoint complete: wrote 2241 buffers (13.7%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.008 s, sync=0.008 s, total=0.016 s; sync files=242, longest=0.001 s, average=0.001 s; distance=19426 kB, estimate=26646 kB; lsn=0/6F72878, redo lsn=0/6F72820
+2026-10-18 09:00:21.076 CST [13231] ERROR:  immutable durable field envelope
+2026-10-18 09:00:21.076 CST [13231] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 09:00:21.076 CST [13231] STATEMENT:  UPDATE dl05_outbox SET envelope=envelope || '{"traceId":"changed"}' WHERE command_id=$1
+2026-10-18 09:00:21.076 CST [13231] ERROR:  immutable durable field session_id
+2026-10-18 09:00:21.076 CST [13231] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 09:00:21.076 CST [13231] STATEMENT:  UPDATE dl05_attempts SET session_id='other' WHERE command_id=$1
+2026-10-18 09:00:21.077 CST [13231] ERROR:  insert or update on table "dl05_run_slots" violates foreign key constraint "dl05_run_slots_tenant_id_owner_id_run_id_active_attempt_id_fkey"
+2026-10-18 09:00:21.077 CST [13231] DETAIL:  Key (tenant_id, owner_id, run_id, active_attempt_id)=(test_4054233998cebf695d1ba80ade2bf5b6tenant, test_4054233998cebf695d1ba80ade2bf5b6owner, test_4054233998cebf695d1ba80ade2bf5b6run, not-an-attempt) is not present in table "dl05_attempts".
+2026-10-18 09:00:21.077 CST [13231] STATEMENT:  UPDATE dl05_run_slots SET active_attempt_id='not-an-attempt' WHERE run_id=$1
+2026-10-18 09:00:21.271 CST [13259] ERROR:  durable Session requires atomic attempt/outbox
+2026-10-18 09:00:21.271 CST [13259] CONTEXT:  PL/pgSQL function dl05_utterance_mode() line 5 at RAISE
+2026-10-18 09:00:21.399 CST [13269] ERROR:  duplicate key value violates unique constraint "dl05_turns_pkey"
+2026-10-18 09:00:21.399 CST [13269] DETAIL:  Key (turn_id)=(turn_9afaf5cf87beafe80988a20038481b67) already exists.
+2026-10-18 09:00:21.399 CST [13269] STATEMENT:  INSERT INTO dl05_turns(tenant_id,owner_id,run_id,plan_id,turn_id,turn_type,source_segment_id,source_comment_trace_id,priority,state,scheduled_at,expires_at,input_text,idempotency_key,document) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$15,$10,$11,$12,$13,$14)
+2026-10-18 09:00:23.799 CST [13302] ERROR:  immutable v2 evidence
+2026-10-18 09:00:23.799 CST [13302] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 09:00:23.799 CST [13302] STATEMENT:  DELETE FROM dl05_receiver_consumptions WHERE command_id=$1
+2026-10-18 09:00:23.799 CST [13302] ERROR:  immutable v2 evidence
+2026-10-18 09:00:23.799 CST [13302] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 09:00:23.799 CST [13302] STATEMENT:  UPDATE dl05_receiver_consumptions SET consume_identity='changed' WHERE command_id=$1
+2026-10-18 09:00:23.799 CST [13302] ERROR:  immutable v2 evidence
+2026-10-18 09:00:23.799 CST [13302] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 09:00:23.799 CST [13302] STATEMENT:  DELETE FROM dl05_answer_grants WHERE command_id=$1
+2026-10-18 09:00:23.799 CST [13302] ERROR:  immutable v2 evidence
+2026-10-18 09:00:23.799 CST [13302] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 09:00:23.799 CST [13302] STATEMENT:  UPDATE dl05_answer_segments SET answer_text='changed' WHERE command_id=$1
+2026-10-18 09:00:23.800 CST [13302] ERROR:  immutable durable field command_id
+2026-10-18 09:00:23.800 CST [13302] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 09:00:23.800 CST [13302] STATEMENT:  UPDATE dl05_v2_execution_state SET command_id='other' WHERE command_id=$1
+2026-10-18 09:00:23.800 CST [13302] ERROR:  v2 state cannot reauthorize
+2026-10-18 09:00:23.800 CST [13302] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 09:00:23.800 CST [13302] STATEMENT:  UPDATE dl05_v2_grant_state SET state='ISSUED' WHERE grant_id=$1
+2026-10-18 09:00:23.803 CST [13302] ERROR:  v2 state cannot reauthorize
+2026-10-18 09:00:23.803 CST [13302] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 09:00:23.803 CST [13302] STATEMENT:  UPDATE dl05_v2_registration_state SET state='ACTIVE',revoked_at=NULL WHERE bootstrap_id=$1
+2026-10-18 09:00:24.357 CST [13313] FATAL:  terminating connection due to administrator command
+2026-10-18 09:00:29.685 CST [13366] ERROR:  receiver principal scope mismatch
+2026-10-18 09:00:29.685 CST [13366] CONTEXT:  PL/pgSQL function dl05_v2_mirror_scope() line 9 at RAISE
+2026-10-18 09:00:29.685 CST [13366] STATEMENT:  INSERT INTO dl05_v2_installations(proof_id,command_id,binding,binding_hash,installation_revision,runtime_principal,guardian_principal,observed_by,fence_ref) VALUES($1,$2,'{}',$3,1,$4,$5,'test','test')
+2026-10-18 09:00:29.686 CST [13366] ERROR:  artifact scope mismatch
+2026-10-18 09:00:29.686 CST [13366] CONTEXT:  PL/pgSQL function dl05_v2_artifact_scope() line 9 at RAISE
+2026-10-18 09:00:29.686 CST [13366] STATEMENT:  INSERT INTO dl05_answer_segments(artifact_id,command_id,answer_id,sequence,descriptor,artifact_hash,answer_text,text_hash,previous_hash,product_id,snapshot_version,facts,prepare_receipt) VALUES($1,$2,$3,2,$4,$5,$6,$7,$8,$9,$10,$11,'{}')
+2026-10-18 09:00:31.158 CST [13386] ERROR:  permission denied for table dl05_receiver_consumptions
+2026-10-18 09:00:31.158 CST [13386] STATEMENT:  SELECT * FROM dl05_receiver_consumptions
+2026-10-18 09:00:31.158 CST [13386] ERROR:  permission denied for table dl05_v2_grant_state
+2026-10-18 09:00:31.158 CST [13386] STATEMENT:  INSERT INTO dl05_v2_grant_state VALUES('bad','ISSUED')
+2026-10-18 09:00:31.159 CST [11357] LOG:  checkpoint starting: immediate force wait
+2026-10-18 09:00:31.188 CST [11357] LOG:  checkpoint complete: wrote 2680 buffers (16.4%); 0 WAL file(s) added, 0 removed, 2 recycled; write=0.012 s, sync=0.018 s, total=0.030 s; sync files=780, longest=0.001 s, average=0.001 s; distance=26226 kB, estimate=26604 kB; lsn=0/890F3D8, redo lsn=0/890F380
+2026-10-18 09:00:38.856 CST [13571] ERROR:  immutable durable field envelope
+2026-10-18 09:00:38.856 CST [13571] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 09:00:38.856 CST [13571] STATEMENT:  UPDATE dl05_outbox SET envelope=envelope || '{"traceId":"changed"}' WHERE command_id=$1
+2026-10-18 09:00:38.861 CST [13571] ERROR:  immutable durable field session_id
+2026-10-18 09:00:38.861 CST [13571] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 09:00:38.861 CST [13571] STATEMENT:  UPDATE dl05_attempts SET session_id='other' WHERE command_id=$1
+2026-10-18 09:00:38.861 CST [13571] ERROR:  insert or update on table "dl05_run_slots" violates foreign key constraint "dl05_run_slots_tenant_id_owner_id_run_id_active_attempt_id_fkey"
+2026-10-18 09:00:38.861 CST [13571] DETAIL:  Key (tenant_id, owner_id, run_id, active_attempt_id)=(test_b119d62e09f36a72c127a57297076ac6tenant, test_b119d62e09f36a72c127a57297076ac6owner, test_b119d62e09f36a72c127a57297076ac6run, not-an-attempt) is not present in table "dl05_attempts".
+2026-10-18 09:00:38.861 CST [13571] STATEMENT:  UPDATE dl05_run_slots SET active_attempt_id='not-an-attempt' WHERE run_id=$1
+2026-10-18 09:00:39.234 CST [13586] ERROR:  durable Session requires atomic attempt/outbox
+2026-10-18 09:00:39.234 CST [13586] CONTEXT:  PL/pgSQL function dl05_utterance_mode() line 5 at RAISE
+2026-10-18 09:00:39.402 CST [13595] ERROR:  duplicate key value violates unique constraint "dl05_turns_pkey"
+2026-10-18 09:00:39.402 CST [13595] DETAIL:  Key (turn_id)=(turn_a072a9a2bcd3d8ec3e39722f6c1aa1fe) already exists.
+2026-10-18 09:00:39.402 CST [13595] STATEMENT:  INSERT INTO dl05_turns(tenant_id,owner_id,run_id,plan_id,turn_id,turn_type,source_segment_id,source_comment_trace_id,priority,state,scheduled_at,expires_at,input_text,idempotency_key,document) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$15,$10,$11,$12,$13,$14)
+2026-10-18 09:00:42.234 CST [13629] ERROR:  immutable v2 evidence
+2026-10-18 09:00:42.234 CST [13629] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 09:00:42.234 CST [13629] STATEMENT:  DELETE FROM dl05_receiver_consumptions WHERE command_id=$1
+2026-10-18 09:00:42.234 CST [13629] ERROR:  immutable v2 evidence
+2026-10-18 09:00:42.234 CST [13629] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 09:00:42.234 CST [13629] STATEMENT:  UPDATE dl05_receiver_consumptions SET consume_identity='changed' WHERE command_id=$1
+2026-10-18 09:00:42.234 CST [13629] ERROR:  immutable v2 evidence
+2026-10-18 09:00:42.234 CST [13629] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 09:00:42.234 CST [13629] STATEMENT:  DELETE FROM dl05_answer_grants WHERE command_id=$1
+2026-10-18 09:00:42.234 CST [13629] ERROR:  immutable v2 evidence
+2026-10-18 09:00:42.234 CST [13629] CONTEXT:  PL/pgSQL function dl05_v2_append_only() line 2 at RAISE
+2026-10-18 09:00:42.234 CST [13629] STATEMENT:  UPDATE dl05_answer_segments SET answer_text='changed' WHERE command_id=$1
+2026-10-18 09:00:42.234 CST [13629] ERROR:  immutable durable field command_id
+2026-10-18 09:00:42.234 CST [13629] CONTEXT:  PL/pgSQL function dl05_immutable() line 6 at RAISE
+2026-10-18 09:00:42.234 CST [13629] STATEMENT:  UPDATE dl05_v2_execution_state SET command_id='other' WHERE command_id=$1
+2026-10-18 09:00:42.235 CST [13629] ERROR:  v2 state cannot reauthorize
+2026-10-18 09:00:42.235 CST [13629] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 09:00:42.235 CST [13629] STATEMENT:  UPDATE dl05_v2_grant_state SET state='ISSUED' WHERE grant_id=$1
+2026-10-18 09:00:42.240 CST [13629] ERROR:  v2 state cannot reauthorize
+2026-10-18 09:00:42.240 CST [13629] CONTEXT:  PL/pgSQL function dl05_v2_state_guard() line 11 at RAISE
+2026-10-18 09:00:42.240 CST [13629] STATEMENT:  UPDATE dl05_v2_registration_state SET state='ACTIVE',revoked_at=NULL WHERE bootstrap_id=$1
+2026-10-18 09:00:42.674 CST [13639] FATAL:  terminating connection due to administrator command
+2026-10-18 09:00:48.646 CST [13696] ERROR:  receiver principal scope mismatch
+2026-10-18 09:00:48.646 CST [13696] CONTEXT:  PL/pgSQL function dl05_v2_mirror_scope() line 9 at RAISE
+2026-10-18 09:00:48.646 CST [13696] STATEMENT:  INSERT INTO dl05_v2_installations(proof_id,command_id,binding,binding_hash,installation_revision,runtime_principal,guardian_principal,observed_by,fence_ref) VALUES($1,$2,'{}',$3,1,$4,$5,'test','test')
+2026-10-18 09:00:48.647 CST [13696] ERROR:  artifact scope mismatch
+2026-10-18 09:00:48.647 CST [13696] CONTEXT:  PL/pgSQL function dl05_v2_artifact_scope() line 9 at RAISE
+2026-10-18 09:00:48.647 CST [13696] STATEMENT:  INSERT INTO dl05_answer_segments(artifact_id,command_id,answer_id,sequence,descriptor,artifact_hash,answer_text,text_hash,previous_hash,product_id,snapshot_version,facts,prepare_receipt) VALUES($1,$2,$3,2,$4,$5,$6,$7,$8,$9,$10,$11,'{}')
+2026-10-18 09:00:50.617 CST [13716] ERROR:  permission denied for table dl05_receiver_consumptions
+2026-10-18 09:00:50.617 CST [13716] STATEMENT:  SELECT * FROM dl05_receiver_consumptions
+2026-10-18 09:00:50.617 CST [13716] ERROR:  permission denied for table dl05_v2_grant_state
+2026-10-18 09:00:50.617 CST [13716] STATEMENT:  INSERT INTO dl05_v2_grant_state VALUES('bad','ISSUED')
+2026-10-18 09:00:50.618 CST [11357] LOG:  checkpoint starting: immediate force wait
+2026-10-18 09:00:50.648 CST [11357] LOG:  checkpoint complete: wrote 2617 buffers (16.0%); 0 WAL file(s) added, 0 removed, 2 recycled; write=0.012 s, sync=0.018 s, total=0.031 s; sync files=769, longest=0.001 s, average=0.001 s; distance=25201 kB, estimate=26464 kB; lsn=0/A1ABAA0, redo lsn=0/A1ABA48
+2026-10-18 09:05:05.774 CST [11356] LOG:  received fast shutdown request
+2026-10-18 09:05:05.775 CST [11356] LOG:  aborting any active transactions
+2026-10-18 09:05:05.778 CST [11356] LOG:  background worker "logical replication launcher" (PID 11362) exited with exit code 1
+2026-10-18 09:05:05.778 CST [11357] LOG:  shutting down
+2026-10-18 09:05:05.778 CST [11357] LOG:  checkpoint starting: shutdown immediate
+2026-10-18 09:05:05.802 CST [11357] LOG:  checkpoint complete: wrote 3367 buffers (20.6%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.013 s, sync=0.011 s, total=0.024 s; sync files=286, longest=0.001 s, average=0.001 s; distance=15379 kB, estimate=25356 kB; lsn=0/B0B09F0, redo lsn=0/B0B09F0
+2026-10-18 09:05:05.805 CST [11356] LOG:  database system is shut down

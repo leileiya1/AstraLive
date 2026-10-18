@@ -1,0 +1,45 @@
+from pathlib import Path
+import os,sys,subprocess,tempfile,socket,json,time,resource,hashlib
+repo=Path(sys.argv[1]).resolve();out=Path(sys.argv[2]).resolve();out.mkdir(parents=True,exist_ok=True)
+root=Path(tempfile.mkdtemp(prefix='astralive-agent4-pr13-final-services-',dir='/tmp'))
+env={k:os.environ[k] for k in ['PATH','HOME','TMPDIR','GOCACHE','GOPATH'] if k in os.environ};env.update(LC_ALL='C',PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=str(repo))
+with socket.socket() as s:s.bind(('127.0.0.1',0));port=s.getsockname()[1]
+data=root/'data';sock=root/'sockets';sock.mkdir();started=False;redis=None;records=[]
+def run(label,cmd,cwd=repo):
+ start=time.monotonic();before=resource.getrusage(resource.RUSAGE_CHILDREN)
+ with (out/(label+'.txt')).open('w') as log:r=subprocess.run(cmd,cwd=cwd,env=env,stdout=log,stderr=subprocess.STDOUT)
+ after=resource.getrusage(resource.RUSAGE_CHILDREN);records.append(dict(label=label,command=cmd,cwd=str(cwd),exitCode=r.returncode,elapsedSeconds=round(time.monotonic()-start,3),childUserSeconds=round(after.ru_utime-before.ru_utime,3),childSystemSeconds=round(after.ru_stime-before.ru_stime,3),cumulativeChildPeakRSSBytes=after.ru_maxrss));(out/'commands.json').write_text(json.dumps(records,indent=2)+'\n');print(label,r.returncode,flush=True);return r.returncode
+try:
+ with (root/'init.log').open('w') as f:subprocess.run(['initdb','-D',str(data),'-A','trust','-U','agent4_owner','--no-locale','-E','UTF8'],env=env,stdout=f,stderr=subprocess.STDOUT,check=True)
+ subprocess.run(['pg_ctl','-D',str(data),'-l',str(root/'postgres.log'),'-o',f'-h 127.0.0.1 -p {port} -k {sock}','-w','start'],env=env,stdout=subprocess.DEVNULL,check=True);started=True
+ for db in ['agent2_v2_final','agent2_v1_final']:subprocess.run(['createdb','-h','127.0.0.1','-p',str(port),'-U','agent4_owner',db],env=env,check=True)
+ env.update(DURABLE_V2_TEST_DATABASE_URL=f'postgres://agent4_owner@127.0.0.1:{port}/agent2_v2_final?sslmode=disable',DURABLE_LIVE_TEST_DATABASE_URL=f'postgres://agent4_owner@127.0.0.1:{port}/agent2_v1_final?sslmode=disable',DURABLE_LIVE_TEST_PYTHON='/tmp/astralive-agent2-python/bin/python')
+ with (out/'postgres-inventory.txt').open('w') as f:subprocess.run(['psql',env['DURABLE_V2_TEST_DATABASE_URL'],'-c',"SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"],env=env,stdout=f,stderr=subprocess.STDOUT,check=True)
+ try:
+  with socket.socket() as s:s.bind(('127.0.0.1',56382))
+  redis=subprocess.Popen(['redis-server','--bind','127.0.0.1','--port','56382','--dir',str(root),'--save','','--appendonly','no'],env=env,stdout=(root/'redis.log').open('w'),stderr=subprocess.STDOUT);time.sleep(.15)
+  if redis.poll() is None:env['DURABLE_LIVE_TEST_REDIS_URL']='redis://127.0.0.1:56382/0'
+ except OSError:pass
+ run('original-ABC',['go','test','-race','-json','-count=1','./internal/durablelivev2/authority','-run','^TestAgent4'],repo/'backend')
+ run('authority-race',['go','test','-race','-json','-count=1','./internal/durablelivev2/authority'],repo/'backend')
+ run('go-test',['go','test','-json','-count=1','./...'],repo/'backend')
+ run('go-race',['go','test','-race','-json','-count=1','./...'],repo/'backend')
+ run('go-vet',['go','vet','./...'],repo/'backend')
+ p='/tmp/astralive-agent2-python/bin/python'
+ run('contracts137',[p,'-m','unittest','tests.test_contracts','tests.test_durable_live_contracts','tests.test_durable_answer_contracts','tests.test_answer_contract_repairs','tests.test_receiver_contracts','tests.test_receiver_stop_races','-v'])
+ run('journal11',[p,'-m','pytest','runtime/tests/test_durable_live_journal.py','-q'])
+ run('wire13',[p,'-m','unittest','tests.test_durable_live_v2_wire','-v'])
+ run('candidate-validator',[p,'scripts/validate-answer-contract.py'])
+ run('v1-validator',[p,'scripts/validate-durable-live-contracts.py'])
+ run('generated-check',[p,'scripts/durable-live/generate_v2_wire.py','--check'])
+ if len(sys.argv)>3:
+  extra=repo/'backend/internal/durablelivev2/authority/agent4_independent_final_test.go'
+  assert not extra.exists();extra.write_bytes(Path(sys.argv[3]).read_bytes());env['AGENT4_SQL_SNAPSHOT_PATH']=str(out/'sql-authority-snapshot.json')
+  try:run('independent-final-boundaries',['go','test','-race','-json','-count=1','./internal/durablelivev2/authority','-run','^TestAgent4Independent'],repo/'backend')
+  finally:extra.unlink()
+finally:
+ if redis is not None and redis.poll() is None:redis.terminate();redis.wait(timeout=10)
+ if started:subprocess.run(['pg_ctl','-D',str(data),'-m','fast','-w','stop'],env=env,stdout=subprocess.DEVNULL,check=True)
+ (out/'cleanup.json').write_text(json.dumps(dict(ownedServicesRoot=str(root),postgresStopped=not (data/'postmaster.pid').exists(),redisStarted=redis is not None,redisStopped=redis is None or redis.poll() is not None,sharedServicesTouched=False,wholeServerOutages='NOT TESTED; fixed-port opt-in not enabled',gpu='NOT TESTED'),indent=2)+'\n')
+ (out/'runner-source.py.txt').write_bytes(Path(__file__).read_bytes())
+ if records and any(r['exitCode'] for r in records):sys.exit(1)

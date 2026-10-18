@@ -1,0 +1,9 @@
+{
+  "command": "go test -race ./... -count=1",
+  "exitCode": 1,
+  "seconds": 9.653229708,
+  "v1Postgres": true,
+  "v1PythonRuntime": true,
+  "redisOutage": "NOT RUN: no shared service access",
+  "postgresWholeServerOutage": "NOT RUN: legacy hardcodes incompatible port; connection termination test remains enabled"
+}

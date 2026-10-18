@@ -1,0 +1,33 @@
+?   	astralive/backend/cmd/comment-load	[no test files]
+?   	astralive/backend/cmd/config-bootstrap	[no test files]
+?   	astralive/backend/cmd/operator-bootstrap	[no test files]
+?   	astralive/backend/cmd/server	[no test files]
+?   	astralive/backend/db	[no test files]
+?   	astralive/backend/generated/dbgen	[no test files]
+?   	astralive/backend/generated/openapi	[no test files]
+?   	astralive/backend/generated/runtimeapi	[no test files]
+ok  	astralive/backend/internal/app	1.411s
+?   	astralive/backend/internal/config	[no test files]
+ok  	astralive/backend/internal/contentplan	1.319s
+ok  	astralive/backend/internal/contentplan/contract	1.368s
+--- FAIL: TestPostgresLegacyMigrationUpgradePreservesData (0.16s)
+    integration_test.go:487: 7 <nil>
+FAIL
+FAIL	astralive/backend/internal/durableintegration	2.369s
+ok  	astralive/backend/internal/durablelive	7.928s
+ok  	astralive/backend/internal/durablelivev2/authority	1.171s
+?   	astralive/backend/internal/eventbus	[no test files]
+ok  	astralive/backend/internal/fsm	1.294s
+ok  	astralive/backend/internal/httpapi	1.825s
+?   	astralive/backend/internal/ids	[no test files]
+ok  	astralive/backend/internal/interaction	1.395s
+?   	astralive/backend/internal/metrics	[no test files]
+ok  	astralive/backend/internal/personalconfig	2.075s
+ok  	astralive/backend/internal/platform	1.694s
+ok  	astralive/backend/internal/platform/mock	1.416s
+ok  	astralive/backend/internal/runtime	1.422s
+ok  	astralive/backend/internal/sse	1.301s
+ok  	astralive/backend/internal/turnmanager	2.350s
+ok  	astralive/backend/internal/userconfig	1.508s
+ok  	astralive/backend/tests	1.393s
+FAIL

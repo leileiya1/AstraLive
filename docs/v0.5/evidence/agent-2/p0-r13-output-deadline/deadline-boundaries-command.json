@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "./internal/durablelivev2/authority",
+    "-run",
+    "^(TestOutputDeadline|TestAgent4)",
+    "-count=1",
+    "-timeout=90s",
+    "-json"
+  ],
+  "exitCode": 0,
+  "seconds": 6.631537333
+}
