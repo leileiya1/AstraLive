@@ -1,0 +1,332 @@
+{
+  "streaming-pg-race": {
+    "counts": {
+      "pass_all": 61,
+      "pass_top": 18,
+      "packages_pass": 1
+    },
+    "packages": {
+      "astralive/backend/internal/turnmanager/answerstream": {
+        "pass_all": 61,
+        "pass_top": 18
+      }
+    },
+    "skips": []
+  },
+  "go-test": {
+    "counts": {
+      "packages_skip": 12,
+      "pass_all": 420,
+      "pass_top": 229,
+      "skip_all": 13,
+      "skip_top": 13,
+      "packages_pass": 20
+    },
+    "packages": {
+      "astralive/backend/internal/app": {
+        "pass_all": 3,
+        "pass_top": 3,
+        "skip_all": 1,
+        "skip_top": 1
+      },
+      "astralive/backend/internal/contentplan": {
+        "pass_all": 28,
+        "pass_top": 10
+      },
+      "astralive/backend/internal/contentplan/answerstream": {
+        "pass_all": 46,
+        "pass_top": 12
+      },
+      "astralive/backend/internal/contentplan/contract": {
+        "pass_all": 21,
+        "pass_top": 1
+      },
+      "astralive/backend/internal/durableintegration": {
+        "pass_all": 8,
+        "pass_top": 8
+      },
+      "astralive/backend/internal/durablelive": {
+        "pass_all": 32,
+        "pass_top": 32,
+        "skip_all": 4,
+        "skip_top": 4
+      },
+      "astralive/backend/internal/durablelivev2/authority": {
+        "pass_all": 83,
+        "pass_top": 47,
+        "skip_all": 1,
+        "skip_top": 1
+      },
+      "astralive/backend/internal/durablelivev2/wire": {
+        "pass_all": 8,
+        "pass_top": 8
+      },
+      "astralive/backend/internal/fsm": {
+        "pass_all": 2,
+        "pass_top": 2
+      },
+      "astralive/backend/internal/httpapi": {
+        "skip_all": 2,
+        "skip_top": 2,
+        "pass_all": 14,
+        "pass_top": 10
+      },
+      "astralive/backend/internal/interaction": {
+        "pass_all": 24,
+        "pass_top": 15
+      },
+      "astralive/backend/internal/personalconfig": {
+        "pass_all": 18,
+        "pass_top": 6
+      },
+      "astralive/backend/internal/platform": {
+        "pass_all": 1,
+        "pass_top": 1
+      },
+      "astralive/backend/internal/platform/mock": {
+        "pass_all": 4,
+        "pass_top": 4
+      },
+      "astralive/backend/internal/runtime": {
+        "pass_all": 3,
+        "pass_top": 3
+      },
+      "astralive/backend/internal/sse": {
+        "pass_all": 1,
+        "pass_top": 1
+      },
+      "astralive/backend/internal/turnmanager": {
+        "pass_all": 31,
+        "pass_top": 26,
+        "skip_all": 1,
+        "skip_top": 1
+      },
+      "astralive/backend/internal/turnmanager/answerstream": {
+        "pass_all": 82,
+        "pass_top": 29
+      },
+      "astralive/backend/internal/userconfig": {
+        "skip_all": 3,
+        "skip_top": 3,
+        "pass_all": 11,
+        "pass_top": 11
+      },
+      "astralive/backend/tests": {
+        "skip_all": 1,
+        "skip_top": 1
+      }
+    },
+    "skips": [
+      {
+        "package": "astralive/backend/internal/app",
+        "test": "TestAuditSelectionExpiresWhileWaitingForCommandLock"
+      },
+      {
+        "package": "astralive/backend/internal/durablelive",
+        "test": "TestRedisStreamsDuplicateReclaimAndSQLProjection"
+      },
+      {
+        "package": "astralive/backend/internal/durablelive",
+        "test": "TestRedisIsolatedDisconnectAndSQLFallback"
+      },
+      {
+        "package": "astralive/backend/internal/durablelive",
+        "test": "TestIsolatedBackendHelper"
+      },
+      {
+        "package": "astralive/backend/internal/durablelive",
+        "test": "TestPostgresIsolatedServerOutage"
+      },
+      {
+        "package": "astralive/backend/internal/durablelivev2/authority",
+        "test": "TestOwnedCommitCrashChild"
+      },
+      {
+        "package": "astralive/backend/internal/httpapi",
+        "test": "TestProductAuthorizationAndPinnedBindings"
+      },
+      {
+        "package": "astralive/backend/internal/httpapi",
+        "test": "TestInteractionFormalCPU"
+      },
+      {
+        "package": "astralive/backend/internal/turnmanager",
+        "test": "TestExportContractRequests"
+      },
+      {
+        "package": "astralive/backend/internal/userconfig",
+        "test": "TestConfigurationBrowserHarness"
+      },
+      {
+        "package": "astralive/backend/internal/userconfig",
+        "test": "TestPostgresConfigurationLifecycle"
+      },
+      {
+        "package": "astralive/backend/internal/userconfig",
+        "test": "TestLocalProviderProbesScopedAndVersioned"
+      },
+      {
+        "package": "astralive/backend/tests",
+        "test": "TestEventDedupAndStateUpdateWithPostgres"
+      }
+    ]
+  },
+  "go-race": {
+    "counts": {
+      "packages_skip": 12,
+      "pass_all": 420,
+      "pass_top": 229,
+      "skip_all": 13,
+      "skip_top": 13,
+      "packages_pass": 20
+    },
+    "packages": {
+      "astralive/backend/internal/app": {
+        "pass_all": 3,
+        "pass_top": 3,
+        "skip_all": 1,
+        "skip_top": 1
+      },
+      "astralive/backend/internal/contentplan": {
+        "pass_all": 28,
+        "pass_top": 10
+      },
+      "astralive/backend/internal/contentplan/answerstream": {
+        "pass_all": 46,
+        "pass_top": 12
+      },
+      "astralive/backend/internal/contentplan/contract": {
+        "pass_all": 21,
+        "pass_top": 1
+      },
+      "astralive/backend/internal/durablelive": {
+        "pass_all": 32,
+        "pass_top": 32,
+        "skip_all": 4,
+        "skip_top": 4
+      },
+      "astralive/backend/internal/durableintegration": {
+        "pass_all": 8,
+        "pass_top": 8
+      },
+      "astralive/backend/internal/durablelivev2/authority": {
+        "pass_all": 83,
+        "pass_top": 47,
+        "skip_all": 1,
+        "skip_top": 1
+      },
+      "astralive/backend/internal/durablelivev2/wire": {
+        "pass_all": 8,
+        "pass_top": 8
+      },
+      "astralive/backend/internal/fsm": {
+        "pass_all": 2,
+        "pass_top": 2
+      },
+      "astralive/backend/internal/httpapi": {
+        "skip_all": 2,
+        "skip_top": 2,
+        "pass_all": 14,
+        "pass_top": 10
+      },
+      "astralive/backend/internal/interaction": {
+        "pass_all": 24,
+        "pass_top": 15
+      },
+      "astralive/backend/internal/personalconfig": {
+        "pass_all": 18,
+        "pass_top": 6
+      },
+      "astralive/backend/internal/platform": {
+        "pass_all": 1,
+        "pass_top": 1
+      },
+      "astralive/backend/internal/platform/mock": {
+        "pass_all": 4,
+        "pass_top": 4
+      },
+      "astralive/backend/internal/runtime": {
+        "pass_all": 3,
+        "pass_top": 3
+      },
+      "astralive/backend/internal/sse": {
+        "pass_all": 1,
+        "pass_top": 1
+      },
+      "astralive/backend/internal/turnmanager": {
+        "pass_all": 31,
+        "pass_top": 26,
+        "skip_all": 1,
+        "skip_top": 1
+      },
+      "astralive/backend/internal/turnmanager/answerstream": {
+        "pass_all": 82,
+        "pass_top": 29
+      },
+      "astralive/backend/internal/userconfig": {
+        "skip_all": 3,
+        "skip_top": 3,
+        "pass_all": 11,
+        "pass_top": 11
+      },
+      "astralive/backend/tests": {
+        "skip_all": 1,
+        "skip_top": 1
+      }
+    },
+    "skips": [
+      {
+        "package": "astralive/backend/internal/app",
+        "test": "TestAuditSelectionExpiresWhileWaitingForCommandLock"
+      },
+      {
+        "package": "astralive/backend/internal/durablelive",
+        "test": "TestRedisStreamsDuplicateReclaimAndSQLProjection"
+      },
+      {
+        "package": "astralive/backend/internal/durablelive",
+        "test": "TestRedisIsolatedDisconnectAndSQLFallback"
+      },
+      {
+        "package": "astralive/backend/internal/durablelive",
+        "test": "TestIsolatedBackendHelper"
+      },
+      {
+        "package": "astralive/backend/internal/durablelive",
+        "test": "TestPostgresIsolatedServerOutage"
+      },
+      {
+        "package": "astralive/backend/internal/durablelivev2/authority",
+        "test": "TestOwnedCommitCrashChild"
+      },
+      {
+        "package": "astralive/backend/internal/httpapi",
+        "test": "TestProductAuthorizationAndPinnedBindings"
+      },
+      {
+        "package": "astralive/backend/internal/httpapi",
+        "test": "TestInteractionFormalCPU"
+      },
+      {
+        "package": "astralive/backend/internal/turnmanager",
+        "test": "TestExportContractRequests"
+      },
+      {
+        "package": "astralive/backend/internal/userconfig",
+        "test": "TestConfigurationBrowserHarness"
+      },
+      {
+        "package": "astralive/backend/internal/userconfig",
+        "test": "TestPostgresConfigurationLifecycle"
+      },
+      {
+        "package": "astralive/backend/internal/userconfig",
+        "test": "TestLocalProviderProbesScopedAndVersioned"
+      },
+      {
+        "package": "astralive/backend/tests",
+        "test": "TestEventDedupAndStateUpdateWithPostgres"
+      }
+    ]
+  }
+}

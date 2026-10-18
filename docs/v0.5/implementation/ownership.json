@@ -4,7 +4,7 @@
   "frozenCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
   "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
   "productionEnabled": false,
-  "dispatchStatus": "TASK_PACKAGES_PREPARED_NOT_STARTED",
+  "dispatchStatus": "DTO_DELIVERED; OTHER_OWNER_DOMAIN_WORK_INDEPENDENT_PER_USER",
   "migrationReservation": {
     "path": "backend/db/migrations/000007_answer_stream.sql",
     "owner": "Agent 2",
@@ -49,5 +49,6 @@
     ]
   },
   "rule": "Other owners submit shared-file patches for Agent4 integration; no direct edits to another worktree or frozen normative files.",
-  "dtoStatus": "RESERVED_PLAN_ONLY_NOT_IMPLEMENTED"
+  "dtoStatus": "IMPLEMENTED_WIRE_ONLY; NO_PRODUCTION_WIRING",
+  "dtoHandoff": "DTO-HANDOFF.md"
 }

@@ -1,0 +1,40 @@
+[
+  {
+    "label": "authority-boundaries-expanded",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durablelivev2/authority",
+      "-run",
+      "TestAgent4"
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes/backend",
+    "exitCode": 1,
+    "elapsedSeconds": 1.732,
+    "childUserSeconds": 0.996,
+    "childSystemSeconds": 0.82,
+    "cumulativeChildPeakRSSBytes": 325353472
+  },
+  {
+    "label": "original-migration-count-failure",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durableintegration",
+      "-run",
+      "TestPostgresLegacyMigrationUpgradePreservesData"
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes/backend",
+    "exitCode": 1,
+    "elapsedSeconds": 1.36,
+    "childUserSeconds": 0.916,
+    "childSystemSeconds": 0.972,
+    "cumulativeChildPeakRSSBytes": 330170368
+  }
+]

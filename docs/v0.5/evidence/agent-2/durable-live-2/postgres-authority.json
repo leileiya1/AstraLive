@@ -1,0 +1,17 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "./internal/durablelivev2/authority",
+    "-count=1",
+    "-v"
+  ],
+  "exitCode": 0,
+  "seconds": 14.4703125,
+  "database": "owned localhost PostgreSQL",
+  "fsync": "default on",
+  "physicalAdapters": "explicit test fixtures",
+  "officialWire": "not mounted",
+  "officialDTOSHA": "e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565"
+}

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/tmp/astralive-agent2-python/bin/python",
+    "-m",
+    "unittest",
+    "tests.test_contracts",
+    "tests.test_durable_live_contracts",
+    "tests.test_durable_answer_contracts",
+    "tests.test_answer_contract_repairs",
+    "tests.test_receiver_contracts",
+    "tests.test_receiver_stop_races",
+    "-v"
+  ],
+  "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-3",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exitCode": 0,
+  "seconds": 19.853
+}

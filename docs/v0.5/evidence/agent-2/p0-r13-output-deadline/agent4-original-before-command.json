@@ -1,0 +1,18 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-overlay=/tmp/astralive-agent2-p0-output.kczpw5d8/original-overlay.json",
+    "./internal/durablelivev2/authority",
+    "-run",
+    "^TestAgent4",
+    "-count=1",
+    "-json"
+  ],
+  "exitCode": 1,
+  "seconds": 1.692378208,
+  "head": "0230d93cbcb1a353ba2270670d26fcf467cd1c21",
+  "sourceCommit": "e9698923c6ed367ef31befc1e137811624b9ef20",
+  "reproductionSourceSHA256": "0bf24152b3bd99016f12b486d1de960bd398be53d4d7ae0136c4df023193f91c"
+}

@@ -1,0 +1,9 @@
+{"Time":"2026-10-18T16:14:10.867579+08:00","Action":"start","Package":"astralive/backend/internal/durableintegration/receiver1"}
+{"Time":"2026-10-18T16:14:11.376238+08:00","Action":"run","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport"}
+{"Time":"2026-10-18T16:14:11.376349+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Output":"=== RUN   TestPostgresReceiver1RealTransport\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:14:11.605889+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Output":"    interop_test.go:312: Install initial independent observation: OUTPUT_FENCE_UNPROVEN\n","OutputType":"error"}
+{"Time":"2026-10-18T16:14:11.607682+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Output":"--- FAIL: TestPostgresReceiver1RealTransport (0.23s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:14:11.607713+08:00","Action":"fail","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Elapsed":0.23}
+{"Time":"2026-10-18T16:14:11.607728+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:14:11.60897+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Output":"FAIL\tastralive/backend/internal/durableintegration/receiver1\t0.741s\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:14:11.608996+08:00","Action":"fail","Package":"astralive/backend/internal/durableintegration/receiver1","Elapsed":0.741}

@@ -1,0 +1,68 @@
+[
+  {
+    "label": "candidate-go",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "./..."
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 12.227,
+    "childUserSeconds": 13.055,
+    "childSystemSeconds": 5.037,
+    "cumulativeChildPeakRSSBytes": 374554624
+  },
+  {
+    "label": "candidate-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./..."
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 15.012,
+    "childUserSeconds": 18.726,
+    "childSystemSeconds": 5.178,
+    "cumulativeChildPeakRSSBytes": 403243008
+  },
+  {
+    "label": "candidate-vet",
+    "command": [
+      "go",
+      "vet",
+      "./..."
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 0.342,
+    "childUserSeconds": 1.188,
+    "childSystemSeconds": 1.346,
+    "cumulativeChildPeakRSSBytes": 403243008
+  },
+  {
+    "label": "authority-boundaries",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durablelivev2/authority",
+      "-run",
+      "TestAgent4"
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes/backend",
+    "exitCode": 1,
+    "elapsedSeconds": 1.44,
+    "childUserSeconds": 0.91,
+    "childSystemSeconds": 0.75,
+    "cumulativeChildPeakRSSBytes": 403243008
+  }
+]

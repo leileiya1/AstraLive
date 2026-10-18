@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/tmp/astralive-agent2-python/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests",
+    "-q"
+  ],
+  "cwd": "runtime",
+  "PYTHONPATH": "runtime:repository",
+  "exitCode": 0,
+  "seconds": 10.522635333
+}
