@@ -1,0 +1,16 @@
+{
+  "generatorRuntime": "Python >=3.12 stdlib only",
+  "recommendedPython": "3.12.13",
+  "alsoTestedGeneratorPython": "3.14.8",
+  "gofmtToolchain": "go1.27.2",
+  "minimumSDKGo": "1.24",
+  "minimumSDKPython": "3.12",
+  "sdkRuntimeDependencies": "standard library only; schema is generated package data",
+  "testVersions": {
+    "jsonschema": "4.26.0",
+    "httpx": "0.28.1",
+    "PyYAML": "6.0.3",
+    "pytest": "9.1.1"
+  },
+  "policy": "Use recorded formatter version for byte-for-byte generation. --check compares every output. No go.mod/go.sum, existing test requirements or frozen contract changed."
+}

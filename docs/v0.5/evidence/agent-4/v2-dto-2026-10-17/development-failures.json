@@ -1,0 +1,16 @@
+[
+  {
+    "log": "development-first-wire-test.txt",
+    "phase": "initial uncommitted SDK test",
+    "result": "1 ERROR, 9 PASS",
+    "cause": "Python3.12 frozen+slots rejects unknown attribute with TypeError; test expected only AttributeError",
+    "resolution": "assert rejection and absence of the attribute; accept documented stdlib exception shape; wire/schema rejection tests retained"
+  },
+  {
+    "log": "encode-foreign-before.txt",
+    "phase": "independent negative API probe on uncommitted SDK",
+    "result": "Go test failed with panic",
+    "cause": "foreign embedded Message could choose an unknown SchemaName before Encode registry check",
+    "resolution": "reject nonregistered concrete types with DTO_REQUIRED; permanent regression added; no transport or production route involved"
+  }
+]

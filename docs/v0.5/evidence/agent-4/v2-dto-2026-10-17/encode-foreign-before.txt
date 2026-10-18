@@ -1,0 +1,25 @@
+=== RUN   TestEncodeRejectsForeignEmbeddedMessage
+--- FAIL: TestEncodeRejectsForeignEmbeddedMessage (0.00s)
+panic: interface conversion: interface {} is nil, not map[string]interface {} [recovered, repanicked]
+
+goroutine 34 [running]:
+testing.tRunner.func1.2({0x100d0a298, 0x65bf390ff050})
+	/opt/homebrew/Cellar/go/1.27.2/libexec/src/testing/testing.go:2125 +0x1a0
+testing.tRunner.func1()
+	/opt/homebrew/Cellar/go/1.27.2/libexec/src/testing/testing.go:2128 +0x2c8
+panic({0x100d0a298?, 0x65bf390ff050?})
+	/opt/homebrew/Cellar/go/1.27.2/libexec/src/runtime/panic.go:859 +0x120
+astralive/backend/internal/durablelivev2/wire.node(...)
+	/Users/sapiece/innovationProject/AstraLive-agent-4/backend/internal/durablelivev2/wire/codec_generated.go:204
+astralive/backend/internal/durablelivev2/wire.marshalNamed({0x100b2c433, 0x13}, {0x100d502f0?, 0x100de1d00?})
+	/Users/sapiece/innovationProject/AstraLive-agent-4/backend/internal/durablelivev2/wire/codec_generated.go:481 +0x18c
+astralive/backend/internal/durablelivev2/wire.Encode({0x100d69b60, 0x100de1d00?})
+	/Users/sapiece/innovationProject/AstraLive-agent-4/backend/internal/durablelivev2/wire/codec_generated.go:505 +0x16c
+astralive/backend/internal/durablelivev2/wire.TestEncodeRejectsForeignEmbeddedMessage(0x65bf39164248)
+	/Users/sapiece/innovationProject/AstraLive-agent-4/backend/internal/durablelivev2/wire/codec_test.go:112 +0x30
+testing.tRunner(0x65bf39164248, 0x100d6a6c8)
+	/opt/homebrew/Cellar/go/1.27.2/libexec/src/testing/testing.go:2195 +0xc4
+created by testing.(*T).Run in goroutine 1
+	/opt/homebrew/Cellar/go/1.27.2/libexec/src/testing/testing.go:2260 +0x3b8
+FAIL	astralive/backend/internal/durablelivev2/wire	0.339s
+FAIL
