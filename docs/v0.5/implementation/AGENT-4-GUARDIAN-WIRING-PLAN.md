@@ -17,3 +17,11 @@ Use sole DTO `e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565`, Authority source merge 
 Start next round with **Agent4 orders1–3**, reviewing the actual official Python SDK shape and authenticated transport/Registrar composition before asking Agent5 to expand media interfaces. Agent5 can prepare its existing owned adapter/isolation tests against these fixed ports after receiving exact Agent4 adapter pins; it must not invent a parallel DTO/auth protocol or edit shared Runtime/Backend files. Agent2 reviews Authority actor/installation scope; Agent3 consumes its existing Executor/ReceiverProofs ports, not another SQL store. PR11 itself still needs independent code/regression review against current integration before merge.
 
 After dependencies land, arrange a separate real Go/Python/PostgreSQL/Unix IPC/CPU failure test: concurrent consume, Stop race, expiry/renewal, file/directory fsync failure, ACK loss, Receiver/Guardian restarts, product/Binding/Generation switch, Seal/drain and late queued media. Only then consider authorized physical-output tests. Neither contract approval, PR12 SQL PASS nor PR11 CPU PASS enables Durable LIVE. OUTPUT_FENCE_UNPROVEN remains closed until independently proved. Frozen v1.1, durable-live-1, GPU binary wire, PTS and Consumption Credit semantics stay unchanged.
+
+Implementation update: plan1–3 foundation code and actual native process/SQL
+results are in [receiver-1 handoff](AGENT-4-RECEIVER1-WIRING-HANDOFF.md).
+Physical Session Generation/closed-fence source remains unavailable, so production
+Registrar/LIVE is BLOCKED. PR11 remains unmerged; its protected v1 fixture needs
+owner/protection review after migration000007. The handoff distinguishes actual
+CONTROL/Guardian/Runtime Unix authentication from injected physical sources and
+production once-TTS/media work deferred to plans4–7.

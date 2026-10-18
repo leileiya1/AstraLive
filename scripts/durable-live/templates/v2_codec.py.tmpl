@@ -43,6 +43,8 @@ class SecretString:
     def __setattr__(self, key, value): raise AttributeError('immutable secret')
     def __eq__(self, other): return type(self) is type(other) and hmac.compare_digest(self._value, other._value)
     def __hash__(self): return hash(self._value)
+    def __copy__(self): return self
+    def __deepcopy__(self, memo): return self
 
 def _secret(cls, value):
     obj = object.__new__(cls)

@@ -1,0 +1,970 @@
+EEEEEEEE.EEEEEEEEEEEEE...                                                [100%]
+==================================== ERRORS ====================================
+___________ ERROR at setup of test_real_rtmp_full_decode_drain_stop ____________
+
+self = <Coroutine test_real_rtmp_full_decode_drain_stop>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+_________ ERROR at setup of test_old_epoch_identity_and_permit_expiry __________
+
+self = <Coroutine test_old_epoch_identity_and_permit_expiry>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+___________ ERROR at setup of test_competing_guardian_real_sql_lock ____________
+
+self = <Coroutine test_competing_guardian_real_sql_lock>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+_________ ERROR at setup of test_pg_connection_loss_retires_publisher __________
+
+self = <Coroutine test_pg_connection_loss_retires_publisher>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+_____ ERROR at setup of test_stop_races_delayed_renew_and_pending_install ______
+
+self = <Coroutine test_stop_races_delayed_renew_and_pending_install>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+______________ ERROR at setup of test_late_renew_cannot_resurrect ______________
+
+self = <Coroutine test_late_renew_cannot_resurrect>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+_ ERROR at setup of test_authenticated_ipc_scopes_and_no_management_for_runtime _
+
+self = <Coroutine test_authenticated_ipc_scopes_and_no_management_for_runtime>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+________ ERROR at setup of test_every_authority_dimension_and_tombstone ________
+
+self = <Coroutine test_every_authority_dimension_and_tombstone>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+_ ERROR at setup of test_two_physical_publishers_and_old_credentials_reconnect _
+
+self = <Coroutine test_two_physical_publishers_and_old_credentials_reconnect>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+_ ERROR at setup of test_retained_real_ffmpeg_physically_kicked_before_activation _
+
+self = <Coroutine test_retained_real_ffmpeg_physically_kicked_before_activation>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+___________ ERROR at setup of test_exclusivity_loss_closes_admission ___________
+
+self = <Coroutine test_exclusivity_loss_closes_admission>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+___________ ERROR at setup of test_webrtc_real_peer_closed_on_expiry ___________
+
+self = <Coroutine test_webrtc_real_peer_closed_on_expiry>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+_____ ERROR at setup of test_short_segment_and_missing_tail_remain_unknown _____
+
+self = <Coroutine test_short_segment_and_missing_tail_remain_unknown>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+__ ERROR at setup of test_sigkill_supervisor_restart_and_closed_admission[0] ___
+
+self = <Coroutine test_sigkill_supervisor_restart_and_closed_admission[0]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+__ ERROR at setup of test_sigkill_supervisor_restart_and_closed_admission[1] ___
+
+self = <Coroutine test_sigkill_supervisor_restart_and_closed_admission[1]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+__ ERROR at setup of test_sigkill_supervisor_restart_and_closed_admission[2] ___
+
+self = <Coroutine test_sigkill_supervisor_restart_and_closed_admission[2]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+_______________ ERROR at setup of test_install_stop_concurrency ________________
+
+self = <Coroutine test_install_stop_concurrency>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+___ ERROR at setup of test_readonly_database_role_and_startup_db_unavailable ___
+
+self = <Coroutine test_readonly_database_role_and_startup_db_unavailable>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+___ ERROR at setup of test_delayed_old_writer_cannot_reach_replacement_child ___
+
+self = <Coroutine test_delayed_old_writer_cannot_reach_replacement_child>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+____ ERROR at setup of test_runtime_adapter_real_unix_ipc_and_decoded_drain ____
+
+self = <Coroutine test_runtime_adapter_real_unix_ipc_and_decoded_drain>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+___ ERROR at setup of test_nonzero_source_pts_and_attempt_replay_fail_closed ___
+
+self = <Coroutine test_nonzero_source_pts_and_attempt_replay_fail_closed>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:944: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:407: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/pytest_asyncio/plugin.py:403: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/tests/conftest.py:133: in rig
+    await db.execute("""
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   asyncpg.exceptions.CheckViolationError: command/run revision mismatch
+
+asyncpg/protocol/protocol.pyx:341: CheckViolationError
+=========================== short test summary info ============================
+ERROR output_guardian/tests/test_guardian.py::test_real_rtmp_full_decode_drain_stop
+ERROR output_guardian/tests/test_guardian.py::test_old_epoch_identity_and_permit_expiry
+ERROR output_guardian/tests/test_guardian.py::test_competing_guardian_real_sql_lock
+ERROR output_guardian/tests/test_guardian.py::test_pg_connection_loss_retires_publisher
+ERROR output_guardian/tests/test_guardian.py::test_stop_races_delayed_renew_and_pending_install
+ERROR output_guardian/tests/test_guardian.py::test_late_renew_cannot_resurrect
+ERROR output_guardian/tests/test_guardian.py::test_authenticated_ipc_scopes_and_no_management_for_runtime
+ERROR output_guardian/tests/test_guardian.py::test_every_authority_dimension_and_tombstone
+ERROR output_guardian/tests/test_guardian.py::test_two_physical_publishers_and_old_credentials_reconnect
+ERROR output_guardian/tests/test_guardian.py::test_retained_real_ffmpeg_physically_kicked_before_activation
+ERROR output_guardian/tests/test_guardian.py::test_exclusivity_loss_closes_admission
+ERROR output_guardian/tests/test_guardian.py::test_webrtc_real_peer_closed_on_expiry
+ERROR output_guardian/tests/test_guardian.py::test_short_segment_and_missing_tail_remain_unknown
+ERROR output_guardian/tests/test_guardian.py::test_sigkill_supervisor_restart_and_closed_admission[0]
+ERROR output_guardian/tests/test_guardian.py::test_sigkill_supervisor_restart_and_closed_admission[1]
+ERROR output_guardian/tests/test_guardian.py::test_sigkill_supervisor_restart_and_closed_admission[2]
+ERROR output_guardian/tests/test_guardian.py::test_install_stop_concurrency
+ERROR output_guardian/tests/test_guardian.py::test_readonly_database_role_and_startup_db_unavailable
+ERROR output_guardian/tests/test_guardian.py::test_delayed_old_writer_cannot_reach_replacement_child
+ERROR output_guardian/tests/test_guardian.py::test_runtime_adapter_real_unix_ipc_and_decoded_drain
+ERROR output_guardian/tests/test_guardian.py::test_nonzero_source_pts_and_attempt_replay_fail_closed
+4 passed, 21 errors in 4.85s

@@ -1,0 +1,25 @@
+2026-10-18 16:11:17.180 CST [35852] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-18 16:11:17.180 CST [35852] LOG:  listening on IPv4 address "127.0.0.1", port 64133
+2026-10-18 16:11:17.180 CST [35852] LOG:  listening on Unix socket "/tmp/astralive-agent4-receiver1-pg-4s7upvij/sockets/.s.PGSQL.64133"
+2026-10-18 16:11:17.183 CST [35855] LOG:  database system was shut down at 2026-10-18 16:11:17 CST
+2026-10-18 16:11:17.185 CST [35852] LOG:  database system is ready to accept connections
+2026-10-18 16:11:18.654 CST [35879] ERROR:  function clock_timeteststamp() does not exist at character 140
+2026-10-18 16:11:18.654 CST [35879] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2026-10-18 16:11:18.654 CST [35879] STATEMENT:  INSERT INTO session_provider_bindings(session_id,tenant_id,user_id,binding_id,room_snapshot,summary,expires_at) VALUES($1,$2,$3,$4,$5,'{}',clock_timetestStamp()+interval '1 hour')
+2026-10-18 16:11:18.692 CST [35883] ERROR:  relation "schema_migrations" does not exist at character 15
+2026-10-18 16:11:18.692 CST [35883] STATEMENT:  SELECT * FROM schema_migrations ORDER BY 1
+2026-10-18 16:11:18.710 CST [35853] LOG:  checkpoint starting: immediate force wait
+2026-10-18 16:11:18.830 CST [35853] LOG:  checkpoint complete: wrote 3024 buffers (18.5%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.097 s, sync=0.024 s, total=0.121 s; sync files=1236, longest=0.001 s, average=0.001 s; distance=19926 kB, estimate=19926 kB; lsn=0/2890488, redo lsn=0/2890430
+2026-10-18 16:11:18.860 CST [35853] LOG:  checkpoint starting: immediate force wait
+2026-10-18 16:11:18.860 CST [35853] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=2, longest=0.001 s, average=0.001 s; distance=1 kB, estimate=17934 kB; lsn=0/2890AC0, redo lsn=0/2890A68
+2026-10-18 16:11:18.886 CST [35853] LOG:  checkpoint starting: immediate force wait
+2026-10-18 16:11:18.887 CST [35853] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=2, longest=0.001 s, average=0.001 s; distance=1 kB, estimate=16141 kB; lsn=0/28910F8, redo lsn=0/28910A0
+2026-10-18 16:11:18.913 CST [35853] LOG:  checkpoint starting: immediate force wait
+2026-10-18 16:11:18.913 CST [35853] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=2, longest=0.001 s, average=0.001 s; distance=1 kB, estimate=14527 kB; lsn=0/2891730, redo lsn=0/28916D8
+2026-10-18 16:11:18.940 CST [35852] LOG:  received fast shutdown request
+2026-10-18 16:11:18.940 CST [35852] LOG:  aborting any active transactions
+2026-10-18 16:11:18.941 CST [35852] LOG:  background worker "logical replication launcher" (PID 35858) exited with exit code 1
+2026-10-18 16:11:18.941 CST [35853] LOG:  shutting down
+2026-10-18 16:11:18.941 CST [35853] LOG:  checkpoint starting: shutdown immediate
+2026-10-18 16:11:18.941 CST [35853] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=13074 kB; lsn=0/2891838, redo lsn=0/2891838
+2026-10-18 16:11:18.943 CST [35852] LOG:  database system is shut down
