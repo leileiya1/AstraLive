@@ -1,6 +1,6 @@
-# R1-INSTALLATION-REVISION-DRIFT — fix ready for Agent2 review
+# R1-INSTALLATION-REVISION-DRIFT — Agent2 layer A FINAL ACK received
 
-**P1 owner ACK pending. ASTRALIVE V0.5 BLOCKED / OUTPUT_FENCE_UNPROVEN.**
+**Source-fix layer A FINAL ACK received; layer B remains BLOCKED. ASTRALIVE V0.5 BLOCKED / OUTPUT_FENCE_UNPROVEN.**
 Agent2's review of `0a67a35e5815031d4d0d0a4ca4da89882e31e079` correctly identified a
 real trusted-source integration bug. Prior real-process/SQL results do not waive
 it. Starting integration is `eb00428eeb1f0506e9b71eea47480ba4d982c7db`.
@@ -63,8 +63,11 @@ The independently trusted physical owner must call
 physical revision/Generation/process/key/fence or replacing the source**:
 
 1. `CloseAdmission` irreversibly closes the local gate without waiting for SQL or
-   IPC. No later reader can enter; current responses refuse a positive result
-   after closure. Gate closure does not assert that any physical output stopped.
+   IPC. No later reader can enter. A Backend response already committed and
+   checked before closure may still reach the network Writer after closure;
+   its Reader still blocks Retire and physical replacement. This historical
+   reply cannot directly start TTS: Receiver final proof/short gate and actual
+   sink fencing remain mandatory. Gate closure itself proves no physical stop.
 2. Wait for existing users outside SQL. The old physical tuple must stay unchanged
    until this barrier returns successfully. A timeout/error keeps the gate closed
    and does not permit replacement. Concurrent SQL users can finish only against
@@ -114,8 +117,8 @@ Agent5's owner review. Subsequent repeated success does not establish universal
 stability. Linux UID/ACL/network/cgroup/old publisher and real WebRTC/RTMP/GPU,
 production PhysicalSource/Session assembly, once-TTS and media remain NOT TESTED
 or BLOCKED. The existing sources can deny all production admission; this fix
-cannot create a physical output proof. Agent2 must independently review the new
-exact SHA before P1 is declared resolved.
+cannot create a physical output proof. Agent2 subsequently independently reviewed this exact SHA and granted the
+scoped FINAL ACK recorded below.
 
 ## Final committed integration validation
 
@@ -156,7 +159,8 @@ with owner commit provenance, never its unreviewed Guardian core. Its fixed
 `9b969d099b7a3b6b85f3595d26c36fb953d47263` code is tested as an isolated archive.
 The source gate coordinates SQL eligibility, not physical media output; no
 production PhysicalSource, Linux isolation or media acceptance is implied.
-**Formal Agent2 security re-review and ACK are still pending.**
+**Agent2 FINAL ACK is now formally received for the exact source/constraints;
+old pending flags in captured test summaries are historical snapshots.**
 
 A further20 fresh pytest/native CPU child processes independently passed the
 900ms pre-Grant startup/two-unit continuity test at fixed PR11 `9b969d0`.
@@ -167,3 +171,7 @@ SLA. The real host source must keep the physical tuple unchanged through the
 retirement barrier; queued/in-flight network responses are not proof that an old
 physical output remains current. Receiver final checks and real sink fencing
 remain separate mandatory later work.
+
+[Formal scope and ACK-boundary receipt](AGENT-4-R1-FINAL-ACK-RECEIPT.json) records the
+owner FINAL ACK and unchanged six production blobs. The separate PR11 cgroup
+scope P1 does not revoke this source-fix ACK or clear physical layer B.

@@ -1,0 +1,89 @@
+[
+  {
+    "label": "postgres-inventory",
+    "command": [
+      "psql",
+      "postgres://agent3_owner@127.0.0.1:62866/agent3_streaming_owned?sslmode=disable",
+      "-c",
+      "SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 0.019,
+    "childUserSeconds": 0.007535000000000014,
+    "childSystemSeconds": 0.004139000000000004,
+    "childPeakRSSBytes": 50003968
+  },
+  {
+    "label": "receiver1-pg-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durableintegration/receiver1",
+      "-run",
+      "^TestPostgres"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 15.936,
+    "childUserSeconds": 10.263902,
+    "childSystemSeconds": 2.061105,
+    "childPeakRSSBytes": 334299136
+  },
+  {
+    "label": "agent2-original-revision-repeat3",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=3",
+      "./internal/durableintegration/receiver1",
+      "-run",
+      "^TestAgent2ReviewCurrentPhysicalRevision"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 3.899,
+    "childUserSeconds": 2.2015960000000003,
+    "childSystemSeconds": 0.6208490000000002,
+    "childPeakRSSBytes": 334299136
+  },
+  {
+    "label": "agent2-owner-probes",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durableintegration/receiver1",
+      "-run",
+      "^TestAgent2Review"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 8.72,
+    "childUserSeconds": 5.934575999999998,
+    "childSystemSeconds": 1.281631,
+    "childPeakRSSBytes": 334299136
+  },
+  {
+    "label": "migration-count",
+    "command": [
+      "psql",
+      "postgres://agent3_owner@127.0.0.1:62866/agent4_receiver1_owned?sslmode=disable",
+      "-c",
+      "SELECT * FROM schema_migrations ORDER BY 1"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 0.026,
+    "childUserSeconds": 0.011307999999999652,
+    "childSystemSeconds": 0.006616000000000177,
+    "childPeakRSSBytes": 334299136
+  }
+]

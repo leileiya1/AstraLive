@@ -1,0 +1,82 @@
+{'ordinaryFilesOnly': True, 'when': 'preexisting', 'killWrite': '1', 'rejected': True}
+F{'ordinaryFilesOnly': True, 'when': 'after-parent-procs-read', 'killWrite': '1', 'rejected': True}
+F..
+=================================== FAILURES ===================================
+_____ test_unknown_descendant_must_not_receive_recursive_kill[preexisting] _____
+
+tmp_path = PosixPath('/private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/pytest-of-sapiece/pytest-218/test_unknown_descendant_must_n0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108e56360>
+when = 'preexisting'
+
+    @pytest.mark.parametrize('when', ['preexisting', 'after-parent-procs-read'])
+    def test_unknown_descendant_must_not_receive_recursive_kill(tmp_path, monkeypatch, when):
+        group = model(tmp_path, monkeypatch)
+        nested = group.path / 'unregistered-descendant'
+        def inject():
+            nested.mkdir(mode=0o700)
+            (nested / 'cgroup.procs').write_text('999999\n')  # inert text, not a PID syscall
+        if when == 'preexisting':
+            inject()
+        else:
+            read_text = Path.read_text
+            def read(path, *args, **kwargs):
+                text = read_text(path, *args, **kwargs)
+                if path == group.path/'cgroup.procs' and not nested.exists():
+                    inject()
+                return text
+            monkeypatch.setattr(Path, 'read_text', read)
+        rejected = False
+        try:
+            group.fence()
+        except Closed:
+            rejected = True
+        kill = (group.path / 'cgroup.kill').read_text()
+        print(dict(ordinaryFilesOnly=True, when=when, killWrite=kill, rejected=rejected))
+>       assert rejected and kill == '', 'P1: recursive kill issued without checking unknown descendant scope'
+E       AssertionError: P1: recursive kill issued without checking unknown descendant scope
+E       assert (True and '1' == ''
+E         
+E         + 1)
+
+/tmp/agent4-pr11-probes/test_owned_cgroup_scope.py:47: AssertionError
+_ test_unknown_descendant_must_not_receive_recursive_kill[after-parent-procs-read] _
+
+tmp_path = PosixPath('/private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/pytest-of-sapiece/pytest-218/test_unknown_descendant_must_n1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108e564e0>
+when = 'after-parent-procs-read'
+
+    @pytest.mark.parametrize('when', ['preexisting', 'after-parent-procs-read'])
+    def test_unknown_descendant_must_not_receive_recursive_kill(tmp_path, monkeypatch, when):
+        group = model(tmp_path, monkeypatch)
+        nested = group.path / 'unregistered-descendant'
+        def inject():
+            nested.mkdir(mode=0o700)
+            (nested / 'cgroup.procs').write_text('999999\n')  # inert text, not a PID syscall
+        if when == 'preexisting':
+            inject()
+        else:
+            read_text = Path.read_text
+            def read(path, *args, **kwargs):
+                text = read_text(path, *args, **kwargs)
+                if path == group.path/'cgroup.procs' and not nested.exists():
+                    inject()
+                return text
+            monkeypatch.setattr(Path, 'read_text', read)
+        rejected = False
+        try:
+            group.fence()
+        except Closed:
+            rejected = True
+        kill = (group.path / 'cgroup.kill').read_text()
+        print(dict(ordinaryFilesOnly=True, when=when, killWrite=kill, rejected=rejected))
+>       assert rejected and kill == '', 'P1: recursive kill issued without checking unknown descendant scope'
+E       AssertionError: P1: recursive kill issued without checking unknown descendant scope
+E       assert (True and '1' == ''
+E         
+E         + 1)
+
+/tmp/agent4-pr11-probes/test_owned_cgroup_scope.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../tmp/agent4-pr11-probes/test_owned_cgroup_scope.py::test_unknown_descendant_must_not_receive_recursive_kill[preexisting]
+FAILED ../../../tmp/agent4-pr11-probes/test_owned_cgroup_scope.py::test_unknown_descendant_must_not_receive_recursive_kill[after-parent-procs-read]
+2 failed, 2 passed in 0.60s

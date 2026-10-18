@@ -1,0 +1,14 @@
+from pathlib import Path
+import os,subprocess,json,time,resource
+root=Path('/tmp/agent4-pr11-candidate');out=Path('/tmp/agent4-pr11-additional-results');out.mkdir(exist_ok=True)
+py='/tmp/astralive-agent4-receiver1-python/bin/python';env={k:os.environ[k]for k in ('PATH','HOME','TMPDIR')if k in os.environ};env.update(PYTHONPATH=str(root/'runtime')+os.pathsep+str(root),PYTHONDONTWRITEBYTECODE='1',LC_ALL='C');records=[]
+def run(name,cmd):
+ start=time.monotonic();before=resource.getrusage(resource.RUSAGE_CHILDREN)
+ with (out/(name+'.txt')).open('w')as log:r=subprocess.run(cmd,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT)
+ after=resource.getrusage(resource.RUSAGE_CHILDREN);records.append(dict(label=name,command=cmd,cwd=str(root),exitCode=r.returncode,elapsedSeconds=time.monotonic()-start,childUserSeconds=after.ru_utime-before.ru_utime,childSystemSeconds=after.ru_stime-before.ru_stime,childPeakRSSBytes=after.ru_maxrss));(out/'commands.json').write_text(json.dumps(records,indent=2)+'\n');print(name,r.returncode,flush=True)
+run('v1-exact25',[py,'-m','pytest','-p','no:cacheprovider','output_guardian/tests/test_guardian.py','output_guardian/tests/test_supervisor_cleanup.py','-q','-rs'])
+run('v2-original69-current-head',[py,'-m','pytest','-p','no:cacheprovider','output_guardian/tests/v2','--ignore=output_guardian/tests/v2/test_readiness.py','--ignore=output_guardian/tests/v2/test_official.py','--ignore=output_guardian/tests/v2/test_physical.py','-q','-rs'])
+run('v2-full83-current-candidate',[py,'-m','pytest','-p','no:cacheprovider','output_guardian/tests/v2','-q','-rs'])
+for i in range(20):run('cold-unit2-%02d'%(i+1),[py,'-m','pytest','-p','no:cacheprovider','output_guardian/tests/v2/test_readiness.py::test_startup_delayed_before_grant_two_units_remain_continuous','-q'])
+# Keep every failure; no change to grants, margins, test inputs or assertions.
+raise SystemExit(int(any(x['exitCode'] for x in records)))

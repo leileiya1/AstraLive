@@ -5,7 +5,9 @@ Agent2 found P1 R1-INSTALLATION-REVISION-DRIFT; fix `58cbc59042c70f9010a368f9632
 and exact fixture/protection delivery `08af1049250d2657d7afb5e303d97a02e9761570` are
 [documented separately](AGENT-4-R1-REVISION-DRIFT-FIX.md). Final full runner now
 passes on committed source; original failures below remain retained. Agent2
-ACK is pending, production PhysicalSource remains missing and LIVE stays closed.
+[layer A FINAL ACK is received](AGENT-4-R1-FINAL-ACK-RECEIPT.json); production
+PhysicalSource remains missing and LIVE stays closed. PR11 is separately blocked
+by the new cgroup kill-scope review.
 
 **ASTRALIVE V0.5 BLOCKED.** This delivery implements the official mapping, private native process-authenticated Authority transport, and co-located CONTROL Registrar APIs. Native Stage→Register and consumption authorization are exercised on real processes/SQL, with an explicitly injected physical-installation fixture. Production registration remains **BLOCKED: PHYSICAL_INSTALLATION_SOURCE_UNAVAILABLE / OUTPUT_FENCE_UNPROVEN**. The existing shared Session launcher cannot independently prove installed Generation and old-output isolation. No default-success source is provided. No v2 public route, Session dispatcher, media, TTS or GPU entrypoint is enabled.
 

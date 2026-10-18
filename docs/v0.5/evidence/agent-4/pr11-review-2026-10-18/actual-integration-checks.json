@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "a0a05071d3eae1cc918fc7d7c2c56604fea380da",
+  "documentationOnlyChanges": true,
+  "contracts137": "PASS; actual-integration-contract137.txt",
+  "commands": [
+    {
+      "command": [
+        "/tmp/astralive-agent4-receiver1-python/bin/python",
+        "scripts/validate-durable-live-contracts.py"
+      ],
+      "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+      "exitCode": 0,
+      "label": "validator-v1"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent4-receiver1-python/bin/python",
+        "scripts/validate-answer-contract.py"
+      ],
+      "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+      "exitCode": 0,
+      "label": "validator-v2"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent4-receiver1-python/bin/python",
+        "scripts/durable-live/generate_v2_wire.py",
+        "--check"
+      ],
+      "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+      "exitCode": 0,
+      "label": "generated-check"
+    }
+  ]
+}

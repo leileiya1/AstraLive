@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/tmp/astralive-agent4-receiver1-python/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "/tmp/agent4-pr11-probes/test_owned_cgroup_scope.py",
+    "-q",
+    "-s"
+  ],
+  "cwd": "/tmp/agent4-pr11-candidate",
+  "records": [
+    {
+      "iteration": 1,
+      "exitCode": 1,
+      "seconds": 0.8651820418890566
+    },
+    {
+      "iteration": 2,
+      "exitCode": 1,
+      "seconds": 0.882579917088151
+    },
+    {
+      "iteration": 3,
+      "exitCode": 1,
+      "seconds": 0.8847900829277933
+    }
+  ],
+  "fixture": "ORDINARY_FILES_ONLY; no Linux kernel cgroup; no real PID syscall",
+  "expected": "2 unknown-descendant tests FAIL,2 controls PASS per iteration"
+}
