@@ -1,0 +1,117 @@
+package answerstream
+
+import (
+ "context"
+ "encoding/json"
+ "errors"
+ "io"
+ "strings"
+ "sync"
+ "testing"
+ "time"
+ cp "astralive/backend/internal/contentplan"
+ domain "astralive/backend/internal/contentplan/answerstream"
+ "astralive/backend/internal/durablelivev2/authority"
+ "astralive/backend/internal/durablelivev2/wire"
+ "github.com/jackc/pgx/v5"
+ "github.com/jackc/pgx/v5/pgxpool"
+)
+
+func TestPostgresAgent4CommandScopedFacts(t *testing.T) {
+ f,g:=newPGStream(t),newPGStream(t)
+ a,b:=f.artifacts()[0],g.artifacts()[0]
+ raw,_:=b.Typed();bytes,_:=wire.Encode(raw)
+ denied(t,f.facts.Verify(f.ctx,g.runtime,integerDocument(bytes)))
+ denied(t,f.facts.Verify(f.ctx,f.runtime,integerDocument(bytes)))
+ for _,bad:=range []domain.AuthorityFacts{
+  {Store:f.store,Control:g.control,Binding:f.b},
+  {Store:f.store,Control:f.runtime,Binding:f.b},
+  {Store:f.store,Control:func()authority.Actor{p:=f.control;p.Room=g.room;return p}(),Binding:f.b},
+  {Store:f.store,Control:f.control,Binding:func()domain.Binding{b:=f.b;b.Command=g.b.Command;return b}()},
+ } {k,e:=bad.Load(f.ctx);denied(t,e);if k.Language!=nil {t.Fatal("scope failure returned knowledge")}}
+ shared:=authority.New(f.pool)
+ shared.Assertions=f.facts.Verify
+ qg,e:=b.PrepareRequest("agent4-scope",1,0);must(t,e)
+ _,e=CallAuthority(f.ctx,shared,g.runtime,wire.OpJournalPrepareAnswer,qg);denied(t,e)
+ // An explicit trusted command dispatcher is the composition requirement; the
+ // per-command verifier still rejects wrong routing. Not production glue.
+ entries:=map[string]*domain.AuthorityFacts{f.b.Command:f.facts,g.b.Command:g.facts}
+ shared.Assertions=func(ctx context.Context,p authority.Actor,v authority.Document)error {
+  s:=entries[v["commandId"].(string)];if s==nil{return domain.ErrFacts};return s.Verify(ctx,p,v)
+ }
+ qa,e:=a.PrepareRequest("agent4-scope",1,0);must(t,e)
+ _,e=CallAuthority(f.ctx,shared,f.runtime,wire.OpJournalPrepareAnswer,qa);must(t,e)
+ _,e=CallAuthority(g.ctx,shared,g.runtime,wire.OpJournalPrepareAnswer,qg);must(t,e)
+ if f.count("dl05_answer_segments")!=1||g.count("dl05_answer_segments")!=1||f.count("dl05_answer_grants")!=0||g.count("dl05_answer_grants")!=0 {t.Fatal("cross-command projection/authorization")}
+ delete(entries,f.b.Command)
+ _,e=CallAuthority(f.ctx,shared,f.runtime,wire.OpJournalPrepareAnswer,qa);denied(t,e)
+}
+
+type agent4LiteralTracer struct{once sync.Once;hook func(context.Context)error;err error}
+func (v *agent4LiteralTracer)TraceQueryStart(ctx context.Context,_ *pgx.Conn,d pgx.TraceQueryStartData)context.Context {
+ if strings.HasPrefix(d.SQL,"SELECT price::text,currency,stock,clock_timestamp() FROM products") {v.once.Do(func(){v.err=v.hook(ctx)})};return ctx
+}
+func (*agent4LiteralTracer)TraceQueryEnd(context.Context,*pgx.Conn,pgx.TraceQueryEndData){}
+func TestPostgresAgent4LiteralProjectionRace(t *testing.T) {
+ for _,column:=range []string{"price","stock"} {t.Run(column,func(t *testing.T){
+  f:=newPGStream(t);cfg:=f.pool.Config().Copy()
+  tracer:=&agent4LiteralTracer{hook:func(ctx context.Context)error {
+   sql:="UPDATE products SET price=130,updated_at=clock_timestamp() WHERE id=$1";if column=="stock" {sql="UPDATE products SET stock=8,updated_at=clock_timestamp() WHERE id=$1"}
+   _,e:=f.pool.Exec(ctx,sql,f.b.Product);return e
+  }}
+  cfg.ConnConfig.Tracer=tracer;p,e:=pgxpool.NewWithConfig(f.ctx,cfg);must(t,e);defer p.Close()
+  facts:=domain.AuthorityFacts{Store:authority.New(p),Control:f.control,Binding:f.b}
+  k,e:=facts.Load(f.ctx);denied(t,e);must(t,tracer.err)
+  if k.Language!=nil {t.Fatal("mixed projection/literal source was accepted")}
+ })}
+}
+func TestPostgresAgent4ExpiredProviderBindingRejectsUnit2(t *testing.T) {
+ f:=newPGStream(t);a:=f.artifacts()
+ must(t,f.adapter.Prepare(f.ctx,a[0]));must(t,f.adapter.Start(f.ctx,a[0],First));must(t,f.adapter.ConsumeOnce(f.ctx,a[0]));must(t,f.adapter.ConfirmDrain(f.ctx,a[0]));must(t,f.adapter.Prepare(f.ctx,a[1]))
+ f.exec("UPDATE session_provider_bindings SET expires_at=clock_timestamp() WHERE session_id=$1",f.b.Session)
+ denied(t,f.adapter.Check(f.ctx,a[1]));denied(t,f.adapter.Start(f.ctx,a[1],Continuation))
+ if f.count("dl05_answer_grants")!=1||f.count("dl05_receiver_consumptions")!=1 {t.Fatal("expired Binding authorized another unit")};f.assertSlot(true)
+}
+func TestPostgresAgent4RehashedTamperedAssertions(t *testing.T) {
+ for _,kind:=range []string{"body","valueHash","sourceVersion","snapshot"} {t.Run(kind,func(t *testing.T){
+  f:=newPGStream(t);a:=f.artifacts()[0];q,e:=a.PrepareRequest("agent4-tamper",1,0);must(t,e)
+  switch kind {
+  case "body":q.Artifact.AnswerText="这款的价格是129.91元。";q.Artifact.AnswerTextHash=wire.Hash(cp.Hash(q.Artifact.AnswerText))
+  case "valueHash":q.Artifact.FactDependencies[0].ValueHash=wire.Hash(strings.Repeat("0",64))
+  case "sourceVersion":q.Artifact.FactDependencies[0].SourceVersion="wrong-source"
+  case "snapshot":s:=wire.Hash(strings.Repeat("0",64));q.Artifact.ProductSnapshotVersion=&s
+  }
+  raw,e:=wire.Encode(&q.Artifact);must(t,e);m:=integerDocument(raw);delete(m,"artifactHash");h,e:=cp.Version(m);must(t,e);q.Artifact.ArtifactHash=wire.Hash(h)
+  must(t,wire.VerifyAnswerArtifactHashes(&q.Artifact))
+  _,e=CallAuthority(f.ctx,f.store,f.runtime,wire.OpJournalPrepareAnswer,q);denied(t,e)
+  if f.count("dl05_answer_segments")!=0 {t.Fatal("self-consistent false fact persisted")}
+ })}
+}
+func TestPostgresAgent4Actual32UnitBound(t *testing.T) {
+ for _,n:=range []int{32,33} {t.Run(string(rune('A'+n-32)),func(t *testing.T){
+  f:=newPGStream(t);c:=f.coordinator(&mockSource{tokens:[]rune(strings.Repeat("这款有XL尺码。",n))})
+  for i:=0;i<32;i++ {must(t,c.PrepareNext());must(t,c.StartNext());must(t,c.Drain())}
+  if f.count("dl05_answer_segments")!=32||f.count("dl05_answer_grants")!=32||f.count("dl05_receiver_consumptions")!=32 {t.Fatal("wrong32-unit bounds")}
+  if n==32 {expect(t,c.PrepareNext(),io.EOF);must(t,c.Complete());f.assertSlot(false)} else {
+   e:=c.PrepareNext();if !errors.Is(e,domain.ErrLimit) {t.Fatal("unit33 not rejected",e)};f.assertSlot(true)
+   if f.count("dl05_answer_segments")!=32 {t.Fatal("unit33 persisted")}
+  }
+  var stop int64;must(t,f.pool.QueryRow(f.ctx,"SELECT stop_revision FROM dl05_runs WHERE run_id=$1",f.b.Run).Scan(&stop));if stop!=0 {t.Fatal("normal drain became Stop")}
+ })}
+}
+func TestPostgresAgent4BlockedProviderStop(t *testing.T) {
+ f:=newPGStream(t);s:=&channelSource{chunks:make(chan string),done:make(chan struct{})};c:=f.coordinator(s)
+ entered:=make(chan struct{});done:=make(chan error,1)
+ go func(){close(entered);done<-c.PrepareNext()}();<-entered;f.stop();c.Stop()
+ select {case e:=<-done:if e==nil {t.Fatal("stopped provider returned success")};case <-time.After(2*time.Second):t.Fatal("provider cancellation did not settle")}
+ select {case <-s.done:default:t.Fatal("source not closed")}
+ if f.count("dl05_answer_segments")!=0||f.count("dl05_answer_grants")!=0 {t.Fatal("late provider committed")}
+}
+func TestPostgresAgent4ConcurrentConsumeAtMostOneLatch(t *testing.T) {
+ f:=newPGStream(t);a:=f.artifacts()[0];must(t,f.adapter.Prepare(f.ctx,a));must(t,f.adapter.Start(f.ctx,a,First))
+ var wg sync.WaitGroup;start:=make(chan struct{})
+ for i:=0;i<2;i++ {wg.Add(1);go func(){defer wg.Done();<-start;_ = f.adapter.ConsumeOnce(f.ctx,a)}()};close(start);wg.Wait()
+ if f.count("dl05_receiver_consumptions")>1||f.count("dl05_answer_grants")!=1||f.receiver.acks>1 {t.Fatal("duplicate consumption")};f.assertSlot(true)
+}
+// Keep JSON import available to reviewers of raw document mutation paths.
+var _=json.Valid

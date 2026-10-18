@@ -1,0 +1,78 @@
+[
+  {
+    "answerId": "answer",
+    "answerText": "这款的价格是129.90元。",
+    "answerTextHash": "4dda63a0f5f6368c14dd289e51ed25369b3066f0dc8b50e702444e174ce59269",
+    "artifactHash": "c8a388ba0fa6b7533bc6fd17c07d51bd63299c2f851cfbb597eb24d73dd64c28",
+    "artifactId": "au_ebcf1c2fecc1dacc6efbb12334649a5107ef87accffe594811e99c2e0c2facec",
+    "assertionKinds": [
+      "PRICE"
+    ],
+    "attemptId": "attempt",
+    "commandId": "command",
+    "contractRevision": "durable-live-2",
+    "createdAt": "2026-10-17T00:00:00Z",
+    "estimatedDurationMs": 2560,
+    "factDependencies": [
+      {
+        "expiresAt": "2026-10-17T00:00:02Z",
+        "kind": "PRICE",
+        "productId": "product",
+        "sourceVersion": "source_1",
+        "validatedAt": "2026-10-17T00:00:00Z",
+        "valueHash": "13024046cbcaedb79964646e8ca639152d795bb515300d5d86bdec34bde26037"
+      }
+    ],
+    "ownerId": "owner",
+    "previousArtifactHash": null,
+    "producerIncarnation": "producer",
+    "productId": "product",
+    "productSnapshotVersion": "16a0eeb0791b6c92451fd284dd9f599e0a7dbe7f6ebea6e2d2d06c7f74aec112",
+    "requestHash": "5fa3d8d0671310a75014d92b407a9b9426121be6e45f2defb4576a47481fd762",
+    "runEpoch": 1,
+    "runId": "run",
+    "schemaVersion": "0.5",
+    "semanticBoundary": "COMPLETE_SENTENCE",
+    "sequence": 1,
+    "sessionId": "session",
+    "tenantId": "tenant"
+  },
+  {
+    "answerId": "answer",
+    "answerText": "这款有XL、XXL和2XL尺码。",
+    "answerTextHash": "449508bc925325a48505efa1f1f034ec5bd13a1c03f21dc37605d0f719cb596b",
+    "artifactHash": "dee494765db1015b82deb3c81ef24bebd82f50ee8e2160b5ff7d0931198dc6d1",
+    "artifactId": "au_dd90ca664c24b111c86ec7a63b8973d43af73c09e97ad9e11ea2439ac2fec8c5",
+    "assertionKinds": [
+      "SIZE_OPTIONS"
+    ],
+    "attemptId": "attempt",
+    "commandId": "command",
+    "contractRevision": "durable-live-2",
+    "createdAt": "2026-10-17T00:00:00Z",
+    "estimatedDurationMs": 2960,
+    "factDependencies": [
+      {
+        "expiresAt": "2026-10-17T00:00:02Z",
+        "kind": "SIZE_OPTIONS",
+        "productId": "product",
+        "sourceVersion": "source_1",
+        "validatedAt": "2026-10-17T00:00:00Z",
+        "valueHash": "fbf0b6de0f406a9a220d4dc6a14ded116a2c2d1a7ba8b1ba97ddc734011bbe4e"
+      }
+    ],
+    "ownerId": "owner",
+    "previousArtifactHash": "c8a388ba0fa6b7533bc6fd17c07d51bd63299c2f851cfbb597eb24d73dd64c28",
+    "producerIncarnation": "producer",
+    "productId": "product",
+    "productSnapshotVersion": "16a0eeb0791b6c92451fd284dd9f599e0a7dbe7f6ebea6e2d2d06c7f74aec112",
+    "requestHash": "5fa3d8d0671310a75014d92b407a9b9426121be6e45f2defb4576a47481fd762",
+    "runEpoch": 1,
+    "runId": "run",
+    "schemaVersion": "0.5",
+    "semanticBoundary": "COMPLETE_SENTENCE",
+    "sequence": 2,
+    "sessionId": "session",
+    "tenantId": "tenant"
+  }
+]
