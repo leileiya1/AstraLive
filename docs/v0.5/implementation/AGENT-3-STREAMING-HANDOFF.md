@@ -1,15 +1,15 @@
 # Agent 3 — conservative COMMENT answer streaming handoff
 
-交付阶段：可执行的隔离 Go 纯域模块 + CPU/Mock 验证，等待 Agent4 集成。正式 wire 编译、Agent2 真实 Authority/PG 和生产 Runtime/Guardian 接线尚未完成。Durable LIVE 保持关闭。
+交付阶段：隔离 Go 域实现、真实共享wire编码及CPU验证，等待Agent4集成。正式wire编译/跨语言校验已通过；Agent2真实Authority/PG和生产Runtime/Guardian接线尚未完成。Durable LIVE保持关闭。
 
 ## 固定版本与所有权
 
 - 安全同步基线：`e98d8cf53d1aa5518f9c908785b7a5feae5117f8`，在原 `AstraLive-agent-3` / `feat/v05-turn-manager` 上 fast-forward；原实现为 `ed2ebb235cb89e4b10b8a6f9670c6a1be00b1511`。
-- 已测实现提交：`0db4b8eb49f7ae7c37818c8bd047f676cd3ba7be`。随后仅追加本交接说明；最终交付 HEAD 记录于增量 PR 描述。
+- 最终已测实现提交：`90bab471ecf9cf147f5789fa9a8d40d707c0c102`（纯域初始提交为`0db4b8eb49f7ae7c37818c8bd047f676cd3ba7be`）。随后仅更新交接/证据；最终交付HEAD记录于增量PR描述。
 - 冻结输入：`c7fd46209d3cbc6f58541dba8b4e1c85609c823e`，22文件 digest `3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1`，逐文件原字节不变。
-- Agent4 正式 wire 依赖 SHA：**尚未提供**；没有复制 DTO、生成器、Schema 或正式序列化器。
+- Agent4正式wire依赖SHA：`e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565`；按[PR8正式通知](https://github.com/leileiya1/AstraLive/pull/8#issuecomment-6243513734)正常merge到原分支。共享包/生成器/Schema原字节未改，没有复制DTO。
 - Agent2 真实 v2 Authority 依赖 SHA：**尚未提供**；没有 SQL/迁移/Outbox/Lease/Recovery 改动。
-- 仅新增 `backend/internal/contentplan/answerstream/{language,scanner,artifact,stream_test}.go`、`backend/internal/turnmanager/answerstream/{coordinator,coordinator_test}.go` 以及 Agent3 文档/证据。既有业务入口、Scheduler、Runtime、Guardian 和 GPU 文件未改。
+- 仅新增 `backend/internal/contentplan/answerstream/{language,scanner,artifact,wire,stream_test,wire_test}.go`、`backend/internal/turnmanager/answerstream/{coordinator,coordinator_test}.go` 以及 Agent3 文档/证据。既有业务入口、Scheduler、Runtime、Guardian 和 GPU 文件未改。
 - 本轮增量 PR 面向 `integration/v05-durable-live`。旧 PR5 的 main 目标仅保留历史交付，不据其差异合并本轮内容。
 
 ## 已实现的纯域能力
@@ -22,7 +22,7 @@
 
 `Scanner.Next(ctx)` 在完整生产式被识别时立即返回，不等provider EOF；一次只拉一个<=64字符slice，窗口满时不读取。关闭后不能继续消费已缓冲的下一句。`Builder` 对同值/同版本的完整依赖重新观察，生成实际正文Hash、稳定ArtifactId、前驱链、最终正文Hash和manifestHash；拒绝缺失/额外/变化/过期依赖和超长文本。正文不trim、不NFC、不添加分隔符。
 
-`Encoding` 是Agent4唯一正式编码器的适配点：将不可直接JSON序列化的内部 `Draft` 映射至正式AnswerArtifact，Schema/语义验证后返回仅排除artifactHash的完整canonical bytes。Builder对这些bytes计算Artifact Hash并保留副本。测试编码器明确基于冻结fixture；它没有成为生产DTO或执行路径。
+`WireEncoding` 将不可直接JSON序列化的内部`Draft`映射到Agent4唯一正式`wire.AnswerArtifact`，使用其严格Encode/CanonicalJSON返回仅排除artifactHash的完整canonical bytes。Builder计算Artifact Hash并保留副本；`Artifact.Typed()`再调用真实SDK解码和VerifyAnswerArtifactHashes。`PrepareRequest()`与`Summary.SealRequest()`构建实际共享请求DTO并验证结构，使用调用者提供的当前CAS revision，不创建HTTP/Authority入口。保留的fixture编码器仅作独立测试基准。
 
 ## Coordinator接线顺序与权限
 
@@ -33,11 +33,11 @@
 | `Source` | 复用既有DeepSeek流，一个provider任务；输入是原始decoded token slices，不先经legacy `sentence_stream()` 的逗号/长度fallback处理。Source必须遵守取消，Close须取消/唤醒读取；raw SSE frame须在解码前限制16KiB |
 | `Facts.Observe` | 可信Product Tool预读；核验当前snapshot，返回完全相同kind/product/sourceVersion/valueHash的当前观察，不能伪造时间戳或替换事实；远程工作不占SQL事务 |
 | `Executor.Check` | 可信当前Stop/epoch/Session/Binding/事实/期限预检；通过新的append-only同值FactObservation续期，不改旧Artifact，不以原Grant expiry中断已消费正常长句 |
-| `PrepareNext` → `Executor.Prepare` | `JournalPrepareAnswer`，同一描述符和稳定key；预检后由Backend事务复核。CAS冲突在适配器内部读取当前revision后重试相同描述符；丢Prepare ACK可返回 `ErrPrepareUncertain`，域模块只重试同一Artifact |
+| `PrepareNext` → `Executor.Prepare` | 使用`Artifact.PrepareRequest()`的真实共享`JournalPrepareAnswer`，同一描述符和稳定key；预检后由Backend事务复核。CAS冲突在适配器内部读取当前revision后重试相同描述符；丢Prepare ACK可返回 `ErrPrepareUncertain`，域模块只重试同一Artifact |
 | `StartNext` → `Executor.Start` | 首次 `AcquireOutputPermit` + 唯一 `JournalStart`；后续 `JournalStartAnswerSegment` 只在可信前驱drain之后。只能接受首次true授权响应，ticket留在受限适配器中 |
 | `Executor.ConsumeOnce` | 原Receiver Consume/Backend latch/Guardian fsync首ACK/Runtime once-TTS完整链；不能把enqueue当消费成功，不能从query/retry恢复true响应。未知或丢ACK直接终止域协调器，保持权威UNKNOWN |
 | `Drain` → `Executor.ConfirmDrain` | 真正 `ReceiverFinishUnit` 所绑定的Observer required ranges + Backend `JournalConfirmAnswerSegment` 已确认；无运行时自报的done布尔值入口 |
-| provider EOF → `Executor.Seal` | 正式 `JournalSealAnswer`，精确顺序的manifest及无分隔符拼接的实际正文Hash；EOF只约束结束，不约束首句 |
+| provider EOF → `Executor.Seal` | 使用`Summary.SealRequest()`的真实共享`JournalSealAnswer`，精确顺序的manifest及无分隔符拼接的实际正文Hash；EOF只约束结束，不约束首句 |
 | `Complete` → CONTROL `Completion.Commit` | 再由权威状态验证seal+全部连续required drain+无unknown tail，走现有CONTROL `ConfirmCheckpoint` 业务提交；COMMENT子单元不会直接推进商品Segment cursor或释放全局Slot |
 
 `PrepareNext`一个owner，`Drain`可以并行，因此支持Prepare-before-Drain和Drain-before-late-Prepare。一个活动单元加一个lookahead、同一单元一次START/Consume尝试；32并发Start也不能复制效果。正常Drain只记单元状态。全局完成后原Manager读取权威投影，再仲裁下一未完成SCRIPT；本模块没有商品cursor、第二个Scheduler或Avatar队列。
@@ -63,8 +63,8 @@ Source是纯域接口，没有增加Token IPC/HTTP协议。现有DeepSeek执行�
 
 ## 验证与剩余门槛
 
-见[完整测试报告](AGENT-3-STREAMING-TEST-REPORT.md)和[原始证据](agent-3-evidence/)。20个新增顶层域测试通过；含原模块与Scheduler共6包race通过、137契约、11Journal、两个validator和冻结fixture实际AnswerArtifact Hash检查通过。既有可选v1导出测试1 SKIP，最终0 FAIL。
+见[完整测试报告](AGENT-3-STREAMING-TEST-REPORT.md)和[原始证据](agent-3-evidence/)。23个新增顶层域测试通过；含原模块、Scheduler和真实wire共7包race通过（83顶层PASS）、137契约、11Journal、13共享wire Python测试、生成器--check、两个validator和冻结fixture检查通过。真实Go DTO产出的2 Artifact/2 Prepare/1 Seal另经真实Python SDK解码/hash/manifest校验。既有可选v1导出测试1 SKIP，最终0 FAIL。
 
-正式DTO/Authority依赖固定SHA、正式wire编译、真实PG、真实Tool及身份装配、跨进程IPC/fsync/Guardian、Runtime实际once-TTS/媒体lineage、required-range drain、真实DeepSeek/TTS/GPU/Chrome/WebRTC/RTMP/观众及忙/闲首句SLA均待后续独立验收。新增检查和往返成本不可忽略；CPU阻塞EOF测试不代表首句秒数或SLA达标。
+Agent2真实Authority依赖固定SHA、真实PG、真实Tool及身份装配、跨进程IPC/fsync/Guardian、Runtime实际once-TTS/媒体lineage、required-range drain、真实DeepSeek/TTS/GPU/Chrome/WebRTC/RTMP/观众及忙/闲首句SLA均待后续独立验收。新增检查和往返成本不可忽略；CPU阻塞EOF测试不代表首句秒数或SLA达标。
 
 回滚只需不装配这两个新增包；没有默认入口或数据迁移。不要通过修改LIVE开关、冻结规范、Generation Fence、PCM/PTS/Credit或媒体协议使Mock交付变为生产可运行。

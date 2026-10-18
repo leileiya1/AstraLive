@@ -29,6 +29,6 @@ Scheduler补丁采用零行上下文以保持补丁文件本身无尾部空白�
 
 ## durable-live-2 隔离增量交付
 
-在基线 `e98d8cf53d1aa5518f9c908785b7a5feae5117f8` 的原Agent3分支新增保守中文语义流、实际回答Hash构建域模块及单COMMENT协调器。实现提交 `0db4b8eb49f7ae7c37818c8bd047f676cd3ba7be`；面向integration的增量PR记录最终HEAD。
+在基线 `e98d8cf53d1aa5518f9c908785b7a5feae5117f8` 的原Agent3分支新增保守中文语义流、实际回答Hash构建域模块及单COMMENT协调器。纯域初始提交 `0db4b8eb49f7ae7c37818c8bd047f676cd3ba7be`；最终已测实现 `90bab471ecf9cf147f5789fa9a8d40d707c0c102`，已正常merge Agent4正式wire pin `e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565`。增量PR记录最终HEAD。
 
-详见[新交接说明](implementation/AGENT-3-STREAMING-HANDOFF.md)、[测试报告](implementation/AGENT-3-STREAMING-TEST-REPORT.md)。20个新增顶层CPU/Mock测试、原模块/Scheduler race、137契约、11Journal通过。正式wire和真实Authority依赖SHA尚未提供，未复制DTO/SQL、未接共享入口，生产与真实媒体/SLA仍NOT TESTED。上文v1交付记录保留。
+详见[新交接说明](implementation/AGENT-3-STREAMING-HANDOFF.md)、[测试报告](implementation/AGENT-3-STREAMING-TEST-REPORT.md)。23个新增顶层测试、7包race、137契约、11Journal、13共享wire Python测试通过；真实共享Go/Python Artifact/Prepare/Seal及Hash校验通过。真实Authority依赖SHA尚未提供，未复制DTO/SQL、未接共享入口，生产与真实媒体/SLA仍NOT TESTED。上文v1交付记录保留。
