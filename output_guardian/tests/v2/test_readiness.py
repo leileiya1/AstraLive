@@ -120,6 +120,30 @@ async def test_ready_timeout_kills_child_and_does_not_open_gate(domain):
 
 
 @pytest.mark.asyncio
+async def test_stop_immediately_after_native_spawn_reaps_child(domain, monkeypatch):
+    d = domain
+    cpu = CPUMedia(d.r.gate, d.tmp / "spawn-stop", d.r.required_sinks)
+    d.r.outputs = cpu
+    start = multiprocessing.process.BaseProcess.start
+    owned = []
+
+    def stop_after_spawn(process):
+        start(process)
+        owned.append(process.pid)
+        with d.r.gate.lock:
+            d.r.gate.stop_locked(d.r.staged["runId"])
+
+    monkeypatch.setattr(multiprocessing.process.BaseProcess, "start", stop_after_spawn)
+    with pytest.raises(Closed):
+        await cpu.start()
+    assert owned and cpu.process is None and not cpu.ready
+    assert not cpu.registry.exists() and not any(cpu.edge.tag)
+    import psutil
+
+    assert not psutil.pid_exists(owned[0])
+
+
+@pytest.mark.asyncio
 async def test_actual_expiry_during_event_loop_stall_still_rejects(domain):
     d = domain
     cpu = CPUMedia(d.r.gate, d.tmp / "expired", d.r.required_sinks)

@@ -343,31 +343,34 @@ class CPUMedia:
         self.process.start()
         child.close()
         writer.close()
-        # No media/config secret is handed to the child before the parent
-        # independently records ownership. Gate is closed at this point.
-        require(
-            self.gate.state in {"FENCED", "STAGED_CLOSED"} and self.gate.active is None
-        )
-        record = dict(
-            pid=self.process.pid,
-            created=psutil.Process(self.process.pid).create_time(),
-            uid=os.geteuid(),
-        )
-
-        def persist():
-            self.state_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
-            with self.registry.open("x") as stream:
-                os.chmod(self.registry, 0o600)
-                json.dump(record, stream)
-                stream.flush()
-                os.fsync(stream.fileno())
-            fd = os.open(self.state_dir, os.O_RDONLY | os.O_DIRECTORY)
-            try:
-                os.fsync(fd)
-            finally:
-                os.close(fd)
-
         try:
+            # No media/config secret is handed to the child before the parent
+            # independently records ownership. Gate is closed at this point.
+            with self.gate.lock:
+                self.gate.compare_locked(captured)
+                require(
+                    self.gate.state in {"FENCED", "STAGED_CLOSED"}
+                    and self.gate.active is None
+                )
+            record = dict(
+                pid=self.process.pid,
+                created=psutil.Process(self.process.pid).create_time(),
+                uid=os.geteuid(),
+            )
+
+            def persist():
+                self.state_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
+                with self.registry.open("x") as stream:
+                    os.chmod(self.registry, 0o600)
+                    json.dump(record, stream)
+                    stream.flush()
+                    os.fsync(stream.fileno())
+                fd = os.open(self.state_dir, os.O_RDONLY | os.O_DIRECTORY)
+                try:
+                    os.fsync(fd)
+                finally:
+                    os.close(fd)
+
             await asyncio.to_thread(persist)
 
             def receive_ready():
