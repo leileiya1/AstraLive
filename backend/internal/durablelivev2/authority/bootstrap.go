@@ -195,6 +195,7 @@ func (s *Store) register(ctx context.Context, tx pgx.Tx, p Actor, st *state, q D
 	if e = check.registered(ctx, tx, p); e != nil {
 		return nil, e
 	}
+	st.limit = minTime(st.limit, check.limit)
 	if st.registration != nil {
 		if text(st.registration, "registrationHash") != hash(b) || text(st.registration, "stageReceiptId") != text(receipt, "stageReceiptId") || text(st.registration, "state") != "ACTIVE" {
 			return nil, fail("STATE_CONFLICT")

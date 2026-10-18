@@ -1,5 +1,7 @@
 # Agent 2 — durable-live-2 PostgreSQL / Authority handoff
 
+**当前复审状态：** 首轮被 Agent4 以 P0-R13-OUTPUT-DEADLINE 阻塞；本轮修复、当前测试与未解决共享项见 [P0修复交接](AGENT-2-P0-R13-OUTPUT-DEADLINE.md)。下文首轮验收数字保留为历史证据，不能替代新 SHA 的独立正式复审。
+
 本次为真实 SQL 与隔离 Authority 域实现，目标 integration/v05-durable-live，由 Agent4 审核。Durable LIVE 保持关闭；没有公共 HTTP/Runtime 接线，没有启动 GPU 或操作共享/生产数据库。
 
 - 开工基线：`e98d8cf53d1aa5518f9c908785b7a5feae5117f8`。原 Worktree `AstraLive-agent-2`、原分支 `feat/v05-durable-recovery`；开工时干净，以 ff-only 同步，未 reset/force/stash/clean。

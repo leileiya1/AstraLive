@@ -178,6 +178,7 @@ type state struct {
 	c, r, b             Document
 	registration        Document
 	now, limit          time.Time
+	outputExpiry        time.Time
 	inbox               string
 	inboxRev, answerRev int64
 	answerID            string
@@ -306,17 +307,17 @@ func (st *state) registered(ctx context.Context, tx pgx.Tx, p Actor) error {
 	if p.Role == "RUNTIME_JOURNAL" && (text(st.b, "runtimePrincipalId") != p.ID || text(st.b, "runtimeIncarnation") != p.Incarnation || st.producer != p.Producer) {
 		return fail("FORBIDDEN")
 	}
-	var good bool
-	e := tx.QueryRow(ctx, `SELECT true FROM dl05_v2_installations i JOIN dl05_v2_processes r ON r.principal_id=i.runtime_principal JOIN dl05_v2_processes g ON g.principal_id=i.guardian_principal JOIN dl05_room_outputs o ON o.room_id=$4 WHERE i.proof_id=$1 AND i.command_id=$2 AND i.retired_at IS NULL AND r.revoked_at IS NULL AND g.revoked_at IS NULL AND o.active_run_id=$3 AND o.output_binding_version=$5 AND o.guardian_id=$6 AND o.expires_at>clock_timestamp() AND ($7<>'OUTPUT_GUARDIAN' OR (g.principal_id=$8 AND g.incarnation=$9)) FOR SHARE OF i,r,g,o`, st.b["physicalInstallProofRef"], st.c["commandId"], st.c["runId"], p.Room, number(st.b, "outputBindingVersion"), st.b["guardianId"], p.Role, p.ID, p.Incarnation).Scan(&good)
+	e := tx.QueryRow(ctx, `SELECT o.expires_at FROM dl05_v2_installations i JOIN dl05_v2_processes r ON r.principal_id=i.runtime_principal JOIN dl05_v2_processes g ON g.principal_id=i.guardian_principal JOIN dl05_room_outputs o ON o.room_id=$4 WHERE i.proof_id=$1 AND i.command_id=$2 AND i.retired_at IS NULL AND r.revoked_at IS NULL AND g.revoked_at IS NULL AND o.active_run_id=$3 AND o.output_binding_version=$5 AND o.guardian_id=$6 AND o.expires_at>clock_timestamp() AND ($7<>'OUTPUT_GUARDIAN' OR (g.principal_id=$8 AND g.incarnation=$9)) FOR SHARE OF i,r,g,o`, st.b["physicalInstallProofRef"], st.c["commandId"], st.c["runId"], p.Room, number(st.b, "outputBindingVersion"), st.b["guardianId"], p.Role, p.ID, p.Incarnation).Scan(&st.outputExpiry)
 	if errors.Is(e, pgx.ErrNoRows) {
 		return fail("REGISTRATION_REVOKED")
 	}
 	if e != nil {
 		return e
 	}
-	if !good {
-		return fail("REGISTRATION_REVOKED")
-	}
+	// The SHARE lock on o serializes shortening/revocation with this transaction.
+	// Time still advances under the lock: retain its actual deadline for the final
+	// DB-clock check, never treat the initial validity predicate as a lasting proof.
+	st.limit = minTime(st.limit, st.outputExpiry)
 	return nil
 }
 
@@ -482,8 +483,8 @@ func (s *Store) Call(ctx context.Context, p Actor, name string, q Document) (out
 		if err = tx.QueryRow(ctx, "SELECT clock_timestamp()").Scan(&at); err != nil {
 			return nil, err
 		}
-		if !st.limit.After(at) {
-			return nil, fail("LEASE_LOST")
+		if err = st.finalizeResponse(name, out, at); err != nil {
+			return nil, err
 		}
 	}
 	if err = tx.Commit(ctx); err != nil {
@@ -491,9 +492,37 @@ func (s *Store) Call(ctx context.Context, p Actor, name string, q Document) (out
 	}
 	return out, nil
 }
-func timing(now time.Time, g, pm Document) Document {
-	grant := max(int64(0), date(g, "expiresAt").Sub(now).Milliseconds())
-	proof := max(int64(0), date(pm, "expiresAt").Sub(now).Milliseconds())
+
+// finalizeResponse runs after local validation and immediately before Commit.
+// All authority/source rows remain locked. No application callback or external
+// work runs between this DB-clock check and Commit. Replacing relative budgets
+// does not alter immutable proofs or remove the receiver ACK/deadline checks.
+func (st *state) finalizeResponse(name string, out Document, at time.Time) error {
+	if !st.limit.After(at) {
+		return fail("LEASE_LOST")
+	}
+	switch name {
+	case "QueryReceiverAuthority":
+		snap := obj(out, "snapshot")
+		snap["authorityTime"] = stamp(at)
+		snap["validUntil"] = stamp(st.limit)
+		snap["timing"] = timing(at, obj(snap, "grant"), obj(snap, "permit"), st.limit)
+	case "JournalStart", "JournalStartAnswerSegment", "CommitReceiverConsume":
+		if out["startAuthorized"] == true || out["segmentStartAuthorized"] == true || out["consumeAuthorized"] == true {
+			// Original first-response handshakes still require the frozen 100ms margin.
+			if st.limit.Sub(at).Milliseconds() <= 100 {
+				return fail("GRANT_EXPIRED")
+			}
+			remaining := st.limit.Sub(at).Milliseconds()
+			out["consumeTiming"] = Document{"remainingGrantMs": remaining, "remainingProofMs": remaining, "safetyMarginMs": int64(100)}
+		}
+	}
+	return nil
+}
+
+func timing(now time.Time, g, pm Document, limit time.Time) Document {
+	grant := max(int64(0), minTime(date(g, "expiresAt"), limit).Sub(now).Milliseconds())
+	proof := max(int64(0), minTime(date(pm, "expiresAt"), limit).Sub(now).Milliseconds())
 	return Document{"remainingGrantMs": grant, "remainingProofMs": proof, "safetyMarginMs": int64(100)}
 }
 func secret() string {

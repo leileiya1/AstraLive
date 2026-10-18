@@ -64,7 +64,7 @@ func (s *Store) snapshot(ctx context.Context, tx pgx.Tx, p Actor, st *state, q D
 	if e = tx.QueryRow(ctx, "SELECT clock_timestamp()").Scan(&st.now); e != nil {
 		return nil, e
 	}
-	return Document{"requestId": q["requestId"], "snapshot": Document{"registration": st.registration, "artifactRegistration": child, "artifact": a, "grant": g, "grantState": status, "permit": pm, "observation": obs, "consumption": summary, "authorityTime": stamp(st.now), "validUntil": pm["expiresAt"], "timing": timing(st.now, g, pm)}}, nil
+	return Document{"requestId": q["requestId"], "snapshot": Document{"registration": st.registration, "artifactRegistration": child, "artifact": a, "grant": g, "grantState": status, "permit": pm, "observation": obs, "consumption": summary, "authorityTime": stamp(st.now), "validUntil": stamp(st.limit), "timing": timing(st.now, g, pm, st.limit)}}, nil
 }
 func (s *Store) consume(ctx context.Context, tx pgx.Tx, p Actor, st *state, q Document) (Document, error) {
 	// Current authority is checked BEFORE duplicate/nonce lookup.
@@ -165,7 +165,7 @@ func (s *Store) consume(ctx context.Context, tx pgx.Tx, p Actor, st *state, q Do
 	if e != nil {
 		return nil, e
 	}
-	return Document{"requestId": q["requestId"], "consumeAuthorized": true, "consumption": record, "consumeTiming": timing(st.now, g, obj(v, "permit")), "summary": Document{"state": "CONSUMED", "receiptId": record["receiptId"]}}, nil
+	return Document{"requestId": q["requestId"], "consumeAuthorized": true, "consumption": record, "consumeTiming": timing(st.now, g, obj(v, "permit"), st.limit), "summary": Document{"state": "CONSUMED", "receiptId": record["receiptId"]}}, nil
 }
 func (s *Store) metadata(ctx context.Context, tx pgx.Tx, p Actor, st *state, q Document) (Document, error) {
 	if st.b == nil || q["bootstrapId"] != st.b["bootstrapId"] {

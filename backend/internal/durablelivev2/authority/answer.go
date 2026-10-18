@@ -267,6 +267,7 @@ func (s *Store) permit(ctx context.Context, tx pgx.Tx, p Actor, st *state, q Doc
 	observation["validUntil"] = stamp(valid)
 	observation["authorityRevision"] = hash(Document{"snapshot": a["productSnapshotVersion"], "facts": a["factDependencies"]})
 	expiry := minTime(st.now.Add(800*time.Millisecond), valid)
+	st.limit = minTime(st.limit, expiry)
 	if !expiry.After(st.now) {
 		return nil, fail("FACT_EXPIRED")
 	}
@@ -313,6 +314,9 @@ func (s *Store) currentProof(ctx context.Context, tx pgx.Tx, p Actor, st *state,
 	if e = s.facts(ctx, tx, p, st, a); e != nil {
 		return nil, nil, e
 	}
+	// The immutable permit may predate a shortened output/Binding/lease. The
+	// current proof is the intersection, not a rewrite of that persisted permit.
+	st.limit = minTime(st.limit, minTime(date(pm, "expiresAt"), date(obs, "validUntil")))
 	return pm, obs, nil
 }
 func ticketVerifier(st *state, grantID, ticket string) string {
@@ -380,11 +384,11 @@ func (s *Store) start(ctx context.Context, tx pgx.Tx, p Actor, st *state, q Docu
 	if e = tx.QueryRow(ctx, "SELECT clock_timestamp()").Scan(&st.now); e != nil {
 		return nil, e
 	}
-	if !date(pm, "expiresAt").After(st.now.Add(100 * time.Millisecond)) {
+	if !st.limit.After(st.now.Add(100 * time.Millisecond)) {
 		return nil, fail("GRANT_EXPIRED")
 	}
 	st.limit = minTime(st.limit, date(pm, "expiresAt"))
-	grant := Document{"grantId": id("grant"), "commandId": st.c["commandId"], "attemptId": st.c["attemptId"], "sessionId": st.c["sessionId"], "runEpoch": st.c["runEpoch"], "producerIncarnation": st.producer, "answerId": a["answerId"], "artifactId": aid, "artifactHash": a["artifactHash"], "sequence": a["sequence"], "permitId": pm["permitId"], "factObservationId": ob["observationId"], "factValidUntil": ob["validUntil"], "issuedAt": stamp(st.now), "expiresAt": pm["expiresAt"], "authorizationScope": "UNIT_START_ONCE"}
+	grant := Document{"grantId": id("grant"), "commandId": st.c["commandId"], "attemptId": st.c["attemptId"], "sessionId": st.c["sessionId"], "runEpoch": st.c["runEpoch"], "producerIncarnation": st.producer, "answerId": a["answerId"], "artifactId": aid, "artifactHash": a["artifactHash"], "sequence": a["sequence"], "permitId": pm["permitId"], "factObservationId": ob["observationId"], "factValidUntil": ob["validUntil"], "issuedAt": stamp(st.now), "expiresAt": stamp(st.limit), "authorizationScope": "UNIT_START_ONCE"}
 	ticket := secret()
 	_, e = tx.Exec(ctx, `INSERT INTO dl05_answer_grants VALUES($1,$2,$3,$4,$5,$6,$7)`, grant["grantId"], st.c["commandId"], aid, grant, ticketVerifier(st, text(grant, "grantId"), ticket), pm["permitId"], date(grant, "expiresAt"))
 	if e != nil {
@@ -404,7 +408,7 @@ func (s *Store) start(ctx context.Context, tx pgx.Tx, p Actor, st *state, q Docu
 	}
 	st.answerRev++
 	if continuation {
-		return answerResponse(q, Document{"commandId": st.c["commandId"], "answerId": a["answerId"], "artifactId": aid, "artifactHash": a["artifactHash"], "segmentStartAuthorized": true, "grant": grant, "state": "STARTED", "answerRevision": st.answerRev, "consumeTicket": ticket, "consumeTiming": timing(st.now, grant, pm)}), nil
+		return answerResponse(q, Document{"commandId": st.c["commandId"], "answerId": a["answerId"], "artifactId": aid, "artifactHash": a["artifactHash"], "segmentStartAuthorized": true, "grant": grant, "state": "STARTED", "answerRevision": st.answerRev, "consumeTicket": ticket, "consumeTiming": timing(st.now, grant, pm, st.limit)}), nil
 	}
 	tag, e := tx.Exec(ctx, "UPDATE dl05_runtime_inbox SET status='STARTED',revision=revision+1,started_at=clock_timestamp() WHERE command_id=$1 AND status='ACCEPTED' AND executor_sealed_at IS NULL", st.c["commandId"])
 	if e != nil {
@@ -416,5 +420,5 @@ func (s *Store) start(ctx context.Context, tx pgx.Tx, p Actor, st *state, q Docu
 	st.inboxRev++
 	var receipt string
 	e = tx.QueryRow(ctx, "SELECT receipt_id FROM dl05_runtime_inbox WHERE command_id=$1", st.c["commandId"]).Scan(&receipt)
-	return Document{"requestId": q["requestId"], "startAuthorized": true, "answerGrant": grant, "state": "STARTED", "revision": st.inboxRev, "evidenceRef": receipt, "consumeTicket": ticket, "consumeTiming": timing(st.now, grant, pm)}, e
+	return Document{"requestId": q["requestId"], "startAuthorized": true, "answerGrant": grant, "state": "STARTED", "revision": st.inboxRev, "evidenceRef": receipt, "consumeTicket": ticket, "consumeTiming": timing(st.now, grant, pm, st.limit)}, e
 }

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "./internal/durablelivev2/authority",
+    "-count=1",
+    "-timeout=120s",
+    "-json"
+  ],
+  "exitCode": 0,
+  "seconds": 21.590050458
+}

@@ -1,0 +1,303 @@
+{
+  "originalAgent4Before": {
+    "topLevel": {
+      "pass": 0,
+      "fail": 3,
+      "skip": 0
+    },
+    "subtests": {
+      "pass": 0,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "originalAgent4Final": {
+    "topLevel": {
+      "pass": 3,
+      "fail": 0,
+      "skip": 0
+    },
+    "subtests": {
+      "pass": 0,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "authority": {
+    "topLevel": {
+      "pass": 47,
+      "fail": 0,
+      "skip": 1
+    },
+    "subtests": {
+      "pass": 36,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "originalBaselineTests": {
+    "TestConcurrentConsumeOneLatch": "pass",
+    "TestRollbackAtResponseValidation": "pass",
+    "TestStopCommitBothOrdersAndCompetition": "pass",
+    "TestUnknownDurableAuditAndNotification": "pass",
+    "TestPrepareAliasAndDrainScopeUnit2": "pass",
+    "TestScopeRolesAndCurrentIdentity": "pass",
+    "TestChangedFactsBindingEpochAndExpiry": "pass",
+    "TestRenewAfterGrantExpiryDoesNotReauthorize": "pass",
+    "TestExternalPreflightDoesNotBlockStop": "pass",
+    "TestSQLTombstonesCannotBeRewritten": "pass",
+    "TestExpiredRecoveryIsIdempotent": "pass",
+    "TestOwnedCommitCrashChild": "skip",
+    "TestCommitThenSIGKILLFreshBackendDoesNotReplay": "pass",
+    "TestSealedAllDrainControlCompletionAndNoEarlyRelease": "pass",
+    "TestStopRegisterAndUntrustedBootstrap": "pass",
+    "TestAtomicFactMismatchPrepareAndBadTicket": "pass",
+    "TestOriginalFactAndGrantExpiryFreshProofOnly": "pass",
+    "TestNoVerifierNoAuthority": "pass",
+    "TestLateValidationCannotReturnExpiredPositive": "pass",
+    "TestStopFirstRegistrationActualCompetition": "pass",
+    "TestConcurrentPrepareCASAndOriginalReceipt": "pass",
+    "TestStopStaleCASPersistsOneStopIntent": "pass",
+    "TestSQLRejectsCrossTenantMirrorAndArtifact": "pass",
+    "TestSQLLatencyEvidence": "pass",
+    "TestLostStartACKExpiresWithoutRegrant": "pass",
+    "TestUnknownRequiresIndependentFenceToReleaseSlot": "pass",
+    "TestMigrationUpgradeRepeatConcurrentPreservesV1": "pass",
+    "TestMigrationAndNormalConsume": "pass",
+    "TestOfficialWireAdapterConsumptionAndStrictAdmission": "pass",
+    "TestOfficialWireMetadataRolesAndHashes": "pass",
+    "TestRegistrarHistoricalReadbackAfterLostRegistrationACK": "pass"
+  },
+  "newDeadlineTopLevel": {
+    "TestOutputDeadlineEqualDatabaseNow": "pass",
+    "TestOutputDeadlineExpiresDuringPublication": "pass",
+    "TestOutputDeadlineQueryBudgetUsesFinalDatabaseTime": "pass",
+    "TestOutputDeadlineShorteningTransactionWins": "pass",
+    "TestOutputDeadlineWriterCannotCrossFinalPublication": "pass",
+    "TestOutputDeadlineConcurrentConsumeAndRevocation": "pass",
+    "TestOutputDeadlineLostACKKeepsLatchAndUnknown": "pass",
+    "TestOutputDeadlineUnit2StillUsesIndependentGrant": "pass",
+    "TestOutputDeadlineConsumedLongUnitCanRefreshProof": "pass",
+    "TestOutputDeadlineStopUnknownAndEpochRemainClosed": "pass",
+    "TestOutputDeadlineRegistrationMustRemainCurrentAtCommit": "pass",
+    "TestOutputDeadlineStartCapsOriginalGrantAndBudget": "pass",
+    "TestOutputDeadlineIntersectsEarlierRunLease": "pass",
+    "TestOutputDeadlineContinuousProofRefreshBeyondInitialGrantAndFacts": "pass"
+  },
+  "newDeadlineSubtests": [
+    "TestOutputDeadlineExpiresDuringPublication/AcquireOutputPermit",
+    "TestOutputDeadlineExpiresDuringPublication/QueryReceiverAuthority",
+    "TestOutputDeadlineExpiresDuringPublication/CommitReceiverConsume",
+    "TestOutputDeadlineShorteningTransactionWins/QueryReceiverAuthority",
+    "TestOutputDeadlineShorteningTransactionWins/CommitReceiverConsume",
+    "TestOutputDeadlineWriterCannotCrossFinalPublication/AcquireOutputPermit",
+    "TestOutputDeadlineWriterCannotCrossFinalPublication/QueryReceiverAuthority",
+    "TestOutputDeadlineWriterCannotCrossFinalPublication/CommitReceiverConsume",
+    "TestOutputDeadlineConcurrentConsumeAndRevocation/true",
+    "TestOutputDeadlineConcurrentConsumeAndRevocation/false",
+    "TestOutputDeadlineStopUnknownAndEpochRemainClosed/Stop",
+    "TestOutputDeadlineStopUnknownAndEpochRemainClosed/Unknown",
+    "TestOutputDeadlineStopUnknownAndEpochRemainClosed/Epoch"
+  ],
+  "backend": {
+    "full-go-test": {
+      "command": [
+        "go",
+        "test",
+        "./...",
+        "-count=1",
+        "-timeout=120s",
+        "-json"
+      ],
+      "exitCode": 1,
+      "seconds": 17.535392208,
+      "topLevel": {
+        "pass": 187,
+        "fail": 1,
+        "skip": 13
+      },
+      "failingTests": [
+        {
+          "package": "astralive/backend/internal/durableintegration",
+          "test": "TestPostgresLegacyMigrationUpgradePreservesData"
+        }
+      ],
+      "noSharedFileEdits": true,
+      "noMigrationOverlay": true
+    },
+    "full-go-race": {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "./...",
+        "-count=1",
+        "-timeout=120s",
+        "-json"
+      ],
+      "exitCode": 1,
+      "seconds": 21.586118875000004,
+      "topLevel": {
+        "pass": 187,
+        "fail": 1,
+        "skip": 13
+      },
+      "failingTests": [
+        {
+          "package": "astralive/backend/internal/durableintegration",
+          "test": "TestPostgresLegacyMigrationUpgradePreservesData"
+        }
+      ],
+      "noSharedFileEdits": true,
+      "noMigrationOverlay": true
+    },
+    "vet": {
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exitCode": 0,
+      "seconds": 0.20609300000000275,
+      "topLevel": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 0
+      },
+      "failingTests": [],
+      "noSharedFileEdits": true,
+      "noMigrationOverlay": true
+    }
+  },
+  "contractChecks": {
+    "contracts-137": {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_contracts",
+        "tests.test_durable_live_contracts",
+        "tests.test_durable_answer_contracts",
+        "tests.test_answer_contract_repairs",
+        "tests.test_receiver_contracts",
+        "tests.test_receiver_stop_races",
+        "-v"
+      ],
+      "exitCode": 0,
+      "seconds": 18.670027666
+    },
+    "journal-11": {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "runtime/tests/test_durable_live_journal.py",
+        "-q"
+      ],
+      "exitCode": 0,
+      "seconds": 0.5385529170000005
+    },
+    "official-wire-13": {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_durable_live_v2_wire",
+        "-v"
+      ],
+      "exitCode": 0,
+      "seconds": 2.4673613749999994
+    },
+    "candidate-validator": {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "scripts/validate-answer-contract.py"
+      ],
+      "exitCode": 0,
+      "seconds": 0.23388195800000133
+    },
+    "v1-validator": {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "scripts/validate-durable-live-contracts.py"
+      ],
+      "exitCode": 0,
+      "seconds": 0.13189645900000002
+    },
+    "generated-check": {
+      "command": [
+        "python3",
+        "scripts/durable-live/generate_v2_wire.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 0.06811583299999668
+    }
+  },
+  "skips": [
+    {
+      "package": "astralive/backend/internal/app",
+      "test": "TestAuditSelectionExpiresWhileWaitingForCommandLock"
+    },
+    {
+      "package": "astralive/backend/internal/httpapi",
+      "test": "TestProductAuthorizationAndPinnedBindings"
+    },
+    {
+      "package": "astralive/backend/internal/httpapi",
+      "test": "TestInteractionFormalCPU"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestRedisStreamsDuplicateReclaimAndSQLProjection"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestRedisIsolatedDisconnectAndSQLFallback"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestIsolatedBackendHelper"
+    },
+    {
+      "package": "astralive/backend/internal/userconfig",
+      "test": "TestConfigurationBrowserHarness"
+    },
+    {
+      "package": "astralive/backend/tests",
+      "test": "TestEventDedupAndStateUpdateWithPostgres"
+    },
+    {
+      "package": "astralive/backend/internal/userconfig",
+      "test": "TestPostgresConfigurationLifecycle"
+    },
+    {
+      "package": "astralive/backend/internal/userconfig",
+      "test": "TestLocalProviderProbesScopedAndVersioned"
+    },
+    {
+      "package": "astralive/backend/internal/turnmanager",
+      "test": "TestExportContractRequests"
+    },
+    {
+      "package": "astralive/backend/internal/durablelivev2/authority",
+      "test": "TestOwnedCommitCrashChild"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresIsolatedServerOutage"
+    }
+  ],
+  "notTested": [
+    "whole-server PostgreSQL/Redis outage",
+    "production Registrar/source adapter",
+    "real HTTP/IPC identity and latency",
+    "Guardian fsync/ACK/final output gate",
+    "GPU/Worker/Publisher/Decoder/Sink/RTMP/WebRTC/audience",
+    "host/cross-host recovery"
+  ],
+  "sharedOwnership": "full Go test/race remain FAIL only migration count6 assertion; no shared file or protected policy changed; Agent4 owns both integration repairs",
+  "productionEnabled": false
+}

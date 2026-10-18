@@ -1,0 +1,67 @@
+{
+  "contracts-137": {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_contracts",
+      "tests.test_durable_live_contracts",
+      "tests.test_durable_answer_contracts",
+      "tests.test_answer_contract_repairs",
+      "tests.test_receiver_contracts",
+      "tests.test_receiver_stop_races",
+      "-v"
+    ],
+    "exitCode": 0,
+    "seconds": 18.670027666
+  },
+  "journal-11": {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "runtime/tests/test_durable_live_journal.py",
+      "-q"
+    ],
+    "exitCode": 0,
+    "seconds": 0.5385529170000005
+  },
+  "official-wire-13": {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_durable_live_v2_wire",
+      "-v"
+    ],
+    "exitCode": 0,
+    "seconds": 2.4673613749999994
+  },
+  "candidate-validator": {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/validate-answer-contract.py"
+    ],
+    "exitCode": 0,
+    "seconds": 0.23388195800000133
+  },
+  "v1-validator": {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/validate-durable-live-contracts.py"
+    ],
+    "exitCode": 0,
+    "seconds": 0.13189645900000002
+  },
+  "generated-check": {
+    "command": [
+      "python3",
+      "scripts/durable-live/generate_v2_wire.py",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 0.06811583299999668
+  }
+}
