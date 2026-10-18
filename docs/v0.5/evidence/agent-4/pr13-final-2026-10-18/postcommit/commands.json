@@ -1,0 +1,178 @@
+[
+  {
+    "label": "original-ABC",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durablelivev2/authority",
+      "-run",
+      "^TestAgent4"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 2.241,
+    "childUserSeconds": 0.531,
+    "childSystemSeconds": 0.776,
+    "cumulativeChildPeakRSSBytes": 326631424
+  },
+  {
+    "label": "authority-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durablelivev2/authority"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 21.172,
+    "childUserSeconds": 4.04,
+    "childSystemSeconds": 1.837,
+    "cumulativeChildPeakRSSBytes": 331431936
+  },
+  {
+    "label": "go-test",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "./..."
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 17.42,
+    "childUserSeconds": 6.449,
+    "childSystemSeconds": 4.006,
+    "cumulativeChildPeakRSSBytes": 371982336
+  },
+  {
+    "label": "go-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./..."
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 21.971,
+    "childUserSeconds": 14.153,
+    "childSystemSeconds": 4.602,
+    "cumulativeChildPeakRSSBytes": 403685376
+  },
+  {
+    "label": "go-vet",
+    "command": [
+      "go",
+      "vet",
+      "./..."
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 0.184,
+    "childUserSeconds": 0.232,
+    "childSystemSeconds": 0.845,
+    "cumulativeChildPeakRSSBytes": 403685376
+  },
+  {
+    "label": "contracts137",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_contracts",
+      "tests.test_durable_live_contracts",
+      "tests.test_durable_answer_contracts",
+      "tests.test_answer_contract_repairs",
+      "tests.test_receiver_contracts",
+      "tests.test_receiver_stop_races",
+      "-v"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+    "exitCode": 0,
+    "elapsedSeconds": 18.714,
+    "childUserSeconds": 1.921,
+    "childSystemSeconds": 0.749,
+    "cumulativeChildPeakRSSBytes": 403685376
+  },
+  {
+    "label": "journal11",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "pytest",
+      "runtime/tests/test_durable_live_journal.py",
+      "-q"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+    "exitCode": 0,
+    "elapsedSeconds": 0.553,
+    "childUserSeconds": 0.25,
+    "childSystemSeconds": 0.045,
+    "cumulativeChildPeakRSSBytes": 403685376
+  },
+  {
+    "label": "wire13",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_durable_live_v2_wire",
+      "-v"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+    "exitCode": 0,
+    "elapsedSeconds": 2.691,
+    "childUserSeconds": 1.949,
+    "childSystemSeconds": 0.656,
+    "cumulativeChildPeakRSSBytes": 403685376
+  },
+  {
+    "label": "candidate-validator",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/validate-answer-contract.py"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+    "exitCode": 0,
+    "elapsedSeconds": 0.228,
+    "childUserSeconds": 0.209,
+    "childSystemSeconds": 0.016,
+    "cumulativeChildPeakRSSBytes": 403685376
+  },
+  {
+    "label": "v1-validator",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/validate-durable-live-contracts.py"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+    "exitCode": 0,
+    "elapsedSeconds": 0.131,
+    "childUserSeconds": 0.118,
+    "childSystemSeconds": 0.01,
+    "cumulativeChildPeakRSSBytes": 403685376
+  },
+  {
+    "label": "generated-check",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/durable-live/generate_v2_wire.py",
+      "--check"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+    "exitCode": 0,
+    "elapsedSeconds": 0.054,
+    "childUserSeconds": 0.038,
+    "childSystemSeconds": 0.015,
+    "cumulativeChildPeakRSSBytes": 403685376
+  }
+]

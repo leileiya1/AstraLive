@@ -46,6 +46,8 @@ Candidate and final production/shared source hashes match. Both phases ran separ
 | Extra independent rollback/budget/SQL snapshot probes |3 PASS |Same tested source hashes; not added to permanent module tests |
 | Unauthorized protected-file mutations |Both rejected; restored validator PASS |All313 expected hashes independently checked |
 
+After committing and pushing normal merge **`a4a57fcc0effd5dd5ea9689b355a963b007c20f3`**, the complete suite was independently rerun a third time on that exact committed integration source. Post-commit A/B/C3 PASS, Authority47 PASS/1 helper SKIP, Go test/race each189 PASS/0 FAIL/12 SKIP, vet,137 contracts,11 Journal,13 wire, both validators and generator check all PASS. Distinct commands/logs are in `postcommit/`; committed source blobs match both earlier source manifests. The follow-up audit commit adds only these results/docs, leaving the Authority consumer pin at **a4a57fcc0effd5dd5ea9689b355a963b007c20f3**.
+
 [Summary and full skip reasons](../evidence/agent-4/pr13-final-2026-10-18/summary.json), separate candidate/final raw commands/logs, PostgreSQL settings, owned-service cleanup, pre/post source manifests and CPU child-resource records are retained.12 Go skips cover optional browser/provider/formal/userconfig/event/export fixtures, helper entrypoints exercised by their parent tests, and fixed-port whole PostgreSQL/Redis outage opt-ins. Dedicated Redis stream/reclaim ran; whole-server outages did not. CPU deltas/cumulative Darwin child peak RSS are not a production performance benchmark. Only owned new services/child processes were stopped; data/logs retained.
 
 ## Consumer handoff and remaining gates
