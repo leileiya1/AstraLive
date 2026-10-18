@@ -1,5 +1,7 @@
 # durable-live-2 DTO generation plan
 
+当前实施状态：生成器、Go/Python严格DTO与operation codec已交付；使用方法/最终证据见 [DTO-HANDOFF](implementation/DTO-HANDOFF.md)。以下为原获批后计划，唯一Owner和冻结输入规则继续适用。
+
 Owner / 唯一维护者：Agent4。此文件是实施方案，不是新的授权协议；当前尚未交付生产DTO或生成器。
 
 ## 固定输入与输出

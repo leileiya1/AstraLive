@@ -1,5 +1,7 @@
 # CCR-ADL-001 implementation baseline
 
+DTO后续交付：统一生成器/Go/Python wire实现已完成，详见 [DTO-HANDOFF](implementation/DTO-HANDOFF.md)；本文件记录原e98基线分工，原“尚未实现”描述保留为该阶段状态。新DTO完整SHA以PR8定版通知为准，生产接线仍未实施。
+
 本登记只分配实现责任，不改变获批技术协议，也不启动生产功能。
 
 - Baseline ID: `v05-ccr-adl-001-approved-20261017`。
