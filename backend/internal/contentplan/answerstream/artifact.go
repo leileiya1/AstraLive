@@ -33,11 +33,11 @@ type Draft struct {
 	Created                      time.Time
 }
 
-// Encoding is implemented only by Agent4 using the sole formal wire package.
+// Encoding delegates wire representation to Agent4's sole formal package.
 // Encode must schema/semantics-validate the exact Draft mapping and return the
 // canonical complete AnswerArtifact EXCLUDING ONLY artifactHash. Empty facts
 // map to [], first previousArtifactHash to null; never trim/normalize Text.
-// This package intentionally ships no production encoder or shadow v2 DTO.
+// WireEncoding uses Agent4's sole generated package; no shadow DTO is defined.
 type Encoding interface{ Encode(Draft) ([]byte, error) }
 
 // Facts re-reads trusted Tool assertions outside SQL. It must return the exact
@@ -157,7 +157,7 @@ func (b *Builder) Build(ctx context.Context, u Unit) (Artifact, error) {
 		}
 	}
 	seq := len(b.entries) + 1
-	idHash, _ := cp.Version([]any{"answer-unit-domain-1", b.binding.Run, b.binding.Command, b.binding.Attempt, b.binding.Answer, seq})
+	idHash, _ := cp.Version([]any{"answer-unit-domain-1", b.binding.Tenant, b.binding.Owner, b.binding.Run, b.binding.Command, b.binding.Attempt, b.binding.Answer, seq})
 	d := Draft{Binding: b.binding, ID: "au_" + idHash, Sequence: seq, Text: u.text, TextHash: cp.Hash(u.text), PreviousHash: b.previous, Facts: ordered, Duration: duration, Created: now}
 	copyDraft := d
 	copyDraft.Facts = append([]Dependency(nil), d.Facts...)

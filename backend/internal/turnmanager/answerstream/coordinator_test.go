@@ -12,8 +12,9 @@ import (
 	"time"
 )
 
-// All peers below are explicit CPU/Mock domain seams. They do NOT implement
-// v2 DTOs, SQL, ticket authentication, fsync, media drain or real TTS.
+// All peers below are explicit CPU/Mock authority seams. The builder now uses
+// Agent4's real wire encoding, but peers do NOT implement SQL, authentication,
+// fsync, media drain or real TTS.
 var now = time.Date(2026, 10, 17, 0, 0, 0, 0, time.UTC)
 
 const reply = "这款的价格是129.90元。这款有XL和XXL尺码。"
@@ -72,14 +73,6 @@ type mockFacts struct{}
 
 func (mockFacts) Observe(_ context.Context, _ domain.Binding, f []domain.Dependency) ([]domain.Dependency, error) {
 	return append([]domain.Dependency(nil), f...), nil
-}
-
-type mockEncoding struct{}
-
-func (mockEncoding) Encode(d domain.Draft) ([]byte, error) {
-	// Deliberately NOT an AnswerArtifact wire object: tests distinguish pure
-	// domain coordination from formal encoder/Authority interoperability.
-	return cp.Canonical(map[string]any{"testOnly": true, "text": d.Text, "textHash": d.TextHash, "previous": d.PreviousHash, "sequence": d.Sequence, "id": d.ID})
 }
 
 type mockPeers struct {
@@ -234,7 +227,7 @@ func harness(t *testing.T, source domain.Source) (*Coordinator, *mockPeers) {
 	if e != nil {
 		t.Fatal(e)
 	}
-	b, e := domain.NewBuilder(domain.Binding{Tenant: "tenant", Owner: "owner", Run: "run", Session: "session", Command: "command", Attempt: "attempt", Turn: "turn", Utterance: "utterance", Producer: "producer", Answer: "answer", Product: "product", Snapshot: cp.Hash("snapshot"), RequestHash: cp.Hash("question"), Epoch: 1, Generation: 7}, func() time.Time { return now }, mockFacts{}, mockEncoding{})
+	b, e := domain.NewBuilder(domain.Binding{Tenant: "tenant", Owner: "owner", Run: "run", Session: "session", Command: "command", Attempt: "attempt", Turn: "turn", Utterance: "utterance", Producer: "producer", Answer: "answer", Product: "product", Snapshot: cp.Hash("snapshot"), RequestHash: cp.Hash("question"), Epoch: 1, Generation: 7}, func() time.Time { return now }, mockFacts{}, domain.WireEncoding{})
 	if e != nil {
 		t.Fatal(e)
 	}

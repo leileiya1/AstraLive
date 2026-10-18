@@ -7,12 +7,14 @@
     "-json",
     "./internal/contentplan/...",
     "./internal/turnmanager/...",
-    "./internal/interaction"
+    "./internal/interaction",
+    "./internal/durablelivev2/wire"
   ],
   "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-3/backend",
   "environment": {
-    "ASTRALIVE_AGENT3_ARTIFACT_EVIDENCE": "/Users/sapiece/innovationProject/AstraLive-agent-3/docs/v0.5/implementation/agent-3-evidence/mock-artifacts.json"
+    "ASTRALIVE_AGENT3_ARTIFACT_EVIDENCE": "/Users/sapiece/innovationProject/AstraLive-agent-3/docs/v0.5/implementation/agent-3-evidence/mock-artifacts.json",
+    "ASTRALIVE_AGENT3_WIRE_EVIDENCE": "/Users/sapiece/innovationProject/AstraLive-agent-3/docs/v0.5/implementation/agent-3-evidence/official-wire-artifacts.json"
   },
   "exitCode": 0,
-  "seconds": 2.55
+  "seconds": 2.311
 }

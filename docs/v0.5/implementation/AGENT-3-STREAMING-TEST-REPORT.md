@@ -1,6 +1,6 @@
 # Agent 3 durable-live-2 streaming test report
 
-本轮交付为 CPU 纯域实现；正式 wire 编译和真实 Authority/PG 联验等待 Agent4/2 的固定 SHA。无生产入口、DTO、SQL、媒体协议或 LIVE 开关改动。
+本轮交付为 CPU 域实现及真实共享 wire 编码/跨语言验证。已按Agent4正式通知正常合并并固定SDK `e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565`；真实 Authority/PG 联验仍等待Agent2固定SHA。无生产入口、竞争DTO、SQL、媒体协议或LIVE开关改动。
 
 基线 `e98d8cf53d1aa5518f9c908785b7a5feae5117f8`；冻结契约 `c7fd46209d3cbc6f58541dba8b4e1c85609c823e`，22文件 digest `3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1`。原 Worktree/分支安全 fast-forward，无新 Worktree/分支/Agent。逐文件核验原字节及 digest：[baseline-verification.json](agent-3-evidence/baseline-verification.json)。
 
@@ -8,14 +8,17 @@
 
 | 检查 | 最终实际结果 | 原始输出 |
 | --- | --- | --- |
-| `cd backend && go test -count=1 -race -json ./internal/contentplan/... ./internal/turnmanager/... ./internal/interaction` | 6 packages PASS；72个顶层测试通过，0 FAIL，1 SKIP；含子测试168 PASS | [命令/耗时](agent-3-evidence/go-race.json)、[完整JSON输出](agent-3-evidence/go-race.txt)、[逐包计数](agent-3-evidence/go-summary.json) |
-| 新 `contentplan/answerstream` | 9个顶层测试通过，含子测试43 PASS，0 FAIL/0 SKIP | 同上 |
+| `cd backend && go test -count=1 -race -json ./internal/contentplan/... ./internal/turnmanager/... ./internal/interaction ./internal/durablelivev2/wire` | 7 packages PASS；83个顶层测试通过，0 FAIL，1 SKIP；含子测试179 PASS | [命令/耗时](agent-3-evidence/go-race.json)、[完整JSON输出](agent-3-evidence/go-race.txt)、[逐包计数](agent-3-evidence/go-summary.json) |
+| 新 `contentplan/answerstream` | 12个顶层测试通过，含子测试46 PASS，0 FAIL/0 SKIP | 同上 |
 | 新 `turnmanager/answerstream` | 11个顶层测试通过，含子测试21 PASS，0 FAIL/0 SKIP | 同上 |
-| 六组契约 `unittest ... -v` | 137/137 PASS，19.706s | [完整命令](agent-3-evidence/contracts-137.json)、[原始输出](agent-3-evidence/contracts-137.txt) |
-| `PYTHONPATH=runtime python -m pytest -p no:cacheprovider runtime/tests/test_durable_live_journal.py -q` | 11/11 PASS，0.48s | [命令](agent-3-evidence/journal-11.json)、[输出](agent-3-evidence/journal-11.txt) |
+| 六组契约 `unittest ... -v` | 137/137 PASS，19.527s | [完整命令](agent-3-evidence/contracts-137.json)、[原始输出](agent-3-evidence/contracts-137.txt) |
+| `PYTHONPATH=runtime python -m pytest -p no:cacheprovider runtime/tests/test_durable_live_journal.py -q` | 11/11 PASS，0.43s | [命令](agent-3-evidence/journal-11.json)、[输出](agent-3-evidence/journal-11.txt) |
 | `python scripts/validate-answer-contract.py` | PASS，132 definitions /25+13 operations /12 FSM /13 vectors /313 protected hashes /3 Stop scenarios | [输出](agent-3-evidence/validator-v2.txt) |
 | `python scripts/validate-durable-live-contracts.py` | PASS，44 frozen files /20 operations /4 vectors | [输出](agent-3-evidence/validator-v1.txt) |
-| 新包 `go vet` | PASS，exit0 | [命令](agent-3-evidence/go-vet.json) |
+| 共享wire Python `unittest tests.test_durable_live_v2_wire -v` | 13 PASS，2.535s | [原始输出](agent-3-evidence/official-wire-python.txt) |
+| `python3 scripts/durable-live/generate_v2_wire.py --check` | PASS；未改共享包/生成器/规范 | [输出](agent-3-evidence/generated-check.txt) |
+| 真实Go DTO产出→真实Python DTO decode/hash | 2 Artifact +2 Prepare +1 Seal；Hash/manifest PASS | [描述符](agent-3-evidence/official-wire-artifacts.json)、[结果](agent-3-evidence/official-wire-interop.json) |
+| 新包及共享wire `go vet` | PASS，exit0 | [命令](agent-3-evidence/go-vet.json) |
 | 显式Mock编码器产出的实际回答，经冻结 `validate_artifact()` 独立校验 | 2/2 Schema、正文Hash、Artifact Hash、链关系 PASS | [描述符](agent-3-evidence/mock-artifacts.json)、[结果](agent-3-evidence/mock-artifact-validation.json) |
 
 唯一 SKIP 是既有 `TestExportContractRequests`：未设置可选 `ASTRALIVE_DIRECTOR_EVIDENCE`，故没有重新导出旧 v1 请求；不是行为测试被跳过。新 v2 测试不依赖此开关。初轮测试辅助代码有字段误写为方法的编译错误，已修正；上表是修正后最终运行结果。
@@ -35,6 +38,6 @@
 
 ## 验收边界
 
-`Encoding`、`Facts`、`Executor`、`Completion` 在本轮都是明确Mock；新代码没有正式wire实现。冻结fixture编码的Schema/Hash PASS不等于Agent4正式DTO编译或Agent2真实Authority互操作。完整句采用可信词汇驱动的有限语法；未知自由改写会fail-closed，不能视作通用中文NLU。
+`WireEncoding`、`Artifact.Typed()`、Prepare/Seal请求构建使用Agent4真实唯一DTO和canonical/hash工具；协调器测试也已使用真实wire编码。`Facts`、`Executor`、`Completion` 仍是明确Mock。保留的fixture编码器只是独立测试基准；正式wire编译/跨语言PASS不等于Agent2真实Authority互操作。完整句采用可信词汇驱动的有限语法；未知自由改写会fail-closed，不能视作通用中文NLU。
 
 真实PG多连接/提交崩溃/持久Latch、Tool与Binding来源装配、私有IPC、Registrar、Runtime once-TTS、fsync、Guardian物理输出、异步PCM/GPU lineage、真实required-range drain、DeepSeek/XiaoYa/SoulX/GPU、Chrome/WebRTC/RTMP/观众、忙讲解P50≤5s/P95≤8s和空闲P50≤3s/P95≤5s，均 NOT TESTED。新增Authority、事实检查和同步开销须在后续真实时间线中测量。
