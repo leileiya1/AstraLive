@@ -6,7 +6,7 @@
 - 冻结：`c7fd46209d3cbc6f58541dba8b4e1c85609c823e`；22 文件 digest `3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1`。独立重算一致，000001–000006 保持原字节，见 [provenance](../evidence/agent-2/durable-live-2/provenance.json)。
 - **正式 DTO SHA：`e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565`。** 末轮 fetch 收到该交付后，在未覆盖现有修改的情况下 ff-only 同步；当前实现显式 import 这一唯一 Go wire 包，未复制 Schema/DTO。`New` 使用官方 strict validator，`Handle` 校验官方 operation/role/target/method/route、闭合 raw JSON 和生成类型；真实 SQL 消费通过官方 typed response 验证。新增 duplicate-key/extra-key/小数身份/角色/路由/Hash 测试。公共 HTTP/认证 Context/Runtime 入口仍由 Agent4 接线，此 PR 保持 Draft 待其独立审核。
 
-实现与测试源码提交：`b2e9b63d210d9088bd850fba296bd820f0fab180`。后续交付元数据提交不改变这些已验收源码。
+实现与测试源码提交由交付元数据记录；原始 evidence 同时保留补丁前失败及修正后的通过记录。
 
 ## 实现范围
 
@@ -14,7 +14,7 @@
 
 迁移包含 run revision 隔离、可信 process/key/install mirror、DB-time stage challenge、immutable bootstrap/registration sidecar、AnswerStream、完整 Artifact 正文/UTF-8 SHA256/hash/facts/version、Artifact child、Prepare 原始键与 alias/原始 receipt、FactObservation、Permit、one-shot Grant、仅 verifier 的 ticket、唯一消费 latch、execution knowledge、完整 Drain 身份回执、Observer evidence 和 audit。复合 FK/UNIQUE、条件更新、append-only/不可变/tombstone/revision 约束及 PUBLIC 权限撤销实际在 PostgreSQL 执行。
 
-支持注册/撤销、Prepare、Permit/FactObservation 刷新、全局 START、Continuation、Drain、Seal、Answer/Execution Query、受限 Authority Query/Commit/metadata、Checkpoint、CONTROL Stop/UNKNOWN 和 bounded expiry recovery。操作与字段来自冻结协议；模块不挂路由。Backend 权威写、Guardian 只有三项受限调用、Runtime 没有业务 SQL 凭据。真实角色/token/peer/channel/SQL role 装配仍由 Agent4 接线。
+支持 CONTROL Registrar 注册 ACK 丢失后的有 scope 历史 repository readback（只读、无新 wire 操作），注册/撤销、Prepare、Permit/FactObservation 刷新、全局 START、Continuation、Drain、Seal、Answer/Execution Query、受限 Authority Query/Commit/metadata、Checkpoint、CONTROL Stop/UNKNOWN 和 bounded expiry recovery。操作与字段来自冻结协议；模块不挂路由。Backend 权威写、Guardian 只有三项受限调用、Runtime 没有业务 SQL 凭据。真实角色/token/peer/channel/SQL role 装配仍由 Agent4 接线。
 
 外部 InstallationSource、Assertions、Observer、physical CheckpointProof 都在 Begin 前运行。缺失则拒绝。事务内复核当前 SQL sourceVersion/valueHash/snapshot、Provider Binding、lease/slot/session/epoch/producer、process incarnation、registration 与 output mirror；产品/身份行加共享锁，全部写操作先锁既有 Run。Agent4 的 source retirement、process replacement、epoch/session/output 安装必须使用同一 Run 锁域。锁与 statement 有界，validator 必须为本地无网络校验。
 
@@ -35,7 +35,7 @@
 
 | 验证 | 结果 / 边界 |
 | --- | --- |
-| 真实 PG Authority race | 29 PASS、0 FAIL、1 helper SKIP；含多连接唯一消费、Prepare 并发、alias/Drain scope、回滚、Stop×Commit/首次注册、旧 Epoch/Generation/跨租户拒绝、过期 facts/proofs/Binding、unused Grant ACK loss、UNKNOWN audit、提交后专用 Go SIGKILL |
+| 真实 PG Authority race | 30 PASS、0 FAIL、1 helper SKIP；含多连接唯一消费、Prepare 并发、alias/Drain scope、回滚、Stop×Commit/首次注册、旧 Epoch/Generation/跨租户拒绝、过期 facts/proofs/Binding、unused Grant ACK loss、UNKNOWN audit、提交后专用 Go SIGKILL |
 | 000006→000007 / 空库 / 并发迁移 | PASS；保留旧 product 字节与 v1 run revision；4 个并发 migration runner；实际低权限 SQL SELECT/INSERT 被拒绝 |
 | 137 契约、11 Journal、13 官方跨语言 wire、两 Validator | PASS；22 normative 文件及 313 protected hashes 未改 |
 | Runtime regression | 169 PASS、11 opt-in SKIP、50 subtests PASS；cwd=runtime，PYTHONPATH=runtime:repo |

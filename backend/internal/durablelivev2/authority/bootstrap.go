@@ -288,3 +288,39 @@ func invalidate(ctx context.Context, tx pgx.Tx, st *state, reason string) error 
 	_, e = tx.Exec(ctx, `UPDATE dl05_v2_execution_state SET state='UNKNOWN' WHERE command_id=$1 AND state='ACTIVE'`, st.c["commandId"])
 	return e
 }
+
+// ReadRegistration is a CONTROL repository readback after a registration ACK
+// loss. It is not a new wire operation or execution grant. It remains available
+// after proof expiry/Stop, returning immutable identity plus revocation knowledge.
+func (s *Store) ReadRegistration(ctx context.Context, p Actor, bootstrapID string) (Document, error) {
+	if p.Role != "CONTROL_REGISTRAR" {
+		return nil, fail("FORBIDDEN")
+	}
+	c, e := s.resolve(ctx, Document{"bootstrapId": bootstrapID})
+	if e != nil {
+		return nil, normalize(e)
+	}
+	if e = validateScope(p, c); e != nil {
+		return nil, e
+	}
+	tx, e := s.begin(ctx)
+	if e != nil {
+		return nil, e
+	}
+	defer tx.Rollback(ctx)
+	st, e := s.lock(ctx, tx, p, c, true)
+	if e != nil {
+		return nil, normalize(e)
+	}
+	if st.b == nil || st.b["bootstrapId"] != bootstrapID {
+		return nil, fail("RESOURCE_NOT_FOUND")
+	}
+	out := clone(st.registration)
+	if s.Validate == nil {
+		return nil, fail("DEPENDENCY_UNAVAILABLE")
+	}
+	if e = s.Validate("ReceiverRegistration", out); e != nil {
+		return nil, e
+	}
+	return out, tx.Commit(ctx)
+}

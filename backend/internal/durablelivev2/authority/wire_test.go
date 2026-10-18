@@ -67,3 +67,27 @@ func TestOfficialWireMetadataRolesAndHashes(t *testing.T) {
 		t.Fatal("default verifier bypass")
 	}
 }
+
+func TestRegistrarHistoricalReadbackAfterLostRegistrationACK(t *testing.T) {
+	f := newFixture(t, true)
+	reg, e := f.s.ReadRegistration(f.ctx, f.registrar, text(f.binding, "bootstrapId"))
+	if e != nil || hash(reg) != hash(f.registration) {
+		t.Fatal("lost ACK readback", e)
+	}
+	if _, e = f.s.ReadRegistration(f.ctx, f.guardian, text(f.binding, "bootstrapId")); e == nil {
+		t.Fatal("Guardian repository privilege")
+	}
+	bad := f.registrar
+	bad.Owner = "other-owner"
+	if _, e = f.s.ReadRegistration(f.ctx, bad, text(f.binding, "bootstrapId")); e == nil {
+		t.Fatal("cross-owner registration")
+	}
+	f.stop()
+	reg, e = f.s.ReadRegistration(f.ctx, f.registrar, text(f.binding, "bootstrapId"))
+	if e != nil || reg["state"] != "REVOKED" {
+		t.Fatal(reg, e)
+	}
+	if strings.Contains(string(canon(reg)), "consumeTicket") {
+		t.Fatal("readback capability")
+	}
+}
