@@ -1,0 +1,34 @@
+{
+  "checkedCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+  "results": [
+    {
+      "name": "source-and-doc-diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "eb00428eeb1f0506e9b71eea47480ba4d982c7db",
+        "HEAD",
+        "--",
+        "output_guardian",
+        "infra/guardian/v2",
+        ":(exclude)infra/guardian/v2/evidence/**"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "raw-evidence-diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "eb00428eeb1f0506e9b71eea47480ba4d982c7db",
+        "HEAD",
+        "--",
+        "infra/guardian/v2/evidence/owner-review-20261018"
+      ],
+      "exitCode": 2
+    }
+  ],
+  "rawPolicy": "Original pytest, initdb and psql output retains exact whitespace. Full evidence diff check warnings are retained, never trim original logs or label that check PASS."
+}

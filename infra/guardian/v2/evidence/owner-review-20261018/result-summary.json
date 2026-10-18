@@ -126,7 +126,8 @@
     "Development final/v1-25.txt:24 PASS/1 RTMP decoded-tail denial; no assertions changed; committed-final25PASS does not establish flake-free media/SLA",
     "Development final/cold-after-15..19: transient UnboundLocalError during an incorrectly placed cleanup edit while runner active; fixed before be0d81f and all20 repeated on immutable committed source; raw failures kept",
     "137 suite:136 PASS/1 protected fixture hash failure and validator-v2 FAIL; no governance bypass",
-    "Documentation diff check caught extra EOF blank lines during doc preparation; corrected and final doc diff audit passed without rewriting raw failed log"
+    "Documentation diff check caught extra EOF blank lines during doc preparation; corrected and final doc diff audit passed without rewriting raw failed log",
+    "Full raw-evidence diff reports original pytest/psql/initdb whitespace warnings; preserve original bytes. Source/docs-only diff PASS; raw evidence diff not PASS."
   ],
   "finalDocDiffCheck": {
     "command": [
@@ -136,5 +137,35 @@
     ],
     "exitCode": 0,
     "originalDiffCheck": "retained in committed-final/diff-check.txt; only two extra EOF blanks, corrected"
-  }
+  },
+  "finalDiffAudit": [
+    {
+      "name": "source-and-doc-diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "eb00428eeb1f0506e9b71eea47480ba4d982c7db",
+        "HEAD",
+        "--",
+        "output_guardian",
+        "infra/guardian/v2",
+        ":(exclude)infra/guardian/v2/evidence/**"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "raw-evidence-diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "eb00428eeb1f0506e9b71eea47480ba4d982c7db",
+        "HEAD",
+        "--",
+        "infra/guardian/v2/evidence/owner-review-20261018"
+      ],
+      "exitCode": 2
+    }
+  ]
 }

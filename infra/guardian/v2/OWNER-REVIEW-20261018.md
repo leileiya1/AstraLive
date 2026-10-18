@@ -148,14 +148,17 @@ refuses existing output directories and preserves failing checks.
 | Official Python wire + adapter/resource suites |21 PASS |
 | Durable Journal |11 PASS |
 | Frozen contract suite |136 PASS /1 protected-hash FAIL |
-| v1 validator / generated codec check / lint / diff |PASS |
+| v1 validator / generated codec check / lint / source+doc diff |PASS |
 | v2 validator |FAIL: exact protected fixture hash, pending Agent4 |
 | Linux UID/ACL/namespace/cgroup execution; GPU; production sinks |NOT TESTED /BLOCKED |
 
 The complete runner exits **1**, correctly retaining both governance failures.
 Its diff check also caught two trailing blank lines while documentation was
 being added; the final documentation diff audit passes after correction, with
-the original diff-check failure retained.
+the original diff-check failure retained. The final complete raw-evidence
+diff check reports original pytest/psql/initdb whitespace warnings. Those bytes
+are intentionally preserved; that full raw-log check is not labeled PASS.
+See [final diff audit](evidence/owner-review-20261018/final-diff-audit.json).
 Machine-readable [result summary](evidence/owner-review-20261018/result-summary.json),
 [source hashes](evidence/owner-review-20261018/implementation-source-manifest.json)
 and [cold timing measurements](evidence/owner-review-20261018/cold-final-measurements.json)
