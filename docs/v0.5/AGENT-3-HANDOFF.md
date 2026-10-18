@@ -32,3 +32,10 @@ Scheduler补丁采用零行上下文以保持补丁文件本身无尾部空白�
 在基线 `e98d8cf53d1aa5518f9c908785b7a5feae5117f8` 的原Agent3分支新增保守中文语义流、实际回答Hash构建域模块及单COMMENT协调器。纯域初始提交 `0db4b8eb49f7ae7c37818c8bd047f676cd3ba7be`；最终已测实现 `90bab471ecf9cf147f5789fa9a8d40d707c0c102`，已正常merge Agent4正式wire pin `e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565`。增量PR记录最终HEAD。
 
 详见[新交接说明](implementation/AGENT-3-STREAMING-HANDOFF.md)、[测试报告](implementation/AGENT-3-STREAMING-TEST-REPORT.md)。23个新增顶层测试、7包race、137契约、11Journal、13共享wire Python测试通过；真实共享Go/Python Artifact/Prepare/Seal及Hash校验通过。真实Authority依赖SHA尚未提供，未复制DTO/SQL、未接共享入口，生产与真实媒体/SLA仍NOT TESTED。上文v1交付记录保留。
+
+
+## durable-live-2 真实 PostgreSQL 域联验增量
+
+已在原Worktree/分支正常merge integration `235258ad75f7d271a279ea89fd88ddf80e797f31`（包含Authority merge `a4a57fcc0effd5dd5ea9689b355a963b007c20f3`），完成正式DTO→真实Authority Handle→独占PG的Streaming域适配。18项新增PG顶层测试/61含子测试PASS；完整七迁移Go test/race各229顶层PASS、13明确SKIP、0FAIL；原23Streaming/137契约/11Journal/13wire及validator均通过。已知SKIP和真实/fixture边界不能省略，见 [最新交接](implementation/AGENT-3-POSTGRES-HANDOFF.md)、[完整测试报告](implementation/AGENT-3-POSTGRES-TEST-REPORT.md)。
+
+首句在EOF前真实Prepare/START，双Unit同COMMENT且单START，两种Drain顺序、CAS/回执、ACK-loss→UNKNOWN、Stop竞争、事实/最早输出期限、Seal+drain+CONTROL均通过真实SQL验证。既有Scheduler/公平预算/业务cursor不变。Receiver/Registrar/Observer/物理来源仍是显式fixture；IPC/Guardian/Runtime once-TTS/媒体/required Sink、真实GPU与首句SLA仍NOT TESTED。没有修改Agent2 Authority、迁移、共享入口、Guardian或冻结规范；未启用LIVE，等待Agent4集成复审。

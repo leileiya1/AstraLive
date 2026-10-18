@@ -1,5 +1,6 @@
 # Agent 3 — conservative COMMENT answer streaming handoff
 
+> 本文为前一阶段 CPU/wire 历史记录。当前真实 Authority/七迁移 PostgreSQL 结果已更新至 [PG交接](AGENT-3-POSTGRES-HANDOFF.md) 与 [PG报告](AGENT-3-POSTGRES-TEST-REPORT.md)，不再等待 Agent2 pin；历史结果保留。
 交付阶段：隔离 Go 域实现、真实共享wire编码及CPU验证，等待Agent4集成。正式wire编译/跨语言校验已通过；Agent2真实Authority/PG和生产Runtime/Guardian接线尚未完成。Durable LIVE保持关闭。
 
 ## 固定版本与所有权

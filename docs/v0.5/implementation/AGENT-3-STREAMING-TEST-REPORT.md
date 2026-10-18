@@ -1,5 +1,6 @@
 # Agent 3 durable-live-2 streaming test report
 
+> 本文为前一阶段 CPU/wire 历史记录。当前真实 Authority/七迁移 PostgreSQL 结果已更新至 [PG交接](AGENT-3-POSTGRES-HANDOFF.md) 与 [PG报告](AGENT-3-POSTGRES-TEST-REPORT.md)，不再等待 Agent2 pin；历史结果保留。
 本轮交付为 CPU 域实现及真实共享 wire 编码/跨语言验证。已按Agent4正式通知正常合并并固定SDK `e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565`；真实 Authority/PG 联验仍等待Agent2固定SHA。无生产入口、竞争DTO、SQL、媒体协议或LIVE开关改动。
 
 基线 `e98d8cf53d1aa5518f9c908785b7a5feae5117f8`；冻结契约 `c7fd46209d3cbc6f58541dba8b4e1c85609c823e`，22文件 digest `3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1`。原 Worktree/分支安全 fast-forward，无新 Worktree/分支/Agent。逐文件核验原字节及 digest：[baseline-verification.json](agent-3-evidence/baseline-verification.json)。
