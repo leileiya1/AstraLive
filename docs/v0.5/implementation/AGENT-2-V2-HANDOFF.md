@@ -6,6 +6,8 @@
 - 冻结：`c7fd46209d3cbc6f58541dba8b4e1c85609c823e`；22 文件 digest `3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1`。独立重算一致，000001–000006 保持原字节，见 [provenance](../evidence/agent-2/durable-live-2/provenance.json)。
 - **正式 DTO SHA：`e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565`。** 末轮 fetch 收到该交付后，在未覆盖现有修改的情况下 ff-only 同步；当前实现显式 import 这一唯一 Go wire 包，未复制 Schema/DTO。`New` 使用官方 strict validator，`Handle` 校验官方 operation/role/target/method/route、闭合 raw JSON 和生成类型；真实 SQL 消费通过官方 typed response 验证。新增 duplicate-key/extra-key/小数身份/角色/路由/Hash 测试。公共 HTTP/认证 Context/Runtime 入口仍由 Agent4 接线，此 PR 保持 Draft 待其独立审核。
 
+实现与测试源码提交：`b2e9b63d210d9088bd850fba296bd820f0fab180`。后续交付元数据提交不改变这些已验收源码。
+
 ## 实现范围
 
 唯一新增迁移 [000007_answer_stream.sql](../../../backend/db/migrations/000007_answer_stream.sql)；代码在 [authority](../../../backend/internal/durablelivev2/authority/README.md)。复用既有 Run、租约、Slot、Turn、Attempt、Outbox、Runtime Inbox、Checkpoint、SSE notification 表；不建立第二业务数据库。
