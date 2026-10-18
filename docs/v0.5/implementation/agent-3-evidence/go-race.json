@@ -1,0 +1,18 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-count=1",
+    "-race",
+    "-json",
+    "./internal/contentplan/...",
+    "./internal/turnmanager/...",
+    "./internal/interaction"
+  ],
+  "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-3/backend",
+  "environment": {
+    "ASTRALIVE_AGENT3_ARTIFACT_EVIDENCE": "/Users/sapiece/innovationProject/AstraLive-agent-3/docs/v0.5/implementation/agent-3-evidence/mock-artifacts.json"
+  },
+  "exitCode": 0,
+  "seconds": 2.55
+}
