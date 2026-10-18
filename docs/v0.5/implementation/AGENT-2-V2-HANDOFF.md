@@ -6,7 +6,7 @@
 - 冻结：`c7fd46209d3cbc6f58541dba8b4e1c85609c823e`；22 文件 digest `3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1`。独立重算一致，000001–000006 保持原字节，见 [provenance](../evidence/agent-2/durable-live-2/provenance.json)。
 - **正式 DTO SHA：`e3302f6b2bb19e0184cde3a6cbbcaf3ea4371565`。** 末轮 fetch 收到该交付后，在未覆盖现有修改的情况下 ff-only 同步；当前实现显式 import 这一唯一 Go wire 包，未复制 Schema/DTO。`New` 使用官方 strict validator，`Handle` 校验官方 operation/role/target/method/route、闭合 raw JSON 和生成类型；真实 SQL 消费通过官方 typed response 验证。新增 duplicate-key/extra-key/小数身份/角色/路由/Hash 测试。公共 HTTP/认证 Context/Runtime 入口仍由 Agent4 接线，此 PR 保持 Draft 待其独立审核。
 
-实现与测试源码提交由交付元数据记录；原始 evidence 同时保留补丁前失败及修正后的通过记录。
+实现与测试源码提交：`4927ea86606701861464788115c9db76e9042bd3`；后续提交只更新交付元数据。原始 evidence 同时保留补丁前失败及修正后的通过记录。
 
 ## 实现范围
 
@@ -39,7 +39,7 @@
 | 000006→000007 / 空库 / 并发迁移 | PASS；保留旧 product 字节与 v1 run revision；4 个并发 migration runner；实际低权限 SQL SELECT/INSERT 被拒绝 |
 | 137 契约、11 Journal、13 官方跨语言 wire、两 Validator | PASS；22 normative 文件及 313 protected hashes 未改 |
 | Runtime regression | 169 PASS、11 opt-in SKIP、50 subtests PASS；cwd=runtime，PYTHONPATH=runtime:repo |
-| 全 Go race | **未经补丁原样运行 FAIL**：唯一共享测试把 migration 数写死为 6；其余包通过。独立补丁经临时 overlay 后 172 PASS、0 FAIL、11 SKIP，未改共享文件 |
+| 全 Go race | **未经补丁原样运行 FAIL**：唯一共享测试把 migration 数写死为 6；其余包通过。独立补丁经临时 overlay 后 173 PASS、0 FAIL、11 SKIP，未改共享文件 |
 | go vet | PASS |
 
 共享补丁：[agent-2-v2-shared.patch](../integration/agent-2-v2-shared.patch)，仅调整共享集成测试的迁移数 6→7；交 Agent4 应用。overlay 文件在临时目录，不在原工作树落地。完整 Go 日志逐项列出 opt-in SKIP；whole-server PostgreSQL outage 未运行，旧测试硬编码专用端口，未挪用实际服务。旧真实连接中断恢复、Redis stream/reclaim 与专用 Redis outage 已执行。
