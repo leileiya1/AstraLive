@@ -56,3 +56,26 @@ def test_tampered_archive_refuses_restore_before_destination_creation(tmp_path):
     with pytest.raises(ValueError, match="archive hash"):
         restore(destination, root)
     assert not destination.exists()
+
+
+def test_known_collection_metadata_is_preserved(tmp_path):
+    root, path, _, _ = source(tmp_path)
+    command = ["python", "-m", "pytest", "inert-example"]
+    (path.parent / "final-check-commands.json").write_text(
+        json.dumps(
+            [
+                dict(
+                    log=path.name,
+                    command=command,
+                    sourceCommit="known-fixed-test-pin",
+                    generatedAtUTC="2026-10-19T00:00:00+00:00",
+                )
+            ]
+        )
+    )
+    pack(root)
+    doc = json.loads((root / INDEX).read_text())
+    meta = doc["files"][str(path.relative_to(root))]["provenance"]
+    assert meta["knownCollectionCommands"] == [command]
+    assert meta["knownImplementationCommits"] == ["known-fixed-test-pin"]
+    assert meta["knownGeneratedAtUTC"] == ["2026-10-19T00:00:00+00:00"]

@@ -47,6 +47,7 @@ def metadata(root, path):
             "native-commands.json",
             "before-commands.json",
             "after-commands.json",
+            "final-check-commands.json",
         )
     ]
     for source in candidates:
