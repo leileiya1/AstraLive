@@ -162,5 +162,23 @@
     "cwd": "/tmp/agent4-pr11-final-candidate",
     "exitCode": 0,
     "log": "v2-original69.txt"
+  },
+  {
+    "label": "real-stale-media3-fresh-output",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "output_guardian.tests.conftest",
+      "/tmp/agent4-pr11-final-probes/test_real_stale_media_fresh_output.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-final-candidate",
+    "exitCode": 1,
+    "log": "real-stale-media3-fresh-output.txt"
   }
 ]

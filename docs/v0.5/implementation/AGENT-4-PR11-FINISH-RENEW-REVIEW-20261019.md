@@ -114,6 +114,12 @@ missing-tail and complete regressions. Supply a **new service.py postimage**,
 exact Owner patch and source pin for Agent4 review; current94eb postimage is not
 approved merely because its original positive cases pass.
 
+Additional fresh-output control: a further3 native cases explicitly set the
+SQL room output deadline30s ahead. At release they retain29.87–29.91s output
+eligibility and707.17–707.81ms current Right. All3 still revoke/kill the new
+Generation without Stop. These supplementary records exclude even a stale
+fixture output-deadline interpretation; they are not added to positive48 totals.
+
 ## Additional combined-regression failure: test SQL connection race
 
 Combined Guardian regression: **201 PASS /1 FAIL /1 Linux SKIP**. The failure is
