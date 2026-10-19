@@ -1,5 +1,13 @@
 # receiver-1 isolated implementation
 
+## P1 correction, 2026-10-19
+
+See [P1 review](PR11-P1-FIX-20261019.md). The cgroup helper cannot prove exclusive
+mutation control and now refuses before creation/attach/kill/removal. It issues
+no positive process-fence receipt. Full-PR whitespace checks use losslessly
+archived raw logs; [exact recovery instructions](RAW-EVIDENCE.md) preserve every
+original failure byte. Production remains OUTPUT_FENCE_UNPROVEN.
+
 ## Current owner review
 
 The 2026-10-18 receiver-1 dependency review supersedes dependency availability

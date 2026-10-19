@@ -1,5 +1,10 @@
 # Agent4 integration handoff — receiver-1 domain increment
 
+Current correction: [PR11 P1 fix](PR11-P1-FIX-20261019.md). The cgroup helper is
+unavailable for mutation until a trusted exclusive controller is independently
+proved. No kill or positive installation is authorized. Raw historical logs are
+losslessly archived: [restore/verify](RAW-EVIDENCE.md).
+
 ## 2026-10-18 dependency update
 
 Consume the fixed receiver-1 official ports and native identity transport using

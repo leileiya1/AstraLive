@@ -1,5 +1,10 @@
 # Receiver-1 physical installation handoff, 2026-10-18
 
+**2026-10-19 P1 correction:** `OwnedCgroup` no longer permits any mutation or
+positive fence result. See [fixed scope](PR11-P1-FIX-20261019.md). Independent
+exclusive control is unproved; it refuses before group creation, attach, kill
+and removal. This supersedes the original cgroup building-block description.
+
 **OUTPUT GUARDIAN BLOCKED.** This is an executable CPU evidence collector and
 Linux process-fence building block, with an explicit production denial boundary.
 It is not a working production `PhysicalSource`. No service was installed, no
@@ -88,13 +93,15 @@ strict peer pins. Do not weaken its validator or introduce another protocol.
 | Stop/restart | Close local gate first, revoke target credentials/connections and kill owned cgroup; require kernel empty + target disconnection + no usable old credentials/sockets before new admission |
 | Required sinks | Each actual transport/decoder/required endpoint revalidates original lineage/Stop; independently observed complete terminal PCM/video ranges, not enqueue/packet/Credit counts |
 
-`linux_fence.OwnedCgroup` implements part of this process fence. It checks the
-real Linux cgroup-v2 filesystem, creates a fresh child under an explicitly
-delegated UID-owned parent, pins attached direct children, refuses unknown
-members, writes `cgroup.kill` and requires actual kernel `populated=0`. It never
-adopts an existing live group. It does not revoke keys, prove target exclusivity
-or certify namespaces. A strict refusal for unknown descendants is intentional;
-a future supervised process-tree launcher must register its own descendants.
+`linux_fence.OwnedCgroup` retains real filesystem/inode/UID/permission/native
+membership checks but cannot prove a trusted mutation boundary. The previous
+direct-member check failed to cover recursive kill and concurrent subgroup
+creation. There is now no kill/procs write, rmdir or positive receipt. Even a
+matching empty leaf and `max.descendants=0` are insufficient without exclusive
+control over topology, membership, writable handles and lifecycle. It never
+adopts an old group. A future independently reviewed controller must still
+confirm real kernel `populated=0` after an authorized operation; that alone
+would not revoke keys, prove target exclusivity or certify namespaces.
 
 `runtime_namespace_census` reads actual `/proc` native identities, distinct
 Runtime UID, zero capability sets, `NoNewPrivs`, distinct mount/net namespaces,
@@ -103,16 +110,16 @@ modes. It returns only a partial kernel census. It does not prove inherited-fd
 closure, effective proxy policy, mount reachability, target exclusivity or
 credential revocation. Neither helper can enable `RegistrarPhysicalSource`.
 
-An isolated Linux operator may execute only the owned synthetic-child test:
+This round authorizes only non-destructive ordinary-file scope tests:
 
 ```sh
-AG5_OWNED_CGROUP_PARENT=/path/to/dedicated/delegated/cgroup \
 PYTHONPATH=runtime:. .venv-guardian/bin/python -m pytest \
-  output_guardian/tests/v2/test_physical.py::test_linux_real_owned_cgroup_kill -v
+  output_guardian/tests/v2/test_cgroup_scope.py -v
 ```
 
-This requires a dedicated delegated cgroup-v2 parent with `cgroup.kill`, not a
-shared service group. A passing result proves only this owned-process kill.
+This creates no cgroup. Owned CPU identity probes exit naturally without signals.
+The existing Linux
+kill opt-in test remains unexecuted and cannot pass with the closed helper.
 UID/group ACL, namespace, inherited socket, target publish, old credential,
 Guardian SIGKILL/orphan/restart and per-required-sink tests still need independent
 Linux execution. No cross-compilation or ordinary fake filesystem counts.

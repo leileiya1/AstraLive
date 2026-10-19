@@ -1,0 +1,145 @@
+[
+  {
+    "label": "initdb",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/initdb",
+      "-D",
+      "/tmp/ag5-native-weqd6mdx/data",
+      "-A",
+      "trust",
+      "-U",
+      "ag5_owner",
+      "--no-locale",
+      "-E",
+      "UTF8"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.30359075008891523,
+    "userSeconds": 0.153718,
+    "systemSeconds": 0.14393499999999998,
+    "peakRSSBytes": 50200576,
+    "generatedAtUTC": "2026-10-19T00:06:59.131946+00:00",
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae"
+  },
+  {
+    "label": "start",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+      "-D",
+      "/tmp/ag5-native-weqd6mdx/data",
+      "-l",
+      "/tmp/ag5-native-weqd6mdx/postgres.log",
+      "-o",
+      "-h 127.0.0.1 -p 60597 -k /tmp/ag5-native-weqd6mdx/sockets",
+      "-w",
+      "start"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.12646925006993115,
+    "userSeconds": 0.007768999999999998,
+    "systemSeconds": 0.005125999999999992,
+    "peakRSSBytes": 50200576,
+    "generatedAtUTC": "2026-10-19T00:06:59.258795+00:00",
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae"
+  },
+  {
+    "label": "createdb",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/createdb",
+      "-h",
+      "127.0.0.1",
+      "-p",
+      "60597",
+      "-U",
+      "ag5_owner",
+      "agent4_receiver1_ag5_owned"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.04883149988017976,
+    "userSeconds": 0.008951999999999988,
+    "systemSeconds": 0.004541000000000017,
+    "peakRSSBytes": 50200576,
+    "generatedAtUTC": "2026-10-19T00:06:59.307984+00:00",
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae"
+  },
+  {
+    "label": "settings",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/psql",
+      "postgres://ag5_owner@127.0.0.1:60597/agent4_receiver1_ag5_owned?sslmode=disable",
+      "-c",
+      "SELECT version(),current_database(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.025329750031232834,
+    "userSeconds": 0.007445000000000007,
+    "systemSeconds": 0.004361000000000004,
+    "peakRSSBytes": 50200576,
+    "generatedAtUTC": "2026-10-19T00:06:59.333613+00:00",
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae"
+  },
+  {
+    "label": "native-package-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durableintegration/receiver1"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5/backend",
+    "exitCode": 0,
+    "seconds": 22.196906166849658,
+    "userSeconds": 14.811645,
+    "systemSeconds": 3.059122,
+    "peakRSSBytes": 333512704,
+    "generatedAtUTC": "2026-10-19T00:07:21.530793+00:00",
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae"
+  },
+  {
+    "label": "dropdb",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/dropdb",
+      "-h",
+      "127.0.0.1",
+      "-p",
+      "60597",
+      "-U",
+      "ag5_owner",
+      "agent4_receiver1_ag5_owned"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.05304625001735985,
+    "userSeconds": 0.009240999999999389,
+    "systemSeconds": 0.004952999999999985,
+    "peakRSSBytes": 333512704,
+    "generatedAtUTC": "2026-10-19T00:07:21.584229+00:00",
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae"
+  },
+  {
+    "label": "stop",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+      "-D",
+      "/tmp/ag5-native-weqd6mdx/data",
+      "-m",
+      "fast",
+      "-w",
+      "stop"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.10807754215784371,
+    "userSeconds": 0.0018810000000009097,
+    "systemSeconds": 0.0017290000000000916,
+    "peakRSSBytes": 333512704,
+    "generatedAtUTC": "2026-10-19T00:07:21.692592+00:00",
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae"
+  }
+]
