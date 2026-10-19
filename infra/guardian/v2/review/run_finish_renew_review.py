@@ -154,7 +154,7 @@ def main():
                 ],
             )
         run(
-            "lifecycle-32",
+            "lifecycle",
             [
                 sys.executable,
                 "-m",

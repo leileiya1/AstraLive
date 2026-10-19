@@ -471,3 +471,34 @@ async def test_child_registry_fsync_failure_cannot_leave_publisher(
         await pub.start({"identity": {}})
     assert pub.process is None and pub.pipe is None
     assert not pub.registry.exists()
+
+
+@pytest.mark.asyncio
+async def test_duplicate_valid_renew_reservations_both_drain_before_abort(
+    local, monkeypatch
+):
+    g, a = local.g, local.a
+    g.publisher.permit_release = asyncio.Event()
+    second_entered = asyncio.Event()
+    original = g.publisher.call
+    count = 0
+
+    async def counted(message, **kw):
+        nonlocal count
+        if message["op"] == "permit":
+            count += 1
+            if count == 2:
+                second_entered.set()
+        return await original(message, **kw)
+
+    monkeypatch.setattr(g.publisher, "call", counted)
+    one = asyncio.create_task(g.renew(a, "same-valid-permit"))
+    two = asyncio.create_task(g.renew(a, "same-valid-permit"))
+    await second_entered.wait()
+    finish = asyncio.create_task(g.finish(a))
+    await g._life.idle.waiting.wait()
+    assert g._life.renewing == 2 and not g.publisher.aborted.is_set()
+    g.publisher.permit_release.set()
+    assert all(r["state"] == "AUTHORIZED" for r in await asyncio.gather(one, two))
+    assert (await finish)["state"] == "LOCAL_MEDIA_DRAINED"
+    assert g._life.renewing == 0
