@@ -52,7 +52,9 @@ async def test_real_last_packet_missing_never_drains(rig, monkeypatch, missing):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("boundary", ["stop", "terminal", "expiry", "crash"])
+@pytest.mark.parametrize(
+    "boundary", ["stop", "terminal", "expiry", "crash", "crash-at-abort"]
+)
 async def test_real_proven_ranges_never_override_lifecycle(rig, monkeypatch, boundary):
     await rig.activate()
     g = rig.guardian
@@ -74,8 +76,16 @@ async def test_real_proven_ranges_never_override_lifecycle(rig, monkeypatch, bou
     abort = g.publisher.abort
 
     async def pause_abort(*a, **kw):
+        if boundary == "crash-at-abort" and verified.is_set() and not paused.is_set():
+            paused.set()
+            g.publisher.process.kill()
+            await asyncio.to_thread(g.publisher.process.wait)
         result = await abort(*a, **kw)
-        if verified.is_set() and not paused.is_set() and boundary != "crash":
+        if (
+            verified.is_set()
+            and not paused.is_set()
+            and boundary not in {"crash", "crash-at-abort"}
+        ):
             paused.set()
             await release.wait()
         return result
@@ -109,7 +119,7 @@ async def test_real_proven_ranges_never_override_lifecycle(rig, monkeypatch, bou
             late = asyncio.create_task(g.renew(rig.attempt, target))
             await committed.wait()
         finish = asyncio.create_task(g.finish(rig.attempt))
-        if boundary == "crash":
+        if boundary in {"crash", "crash-at-abort"}:
             with pytest.raises(Closed, match="DRAIN_UNKNOWN"):
                 await finish
             assert g.last_drain_result["coverage"] == "PASS"

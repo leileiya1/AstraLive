@@ -193,7 +193,7 @@ class Guardian:
             life.revocation = reason
             await self.retire()
 
-    async def close_resources(self):
+    async def close_resources(self, *, terminal=None):
         # Coalesce cleanup by owned-resource task, without a lifecycle mutex.
         # Stop invalidates synchronously before awaiting the shared reaper.
         task = self._cleanup_task
@@ -202,8 +202,14 @@ class Guardian:
             output, self.web = self.web, None
 
             async def cleanup():
-                failed = False
-                actions = [self.publisher.abort, self.receiver.abort]
+                fault = None
+
+                async def abort_publisher():
+                    await self.publisher.abort(
+                        terminal, require_live=terminal is not None
+                    )
+
+                actions = [abort_publisher, self.receiver.abort]
                 if socket is not None:
                     actions.append(socket.close)
                 if output is not None:
@@ -216,13 +222,25 @@ class Guardian:
                 for action in actions:
                     try:
                         await action()
-                    except BaseException:
-                        failed = True  # still attempt all independent closures
-                if failed:
-                    raise Closed()
+                    except BaseException as exc:
+                        if fault is None:
+                            fault = (
+                                exc.code
+                                if isinstance(exc, Closed)
+                                else "OUTPUT_FENCE_UNPROVEN"
+                            )
+                if fault is not None:
+                    raise Closed(fault)  # still attempted all independent closures
 
             task = self._cleanup_task = asyncio.create_task(cleanup())
-        await asyncio.shield(task)
+        try:
+            await asyncio.shield(task)
+        except BaseException:
+            if task.done():
+                self.failed = True
+                if self._cleanup_task is task:
+                    self._cleanup_task = None
+            raise
         if self._cleanup_task is task:
             self._cleanup_task = None
 
@@ -576,7 +594,7 @@ class Guardian:
                 raise Closed("MEDIA_DELIVERY_FAILED")
             life.phase = "TERMINATING"
             stage = "TEARDOWN"
-            await self.close_resources()
+            await self.close_resources(terminal=process)
             stage = "FINAL_CHECK"
             self._check_life(life)
             # Completion vs Stop linearizes here, without an intervening await.

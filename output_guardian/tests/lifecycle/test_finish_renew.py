@@ -64,7 +64,7 @@ class Endpoint:
                 await self.permit_release.wait()
         return {"manifest": {}, "audioSamples": 64000, "videoPTSUS": [0]}
 
-    async def abort(self, *a):
+    async def abort(self, *a, **kw):
         self.process = self.pipe = None
         self.alive = False
         self.aborted.set()
@@ -502,3 +502,21 @@ async def test_duplicate_valid_renew_reservations_both_drain_before_abort(
     assert all(r["state"] == "AUTHORIZED" for r in await asyncio.gather(one, two))
     assert (await finish)["state"] == "LOCAL_MEDIA_DRAINED"
     assert g._life.renewing == 0
+
+
+@pytest.mark.asyncio
+async def test_normal_terminal_abort_rejects_broken_original_pipe(tmp_path):
+    pub = Publisher(tmp_path)
+    proc = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(20)"])
+    parent, child = Pipe()
+    pub.process, pub.pipe = proc, parent
+    pub.registry.write_text("owned synthetic process")
+    parent.close()
+    try:
+        with pytest.raises(Closed, match="MEDIA_DELIVERY_FAILED"):
+            await pub.abort(proc, require_live=True)
+        assert proc.poll() is not None and pub.pipe is None
+        with pytest.raises(Closed):
+            await pub.start({})
+    finally:
+        child.close()

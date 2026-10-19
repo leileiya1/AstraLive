@@ -3,6 +3,7 @@
 import asyncio
 import json
 import os
+import signal
 import subprocess
 import sys
 import uuid
@@ -23,6 +24,7 @@ class Publisher:
         self.identity = None
         self.lock = asyncio.Lock()
         self._aborting = self._abort_owner = None
+        self._quarantined = False
 
     def recover(self):
         if not self.registry.exists():
@@ -52,6 +54,8 @@ class Publisher:
         self.registry.unlink()
 
     async def start(self, config):
+        if self._quarantined:
+            raise Closed()
         if self._aborting is not None:
             if (
                 not self._aborting.done()
@@ -146,12 +150,16 @@ class Publisher:
                 await self.abort(expected)
                 raise Closed("MEDIA_DELIVERY_FAILED") from None
 
-    async def abort(self, expected=None):
+    async def abort(self, expected=None, *, require_live=False):
         task = self._aborting
         if expected is not None and self.process is not expected:
             if task is not None and self._abort_owner is expected:
                 await asyncio.shield(task)
+            if require_live:
+                raise Closed("MEDIA_DELIVERY_FAILED")
             return
+        if require_live and expected is None:
+            raise Closed("MEDIA_DELIVERY_FAILED")
         if task is None:
             process, self.process = self.process, None
             pipe, self.pipe = self.pipe, None
@@ -161,18 +169,29 @@ class Publisher:
                 # PID claim/name lookup; recover() retains its native marker /
                 # creation-time checks. Never let old cleanup unlink a new
                 # registry: start() refuses while this task is outstanding.
+                unexpected = require_live and (
+                    process is None or pipe is None or pipe.closed
+                )
                 try:
                     if process:
-                        if process.poll() is None:
+                        alive = process.poll() is None
+                        unexpected |= require_live and not alive
+                        if alive:
                             process.kill()
-                        await asyncio.to_thread(process.wait)
+                        code = await asyncio.to_thread(process.wait)
+                        unexpected |= require_live and code != -signal.SIGKILL
                 finally:
                     if pipe:
                         pipe.close()
                 self.registry.unlink(missing_ok=True)
+                if unexpected:
+                    self._quarantined = True
+                return unexpected
 
             self._abort_owner = process
             task = self._aborting = asyncio.create_task(reap())
-        await asyncio.shield(task)
+        unexpected = await asyncio.shield(task)
         if self._aborting is task:
             self._aborting = self._abort_owner = None
+        if require_live and unexpected:
+            raise Closed("MEDIA_DELIVERY_FAILED")
