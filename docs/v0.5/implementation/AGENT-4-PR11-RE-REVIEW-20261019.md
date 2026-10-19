@@ -2,6 +2,11 @@
 
 **AGENT 4 BLOCKED — PR11 RE-REVIEW. No merge. ASTRALIVE V0.5 BLOCKED.**
 
+Historical0c review. [The later47eedbb Finish/Renew review](AGENT-4-PR11-FINISH-RENEW-REVIEW-20261019.md)
+confirms the original3+3+48 positives, but withholds protected registration/merge
+for a newly reproduced old-Media/new-Generation retirement defect and a separate
+combined test fixture SQL race. Historical raw failures below remain preserved.
+
 Reviewed full HEAD `0c259cc981c12503485198982e84ad567b529c4e`, core fix
 `dabe495fcc8102febe2ee1512f295a37662f34ae`, against original integration
 `0cc1a141e443ee1069dc997a91182e4b48257be5`. Fetch verified both pins and Draft/open

@@ -1,0 +1,89 @@
+..............................F......................................... [ 35%]
+........................................................................ [ 70%]
+...............s...........................................              [100%]
+=================================== FAILURES ===================================
+____________ test_real_proven_ranges_never_override_lifecycle[stop] ____________
+
+rig = <conftest.Rig object at 0x10e27f320>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10e27ddf0>
+boundary = 'stop'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "boundary", ["stop", "terminal", "expiry", "crash", "crash-at-abort"]
+    )
+    async def test_real_proven_ranges_never_override_lifecycle(rig, monkeypatch, boundary):
+        await rig.activate()
+        g = rig.guardian
+        renewal = asyncio.create_task(rig.renew_forever())
+        verified, paused, release, revoked = (asyncio.Event() for _ in range(4))
+        loop = asyncio.get_running_loop()
+        verify = service.verify_combined
+    
+        def verification(*args):
+            proof = verify(*args)
+            if boundary == "crash":
+                # Only the exact Popen owned by this dedicated test rig is killed.
+                g.publisher.process.kill()
+                g.publisher.process.wait(timeout=1)
+            loop.call_soon_threadsafe(verified.set)
+            return proof
+    
+        monkeypatch.setattr(service, "verify_combined", verification)
+        abort = g.publisher.abort
+    
+        async def pause_abort(*a, **kw):
+            if boundary == "crash-at-abort" and verified.is_set() and not paused.is_set():
+                paused.set()
+                g.publisher.process.kill()
+                await asyncio.to_thread(g.publisher.process.wait)
+            result = await abort(*a, **kw)
+            if (
+                verified.is_set()
+                and not paused.is_set()
+                and boundary not in {"crash", "crash-at-abort"}
+            ):
+                paused.set()
+                await release.wait()
+            return result
+    
+        monkeypatch.setattr(g.publisher, "abort", pause_abort)
+        invalidate = g.invalidate
+    
+        def invalidated(*a, **kw):
+            invalidate(*a, **kw)
+            revoked.set()
+    
+        monkeypatch.setattr(g, "invalidate", invalidated)
+        finish = late = stopping = None
+        try:
+            # Same full64000-sample/100-frame input as the original acceptance:
+            # the earlier30-frame test never reached ingest/observer readiness.
+            await synthetic(rig, count=100)
+            if boundary in {"stop", "terminal"}:
+>               target = await rig.permit()
+                         ^^^^^^^^^^^^^^^^^^
+
+output_guardian/tests/lifecycle/test_real_edges.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+output_guardian/tests/conftest.py:92: in permit
+    await self.db.execute(
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:380: in execute
+    _, status, _ = await self._execute(
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:1903: in _execute
+    with self._stmt_exclusive_section:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <asyncpg.connection._Atomic object at 0x10e27ec80>
+
+    def __enter__(self):
+        if self._acquired:
+>           raise exceptions.InterfaceError(
+                'cannot perform operation: another operation is in progress')
+E           asyncpg.exceptions._base.InterfaceError: cannot perform operation: another operation is in progress
+
+/tmp/astralive-agent4-receiver1-python/lib/python3.12/site-packages/asyncpg/connection.py:2704: InterfaceError
+=========================== short test summary info ============================
+FAILED output_guardian/tests/lifecycle/test_real_edges.py::test_real_proven_ranges_never_override_lifecycle[stop]
+1 failed, 201 passed, 1 skipped in 76.12s (0:01:16)

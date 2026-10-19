@@ -1,0 +1,16 @@
+from pathlib import Path
+import os,json,subprocess,time,resource,hashlib
+root=Path('/tmp/agent4-pr11-final-candidate');out=Path('/tmp/agent4-pr11-final-results/media');out.mkdir(parents=True,exist_ok=True);py='/tmp/astralive-agent4-receiver1-python/bin/python';src=Path('/Users/sapiece/innovationProject/AstraLive-agent-4/docs/v0.5/evidence/agent-4/pr11-rereview-2026-10-19/independent-probes');temp=Path('/tmp/agent4-pr11-final-probes');env={k:os.environ[k]for k in ['PATH','HOME','TMPDIR']if k in os.environ};env.update(PYTHONPATH=str(root/'runtime')+os.pathsep+str(root),PYTHONDONTWRITEBYTECODE='1',LC_ALL='C');records=[];provenance=[]
+def run(label,cmd):
+ start=time.monotonic();before=resource.getrusage(resource.RUSAGE_CHILDREN)
+ with(out/(label+'.txt')).open('w')as f:r=subprocess.run(cmd,cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT)
+ after=resource.getrusage(resource.RUSAGE_CHILDREN);records.append(dict(label=label,command=cmd,cwd=str(root),exitCode=r.returncode,elapsedSeconds=time.monotonic()-start,childUserSeconds=after.ru_utime-before.ru_utime,childSystemSeconds=after.ru_stime-before.ru_stime,childPeakRSSBytes=after.ru_maxrss));(out/'commands.json').write_text(json.dumps(records,indent=2)+'\n');print(label,r.returncode,flush=True)
+for name in ['test_finish_renew_race','test_finish_renew_budget','test_agent4_rtmp','test_agent4_rtmp_phases']:
+ text=(src/(name+'.py.txt')).read_text();import re
+ destinations=re.findall(r"OUT=Path\('([^']+)'\)",text);assert len(destinations)==1
+ new=str(out/(name+'-ledgers'));modified=text.replace(destinations[0],new);assert modified.replace(new,destinations[0])==text
+ p=temp/(name+'.py');p.write_text(modified);provenance.append(dict(source=str(src/(name+'.py.txt')),sha256=hashlib.sha256(text.encode()).hexdigest(),executable=str(p),onlyOutputDirectoryChanged=True))
+ run(name,[py,'-m','pytest','-p','no:cacheprovider','-p','output_guardian.tests.conftest',str(p),'-q','-s'])
+text=(src/'test_agent4_rtmp_phases.py.txt').read_text();destination=re.findall(r"OUT=Path\('([^']+)'\)",text)[0];new=str(out/'stress8-ledgers');p=temp/'test_stress8.py';p.write_text(text.replace(destination,new));cmd=[py,'-m','pytest','-p','no:cacheprovider','-p','output_guardian.tests.conftest']+[str(p)+'::test_original_rtmp_with_passive_diagnostics['+str(i)+']'for i in range(8)]+['-q','-s'];run('stress8',cmd)
+(out/'probe-provenance.json').write_text(json.dumps(provenance,indent=2)+'\n')
+raise SystemExit(int(any(r['exitCode']for r in records)))
