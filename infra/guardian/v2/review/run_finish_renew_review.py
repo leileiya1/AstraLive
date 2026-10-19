@@ -70,7 +70,10 @@ def main():
     commit = subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
     ).strip()
-    sha = lambda b: hashlib.sha256(b).hexdigest()
+
+    def sha(raw):
+        return hashlib.sha256(raw).hexdigest()
+
     original_hashes = {
         p: sha((ROOT / p).read_bytes())
         for p in ("output_guardian/service.py", "output_guardian/process.py")

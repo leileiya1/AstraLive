@@ -24,6 +24,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--cold-repeats", type=int, default=20)
+    parser.add_argument("--base", default="0cc1a141e443ee1069dc997a91182e4b48257be5")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     env = dict(
@@ -177,7 +178,7 @@ def main():
                 "git",
                 "diff",
                 "--check",
-                "0cc1a141e443ee1069dc997a91182e4b48257be5",
+                args.base,
                 "HEAD",
             ],
         ),
