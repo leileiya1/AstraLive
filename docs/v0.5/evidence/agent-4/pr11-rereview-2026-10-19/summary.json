@@ -1,0 +1,281 @@
+{
+  "reviewedHead": "0c259cc981c12503485198982e84ad567b529c4e",
+  "base": "0cc1a141e443ee1069dc997a91182e4b48257be5",
+  "candidateTree": "d6273534ed08d3428becb756870692baa89116eb",
+  "noWorktreeBranchAgentCreated": true,
+  "sourceP1": "P1 SOURCE FIX ACK — DESTRUCTIVE CAPABILITY DISABLED",
+  "integration": "BLOCKED — PR11-V1-FINISH-RENEW-TEARDOWN",
+  "physical": "OUTPUT_FENCE_UNPROVEN / BLOCKED",
+  "merged": false,
+  "fullRunnerExit": 0,
+  "fullGo": {
+    "receiver1-pg-race": {
+      "counts": {
+        "pass": 22
+      },
+      "skips": []
+    },
+    "agent2-original-revision-repeat3": {
+      "counts": {
+        "pass": 6
+      },
+      "skips": []
+    },
+    "agent2-owner-probes": {
+      "counts": {
+        "pass": 15
+      },
+      "skips": []
+    },
+    "streaming-pg-race": {
+      "counts": {
+        "pass": 18
+      },
+      "skips": []
+    },
+    "go-test": {
+      "counts": {
+        "pass": 267,
+        "skip": 13
+      },
+      "skips": [
+        {
+          "package": "astralive/backend/internal/app",
+          "test": "TestAuditSelectionExpiresWhileWaitingForCommandLock",
+          "reason": "=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock\n    interaction_audit_test.go:28: explicit disposable SQL required\n--- SKIP: TestAuditSelectionExpiresWhileWaitingForCommandLock (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestRedisStreamsDuplicateReclaimAndSQLProjection",
+          "reason": "=== RUN   TestRedisStreamsDuplicateReclaimAndSQLProjection\n    evidence_test.go:176: isolated Redis required\n--- SKIP: TestRedisStreamsDuplicateReclaimAndSQLProjection (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestRedisIsolatedDisconnectAndSQLFallback",
+          "reason": "=== RUN   TestRedisIsolatedDisconnectAndSQLFallback\n    evidence_test.go:240: owned Redis required\n--- SKIP: TestRedisIsolatedDisconnectAndSQLFallback (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestIsolatedBackendHelper",
+          "reason": "=== RUN   TestIsolatedBackendHelper\n    process_test.go:38: owned subprocess helper\n--- SKIP: TestIsolatedBackendHelper (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestPostgresIsolatedServerOutage",
+          "reason": "=== RUN   TestPostgresIsolatedServerOutage\n    process_test.go:295: owned cluster path required\n--- SKIP: TestPostgresIsolatedServerOutage (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelivev2/authority",
+          "test": "TestOwnedCommitCrashChild",
+          "reason": "=== RUN   TestOwnedCommitCrashChild\n    acceptance_test.go:412: owned subprocess helper\n--- SKIP: TestOwnedCommitCrashChild (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/httpapi",
+          "test": "TestProductAuthorizationAndPinnedBindings",
+          "reason": "=== RUN   TestProductAuthorizationAndPinnedBindings\n    authorization_integration_test.go:28: explicit disposable DB required\n--- SKIP: TestProductAuthorizationAndPinnedBindings (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/httpapi",
+          "test": "TestInteractionFormalCPU",
+          "reason": "=== RUN   TestInteractionFormalCPU\n    interaction_integration_test.go:39: RUN_INTERACTION_CPU=1 and disposable SQL/Redis required\n--- SKIP: TestInteractionFormalCPU (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/turnmanager",
+          "test": "TestExportContractRequests",
+          "reason": "=== RUN   TestExportContractRequests\n    manager_test.go:530: set ASTRALIVE_DIRECTOR_EVIDENCE for schema/evidence export\n--- SKIP: TestExportContractRequests (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestConfigurationBrowserHarness",
+          "reason": "=== RUN   TestConfigurationBrowserHarness\n    browser_harness_test.go:23: browser harness opt-in\n--- SKIP: TestConfigurationBrowserHarness (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestPostgresConfigurationLifecycle",
+          "reason": "=== RUN   TestPostgresConfigurationLifecycle\n    postgres_test.go:23: CONFIG_TEST_DATABASE_URL not set\n--- SKIP: TestPostgresConfigurationLifecycle (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestLocalProviderProbesScopedAndVersioned",
+          "reason": "=== RUN   TestLocalProviderProbesScopedAndVersioned\n    provider_probe_test.go:22: explicit disposable DB required\n--- SKIP: TestLocalProviderProbesScopedAndVersioned (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/tests",
+          "test": "TestEventDedupAndStateUpdateWithPostgres",
+          "reason": "=== RUN   TestEventDedupAndStateUpdateWithPostgres\n    integration_test.go:45: DATABASE_URL not set\n--- SKIP: TestEventDedupAndStateUpdateWithPostgres (0.00s)\n"
+        }
+      ]
+    },
+    "go-race": {
+      "counts": {
+        "pass": 267,
+        "skip": 13
+      },
+      "skips": [
+        {
+          "package": "astralive/backend/internal/app",
+          "test": "TestAuditSelectionExpiresWhileWaitingForCommandLock",
+          "reason": "=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock\n    interaction_audit_test.go:28: explicit disposable SQL required\n--- SKIP: TestAuditSelectionExpiresWhileWaitingForCommandLock (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestRedisStreamsDuplicateReclaimAndSQLProjection",
+          "reason": "=== RUN   TestRedisStreamsDuplicateReclaimAndSQLProjection\n    evidence_test.go:176: isolated Redis required\n--- SKIP: TestRedisStreamsDuplicateReclaimAndSQLProjection (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestRedisIsolatedDisconnectAndSQLFallback",
+          "reason": "=== RUN   TestRedisIsolatedDisconnectAndSQLFallback\n    evidence_test.go:240: owned Redis required\n--- SKIP: TestRedisIsolatedDisconnectAndSQLFallback (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestIsolatedBackendHelper",
+          "reason": "=== RUN   TestIsolatedBackendHelper\n    process_test.go:38: owned subprocess helper\n--- SKIP: TestIsolatedBackendHelper (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestPostgresIsolatedServerOutage",
+          "reason": "=== RUN   TestPostgresIsolatedServerOutage\n    process_test.go:295: owned cluster path required\n--- SKIP: TestPostgresIsolatedServerOutage (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelivev2/authority",
+          "test": "TestOwnedCommitCrashChild",
+          "reason": "=== RUN   TestOwnedCommitCrashChild\n    acceptance_test.go:412: owned subprocess helper\n--- SKIP: TestOwnedCommitCrashChild (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/httpapi",
+          "test": "TestProductAuthorizationAndPinnedBindings",
+          "reason": "=== RUN   TestProductAuthorizationAndPinnedBindings\n    authorization_integration_test.go:28: explicit disposable DB required\n--- SKIP: TestProductAuthorizationAndPinnedBindings (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/httpapi",
+          "test": "TestInteractionFormalCPU",
+          "reason": "=== RUN   TestInteractionFormalCPU\n    interaction_integration_test.go:39: RUN_INTERACTION_CPU=1 and disposable SQL/Redis required\n--- SKIP: TestInteractionFormalCPU (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/turnmanager",
+          "test": "TestExportContractRequests",
+          "reason": "=== RUN   TestExportContractRequests\n    manager_test.go:530: set ASTRALIVE_DIRECTOR_EVIDENCE for schema/evidence export\n--- SKIP: TestExportContractRequests (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestConfigurationBrowserHarness",
+          "reason": "=== RUN   TestConfigurationBrowserHarness\n    browser_harness_test.go:23: browser harness opt-in\n--- SKIP: TestConfigurationBrowserHarness (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestPostgresConfigurationLifecycle",
+          "reason": "=== RUN   TestPostgresConfigurationLifecycle\n    postgres_test.go:23: CONFIG_TEST_DATABASE_URL not set\n--- SKIP: TestPostgresConfigurationLifecycle (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestLocalProviderProbesScopedAndVersioned",
+          "reason": "=== RUN   TestLocalProviderProbesScopedAndVersioned\n    provider_probe_test.go:22: explicit disposable DB required\n--- SKIP: TestLocalProviderProbesScopedAndVersioned (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/tests",
+          "test": "TestEventDedupAndStateUpdateWithPostgres",
+          "reason": "=== RUN   TestEventDedupAndStateUpdateWithPostgres\n    integration_test.go:45: DATABASE_URL not set\n--- SKIP: TestEventDedupAndStateUpdateWithPostgres (0.00s)\n"
+        }
+      ]
+    }
+  },
+  "vet": "PASS",
+  "contracts": 137,
+  "journal": 11,
+  "wire": 13,
+  "adapter": 8,
+  "validators": "BOTH_PASS",
+  "generator": "PASS",
+  "guardianV1Exact": {
+    "passed": 25,
+    "failed": 0
+  },
+  "guardianV2Original69": {
+    "passed": 69
+  },
+  "guardianV2Extended": {
+    "passed": 142,
+    "skipped": 1,
+    "reason": "dedicated Linux cgroup-v2 delegation unavailable; never enabled"
+  },
+  "guardianRecursive": {
+    "passed": 167,
+    "skipped": 1,
+    "overlap": "same25+142; not added to other groups"
+  },
+  "ownerScope": {
+    "passed": 56,
+    "physicalModelOnly": true
+  },
+  "currentIndependentScope": {
+    "passed": 8,
+    "physicalModelOnly": true
+  },
+  "originalUnchangedScope": {
+    "repeats": 3,
+    "perRepeat": "3 PASS/1 FAIL; empty-leaf kill expectation is superseded by explicit deny-only capability",
+    "historyRetained": true
+  },
+  "readiness": {
+    "passed": 5
+  },
+  "rtmpPassiveRepeat": {
+    "passed": 18,
+    "failed": 2
+  },
+  "rtmpPhaseRepeat": {
+    "passed": 17,
+    "failed": 3
+  },
+  "deterministicFinishRenew": {
+    "failed": 3,
+    "expectedNormalFinishSuccess": true
+  },
+  "deterministicBudgetFinishRenew": {
+    "failed": 3,
+    "expectedNormalFinishSuccess": true,
+    "oldRightRemainingMs": [
+      761.6711249575019,
+      772.7280417457223,
+      776.2704170309007
+    ],
+    "freshSqlPermitRemainingMs": [
+      898.357,
+      898.745,
+      898.802
+    ]
+  },
+  "targetedProbeDevelopmentFailure": "budget probe collection SyntaxError, retained; corrected only diagnostic harness then3 product failures",
+  "rtmpFinding": "All5 passive/phase failures had exact final encoded/decoded coverage PASS before failed teardown; legitimate Renew races a closing Publisher -> LEASE_LOST/Retire -> DRAIN_UNKNOWN. No false media completion observed. Historical no-ledger failures cannot all be retrospectively attributed.",
+  "archive": {
+    "restoredFiles": 199,
+    "oldRawExact": 136,
+    "oldJsonExact": 85,
+    "historicalOwnerManifestExact": 198,
+    "existingManifestsNotChanged": true,
+    "cleanDestinationRestore": true
+  },
+  "protection": {
+    "count": 313,
+    "mutationsRejected": 2,
+    "restoredValidator": "PASS",
+    "inventoryAndApprovedFixtureUnchanged": true
+  },
+  "fullFinalHeadDiffCheck": 0,
+  "freeze": {
+    "files": 22,
+    "digest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+    "manifestAndFilesOriginalBytes": true,
+    "userDigestTruncated": true
+  },
+  "notTested": [
+    "post-merge regression: not merged",
+    "actual Linux cgroup/UID/ACL/kernel exclusive controller",
+    "production PhysicalSource/HostLauncher/once-TTS/Observer/targetSink",
+    "production RTMP/WebRTC/GPU/audience/SLA"
+  ],
+  "overlappingCountsNotSummed": true,
+  "resourceMeasurement": "full-runner commands.json has child CPU/RSS; independent targeted runs retain pytest elapsed/monotonic phase times, per-process CPU/RSS not collected",
+  "cleanup": "full runner4 owned DBs dropped+PG stopped; private Guardian fixture teardown, no shared services"
+}

@@ -1,0 +1,18 @@
+from pathlib import Path
+import subprocess,json,hashlib
+candidate=Path('/tmp/agent4-pr11-rereview-candidate');out=Path('/tmp/agent4-pr11-rereview-protection-negative');out.mkdir(exist_ok=True)
+py='/tmp/astralive-agent4-receiver1-python/bin/python'
+paths=['output_guardian/tests/conftest.py','runtime/app/models.py'];records=[]
+for idx,path in enumerate(paths):
+ p=candidate/path;data=p.read_bytes();mutated=data+b'\n# unauthorized protected mutation\n'
+ try:
+  p.write_bytes(mutated)
+  r=subprocess.run([py,'scripts/validate-answer-contract.py'],cwd=candidate,capture_output=True)
+  (out/f'{idx}-reject.txt').write_bytes(r.stdout+r.stderr)
+  assert r.returncode!=0 and path.encode() in r.stdout+r.stderr,(path,r.returncode)
+  records.append(dict(path=path,expectedSHA256=hashlib.sha256(data).hexdigest(),mutationSHA256=hashlib.sha256(mutated).hexdigest(),exitCode=r.returncode,rejectedAtExpectedProtectedPath=True))
+ finally:p.write_bytes(data)
+r=subprocess.run([py,'scripts/validate-answer-contract.py'],cwd=candidate,capture_output=True);(out/'restored-validator.txt').write_bytes(r.stdout+r.stderr);assert r.returncode==0
+old=json.loads(subprocess.check_output(['git','show','0cc1a141e443ee1069dc997a91182e4b48257be5:contracts/v0.5/durable-live-2/protected-files.json']))
+new=json.loads((candidate/'contracts/v0.5/durable-live-2/protected-files.json').read_text());changed=[p for p,v in old['files'].items() if new['files'][p]!=v];assert changed==[];assert len(old['files'])==len(new['files'])==313
+(out/'summary.json').write_text(json.dumps(dict(candidateOnly=True,tests=records,restoredValidatorExitCode=0,protectedCount=313,changedExpectationPaths=changed,validatorSourceUnchanged=True),indent=2)+'\n');print('PASS 2 protected mutations rejected; all313 restored checks PASS')

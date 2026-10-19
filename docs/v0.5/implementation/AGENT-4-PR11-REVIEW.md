@@ -2,6 +2,11 @@
 
 **AGENT 4 BLOCKED — PR11. ASTRALIVE V0.5 BLOCKED.**
 
+Historical9b review. [The 2026-10-19 re-review](AGENT-4-PR11-RE-REVIEW-20261019.md)
+closes this cgroup source blocker by disabling destructive capability and clears
+raw-evidence whitespace. PR11 remains blocked by a separately reproduced normal
+Finish/Renew teardown race; the historical findings/results below are preserved.
+
 Reviewed Guardian HEAD `9b969d099b7a3b6b85f3595d26c36fb953d47263` against integration
 `a0a05071d3eae1cc918fc7d7c2c56604fea380da`. PR11 stays Draft/unmerged; there is no
 merge commit or post-merge production acceptance. Existing worktree/branch reused.

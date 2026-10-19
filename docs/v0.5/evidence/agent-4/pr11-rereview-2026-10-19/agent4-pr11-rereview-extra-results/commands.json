@@ -1,0 +1,121 @@
+[
+  {
+    "label": "original4-1",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "/tmp/agent4-pr11-rereview-probes/test_original_scope.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 1,
+    "elapsedSeconds": 0.35695375013165176,
+    "childUserSeconds": 0.267194,
+    "childSystemSeconds": 0.06337,
+    "childPeakRSSBytes": 54755328
+  },
+  {
+    "label": "original4-2",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "/tmp/agent4-pr11-rereview-probes/test_original_scope.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 1,
+    "elapsedSeconds": 0.30495879193767905,
+    "childUserSeconds": 0.273634,
+    "childSystemSeconds": 0.028110999999999997,
+    "childPeakRSSBytes": 54755328
+  },
+  {
+    "label": "original4-3",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "/tmp/agent4-pr11-rereview-probes/test_original_scope.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 1,
+    "elapsedSeconds": 0.3732219999656081,
+    "childUserSeconds": 0.300523,
+    "childSystemSeconds": 0.069235,
+    "childPeakRSSBytes": 55115776
+  },
+  {
+    "label": "current-capability-independent",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "/tmp/agent4-pr11-rereview-probes/test_current_scope.py",
+      "-q",
+      "-rs"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 0.31724383402615786,
+    "childUserSeconds": 0.284581,
+    "childSystemSeconds": 0.028641,
+    "childPeakRSSBytes": 55115776
+  },
+  {
+    "label": "owner-scope56",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "output_guardian/tests/v2/test_cgroup_scope.py",
+      "-q",
+      "-rs"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 0.8995747091248631,
+    "childUserSeconds": 0.599726,
+    "childSystemSeconds": 0.138888,
+    "childPeakRSSBytes": 92749824
+  },
+  {
+    "label": "current-original69",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "output_guardian/tests/v2",
+      "--ignore=output_guardian/tests/v2/test_cgroup_scope.py",
+      "--ignore=output_guardian/tests/v2/test_evidence_archive.py",
+      "--ignore=output_guardian/tests/v2/test_readiness.py",
+      "--ignore=output_guardian/tests/v2/test_official.py",
+      "--ignore=output_guardian/tests/v2/test_physical.py",
+      "-q",
+      "-rs"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 3.9006690001115203,
+    "childUserSeconds": 2.505889,
+    "childSystemSeconds": 0.48937299999999995,
+    "childPeakRSSBytes": 107036672
+  }
+]

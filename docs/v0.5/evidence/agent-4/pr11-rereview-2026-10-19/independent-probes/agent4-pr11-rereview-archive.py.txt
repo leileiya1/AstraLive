@@ -1,0 +1,27 @@
+from pathlib import Path
+import subprocess,json,gzip,hashlib,importlib.util
+repo=Path('/tmp/agent4-pr11-rereview-candidate');gitroot=Path('/Users/sapiece/innovationProject/AstraLive-agent-4');out=Path('/tmp/agent4-pr11-rereview-extra-results')
+old='9b969d099b7a3b6b85f3595d26c36fb953d47263';new='0c259cc981c12503485198982e84ad567b529c4e';base='0cc1a141e443ee1069dc997a91182e4b48257be5'
+def blob(rev,p):return subprocess.check_output(['git','show',rev+':'+p],cwd=gitroot)
+def h(b):return hashlib.sha256(b).hexdigest()
+index=json.loads((repo/'infra/guardian/v2/evidence/raw-archive-index.json').read_text());rows=index['files'];oldraw=[]
+paths=subprocess.check_output(['git','ls-tree','-r','--name-only',old,'--','infra/guardian/v2/evidence'],cwd=gitroot).decode().splitlines()
+for p in paths:
+ if p.endswith(('.txt','.xml','.diff')):
+  raw=blob(old,p);r=rows[p];b=(repo/r['archive']).read_bytes();assert gzip.decompress(b)==raw and h(raw)==r['rawSHA256'] and len(raw)==r['rawBytes'];oldraw.append(p)
+# Every retained old command/hash/index JSON blob stays byte-identical, not regenerated.
+oldjson=[p for p in paths if p.endswith('.json')]
+for p in oldjson:assert (repo/p).read_bytes()==blob(old,p),p
+spec=importlib.util.spec_from_file_location('archive',repo/'infra/guardian/v2/review/evidence_archive.py');mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
+dest=Path('/tmp/agent4-pr11-rereview-restored');assert not dest.exists()
+count=mod.restore(dest,repo)
+for p,r in rows.items():assert h((dest/p).read_bytes())==r['rawSHA256']
+manifest=json.loads((repo/'contracts/v0.5/durable-live-2/manifest.json').read_text());frozen='c7fd46209d3cbc6f58541dba8b4e1c85609c823e'
+for p,v in manifest['files'].items():assert (repo/p).read_bytes()==blob(frozen,p) and h((repo/p).read_bytes())==v
+for p in ['contracts/v0.5/durable-live-2/manifest.json','contracts/v0.5/durable-live-2/protected-files.json','output_guardian/tests/conftest.py']:
+ assert (repo/p).read_bytes()==blob(base,p)
+check=subprocess.run(['git','diff','--check',base,new],cwd=gitroot,capture_output=True);(out/'final-head-full-diff-check.txt').write_bytes(check.stdout+check.stderr);assert check.returncode==0
+changed=subprocess.check_output(['git','diff','--name-only',base,new],cwd=gitroot).decode().splitlines()
+assert all(p.startswith(('output_guardian/v2/','output_guardian/tests/v2/','infra/guardian/v2/')) for p in changed),[p for p in changed if not p.startswith(('output_guardian/v2/','output_guardian/tests/v2/','infra/guardian/v2/'))]
+summary=dict(reviewedHead=new,base=base,restoredFiles=count,oldRawByteExact=len(oldraw),oldJsonByteExact=len(oldjson),restoredToNewDirectory=str(dest),fullFinalHeadDiffCheck=check.returncode,normativeFiles=len(manifest['files']),digest=manifest['normativeDigest'],protectedCount=len(json.loads((repo/'contracts/v0.5/durable-live-2/protected-files.json').read_text())['files']),approvedFixtureHash=h((repo/'output_guardian/tests/conftest.py').read_bytes()),changedOwnerPaths=len(changed),unmodifiedSharedFiles=True)
+(out/'archive-source-audit.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary,indent=2))

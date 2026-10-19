@@ -1,0 +1,361 @@
+FFF
+=================================== FAILURES ===================================
+____ test_valid_renew_during_normal_finish_must_not_destroy_proven_drain[0] ____
+
+rig = <output_guardian.tests.conftest.Rig object at 0x10b332f60>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b3321b0>
+repeat = 0
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_valid_renew_during_normal_finish_must_not_destroy_proven_drain(rig,monkeypatch,repeat):
+        await rig.activate(); renewal=asyncio.create_task(rig.renew_forever())
+        paused,released=asyncio.Event(),asyncio.Event();proof=[];injected=False
+        verify=service.verify_combined
+        def verified(*a):
+            result=verify(*a);proof.append(result);return result
+        monkeypatch.setattr(service,'verify_combined',verified)
+        abort=rig.guardian.publisher.abort
+        async def paused_abort(*a,**kw):
+            nonlocal injected
+            result=await abort(*a,**kw)
+            if proof and not injected:
+                injected=True;paused.set();await asyncio.wait_for(released.wait(),0.5)
+            return result
+        monkeypatch.setattr(rig.guardian.publisher,'abort',paused_abort)
+        record={'repeat':repeat,'realSql':True,'actualOwnedMediaProcesses':True,'physicalProductionAcceptance':False,'stopRequested':False,'grantLifetimeChanged':False}
+        finish=None
+        try:
+            await original.synthetic(rig,count=100)
+            finish=asyncio.create_task(rig.guardian.finish(rig.attempt))
+            await asyncio.wait_for(paused.wait(),0.8)
+            record['trustedDrainPassedBeforeRenew']=bool(proof)
+            record['publisherAtRenew']=rig.guardian.publisher.process is None
+            permit=await rig.permit()
+            try:await rig.guardian.renew(rig.attempt,permit)
+            except Closed as e:record['renewError']=e.code
+            else:record['renewResult']='AUTHORIZED'
+            released.set()
+>           try:result=await finish
+                       ^^^^^^^^^^^^
+
+/tmp/agent4-pr11-rereview-probes/test_finish_renew_race.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <output_guardian.service.Guardian object at 0x10b332ea0>
+attempt = Attempt(binding=Binding(tenantId='t', ownerId='o', roomId='room', runId='run', runEpoch=1, sessionId='session', output...on=1, producerIncarnation='producer'), attemptId='attempt', utteranceId='utterance', generation=1, commandId='command')
+
+    async def finish(self, attempt):
+        async with self.operations:
+            self.check(attempt)
+            if self.finishing:
+                raise Closed("STATE_CONFLICT")
+            self.finishing = True
+            barrier = self.barrier
+            try:
+                response = await self.publisher.call({"op": "finish"}, timeout=0.25)
+                manifest = response
+                # Observe the real RTMP reader before closing the publisher;
+                # recorder teardown is permitted to lose its final partial part.
+                for _ in range(100):
+                    self.check(attempt)
+                    try:
+                        observed = await self.receiver.call({"op": "status"})
+                        paths = sorted(
+                            set(self.recording_dir.rglob("*.mp4")) - self.records_before
+                        )
+                        evidence = await asyncio.to_thread(
+                            verify_combined, paths, observed, manifest
+                        )
+                        evidence["attempt"] = attempt.json()
+                        evidence["guardianId"] = self.authority.guardian_id
+                        evidence["barrier"] = barrier
+                        evidence.pop("evidenceSHA256", None)
+                        evidence["evidenceSHA256"] = hashlib.sha256(
+                            json.dumps(evidence, sort_keys=True).encode()
+                        ).hexdigest()
+                        break
+                    except Exception as exc:
+                        self.last_drain_stats = {
+                            "connected": observed.get("connected"),
+                            "openErrorType": observed.get("openErrorType"),
+                            "openErrorNumber": observed.get("openErrorNumber"),
+                            "packets": {
+                                k: len(v)
+                                for k, v in observed.get("manifest", {}).items()
+                            },
+                            "decodeError": observed.get("decodeError"),
+                            "transportEnded": observed.get("transportEnded"),
+                            "recordings": len(paths),
+                        }
+                        self.last_drain_fault = getattr(exc, "code", type(exc).__name__)
+                        await asyncio.sleep(0.01)
+                else:
+                    raise Closed("DRAIN_UNKNOWN")
+                self.check(attempt)
+                if barrier != self.barrier:
+                    raise Closed("DRAIN_UNKNOWN")
+                if self.webrtc_enabled:
+                    # Existing aiortc track consumption is NOT a decoded-peer
+                    # proof. Agent 4 must install the trusted receiver adapter.
+                    raise Closed("DRAIN_UNKNOWN")
+                await self.publisher.abort()
+                await self.receiver.abort()
+                await self.publishing_socket.close()
+                self.publishing_socket = None
+                self.secret, self.publisher_id = None, None
+                await self.ingest.isolate()
+                self.invalidate()
+                return {
+                    "state": "LOCAL_MEDIA_DRAINED",
+                    "attempt": attempt.json(),
+                    "requiredSinks": ["rtmp"],
+                    "evidence": [evidence],
+                }
+            except BaseException:
+                await self.retire()
+>               raise Closed("DRAIN_UNKNOWN") from None
+E               output_guardian.model.Closed: DRAIN_UNKNOWN
+
+output_guardian/service.py:476: Closed
+____ test_valid_renew_during_normal_finish_must_not_destroy_proven_drain[1] ____
+
+rig = <output_guardian.tests.conftest.Rig object at 0x10b332b10>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c6a7020>
+repeat = 1
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_valid_renew_during_normal_finish_must_not_destroy_proven_drain(rig,monkeypatch,repeat):
+        await rig.activate(); renewal=asyncio.create_task(rig.renew_forever())
+        paused,released=asyncio.Event(),asyncio.Event();proof=[];injected=False
+        verify=service.verify_combined
+        def verified(*a):
+            result=verify(*a);proof.append(result);return result
+        monkeypatch.setattr(service,'verify_combined',verified)
+        abort=rig.guardian.publisher.abort
+        async def paused_abort(*a,**kw):
+            nonlocal injected
+            result=await abort(*a,**kw)
+            if proof and not injected:
+                injected=True;paused.set();await asyncio.wait_for(released.wait(),0.5)
+            return result
+        monkeypatch.setattr(rig.guardian.publisher,'abort',paused_abort)
+        record={'repeat':repeat,'realSql':True,'actualOwnedMediaProcesses':True,'physicalProductionAcceptance':False,'stopRequested':False,'grantLifetimeChanged':False}
+        finish=None
+        try:
+            await original.synthetic(rig,count=100)
+            finish=asyncio.create_task(rig.guardian.finish(rig.attempt))
+            await asyncio.wait_for(paused.wait(),0.8)
+            record['trustedDrainPassedBeforeRenew']=bool(proof)
+            record['publisherAtRenew']=rig.guardian.publisher.process is None
+            permit=await rig.permit()
+            try:await rig.guardian.renew(rig.attempt,permit)
+            except Closed as e:record['renewError']=e.code
+            else:record['renewResult']='AUTHORIZED'
+            released.set()
+>           try:result=await finish
+                       ^^^^^^^^^^^^
+
+/tmp/agent4-pr11-rereview-probes/test_finish_renew_race.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <output_guardian.service.Guardian object at 0x10b3aac90>
+attempt = Attempt(binding=Binding(tenantId='t', ownerId='o', roomId='room', runId='run', runEpoch=1, sessionId='session', output...on=1, producerIncarnation='producer'), attemptId='attempt', utteranceId='utterance', generation=1, commandId='command')
+
+    async def finish(self, attempt):
+        async with self.operations:
+            self.check(attempt)
+            if self.finishing:
+                raise Closed("STATE_CONFLICT")
+            self.finishing = True
+            barrier = self.barrier
+            try:
+                response = await self.publisher.call({"op": "finish"}, timeout=0.25)
+                manifest = response
+                # Observe the real RTMP reader before closing the publisher;
+                # recorder teardown is permitted to lose its final partial part.
+                for _ in range(100):
+                    self.check(attempt)
+                    try:
+                        observed = await self.receiver.call({"op": "status"})
+                        paths = sorted(
+                            set(self.recording_dir.rglob("*.mp4")) - self.records_before
+                        )
+                        evidence = await asyncio.to_thread(
+                            verify_combined, paths, observed, manifest
+                        )
+                        evidence["attempt"] = attempt.json()
+                        evidence["guardianId"] = self.authority.guardian_id
+                        evidence["barrier"] = barrier
+                        evidence.pop("evidenceSHA256", None)
+                        evidence["evidenceSHA256"] = hashlib.sha256(
+                            json.dumps(evidence, sort_keys=True).encode()
+                        ).hexdigest()
+                        break
+                    except Exception as exc:
+                        self.last_drain_stats = {
+                            "connected": observed.get("connected"),
+                            "openErrorType": observed.get("openErrorType"),
+                            "openErrorNumber": observed.get("openErrorNumber"),
+                            "packets": {
+                                k: len(v)
+                                for k, v in observed.get("manifest", {}).items()
+                            },
+                            "decodeError": observed.get("decodeError"),
+                            "transportEnded": observed.get("transportEnded"),
+                            "recordings": len(paths),
+                        }
+                        self.last_drain_fault = getattr(exc, "code", type(exc).__name__)
+                        await asyncio.sleep(0.01)
+                else:
+                    raise Closed("DRAIN_UNKNOWN")
+                self.check(attempt)
+                if barrier != self.barrier:
+                    raise Closed("DRAIN_UNKNOWN")
+                if self.webrtc_enabled:
+                    # Existing aiortc track consumption is NOT a decoded-peer
+                    # proof. Agent 4 must install the trusted receiver adapter.
+                    raise Closed("DRAIN_UNKNOWN")
+                await self.publisher.abort()
+                await self.receiver.abort()
+                await self.publishing_socket.close()
+                self.publishing_socket = None
+                self.secret, self.publisher_id = None, None
+                await self.ingest.isolate()
+                self.invalidate()
+                return {
+                    "state": "LOCAL_MEDIA_DRAINED",
+                    "attempt": attempt.json(),
+                    "requiredSinks": ["rtmp"],
+                    "evidence": [evidence],
+                }
+            except BaseException:
+                await self.retire()
+>               raise Closed("DRAIN_UNKNOWN") from None
+E               output_guardian.model.Closed: DRAIN_UNKNOWN
+
+output_guardian/service.py:476: Closed
+____ test_valid_renew_during_normal_finish_must_not_destroy_proven_drain[2] ____
+
+rig = <output_guardian.tests.conftest.Rig object at 0x10c6a5cd0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c6a71d0>
+repeat = 2
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_valid_renew_during_normal_finish_must_not_destroy_proven_drain(rig,monkeypatch,repeat):
+        await rig.activate(); renewal=asyncio.create_task(rig.renew_forever())
+        paused,released=asyncio.Event(),asyncio.Event();proof=[];injected=False
+        verify=service.verify_combined
+        def verified(*a):
+            result=verify(*a);proof.append(result);return result
+        monkeypatch.setattr(service,'verify_combined',verified)
+        abort=rig.guardian.publisher.abort
+        async def paused_abort(*a,**kw):
+            nonlocal injected
+            result=await abort(*a,**kw)
+            if proof and not injected:
+                injected=True;paused.set();await asyncio.wait_for(released.wait(),0.5)
+            return result
+        monkeypatch.setattr(rig.guardian.publisher,'abort',paused_abort)
+        record={'repeat':repeat,'realSql':True,'actualOwnedMediaProcesses':True,'physicalProductionAcceptance':False,'stopRequested':False,'grantLifetimeChanged':False}
+        finish=None
+        try:
+            await original.synthetic(rig,count=100)
+            finish=asyncio.create_task(rig.guardian.finish(rig.attempt))
+            await asyncio.wait_for(paused.wait(),0.8)
+            record['trustedDrainPassedBeforeRenew']=bool(proof)
+            record['publisherAtRenew']=rig.guardian.publisher.process is None
+            permit=await rig.permit()
+            try:await rig.guardian.renew(rig.attempt,permit)
+            except Closed as e:record['renewError']=e.code
+            else:record['renewResult']='AUTHORIZED'
+            released.set()
+>           try:result=await finish
+                       ^^^^^^^^^^^^
+
+/tmp/agent4-pr11-rereview-probes/test_finish_renew_race.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <output_guardian.service.Guardian object at 0x10c6a59d0>
+attempt = Attempt(binding=Binding(tenantId='t', ownerId='o', roomId='room', runId='run', runEpoch=1, sessionId='session', output...on=1, producerIncarnation='producer'), attemptId='attempt', utteranceId='utterance', generation=1, commandId='command')
+
+    async def finish(self, attempt):
+        async with self.operations:
+            self.check(attempt)
+            if self.finishing:
+                raise Closed("STATE_CONFLICT")
+            self.finishing = True
+            barrier = self.barrier
+            try:
+                response = await self.publisher.call({"op": "finish"}, timeout=0.25)
+                manifest = response
+                # Observe the real RTMP reader before closing the publisher;
+                # recorder teardown is permitted to lose its final partial part.
+                for _ in range(100):
+                    self.check(attempt)
+                    try:
+                        observed = await self.receiver.call({"op": "status"})
+                        paths = sorted(
+                            set(self.recording_dir.rglob("*.mp4")) - self.records_before
+                        )
+                        evidence = await asyncio.to_thread(
+                            verify_combined, paths, observed, manifest
+                        )
+                        evidence["attempt"] = attempt.json()
+                        evidence["guardianId"] = self.authority.guardian_id
+                        evidence["barrier"] = barrier
+                        evidence.pop("evidenceSHA256", None)
+                        evidence["evidenceSHA256"] = hashlib.sha256(
+                            json.dumps(evidence, sort_keys=True).encode()
+                        ).hexdigest()
+                        break
+                    except Exception as exc:
+                        self.last_drain_stats = {
+                            "connected": observed.get("connected"),
+                            "openErrorType": observed.get("openErrorType"),
+                            "openErrorNumber": observed.get("openErrorNumber"),
+                            "packets": {
+                                k: len(v)
+                                for k, v in observed.get("manifest", {}).items()
+                            },
+                            "decodeError": observed.get("decodeError"),
+                            "transportEnded": observed.get("transportEnded"),
+                            "recordings": len(paths),
+                        }
+                        self.last_drain_fault = getattr(exc, "code", type(exc).__name__)
+                        await asyncio.sleep(0.01)
+                else:
+                    raise Closed("DRAIN_UNKNOWN")
+                self.check(attempt)
+                if barrier != self.barrier:
+                    raise Closed("DRAIN_UNKNOWN")
+                if self.webrtc_enabled:
+                    # Existing aiortc track consumption is NOT a decoded-peer
+                    # proof. Agent 4 must install the trusted receiver adapter.
+                    raise Closed("DRAIN_UNKNOWN")
+                await self.publisher.abort()
+                await self.receiver.abort()
+                await self.publishing_socket.close()
+                self.publishing_socket = None
+                self.secret, self.publisher_id = None, None
+                await self.ingest.isolate()
+                self.invalidate()
+                return {
+                    "state": "LOCAL_MEDIA_DRAINED",
+                    "attempt": attempt.json(),
+                    "requiredSinks": ["rtmp"],
+                    "evidence": [evidence],
+                }
+            except BaseException:
+                await self.retire()
+>               raise Closed("DRAIN_UNKNOWN") from None
+E               output_guardian.model.Closed: DRAIN_UNKNOWN
+
+output_guardian/service.py:476: Closed
+=========================== short test summary info ============================
+FAILED ../../../tmp/agent4-pr11-rereview-probes/test_finish_renew_race.py::test_valid_renew_during_normal_finish_must_not_destroy_proven_drain[0]
+FAILED ../../../tmp/agent4-pr11-rereview-probes/test_finish_renew_race.py::test_valid_renew_during_normal_finish_must_not_destroy_proven_drain[1]
+FAILED ../../../tmp/agent4-pr11-rereview-probes/test_finish_renew_race.py::test_valid_renew_during_normal_finish_must_not_destroy_proven_drain[2]
+3 failed in 14.28s
