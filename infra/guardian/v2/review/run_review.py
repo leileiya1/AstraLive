@@ -14,6 +14,7 @@ import resource
 import subprocess
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -34,7 +35,13 @@ def main():
             "RUN_WEBRTC_INTEGRATION",
         ):
             env[key] = "0"
+    env.pop(
+        "AG5_OWNED_CGROUP_PARENT", None
+    )  # this round authorizes NO real cgroup test
     py = sys.executable
+    source_commit = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
+    ).strip()
     rows = []
 
     def run(name, command, *, probe=False):
@@ -60,6 +67,8 @@ def main():
             userSeconds=after.ru_utime - before.ru_utime,
             systemSeconds=after.ru_stime - before.ru_stime,
             peakRSSBytes=after.ru_maxrss,
+            generatedAtUTC=datetime.now(timezone.utc).isoformat(),
+            sourceCommit=source_commit,
         )
         rows.append(row)
         (args.output / "commands.json").write_text(json.dumps(rows, indent=2) + "\n")
@@ -88,6 +97,8 @@ def main():
                 "--ignore=output_guardian/tests/v2/test_readiness.py",
                 "--ignore=output_guardian/tests/v2/test_official.py",
                 "--ignore=output_guardian/tests/v2/test_physical.py",
+                "--ignore=output_guardian/tests/v2/test_cgroup_scope.py",
+                "--ignore=output_guardian/tests/v2/test_evidence_archive.py",
                 "-v",
                 "--tb=short",
             ],
@@ -95,6 +106,21 @@ def main():
         (
             "v2-full",
             [py, "-m", "pytest", "output_guardian/tests/v2", "-v", "--tb=short", "-rs"],
+        ),
+        (
+            "cgroup-inert-56",
+            [
+                py,
+                "-m",
+                "pytest",
+                "output_guardian/tests/v2/test_cgroup_scope.py",
+                "-v",
+                "--tb=short",
+            ],
+        ),
+        (
+            "wire-13",
+            [py, "-m", "unittest", "tests.test_durable_live_v2_wire", "-v"],
         ),
         (
             "contracts-137",
@@ -145,7 +171,16 @@ def main():
                 "infra/guardian/v2/review",
             ],
         ),
-        ("diff-check", ["git", "diff", "--check"]),
+        (
+            "diff-check-full-pr",
+            [
+                "git",
+                "diff",
+                "--check",
+                "0cc1a141e443ee1069dc997a91182e4b48257be5",
+                "HEAD",
+            ],
+        ),
     ]
     for name, command in tests:
         run(name, command)

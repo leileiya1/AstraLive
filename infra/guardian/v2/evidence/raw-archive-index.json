@@ -1,0 +1,3764 @@
+{
+  "archivedFromCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+  "createdAtUTC": "2026-10-19T00:03:15.967163+00:00",
+  "files": {
+    "infra/guardian/v2/evidence/contracts-137.txt": {
+      "archive": "infra/guardian/v2/evidence/contracts-137.txt.gz",
+      "archiveSHA256": "9b1d5fa1389c1fda489b2405cd9b8ef0087596c140312e4fe2938f468915978f",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "unittest",
+            "tests.test_contracts",
+            "tests.test_durable_live_contracts",
+            "tests.test_durable_answer_contracts",
+            "tests.test_answer_contract_repairs",
+            "tests.test_receiver_contracts",
+            "tests.test_receiver_stop_races",
+            "-v"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "062d566b0fb73b32c4cfe26d5d371f926d560c52",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 23660,
+      "rawSHA256": "fbb09bcc601b3533a55f0a79893511271ef2e9f51d9724ec0631e66f2f6bf27c"
+    },
+    "infra/guardian/v2/evidence/diff-check.txt": {
+      "archive": "infra/guardian/v2/evidence/diff-check.txt.gz",
+      "archiveSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "git",
+            "diff",
+            "--check"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "infra/guardian/v2/evidence/guardian-original.txt": {
+      "archive": "infra/guardian/v2/evidence/guardian-original.txt.gz",
+      "archiveSHA256": "5d9222e51cfef0deae9e5444de9db0204deab3c87b2527df78c3fb066c9ea625",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/test_guardian.py",
+            "output_guardian/tests/test_supervisor_cleanup.py",
+            "-v",
+            "--junitxml=/Users/sapiece/innovationProject/AstraLive-agent-5/infra/guardian/v2/evidence/guardian-original.xml"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "72af9adf43f6126c3e00a67719fc2c790951e49e",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 3278,
+      "rawSHA256": "20ded19d213e28ab4657f9d165744eb6020335a814f98308236044c8abded97e"
+    },
+    "infra/guardian/v2/evidence/guardian-original.xml": {
+      "archive": "infra/guardian/v2/evidence/guardian-original.xml.gz",
+      "archiveSHA256": "04bf76c5a493c415dd44fd83009b5ed1d78153dc75d1a3385e0a7b004707bc70",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0defc8f1af0c72eef42435c046e1f55e1d4a7a25",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 3487,
+      "rawSHA256": "f03403ad67548470494d8d8a73ab03e0e0832de70d90912732f369c555020bf2"
+    },
+    "infra/guardian/v2/evidence/guardian-v2-final.txt": {
+      "archive": "infra/guardian/v2/evidence/guardian-v2-final.txt.gz",
+      "archiveSHA256": "4416ca1b972c37bf59854db72eca7ce4b1814940dc25583bc9a834333450eab0",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "17541859571bc664371eaa82f24122be206c76de",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 7958,
+      "rawSHA256": "bf9abc1823c92c0838884298f94c79e3856af93ee052b306e0cd9e3c4ba91620"
+    },
+    "infra/guardian/v2/evidence/guardian-v2-final.xml": {
+      "archive": "infra/guardian/v2/evidence/guardian-v2-final.xml.gz",
+      "archiveSHA256": "49177834e024e5cfcaebdfbbc325ef28f78da3761924b5fd3eeb9fbe88abad5e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "ad2273ca497a5a8f5bee8ab2de28edd9b080dad9",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 9258,
+      "rawSHA256": "8b15dce303fe7518b8925bf4088f4eff5e09468d29152321e3f519535c28f093"
+    },
+    "infra/guardian/v2/evidence/guardian-v2-final2.txt": {
+      "archive": "infra/guardian/v2/evidence/guardian-v2-final2.txt.gz",
+      "archiveSHA256": "5d804b21943f48b053c2d74e6d584b1ff2e4c5bbc2e04e7ff466cd33c86f5e2d",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "2bc2facf439588759dec53cd2bdae00abf2214d9",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 8183,
+      "rawSHA256": "cc1a0c0d3a67d48f2d32e4ce83b74a11db10746dfdeae5458bb5f5452ac5b331"
+    },
+    "infra/guardian/v2/evidence/guardian-v2-final2.xml": {
+      "archive": "infra/guardian/v2/evidence/guardian-v2-final2.xml.gz",
+      "archiveSHA256": "e2aff10acfcef168c9095b312d7381af089a5175b8743e820827aedc5e4abe82",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "dfd3b6721464e5d4637f7c6deb95823632fe37e0",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 9534,
+      "rawSHA256": "ed6e881153a0c4a15998d47262e11518c47ef01f6cba049e4bc5d11634b206a9"
+    },
+    "infra/guardian/v2/evidence/guardian-v2.txt": {
+      "archive": "infra/guardian/v2/evidence/guardian-v2.txt.gz",
+      "archiveSHA256": "60bcc86b4cd790ee374f981c3ae70f256f307281efc2f7033432ff0120a98bef",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2",
+            "-v",
+            "--junitxml=/Users/sapiece/innovationProject/AstraLive-agent-5/infra/guardian/v2/evidence/guardian-v2.xml"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "8734493908bd465df99a5adf905080b7ebd83461",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 6232,
+      "rawSHA256": "0849026b2cd9c38d66a8767f778b5594b971f1bb1d4f61fc81366ff43d2d5536"
+    },
+    "infra/guardian/v2/evidence/guardian-v2.xml": {
+      "archive": "infra/guardian/v2/evidence/guardian-v2.xml.gz",
+      "archiveSHA256": "02da2dfd1c3601b21ecf6cff8abe2e6e359f3f6602afc955d183b7c84c9ecf43",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "69999b5259cedccb679d9370d779638c36f7377e",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 7200,
+      "rawSHA256": "53259f809d6a3e15d18d86340c33e6d7b52e2b36e9d24a0a32983e937e06ae29"
+    },
+    "infra/guardian/v2/evidence/journal-11.txt": {
+      "archive": "infra/guardian/v2/evidence/journal-11.txt.gz",
+      "archiveSHA256": "919da2b56a1488de114a6208f1bc40ca2a71689d4b60eba0ff408573728de00b",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "runtime/tests/test_durable_live_journal.py",
+            "-v"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "3065c272a5513fe4d49588de5a5fe99ab1c8579f",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 1827,
+      "rawSHA256": "d02bc06e47df1a3d4039513ddcbea8f05883da562e3526ed318976eb954b2c37"
+    },
+    "infra/guardian/v2/evidence/lint.txt": {
+      "archive": "infra/guardian/v2/evidence/lint.txt.gz",
+      "archiveSHA256": "f3af4d142827f5aad2eb0c72d556d325488a57fb6219aac10afeb51085667d53",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/ruff",
+            "check",
+            "--isolated",
+            "--select",
+            "E4,E7,E9,F,I",
+            "output_guardian/v2",
+            "output_guardian/tests/v2",
+            "infra/guardian/v2/run_acceptance.py"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "1f5f344d054fae10f39140fb7199c99321d9190a",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 19,
+      "rawSHA256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/agent4-original-cold-failure.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/agent4-original-cold-failure.txt.gz",
+      "archiveSHA256": "fd79b1d6288cd32866a523181e428e3035fdca2b30f0c05b8b95c1f18310ba8b",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "008ff27fc0c565de0e27cdeba4f4f720b2cdeaa8",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 2423,
+      "rawSHA256": "30c69daf54c9149092a41fe23b8f5246fa395ec7503e42e9cb6fc9d53a4d88c6"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-00.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-00.txt.gz",
+      "archiveSHA256": "5e82e3916bbbd35c4fa3ce10d3582b62815e2ad973bed4e1e87f3891c7a0073e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f498ee30dacbe816447a8578d7ac1d2a1e67e7da",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "76af71df60bb5f93ea635e8763126ecf98e837672c9980e80aefde989b203765"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-01.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-01.txt.gz",
+      "archiveSHA256": "9f201da5634e97e1f891bba85ca8fee83d1f25664f085ee5b5509e2e6152d8dd",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "5db0a734fb3dfd1d7f017da6e577701e131141ea",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "7fefcaf66f6e7137767bc25d16d128cbf7b8617ad0b6f14fbf9a0b8e7fdd81cd"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-02.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-02.txt.gz",
+      "archiveSHA256": "9f201da5634e97e1f891bba85ca8fee83d1f25664f085ee5b5509e2e6152d8dd",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "5db0a734fb3dfd1d7f017da6e577701e131141ea",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "7fefcaf66f6e7137767bc25d16d128cbf7b8617ad0b6f14fbf9a0b8e7fdd81cd"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-03.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-03.txt.gz",
+      "archiveSHA256": "5e82e3916bbbd35c4fa3ce10d3582b62815e2ad973bed4e1e87f3891c7a0073e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f498ee30dacbe816447a8578d7ac1d2a1e67e7da",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "76af71df60bb5f93ea635e8763126ecf98e837672c9980e80aefde989b203765"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-04.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-04.txt.gz",
+      "archiveSHA256": "9f201da5634e97e1f891bba85ca8fee83d1f25664f085ee5b5509e2e6152d8dd",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "5db0a734fb3dfd1d7f017da6e577701e131141ea",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "7fefcaf66f6e7137767bc25d16d128cbf7b8617ad0b6f14fbf9a0b8e7fdd81cd"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-05.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-05.txt.gz",
+      "archiveSHA256": "5e82e3916bbbd35c4fa3ce10d3582b62815e2ad973bed4e1e87f3891c7a0073e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f498ee30dacbe816447a8578d7ac1d2a1e67e7da",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "76af71df60bb5f93ea635e8763126ecf98e837672c9980e80aefde989b203765"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-06.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-06.txt.gz",
+      "archiveSHA256": "5e82e3916bbbd35c4fa3ce10d3582b62815e2ad973bed4e1e87f3891c7a0073e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f498ee30dacbe816447a8578d7ac1d2a1e67e7da",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "76af71df60bb5f93ea635e8763126ecf98e837672c9980e80aefde989b203765"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-07.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-07.txt.gz",
+      "archiveSHA256": "5e82e3916bbbd35c4fa3ce10d3582b62815e2ad973bed4e1e87f3891c7a0073e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f498ee30dacbe816447a8578d7ac1d2a1e67e7da",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "76af71df60bb5f93ea635e8763126ecf98e837672c9980e80aefde989b203765"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-08.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-08.txt.gz",
+      "archiveSHA256": "5e82e3916bbbd35c4fa3ce10d3582b62815e2ad973bed4e1e87f3891c7a0073e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f498ee30dacbe816447a8578d7ac1d2a1e67e7da",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "76af71df60bb5f93ea635e8763126ecf98e837672c9980e80aefde989b203765"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-09.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-09.txt.gz",
+      "archiveSHA256": "381ce96aa45c9dffa7916a9d871d219ffe45797bea4bd61936084242e8f57065",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "77aa399eefdce302d90fc988a97c8fb29c40b09d",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "976ea3fe6dfa65b827ec05fc16bf49cec94d3fda3b2d6ad4719708e74a38b32d"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-10.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-10.txt.gz",
+      "archiveSHA256": "5e82e3916bbbd35c4fa3ce10d3582b62815e2ad973bed4e1e87f3891c7a0073e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f498ee30dacbe816447a8578d7ac1d2a1e67e7da",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "76af71df60bb5f93ea635e8763126ecf98e837672c9980e80aefde989b203765"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-before-11.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-before-11.txt.gz",
+      "archiveSHA256": "5e82e3916bbbd35c4fa3ce10d3582b62815e2ad973bed4e1e87f3891c7a0073e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f498ee30dacbe816447a8578d7ac1d2a1e67e7da",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "76af71df60bb5f93ea635e8763126ecf98e837672c9980e80aefde989b203765"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/cold-expiry-injected-before.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/cold-expiry-injected-before.txt.gz",
+      "archiveSHA256": "1228364f58e298d3da6af48e46f98d743783c91de74f5e84b8130a8a5ae78f07",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "2fb9e71da63afc186473f358a9e38fabae96ee10",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1965,
+      "rawSHA256": "2a41d358ba5b2a6fa6f66fa26f8b7c9d8bb4a8fa2014a3140605e5cc9f8094b5"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-00.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-00.txt.gz",
+      "archiveSHA256": "fffe22145b18c78f431981f502af4e131b9f71759a86387dfca1d0bb462d3f83",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0bccd0e608224c87a543d1b37ed7719331a52f2e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "93c97c10af4fc8b54296201243c032c5e8295479ca6b4adc06019033d6f9e282"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-01.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-01.txt.gz",
+      "archiveSHA256": "5705be52c5903c3c5c0b94a01d000d64c10850517d99d52d25dd7b27c59ca7f8",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f682f3df6445921f8e06223a5d258d1189c3b2ed",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "8989a153a4f265bdf8bf8abfcbf7ce96cf91c69ee66d543244ebf0fc2c9d041d"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-02.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-02.txt.gz",
+      "archiveSHA256": "272924ae6d48cf7e9c7dd6b65775597d27a933cde63b0cc6d3a26c3dab127f84",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "73859a6593c342d89d3958f7594c747de928c451",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "d907fec0e0445cfe67a7272e864304e81194b234052d6bdfcb6ec87c0b123e62"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-03.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-03.txt.gz",
+      "archiveSHA256": "a0e10d072b7f464c9858cc6108354141406f173fe911d712e48ecd893cc27db2",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f971f7e2121bf379acb638212472ebfafd2ba333",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "fa8e3e1f0a4b084326a7027307e5cc3a94f799f9733ea598c3b878fa3c70f37c"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-04.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-04.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-05.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-05.txt.gz",
+      "archiveSHA256": "a0e10d072b7f464c9858cc6108354141406f173fe911d712e48ecd893cc27db2",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f971f7e2121bf379acb638212472ebfafd2ba333",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "fa8e3e1f0a4b084326a7027307e5cc3a94f799f9733ea598c3b878fa3c70f37c"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-06.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-06.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-07.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-07.txt.gz",
+      "archiveSHA256": "92d0e1b8b545dbfa5b5e14a2c3044c9a2c39c710c6152e637cfa4becf959e917",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "3bccb5afaa76b392b1dabd7256a14450f30c5c6a",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "016a4093788648644b08006f7d1d171ca7639313677f5aa929f004d4a3e52465"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-08.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-08.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-09.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-09.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-10.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-10.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-11.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-11.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-12.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-12.txt.gz",
+      "archiveSHA256": "fffe22145b18c78f431981f502af4e131b9f71759a86387dfca1d0bb462d3f83",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0bccd0e608224c87a543d1b37ed7719331a52f2e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "93c97c10af4fc8b54296201243c032c5e8295479ca6b4adc06019033d6f9e282"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-13.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-13.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-14.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-14.txt.gz",
+      "archiveSHA256": "fffe22145b18c78f431981f502af4e131b9f71759a86387dfca1d0bb462d3f83",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0bccd0e608224c87a543d1b37ed7719331a52f2e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "93c97c10af4fc8b54296201243c032c5e8295479ca6b4adc06019033d6f9e282"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-15.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-15.txt.gz",
+      "archiveSHA256": "fffe22145b18c78f431981f502af4e131b9f71759a86387dfca1d0bb462d3f83",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0bccd0e608224c87a543d1b37ed7719331a52f2e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "93c97c10af4fc8b54296201243c032c5e8295479ca6b4adc06019033d6f9e282"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-16.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-16.txt.gz",
+      "archiveSHA256": "92d0e1b8b545dbfa5b5e14a2c3044c9a2c39c710c6152e637cfa4becf959e917",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "3bccb5afaa76b392b1dabd7256a14450f30c5c6a",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "016a4093788648644b08006f7d1d171ca7639313677f5aa929f004d4a3e52465"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-17.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-17.txt.gz",
+      "archiveSHA256": "fffe22145b18c78f431981f502af4e131b9f71759a86387dfca1d0bb462d3f83",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0bccd0e608224c87a543d1b37ed7719331a52f2e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "93c97c10af4fc8b54296201243c032c5e8295479ca6b4adc06019033d6f9e282"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-18.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-18.txt.gz",
+      "archiveSHA256": "fffe22145b18c78f431981f502af4e131b9f71759a86387dfca1d0bb462d3f83",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0bccd0e608224c87a543d1b37ed7719331a52f2e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "93c97c10af4fc8b54296201243c032c5e8295479ca6b4adc06019033d6f9e282"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-19.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/cold-after-19.txt.gz",
+      "archiveSHA256": "a0e10d072b7f464c9858cc6108354141406f173fe911d712e48ecd893cc27db2",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f971f7e2121bf379acb638212472ebfafd2ba333",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "fa8e3e1f0a4b084326a7027307e5cc3a94f799f9733ea598c3b878fa3c70f37c"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/contracts-137.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/contracts-137.txt.gz",
+      "archiveSHA256": "05a279873bddf7d0b42ee23f29da4355ec86fafaa29ff0518d673a89fdb65707",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "unittest",
+            "tests.test_contracts",
+            "tests.test_durable_live_contracts",
+            "tests.test_durable_answer_contracts",
+            "tests.test_answer_contract_repairs",
+            "tests.test_receiver_contracts",
+            "tests.test_receiver_stop_races",
+            "-v"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f721dd49266fddf32f75cb5aa3659c71e00b9528",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 24586,
+      "rawSHA256": "a4fa1a3c9f6735ad44159a0d82cb88f0899342e5a2a121ad2b1093496f8100f7"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-00.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-00.txt.gz",
+      "archiveSHA256": "94e01f4363f241f12095c74798b582ad894e6833a318e969acd5994690e1672d",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "d4ad29ee1cb9f195568e2405e669bfa3c8291ec5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1155,
+      "rawSHA256": "557d9a2addbcfb919e4e006269aefc4a0c5124a0b3a7bb1b79ec7ac2e6526114"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-01.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-01.txt.gz",
+      "archiveSHA256": "45550a2e6df2b950d0ff70ec3c11938422646ff671d8e2f2efd136c3a9745634",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "3c5bc17695528dfe455fd5104fe3fb1e5dce0661",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1155,
+      "rawSHA256": "4853e82b1f96dbc4c12bda6e0cbe4c59fbc57e292aa5c4598e477a76409c6f89"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-02.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-02.txt.gz",
+      "archiveSHA256": "94e01f4363f241f12095c74798b582ad894e6833a318e969acd5994690e1672d",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "d4ad29ee1cb9f195568e2405e669bfa3c8291ec5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1155,
+      "rawSHA256": "557d9a2addbcfb919e4e006269aefc4a0c5124a0b3a7bb1b79ec7ac2e6526114"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-03.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-03.txt.gz",
+      "archiveSHA256": "2c3f31242d6730cb8ec1a35aa80e50579f5d1f1f8ec4bed6a240b1ab23e1bd37",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "368d9cd7a9f563958ea1384350ffb3ec5dd99610",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1155,
+      "rawSHA256": "ef621ef9fec8e7f183895b87e7e0fe2c321560dedcadc020d5f954019d254890"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-04.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-04.txt.gz",
+      "archiveSHA256": "1d9485c1f409a206da79841098cca2c6aa6983b8d3710373b61ffea121f04fd5",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "11dd3df5438af3d427739613de8057c8f0499074",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1155,
+      "rawSHA256": "1899e3d5fcfecc96b3f60bb562360d44e92c6630f98af7d3ddbcb62767d4ffe0"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-05.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/delayed-ready-05.txt.gz",
+      "archiveSHA256": "1d9485c1f409a206da79841098cca2c6aa6983b8d3710373b61ffea121f04fd5",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "11dd3df5438af3d427739613de8057c8f0499074",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1155,
+      "rawSHA256": "1899e3d5fcfecc96b3f60bb562360d44e92c6630f98af7d3ddbcb62767d4ffe0"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/diff-check.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/diff-check.txt.gz",
+      "archiveSHA256": "3b36dbe450954a4231a149e3571060a833be44ae5d069b5f75919f8f57b502d9",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "git",
+            "diff",
+            "--check"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "5f41cc8b9980ece450bbe2dac867f1f46ca6fc28",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 120,
+      "rawSHA256": "3500e014d8421311da50cfa42b346aeaad264772d8096027b9df7980091e5fbf"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/generated-check.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/generated-check.txt.gz",
+      "archiveSHA256": "7428b73f00ecd8d7822914960049546bc9d8743364d4bbdd6d5b9091744fcd57",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "scripts/durable-live/generate_v2_wire.py",
+            "--check"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6091857235c990e7296df666261dbaa3fff213f5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 104,
+      "rawSHA256": "5d2429e8ad7c485ccf55127950f1ec0a02c379ae34540b9150202e4a0b354a18"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/journal-11.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/journal-11.txt.gz",
+      "archiveSHA256": "6d6170dc3b90779ef42b1655bb21575e4d93fc36e8d70ba9b82b847897ef907f",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "runtime/tests/test_durable_live_journal.py",
+            "-v"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "4d28aeee2bd48e455177e9afd07844d4653ddca4",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1827,
+      "rawSHA256": "1f0b06fae0cd1c88e6ee040ab8e8a161ab1882c36a29e8dcf2f301c5eb4b91ce"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/lint.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/lint.txt.gz",
+      "archiveSHA256": "f3af4d142827f5aad2eb0c72d556d325488a57fb6219aac10afeb51085667d53",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/ruff",
+            "check",
+            "--isolated",
+            "--select",
+            "E4,E7,E9,F,I",
+            "output_guardian/v2",
+            "output_guardian/tests/v2",
+            "infra/guardian/v2/review"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "1f5f344d054fae10f39140fb7199c99321d9190a",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 19,
+      "rawSHA256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/official-wire-adapter-21.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/official-wire-adapter-21.txt.gz",
+      "archiveSHA256": "ff48b1050c4f5b862bb33caa1c2d0acc38663063528fa2544c2dab9f5a320a05",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "unittest",
+            "tests.test_receiver1_wiring",
+            "tests.test_durable_live_v2_wire",
+            "-v"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "edd94f2cc6054b18f2210302e042d23360b13893",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 3203,
+      "rawSHA256": "58618d201d4d5750e6b5c204f7826b608be0136ff7092f816baae1c650b29993"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/v1-25.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/v1-25.txt.gz",
+      "archiveSHA256": "dc790f2cfd465fdea0182075911a2a0d51309319337e0b318888bb74fe463440",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/test_guardian.py",
+            "output_guardian/tests/test_supervisor_cleanup.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "216738c456b4062ecc969c2d07de3095bb4da3cc",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 3154,
+      "rawSHA256": "eadd1d8ba4fb91daa3d6dde03be23ef80100cc99a4f051cacbd35fdd528c1bfd"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/v2-full.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/v2-full.txt.gz",
+      "archiveSHA256": "f7dd53a3d8bbf76f54527532e5b96d733f2c9086ea7bb53bfac066cf030dce4a",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2",
+            "-v",
+            "--tb=short",
+            "-rs"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "13e1be5e6249b9a8fda8bb87d39da6a224060709",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 9865,
+      "rawSHA256": "fd0b7329d2cf6b05954770c7a5d5be414a6cf4f8e5679263bec66ee02ee8ebee"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/v2-original-69.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/v2-original-69.txt.gz",
+      "archiveSHA256": "c19d569cb1c9910544971fa3470b8b695a75810c0268a20dc1b073dab043f279",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2",
+            "--ignore=output_guardian/tests/v2/test_readiness.py",
+            "--ignore=output_guardian/tests/v2/test_official.py",
+            "--ignore=output_guardian/tests/v2/test_physical.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "b7169bf0890aeec484b6d4d9ea580254b891dffb",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 8058,
+      "rawSHA256": "7590cc1f5d35ed64887c123395430012a2af4e7a7bf9dc8f6ed572cd537e0074"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/validator-v1.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/validator-v1.txt.gz",
+      "archiveSHA256": "2963316d4baa3be115bbeb39132926a9677902c5468f2a982e515f0702c28879",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "scripts/validate-durable-live-contracts.py"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "d823c063106ab60e689db95eb7d062ee834c20dd",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 101,
+      "rawSHA256": "3df3dfe05a49a4d9dd91ec057a8d20733ec41a21074f8ebcaa7d23d83b7f0a78"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/committed-final/validator-v2.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/committed-final/validator-v2.txt.gz",
+      "archiveSHA256": "a9456485632d3f7be507b90a90e871cdd76485bcb5bd138b976af840b0a0ba2d",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "scripts/validate-answer-contract.py"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/committed-final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "d85e950368437db6ab54dfcef75d0c3274390ab5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 576,
+      "rawSHA256": "6a2ed5a4df2391dbc6559eed9970836e4609af201af9ade644a9dbc4f724f0f4"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final-doc-diff-check.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final-doc-diff-check.txt.gz",
+      "archiveSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-00.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-00.txt.gz",
+      "archiveSHA256": "fffe22145b18c78f431981f502af4e131b9f71759a86387dfca1d0bb462d3f83",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0bccd0e608224c87a543d1b37ed7719331a52f2e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "93c97c10af4fc8b54296201243c032c5e8295479ca6b4adc06019033d6f9e282"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-01.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-01.txt.gz",
+      "archiveSHA256": "5705be52c5903c3c5c0b94a01d000d64c10850517d99d52d25dd7b27c59ca7f8",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f682f3df6445921f8e06223a5d258d1189c3b2ed",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "8989a153a4f265bdf8bf8abfcbf7ce96cf91c69ee66d543244ebf0fc2c9d041d"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-02.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-02.txt.gz",
+      "archiveSHA256": "084883834d9109be3ffdc070746dba521e9c7aaa70165a3251efceedf1d78f70",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "a7b7e9d3296d44c188a60978b9396f5415df802e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "36ee6125777253800df314c891baf72e42248a17540db95c6bdb02de742e24de"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-03.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-03.txt.gz",
+      "archiveSHA256": "084883834d9109be3ffdc070746dba521e9c7aaa70165a3251efceedf1d78f70",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "a7b7e9d3296d44c188a60978b9396f5415df802e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "36ee6125777253800df314c891baf72e42248a17540db95c6bdb02de742e24de"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-04.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-04.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-05.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-05.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-06.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-06.txt.gz",
+      "archiveSHA256": "a0e10d072b7f464c9858cc6108354141406f173fe911d712e48ecd893cc27db2",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f971f7e2121bf379acb638212472ebfafd2ba333",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "fa8e3e1f0a4b084326a7027307e5cc3a94f799f9733ea598c3b878fa3c70f37c"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-07.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-07.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-08.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-08.txt.gz",
+      "archiveSHA256": "5705be52c5903c3c5c0b94a01d000d64c10850517d99d52d25dd7b27c59ca7f8",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f682f3df6445921f8e06223a5d258d1189c3b2ed",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "8989a153a4f265bdf8bf8abfcbf7ce96cf91c69ee66d543244ebf0fc2c9d041d"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-09.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-09.txt.gz",
+      "archiveSHA256": "fffe22145b18c78f431981f502af4e131b9f71759a86387dfca1d0bb462d3f83",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0bccd0e608224c87a543d1b37ed7719331a52f2e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "93c97c10af4fc8b54296201243c032c5e8295479ca6b4adc06019033d6f9e282"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-10.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-10.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-11.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-11.txt.gz",
+      "archiveSHA256": "fffe22145b18c78f431981f502af4e131b9f71759a86387dfca1d0bb462d3f83",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0bccd0e608224c87a543d1b37ed7719331a52f2e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "93c97c10af4fc8b54296201243c032c5e8295479ca6b4adc06019033d6f9e282"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-12.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-12.txt.gz",
+      "archiveSHA256": "75c71cc7798d41c379ae02913a447497ae1108c10e97ff28e364f1830645a8e3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6df8d945aac20a4125aeb19e923f65d03daafcd5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "f69b41b567fe2583118441e8e8390afa756eecb8625fa01f5e10bcff2c1cef10"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-13.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-13.txt.gz",
+      "archiveSHA256": "fffe22145b18c78f431981f502af4e131b9f71759a86387dfca1d0bb462d3f83",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0bccd0e608224c87a543d1b37ed7719331a52f2e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "93c97c10af4fc8b54296201243c032c5e8295479ca6b4adc06019033d6f9e282"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-14.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-14.txt.gz",
+      "archiveSHA256": "fffe22145b18c78f431981f502af4e131b9f71759a86387dfca1d0bb462d3f83",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0bccd0e608224c87a543d1b37ed7719331a52f2e",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 98,
+      "rawSHA256": "93c97c10af4fc8b54296201243c032c5e8295479ca6b4adc06019033d6f9e282"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-15.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-15.txt.gz",
+      "archiveSHA256": "a06f78d4e65183b0c268e3aefbdd3513ec6069a77930775d2d4d8c7eee4349b0",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "ce6f0f17122934e15e56947574aa470c4efcd0aa",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1030,
+      "rawSHA256": "6c906fb3292976d3d7ceeab86f457951f5d404bd8a5acea2eb60ca9cc27d8958"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-16.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-16.txt.gz",
+      "archiveSHA256": "94fe1dc5d39836505adc4109a4cc53fcf47920a57841ea05d2852f111d82a8a3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "654e18fa4def79ef374b1304074c7154ecd91721",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1030,
+      "rawSHA256": "84b08f6a3600d5a8f4572108e6809755e05de9d13878c3d84f28dd57f1b961af"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-17.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-17.txt.gz",
+      "archiveSHA256": "a06f78d4e65183b0c268e3aefbdd3513ec6069a77930775d2d4d8c7eee4349b0",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "ce6f0f17122934e15e56947574aa470c4efcd0aa",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1030,
+      "rawSHA256": "6c906fb3292976d3d7ceeab86f457951f5d404bd8a5acea2eb60ca9cc27d8958"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-18.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-18.txt.gz",
+      "archiveSHA256": "94fe1dc5d39836505adc4109a4cc53fcf47920a57841ea05d2852f111d82a8a3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "654e18fa4def79ef374b1304074c7154ecd91721",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1030,
+      "rawSHA256": "84b08f6a3600d5a8f4572108e6809755e05de9d13878c3d84f28dd57f1b961af"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-19.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/cold-after-19.txt.gz",
+      "archiveSHA256": "94fe1dc5d39836505adc4109a4cc53fcf47920a57841ea05d2852f111d82a8a3",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "ag5_cold_probe",
+            "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+            "-q",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "654e18fa4def79ef374b1304074c7154ecd91721",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1030,
+      "rawSHA256": "84b08f6a3600d5a8f4572108e6809755e05de9d13878c3d84f28dd57f1b961af"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/contracts-137.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/contracts-137.txt.gz",
+      "archiveSHA256": "f79dd85b79ef5251ca495e551197afe5c8a34aedbb8faa3336005d6bb89b628e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "unittest",
+            "tests.test_contracts",
+            "tests.test_durable_live_contracts",
+            "tests.test_durable_answer_contracts",
+            "tests.test_answer_contract_repairs",
+            "tests.test_receiver_contracts",
+            "tests.test_receiver_stop_races",
+            "-v"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "08cef505e72b1f9cb2cf8262e98912ea56f4cfbc",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 24586,
+      "rawSHA256": "293417383aa75a159a1fec279e88c846a296535a74880bf5928d33fe9f41f3e4"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-00.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-00.txt.gz",
+      "archiveSHA256": "f5532ce14d2cf521c5df425c90f294e6cf87c67950a0c963d1bf46d6b48e80f1",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0698326c544def857f18fe0795a4422423f159b6",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 3660,
+      "rawSHA256": "f5087f80cb01c0a10761588381248e45b9fbce44ca49dca0bcdac52822d3138e"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-01.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-01.txt.gz",
+      "archiveSHA256": "f5532ce14d2cf521c5df425c90f294e6cf87c67950a0c963d1bf46d6b48e80f1",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0698326c544def857f18fe0795a4422423f159b6",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 3660,
+      "rawSHA256": "f5087f80cb01c0a10761588381248e45b9fbce44ca49dca0bcdac52822d3138e"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-02.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-02.txt.gz",
+      "archiveSHA256": "33392f916895582dd86dd5a3a6a0bf621a24688419eecee8cddc794980ad5d53",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f8733a3b9cc11339dfafe6adb287c4ae4990956a",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 3696,
+      "rawSHA256": "68a3000a39a4b2b456a11937efb12a00540f2b9b3d1407ba10c46a1d82b2e7b3"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-03.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-03.txt.gz",
+      "archiveSHA256": "1d9485c1f409a206da79841098cca2c6aa6983b8d3710373b61ffea121f04fd5",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "11dd3df5438af3d427739613de8057c8f0499074",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1155,
+      "rawSHA256": "1899e3d5fcfecc96b3f60bb562360d44e92c6630f98af7d3ddbcb62767d4ffe0"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-04.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-04.txt.gz",
+      "archiveSHA256": "94e01f4363f241f12095c74798b582ad894e6833a318e969acd5994690e1672d",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "d4ad29ee1cb9f195568e2405e669bfa3c8291ec5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1155,
+      "rawSHA256": "557d9a2addbcfb919e4e006269aefc4a0c5124a0b3a7bb1b79ec7ac2e6526114"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-05.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/delayed-ready-05.txt.gz",
+      "archiveSHA256": "38ee39351f50def947c45cc324b591586ed8b4bfc6b6b81416f535c767cecd9e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2/test_readiness.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "f0276764798d57898d38773bc57a59f1d345c824",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1155,
+      "rawSHA256": "11f3263b812f129b3531d788c382b1ffa2f17256b8cae82cfb4dbf2ce6628720"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/diff-check.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/diff-check.txt.gz",
+      "archiveSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "git",
+            "diff",
+            "--check"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/generated-check.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/generated-check.txt.gz",
+      "archiveSHA256": "7428b73f00ecd8d7822914960049546bc9d8743364d4bbdd6d5b9091744fcd57",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "scripts/durable-live/generate_v2_wire.py",
+            "--check"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6091857235c990e7296df666261dbaa3fff213f5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 104,
+      "rawSHA256": "5d2429e8ad7c485ccf55127950f1ec0a02c379ae34540b9150202e4a0b354a18"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/journal-11.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/journal-11.txt.gz",
+      "archiveSHA256": "6d6170dc3b90779ef42b1655bb21575e4d93fc36e8d70ba9b82b847897ef907f",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "runtime/tests/test_durable_live_journal.py",
+            "-v"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "4d28aeee2bd48e455177e9afd07844d4653ddca4",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1827,
+      "rawSHA256": "1f0b06fae0cd1c88e6ee040ab8e8a161ab1882c36a29e8dcf2f301c5eb4b91ce"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/lint.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/lint.txt.gz",
+      "archiveSHA256": "f3af4d142827f5aad2eb0c72d556d325488a57fb6219aac10afeb51085667d53",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/ruff",
+            "check",
+            "--isolated",
+            "--select",
+            "E4,E7,E9,F,I",
+            "output_guardian/v2",
+            "output_guardian/tests/v2",
+            "infra/guardian/v2/review"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "1f5f344d054fae10f39140fb7199c99321d9190a",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 19,
+      "rawSHA256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/official-wire-adapter-21.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/official-wire-adapter-21.txt.gz",
+      "archiveSHA256": "4fd739fb89fa32e6bc24eb69bc3dafede6fa4e21d266a6ed4c9b5c651b2d2b7a",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "unittest",
+            "tests.test_receiver1_wiring",
+            "tests.test_durable_live_v2_wire",
+            "-v"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "17165481b990ca1988603aae41ce8a5d835f31c2",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 3203,
+      "rawSHA256": "c0251557965a31e218208cf30286f6fc36da920365e35e33b597bb186dbf47ca"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/v1-25.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/v1-25.txt.gz",
+      "archiveSHA256": "1eb7499302e0981579ef554a3b722b5a1b1806989b73123c15e05e2e0bad8ec5",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/test_guardian.py",
+            "output_guardian/tests/test_supervisor_cleanup.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "89232a3daa0da28b4117dcce628ac6aca3b54d4f",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 4292,
+      "rawSHA256": "452320ff0f7f01871d47f0a30df97826012b2e32a3f2c30bfba2489aa9d07af0"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/v2-full.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/v2-full.txt.gz",
+      "archiveSHA256": "ec69f3a49978b8c91546678dd4d1064bc9c51ea588393dac9a3564850fe35e36",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2",
+            "-v",
+            "--tb=short",
+            "-rs"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "595f6f7ba96e3fe1393292a9be39eabf5cfe53d8",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 9754,
+      "rawSHA256": "ab915ac1758961f6fff738ed5122d75f8f513aec5cf0de04c9be465781347c7f"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/v2-original-69.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/v2-original-69.txt.gz",
+      "archiveSHA256": "ae9d01d6027b0b8f51fcba8df38ac12eb8c0feb72e37eee04e0f6a3c40ebcec9",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2",
+            "--ignore=output_guardian/tests/v2/test_readiness.py",
+            "--ignore=output_guardian/tests/v2/test_official.py",
+            "--ignore=output_guardian/tests/v2/test_physical.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "b2aac120037edc6976215beae0c70db9dc391d55",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 8058,
+      "rawSHA256": "e0788323c2268d812380710fa463245cdb92256a3e7bbd558fbfa45955e09a1e"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/validator-v1.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/validator-v1.txt.gz",
+      "archiveSHA256": "2963316d4baa3be115bbeb39132926a9677902c5468f2a982e515f0702c28879",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "scripts/validate-durable-live-contracts.py"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "d823c063106ab60e689db95eb7d062ee834c20dd",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 101,
+      "rawSHA256": "3df3dfe05a49a4d9dd91ec057a8d20733ec41a21074f8ebcaa7d23d83b7f0a78"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/final/validator-v2.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/final/validator-v2.txt.gz",
+      "archiveSHA256": "a9456485632d3f7be507b90a90e871cdd76485bcb5bd138b976af840b0a0ba2d",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "scripts/validate-answer-contract.py"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/final/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "d85e950368437db6ab54dfcef75d0c3274390ab5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 576,
+      "rawSHA256": "6a2ed5a4df2391dbc6559eed9970836e4609af201af9ade644a9dbc4f724f0f4"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/fixture-exact.diff": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/fixture-exact.diff.gz",
+      "archiveSHA256": "70b3ba9c037aa4b6019bea46007c7ca9b99cdcc3c3547ab71101f0062821de1f",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "deebfdeb6c2303fad1fdf7437ad2150fd9c412f5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1980,
+      "rawSHA256": "6b8d5f68f694cfaaeea62ecdd73604533e877d65829fe52fdb31c92ab356abac"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-createdb.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-createdb.txt.gz",
+      "archiveSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/createdb",
+            "-h",
+            "127.0.0.1",
+            "-p",
+            "56258",
+            "-U",
+            "ag5_owner",
+            "ag5_receiver1_owned"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-driver.py.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-driver.py.txt.gz",
+      "archiveSHA256": "1b2973fa8156d57630b8675dcc9f6e43906e32f6aac8b843881ef2890dfaa4cd",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "cca4b516cc8e41d5d348abb13eaf8df9dc4f7259",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 3221,
+      "rawSHA256": "18e7f67c8ae3f509262e28274062f2f3b69ad6212377635245d13c3b51547b51"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-dropdb.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-dropdb.txt.gz",
+      "archiveSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/dropdb",
+            "-h",
+            "127.0.0.1",
+            "-p",
+            "56258",
+            "-U",
+            "ag5_owner",
+            "ag5_receiver1_owned"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-final-driver.py.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-final-driver.py.txt.gz",
+      "archiveSHA256": "d6af335651b2a93f878fda34527827e42436a17c832e7dcceb5499f91c303571",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "63b2c23d968af1c98b537056c201cda13311daaa",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 3230,
+      "rawSHA256": "0132695d62d906160b68896d05ce1d1c0815d39e4c7534cfec088d6ab9660d49"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-initdb.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-initdb.txt.gz",
+      "archiveSHA256": "a262eb478b5c2acac01fe6714d3e31ef49d8563fabcd2af8b89eb4a5f9708ab4",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/initdb",
+            "-D",
+            "/tmp/ag5-native-ua79xqhz/data",
+            "-A",
+            "trust",
+            "-U",
+            "ag5_owner",
+            "--no-locale",
+            "-E",
+            "UTF8"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e15c3d8c72dda361abcfe006f04d32839213d164",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 857,
+      "rawSHA256": "41c0545d56059a1498c89a0a9d51e58c963093631209135c53e3bb638103867b"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-pg-settings.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-pg-settings.txt.gz",
+      "archiveSHA256": "d65c24a6e4800a5ceef0f66269155ccc6a82cdb577567ca6fa88fbe1a3fa5bfb",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/psql",
+            "postgres://ag5_owner@127.0.0.1:56258/ag5_receiver1_owned?sslmode=disable",
+            "-c",
+            "SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "1b347da92598a39a120086f9d92da2535df705fd",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 707,
+      "rawSHA256": "0b6b72a332b3e418d2d70b4dcc9eb5beff58f9d7fb5f50b2e3ef00828c46e47c"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-pg-start.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-pg-start.txt.gz",
+      "archiveSHA256": "e368673aef8c85b9339c7457c5544c1b856d1529f0a14f786c0e3b9e03511c3d",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+            "-D",
+            "/tmp/ag5-native-ua79xqhz/data",
+            "-l",
+            "/tmp/ag5-native-ua79xqhz/postgres.log",
+            "-o",
+            "-h 127.0.0.1 -p 56258 -k /tmp/ag5-native-ua79xqhz/sockets",
+            "-w",
+            "start"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0fb0b9795fb4884c3f9d88d91ebb6492510e4ee5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 52,
+      "rawSHA256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-pg-stop.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-pg-stop.txt.gz",
+      "archiveSHA256": "da5bb8e75cbab141a9164b24c1330658be919fc88a9a3838063a58df033740bd",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+            "-D",
+            "/tmp/ag5-native-ua79xqhz/data",
+            "-m",
+            "fast",
+            "-w",
+            "stop"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "bdc448af42aa24144e661f647c52557f2e0d9b3c",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 56,
+      "rawSHA256": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-postgres.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-postgres.txt.gz",
+      "archiveSHA256": "8cbe305cba8aa5639ec590ffca51d591c704ee9aa3c1c225829206610de095c6",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "8d31d03eb6b04a8f2b2b6f24ad801c2415b071b5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1725,
+      "rawSHA256": "1591cd3a076c01aa3b4a110e98e6abbbf76c235389598064e88526b896c28614"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-createdb.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-createdb.txt.gz",
+      "archiveSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/createdb",
+            "-h",
+            "127.0.0.1",
+            "-p",
+            "62300",
+            "-U",
+            "ag5_owner",
+            "agent4_receiver1_ag5_owned"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-dropdb.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-dropdb.txt.gz",
+      "archiveSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/dropdb",
+            "-h",
+            "127.0.0.1",
+            "-p",
+            "62300",
+            "-U",
+            "ag5_owner",
+            "agent4_receiver1_ag5_owned"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-initdb.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-initdb.txt.gz",
+      "archiveSHA256": "ef4d2441b71869ec8b6bf3ebe874ce918955dfcd78caf614c1f181e715dc8686",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/initdb",
+            "-D",
+            "/tmp/ag5-native-d6kgu1i7/data",
+            "-A",
+            "trust",
+            "-U",
+            "ag5_owner",
+            "--no-locale",
+            "-E",
+            "UTF8"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "216d352a56acba634084e6d61a833fbc95110956",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 857,
+      "rawSHA256": "7a23b5c51b7315556d74507c6116717e380c2e42ee94e74840ca9d93e5540e2b"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-pg-settings.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-pg-settings.txt.gz",
+      "archiveSHA256": "e3fe647a9be0783ef9738c97dd1e5188da181a39d9643713feb65d427df05192",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/psql",
+            "postgres://ag5_owner@127.0.0.1:62300/agent4_receiver1_ag5_owned?sslmode=disable",
+            "-c",
+            "SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "2bee71043eca714431856817f18142b689f0e19c",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 728,
+      "rawSHA256": "8cf50662cf62ef36032678a2c09984d32d640b6d8feba22cce43b5c99a9d9a87"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-pg-start.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-pg-start.txt.gz",
+      "archiveSHA256": "e368673aef8c85b9339c7457c5544c1b856d1529f0a14f786c0e3b9e03511c3d",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+            "-D",
+            "/tmp/ag5-native-d6kgu1i7/data",
+            "-l",
+            "/tmp/ag5-native-d6kgu1i7/postgres.log",
+            "-o",
+            "-h 127.0.0.1 -p 62300 -k /tmp/ag5-native-d6kgu1i7/sockets",
+            "-w",
+            "start"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0fb0b9795fb4884c3f9d88d91ebb6492510e4ee5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 52,
+      "rawSHA256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-pg-stop.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-pg-stop.txt.gz",
+      "archiveSHA256": "da5bb8e75cbab141a9164b24c1330658be919fc88a9a3838063a58df033740bd",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+            "-D",
+            "/tmp/ag5-native-d6kgu1i7/data",
+            "-m",
+            "fast",
+            "-w",
+            "stop"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "bdc448af42aa24144e661f647c52557f2e0d9b3c",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 56,
+      "rawSHA256": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-postgres.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-postgres.txt.gz",
+      "archiveSHA256": "171ce0ea3f1b1b037af18c13fa3ea8726d205fee2a1bbb0ee7cb896f5787b99e",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "6e1cc38b760a2ed5bff95b27931633e1176e9439",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1725,
+      "rawSHA256": "3c553f32c99afb17e21a23ebf08f551b2e9f889cbf175348249c0b2546002d42"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/official-native-race.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/official-native-race.txt.gz",
+      "archiveSHA256": "5f73cf654bac898ef75da8ce29eca3e86dcce9559120cfc99c082e3574b00000",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "go",
+            "test",
+            "-race",
+            "-json",
+            "-count=1",
+            "./internal/durableintegration/receiver1",
+            "-run",
+            "^TestPostgres"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/committed-final/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "a1ee8a54a4fc7a718625c6042b2d86e151b48d9b",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 27939,
+      "rawSHA256": "3b75979651194ba82d04d16157be036ac01e48f304a08aea5a3fd1f1663bd87e"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-createdb.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-createdb.txt.gz",
+      "archiveSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/createdb",
+            "-h",
+            "127.0.0.1",
+            "-p",
+            "56500",
+            "-U",
+            "ag5_owner",
+            "agent4_receiver1_ag5_owned"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-dropdb.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-dropdb.txt.gz",
+      "archiveSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/dropdb",
+            "-h",
+            "127.0.0.1",
+            "-p",
+            "56500",
+            "-U",
+            "ag5_owner",
+            "agent4_receiver1_ag5_owned"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-initdb.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-initdb.txt.gz",
+      "archiveSHA256": "f5423aaee48492cc11bf7af61d33f8fd8de6b912c8716c521d4dc0890244ff3b",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/initdb",
+            "-D",
+            "/tmp/ag5-native-iwjjdg74/data",
+            "-A",
+            "trust",
+            "-U",
+            "ag5_owner",
+            "--no-locale",
+            "-E",
+            "UTF8"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e5c72596645d4241a6c5700987650e780301a627",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 857,
+      "rawSHA256": "9e13adc2f25f894d163c7020a2519c8164ba42f3ffa8df4a4a6c466ec63e58d5"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-pg-settings.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-pg-settings.txt.gz",
+      "archiveSHA256": "40cbcd7b497dbbf204fbeaf01a67bb7aba05b3b52890aba82841f84cf8dbf890",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/psql",
+            "postgres://ag5_owner@127.0.0.1:56500/agent4_receiver1_ag5_owned?sslmode=disable",
+            "-c",
+            "SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "5d0419a10672d8f91fc97e5927c7a7249aabd6a4",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 728,
+      "rawSHA256": "f02f832f11bf525b1affc457d750ed5251e1fb90855e692e6b91d72880025c87"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-pg-start.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-pg-start.txt.gz",
+      "archiveSHA256": "e368673aef8c85b9339c7457c5544c1b856d1529f0a14f786c0e3b9e03511c3d",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+            "-D",
+            "/tmp/ag5-native-iwjjdg74/data",
+            "-l",
+            "/tmp/ag5-native-iwjjdg74/postgres.log",
+            "-o",
+            "-h 127.0.0.1 -p 56500 -k /tmp/ag5-native-iwjjdg74/sockets",
+            "-w",
+            "start"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "0fb0b9795fb4884c3f9d88d91ebb6492510e4ee5",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 52,
+      "rawSHA256": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-pg-stop.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-pg-stop.txt.gz",
+      "archiveSHA256": "da5bb8e75cbab141a9164b24c1330658be919fc88a9a3838063a58df033740bd",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+            "-D",
+            "/tmp/ag5-native-iwjjdg74/data",
+            "-m",
+            "fast",
+            "-w",
+            "stop"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "bdc448af42aa24144e661f647c52557f2e0d9b3c",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 56,
+      "rawSHA256": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-postgres.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-postgres.txt.gz",
+      "archiveSHA256": "c80c1d16975036c142f9cf0f4faef6843c365d85be48a3d7726f123dba6bea07",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "829e061af3ce124c65a913c89b1d6c79bdae30f3",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 1725,
+      "rawSHA256": "72f94787e2835360fb18cde70e584dddd606e3ca36c91e800e3b7f0786456c3b"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/official-native-race.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/official-native-race.txt.gz",
+      "archiveSHA256": "49e582112cc686f8349fdca3187ccf08569ef9315cf314c9a09c876db81a14ca",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "go",
+            "test",
+            "-race",
+            "-json",
+            "-count=1",
+            "./internal/durableintegration/receiver1",
+            "-run",
+            "^TestPostgres"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-runs/second/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "7c171817bea5b9b3e708e23fe0c869ba1ee353d8",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 27943,
+      "rawSHA256": "400b791c982e9192889d91627dfb9b2f7069805464f60b32ef1b8ded65d50bd7"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/official-native-race.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/official-native-race.txt.gz",
+      "archiveSHA256": "b04c4bb1ae673c56ca3c3acbcfdcbeb4b20d081e17ab21a13f6e205434cb6cf7",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "go",
+            "test",
+            "-race",
+            "-json",
+            "-count=1",
+            "./internal/durableintegration/receiver1",
+            "-run",
+            "^TestPostgres"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "d3eac1e9543a59d530a438f6e27ec532dceeb6d7",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 24930,
+      "rawSHA256": "444ff711fd648430db8b7d32734bfe44502c9ba61d7a7298a125cf55f714f98e"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/raw-evidence-diff.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/raw-evidence-diff.txt.gz",
+      "archiveSHA256": "ee8d0f5f57a03b4f9e1fae1a13833a45939502c47b0030e14ae7ad33c22c25d4",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "67be5478b83a28f7db36d2d50ce8bd404a2d4a68",
+        "sourceCommit": "9b969d099b7a3b6b85f3595d26c36fb953d47263",
+        "sourceCommitTime": "2026-10-18T19:38:30+08:00"
+      },
+      "rawBytes": 3281,
+      "rawSHA256": "988fa2718c973996e05d85374451e53969a9d7201a3abcb06e2c90e6d9e86aa5"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/source-and-doc-diff.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/source-and-doc-diff.txt.gz",
+      "archiveSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "sourceCommit": "9b969d099b7a3b6b85f3595d26c36fb953d47263",
+        "sourceCommitTime": "2026-10-18T19:38:30+08:00"
+      },
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/v1-candidate.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/v1-candidate.txt.gz",
+      "archiveSHA256": "e870df4089088dc7613f79f6953938774e12a64cbfaf41dfe351a381dd0b6a8d",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/test_guardian.py",
+            "output_guardian/tests/test_supervisor_cleanup.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/v1-candidate-command.json",
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "c4ad32525c7a442030a7e8c9803b4172e58ad17f",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 3136,
+      "rawSHA256": "d0108fd669dc557e0c8cc4b90f9dcdb40050bb41e02c846c7a8698a9c2d5ada8"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/v1-prepatch.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/v1-prepatch.txt.gz",
+      "archiveSHA256": "9b2a6b1c1f25fb680a219a802aac999e94c2f07f45474f775e6623b07b164c42",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/test_guardian.py",
+            "output_guardian/tests/test_supervisor_cleanup.py",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/v1-prepatch-command.json",
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "71ad5c158d894aa61d7814370fc86963736621db",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 42494,
+      "rawSHA256": "18767872fd481c0a9a8a086f0ab747af750d01693535928c99f8e085d9ebb359"
+    },
+    "infra/guardian/v2/evidence/owner-review-20261018/v2-candidate.txt": {
+      "archive": "infra/guardian/v2/evidence/owner-review-20261018/v2-candidate.txt.gz",
+      "archiveSHA256": "fd08578bc3b1f18564e8ce5677773d60b3017429c03ce109bc6f9344f8f5b8cd",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "output_guardian/tests/v2",
+            "-v",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/owner-review-20261018/v2-candidate-command.json",
+          "infra/guardian/v2/evidence/owner-review-20261018/native-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "5bc66bb2678d1f345b670d22b794f7a07d41da1d",
+        "sourceCommit": "e21a6df8a3071572fd72d42442b906d485d72237",
+        "sourceCommitTime": "2026-10-18T19:38:01+08:00"
+      },
+      "rawBytes": 8040,
+      "rawSHA256": "1c285384b74881686e00b1c5dfe4506bc7b5cfb754c40f2547e22ec79c8fc64c"
+    },
+    "infra/guardian/v2/evidence/p1-fix-20261019/agent4-before-1.txt": {
+      "archive": "infra/guardian/v2/evidence/p1-fix-20261019/agent4-before-1.txt.gz",
+      "archiveSHA256": "7670abe997e3af62b8c6409d5d15571ea78c0209e96d52bcbf9e4c8700ec2fe6",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "/tmp/ag5_test_original_cgroup_scope.py",
+            "-v",
+            "-s",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": [
+          "2026-10-18T23:59:25.381251+00:00"
+        ],
+        "knownImplementationCommits": [
+          "43ea7b4ee973d62947a23b83562936bba13e814e"
+        ],
+        "metadataSources": [
+          "infra/guardian/v2/evidence/p1-fix-20261019/before-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": null,
+        "sourceCommit": "",
+        "sourceCommitTime": null
+      },
+      "rawBytes": 2470,
+      "rawSHA256": "cd5c88901d748d0fe04413ebaf36562e0f0bbfb188477eb3375441d2291eb8f4"
+    },
+    "infra/guardian/v2/evidence/p1-fix-20261019/agent4-before-2.txt": {
+      "archive": "infra/guardian/v2/evidence/p1-fix-20261019/agent4-before-2.txt.gz",
+      "archiveSHA256": "9a1f5abb2573e2f330eed18d35b1b256ce9d5fcda6c07cc9b913036bab997606",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "/tmp/ag5_test_original_cgroup_scope.py",
+            "-v",
+            "-s",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": [
+          "2026-10-18T23:59:26.201780+00:00"
+        ],
+        "knownImplementationCommits": [
+          "43ea7b4ee973d62947a23b83562936bba13e814e"
+        ],
+        "metadataSources": [
+          "infra/guardian/v2/evidence/p1-fix-20261019/before-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": null,
+        "sourceCommit": "",
+        "sourceCommitTime": null
+      },
+      "rawBytes": 2470,
+      "rawSHA256": "3769afde0b726397ab64412cdf514e45275083468975e9a3d0066b69383ffc37"
+    },
+    "infra/guardian/v2/evidence/p1-fix-20261019/agent4-before-3.txt": {
+      "archive": "infra/guardian/v2/evidence/p1-fix-20261019/agent4-before-3.txt.gz",
+      "archiveSHA256": "9a1f5abb2573e2f330eed18d35b1b256ce9d5fcda6c07cc9b913036bab997606",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "pytest",
+            "/tmp/ag5_test_original_cgroup_scope.py",
+            "-v",
+            "-s",
+            "--tb=short"
+          ]
+        ],
+        "knownGeneratedAtUTC": [
+          "2026-10-18T23:59:27.027674+00:00"
+        ],
+        "knownImplementationCommits": [
+          "43ea7b4ee973d62947a23b83562936bba13e814e"
+        ],
+        "metadataSources": [
+          "infra/guardian/v2/evidence/p1-fix-20261019/before-commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": null,
+        "sourceCommit": "",
+        "sourceCommitTime": null
+      },
+      "rawBytes": 2470,
+      "rawSHA256": "3769afde0b726397ab64412cdf514e45275083468975e9a3d0066b69383ffc37"
+    },
+    "infra/guardian/v2/evidence/runtime-unit.txt": {
+      "archive": "infra/guardian/v2/evidence/runtime-unit.txt.gz",
+      "archiveSHA256": "15fbaa8b73afb572fbac79c75ec5269fa04aa3aad0b832f1c2afc2b543b65e91",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "runtime/tests",
+            "-p",
+            "test_*.py",
+            "-v"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "be03d2e04b3508e0eccc997703e9b451348fcdba",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 440443,
+      "rawSHA256": "f3c7a7bdec4043f5b23d3931a0ca1284d6fbf88ebda57d77731dca6f41a21d49"
+    },
+    "infra/guardian/v2/evidence/validator-v1.txt": {
+      "archive": "infra/guardian/v2/evidence/validator-v1.txt.gz",
+      "archiveSHA256": "2963316d4baa3be115bbeb39132926a9677902c5468f2a982e515f0702c28879",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "scripts/validate-durable-live-contracts.py"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "d823c063106ab60e689db95eb7d062ee834c20dd",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 101,
+      "rawSHA256": "3df3dfe05a49a4d9dd91ec057a8d20733ec41a21074f8ebcaa7d23d83b7f0a78"
+    },
+    "infra/guardian/v2/evidence/validator-v2.txt": {
+      "archive": "infra/guardian/v2/evidence/validator-v2.txt.gz",
+      "archiveSHA256": "70c380b5aedc885be91b3ff5275f8041282cdb00e438c2e071037a603771c1fa",
+      "provenance": {
+        "archivedAtCommit": "43ea7b4ee973d62947a23b83562936bba13e814e",
+        "knownCollectionCommands": [
+          [
+            "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+            "scripts/validate-answer-contract.py"
+          ]
+        ],
+        "knownGeneratedAtUTC": null,
+        "knownImplementationCommits": null,
+        "metadataSources": [
+          "infra/guardian/v2/evidence/commands.json"
+        ],
+        "note": "Unknown collection time is null; commit time is not log generation time.",
+        "sourceBlob": "c0f5cfb9cf747b587b10c9afe3f3ee2e24146299",
+        "sourceCommit": "d8eb05e79661b859547242575e0ac6d1d7303aa1",
+        "sourceCommitTime": "2026-10-18T08:05:22+08:00"
+      },
+      "rawBytes": 149,
+      "rawSHA256": "4b5d284bbf7256230b0b7265b01cc2f51b53eb4bed66604bca4fe5b2aa686515"
+    }
+  },
+  "format": "gzip-level9-mtime0-emptyfilename-os255"
+}

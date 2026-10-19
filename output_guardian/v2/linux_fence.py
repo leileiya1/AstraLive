@@ -1,16 +1,16 @@
-"""Concrete cgroup-v2 owned-process fencing building block, Linux execution pending.
+"""Read-only cgroup-v2 scope checks; exclusive mutation boundary is unavailable.
 
 No namespaces are entered and no existing cgroup is adopted. Only direct
 supervisor-owned native children may be attached to a fresh delegated cgroup.
-Kernel cgroup.kill + populated=0 is process fencing, NOT output key revocation
-or complete network/RTMP/WebRTC installation proof.
+No cgroup.kill/procs write or removal is authorized by this implementation.
+A future kernel populated=0 proof would still not revoke output keys or peers.
 """
 
 import ctypes
 import os
 import stat
 import sys
-import time
+import threading
 import uuid
 from pathlib import Path
 
@@ -34,6 +34,17 @@ def _cgroup2(path):
 
 
 class OwnedCgroup:
+    """Fresh native scope census; destructive mutation is currently UNAVAILABLE.
+
+    Mode0700 and cgroup.max.descendants=0 are not exclusive control: same-UID
+    children, inherited writable FDs, privileged writers and lifecycle changes
+    can invalidate them. No implemented host controller proves their exclusion.
+    Consequently no path here writes cgroup.kill/procs or removes a group. A
+    local lock serializes our lifecycle only; it does not lock kernel topology.
+    Unknown/failed operations retire this handle, never automatically adopt or
+    retry it after a process exit. Independent isolation/reconciliation is needed.
+    """
+
     def __init__(self, delegated_parent):
         require(sys.platform.startswith("linux"), "OUTPUT_FENCE_UNPROVEN")
         parent = Path(delegated_parent)
@@ -45,70 +56,107 @@ class OwnedCgroup:
             and not st.st_mode & 0o022
         )
         require((parent / "cgroup.controllers").is_file(), "OUTPUT_FENCE_UNPROVEN")
-        path = parent / ("guardian-" + uuid.uuid4().hex)
-        path.mkdir(mode=0o700)  # never adopt a user-supplied/live cgroup
-        self.path, self.inode = path, path.stat().st_ino
+        # No controller currently excludes same-UID/privileged/inherited-FD
+        # writers. Do not even create an unmanageable group that close() could
+        # not safely reclaim. No existing group is accepted or adopted.
+        self.path = parent / ("guardian-" + uuid.uuid4().hex)
         self.members, self.retired = {}, False
+        self._lock = threading.RLock()
+        self.retired = True
+        self._exclusive_mutation()
 
     def _owned(self):
+        """Read-only scope checks; success is NOT a mutation authorization."""
         _cgroup2(self.path)
         st = self.path.lstat()
         require(
             stat.S_ISDIR(st.st_mode)
             and st.st_ino == self.inode
-            and st.st_uid == os.geteuid()
+            and st.st_dev == getattr(self, "device", st.st_dev)
+            and st.st_uid == os.geteuid(),
+            "OUTPUT_FENCE_UNPROVEN",
         )
-        require(not st.st_mode & 0o022 and (self.path / "cgroup.kill").is_file())
+        require(not st.st_mode & 0o077, "OUTPUT_FENCE_UNPROVEN")
+        for name in ("cgroup.procs", "cgroup.kill", "cgroup.events"):
+            entry = (self.path / name).lstat()
+            require(
+                stat.S_ISREG(entry.st_mode)
+                and entry.st_uid == os.geteuid()
+                and not entry.st_mode & 0o022,
+                "OUTPUT_FENCE_UNPROVEN",
+            )
+        # A snapshot detects known bad scope; it never proves the absence of a
+        # concurrent creator. Any directory/symlink/unknown interface refuses.
+        for entry in self.path.iterdir():
+            kind = entry.lstat().st_mode
+            require(stat.S_ISREG(kind), "OUTPUT_FENCE_UNPROVEN")
+
+    def _members(self):
+        members = [int(p) for p in (self.path / "cgroup.procs").read_text().split()]
+        for pid in members:
+            require(pid in self.members, "OUTPUT_FENCE_UNPROVEN")
+            native = self.members[pid]
+            require(
+                identity(pid) == native
+                and native.uid == os.geteuid()
+                and psutil.Process(pid).ppid() == os.getpid(),
+                "OUTPUT_FENCE_UNPROVEN",
+            )
+        return members
+
+    def _exclusive_mutation(self):
+        # No bool, callback, chmod, recursive PID snapshot, flock or local lock
+        # can supply a missing trusted kernel/host ownership boundary. Even an
+        # empty, identity-matched leaf must refuse BEFORE ANY mutation. A future
+        # positive implementation requires separate review and Linux evidence.
+        require(False, "OUTPUT_FENCE_UNPROVEN")
 
     def attach(self, native):
-        require(isinstance(native, ProcessIdentity) and not self.retired)
-        self._owned()
-        require(
-            identity(native.pid) == native
-            and psutil.Process(native.pid).ppid() == os.getpid(),
-            "UNAUTHENTICATED",
-        )
-        require(
-            native.uid == os.geteuid() and native.pid != os.getpid(), "UNAUTHENTICATED"
-        )
-        (self.path / "cgroup.procs").write_text(str(native.pid))
-        require(identity(native.pid) == native)
-        self.members[native.pid] = native
+        with getattr(self, "_lock", threading.RLock()):
+            try:
+                require(isinstance(native, ProcessIdentity) and not self.retired)
+                self._owned()
+                require(
+                    identity(native.pid) == native
+                    and psutil.Process(native.pid).ppid() == os.getpid()
+                    and native.uid == os.geteuid()
+                    and native.pid != os.getpid(),
+                    "UNAUTHENTICATED",
+                )
+                self._members()
+                self._owned()
+                self._exclusive_mutation()  # no cgroup.procs write on refusal
+            finally:
+                self.retired = True
 
     def fence(self, timeout=0.250):
         require(0 < timeout <= 1)
-        self._owned()
-        # Unknown members/descendants demand reconciliation. Never kill an
-        # untracked PID merely because a caller claims this is its cgroup.
-        members = [int(p) for p in (self.path / "cgroup.procs").read_text().split()]
-        for pid in members:
-            require(
-                pid in self.members and identity(pid) == self.members[pid],
-                "OUTPUT_FENCE_UNPROVEN",
-            )
-        self.retired = True
-        (self.path / "cgroup.kill").write_text("1")
-        deadline = time.monotonic() + timeout
-        while time.monotonic() < deadline:
-            self._owned()
-            events = dict(
-                line.split()
-                for line in (self.path / "cgroup.events").read_text().splitlines()
-            )
-            if events.get("populated") == "0":
-                return {
-                    "kernelCgroup": str(self.path),
-                    "inode": self.inode,
-                    "populated": 0,
-                    "scope": "OWNED_PROCESS_FENCE_ONLY",
-                }
-            time.sleep(0.005)  # external control operation, never an admission gate
-        require(False, "OUTPUT_FENCE_UNPROVEN")
+        with getattr(self, "_lock", threading.RLock()):
+            try:
+                require(not self.retired, "OUTPUT_FENCE_UNPROVEN")
+                self._owned()
+                self._members()
+                self._owned()  # detects changes; not a TOCTOU solution
+                self._exclusive_mutation()  # no cgroup.kill write exists
+            finally:
+                self.retired = True
+        # No positive fence receipt. Kernel populated=0 would still be required
+        # AFTER an independently authorized kill; a pre-kill snapshot is not it.
 
     def close(self):
-        self._owned()
-        require(not (self.path / "cgroup.procs").read_text().strip())
-        self.path.rmdir()
+        with getattr(self, "_lock", threading.RLock()):
+            try:
+                self._owned()
+                require(not self._members(), "OUTPUT_FENCE_UNPROVEN")
+                events = dict(
+                    line.split()
+                    for line in (self.path / "cgroup.events").read_text().splitlines()
+                )
+                require(events.get("populated") == "0", "OUTPUT_FENCE_UNPROVEN")
+                self._owned()
+                self._exclusive_mutation()  # no path-based rmdir on refusal
+            finally:
+                self.retired = True
 
 
 def runtime_namespace_census(
