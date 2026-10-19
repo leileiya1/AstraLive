@@ -1,11 +1,13 @@
 """Inert ordinary-file adversaries. NEVER real cgroups, PIDs or process signals.
 
-Only filesystem recognition is stubbed for scope models; native identity calls
-are stubbed for inert PID text. A matching leaf is a valid census, not exclusive
-mutation control. It must also refuse pending independent Linux assembly.
+Only filesystem recognition is stubbed for scope models. Matching ownership
+uses real dedicated CPU children and native PID/birth/UID/parent checks; children
+exit via stdin EOF, never a signal. A valid census is not mutation authority.
 """
 
 import os
+import subprocess
+import sys
 import threading
 from pathlib import Path
 from types import SimpleNamespace
@@ -48,7 +50,13 @@ def model(tmp_path, monkeypatch, request):
 
     monkeypatch.setattr(Path, "write_text", write)
     monkeypatch.setattr(Path, "rmdir", remove)
-    return SimpleNamespace(group=group, path=path, writes=writes, raw_write=write_text)
+    children = []
+    yield SimpleNamespace(
+        group=group, path=path, writes=writes, raw_write=write_text, children=children
+    )
+    for child in children:
+        child.stdin.close()  # natural exit, no kill/terminate/signal
+        child.wait(timeout=2)
 
 
 def unchanged(m, before=""):
@@ -63,14 +71,15 @@ def nested(m):
     (child / "cgroup.procs").write_text("999998\n")
 
 
-def registered(m, monkeypatch):
-    native = ProcessIdentity(999999, os.geteuid(), "inert-test-birth")
-    m.group.members[native.pid] = native
-    m.raw_write(m.path / "cgroup.procs", "999999\n")
-    monkeypatch.setattr(lf, "identity", lambda pid: native)
-    monkeypatch.setattr(
-        lf.psutil, "Process", lambda pid: SimpleNamespace(ppid=os.getpid)
+def registered(m):
+    child = subprocess.Popen(
+        [sys.executable, "-c", "import sys; sys.stdin.buffer.read(1)"],
+        stdin=subprocess.PIPE,
     )
+    m.children.append(child)
+    native = lf.identity(child.pid)
+    m.group.members[native.pid] = native
+    m.raw_write(m.path / "cgroup.procs", f"{native.pid}\n")
     return native
 
 
@@ -107,22 +116,23 @@ def test_C_unknown_direct_pid_denied_before_kill(model):
 
 
 def test_D_matching_owned_leaf_is_census_not_mutation_authority(model, monkeypatch):
-    registered(model, monkeypatch)
+    native = registered(model)
     model.group._owned()
-    assert model.group._members() == [999999]
+    assert model.group._members() == [native.pid]
     with pytest.raises(Closed, match="OUTPUT_FENCE_UNPROVEN"):
         model.group.fence()
-    unchanged(model, "999999\n")
+    unchanged(model, f"{native.pid}\n")
 
 
 def test_E_reused_pid_identity_denied(model, monkeypatch):
-    native = registered(model, monkeypatch)
-    monkeypatch.setattr(
-        lf, "identity", lambda pid: ProcessIdentity(pid, native.uid, "reused")
+    native = registered(model)
+    # Corrupt the recorded birth; the actual native identity remains untouched.
+    model.group.members[native.pid] = ProcessIdentity(
+        native.pid, native.uid, "old-birth"
     )
     with pytest.raises(Closed):
         model.group.fence()
-    unchanged(model, "999999\n")
+    unchanged(model, f"{native.pid}\n")
 
 
 @pytest.mark.parametrize(
@@ -206,11 +216,14 @@ def test_H_concurrent_lifecycle_never_authorizes(model):
 
 
 def test_J_stop_repeat_partial_failure_and_exit_never_reauthorize(model, monkeypatch):
-    native = registered(model, monkeypatch)
+    native = registered(model)
     with pytest.raises(Closed):
         model.group.attach(native)
     assert model.group.retired
-    # Exit is inert text, no signal. A failed handle cannot be auto-adopted.
+    model.children[0].stdin.close()
+    model.children[0].wait(timeout=2)
+    model.children.clear()
+    # Natural process exit cannot authorize retry/adoption of the failed handle.
     model.raw_write(model.path / "cgroup.procs", "")
     for op in (model.group.fence, model.group.close, model.group.fence):
         with pytest.raises(Closed):
