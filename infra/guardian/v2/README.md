@@ -1,5 +1,12 @@
 # receiver-1 isolated implementation
 
+## Current v1 lifecycle correction
+
+[Finish/Renew handoff](V1-FINISH-RENEW-HANDOFF-20261019.md) and
+[acceptance](V1-FINISH-RENEW-ACCEPTANCE-20261019.md) cover the normal terminal
+race identified by Agent4. Two exact protected postimages await Agent4 governance.
+Production remains OUTPUT_FENCE_UNPROVEN; cgroup capability stays disabled.
+
 ## P1 correction, 2026-10-19
 
 See [P1 review](PR11-P1-FIX-20261019.md). The cgroup helper cannot prove exclusive

@@ -1,5 +1,10 @@
 # Agent4 integration handoff — receiver-1 domain increment
 
+Current request: review the exact v1
+[Finish/Renew protected patch](V1-FINISH-RENEW-HANDOFF-20261019.md) and
+[fresh acceptance evidence](V1-FINISH-RENEW-ACCEPTANCE-20261019.md).
+No v2 Session/continuation, Linux capability or Runtime wiring changes.
+
 Current correction: [PR11 P1 fix](PR11-P1-FIX-20261019.md). The cgroup helper is
 unavailable for mutation until a trusted exclusive controller is independently
 proved. No kill or positive installation is authorized. Raw historical logs are

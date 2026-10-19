@@ -1,0 +1,50 @@
+{
+  "temporaryRoot": "/tmp/ag5-finish-probes-d1lvknun",
+  "sourceCommit": "864cdbf7545ea3fdd52d4f8405bcd83dcb3497b5",
+  "probes": [
+    {
+      "name": "test_finish_renew_race",
+      "source": "docs/v0.5/evidence/agent-4/pr11-rereview-2026-10-19/independent-probes/test_finish_renew_race.py.txt",
+      "sourceSHA256": "ea9e7a097e6db618f51ccc23a61fbf5dfdaf81dad8807d0d9fddd526e33aca36",
+      "exactCopySHA256": "ea9e7a097e6db618f51ccc23a61fbf5dfdaf81dad8807d0d9fddd526e33aca36",
+      "outputOnlyReplacement": {
+        "before": "/tmp/agent4-pr11-rereview-finish-renew-results",
+        "after": "/Users/sapiece/innovationProject/AstraLive-agent-5/infra/guardian/v2/evidence/finish-renew-20261019/before-test_finish_renew_race"
+      },
+      "runnableSHA256": "526afcaebb062ef4a59bcb58823e1f5dcdd9f56a226fddad315152abd4307a1f"
+    },
+    {
+      "name": "test_finish_renew_budget",
+      "source": "docs/v0.5/evidence/agent-4/pr11-rereview-2026-10-19/independent-probes/test_finish_renew_budget.py.txt",
+      "sourceSHA256": "c2cb05f0e31aa325424b0c5ad8f79a10b18596889b3aa0ad73594835f6fe4823",
+      "exactCopySHA256": "c2cb05f0e31aa325424b0c5ad8f79a10b18596889b3aa0ad73594835f6fe4823",
+      "outputOnlyReplacement": {
+        "before": "/tmp/agent4-pr11-rereview-finish-renew-budget-results",
+        "after": "/Users/sapiece/innovationProject/AstraLive-agent-5/infra/guardian/v2/evidence/finish-renew-20261019/before-test_finish_renew_budget"
+      },
+      "runnableSHA256": "43de6987ac7b77ab52a95aaf206844772c726263af966816b922cdadc36b3f70"
+    },
+    {
+      "name": "test_agent4_rtmp",
+      "source": "docs/v0.5/evidence/agent-4/pr11-rereview-2026-10-19/independent-probes/test_agent4_rtmp.py.txt",
+      "sourceSHA256": "19465e8d49d5973107d52413ac52c36d06c4947bcf9fe4bce341ddaf41346eb3",
+      "exactCopySHA256": "19465e8d49d5973107d52413ac52c36d06c4947bcf9fe4bce341ddaf41346eb3",
+      "outputOnlyReplacement": {
+        "before": "/tmp/agent4-pr11-rereview-rtmp-results",
+        "after": "/Users/sapiece/innovationProject/AstraLive-agent-5/infra/guardian/v2/evidence/finish-renew-20261019/before-test_agent4_rtmp"
+      },
+      "runnableSHA256": "dec12623be499645da09a224434279af9a831fd62354a29959acda3f44f42320"
+    },
+    {
+      "name": "test_agent4_rtmp_phases",
+      "source": "docs/v0.5/evidence/agent-4/pr11-rereview-2026-10-19/independent-probes/test_agent4_rtmp_phases.py.txt",
+      "sourceSHA256": "d0aa82ee9434adea657e449236568ddfa84ada17abecff239e9b80af107b445c",
+      "exactCopySHA256": "d0aa82ee9434adea657e449236568ddfa84ada17abecff239e9b80af107b445c",
+      "outputOnlyReplacement": {
+        "before": "/tmp/agent4-pr11-rereview-rtmp-phase-results",
+        "after": "/Users/sapiece/innovationProject/AstraLive-agent-5/infra/guardian/v2/evidence/finish-renew-20261019/before-test_agent4_rtmp_phases"
+      },
+      "runnableSHA256": "819e0bb7b08568563a50a96d257cb58deb0b7d4063daa314d326b6cb13c51ffe"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "name": "full-owner-regression",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "infra/guardian/v2/review/run_review.py",
+      "--output",
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/infra/guardian/v2/evidence/finish-renew-20261019/regression",
+      "--base",
+      "864cdbf7545ea3fdd52d4f8405bcd83dcb3497b5"
+    ],
+    "exitCode": 1,
+    "sourceCommit": "393203a79b869d04fc3d79c34227c778c66543d2",
+    "generatedAtUTC": "2026-10-19T01:08:18.493379+00:00"
+  },
+  {
+    "name": "native-receiver1",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "infra/guardian/v2/review/run_native_review.py",
+      "--output",
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/infra/guardian/v2/evidence/finish-renew-20261019/native"
+    ],
+    "exitCode": 0,
+    "sourceCommit": "393203a79b869d04fc3d79c34227c778c66543d2",
+    "generatedAtUTC": "2026-10-19T01:08:40.540315+00:00"
+  }
+]
