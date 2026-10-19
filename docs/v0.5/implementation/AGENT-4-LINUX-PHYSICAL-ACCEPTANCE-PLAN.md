@@ -1,9 +1,12 @@
 # Next-stage Linux physical acceptance: ownership and permission boundary
 
 **NOT AUTHORIZED TO EXECUTE BY THIS DOCUMENT. OUTPUT_FENCE_UNPROVEN.**
-PR11 `9b969d099b7a3b6b85f3595d26c36fb953d47263` is BLOCKED for unknown-descendant
-kill scope. It is a review reference, not an approved destructive-test version.
-Agent5 must first fix that P1 and receive a new exact-pin independent code review.
+PR11 `0c259cc981c12503485198982e84ad567b529c4e` has a scoped source ACK only
+because all cgroup mutations are disabled. It remains BLOCKED for the independent
+normal Finish/Renew teardown race documented in the 2026-10-19 re-review. Neither
+old9b nor current0c is an approved positive/destructive Linux version. A future
+exclusive controller requires a new exact-pin review and explicit environment
+authorization; enabling the current denied helper is not an implementation.
 
 Fixed Agent4 code dependency: Registrar `58cbc59042c70f9010a368f963257fdad5154b91`,
 fixture/acceptance `08af1049250d2657d7afb5e303d97a02e9761570`, audit integration

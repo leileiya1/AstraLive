@@ -1,0 +1,119 @@
+[
+  {
+    "label": "rtmp-repeat20-diagnostic",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "output_guardian.tests.conftest",
+      "/tmp/agent4-pr11-rereview-probes/test_agent4_rtmp.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 1,
+    "log": "agent4-pr11-rereview-extra-results/rtmp-repeat20-diagnostic.txt",
+    "generatedAtUTC": null,
+    "note": "real dedicated loopback PG/MediaMTX plus owned native media; installation/output production proof not claimed"
+  },
+  {
+    "label": "rtmp-repeat20-phases",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "output_guardian.tests.conftest",
+      "/tmp/agent4-pr11-rereview-probes/test_agent4_rtmp_phases.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 1,
+    "log": "agent4-pr11-rereview-extra-results/rtmp-repeat20-phases.txt",
+    "generatedAtUTC": null,
+    "note": "real dedicated loopback PG/MediaMTX plus owned native media; installation/output production proof not claimed"
+  },
+  {
+    "label": "finish-renew-deterministic3",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "output_guardian.tests.conftest",
+      "/tmp/agent4-pr11-rereview-probes/test_finish_renew_race.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 1,
+    "log": "agent4-pr11-rereview-extra-results/finish-renew-deterministic3.txt",
+    "generatedAtUTC": null,
+    "note": "real dedicated loopback PG/MediaMTX plus owned native media; installation/output production proof not claimed"
+  },
+  {
+    "label": "finish-renew-budget3",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "output_guardian.tests.conftest",
+      "/tmp/agent4-pr11-rereview-probes/test_finish_renew_budget.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 2,
+    "log": "agent4-pr11-rereview-extra-results/finish-renew-budget3.txt",
+    "generatedAtUTC": null,
+    "note": "collection error is development harness only"
+  },
+  {
+    "label": "finish-renew-budget3-corrected",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "output_guardian.tests.conftest",
+      "/tmp/agent4-pr11-rereview-probes/test_finish_renew_budget.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 1,
+    "log": "agent4-pr11-rereview-extra-results/finish-renew-budget3-corrected.txt",
+    "generatedAtUTC": null,
+    "note": "real dedicated loopback PG/MediaMTX plus owned native media; installation/output production proof not claimed"
+  },
+  {
+    "label": "v1-exact25",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "output_guardian/tests/test_guardian.py",
+      "output_guardian/tests/test_supervisor_cleanup.py",
+      "-q",
+      "-rs"
+    ],
+    "cwd": "/tmp/agent4-pr11-rereview-candidate",
+    "exitCode": 0,
+    "log": "agent4-pr11-rereview-extra-results/v1-exact25.txt"
+  }
+]

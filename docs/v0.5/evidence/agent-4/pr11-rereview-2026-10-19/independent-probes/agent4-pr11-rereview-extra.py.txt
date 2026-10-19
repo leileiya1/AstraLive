@@ -1,0 +1,14 @@
+from pathlib import Path
+import os,subprocess,json,time,resource
+root=Path('/tmp/agent4-pr11-rereview-candidate');out=Path('/tmp/agent4-pr11-rereview-extra-results');py='/tmp/astralive-agent4-receiver1-python/bin/python'
+env={k:os.environ[k]for k in ['PATH','HOME','TMPDIR']if k in os.environ};env.update(PYTHONPATH=str(root/'runtime')+os.pathsep+str(root),PYTHONDONTWRITEBYTECODE='1',LC_ALL='C')
+records=[]
+def run(label,cmd):
+ start=time.monotonic();before=resource.getrusage(resource.RUSAGE_CHILDREN)
+ with (out/(label+'.txt')).open('w')as f:r=subprocess.run(cmd,cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT)
+ after=resource.getrusage(resource.RUSAGE_CHILDREN);records.append(dict(label=label,command=cmd,cwd=str(root),exitCode=r.returncode,elapsedSeconds=time.monotonic()-start,childUserSeconds=after.ru_utime-before.ru_utime,childSystemSeconds=after.ru_stime-before.ru_stime,childPeakRSSBytes=after.ru_maxrss));(out/'commands.json').write_text(json.dumps(records,indent=2)+'\n');print(label,r.returncode,flush=True)
+for i in range(3):run(f'original4-{i+1}',[py,'-m','pytest','-p','no:cacheprovider','/tmp/agent4-pr11-rereview-probes/test_original_scope.py','-q','-s'])
+run('current-capability-independent',[py,'-m','pytest','-p','no:cacheprovider','/tmp/agent4-pr11-rereview-probes/test_current_scope.py','-q','-rs'])
+run('owner-scope56',[py,'-m','pytest','-p','no:cacheprovider','output_guardian/tests/v2/test_cgroup_scope.py','-q','-rs'])
+run('current-original69',[py,'-m','pytest','-p','no:cacheprovider','output_guardian/tests/v2','--ignore=output_guardian/tests/v2/test_cgroup_scope.py','--ignore=output_guardian/tests/v2/test_evidence_archive.py','--ignore=output_guardian/tests/v2/test_readiness.py','--ignore=output_guardian/tests/v2/test_official.py','--ignore=output_guardian/tests/v2/test_physical.py','-q','-rs'])
+# All failures remain observable; original4 includes intentionally unsupported historical positive control.
