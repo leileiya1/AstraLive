@@ -5,7 +5,6 @@ uses real dedicated CPU children and native PID/birth/UID/parent checks; childre
 exit via stdin EOF, never a signal. A valid census is not mutation authority.
 """
 
-import os
 import subprocess
 import sys
 import threading
