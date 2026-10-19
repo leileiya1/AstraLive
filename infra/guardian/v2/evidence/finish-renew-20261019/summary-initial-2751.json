@@ -1,0 +1,108 @@
+{
+  "status": "OUTPUT GUARDIAN BLOCKED",
+  "sourceFix": "READY_FOR_AGENT4_REVIEW",
+  "coreImplementation": "2751d1d3f9a55d25c07953777b3290fdac815bd4",
+  "latestTestSource": "4b1ea9fc90ee0be86e8a19221eec9f0012379e78",
+  "integration": "864cdbf7545ea3fdd52d4f8405bcd83dcb3497b5",
+  "beforeDeterministic": {
+    "race": "3 FAIL",
+    "budget": "3 FAIL"
+  },
+  "finalMedia": {
+    "deterministicRace": "3 PASS",
+    "deterministicBudget": "3 PASS",
+    "realRTMP20": "20 PASS",
+    "phases20": "20 PASS",
+    "stress": "8 PASS",
+    "initialNewSuite": "32 PASS",
+    "finalNewSuite": "33 PASS (27 local/mock/owned process +6 real SQL/RTMP)",
+    "currentCgroup8": "8 PASS"
+  },
+  "regression": {
+    "v1": 25,
+    "v2Original": 69,
+    "v2ExpandedPass": 142,
+    "v2LinuxSkip": 1,
+    "cgroupOwner": 56,
+    "coldIndependent": 20,
+    "readiness": "6x5 PASS",
+    "wire": 13,
+    "officialCombined": 21,
+    "journal": 11,
+    "contracts": "136 PASS/1 protected FAIL",
+    "validatorV1": "PASS",
+    "validatorV2": "FAIL protected process.py; both proposed files pending",
+    "generator": "PASS",
+    "lint": "PASS"
+  },
+  "native": {
+    "topLevelPass": 38,
+    "fail": 0,
+    "skip": 0,
+    "sourceOutput": "explicit fixture; real native/SQL",
+    "fullOtherGoPackages": "NOT RERUN; Agent4 independent integration"
+  },
+  "expectedFailedChecks": [
+    {
+      "name": "contracts-137",
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_contracts",
+        "tests.test_durable_live_contracts",
+        "tests.test_durable_answer_contracts",
+        "tests.test_answer_contract_repairs",
+        "tests.test_receiver_contracts",
+        "tests.test_receiver_stop_races",
+        "-v"
+      ],
+      "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+      "exitCode": 1,
+      "seconds": 18.742998749949038,
+      "userSeconds": 1.8944790000000005,
+      "systemSeconds": 0.7127800000000004,
+      "peakRSSBytes": 179224576,
+      "generatedAtUTC": "2026-10-19T01:07:51.268019+00:00",
+      "sourceCommit": "393203a79b869d04fc3d79c34227c778c66543d2"
+    },
+    {
+      "name": "validator-v2",
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+        "scripts/validate-answer-contract.py"
+      ],
+      "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+      "exitCode": 1,
+      "seconds": 0.2159282499924302,
+      "userSeconds": 0.2018419999999992,
+      "systemSeconds": 0.011802000000000312,
+      "peakRSSBytes": 186843136,
+      "generatedAtUTC": "2026-10-19T01:07:54.520018+00:00",
+      "sourceCommit": "393203a79b869d04fc3d79c34227c778c66543d2"
+    }
+  ],
+  "protectedPostimagesPending": [
+    {
+      "path": "output_guardian/process.py",
+      "expected": "5d95a661471d1f13415efae4b6ce35fb0fed23d961d45bceab35de9526f5b4d3",
+      "actual": "fa05eee6949b678680afdf5db0260b6ee8731620523ab6b175d8e956f35201dd"
+    },
+    {
+      "path": "output_guardian/service.py",
+      "expected": "12b5225dffcfad095bf4f07140d30c907325a8ccf244aa124b80d3153fc76e52",
+      "actual": "4a8904ce72977b5bcbce7cbabd94c1cacca9cb3223fcb8115dcae93ac71ef3fd"
+    }
+  ],
+  "allProductionCodeStableDuringMediaRun": true,
+  "failuresRetained": [
+    "original old-source deterministic6 FAIL with valid real SQL deadlines and full proof",
+    "initial uncollected tool test failures, captured repeat development-lifecycle-1:3FAIL17PASS1ERROR; test Stop event/injection ordering repaired",
+    "development unit rapid-rebuild mock observer missing:1FAIL25PASS, tool transcript only; fixture creates fresh observer thereafter",
+    "development-lifecycle-3:6FAIL26PASS, 30-frame inputs never made observer ready; safe UNKNOWN preserved; original100-frame input used to exercise intended actual edges",
+    "runner lint E731 fixed in393203a; no suppression",
+    "all previous historical LEASE_LOST/RTMP/cgroup/whitespace failures remain byte-exact; older uninstrumented failures not retroactively assigned"
+  ],
+  "noDeadlineMarginPTSOrCreditChanges": true,
+  "generatedAtUTC": "2026-10-19T01:12:46.156154+00:00"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "guardian-v2-final",
+  "command": [
+    "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+    "-m",
+    "pytest",
+    "output_guardian/tests/v2",
+    "-v",
+    "--junitxml=infra/guardian/v2/evidence/guardian-v2-final.xml"
+  ],
+  "exitCode": 0,
+  "seconds": 3.152,
+  "reason": "added restart/identity regression cases after original acceptance; production implementation unchanged"
+}

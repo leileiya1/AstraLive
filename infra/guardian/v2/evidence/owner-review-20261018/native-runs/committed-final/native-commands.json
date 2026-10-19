@@ -1,0 +1,133 @@
+[
+  {
+    "label": "native-initdb",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/initdb",
+      "-D",
+      "/tmp/ag5-native-d6kgu1i7/data",
+      "-A",
+      "trust",
+      "-U",
+      "ag5_owner",
+      "--no-locale",
+      "-E",
+      "UTF8"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.3579910830594599,
+    "userSeconds": 0.170094,
+    "systemSeconds": 0.177235,
+    "peakRSSBytes": 49971200
+  },
+  {
+    "label": "native-pg-start",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+      "-D",
+      "/tmp/ag5-native-d6kgu1i7/data",
+      "-l",
+      "/tmp/ag5-native-d6kgu1i7/postgres.log",
+      "-o",
+      "-h 127.0.0.1 -p 62300 -k /tmp/ag5-native-d6kgu1i7/sockets",
+      "-w",
+      "start"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.1279553750064224,
+    "userSeconds": 0.009222000000000008,
+    "systemSeconds": 0.007661000000000001,
+    "peakRSSBytes": 49971200
+  },
+  {
+    "label": "native-createdb",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/createdb",
+      "-h",
+      "127.0.0.1",
+      "-p",
+      "62300",
+      "-U",
+      "ag5_owner",
+      "agent4_receiver1_ag5_owned"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.054945291951298714,
+    "userSeconds": 0.00955399999999998,
+    "systemSeconds": 0.0070069999999999855,
+    "peakRSSBytes": 49971200
+  },
+  {
+    "label": "native-pg-settings",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/psql",
+      "postgres://ag5_owner@127.0.0.1:62300/agent4_receiver1_ag5_owned?sslmode=disable",
+      "-c",
+      "SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.021053083008155227,
+    "userSeconds": 0.008202000000000015,
+    "systemSeconds": 0.0050050000000000094,
+    "peakRSSBytes": 49971200
+  },
+  {
+    "label": "official-native-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durableintegration/receiver1",
+      "-run",
+      "^TestPostgres"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5/backend",
+    "exitCode": 0,
+    "seconds": 12.075309790903702,
+    "userSeconds": 6.778474999999999,
+    "systemSeconds": 1.740694,
+    "peakRSSBytes": 331808768
+  },
+  {
+    "label": "native-dropdb",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/dropdb",
+      "-h",
+      "127.0.0.1",
+      "-p",
+      "62300",
+      "-U",
+      "ag5_owner",
+      "agent4_receiver1_ag5_owned"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.06283974996767938,
+    "userSeconds": 0.012211000000000638,
+    "systemSeconds": 0.007556999999999814,
+    "peakRSSBytes": 331808768
+  },
+  {
+    "label": "native-pg-stop",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+      "-D",
+      "/tmp/ag5-native-d6kgu1i7/data",
+      "-m",
+      "fast",
+      "-w",
+      "stop"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.11042612511664629,
+    "userSeconds": 0.0020059999999997302,
+    "systemSeconds": 0.0026620000000001642,
+    "peakRSSBytes": 331808768
+  }
+]

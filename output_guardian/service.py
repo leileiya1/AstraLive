@@ -21,6 +21,22 @@ from .process import Publisher
 from .rtmp_proxy import PublishingSocket
 
 
+class _TerminalConflict(Closed):
+    def __init__(self):
+        super().__init__("STATE_CONFLICT")
+
+
+class _Lifecycle:
+    """Event-loop-only short state transitions; no lock is held over I/O."""
+
+    def __init__(self, attempt, barrier):
+        self.attempt, self.barrier = attempt, barrier
+        self.phase, self.renewing = "ACTIVE", 0
+        self.revocation = None  # diagnostic only, never an authorization flag
+        self.idle = asyncio.Event()
+        self.idle.set()
+
+
 class Guardian:
     def __init__(
         self,
@@ -74,7 +90,10 @@ class Guardian:
         self.publisher_seen = False
         self.barrier, self.generation = 0, 0
         self.failed, self.started, self.finishing = True, False, False
-        self.operations, self.closing = asyncio.Lock(), asyncio.Lock()
+        self.operations = asyncio.Lock()
+        self._life, self._cleanup_task = None, None
+        self.last_drain_fault = self.last_drain_poll_fault = None
+        self.last_drain_result = None
         self.audio_sequence, self.video_pts = 0, -1
         self.audio_samples, self.video_frames = 0, 0
         self.stopped = set()
@@ -139,7 +158,9 @@ class Guardian:
         self.watchdog = asyncio.create_task(self._watch(), name="guardian-expiry")
         self.poller = asyncio.create_task(self._poll(), name="guardian-authority")
 
-    def invalidate(self, *, fatal=False):
+    def invalidate(self, *, fatal=False, drained=False):
+        if self._life is not None:
+            self._life.phase = "DRAINED" if drained else "REVOKED"
         self.barrier += 1
         self.right = None
         self.secret = self.read_secret = None
@@ -161,18 +182,67 @@ class Guardian:
         if attempt is not None and attempt != self.attempt:
             raise Closed("STALE_RUN_EPOCH")
 
-    async def close_resources(self):
-        async with self.closing:
-            await self.publisher.abort()
-            await self.receiver.abort()
-            if self.publishing_socket:
-                socket, self.publishing_socket = self.publishing_socket, None
-                await socket.close()
-            if self.web:
-                # stop() cancels sender tracks and closes actual DTLS/SRTP sockets.
-                output, self.web = self.web, None
-                await asyncio.wait_for(output.stop(), 0.5)
-            await self.ingest.isolate()
+    def _check_life(self, life):
+        self.check(life.attempt)
+        if self._life is not life or self.barrier != life.barrier:
+            raise Closed()
+
+    async def _retire_life(self, life, reason=None):
+        # Stale async failures must never close a replacement installation.
+        if self._life is life and self.barrier == life.barrier:
+            life.revocation = reason
+            await self.retire()
+
+    async def close_resources(self, *, terminal=None):
+        # Coalesce cleanup by owned-resource task, without a lifecycle mutex.
+        # Stop invalidates synchronously before awaiting the shared reaper.
+        task = self._cleanup_task
+        if task is None:
+            socket, self.publishing_socket = self.publishing_socket, None
+            output, self.web = self.web, None
+
+            async def cleanup():
+                fault = None
+
+                async def abort_publisher():
+                    await self.publisher.abort(
+                        terminal, require_live=terminal is not None
+                    )
+
+                actions = [abort_publisher, self.receiver.abort]
+                if socket is not None:
+                    actions.append(socket.close)
+                if output is not None:
+
+                    async def stop_peer():
+                        await asyncio.wait_for(output.stop(), 0.5)
+
+                    actions.append(stop_peer)
+                actions.append(self.ingest.isolate)
+                for action in actions:
+                    try:
+                        await action()
+                    except BaseException as exc:
+                        if fault is None:
+                            fault = (
+                                exc.code
+                                if isinstance(exc, Closed)
+                                else "OUTPUT_FENCE_UNPROVEN"
+                            )
+                if fault is not None:
+                    raise Closed(fault)  # still attempted all independent closures
+
+            task = self._cleanup_task = asyncio.create_task(cleanup())
+        try:
+            await asyncio.shield(task)
+        except BaseException:
+            if task.done():
+                self.failed = True
+                if self._cleanup_task is task:
+                    self._cleanup_task = None
+            raise
+        if self._cleanup_task is task:
+            self._cleanup_task = None
 
     async def retire(self, fatal=False):
         self.invalidate(fatal=fatal)
@@ -184,6 +254,12 @@ class Guardian:
 
     async def install(self, binding):
         async with self.operations:
+            if (
+                self.finishing
+                and self._life
+                and self._life.phase in {"DRAINING", "QUIESCING", "TERMINATING"}
+            ):
+                raise Closed("STATE_CONFLICT")
             if self.failed or not self.started or binding.runId in self.stopped:
                 raise Closed()
             self.authority.scope_check(binding)
@@ -224,6 +300,12 @@ class Guardian:
     async def bind(self, attempt, permit_id):
         async with self.operations:
             if (
+                self.finishing
+                and self._life
+                and self._life.phase in {"DRAINING", "QUIESCING", "TERMINATING"}
+            ):
+                raise Closed("STATE_CONFLICT")
+            if (
                 self.failed
                 or attempt.binding != self.binding
                 or attempt.generation <= self.generation
@@ -250,6 +332,7 @@ class Guardian:
             self.audio_sequence, self.video_pts = 0, -1
             self.audio_samples, self.video_frames = 0, 0
             self.finishing = False
+            self._life = _Lifecycle(attempt, barrier)
             self.observer_started = False
             self.secret = secrets.token_urlsafe(32)
             self.read_secret = secrets.token_urlsafe(32)
@@ -296,16 +379,41 @@ class Guardian:
             return {"state": "AUTHORIZED", "barrier": self.barrier}
 
     async def renew(self, attempt, permit_id):
-        self.check(attempt)
-        barrier, old_right = self.barrier, self.right
+        life = self._life
+        if (
+            life is not None
+            and life.phase == "DRAINED"
+            and attempt == life.attempt
+            and attempt.binding.runId not in self.stopped
+            and not self.failed
+        ):
+            raise Closed("STATE_CONFLICT")
+        try:
+            self.check(attempt)
+        except Closed as exc:
+            if exc.code == "LEASE_LOST" and life is not None:
+                try:
+                    await self._retire_life(life, "LEASE_LOST")
+                finally:
+                    raise Closed("LEASE_LOST") from None
+            raise
+        if life is None:
+            raise Closed()
+        if life.phase not in {"ACTIVE", "DRAINING"}:
+            raise Closed("STATE_CONFLICT")
+        old_right, entered = self.right, False
         try:
             right = await self.authority.permit(attempt, permit_id)
-            # A late renewal may never revive an expired local authorization.
+            # Preserve both original deadlines, even when terminal admission
+            # closed during SQL. A real expiry is never a normal conflict.
             old_right.check()
-            self.check(attempt)
-            if barrier != self.barrier:
-                raise Closed()
+            self._check_life(life)
             right.check()
+            if life.phase not in {"ACTIVE", "DRAINING"}:
+                raise _TerminalConflict()
+            life.renewing += 1
+            life.idle.clear()
+            entered = True  # reservation and phase check have no intervening await
             await self.publisher.call(
                 {
                     "op": "permit",
@@ -314,12 +422,21 @@ class Guardian:
                 }
             )
             old_right.check()
-            if barrier != self.barrier:
-                raise Closed()
+            self._check_life(life)
+            right.check()
             self.right = right
-        except BaseException:
-            await self.retire()
-            raise Closed("LEASE_LOST") from None
+        except _TerminalConflict:
+            raise Closed("STATE_CONFLICT") from None
+        except BaseException as exc:
+            try:
+                await self._retire_life(life, getattr(exc, "code", type(exc).__name__))
+            finally:
+                raise Closed("LEASE_LOST") from None
+        finally:
+            if entered:
+                life.renewing -= 1
+                if life.renewing == 0:
+                    life.idle.set()
         return {"state": "AUTHORIZED"}
 
     async def media(self, attempt, packet):
@@ -407,72 +524,107 @@ class Guardian:
     async def finish(self, attempt):
         async with self.operations:
             self.check(attempt)
-            if self.finishing:
+            life = self._life
+            if self.finishing or life is None or life.phase != "ACTIVE":
                 raise Closed("STATE_CONFLICT")
             self.finishing = True
+            life.phase = "DRAINING"
             barrier = self.barrier
+        # No lifecycle/admission mutex is held across any following await.
+        diagnostic = {"coverage": "PENDING", "pollFaults": [], "terminal": None}
+        self.last_drain_result = diagnostic
+        self.last_drain_fault = self.last_drain_poll_fault = None
+        stage = "FLUSH"
+        try:
+            response = await self.publisher.call({"op": "finish"}, timeout=0.25)
+            manifest = response
+            # Observe the real RTMP reader before closing the publisher;
+            # recorder teardown is permitted to lose its final partial part.
+            stage = "COVERAGE"
+            for _ in range(100):
+                self._check_life(life)
+                observed, paths = {}, []
+                try:
+                    observed = await self.receiver.call({"op": "status"})
+                    paths = sorted(
+                        set(self.recording_dir.rglob("*.mp4")) - self.records_before
+                    )
+                    evidence = await asyncio.to_thread(
+                        verify_combined, paths, observed, manifest
+                    )
+                    self.last_drain_fault = None
+                    diagnostic["coverage"] = "PASS"
+                    evidence["attempt"] = attempt.json()
+                    evidence["guardianId"] = self.authority.guardian_id
+                    evidence["barrier"] = barrier
+                    evidence.pop("evidenceSHA256", None)
+                    evidence["evidenceSHA256"] = hashlib.sha256(
+                        json.dumps(evidence, sort_keys=True).encode()
+                    ).hexdigest()
+                    break
+                except Exception as exc:
+                    self.last_drain_stats = {
+                        "connected": observed.get("connected"),
+                        "openErrorType": observed.get("openErrorType"),
+                        "openErrorNumber": observed.get("openErrorNumber"),
+                        "packets": {
+                            k: len(v) for k, v in observed.get("manifest", {}).items()
+                        },
+                        "decodeError": observed.get("decodeError"),
+                        "transportEnded": observed.get("transportEnded"),
+                        "recordings": len(paths),
+                    }
+                    fault = getattr(exc, "code", type(exc).__name__)
+                    self.last_drain_poll_fault = fault
+                    diagnostic["pollFaults"].append({"terminal": False, "code": fault})
+                    await asyncio.sleep(0.01)
+            else:
+                raise Closed("DRAIN_UNKNOWN")
+            self._check_life(life)
+            if self.webrtc_enabled:
+                raise Closed("DRAIN_UNKNOWN")  # no trusted decoded-peer proof
+            # Close NEW renew admission before waiting, preserving reservations
+            # already updating the child. This short transition does no I/O.
+            life.phase = "QUIESCING"
+            stage = "QUIESCING"
+            await life.idle.wait()
+            self._check_life(life)
+            process, pipe = self.publisher.process, self.publisher.pipe
+            if process is None or pipe is None or process.poll() is not None:
+                raise Closed("MEDIA_DELIVERY_FAILED")
+            life.phase = "TERMINATING"
+            stage = "TEARDOWN"
+            await self.close_resources(terminal=process)
+            stage = "FINAL_CHECK"
+            self._check_life(life)
+            # Completion vs Stop linearizes here, without an intervening await.
+            self.invalidate(drained=True)
+            diagnostic.update(terminal="DRAINED", stage="COMPLETED", fault=None)
+            return {
+                "state": "LOCAL_MEDIA_DRAINED",
+                "attempt": attempt.json(),
+                "requiredSinks": ["rtmp"],
+                "evidence": [evidence],
+            }
+        except BaseException as exc:
+            code = getattr(exc, "code", type(exc).__name__)
+            cause = (
+                "STOP"
+                if attempt.binding.runId in self.stopped
+                else "RIGHT_EXPIRED"
+                if code == "LEASE_LOST"
+                else "BARRIER_REVOKED"
+                if self.barrier != barrier
+                else "CANCELLED"
+                if isinstance(exc, asyncio.CancelledError)
+                else stage
+            )
+            diagnostic.update(terminal="FAILED", stage=stage, fault=code, cause=cause)
+            diagnostic["revocation"] = life.revocation
+            self.last_drain_fault = code
             try:
-                response = await self.publisher.call({"op": "finish"}, timeout=0.25)
-                manifest = response
-                # Observe the real RTMP reader before closing the publisher;
-                # recorder teardown is permitted to lose its final partial part.
-                for _ in range(100):
-                    self.check(attempt)
-                    try:
-                        observed = await self.receiver.call({"op": "status"})
-                        paths = sorted(
-                            set(self.recording_dir.rglob("*.mp4")) - self.records_before
-                        )
-                        evidence = await asyncio.to_thread(
-                            verify_combined, paths, observed, manifest
-                        )
-                        evidence["attempt"] = attempt.json()
-                        evidence["guardianId"] = self.authority.guardian_id
-                        evidence["barrier"] = barrier
-                        evidence.pop("evidenceSHA256", None)
-                        evidence["evidenceSHA256"] = hashlib.sha256(
-                            json.dumps(evidence, sort_keys=True).encode()
-                        ).hexdigest()
-                        break
-                    except Exception as exc:
-                        self.last_drain_stats = {
-                            "connected": observed.get("connected"),
-                            "openErrorType": observed.get("openErrorType"),
-                            "openErrorNumber": observed.get("openErrorNumber"),
-                            "packets": {
-                                k: len(v)
-                                for k, v in observed.get("manifest", {}).items()
-                            },
-                            "decodeError": observed.get("decodeError"),
-                            "transportEnded": observed.get("transportEnded"),
-                            "recordings": len(paths),
-                        }
-                        self.last_drain_fault = getattr(exc, "code", type(exc).__name__)
-                        await asyncio.sleep(0.01)
-                else:
-                    raise Closed("DRAIN_UNKNOWN")
-                self.check(attempt)
-                if barrier != self.barrier:
-                    raise Closed("DRAIN_UNKNOWN")
-                if self.webrtc_enabled:
-                    # Existing aiortc track consumption is NOT a decoded-peer
-                    # proof. Agent 4 must install the trusted receiver adapter.
-                    raise Closed("DRAIN_UNKNOWN")
-                await self.publisher.abort()
-                await self.receiver.abort()
-                await self.publishing_socket.close()
-                self.publishing_socket = None
-                self.secret, self.publisher_id = None, None
-                await self.ingest.isolate()
-                self.invalidate()
-                return {
-                    "state": "LOCAL_MEDIA_DRAINED",
-                    "attempt": attempt.json(),
-                    "requiredSinks": ["rtmp"],
-                    "evidence": [evidence],
-                }
-            except BaseException:
-                await self.retire()
+                await self._retire_life(life)
+            finally:
                 raise Closed("DRAIN_UNKNOWN") from None
 
     async def stop(self, run_id):
@@ -480,7 +632,12 @@ class Guardian:
         # Synchronous tombstone/barrier precedes every await and defeats an
         # already in-flight install/renewal. No permit/lease needed for Stop.
         self.stopped.add(run_id)
-        self.persist_stops()
+        try:
+            self.persist_stops()
+        except BaseException:
+            # A failed tombstone fsync cannot skip physical revocation.
+            await self.retire(fatal=True)
+            raise Closed() from None
         if not self.binding or self.binding.runId == run_id:
             await self.retire()
         return {"state": "CLOSED_FENCED", "runId": run_id}
@@ -493,6 +650,8 @@ class Guardian:
                     self.check()
                 except Closed as exc:
                     self.last_fault = exc.code
+                    if self._life is not None:
+                        self._life.revocation = exc.code
                     try:
                         await self.retire()
                     except Closed:
@@ -504,6 +663,7 @@ class Guardian:
             await asyncio.sleep(0.05)
             if self.right is None:
                 continue
+            life = self._life
             try:
                 self.check()
                 if time.monotonic() - last_poll >= 0.1:
@@ -544,9 +704,15 @@ class Guardian:
             except asyncio.CancelledError:
                 raise
             except Exception as exc:
+                if (
+                    life is not self._life
+                    or life is None
+                    or life.barrier != self.barrier
+                ):
+                    continue
                 self.last_fault = getattr(exc, "code", type(exc).__name__)
                 try:
-                    await self.retire()
+                    await self._retire_life(life, self.last_fault)
                 except Closed:
                     pass
 
@@ -570,6 +736,8 @@ class Guardian:
         try:
             self.check()
         except Closed:
+            return False
+        if self._life is not None and self._life.phase not in {"ACTIVE", "DRAINING"}:
             return False
         if (
             not self.secret

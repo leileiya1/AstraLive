@@ -1,0 +1,20 @@
+{
+  "command": [
+    ".venv-guardian/bin/python",
+    "infra/guardian/v2/review/evidence_archive.py",
+    "restore",
+    "--destination",
+    "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/ag5-final-restore-ojghduyk/restored"
+  ],
+  "exitCode": 0,
+  "restoreOutput": {
+    "operation": "restore",
+    "verifiedFiles": 330
+  },
+  "rawFiles": 330,
+  "priorIndexEntriesPreserved": 199,
+  "allRawSHA256Verified": true,
+  "temporaryRestoreDirectoryRemoved": true,
+  "generatedAtUTC": "2026-10-19T01:37:33.627461+00:00",
+  "indexSHA256": "9663827e8a434ec0e73f683091c9aecc103a7ef6f70a0a92ebd6e3f4841d5776"
+}

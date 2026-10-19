@@ -1,0 +1,782 @@
+[
+  {
+    "name": "v1-25",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/test_guardian.py",
+      "output_guardian/tests/test_supervisor_cleanup.py",
+      "-v",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 33.27735345903784,
+    "userSeconds": 7.819329000000001,
+    "systemSeconds": 4.295297,
+    "peakRSSBytes": 134692864,
+    "generatedAtUTC": "2026-10-19T01:33:35.980619+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "v2-original-69",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/v2",
+      "--ignore=output_guardian/tests/v2/test_readiness.py",
+      "--ignore=output_guardian/tests/v2/test_official.py",
+      "--ignore=output_guardian/tests/v2/test_physical.py",
+      "--ignore=output_guardian/tests/v2/test_cgroup_scope.py",
+      "--ignore=output_guardian/tests/v2/test_evidence_archive.py",
+      "-v",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 2.939733666134998,
+    "userSeconds": 1.6701480000000002,
+    "systemSeconds": 0.4682259999999996,
+    "peakRSSBytes": 134692864,
+    "generatedAtUTC": "2026-10-19T01:33:38.920830+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "v2-full",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/v2",
+      "-v",
+      "--tb=short",
+      "-rs"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 5.945668209111318,
+    "userSeconds": 2.597370999999999,
+    "systemSeconds": 0.7978760000000005,
+    "peakRSSBytes": 134692864,
+    "generatedAtUTC": "2026-10-19T01:33:44.866808+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cgroup-inert-56",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/v2/test_cgroup_scope.py",
+      "-v",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.43857700005173683,
+    "userSeconds": 0.31333000000000055,
+    "systemSeconds": 0.10976799999999987,
+    "peakRSSBytes": 134692864,
+    "generatedAtUTC": "2026-10-19T01:33:45.305701+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "wire-13",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_durable_live_v2_wire",
+      "-v"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 5.366939834086224,
+    "userSeconds": 1.8942739999999993,
+    "systemSeconds": 0.62547,
+    "peakRSSBytes": 179224576,
+    "generatedAtUTC": "2026-10-19T01:33:50.672937+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "contracts-137",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_contracts",
+      "tests.test_durable_live_contracts",
+      "tests.test_durable_answer_contracts",
+      "tests.test_answer_contract_repairs",
+      "tests.test_receiver_contracts",
+      "tests.test_receiver_stop_races",
+      "-v"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 1,
+    "seconds": 18.7201880000066,
+    "userSeconds": 1.9227349999999994,
+    "systemSeconds": 0.7303360000000003,
+    "peakRSSBytes": 179224576,
+    "generatedAtUTC": "2026-10-19T01:34:09.393446+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "official-wire-adapter-21",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_receiver1_wiring",
+      "tests.test_durable_live_v2_wire",
+      "-v"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 2.3690260420553386,
+    "userSeconds": 1.9491230000000002,
+    "systemSeconds": 0.6233769999999996,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:11.762806+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "journal-11",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "runtime/tests/test_durable_live_journal.py",
+      "-v"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.5354075829964131,
+    "userSeconds": 0.24026500000000084,
+    "systemSeconds": 0.03949300000000022,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:12.298621+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "validator-v1",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "scripts/validate-durable-live-contracts.py"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.12279083393514156,
+    "userSeconds": 0.1119790000000016,
+    "systemSeconds": 0.008466999999999558,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:12.421747+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "validator-v2",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "scripts/validate-answer-contract.py"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 1,
+    "seconds": 0.21424245811067522,
+    "userSeconds": 0.19941999999999993,
+    "systemSeconds": 0.012334000000000067,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:12.636305+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "generated-check",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "scripts/durable-live/generate_v2_wire.py",
+      "--check"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.049469167133793235,
+    "userSeconds": 0.03616599999999792,
+    "systemSeconds": 0.013562000000000296,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:12.686099+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "lint",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/ruff",
+      "check",
+      "--isolated",
+      "--select",
+      "E4,E7,E9,F,I",
+      "output_guardian/v2",
+      "output_guardian/tests/v2",
+      "infra/guardian/v2/review"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.00918870815075934,
+    "userSeconds": 0.004484999999998962,
+    "systemSeconds": 0.008041000000000409,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:12.695603+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "diff-check-full-pr",
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "864cdbf7545ea3fdd52d4f8405bcd83dcb3497b5",
+      "HEAD"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.016143333865329623,
+    "userSeconds": 0.005985000000002572,
+    "systemSeconds": 0.008751999999999427,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:12.712046+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-00",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.4702011668123305,
+    "userSeconds": 0.37209299999999956,
+    "systemSeconds": 0.09099000000000057,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:13.182708+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-01",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.4896242921240628,
+    "userSeconds": 0.3667680000000004,
+    "systemSeconds": 0.11567499999999953,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:13.672934+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-02",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.46553545794449747,
+    "userSeconds": 0.3694609999999976,
+    "systemSeconds": 0.09334700000000051,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:14.138998+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-03",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.4634145419113338,
+    "userSeconds": 0.378617000000002,
+    "systemSeconds": 0.08097699999999897,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:14.602955+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-04",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.45327525003813207,
+    "userSeconds": 0.3695409999999981,
+    "systemSeconds": 0.07814800000000055,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:15.056762+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-05",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.44502966688014567,
+    "userSeconds": 0.36584700000000225,
+    "systemSeconds": 0.07747600000000077,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:15.502335+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-06",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.4516422499436885,
+    "userSeconds": 0.3703019999999988,
+    "systemSeconds": 0.0789629999999999,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:15.954511+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-07",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.45624266588129103,
+    "userSeconds": 0.376927000000002,
+    "systemSeconds": 0.08126799999999967,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:16.411295+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-08",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.4404842909425497,
+    "userSeconds": 0.36406599999999756,
+    "systemSeconds": 0.07883999999999958,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:16.852339+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-09",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.4493053338956088,
+    "userSeconds": 0.36448700000000045,
+    "systemSeconds": 0.07776199999999989,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:17.302227+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-10",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.45389112480916083,
+    "userSeconds": 0.3721749999999986,
+    "systemSeconds": 0.07883400000000051,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:17.756667+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-11",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.4513604159001261,
+    "userSeconds": 0.36861800000000144,
+    "systemSeconds": 0.07913300000000056,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:18.208601+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-12",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.4436038751155138,
+    "userSeconds": 0.36514500000000183,
+    "systemSeconds": 0.07731199999999916,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:18.652776+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-13",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.44396466691978276,
+    "userSeconds": 0.366343999999998,
+    "systemSeconds": 0.07986499999999985,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:19.097297+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-14",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.43832220789045095,
+    "userSeconds": 0.3632080000000002,
+    "systemSeconds": 0.07694299999999998,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:19.536205+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-15",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.4393784161657095,
+    "userSeconds": 0.362919999999999,
+    "systemSeconds": 0.07629799999999953,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:19.976167+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-16",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.4386262090411037,
+    "userSeconds": 0.3623880000000028,
+    "systemSeconds": 0.07639500000000155,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:20.415383+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-17",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.44361458299681544,
+    "userSeconds": 0.3648429999999969,
+    "systemSeconds": 0.07821099999999959,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:20.859583+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-18",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.44822079106234014,
+    "userSeconds": 0.3680770000000031,
+    "systemSeconds": 0.08085699999999996,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:21.308369+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "cold-after-19",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "ag5_cold_probe",
+      "output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks",
+      "-q",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.4424132080748677,
+    "userSeconds": 0.3641239999999968,
+    "systemSeconds": 0.07635599999999876,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:21.751374+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "delayed-ready-00",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/v2/test_readiness.py",
+      "-v",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 2.5067006659228355,
+    "userSeconds": 0.6392380000000024,
+    "systemSeconds": 0.16573500000000152,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:24.258583+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "delayed-ready-01",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/v2/test_readiness.py",
+      "-v",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 2.5383744998835027,
+    "userSeconds": 0.6579179999999987,
+    "systemSeconds": 0.17719499999999933,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:26.797534+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "delayed-ready-02",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/v2/test_readiness.py",
+      "-v",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 2.5092338328249753,
+    "userSeconds": 0.6356560000000009,
+    "systemSeconds": 0.16610700000000023,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:29.307318+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "delayed-ready-03",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/v2/test_readiness.py",
+      "-v",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 2.4920964590273798,
+    "userSeconds": 0.6287739999999999,
+    "systemSeconds": 0.16590399999999939,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:31.800012+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "delayed-ready-04",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/v2/test_readiness.py",
+      "-v",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 2.5054388749413192,
+    "userSeconds": 0.6301549999999985,
+    "systemSeconds": 0.1625980000000009,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:34.306017+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  },
+  {
+    "name": "delayed-ready-05",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/v2/test_readiness.py",
+      "-v",
+      "--tb=short"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 2.5123193750623614,
+    "userSeconds": 0.6297680000000021,
+    "systemSeconds": 0.1725999999999992,
+    "peakRSSBytes": 187072512,
+    "generatedAtUTC": "2026-10-19T01:34:36.818952+00:00",
+    "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69"
+  }
+]

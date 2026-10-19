@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv-guardian/bin/ruff",
+    "check",
+    "--isolated",
+    "--select",
+    "E4,E7,E9,F,I",
+    "output_guardian/service.py",
+    "output_guardian/process.py",
+    "output_guardian/tests/lifecycle",
+    "output_guardian/v2",
+    "output_guardian/tests/v2",
+    "infra/guardian/v2/review"
+  ],
+  "exitCode": 0,
+  "sourceCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69",
+  "generatedAtUTC": "2026-10-19T01:34:20.959231+00:00"
+}

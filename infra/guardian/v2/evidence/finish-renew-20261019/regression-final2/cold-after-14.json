@@ -1,0 +1,150 @@
+{
+  "exit": 0,
+  "events": [
+    {
+      "phase": "cpu_start",
+      "at": 1325785.772354625
+    },
+    {
+      "phase": "cpu_start_return",
+      "at": 1325785.86634225,
+      "pid": 77245
+    },
+    {
+      "phase": "consume_start",
+      "at": 1325785.866352708
+    },
+    {
+      "phase": "rpc",
+      "at": 1325785.867484125,
+      "operation": "QueryReceiverAuthority",
+      "seconds": 0.0008131670765578747
+    },
+    {
+      "phase": "rpc",
+      "at": 1325785.86857125,
+      "operation": "CommitReceiverConsume",
+      "seconds": 0.0005511250346899033
+    },
+    {
+      "phase": "rpc",
+      "at": 1325785.869946416,
+      "operation": "QueryReceiverAuthority",
+      "seconds": 0.00046524987556040287
+    },
+    {
+      "phase": "consume_return",
+      "at": 1325785.870444791,
+      "mono_left": 0.6990232500247657,
+      "suspend_left": 0.6990235415287316
+    },
+    {
+      "phase": "av_unit_entry",
+      "at": 1325785.870455333
+    },
+    {
+      "phase": "media_entry",
+      "at": 1325785.880778666,
+      "kind": "audio",
+      "sequence": 120,
+      "mono_left": 0.6886907080188394,
+      "suspend_left": 0.6886900416575372
+    },
+    {
+      "phase": "media_entry",
+      "at": 1325785.880891666,
+      "kind": "video",
+      "sequence": 121,
+      "mono_left": 0.6885764580219984,
+      "suspend_left": 0.6885767083149403
+    },
+    {
+      "phase": "media_entry",
+      "at": 1325785.881012833,
+      "kind": "audio",
+      "sequence": 122,
+      "mono_left": 0.6884551248513162,
+      "suspend_left": 0.6884554582647979
+    },
+    {
+      "phase": "media_entry",
+      "at": 1325785.881068875,
+      "kind": "video",
+      "sequence": 123,
+      "mono_left": 0.6883989169728011,
+      "suspend_left": 0.6883993332739919
+    },
+    {
+      "phase": "consume_start",
+      "at": 1325785.888419416
+    },
+    {
+      "phase": "rpc",
+      "at": 1325785.88897375,
+      "operation": "QueryReceiverAuthority",
+      "seconds": 0.00047979108057916164
+    },
+    {
+      "phase": "rpc",
+      "at": 1325785.889843166,
+      "operation": "CommitReceiverConsume",
+      "seconds": 0.00041020801290869713
+    },
+    {
+      "phase": "rpc",
+      "at": 1325785.890905375,
+      "operation": "QueryReceiverAuthority",
+      "seconds": 0.0005080001428723335
+    },
+    {
+      "phase": "consume_return",
+      "at": 1325785.891405416,
+      "mono_left": 0.6989755420945585,
+      "suspend_left": 0.6989755833055824
+    },
+    {
+      "phase": "av_unit_entry",
+      "at": 1325785.891417833
+    },
+    {
+      "phase": "media_entry",
+      "at": 1325785.891461041,
+      "kind": "audio",
+      "sequence": 124,
+      "mono_left": 0.6989198750816286,
+      "suspend_left": 0.6989199582021683
+    },
+    {
+      "phase": "media_entry",
+      "at": 1325785.89152175,
+      "kind": "video",
+      "sequence": 125,
+      "mono_left": 0.6988590001128614,
+      "suspend_left": 0.6988591665867716
+    },
+    {
+      "phase": "media_entry",
+      "at": 1325785.891622833,
+      "kind": "audio",
+      "sequence": 126,
+      "mono_left": 0.6987579590640962,
+      "suspend_left": 0.6987580831628293
+    },
+    {
+      "phase": "media_entry",
+      "at": 1325785.891671125,
+      "kind": "video",
+      "sequence": 127,
+      "mono_left": 0.6987096250522882,
+      "suspend_left": 0.6987098332028836
+    },
+    {
+      "phase": "media_entry",
+      "at": 1325785.896960666,
+      "kind": "audio",
+      "sequence": 128,
+      "mono_left": -1325785.896959958,
+      "suspend_left": -1713333.8987500416
+    }
+  ]
+}

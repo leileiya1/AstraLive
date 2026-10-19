@@ -1,0 +1,188 @@
+{
+  "status": "OUTPUT GUARDIAN BLOCKED",
+  "p1": "READY_FOR_AGENT4_REVIEW_UNPROVEN_MUTATION_DENIED",
+  "blockedHead": "9b969d099b7a3b6b85f3595d26c36fb953d47263",
+  "integration": "0cc1a141e443ee1069dc997a91182e4b48257be5",
+  "coreImplementation": "dabe495fcc8102febe2ee1512f295a37662f34ae",
+  "finalTestTooling": "2e1b6e2f8302564723560cde158e507d6f3d6b2d",
+  "mainRunnerExit": 1,
+  "mainRunnerFailures": [
+    {
+      "name": "v1-25",
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+        "-m",
+        "pytest",
+        "output_guardian/tests/test_guardian.py",
+        "output_guardian/tests/test_supervisor_cleanup.py",
+        "-v",
+        "--tb=short"
+      ],
+      "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+      "exitCode": 1,
+      "seconds": 31.811865957919508,
+      "userSeconds": 6.988194,
+      "systemSeconds": 3.7979019999999997,
+      "peakRSSBytes": 135823360,
+      "generatedAtUTC": "2026-10-19T00:05:09.363442+00:00",
+      "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae"
+    }
+  ],
+  "finalChecks": [
+    {
+      "log": "v2-final-native-scope.txt",
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+        "-m",
+        "pytest",
+        "output_guardian/tests/v2",
+        "-v",
+        "--tb=short",
+        "-rs"
+      ],
+      "exitCode": 0,
+      "seconds": 5.810495708137751,
+      "sourceCommit": "887a2a5cfe374f042018cfbad4e5fa768004465f",
+      "generatedAtUTC": "2026-10-19T00:08:06.596689+00:00"
+    },
+    {
+      "log": "lint-final.txt",
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/ruff",
+        "check",
+        "--isolated",
+        "--select",
+        "E4,E7,E9,F,I",
+        "output_guardian/v2",
+        "output_guardian/tests/v2",
+        "infra/guardian/v2/review"
+      ],
+      "exitCode": 0,
+      "seconds": 0.010122083127498627,
+      "sourceCommit": "887a2a5cfe374f042018cfbad4e5fa768004465f",
+      "generatedAtUTC": "2026-10-19T00:08:06.611969+00:00"
+    },
+    {
+      "log": "v2-final2.txt",
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+        "-m",
+        "pytest",
+        "output_guardian/tests/v2",
+        "-v",
+        "--tb=short",
+        "-rs"
+      ],
+      "exitCode": 0,
+      "seconds": 5.8429168339353055,
+      "sourceCommit": "2e1b6e2f8302564723560cde158e507d6f3d6b2d",
+      "generatedAtUTC": "2026-10-19T00:09:03.539741+00:00"
+    },
+    {
+      "log": "lint-final2.txt",
+      "command": [
+        "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/ruff",
+        "check",
+        "--isolated",
+        "--select",
+        "E4,E7,E9,F,I",
+        "output_guardian/v2",
+        "output_guardian/tests/v2",
+        "infra/guardian/v2/review"
+      ],
+      "exitCode": 0,
+      "seconds": 0.009804083965718746,
+      "sourceCommit": "2e1b6e2f8302564723560cde158e507d6f3d6b2d",
+      "generatedAtUTC": "2026-10-19T00:09:03.554560+00:00"
+    }
+  ],
+  "nativeTopLevelPass": 38,
+  "nativeTopLevelNames": [
+    "TestAgent2ReviewNilSourceActuallyRejects",
+    "TestAgent2ReviewLostRegistrationACKHistoricalOnly",
+    "TestAgent2ReviewConcurrentRevokePreservesLatch",
+    "TestAgent2ReviewReplacementCannotReuseInstallation",
+    "TestAgent2ReviewSourceRevocationDeniesRPC",
+    "TestAgent2ReviewPhysicalObserveOutsideSQLLocks",
+    "TestAgent2ReviewOutputExpiresDuringFirstConsumeRPC",
+    "TestAgent2ReviewRevocationDuringSourceReadDenies",
+    "TestAgent2ReviewRegistrationSourceChangeAndScope",
+    "TestAgent2ReviewSharedStoreRegistryDispatch",
+    "TestAgent2ReviewHistoricalConsumptionAfterSourceLoss",
+    "TestAgent2ReviewGuardianRoutesDenyEveryControlOperation",
+    "TestAgent2ReviewCurrentPhysicalRevisionBeforeRegister",
+    "TestAgent2ReviewCurrentPhysicalRevisionAfterRegister",
+    "TestAgent2ReviewFirstConsumeFinalDeadlineAndRPCGate",
+    "TestPostgresInstallationRetirementSerializesConsumeAndRunLock",
+    "TestPostgresInstallationRetirementDuringRegister",
+    "TestPostgresInstallationConsumedRetirementPreservesHistory",
+    "TestPostgresInstallationObserveOnlyCannotAuthorize",
+    "TestInstallationGateCloseNeverReopensOrBlocks",
+    "TestPostgresInstallationQueryConsumeWithdrawalSQLRace",
+    "TestPostgresInstallationUncoordinatedDriftDuringRegisterRefused",
+    "TestPostgresInstallationSessionExpiryReconcilesWithoutReplay",
+    "TestPostgresInstallationCoexistingNativeGenerationCannotReuseOldGate",
+    "TestPostgresReceiver1RealTransport",
+    "TestPostgresReceiver1ConcurrentLatchAndRuntimeIdentity",
+    "TestPostgresReceiver1WrongProcessAndChannel",
+    "TestPostgresReceiver1LostBackendReply",
+    "TestPostgresReceiver1StopBeforeFinalReceiverACK",
+    "TestPostgresReceiver1ExpiryDuringRPC",
+    "TestPostgresReceiver1RenewConsumedLongUnit",
+    "TestPostgresReceiver1ScopeVersionAndStaleIdentity",
+    "TestPostgresReceiver1CrashReconciliation",
+    "TestPostgresReceiver1BackendStrictDecode",
+    "TestPostgresReceiver1RegistrarAdmissionAndReadback",
+    "TestPostgresReceiver1ExpiredInstallationCannotStage",
+    "TestPostgresReceiver1NativeRuntimeIPCChannels",
+    "TestPostgresReceiver1ControlCredentialSeparation"
+  ],
+  "nativeFail": 0,
+  "nativeSkip": 0,
+  "v1FullRepeat": {
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/test_guardian.py",
+      "output_guardian/tests/test_supervisor_cleanup.py",
+      "-v",
+      "--tb=short"
+    ],
+    "exitCode": 0,
+    "seconds": 31.42008087504655,
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae",
+    "generatedAtUTC": "2026-10-19T00:06:58.805512+00:00"
+  },
+  "results": {
+    "v2OriginalPass": 69,
+    "v2FinalPass": 142,
+    "v2LinuxSkip": 1,
+    "scopeCasesPass": 56,
+    "archiveCasesPass": 4,
+    "coldIndependentPass": 20,
+    "readinessRepeats": 6,
+    "readinessCasesPerRun": 5,
+    "contractPass": 137,
+    "journalPass": 11,
+    "wirePass": 13,
+    "officialCombinedPass": 21,
+    "validators": "both PASS"
+  },
+  "failuresRetained": [
+    "Agent4 before3x:2 FAIL/2 PASS (recursive write occurs)",
+    "Agent4 unchanged after3x:3 PASS/1 FAIL (old empty-leaf positive kill expectation now refused)",
+    "Agent4 safety subset after3x:3 PASS/0 FAIL/1 deselected",
+    "v1 first full run24 PASS/1 FAIL actual RTMP tail coverage; full repeat25 PASS, not resolution",
+    "Historical original LEASE_LOST/RTMP/development/whitespace errors retained byte-exact in archive",
+    "Development native-probe rewrite unused os import F401; removed in887a2a5, final lint PASS; tool transcript only, no original log file was collected"
+  ],
+  "notTested": [
+    "real Linux cgroup/UID/ACL/network/lifecycle isolation",
+    "full backend packages outside receiver1",
+    "production PhysicalSource/RTMP-WebRTC continuous required sinks/GPU/audience"
+  ],
+  "cgroupWritesIssued": 0,
+  "positiveFencingReceipts": 0,
+  "generatedAtUTC": "2026-10-19T00:10:44.244440+00:00"
+}

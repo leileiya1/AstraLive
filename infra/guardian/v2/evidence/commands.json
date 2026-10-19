@@ -1,0 +1,135 @@
+[
+  {
+    "name": "guardian-v2",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/v2",
+      "-v",
+      "--junitxml=/Users/sapiece/innovationProject/AstraLive-agent-5/infra/guardian/v2/evidence/guardian-v2.xml"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 2.855,
+    "output": "guardian-v2.txt"
+  },
+  {
+    "name": "guardian-original",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests/test_guardian.py",
+      "output_guardian/tests/test_supervisor_cleanup.py",
+      "-v",
+      "--junitxml=/Users/sapiece/innovationProject/AstraLive-agent-5/infra/guardian/v2/evidence/guardian-original.xml"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 32.979,
+    "output": "guardian-original.txt"
+  },
+  {
+    "name": "contracts-137",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_contracts",
+      "tests.test_durable_live_contracts",
+      "tests.test_durable_answer_contracts",
+      "tests.test_answer_contract_repairs",
+      "tests.test_receiver_contracts",
+      "tests.test_receiver_stop_races",
+      "-v"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 20.402,
+    "output": "contracts-137.txt"
+  },
+  {
+    "name": "journal-11",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "runtime/tests/test_durable_live_journal.py",
+      "-v"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.718,
+    "output": "journal-11.txt"
+  },
+  {
+    "name": "runtime-unit",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "runtime/tests",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 9.804,
+    "output": "runtime-unit.txt"
+  },
+  {
+    "name": "validator-v2",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "scripts/validate-answer-contract.py"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.262,
+    "output": "validator-v2.txt"
+  },
+  {
+    "name": "validator-v1",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "scripts/validate-durable-live-contracts.py"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.138,
+    "output": "validator-v1.txt"
+  },
+  {
+    "name": "lint",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/ruff",
+      "check",
+      "--isolated",
+      "--select",
+      "E4,E7,E9,F,I",
+      "output_guardian/v2",
+      "output_guardian/tests/v2",
+      "infra/guardian/v2/run_acceptance.py"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.01,
+    "output": "lint.txt"
+  },
+  {
+    "name": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-5",
+    "exitCode": 0,
+    "seconds": 0.007,
+    "output": "diff-check.txt"
+  }
+]
