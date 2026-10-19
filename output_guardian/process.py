@@ -22,6 +22,7 @@ class Publisher:
         self.process = self.pipe = None
         self.identity = None
         self.lock = asyncio.Lock()
+        self._aborting = self._abort_owner = None
 
     def recover(self):
         if not self.registry.exists():
@@ -51,6 +52,14 @@ class Publisher:
         self.registry.unlink()
 
     async def start(self, config):
+        if self._aborting is not None:
+            if (
+                not self._aborting.done()
+                or self._aborting.cancelled()
+                or self._aborting.exception() is not None
+            ):
+                raise Closed()
+            self._aborting = self._abort_owner = None
         if self.process:
             raise Closed()
         self.identity = config.get("identity")
@@ -138,14 +147,32 @@ class Publisher:
                 raise Closed("MEDIA_DELIVERY_FAILED") from None
 
     async def abort(self, expected=None):
+        task = self._aborting
         if expected is not None and self.process is not expected:
+            if task is not None and self._abort_owner is expected:
+                await asyncio.shield(task)
             return
-        process, self.process = self.process, None
-        pipe, self.pipe = self.pipe, None
-        if process:
-            if process.poll() is None:
-                process.kill()
-            await asyncio.to_thread(process.wait)
-        if pipe:
-            pipe.close()
-        self.registry.unlink(missing_ok=True)
+        if task is None:
+            process, self.process = self.process, None
+            pipe, self.pipe = self.pipe, None
+
+            async def reap():
+                # Only the actual owned Popen handle is signalled. No Runtime
+                # PID claim/name lookup; recover() retains its native marker /
+                # creation-time checks. Never let old cleanup unlink a new
+                # registry: start() refuses while this task is outstanding.
+                try:
+                    if process:
+                        if process.poll() is None:
+                            process.kill()
+                        await asyncio.to_thread(process.wait)
+                finally:
+                    if pipe:
+                        pipe.close()
+                self.registry.unlink(missing_ok=True)
+
+            self._abort_owner = process
+            task = self._aborting = asyncio.create_task(reap())
+        await asyncio.shield(task)
+        if self._aborting is task:
+            self._aborting = self._abort_owner = None
