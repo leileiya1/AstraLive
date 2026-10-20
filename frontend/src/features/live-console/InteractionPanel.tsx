@@ -28,7 +28,10 @@ export function InteractionPanel({ sessionId, running, speechQueue }: { sessionI
   const qc = useQueryClient();
   const [text, setText] = useState("有 XL 吗？");
   const key = ["interaction", sessionId];
-  const query = useQuery({ queryKey: key, queryFn: () => request<Snapshot>(sessionId!), enabled: !!sessionId && running, refetchInterval: running ? 1000 : false, retry: false });
+  // An authentication/authorization refusal will not change by polling: stop
+  // and keep the notice until the operator logs in and the panel remounts.
+  const refused = (error: unknown) => error instanceof ApiError && (error.status === 401 || error.status === 403);
+  const query = useQuery({ queryKey: key, queryFn: () => request<Snapshot>(sessionId!), enabled: !!sessionId && running, refetchInterval: q => running && !refused(q.state.error) ? 1000 : false, retry: false });
   const action = useMutation({ mutationFn: ({ suffix, method, body }: { suffix: string; method: string; body?: unknown }) => request(sessionId!, suffix, method, body), onSuccess: () => { void qc.invalidateQueries({ queryKey: key }); } });
   const send = (suffix: string, method: string, body?: unknown) => action.mutate({ suffix, method, body });
   const data = query.data;

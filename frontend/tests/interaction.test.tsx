@@ -23,3 +23,13 @@ test('no polling/mutation after Session Stop',()=>{
  const fetch=vi.fn();vi.stubGlobal('fetch',fetch);show(false)
  expect(fetch).not.toHaveBeenCalled();expect(screen.getByRole('button',{name:'恢复自动互动'})).toBeDisabled()
 })
+test('stops polling after an authentication refusal instead of retrying every second',async()=>{
+ const fetch=vi.fn().mockResolvedValue({ok:false,status:401,json:async()=>({code:'UNAUTHENTICATED',message:'login required'})});vi.stubGlobal('fetch',fetch)
+ vi.useFakeTimers({shouldAdvanceTime:true})
+ try{
+  show();await waitFor(()=>expect(fetch).toHaveBeenCalledTimes(1))
+  await vi.advanceTimersByTimeAsync(5000)
+  expect(fetch).toHaveBeenCalledTimes(1)
+  expect(screen.getByText(/login required/)).toBeInTheDocument()
+ }finally{vi.useRealTimers()}
+})
