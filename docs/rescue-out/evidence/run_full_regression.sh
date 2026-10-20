@@ -34,6 +34,7 @@ step() { # name, command...
 }
 
 { date -u +%FT%TZ; echo "head=$(git rev-parse HEAD) index-tree=$(git write-tree)"; } >"$SUMMARY"
+if [ -z "${ONLY_GO:-}" ]; then
 step guardian   "$PY" -m pytest output_guardian/tests -p no:cacheprovider -q -rfEs
 step contracts  "$PY" -m unittest tests.test_contracts tests.test_durable_live_contracts \
   tests.test_durable_answer_contracts tests.test_answer_contract_repairs \
@@ -47,12 +48,13 @@ step diff-check git diff --check HEAD
 step runtime    env PYTHONPATH=runtime "$PY" -m unittest discover -s runtime/tests -p 'test_*.py'
 step gpu-worker env PYTHONPATH=runtime "$ROOT/.venv-gpusim/bin/python" -m pytest gpu_worker/tests -p no:cacheprovider -q
 step frontend   sh -c 'cd frontend && bun install --frozen-lockfile && bun run test && bun run build'
+fi
 
 PORT=$("$PY" -c "import socket;s=socket.socket();s.bind(('127.0.0.1',0));print(s.getsockname()[1])")
 "$PGBIN/initdb" -D "$WORK/pg" -A trust -U rescue_owner >/dev/null
 "$PGBIN/pg_ctl" -D "$WORK/pg" -o "-h 127.0.0.1 -p $PORT -k ''" -l "$WORK/pg.log" start >/dev/null
 sleep 1
-for d in agent2_rescue agent2_v2_rescue rescue_cfg; do
+for d in agent2_rescue agent2_v2_rescue rescue_cfg agent4_receiver1_rescue agent3_streaming_rescue; do
   "$PGBIN/createdb" -h 127.0.0.1 -p "$PORT" -U rescue_owner "$d"
 done
 if lsof -nP -iTCP:56382 -sTCP:LISTEN >/dev/null 2>&1; then
@@ -67,10 +69,25 @@ export DURABLE_V2_TEST_DATABASE_URL="$U/agent2_v2_rescue?sslmode=disable"
 export CONFIG_TEST_DATABASE_URL="$U/rescue_cfg?sslmode=disable"
 export DURABLE_LIVE_TEST_REDIS_URL="redis://127.0.0.1:56382/1"
 export DURABLE_LIVE_TEST_PYTHON="$PY"
+# Owned-database markers required by the receiver1/answerstream guards: this
+# cluster is created by this script, used only here and deleted on exit.
+mkdir -p "$WORK/r1" "$WORK/a3"
+printf 'Agent4 dedicated receiver1 PostgreSQL\n' >"$WORK/r1/AGENT4_RECEIVER1_OWNED"
+printf 'agent3 isolated streaming acceptance\n' >"$WORK/a3/AGENT3_OWNED"
+export AGENT4_RECEIVER1_DATABASE_URL="$U/agent4_receiver1_rescue?sslmode=disable"
+export AGENT4_RECEIVER1_OWNED_ROOT="$WORK/r1" AGENT4_RECEIVER1_PYTHON="$PY"
+export AGENT4_PR11_ARCHIVE="$ROOT"
+export AGENT3_STREAM_DATABASE_URL="$U/agent3_streaming_rescue?sslmode=disable"
+export AGENT3_PG_OWNED_ROOT="$WORK/a3"
 cd backend
+if [ -n "${ONLY_GO:-}" ]; then  # e.g. ONLY_GO="./internal/durableintegration/receiver1"
+  go test -p 1 -race -count=1 -json $ONLY_GO >"$OUT/go-race.jsonl" 2>"$OUT/go-race.stderr.txt"
+  code=$?
+else
 step go-vet go vet ./...
 go test -p 1 -race -count=1 -json ./... >"$OUT/go-race.jsonl" 2>"$OUT/go-race.stderr.txt"
 code=$?
+fi
 "$PY" - "$OUT/go-race.jsonl" "$code" <<'EOF' | tee -a "$SUMMARY"
 import collections, json, sys
 c = collections.Counter(); fails = []

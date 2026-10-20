@@ -1,0 +1,6 @@
+=== RUN   TestRedisIsolatedDisconnectAndSQLFallback
+redis: 2026/10/20 20:30:08 pool.go:422: redis: connection pool: failed to dial after 2 attempts: dial tcp 127.0.0.1:56382: i/o timeout
+redis: 2026/10/20 20:30:09 pool.go:422: redis: connection pool: failed to dial after 2 attempts: dial tcp 127.0.0.1:56382: i/o timeout
+--- PASS: TestRedisIsolatedDisconnectAndSQLFallback (0.39s)
+PASS
+ok  	astralive/backend/internal/durablelive	1.718s
