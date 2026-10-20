@@ -26,6 +26,11 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt -r /tmp/requirements-tes
       aiohttp==3.14.5 asyncpg==0.32.0 av==17.1.0 numpy==2.5.4 aiortc==1.15.0 \
       psutil==7.2.2 httpx==0.28.1 pydantic==2.14.1 pytest==9.1.1 pytest-asyncio==1.4.0 \
       jsonschema==4.26.0
+# Separate layer: real ffmpeg (retained-encoder kick test) and git (evidence
+# archive tool) without invalidating the cached Python dependency layer.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends git ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
 COPY . /src
 RUN useradd -u 22099 -m tester && chown -R tester /src
 USER tester
