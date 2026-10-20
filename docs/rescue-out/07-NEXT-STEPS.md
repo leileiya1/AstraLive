@@ -19,6 +19,8 @@ CPU 测试通过 ≠ 生产可用。下列阶段严格按依赖顺序推进；�
 
 ## 阶段 2 — Runtime 一次性 TTS 与 ReceiverProofs
 
+**进展（2026-10-20）**：第一步已完成——Runtime receiver-1 客户端（一次消费、一次 TTS、lineage 绑定媒体、drain 证据），见 [09-STAGE2-RUNTIME-RECEIVER.md](09-STAGE2-RUNTIME-RECEIVER.md)。剩余 2b/2c/2d 及协调器归属决策见该文档。
+
 Runtime 侧 receiver1 adapter 消费 v2 Grant，单次 TTS 结果绑定 ReceiverProof；不可重放、Stop 优先。依赖阶段 1 的 Guardian v2 gate。
 
 ## 阶段 3 — 真实 Observer 与 required Sink
