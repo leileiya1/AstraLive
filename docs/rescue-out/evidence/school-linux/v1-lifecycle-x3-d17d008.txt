@@ -1,0 +1,13 @@
+2026-10-20T11:31:31Z
+--- run 1
+FAILED output_guardian/tests/test_guardian.py::test_retained_real_ffmpeg_physically_kicked_before_activation
+ERROR output_guardian/tests/test_guardian.py::test_two_physical_publishers_and_old_credentials_reconnect
+1 failed, 76 passed, 1 error in 90.87s (0:01:30)
+--- run 2
+            self.failed = True
+FAILED output_guardian/tests/test_guardian.py::test_retained_real_ffmpeg_physically_kicked_before_activation
+ERROR output_guardian/tests/lifecycle/test_stale_generation.py::test_real_stale_media_ack_keeps_new_generation[2]
+1 failed, 75 passed, 1 error in 91.00s (0:01:30)
+--- run 3
+FAILED output_guardian/tests/test_guardian.py::test_retained_real_ffmpeg_physically_kicked_before_activation
+1 failed, 76 passed in 90.35s (0:01:30)

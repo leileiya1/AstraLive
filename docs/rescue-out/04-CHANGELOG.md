@@ -52,6 +52,15 @@
 - `test_real_edges.py`：导入上述 fixture（1 行）。断言、调度、期限、输入均未改。
 - `test_stale_generation.py`：17 个回归，见 05 §2。文件级 `# ruff: noqa: F811`：pytest 按名称解析重导出的 `local` fixture（别名导入在 pytest 9.1.1 下无法注册，已实测 12 ERROR 后回退）。
 
-## 6. 证据工具
+## 6. 后续提交（Linux 部署测试中发现）
+
+| 提交 | 文件 | 内容 |
+| --- | --- | --- |
+| `f036fa3` | `infra/guardian/rescue-test/Dockerfile`（新，测试专用镜像）；`output_guardian/tests/v2/test_ipc.py` | 镜像；teardown 容忍 reset —— **单独无效**（见 school-linux 证据） |
+| `d17d008` | `output_guardian/tests/v2/test_ipc.py` | `send()` 将 `ConnectionResetError` 与 EOF 同视为“无回复关闭”；teardown 抑制保留（传输层会再次抛出同一异常） |
+
+两者均不涉及受保护文件或生产源码。
+
+## 7. 证据工具
 
 - `evidence/run_agent4_probes.py`：把 Agent4 原始探针复制进临时包运行，仅替换 `/tmp/agent4-pr11-final-results` 字面量，运行后删除临时包。原始探针字节与来源 SHA256：`evidence/probes/ORIGINAL-SHA256.txt`（来自 `origin/integration/v05-durable-live` @ `e4292ac`）。

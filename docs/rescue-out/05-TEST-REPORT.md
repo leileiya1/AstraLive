@@ -63,10 +63,16 @@
 
 Go 52 个 SKIP：receiver1 36（需 Agent4 专用库标记文件与 PR11 归档）、answerstream 8（需 Agent3 专用库）、其余为显式 opt-in（浏览器、owned 子进程助手等）。
 
-## 4. 资源清理
+## 4. Linux（school-linux Docker，隔离容器）
+
+详见 `evidence/school-linux/README.md`。要点：新回归在 Linux 上 **85/85 PASS**（5×17）；发现并修复 1 个 Linux 专属的确定性测试缺陷（v2 IPC `[v1]`，第一次修复 `f036fa3` 无效并保留记录，`d17d008` 修复后 PASS）；剩余失败为镜像缺 ffmpeg/git（5）、`--network none` 下 WebRTC（1）、受保护 `rig` fixture 的 Linux 负载计时 ERROR（2 次）及 1 次未复现、未保留 traceback 的 ERROR。
+
+修复后 Mac：`output_guardian/tests/v2/test_ipc.py` 17 PASS。
+
+## 5. 资源清理
 
 私有 PG 已 `pg_ctl stop -m fast` 并删除数据目录；两个私有 Redis `shutdown nosave`；确认无残留监听（`evidence/after/regression/go-resources-cleanup.txt`）。Guardian 测试的 PG/MediaMTX/子进程由 fixture 自行回收。
 
-## 5. 未测试（不得视为通过）
+## 6. 未测试（不得视为通过）
 
 Linux cgroup/UID/网络/ACL/物理隔离；生产 PhysicalSource、Host Launcher、必需 Sink、Observer；receiver1 Agent4 专用库原生套件；GPU；真实平台推流；Durable LIVE。
