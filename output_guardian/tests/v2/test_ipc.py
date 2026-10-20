@@ -1,6 +1,7 @@
 """Actual AF_UNIX HTTP and OS peer credentials; Authority/Registrar mocked."""
 
 import asyncio
+import contextlib
 import hashlib
 import json
 import os
@@ -174,7 +175,9 @@ async def test_real_ipc_denies_unprovisioned_context(domain, fault):
         assert not d.x.b.latches and d.r.gate.active is None
     finally:
         connection[1].close()
-        await connection[1].wait_closed()
+        # Linux resets a client whose unread request the server refused.
+        with contextlib.suppress(ConnectionResetError):
+            await connection[1].wait_closed()
         await ipc.close()
 
 
