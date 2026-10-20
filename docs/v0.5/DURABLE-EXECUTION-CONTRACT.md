@@ -1,5 +1,7 @@
 # durable-live-1 Durable Execution 合约
 
+> CCR-ADL-001 review at PR8 `01a752baf79c25d4d268167d016c8c62e754cfdf`: active durable-live-1 is preserved. [durable-live-2 incremental answer candidate](ccr/CCR-ADL-001.md) and [migration/owner handoff](ccr/CCR-ADL-001-HANDOFF.md) are PENDING OWNER ACK; this historical v1 freeze does not approve that upgrade.
+
 独立内部 Schema：`contracts/v0.5/durable-live/schema.json`；路径/方法/角色/请求/响应/状态：`protocol.json`。固定schemaVersion=`0.5`与contractRevision=`durable-live-1`。所有对象 additionalProperties=false；拒绝未知字段、非UTC Z时间、非法枚举、空ID、bool冒充epoch。JSON没有浮点业务数值，金额用十进制字符串。跨对象相等/序列约束由业务验证器与存储事务执行。
 
 ## 包与职责

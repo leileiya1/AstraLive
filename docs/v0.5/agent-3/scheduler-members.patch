@@ -1,0 +1,56 @@
+--- a/backend/internal/interaction/scheduler.go
++++ b/backend/internal/interaction/scheduler.go
+@@ -44,8 +44,10 @@
+-	EstimatedReplyMS int            `json:"estimatedReplyMs"`
+-	Event            platform.Event `json:"event"`
+-	Topic            string         `json:"topic"`
+-	Audience         int            `json:"audience"`
+-	Priority         int            `json:"priority"`
+-	Policy           string         `json:"policy"`
+-	ProductID        string         `json:"productId"`
+-	SelectedAt       time.Time      `json:"selectedAt"`
++	// Members retains every normalized source of this one Scheduler selection.
++	Members          []platform.Event `json:"-"`
++	EstimatedReplyMS int              `json:"estimatedReplyMs"`
++	Event            platform.Event   `json:"event"`
++	Topic            string           `json:"topic"`
++	Audience         int              `json:"audience"`
++	Priority         int              `json:"priority"`
++	Policy           string           `json:"policy"`
++	ProductID        string           `json:"productId"`
++	SelectedAt       time.Time        `json:"selectedAt"`
+@@ -56,0 +59,3 @@
++	// SelectionOnly is opt-in for a durable-admission Dispatcher. It permits
++	// selecting during media playback; the Turn Manager still owns media slots.
++	SelectionOnly      bool
+@@ -351,0 +357,6 @@
++			if len(c.selection.Members) >= 128 {
++				s.counters.Dropped++
++				outcomes.WithLabelValues("dropped").Inc()
++				return nil
++			}
++			c.selection.Members = append(c.selection.Members, e)
+@@ -373 +384 @@
+-	selection := Selection{Event: e, Topic: topic, Audience: 1, Priority: priority, Policy: "NONE", ProductID: s.product, EstimatedReplyMS: estimate(topic)}
++	selection := Selection{Members: []platform.Event{e}, Event: e, Topic: topic, Audience: 1, Priority: priority, Policy: "NONE", ProductID: s.product, EstimatedReplyMS: estimate(topic)}
+@@ -436 +447 @@
+-	if gate.Busy {
++	if gate.Busy && !gate.SelectionOnly {
+@@ -522,0 +534 @@
++		c.Members = append([]platform.Event{}, s.current.Members...)
+--- /dev/null
++++ b/backend/internal/turnmanager/preserved_sources.go
+@@ -0,0 +1,13 @@
++package turnmanager
++
++import (
++	c "astralive/backend/internal/contentplan/contract"
++	"astralive/backend/internal/interaction"
++	"context"
++)
++
++type PreservedSources struct{}
++
++func (PreservedSources) SelectionSources(_ context.Context, v interaction.Selection) ([]c.CommentSource, error) {
++	return SourcesFromEvents(v.Members)
++}

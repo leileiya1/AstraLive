@@ -1,0 +1,785 @@
+{
+  "contractRevision": "durable-live-2",
+  "machines": {
+    "BroadcastRun": {
+      "states": [
+        "CREATED",
+        "PREPARING",
+        "LIVE",
+        "RECOVERING",
+        "PAUSED",
+        "STOPPING",
+        "STOPPED",
+        "FAILED"
+      ],
+      "initialState": "CREATED",
+      "transitions": [
+        {
+          "fromState": "CREATED",
+          "toState": "PREPARING",
+          "guard": "INITIAL_LEASE_AND_PREPARE_COMMITTED"
+        },
+        {
+          "fromState": "PREPARING",
+          "toState": "LIVE",
+          "guard": "RECONCILED_ACTIVE_FENCE_AND_OUTPUT"
+        },
+        {
+          "fromState": "RECOVERING",
+          "toState": "LIVE",
+          "guard": "RECONCILED_ACTIVE_FENCE_AND_OUTPUT"
+        },
+        {
+          "fromState": "PREPARING",
+          "toState": "RECOVERING",
+          "guard": "RECOVERABLE_FAULT_ADMISSION_CLOSED"
+        },
+        {
+          "fromState": "LIVE",
+          "toState": "RECOVERING",
+          "guard": "RECOVERABLE_FAULT_ADMISSION_CLOSED"
+        },
+        {
+          "fromState": "LIVE",
+          "toState": "PAUSED",
+          "guard": "PAUSE_AND_OUTPUT_BARRIER"
+        },
+        {
+          "fromState": "PREPARING",
+          "toState": "PAUSED",
+          "guard": "PAUSE_AND_OUTPUT_BARRIER"
+        },
+        {
+          "fromState": "RECOVERING",
+          "toState": "PAUSED",
+          "guard": "PAUSE_AND_OUTPUT_BARRIER"
+        },
+        {
+          "fromState": "PAUSED",
+          "toState": "RECOVERING",
+          "guard": "EXPLICIT_RESUME_NEW_TERM"
+        },
+        {
+          "fromState": "CREATED",
+          "toState": "STOPPING",
+          "guard": "AUTHORIZED_DURABLE_STOP_TOMBSTONE"
+        },
+        {
+          "fromState": "PREPARING",
+          "toState": "STOPPING",
+          "guard": "AUTHORIZED_DURABLE_STOP_TOMBSTONE"
+        },
+        {
+          "fromState": "LIVE",
+          "toState": "STOPPING",
+          "guard": "AUTHORIZED_DURABLE_STOP_TOMBSTONE"
+        },
+        {
+          "fromState": "RECOVERING",
+          "toState": "STOPPING",
+          "guard": "AUTHORIZED_DURABLE_STOP_TOMBSTONE"
+        },
+        {
+          "fromState": "PAUSED",
+          "toState": "STOPPING",
+          "guard": "AUTHORIZED_DURABLE_STOP_TOMBSTONE"
+        },
+        {
+          "fromState": "STOPPING",
+          "toState": "STOPPED",
+          "guard": "ALL_OUTPUTS_STOPPED_BINDINGS_RELEASED"
+        },
+        {
+          "fromState": "CREATED",
+          "toState": "FAILED",
+          "guard": "UNRECOVERABLE_KEEP_FENCE_AND_TOMBSTONE"
+        },
+        {
+          "fromState": "PREPARING",
+          "toState": "FAILED",
+          "guard": "UNRECOVERABLE_KEEP_FENCE_AND_TOMBSTONE"
+        },
+        {
+          "fromState": "LIVE",
+          "toState": "FAILED",
+          "guard": "UNRECOVERABLE_KEEP_FENCE_AND_TOMBSTONE"
+        },
+        {
+          "fromState": "RECOVERING",
+          "toState": "FAILED",
+          "guard": "UNRECOVERABLE_KEEP_FENCE_AND_TOMBSTONE"
+        },
+        {
+          "fromState": "PAUSED",
+          "toState": "FAILED",
+          "guard": "UNRECOVERABLE_KEEP_FENCE_AND_TOMBSTONE"
+        },
+        {
+          "fromState": "STOPPING",
+          "toState": "FAILED",
+          "guard": "UNRECOVERABLE_KEEP_FENCE_AND_TOMBSTONE"
+        }
+      ]
+    },
+    "Turn": {
+      "states": [
+        "READY",
+        "WAITING",
+        "DISPATCHING",
+        "PLAYING",
+        "COMPLETED",
+        "INTERRUPTED",
+        "UNKNOWN"
+      ],
+      "initialState": "READY",
+      "transitions": [
+        {
+          "fromState": "READY",
+          "toState": "WAITING",
+          "guard": "BOUNDARY_OR_FAIRNESS_WAIT"
+        },
+        {
+          "fromState": "WAITING",
+          "toState": "READY",
+          "guard": "ELIGIBLE_BOUNDARY_TTL_PLAN"
+        },
+        {
+          "fromState": "READY",
+          "toState": "DISPATCHING",
+          "guard": "ATOMIC_SLOT_ATTEMPT_OUTBOX_CLAIM"
+        },
+        {
+          "fromState": "DISPATCHING",
+          "toState": "PLAYING",
+          "guard": "VERIFIED_ATTEMPT_PLAYING_PROOF"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "PLAYING",
+          "guard": "VERIFIED_ATTEMPT_PLAYING_PROOF"
+        },
+        {
+          "fromState": "PLAYING",
+          "toState": "COMPLETED",
+          "guard": "ATOMIC_BUSINESS_COMPLETE_PROOF"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "COMPLETED",
+          "guard": "ATOMIC_BUSINESS_COMPLETE_PROOF"
+        },
+        {
+          "fromState": "READY",
+          "toState": "INTERRUPTED",
+          "guard": "NOT_DISPATCHED_CANCEL_EXPIRED_PLAN_CHANGED"
+        },
+        {
+          "fromState": "WAITING",
+          "toState": "INTERRUPTED",
+          "guard": "NOT_DISPATCHED_CANCEL_EXPIRED_PLAN_CHANGED"
+        },
+        {
+          "fromState": "DISPATCHING",
+          "toState": "INTERRUPTED",
+          "guard": "VERIFIED_OUTPUT_FENCE_BARRIER"
+        },
+        {
+          "fromState": "PLAYING",
+          "toState": "INTERRUPTED",
+          "guard": "VERIFIED_OUTPUT_FENCE_BARRIER"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "INTERRUPTED",
+          "guard": "VERIFIED_OUTPUT_FENCE_BARRIER"
+        },
+        {
+          "fromState": "DISPATCHING",
+          "toState": "UNKNOWN",
+          "guard": "UNRESOLVED_EXECUTION_OR_OUTPUT"
+        },
+        {
+          "fromState": "PLAYING",
+          "toState": "UNKNOWN",
+          "guard": "UNRESOLVED_EXECUTION_OR_OUTPUT"
+        }
+      ]
+    },
+    "DispatchIntent": {
+      "states": [
+        "PENDING",
+        "CLAIMED",
+        "ACCEPTED",
+        "RECONCILING",
+        "COMPLETED",
+        "FAILED",
+        "UNKNOWN"
+      ],
+      "initialState": "PENDING",
+      "transitions": [
+        {
+          "fromState": "PENDING",
+          "toState": "CLAIMED",
+          "guard": "AUTHORIZED_MEDIA_OR_CONTROL_CLAIM_CAS"
+        },
+        {
+          "fromState": "CLAIMED",
+          "toState": "ACCEPTED",
+          "guard": "DURABLE_INBOX_ACCEPTANCE"
+        },
+        {
+          "fromState": "CLAIMED",
+          "toState": "PENDING",
+          "guard": "PROVEN_NO_SEND_OR_SEALED_NO_EFFECT"
+        },
+        {
+          "fromState": "CLAIMED",
+          "toState": "RECONCILING",
+          "guard": "AMBIGUOUS_ACK_OR_EXPIRED_CLAIM"
+        },
+        {
+          "fromState": "ACCEPTED",
+          "toState": "RECONCILING",
+          "guard": "AMBIGUOUS_ACK_OR_EXPIRED_CLAIM"
+        },
+        {
+          "fromState": "RECONCILING",
+          "toState": "ACCEPTED",
+          "guard": "MATCHING_ACCEPTED_RECEIPT"
+        },
+        {
+          "fromState": "RECONCILING",
+          "toState": "COMPLETED",
+          "guard": "COMPLETE_CHECKPOINT_OR_CONTROL_PROOF"
+        },
+        {
+          "fromState": "ACCEPTED",
+          "toState": "COMPLETED",
+          "guard": "COMPLETE_CHECKPOINT_OR_CONTROL_PROOF"
+        },
+        {
+          "fromState": "RECONCILING",
+          "toState": "PENDING",
+          "guard": "PROVEN_MEDIA_NO_EFFECT_OR_SAFE_CONTROL_RETRY"
+        },
+        {
+          "fromState": "RECONCILING",
+          "toState": "UNKNOWN",
+          "guard": "INSUFFICIENT_OR_CONFLICTING_PROOF"
+        },
+        {
+          "fromState": "PENDING",
+          "toState": "FAILED",
+          "guard": "PROVEN_REJECTION_OR_CANCELLATION"
+        },
+        {
+          "fromState": "CLAIMED",
+          "toState": "FAILED",
+          "guard": "PROVEN_REJECTION_OR_CANCELLATION"
+        },
+        {
+          "fromState": "ACCEPTED",
+          "toState": "FAILED",
+          "guard": "PROVEN_REJECTION_OR_CANCELLATION"
+        },
+        {
+          "fromState": "RECONCILING",
+          "toState": "FAILED",
+          "guard": "PROVEN_REJECTION_OR_CANCELLATION"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "RECONCILING",
+          "guard": "NEW_EVIDENCE_READ_ONLY_RECONCILIATION"
+        }
+      ]
+    },
+    "PlaybackCheckpoint": {
+      "states": [
+        "PLANNED",
+        "DISPATCHED",
+        "RUNTIME_ACCEPTED",
+        "PLAYING",
+        "LOCAL_MEDIA_DRAINED",
+        "COMPLETED",
+        "INTERRUPTED",
+        "UNKNOWN"
+      ],
+      "initialState": "PLANNED",
+      "transitions": [
+        {
+          "fromState": "PLANNED",
+          "toState": "DISPATCHED",
+          "guard": "VERIFIED_SEND_STARTED"
+        },
+        {
+          "fromState": "DISPATCHED",
+          "toState": "RUNTIME_ACCEPTED",
+          "guard": "VERIFIED_INBOX_COMMIT"
+        },
+        {
+          "fromState": "RUNTIME_ACCEPTED",
+          "toState": "PLAYING",
+          "guard": "VERIFIED_SINK_ADMITTED"
+        },
+        {
+          "fromState": "PLAYING",
+          "toState": "LOCAL_MEDIA_DRAINED",
+          "guard": "VERIFIED_ALL_REQUIRED_DRAIN"
+        },
+        {
+          "fromState": "LOCAL_MEDIA_DRAINED",
+          "toState": "COMPLETED",
+          "guard": "VERIFIED_BUSINESS_COMMIT"
+        },
+        {
+          "fromState": "PLANNED",
+          "toState": "INTERRUPTED",
+          "guard": "VERIFIED_FENCE_BARRIER"
+        },
+        {
+          "fromState": "DISPATCHED",
+          "toState": "INTERRUPTED",
+          "guard": "VERIFIED_FENCE_BARRIER"
+        },
+        {
+          "fromState": "RUNTIME_ACCEPTED",
+          "toState": "INTERRUPTED",
+          "guard": "VERIFIED_FENCE_BARRIER"
+        },
+        {
+          "fromState": "PLAYING",
+          "toState": "INTERRUPTED",
+          "guard": "VERIFIED_FENCE_BARRIER"
+        },
+        {
+          "fromState": "LOCAL_MEDIA_DRAINED",
+          "toState": "INTERRUPTED",
+          "guard": "VERIFIED_FENCE_BARRIER"
+        },
+        {
+          "fromState": "DISPATCHED",
+          "toState": "UNKNOWN",
+          "guard": "EXPLICIT_KNOWLEDGE_GAP"
+        },
+        {
+          "fromState": "RUNTIME_ACCEPTED",
+          "toState": "UNKNOWN",
+          "guard": "EXPLICIT_KNOWLEDGE_GAP"
+        },
+        {
+          "fromState": "PLAYING",
+          "toState": "UNKNOWN",
+          "guard": "EXPLICIT_KNOWLEDGE_GAP"
+        },
+        {
+          "fromState": "LOCAL_MEDIA_DRAINED",
+          "toState": "UNKNOWN",
+          "guard": "EXPLICIT_KNOWLEDGE_GAP"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "RUNTIME_ACCEPTED",
+          "guard": "RECONCILED_INBOX_COMMIT"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "PLAYING",
+          "guard": "RECONCILED_SINK_ADMITTED"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "LOCAL_MEDIA_DRAINED",
+          "guard": "RECONCILED_ALL_REQUIRED_DRAIN"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "COMPLETED",
+          "guard": "RECONCILED_BUSINESS_COMMIT"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "INTERRUPTED",
+          "guard": "RECONCILED_FENCE_BARRIER"
+        }
+      ]
+    },
+    "SpeechSegment": {
+      "states": [
+        "READY",
+        "ACTIVE",
+        "COMPLETED",
+        "INTERRUPTED",
+        "UNKNOWN",
+        "INVALIDATED"
+      ],
+      "initialState": "READY",
+      "transitions": [
+        {
+          "fromState": "READY",
+          "toState": "ACTIVE",
+          "guard": "ATOMIC_SLOT_ATTEMPT_OUTBOX_CLAIM"
+        },
+        {
+          "fromState": "ACTIVE",
+          "toState": "COMPLETED",
+          "guard": "ATTEMPT_CHECKPOINT_COMPLETED"
+        },
+        {
+          "fromState": "ACTIVE",
+          "toState": "INTERRUPTED",
+          "guard": "ATTEMPT_CHECKPOINT_INTERRUPTED"
+        },
+        {
+          "fromState": "ACTIVE",
+          "toState": "UNKNOWN",
+          "guard": "ATTEMPT_CHECKPOINT_UNKNOWN"
+        },
+        {
+          "fromState": "READY",
+          "toState": "INVALIDATED",
+          "guard": "PLAN_PRODUCT_OR_FACT_CHANGED"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "COMPLETED",
+          "guard": "RECONCILED_ATTEMPT_COMPLETED"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "INTERRUPTED",
+          "guard": "RECONCILED_ATTEMPT_INTERRUPTED"
+        }
+      ]
+    },
+    "AnswerStream": {
+      "states": [
+        "OPEN",
+        "SEALED",
+        "COMPLETED",
+        "INTERRUPTED",
+        "UNKNOWN"
+      ],
+      "initialState": "OPEN",
+      "transitions": [
+        {
+          "fromState": "OPEN",
+          "toState": "SEALED",
+          "guard": "VERIFIED_EOF_CHAIN_MANIFEST_FINAL_HASH"
+        },
+        {
+          "fromState": "SEALED",
+          "toState": "COMPLETED",
+          "guard": "CONTROL_ALL_UNITS_DRAINED_NO_AMBIGUITY"
+        },
+        {
+          "fromState": "OPEN",
+          "toState": "INTERRUPTED",
+          "guard": "VERIFIED_STOP_OR_FENCE"
+        },
+        {
+          "fromState": "SEALED",
+          "toState": "INTERRUPTED",
+          "guard": "VERIFIED_STOP_OR_FENCE"
+        },
+        {
+          "fromState": "OPEN",
+          "toState": "UNKNOWN",
+          "guard": "AMBIGUOUS_START_UNIT_OR_MISSING_SEAL"
+        },
+        {
+          "fromState": "SEALED",
+          "toState": "UNKNOWN",
+          "guard": "AMBIGUOUS_UNIT_OR_DRAIN"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "INTERRUPTED",
+          "guard": "RECONCILED_FENCE_PROOF"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "COMPLETED",
+          "guard": "RECONCILED_SEALED_COMPLETE_DRAIN_PROOF"
+        }
+      ]
+    },
+    "AnswerArtifactStatus": {
+      "states": [
+        "PREPARED",
+        "STARTED",
+        "DRAINED",
+        "INTERRUPTED",
+        "UNKNOWN"
+      ],
+      "initialState": "PREPARED",
+      "transitions": [
+        {
+          "fromState": "PREPARED",
+          "toState": "STARTED",
+          "guard": "ONE_GRANT_PER_UNIT_NEXT_REQUIRES_TRUSTED_PREDECESSOR_DRAIN"
+        },
+        {
+          "fromState": "STARTED",
+          "toState": "DRAINED",
+          "guard": "TRUSTED_ALL_REQUIRED_UNIT_RANGE_PROOF"
+        },
+        {
+          "fromState": "PREPARED",
+          "toState": "INTERRUPTED",
+          "guard": "PROVEN_NO_EFFECT_FENCE"
+        },
+        {
+          "fromState": "STARTED",
+          "toState": "INTERRUPTED",
+          "guard": "VERIFIED_FENCE"
+        },
+        {
+          "fromState": "STARTED",
+          "toState": "UNKNOWN",
+          "guard": "LOST_GRANT_ACK_OR_MEDIA_AMBIGUITY"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "DRAINED",
+          "guard": "RECONCILED_DRAIN_PROOF_NO_EXECUTION"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "INTERRUPTED",
+          "guard": "RECONCILED_FENCE_PROOF"
+        }
+      ]
+    },
+    "AnswerGrantStatus": {
+      "states": [
+        "ISSUED",
+        "CONSUMED",
+        "EXPIRED",
+        "REVOKED",
+        "UNKNOWN"
+      ],
+      "initialState": "ISSUED",
+      "transitions": [
+        {
+          "fromState": "ISSUED",
+          "toState": "CONSUMED",
+          "guard": "LIVE_ONCE_ONLY_CONSUMPTION_BEFORE_DEADLINE_WITH_CURRENT_PROOFS"
+        },
+        {
+          "fromState": "ISSUED",
+          "toState": "EXPIRED",
+          "guard": "UNCONSUMED_DEADLINE_REACHED_NO_NEW_EFFECT"
+        },
+        {
+          "fromState": "ISSUED",
+          "toState": "REVOKED",
+          "guard": "STOP_OR_AUTHORITY_REVOKED"
+        },
+        {
+          "fromState": "ISSUED",
+          "toState": "UNKNOWN",
+          "guard": "ACK_OR_CONSUMPTION_KNOWLEDGE_LOST_NO_REGRANT"
+        }
+      ]
+    },
+    "AnswerExecutionStatus": {
+      "states": [
+        "ACTIVE",
+        "DRAINED",
+        "FENCED",
+        "UNKNOWN"
+      ],
+      "initialState": "ACTIVE",
+      "transitions": [
+        {
+          "fromState": "ACTIVE",
+          "toState": "DRAINED",
+          "guard": "TRUSTED_ALL_REQUIRED_UNIT_DRAIN"
+        },
+        {
+          "fromState": "ACTIVE",
+          "toState": "FENCED",
+          "guard": "STOP_EPOCH_AUTHORITY_OR_PROOF_FAILURE"
+        },
+        {
+          "fromState": "ACTIVE",
+          "toState": "UNKNOWN",
+          "guard": "PROCESS_RESTART_OR_EXECUTION_KNOWLEDGE_LOST"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "DRAINED",
+          "guard": "HISTORICAL_TRUSTED_DRAIN_NO_NEW_EXECUTION"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "FENCED",
+          "guard": "INDEPENDENT_BARRIER_NO_RESTART"
+        }
+      ]
+    },
+    "ReceiverBootstrapState": {
+      "states": [
+        "ACTIVE",
+        "REVOKED"
+      ],
+      "initialState": "ACTIVE",
+      "transitions": [
+        {
+          "fromState": "ACTIVE",
+          "toState": "REVOKED",
+          "guard": "STOP_EPOCH_SESSION_BINDING_OR_PROCESS_REPLACEMENT_OR_AUTHORITY_LOSS"
+        }
+      ]
+    },
+    "ReceiverConsumptionState": {
+      "states": [
+        "UNCONSUMED",
+        "CONSUMED",
+        "DRAINED",
+        "UNKNOWN",
+        "FENCED"
+      ],
+      "initialState": "UNCONSUMED",
+      "transitions": [
+        {
+          "fromState": "UNCONSUMED",
+          "toState": "CONSUMED",
+          "guard": "BACKEND_UNIQUE_GRANT_LATCH_CAS_WITH_CURRENT_AUTHORITY"
+        },
+        {
+          "fromState": "UNCONSUMED",
+          "toState": "UNKNOWN",
+          "guard": "START_OR_CONSUMPTION_ACK_AMBIGUITY"
+        },
+        {
+          "fromState": "UNCONSUMED",
+          "toState": "FENCED",
+          "guard": "STOP_OR_REVOKED"
+        },
+        {
+          "fromState": "CONSUMED",
+          "toState": "DRAINED",
+          "guard": "TRUSTED_UNIT_DRAIN_NO_TTS_RESTART"
+        },
+        {
+          "fromState": "CONSUMED",
+          "toState": "UNKNOWN",
+          "guard": "COMMITTED_LATCH_ACK_TRUNCATED_BY_LOCAL_STOP_OR_OTHER_ACK_PROCESS_KNOWLEDGE_LOSS"
+        },
+        {
+          "fromState": "CONSUMED",
+          "toState": "FENCED",
+          "guard": "STOP_OR_REGISTRATION_REVOKED"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "DRAINED",
+          "guard": "HISTORICAL_TRUSTED_EVIDENCE_ONLY"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "FENCED",
+          "guard": "INDEPENDENT_PHYSICAL_BARRIER"
+        }
+      ]
+    },
+    "ReceiverBarrierState": {
+      "states": [
+        "FENCED",
+        "STAGED_CLOSED",
+        "ACTIVE_UNIT",
+        "CLOSING",
+        "UNKNOWN"
+      ],
+      "initialState": "FENCED",
+      "transitions": [
+        {
+          "fromState": "FENCED",
+          "toState": "STAGED_CLOSED",
+          "guard": "FRESH_TRUSTED_CLOSED_INSTALL_STAGE_NO_RUN_TOMBSTONE_NO_OLD_REGISTRATION_REARM"
+        },
+        {
+          "fromState": "STAGED_CLOSED",
+          "toState": "ACTIVE_UNIT",
+          "guard": "FRESH_BACKEND_LATCH_FSYNC_FINAL_PROOF_AND_STOP_GATE_ACK_ATOMIC_NO_TOMBSTONE"
+        },
+        {
+          "fromState": "ACTIVE_UNIT",
+          "toState": "STAGED_CLOSED",
+          "guard": "TRUSTED_CURRENT_UNIT_DRAIN_FINAL_STOP_GATE_CLOSE_SLOT_INCREMENT_BARRIER_NO_RUN_STOP"
+        },
+        {
+          "fromState": "STAGED_CLOSED",
+          "toState": "CLOSING",
+          "guard": "STOP_EPOCH_IDENTITY_OR_PROOF_REVOCATION_BARRIER_FIRST"
+        },
+        {
+          "fromState": "ACTIVE_UNIT",
+          "toState": "CLOSING",
+          "guard": "STOP_EPOCH_IDENTITY_OR_PROOF_REVOCATION_BARRIER_FIRST"
+        },
+        {
+          "fromState": "CLOSING",
+          "toState": "FENCED",
+          "guard": "INDEPENDENT_PHYSICAL_CLEANUP_PROOF"
+        },
+        {
+          "fromState": "CLOSING",
+          "toState": "UNKNOWN",
+          "guard": "CLEANUP_UNPROVEN_NO_REOPEN"
+        },
+        {
+          "fromState": "UNKNOWN",
+          "toState": "FENCED",
+          "guard": "INDEPENDENT_BARRIER_ONLY_NO_EXECUTION_RESTORE"
+        }
+      ]
+    }
+  },
+  "approvalStatus": "PENDING_OWNER_ACK",
+  "preparationRule": {
+    "predecessorStates": [
+      "STARTED",
+      "DRAINED"
+    ],
+    "drainedRequiresTrustedEvidence": true,
+    "forbiddenPredecessorStates": [
+      "PREPARED",
+      "UNKNOWN",
+      "INTERRUPTED"
+    ],
+    "answerState": "OPEN",
+    "commandState": "STARTED",
+    "continuousSequence": true,
+    "maxUndrainedUnits": 2
+  },
+  "executionRule": {
+    "grantExpiresAt": "exclusive first consumption deadline only",
+    "renewalMayGrantStart": false,
+    "bindingImmutable": true,
+    "unknownMayResume": false
+  },
+  "receiverStopRule": {
+    "localRunTombstoneIrreversible": true,
+    "stopDependsOnBackendCommit": false,
+    "finalCheckAndCommitSameLocalGate": true,
+    "externalWaitUnderLocalGate": false,
+    "barrierIncrementsOn": [
+      "STAGE",
+      "STOP",
+      "FINISH",
+      "GUARDIAN_RESTART"
+    ],
+    "rejectedAdmissionStates": [
+      "FENCED",
+      "CLOSING",
+      "UNKNOWN"
+    ],
+    "consumeWinnerState": "STAGED_CLOSED",
+    "ongoingExecutionState": "ACTIVE_UNIT",
+    "truncatedConsumedAck": "KEEP_BACKEND_LATCH_AND_UNKNOWN_LOCAL_AUDIT_NO_REARM",
+    "normalFinishIsRunStop": false
+  }
+}

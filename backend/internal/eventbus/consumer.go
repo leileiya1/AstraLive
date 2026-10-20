@@ -22,7 +22,7 @@ type Consumer struct {
 }
 
 func New(r *redis.Client, s *app.Service, stream string, l *slog.Logger) *Consumer {
-	return &Consumer{r, s, stream, "astralive-go", fmt.Sprintf("backend-%d", time.Now().UnixNano()), l, map[string]int{}}
+	return &Consumer{Redis: r, Service: s, Stream: stream, Group: "astralive-go", Name: fmt.Sprintf("backend-%d", time.Now().UnixNano()), Log: l, failures: map[string]int{}}
 }
 func (c *Consumer) Run(ctx context.Context) error {
 	e := c.Redis.XGroupCreateMkStream(ctx, c.Stream, c.Group, "0").Err()

@@ -1,0 +1,23 @@
+--- a/backend/internal/durableintegration/integration_test.go
++++ b/backend/internal/durableintegration/integration_test.go
+@@ -485,3 +485,17 @@
+-	var n int
+-	if e = pool.QueryRow(h.ctx, `SELECT count(*) FROM schema_migrations`).Scan(&n); e != nil || n != 6 {
+-		t.Fatal(n, e)
++	// Assert the registered versions, not only their count: missing or unexpected
++	// migrations must not cancel each other out. Keep this list explicit on upgrade.
++	wantMigrations := []string{
++		"000001_init.sql",
++		"000002_live_room_active_product.sql",
++		"000003_user_configuration.sql",
++		"000004_session_integration.sql",
++		"000005_interaction_receipts.sql",
++		"000006_durable_live.sql",
++		"000007_answer_stream.sql",
++	}
++	var gotMigrations []string
++	if e = pool.QueryRow(h.ctx, `SELECT array_agg(name ORDER BY name) FROM schema_migrations`).Scan(&gotMigrations); e != nil {
++		t.Fatal(e)
++	}
++	if strings.Join(gotMigrations, "\n") != strings.Join(wantMigrations, "\n") {
++		t.Fatalf("migration versions: got %v, want %v", gotMigrations, wantMigrations)

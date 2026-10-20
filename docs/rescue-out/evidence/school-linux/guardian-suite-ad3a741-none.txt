@@ -1,0 +1,48 @@
+2026-10-20T12:08:39Z
+host=school-linux image=astralive-rescue/guardian-test:ad3a741 network=none
+................................................................F....... [ 32%]
+........................................................................ [ 65%]
+...............................ss....................................... [ 98%]
+....                                                                     [100%]
+=================================== FAILURES ===================================
+____________________ test_webrtc_real_peer_closed_on_expiry ____________________
+
+rig = <conftest.Rig object at 0x7f7b2d23dc10>
+
+    @pytest.mark.asyncio
+    async def test_webrtc_real_peer_closed_on_expiry(rig):
+        from aiortc import RTCConfiguration, RTCPeerConnection, RTCSessionDescription
+    
+        await rig.activate(webrtc=True)
+        renewal = asyncio.create_task(rig.renew_forever())
+        peer = RTCPeerConnection(RTCConfiguration(iceServers=[]))
+        peer.addTransceiver("audio", direction="recvonly")
+        peer.addTransceiver("video", direction="recvonly")
+        tracks, received = {}, {"audio": 0, "video": 0}
+        readers = []
+    
+        @peer.on("track")
+        def on_track(track):
+            tracks[track.kind] = track
+    
+        try:
+            await peer.setLocalDescription(await peer.createOffer())
+            answer = await rig.guardian.offer(rig.attempt, peer.localDescription.sdp)
+            await peer.setRemoteDescription(RTCSessionDescription(answer["sdp"], "answer"))
+            for _ in range(100):
+                if peer.connectionState == "connected":
+                    break
+                await asyncio.sleep(0.02)
+>           assert peer.connectionState == "connected"
+E           AssertionError: assert 'new' == 'connected'
+E             
+E             - connected
+E             + new
+
+output_guardian/tests/test_guardian.py:395: AssertionError
+=========================== short test summary info ============================
+FAILED output_guardian/tests/test_guardian.py::test_webrtc_real_peer_closed_on_expiry
+SKIPPED [1] output_guardian/tests/v2/test_physical.py:128: Darwin refusal test; Linux kernel execution has a separate opt-in
+SKIPPED [1] output_guardian/tests/v2/test_physical.py:140: requires dedicated Linux cgroup-v2 delegation; NOT TESTED on Darwin
+1 failed, 217 passed, 2 skipped in 107.29s (0:01:47)
+exit=1

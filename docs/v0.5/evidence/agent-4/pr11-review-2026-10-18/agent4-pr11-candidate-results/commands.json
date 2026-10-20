@@ -1,0 +1,342 @@
+[
+  {
+    "label": "postgres-inventory",
+    "command": [
+      "psql",
+      "postgres://agent3_owner@127.0.0.1:59091/agent3_streaming_owned?sslmode=disable",
+      "-c",
+      "SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 0.02,
+    "childUserSeconds": 0.007470999999999978,
+    "childSystemSeconds": 0.004643000000000008,
+    "childPeakRSSBytes": 50167808
+  },
+  {
+    "label": "receiver1-pg-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durableintegration/receiver1",
+      "-run",
+      "^TestPostgres"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 17.097,
+    "childUserSeconds": 12.587319,
+    "childSystemSeconds": 2.235656,
+    "childPeakRSSBytes": 338739200
+  },
+  {
+    "label": "agent2-original-revision-repeat3",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=3",
+      "./internal/durableintegration/receiver1",
+      "-run",
+      "^TestAgent2ReviewCurrentPhysicalRevision"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 3.949,
+    "childUserSeconds": 2.2430839999999996,
+    "childSystemSeconds": 0.6351269999999998,
+    "childPeakRSSBytes": 338739200
+  },
+  {
+    "label": "agent2-owner-probes",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/durableintegration/receiver1",
+      "-run",
+      "^TestAgent2Review"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 8.847,
+    "childUserSeconds": 6.0469339999999985,
+    "childSystemSeconds": 1.2981119999999997,
+    "childPeakRSSBytes": 338739200
+  },
+  {
+    "label": "streaming-pg-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/turnmanager/answerstream",
+      "-run",
+      "^TestPostgres"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 13.813,
+    "childUserSeconds": 5.505566000000002,
+    "childSystemSeconds": 1.2031650000000003,
+    "childPeakRSSBytes": 338739200
+  },
+  {
+    "label": "go-test",
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "2",
+      "-json",
+      "-count=1",
+      "./..."
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 34.428,
+    "childUserSeconds": 25.339789000000003,
+    "childSystemSeconds": 6.986019,
+    "childPeakRSSBytes": 373489664
+  },
+  {
+    "label": "go-race",
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "2",
+      "-race",
+      "-json",
+      "-count=1",
+      "./..."
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 55.301,
+    "childUserSeconds": 39.98822899999999,
+    "childSystemSeconds": 7.952185,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "go-vet",
+    "command": [
+      "go",
+      "vet",
+      "./..."
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 0.476,
+    "childUserSeconds": 1.2390100000000075,
+    "childSystemSeconds": 0.756138,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "contracts137",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_contracts",
+      "tests.test_durable_live_contracts",
+      "tests.test_durable_answer_contracts",
+      "tests.test_answer_contract_repairs",
+      "tests.test_receiver_contracts",
+      "tests.test_receiver_stop_races",
+      "-v"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 19.811,
+    "childUserSeconds": 2.2281480000000045,
+    "childSystemSeconds": 0.5121169999999999,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "adapter",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_receiver1_wiring",
+      "-v"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 0.204,
+    "childUserSeconds": 0.16782899999999756,
+    "childSystemSeconds": 0.01596500000000134,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "journal11",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "runtime/tests/test_durable_live_journal.py",
+      "-q"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 0.825,
+    "childUserSeconds": 0.5214670000000012,
+    "childSystemSeconds": 0.04274900000000059,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "guardian-v1",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "output_guardian/tests",
+      "-q"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 39.414,
+    "childUserSeconds": 11.553765999999996,
+    "childSystemSeconds": 4.856046999999997,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "guardian-v2-fixed-pr11",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "output_guardian/tests/v2",
+      "-q"
+    ],
+    "cwd": "/tmp/astralive-agent4-receiver1-pg-i3y0nutt/pr11",
+    "exitCode": 0,
+    "elapsedSeconds": 3.326,
+    "childUserSeconds": 2.2378510000000063,
+    "childSystemSeconds": 0.43364400000000103,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "guardian-owner-extended",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "output_guardian/tests/v2",
+      "-q"
+    ],
+    "cwd": "/tmp/astralive-agent4-receiver1-pg-i3y0nutt/owner-pr11",
+    "exitCode": 0,
+    "elapsedSeconds": 6.48,
+    "childUserSeconds": 3.2288790000000063,
+    "childSystemSeconds": 0.7050629999999991,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "guardian-owner-cold-ready",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "output_guardian/tests/v2/test_readiness.py",
+      "-q"
+    ],
+    "cwd": "/tmp/astralive-agent4-receiver1-pg-i3y0nutt/owner-pr11",
+    "exitCode": 0,
+    "elapsedSeconds": 2.788,
+    "childUserSeconds": 0.8607810000000029,
+    "childSystemSeconds": 0.2218429999999998,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "wire13",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_durable_live_v2_wire",
+      "-v"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 2.624,
+    "childUserSeconds": 1.841438999999994,
+    "childSystemSeconds": 0.5275490000000005,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "validator-v1",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "scripts/validate-durable-live-contracts.py"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 0.129,
+    "childUserSeconds": 0.1154510000000073,
+    "childSystemSeconds": 0.00961600000000118,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "validator-v2",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "scripts/validate-answer-contract.py"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 0.224,
+    "childUserSeconds": 0.20647299999998836,
+    "childSystemSeconds": 0.014222999999997654,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "generated-check",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "scripts/durable-live/generate_v2_wire.py",
+      "--check"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 0.051,
+    "childUserSeconds": 0.03535600000000727,
+    "childSystemSeconds": 0.012973999999999819,
+    "childPeakRSSBytes": 403767296
+  },
+  {
+    "label": "migration-count",
+    "command": [
+      "psql",
+      "postgres://agent3_owner@127.0.0.1:59091/agent4_receiver1_owned?sslmode=disable",
+      "-c",
+      "SELECT * FROM schema_migrations ORDER BY 1"
+    ],
+    "cwd": "/private/tmp/agent4-pr11-candidate",
+    "exitCode": 0,
+    "elapsedSeconds": 0.018,
+    "childUserSeconds": 0.007221000000001254,
+    "childSystemSeconds": 0.0039700000000024716,
+    "childPeakRSSBytes": 403767296
+  }
+]

@@ -1,0 +1,9 @@
+{"Time":"2026-10-18T16:11:17.944817+08:00","Action":"start","Package":"astralive/backend/internal/durableintegration/receiver1"}
+{"Time":"2026-10-18T16:11:18.450889+08:00","Action":"run","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport"}
+{"Time":"2026-10-18T16:11:18.450996+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Output":"=== RUN   TestPostgresReceiver1RealTransport\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:11:18.655059+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Output":"    seed_test.go:22: ERROR: function clock_timeteststamp() does not exist (SQLSTATE 42883)\n","OutputType":"error"}
+{"Time":"2026-10-18T16:11:18.656767+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Output":"--- FAIL: TestPostgresReceiver1RealTransport (0.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:11:18.656786+08:00","Action":"fail","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Elapsed":0.21}
+{"Time":"2026-10-18T16:11:18.656799+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:11:18.657893+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Output":"FAIL\tastralive/backend/internal/durableintegration/receiver1\t0.713s\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:11:18.657921+08:00","Action":"fail","Package":"astralive/backend/internal/durableintegration/receiver1","Elapsed":0.713}

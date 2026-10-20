@@ -1,0 +1,13 @@
+{"Time":"2026-10-20T18:53:15.042633+08:00","Action":"start","Package":"astralive/backend/internal/durablelive"}
+{"Time":"2026-10-20T18:53:15.459226+08:00","Action":"run","Package":"astralive/backend/internal/durablelive","Test":"TestRedisStreamsDuplicateReclaimAndSQLProjection"}
+{"Time":"2026-10-20T18:53:15.459351+08:00","Action":"output","Package":"astralive/backend/internal/durablelive","Test":"TestRedisStreamsDuplicateReclaimAndSQLProjection","Output":"=== RUN   TestRedisStreamsDuplicateReclaimAndSQLProjection\n","OutputType":"frame"}
+{"Time":"2026-10-20T18:53:15.552452+08:00","Action":"output","Package":"astralive/backend/internal/durablelive","Test":"TestRedisStreamsDuplicateReclaimAndSQLProjection","Output":"--- PASS: TestRedisStreamsDuplicateReclaimAndSQLProjection (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-20T18:53:15.552482+08:00","Action":"pass","Package":"astralive/backend/internal/durablelive","Test":"TestRedisStreamsDuplicateReclaimAndSQLProjection","Elapsed":0.09}
+{"Time":"2026-10-20T18:53:15.552513+08:00","Action":"run","Package":"astralive/backend/internal/durablelive","Test":"TestRedisIsolatedDisconnectAndSQLFallback"}
+{"Time":"2026-10-20T18:53:15.552529+08:00","Action":"output","Package":"astralive/backend/internal/durablelive","Test":"TestRedisIsolatedDisconnectAndSQLFallback","Output":"=== RUN   TestRedisIsolatedDisconnectAndSQLFallback\n","OutputType":"frame"}
+{"Time":"2026-10-20T18:53:15.552539+08:00","Action":"output","Package":"astralive/backend/internal/durablelive","Test":"TestRedisIsolatedDisconnectAndSQLFallback","Output":"    evidence_test.go:240: owned Redis required\n"}
+{"Time":"2026-10-20T18:53:15.552546+08:00","Action":"output","Package":"astralive/backend/internal/durablelive","Test":"TestRedisIsolatedDisconnectAndSQLFallback","Output":"--- SKIP: TestRedisIsolatedDisconnectAndSQLFallback (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-20T18:53:15.55255+08:00","Action":"skip","Package":"astralive/backend/internal/durablelive","Test":"TestRedisIsolatedDisconnectAndSQLFallback","Elapsed":0}
+{"Time":"2026-10-20T18:53:15.552559+08:00","Action":"output","Package":"astralive/backend/internal/durablelive","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-20T18:53:15.553451+08:00","Action":"output","Package":"astralive/backend/internal/durablelive","Output":"ok  \tastralive/backend/internal/durablelive\t0.511s\n"}
+{"Time":"2026-10-20T18:53:15.553474+08:00","Action":"pass","Package":"astralive/backend/internal/durablelive","Elapsed":0.511}

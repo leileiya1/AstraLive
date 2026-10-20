@@ -1,0 +1,4 @@
+# Raw test/build stdout and unified diffs are retained byte-for-byte as evidence;
+# do not lint their trailing whitespace as code (same rule as agent-2/integration).
+*.txt -whitespace
+*.diff -whitespace

@@ -1,0 +1,104 @@
+[
+  {
+    "log": "agent4-after-unchanged-1.txt",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "/tmp/ag5_test_original_cgroup_scope.py",
+      "-v",
+      "-s",
+      "--tb=short"
+    ],
+    "exitCode": 1,
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae",
+    "generatedAtUTC": "2026-10-19T00:04:59.840917+00:00",
+    "seconds": 0.2823500831145793
+  },
+  {
+    "log": "agent4-after-critical-1.txt",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "/tmp/ag5_test_original_cgroup_scope.py",
+      "-v",
+      "-s",
+      "--tb=short",
+      "-k",
+      "unknown"
+    ],
+    "exitCode": 0,
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae",
+    "generatedAtUTC": "2026-10-19T00:05:00.105310+00:00",
+    "seconds": 0.2642466248944402
+  },
+  {
+    "log": "agent4-after-unchanged-2.txt",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "/tmp/ag5_test_original_cgroup_scope.py",
+      "-v",
+      "-s",
+      "--tb=short"
+    ],
+    "exitCode": 1,
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae",
+    "generatedAtUTC": "2026-10-19T00:05:00.358784+00:00",
+    "seconds": 0.25346154090948403
+  },
+  {
+    "log": "agent4-after-critical-2.txt",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "/tmp/ag5_test_original_cgroup_scope.py",
+      "-v",
+      "-s",
+      "--tb=short",
+      "-k",
+      "unknown"
+    ],
+    "exitCode": 0,
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae",
+    "generatedAtUTC": "2026-10-19T00:05:00.605820+00:00",
+    "seconds": 0.2470253340434283
+  },
+  {
+    "log": "agent4-after-unchanged-3.txt",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "/tmp/ag5_test_original_cgroup_scope.py",
+      "-v",
+      "-s",
+      "--tb=short"
+    ],
+    "exitCode": 1,
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae",
+    "generatedAtUTC": "2026-10-19T00:05:00.870491+00:00",
+    "seconds": 0.2646609579678625
+  },
+  {
+    "log": "agent4-after-critical-3.txt",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "/tmp/ag5_test_original_cgroup_scope.py",
+      "-v",
+      "-s",
+      "--tb=short",
+      "-k",
+      "unknown"
+    ],
+    "exitCode": 0,
+    "sourceCommit": "dabe495fcc8102febe2ee1512f295a37662f34ae",
+    "generatedAtUTC": "2026-10-19T00:05:01.117203+00:00",
+    "seconds": 0.24670287501066923
+  }
+]

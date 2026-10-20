@@ -1,0 +1,429 @@
+{
+  "registrarCommit": "58cbc59042c70f9010a368f963257fdad5154b91",
+  "sourceCommit": "08af1049250d2657d7afb5e303d97a02e9761570",
+  "sourceWorkingTreeHadNoChangesDuringRun": true,
+  "allCommandExitCodes": {
+    "postgres-inventory": 0,
+    "receiver1-pg-race": 0,
+    "agent2-original-revision-repeat3": 0,
+    "agent2-owner-probes": 0,
+    "streaming-pg-race": 0,
+    "go-test": 0,
+    "go-race": 0,
+    "go-vet": 0,
+    "contracts137": 0,
+    "adapter": 0,
+    "journal11": 0,
+    "guardian-v1": 0,
+    "guardian-v2-fixed-pr11": 0,
+    "guardian-owner-extended": 0,
+    "guardian-owner-cold-ready": 0,
+    "wire13": 0,
+    "validator-v1": 0,
+    "validator-v2": 0,
+    "generated-check": 0,
+    "migration-count": 0
+  },
+  "postcommit": {
+    "receiver1-pg-race": {
+      "counts": {
+        "pass": 22
+      },
+      "packages": {
+        "astralive/backend/internal/durableintegration/receiver1": {
+          "pass": 22
+        }
+      },
+      "skips": []
+    },
+    "agent2-original-revision-repeat3": {
+      "counts": {
+        "pass": 6
+      },
+      "packages": {
+        "astralive/backend/internal/durableintegration/receiver1": {
+          "pass": 6
+        }
+      },
+      "skips": []
+    },
+    "agent2-owner-probes": {
+      "counts": {
+        "pass": 15
+      },
+      "packages": {
+        "astralive/backend/internal/durableintegration/receiver1": {
+          "pass": 15
+        }
+      },
+      "skips": []
+    },
+    "streaming-pg-race": {
+      "counts": {
+        "pass": 18
+      },
+      "packages": {
+        "astralive/backend/internal/turnmanager/answerstream": {
+          "pass": 18
+        }
+      },
+      "skips": []
+    },
+    "go-test": {
+      "counts": {
+        "pass": 267,
+        "skip": 13
+      },
+      "packages": {
+        "astralive/backend/internal/app": {
+          "pass": 3,
+          "skip": 1
+        },
+        "astralive/backend/internal/contentplan": {
+          "pass": 10
+        },
+        "astralive/backend/internal/contentplan/answerstream": {
+          "pass": 12
+        },
+        "astralive/backend/internal/contentplan/contract": {
+          "pass": 1
+        },
+        "astralive/backend/internal/durableintegration": {
+          "pass": 8
+        },
+        "astralive/backend/internal/durableintegration/receiver1": {
+          "pass": 38
+        },
+        "astralive/backend/internal/durablelive": {
+          "pass": 32,
+          "skip": 4
+        },
+        "astralive/backend/internal/durablelivev2/authority": {
+          "pass": 47,
+          "skip": 1
+        },
+        "astralive/backend/internal/durablelivev2/wire": {
+          "pass": 8
+        },
+        "astralive/backend/internal/fsm": {
+          "pass": 2
+        },
+        "astralive/backend/internal/httpapi": {
+          "skip": 2,
+          "pass": 10
+        },
+        "astralive/backend/internal/interaction": {
+          "pass": 15
+        },
+        "astralive/backend/internal/personalconfig": {
+          "pass": 6
+        },
+        "astralive/backend/internal/platform": {
+          "pass": 1
+        },
+        "astralive/backend/internal/platform/mock": {
+          "pass": 4
+        },
+        "astralive/backend/internal/runtime": {
+          "pass": 3
+        },
+        "astralive/backend/internal/sse": {
+          "pass": 1
+        },
+        "astralive/backend/internal/turnmanager": {
+          "pass": 26,
+          "skip": 1
+        },
+        "astralive/backend/internal/turnmanager/answerstream": {
+          "pass": 29
+        },
+        "astralive/backend/internal/userconfig": {
+          "skip": 3,
+          "pass": 11
+        },
+        "astralive/backend/tests": {
+          "skip": 1
+        }
+      },
+      "skips": [
+        {
+          "package": "astralive/backend/internal/app",
+          "test": "TestAuditSelectionExpiresWhileWaitingForCommandLock",
+          "reason": "=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock\n    interaction_audit_test.go:28: explicit disposable SQL required\n--- SKIP: TestAuditSelectionExpiresWhileWaitingForCommandLock (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestRedisStreamsDuplicateReclaimAndSQLProjection",
+          "reason": "=== RUN   TestRedisStreamsDuplicateReclaimAndSQLProjection\n    evidence_test.go:176: isolated Redis required\n--- SKIP: TestRedisStreamsDuplicateReclaimAndSQLProjection (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestRedisIsolatedDisconnectAndSQLFallback",
+          "reason": "=== RUN   TestRedisIsolatedDisconnectAndSQLFallback\n    evidence_test.go:240: owned Redis required\n--- SKIP: TestRedisIsolatedDisconnectAndSQLFallback (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestIsolatedBackendHelper",
+          "reason": "=== RUN   TestIsolatedBackendHelper\n    process_test.go:38: owned subprocess helper\n--- SKIP: TestIsolatedBackendHelper (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestPostgresIsolatedServerOutage",
+          "reason": "=== RUN   TestPostgresIsolatedServerOutage\n    process_test.go:295: owned cluster path required\n--- SKIP: TestPostgresIsolatedServerOutage (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelivev2/authority",
+          "test": "TestOwnedCommitCrashChild",
+          "reason": "=== RUN   TestOwnedCommitCrashChild\n    acceptance_test.go:412: owned subprocess helper\n--- SKIP: TestOwnedCommitCrashChild (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/httpapi",
+          "test": "TestProductAuthorizationAndPinnedBindings",
+          "reason": "=== RUN   TestProductAuthorizationAndPinnedBindings\n    authorization_integration_test.go:28: explicit disposable DB required\n--- SKIP: TestProductAuthorizationAndPinnedBindings (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/httpapi",
+          "test": "TestInteractionFormalCPU",
+          "reason": "=== RUN   TestInteractionFormalCPU\n    interaction_integration_test.go:39: RUN_INTERACTION_CPU=1 and disposable SQL/Redis required\n--- SKIP: TestInteractionFormalCPU (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/turnmanager",
+          "test": "TestExportContractRequests",
+          "reason": "=== RUN   TestExportContractRequests\n    manager_test.go:530: set ASTRALIVE_DIRECTOR_EVIDENCE for schema/evidence export\n--- SKIP: TestExportContractRequests (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestConfigurationBrowserHarness",
+          "reason": "=== RUN   TestConfigurationBrowserHarness\n    browser_harness_test.go:23: browser harness opt-in\n--- SKIP: TestConfigurationBrowserHarness (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestPostgresConfigurationLifecycle",
+          "reason": "=== RUN   TestPostgresConfigurationLifecycle\n    postgres_test.go:23: CONFIG_TEST_DATABASE_URL not set\n--- SKIP: TestPostgresConfigurationLifecycle (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestLocalProviderProbesScopedAndVersioned",
+          "reason": "=== RUN   TestLocalProviderProbesScopedAndVersioned\n    provider_probe_test.go:22: explicit disposable DB required\n--- SKIP: TestLocalProviderProbesScopedAndVersioned (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/tests",
+          "test": "TestEventDedupAndStateUpdateWithPostgres",
+          "reason": "=== RUN   TestEventDedupAndStateUpdateWithPostgres\n    integration_test.go:45: DATABASE_URL not set\n--- SKIP: TestEventDedupAndStateUpdateWithPostgres (0.00s)\n"
+        }
+      ]
+    },
+    "go-race": {
+      "counts": {
+        "pass": 267,
+        "skip": 13
+      },
+      "packages": {
+        "astralive/backend/internal/app": {
+          "pass": 3,
+          "skip": 1
+        },
+        "astralive/backend/internal/contentplan": {
+          "pass": 10
+        },
+        "astralive/backend/internal/contentplan/contract": {
+          "pass": 1
+        },
+        "astralive/backend/internal/contentplan/answerstream": {
+          "pass": 12
+        },
+        "astralive/backend/internal/durableintegration": {
+          "pass": 8
+        },
+        "astralive/backend/internal/durableintegration/receiver1": {
+          "pass": 38
+        },
+        "astralive/backend/internal/durablelive": {
+          "pass": 32,
+          "skip": 4
+        },
+        "astralive/backend/internal/durablelivev2/authority": {
+          "pass": 47,
+          "skip": 1
+        },
+        "astralive/backend/internal/durablelivev2/wire": {
+          "pass": 8
+        },
+        "astralive/backend/internal/fsm": {
+          "pass": 2
+        },
+        "astralive/backend/internal/httpapi": {
+          "skip": 2,
+          "pass": 10
+        },
+        "astralive/backend/internal/interaction": {
+          "pass": 15
+        },
+        "astralive/backend/internal/personalconfig": {
+          "pass": 6
+        },
+        "astralive/backend/internal/platform": {
+          "pass": 1
+        },
+        "astralive/backend/internal/platform/mock": {
+          "pass": 4
+        },
+        "astralive/backend/internal/runtime": {
+          "pass": 3
+        },
+        "astralive/backend/internal/sse": {
+          "pass": 1
+        },
+        "astralive/backend/internal/turnmanager": {
+          "pass": 26,
+          "skip": 1
+        },
+        "astralive/backend/internal/turnmanager/answerstream": {
+          "pass": 29
+        },
+        "astralive/backend/internal/userconfig": {
+          "skip": 3,
+          "pass": 11
+        },
+        "astralive/backend/tests": {
+          "skip": 1
+        }
+      },
+      "skips": [
+        {
+          "package": "astralive/backend/internal/app",
+          "test": "TestAuditSelectionExpiresWhileWaitingForCommandLock",
+          "reason": "=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock\n    interaction_audit_test.go:28: explicit disposable SQL required\n--- SKIP: TestAuditSelectionExpiresWhileWaitingForCommandLock (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestRedisStreamsDuplicateReclaimAndSQLProjection",
+          "reason": "=== RUN   TestRedisStreamsDuplicateReclaimAndSQLProjection\n    evidence_test.go:176: isolated Redis required\n--- SKIP: TestRedisStreamsDuplicateReclaimAndSQLProjection (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestRedisIsolatedDisconnectAndSQLFallback",
+          "reason": "=== RUN   TestRedisIsolatedDisconnectAndSQLFallback\n    evidence_test.go:240: owned Redis required\n--- SKIP: TestRedisIsolatedDisconnectAndSQLFallback (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestIsolatedBackendHelper",
+          "reason": "=== RUN   TestIsolatedBackendHelper\n    process_test.go:38: owned subprocess helper\n--- SKIP: TestIsolatedBackendHelper (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestPostgresIsolatedServerOutage",
+          "reason": "=== RUN   TestPostgresIsolatedServerOutage\n    process_test.go:295: owned cluster path required\n--- SKIP: TestPostgresIsolatedServerOutage (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/durablelivev2/authority",
+          "test": "TestOwnedCommitCrashChild",
+          "reason": "=== RUN   TestOwnedCommitCrashChild\n    acceptance_test.go:412: owned subprocess helper\n--- SKIP: TestOwnedCommitCrashChild (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/httpapi",
+          "test": "TestProductAuthorizationAndPinnedBindings",
+          "reason": "=== RUN   TestProductAuthorizationAndPinnedBindings\n    authorization_integration_test.go:28: explicit disposable DB required\n--- SKIP: TestProductAuthorizationAndPinnedBindings (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/httpapi",
+          "test": "TestInteractionFormalCPU",
+          "reason": "=== RUN   TestInteractionFormalCPU\n    interaction_integration_test.go:39: RUN_INTERACTION_CPU=1 and disposable SQL/Redis required\n--- SKIP: TestInteractionFormalCPU (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/turnmanager",
+          "test": "TestExportContractRequests",
+          "reason": "=== RUN   TestExportContractRequests\n    manager_test.go:530: set ASTRALIVE_DIRECTOR_EVIDENCE for schema/evidence export\n--- SKIP: TestExportContractRequests (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestConfigurationBrowserHarness",
+          "reason": "=== RUN   TestConfigurationBrowserHarness\n    browser_harness_test.go:23: browser harness opt-in\n--- SKIP: TestConfigurationBrowserHarness (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestPostgresConfigurationLifecycle",
+          "reason": "=== RUN   TestPostgresConfigurationLifecycle\n    postgres_test.go:23: CONFIG_TEST_DATABASE_URL not set\n--- SKIP: TestPostgresConfigurationLifecycle (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestLocalProviderProbesScopedAndVersioned",
+          "reason": "=== RUN   TestLocalProviderProbesScopedAndVersioned\n    provider_probe_test.go:22: explicit disposable DB required\n--- SKIP: TestLocalProviderProbesScopedAndVersioned (0.00s)\n"
+        },
+        {
+          "package": "astralive/backend/tests",
+          "test": "TestEventDedupAndStateUpdateWithPostgres",
+          "reason": "=== RUN   TestEventDedupAndStateUpdateWithPostgres\n    integration_test.go:45: DATABASE_URL not set\n--- SKIP: TestEventDedupAndStateUpdateWithPostgres (0.00s)\n"
+        }
+      ]
+    }
+  },
+  "beforeOriginalTwoCases": {
+    "repetitions": 3,
+    "fail": 6
+  },
+  "ownerAck": "PENDING; P1 NOT DECLARED RESOLVED",
+  "fixture": "FORMALLY_APPLIED_EXACT_OWNER_APPROVED_POSTIMAGE",
+  "productionPhysicalSource": "UNAVAILABLE / OUTPUT_FENCE_UNPROVEN",
+  "frozenCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+  "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+  "guardianOldCpu": {
+    "passCount": 69,
+    "skipCount": 0,
+    "commit": "d8eb05e79661b859547242575e0ac6d1d7303aa1"
+  },
+  "guardianOwnerExtended": {
+    "passCount": 82,
+    "skipCount": 1,
+    "reason": "Linux unavailable on Darwin",
+    "commit": "9b969d099b7a3b6b85f3595d26c36fb953d47263"
+  },
+  "guardianV1": {
+    "passCount": 25,
+    "skipCount": 0
+  },
+  "readiness": {
+    "passCount": 5
+  },
+  "contracts": 137,
+  "journal": 11,
+  "wire": 13,
+  "adapter": 8,
+  "cleanup": {
+    "ownedRoot": "/tmp/astralive-agent4-receiver1-pg-emr0vvhi",
+    "port": 58610,
+    "createdDatabases": [
+      "agent3_streaming_owned",
+      "agent2_v2_agent3_owned",
+      "agent2_v1_agent3_owned",
+      "agent4_receiver1_owned"
+    ],
+    "droppedDatabases": [
+      "agent3_streaming_owned",
+      "agent2_v2_agent3_owned",
+      "agent2_v1_agent3_owned",
+      "agent4_receiver1_owned"
+    ],
+    "postgresStopped": true,
+    "sharedServicesTouched": false,
+    "physicalAdapters": "EXPLICIT_INSTALLATION_AND_OUTPUT_FIXTURES; REAL_OS_AUTH_SQL_AND_PR11_CORE",
+    "ipcTtsMediaGpu": "NOT_TESTED"
+  },
+  "notTested": [
+    "Production independent PhysicalSource",
+    "Linux runtime/UID/ACL/network/cgroup/old publisher",
+    "Runtime once-TTS/physical required sinks",
+    "GPU/WebRTC/platform RTMP/audience/SLA"
+  ],
+  "historyFailuresRetained": [
+    "Original two revision vulnerabilities x3",
+    "Previous 68PASS/1LEASE_LOST CPU run",
+    "Agent5 transient RTMP tail failure; subsequent passes do not erase history"
+  ],
+  "coldReadyIndependentProcesses": {
+    "pass": 20,
+    "fail": 0,
+    "scope": "fixed PR11 9b969d0 CPU/Mock Authority; NOT production media",
+    "historicalFailuresRemainUnresolved": true
+  }
+}

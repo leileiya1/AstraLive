@@ -1,0 +1,35 @@
+F
+=================================== FAILURES ===================================
+_____________ test_old_media_failure_cannot_retire_new_generation ______________
+
+local = namespace(g=<output_guardian.service.Guardian object at 0x10c2d3590>, a=Attempt(binding=Binding(tenantId='t', ownerId=...=None, calls=1, returned=Right(permit_id='permit', deadline=1715685.8705314158, monotonic_deadline=1328137.868741833)))
+
+    @pytest.mark.asyncio
+    async def test_old_media_failure_cannot_retire_new_generation(local):
+        g,a=local.g,local.a
+        entered,release=asyncio.Event(),asyncio.Event()
+        original=g.publisher.call
+        async def delayed(message,**kwargs):
+            if message['op']=='audio':
+                entered.set();await release.wait();raise Closed('MEDIA_DELIVERY_FAILED')
+            return await original(message,**kwargs)
+        g.publisher.call=delayed
+        media=asyncio.create_task(g.media(a,{'kind':'audio','sequence':0,'payload':b'\0'*640}))
+        await entered.wait()
+        replacement=dataclasses.replace(a,attemptId='new-attempt',utteranceId='new-utterance',generation=2,commandId='new-command')
+        try:
+            result=await g.bind(replacement,'new-permit')
+            assert result['state']=='AUTHORIZED'
+            life,barrier=g._life,g.barrier
+            release.set()
+            with pytest.raises(Closed):await media
+>           assert g._life is life and g.barrier==barrier and g.right is not None and g._life.phase=='ACTIVE', 'Old media callback retired newly authorized Generation'
+E           AssertionError: Old media callback retired newly authorized Generation
+E           assert (<output_guardian.service._Lifecycle object at 0x10943d7c0> is <output_guardian.service._Lifecycle object at 0x10943d7c0> and 2 == 1)
+E            +  where <output_guardian.service._Lifecycle object at 0x10943d7c0> = <output_guardian.service.Guardian object at 0x10c2d3590>._life
+E            +  and   2 = <output_guardian.service.Guardian object at 0x10c2d3590>.barrier
+
+/tmp/agent4-pr11-final-probes/test_stale_callbacks.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../tmp/agent4-pr11-final-probes/test_stale_callbacks.py::test_old_media_failure_cannot_retire_new_generation
+1 failed in 0.23s

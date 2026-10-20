@@ -1,5 +1,7 @@
 # durable-live-1 状态与证据
 
+> CCR-ADL-001 review at PR8 `01a752baf79c25d4d268167d016c8c62e754cfdf`: active durable-live-1 is preserved. [durable-live-2 incremental answer candidate](ccr/CCR-ADL-001.md) and [migration/owner handoff](ccr/CCR-ADL-001-HANDOFF.md) are PENDING OWNER ACK; this historical v1 freeze does not approve that upgrade.
+
 机器转换表见 `contracts/v0.5/durable-live/state-machines.json`。每条转换都要同时满足下表 guard、授权、expectedRevision CAS 与当前 epoch；Stop是例外：锁行后读取最新revision写停止，调用者旧revision仅用于审计，不能因此丢弃Stop。任何未列出的边拒绝409 STATE_CONFLICT。同状态重复事件只有相同证据 hash 才 no-op，不产生新副作用。状态不能用数值大小或 occurredAt 排序。
 
 ## BroadcastRun

@@ -1,0 +1,43 @@
+[
+  {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_contracts",
+      "tests.test_durable_live_contracts",
+      "tests.test_durable_answer_contracts",
+      "tests.test_answer_contract_repairs",
+      "tests.test_receiver_contracts",
+      "tests.test_receiver_stop_races",
+      "-v"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+    "testedCommit": "0eed2d030c3440cd8770568d9317fca5dc981bf0",
+    "log": "postmerge-contracts-137.txt",
+    "exitCode": 0,
+    "elapsedSeconds": 19.63
+  },
+  {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/validate-answer-contract.py"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+    "testedCommit": "0eed2d030c3440cd8770568d9317fca5dc981bf0",
+    "log": "postmerge-candidate-validator.txt",
+    "exitCode": 0,
+    "elapsedSeconds": 0.22
+  },
+  {
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/validate-durable-live-contracts.py"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-4",
+    "testedCommit": "0eed2d030c3440cd8770568d9317fca5dc981bf0",
+    "log": "postmerge-frozen-validator.txt",
+    "exitCode": 0,
+    "elapsedSeconds": 0.125
+  }
+]

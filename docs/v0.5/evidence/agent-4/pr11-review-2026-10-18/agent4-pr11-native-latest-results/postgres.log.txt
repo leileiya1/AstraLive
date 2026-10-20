@@ -1,0 +1,20 @@
+2026-10-18 21:59:34.232 CST [62846] LOG:  starting PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-18 21:59:34.232 CST [62846] LOG:  listening on IPv4 address "127.0.0.1", port 62866
+2026-10-18 21:59:34.232 CST [62846] LOG:  listening on Unix socket "/tmp/astralive-agent4-receiver1-pg-xhjbr7og/sockets/.s.PGSQL.62866"
+2026-10-18 21:59:34.235 CST [62849] LOG:  database system was shut down at 2026-10-18 21:59:34 CST
+2026-10-18 21:59:34.237 CST [62846] LOG:  database system is ready to accept connections
+2026-10-18 22:00:03.121 CST [62847] LOG:  checkpoint starting: immediate force wait
+2026-10-18 22:00:03.247 CST [62847] LOG:  checkpoint complete: wrote 3482 buffers (21.3%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.100 s, sync=0.027 s, total=0.127 s; sync files=1267, longest=0.001 s, average=0.001 s; distance=22594 kB, estimate=22594 kB; lsn=0/2B2B410, redo lsn=0/2B2B3B8
+2026-10-18 22:00:03.275 CST [62847] LOG:  checkpoint starting: immediate force wait
+2026-10-18 22:00:03.275 CST [62847] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=2, longest=0.001 s, average=0.001 s; distance=1 kB, estimate=20335 kB; lsn=0/2B2BA48, redo lsn=0/2B2B9F0
+2026-10-18 22:00:03.300 CST [62847] LOG:  checkpoint starting: immediate force wait
+2026-10-18 22:00:03.301 CST [62847] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=2, longest=0.001 s, average=0.001 s; distance=1 kB, estimate=18302 kB; lsn=0/2B2C098, redo lsn=0/2B2C040
+2026-10-18 22:00:03.326 CST [62847] LOG:  checkpoint starting: immediate force wait
+2026-10-18 22:00:03.326 CST [62847] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=2, longest=0.001 s, average=0.001 s; distance=1 kB, estimate=16471 kB; lsn=0/2B2C6D0, redo lsn=0/2B2C678
+2026-10-18 22:00:03.354 CST [62846] LOG:  received fast shutdown request
+2026-10-18 22:00:03.354 CST [62846] LOG:  aborting any active transactions
+2026-10-18 22:00:03.355 CST [62846] LOG:  background worker "logical replication launcher" (PID 62852) exited with exit code 1
+2026-10-18 22:00:03.355 CST [62847] LOG:  shutting down
+2026-10-18 22:00:03.355 CST [62847] LOG:  checkpoint starting: shutdown immediate
+2026-10-18 22:00:03.355 CST [62847] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=14824 kB; lsn=0/2B2C7D8, redo lsn=0/2B2C7D8
+2026-10-18 22:00:03.357 CST [62846] LOG:  database system is shut down

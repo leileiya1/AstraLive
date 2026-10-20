@@ -1,0 +1,11 @@
+2026-10-20T12:10:28Z
+host=school-linux image=astralive-rescue/guardian-test:ad3a741 network=bridge
+........................................................................ [ 32%]
+........................................................................ [ 65%]
+...............................ss....................................... [ 98%]
+....                                                                     [100%]
+=========================== short test summary info ============================
+SKIPPED [1] output_guardian/tests/v2/test_physical.py:128: Darwin refusal test; Linux kernel execution has a separate opt-in
+SKIPPED [1] output_guardian/tests/v2/test_physical.py:140: requires dedicated Linux cgroup-v2 delegation; NOT TESTED on Darwin
+218 passed, 2 skipped in 108.45s (0:01:48)
+exit=0

@@ -1,0 +1,34 @@
+{'ordinaryFilesOnly': True, 'when': 'preexisting', 'killWrite': '', 'rejected': True}
+.{'ordinaryFilesOnly': True, 'when': 'after-parent-procs-read', 'killWrite': '', 'rejected': True}
+..F
+=================================== FAILURES ===================================
+________________________ test_empty_owned_leaf_control _________________________
+
+tmp_path = PosixPath('/private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/pytest-of-sapiece/pytest-271/test_empty_owned_leaf_control0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108e49ee0>
+
+    def test_empty_owned_leaf_control(tmp_path, monkeypatch):
+        group = model(tmp_path, monkeypatch, populated='0')
+>       assert group.fence()['scope'] == 'OWNED_PROCESS_FENCE_ONLY'
+               ^^^^^^^^^^^^^
+
+/tmp/agent4-pr11-rereview-probes/test_original_scope.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+output_guardian/v2/linux_fence.py:140: in fence
+    self._exclusive_mutation()  # no cgroup.kill write exists
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/v2/linux_fence.py:112: in _exclusive_mutation
+    require(False, "OUTPUT_FENCE_UNPROVEN")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, code = 'OUTPUT_FENCE_UNPROVEN'
+
+    def require(condition, code="CONSUMPTION_UNKNOWN"):
+        if not condition:
+>           raise Closed(code)
+E           output_guardian.model.Closed: OUTPUT_FENCE_UNPROVEN
+
+output_guardian/v2/gate.py:23: Closed
+=========================== short test summary info ============================
+FAILED ../../../tmp/agent4-pr11-rereview-probes/test_original_scope.py::test_empty_owned_leaf_control
+1 failed, 3 passed in 0.08s

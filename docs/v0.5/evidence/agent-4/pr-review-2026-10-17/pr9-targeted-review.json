@@ -1,0 +1,18 @@
+[
+  {
+    "case": "next semantic unit arrives after prior unit drained",
+    "previousState": "DRAINED",
+    "inbox": "STARTED",
+    "requestRevisionsAreCurrent": true,
+    "actualError": "ANSWER_GAP",
+    "expected": "prepare next unit in same OPEN STARTED command without reauthorizing prior unit"
+  },
+  {
+    "case": "lost continuation ACK retry",
+    "retry": {
+      "segmentStartAuthorized": false,
+      "grant": null
+    },
+    "globalStartCount": 1
+  }
+]

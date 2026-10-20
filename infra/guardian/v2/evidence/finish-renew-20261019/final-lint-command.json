@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/ruff",
+    "check",
+    "--isolated",
+    "--select",
+    "E4,E7,E9,F,I",
+    "output_guardian/service.py",
+    "output_guardian/process.py",
+    "output_guardian/v2",
+    "output_guardian/tests/v2",
+    "output_guardian/tests/lifecycle",
+    "infra/guardian/v2/review"
+  ],
+  "exitCode": 0,
+  "sourceCommit": "4b1ea9fc90ee0be86e8a19221eec9f0012379e78",
+  "generatedAtUTC": "2026-10-19T01:19:08.851395+00:00"
+}

@@ -1,5 +1,7 @@
 # durable-live-1 PostgreSQL设计（Agent 2实施）
 
+> CCR-ADL-001 review at PR8 `01a752baf79c25d4d268167d016c8c62e754cfdf`: active durable-live-1 is preserved. [durable-live-2 incremental answer candidate](ccr/CCR-ADL-001.md) and [migration/owner handoff](ccr/CCR-ADL-001-HANDOFF.md) are PENDING OWNER ACK; this historical v1 freeze does not approve that upgrade.
+
 本PR**不提交正式migration**。main当前到000005，Agent2独占下一migration：在本基线预留 `000006_durable_live.sql`；若集成目标已有000006必须CCR改用下一个空编号并映射表设计，禁止覆盖实验分支 `v05_*` 表。新增表统一 `dl05_*`，不是允许永久并存两套调度事实源；最终集成必须选择或迁移单一权威。
 
 以下为规范列/约束设计；所有ID为text，所有时间timestamptz，version/epoch/sequence为bigint且positive，JSON integer≤9007199254740991。state用text CHECK（与schema枚举一致）；不是可绕过的自由字符串。通用created_at/updated_at NOT NULL DEFAULT clock_timestamp()，revision NOT NULL DEFAULT1，变更以expected revision CAS。不可变字段应通过repo白名单及DB trigger保护。

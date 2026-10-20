@@ -1,0 +1,133 @@
+diff --git a/output_guardian/service.py b/output_guardian/service.py
+index 516439f..50f11c6 100644
+--- a/output_guardian/service.py
++++ b/output_guardian/service.py
+@@ -443,7 +443,12 @@ class Guardian:
+         self.check(attempt)
+         if self.finishing:
+             raise Closed("STATE_CONFLICT")
+-        barrier = self.barrier
++        # Every later decision is scoped to the life admitted here; a late
++        # result may only reject itself, never retire a replacement life.
++        life = self._life
++        if life is None:
++            raise Closed()
++        self._check_life(life)
+         kind, payload = packet["kind"], packet["payload"]
+         from runtime.app.providers import AudioChunk, VideoFrame
+ 
+@@ -482,7 +487,7 @@ class Guardian:
+             if self.video_frames >= self.media_config["fps"] * 6:
+                 raise Closed("INVALID_ARGUMENT")
+             if self.video_frames == 0 and pts != 0:
+-                await self.retire()
++                await self._retire_life(life, "OUTPUT_FENCE_UNPROVEN")
+                 raise Closed("OUTPUT_FENCE_UNPROVEN")
+             self.video_frames += 1
+             self.video_pts = pts
+@@ -498,14 +503,14 @@ class Guardian:
+             raise Closed("INVALID_ARGUMENT")
+         try:
+             await self.publisher.call(message)
+-            self.check(attempt)
+-            if barrier != self.barrier:
+-                raise Closed()
++            self._check_life(life)
+             if self.web:
+                 await asyncio.wait_for(getattr(self.web, "push_" + kind)(item), 0.1)
+-            self.check(attempt)
+-        except BaseException:
+-            await self.retire()
++            self._check_life(life)
++        except BaseException as exc:
++            # A real fault of the still-current life is retired; a stale ACK,
++            # failure or cancellation only fails this request (never replayed).
++            await self._retire_life(life, getattr(exc, "code", type(exc).__name__))
+             raise Closed("MEDIA_DELIVERY_FAILED") from None
+         return {"accepted": True}  # Explicitly NOT a drain/checkpoint or GPU credit.
+ 
+@@ -552,7 +557,8 @@ class Guardian:
+                     evidence = await asyncio.to_thread(
+                         verify_combined, paths, observed, manifest
+                     )
+-                    self.last_drain_fault = None
++                    if self._life is life:
++                        self.last_drain_fault = None
+                     diagnostic["coverage"] = "PASS"
+                     evidence["attempt"] = attempt.json()
+                     evidence["guardianId"] = self.authority.guardian_id
+@@ -563,19 +569,21 @@ class Guardian:
+                     ).hexdigest()
+                     break
+                 except Exception as exc:
+-                    self.last_drain_stats = {
+-                        "connected": observed.get("connected"),
+-                        "openErrorType": observed.get("openErrorType"),
+-                        "openErrorNumber": observed.get("openErrorNumber"),
+-                        "packets": {
+-                            k: len(v) for k, v in observed.get("manifest", {}).items()
+-                        },
+-                        "decodeError": observed.get("decodeError"),
+-                        "transportEnded": observed.get("transportEnded"),
+-                        "recordings": len(paths),
+-                    }
+                     fault = getattr(exc, "code", type(exc).__name__)
+-                    self.last_drain_poll_fault = fault
++                    if self._life is life:  # a replaced life keeps its own record
++                        self.last_drain_stats = {
++                            "connected": observed.get("connected"),
++                            "openErrorType": observed.get("openErrorType"),
++                            "openErrorNumber": observed.get("openErrorNumber"),
++                            "packets": {
++                                k: len(v)
++                                for k, v in observed.get("manifest", {}).items()
++                            },
++                            "decodeError": observed.get("decodeError"),
++                            "transportEnded": observed.get("transportEnded"),
++                            "recordings": len(paths),
++                        }
++                        self.last_drain_poll_fault = fault
+                     diagnostic["pollFaults"].append({"terminal": False, "code": fault})
+                     await asyncio.sleep(0.01)
+             else:
+@@ -621,7 +629,8 @@ class Guardian:
+             )
+             diagnostic.update(terminal="FAILED", stage=stage, fault=code, cause=cause)
+             diagnostic["revocation"] = life.revocation
+-            self.last_drain_fault = code
++            if self._life is life:
++                self.last_drain_fault = code
+             try:
+                 await self._retire_life(life)
+             finally:
+@@ -691,6 +700,9 @@ class Guardian:
+                             continue
+                     if not self.finishing:
+                         publishers = await self.ingest.publishers()
++                        # An observation made for a replaced life is discarded.
++                        if self.barrier != barrier:
++                            continue
+                         if len(publishers) > 1:
+                             raise Closed()
+                         if publishers:
+@@ -698,6 +710,8 @@ class Guardian:
+                                 # Only a publish auth callback may supply the ID.
+                                 raise Closed()
+                             await self.ingest.exclusive(self.publisher_id)
++                            if self.barrier != barrier:
++                                continue
+                             self.publisher_seen = True
+                         elif self.publisher_seen:
+                             raise Closed()
+@@ -860,7 +874,10 @@ def ipc_app(guardian, control_token, producers):
+                 try:
+                     result = await asyncio.wait_for(guardian.finish(attempt), 2)
+                 except asyncio.TimeoutError:
+-                    await guardian.retire()
++                    # Retire only the life this Finish named, never a successor.
++                    life = guardian._life
++                    if life is not None and life.attempt == attempt:
++                        await guardian._retire_life(life, "DRAIN_UNKNOWN")
+                     raise Closed("DRAIN_UNKNOWN") from None
+             else:
+                 raise Closed("INVALID_ARGUMENT")

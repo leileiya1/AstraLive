@@ -1,0 +1,14 @@
+{
+  "name": "guardian-v2-final2",
+  "command": [
+    "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+    "-m",
+    "pytest",
+    "output_guardian/tests/v2",
+    "-v",
+    "--junitxml=infra/guardian/v2/evidence/guardian-v2-final2.xml"
+  ],
+  "exitCode": 0,
+  "seconds": 2.772,
+  "reason": "added actual kernel EBADF file/directory fsync fault tests; production implementation unchanged"
+}

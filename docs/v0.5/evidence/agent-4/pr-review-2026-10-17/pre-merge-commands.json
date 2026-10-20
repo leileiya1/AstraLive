@@ -1,0 +1,45 @@
+[
+  {
+    "name": "pr9-schema",
+    "pid": 67940,
+    "cwd": "/tmp/astralive-agent4-pr9-review-moe6ipm2",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "scripts/validate-answer-contract.py"
+    ],
+    "log": "/Users/sapiece/innovationProject/AstraLive-agent-4/docs/v0.5/evidence/agent-4/pr-review-2026-10-17/pr9-schema.log",
+    "exitCode": 0
+  },
+  {
+    "name": "pr9-contract-tests",
+    "pid": 67941,
+    "cwd": "/tmp/astralive-agent4-pr9-review-moe6ipm2",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_contracts",
+      "tests.test_durable_live_contracts",
+      "tests.test_durable_answer_contracts",
+      "-v"
+    ],
+    "log": "/Users/sapiece/innovationProject/AstraLive-agent-4/docs/v0.5/evidence/agent-4/pr-review-2026-10-17/pr9-contract-tests.log",
+    "exitCode": 0
+  },
+  {
+    "name": "pr10-before-merge",
+    "pid": 67942,
+    "cwd": "/tmp/astralive-agent4-pr10-review-wck0sjr4",
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "-m",
+      "pytest",
+      "output_guardian/tests",
+      "-q",
+      "-s",
+      "--junitxml=/Users/sapiece/innovationProject/AstraLive-agent-4/docs/v0.5/evidence/agent-4/pr-review-2026-10-17/pr10-before-merge.xml"
+    ],
+    "log": "/Users/sapiece/innovationProject/AstraLive-agent-4/docs/v0.5/evidence/agent-4/pr-review-2026-10-17/pr10-before-merge.log",
+    "exitCode": 0
+  }
+]

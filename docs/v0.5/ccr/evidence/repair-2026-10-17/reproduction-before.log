@@ -1,0 +1,52 @@
+test_delayed_unit2_after_trusted_drain (tests.test_answer_contract_repairs.AnswerRepairTests.test_delayed_unit2_after_trusted_drain) ... ERROR
+test_drain_receipt_cannot_cross_artifacts (tests.test_answer_contract_repairs.AnswerRepairTests.test_drain_receipt_cannot_cross_artifacts) ... FAIL
+test_grant_models_consume_deadline_instead_of_opaque_string (tests.test_answer_contract_repairs.AnswerRepairTests.test_grant_models_consume_deadline_instead_of_opaque_string) ... FAIL
+test_prepare_alias_key_cannot_be_reassigned (tests.test_answer_contract_repairs.AnswerRepairTests.test_prepare_alias_key_cannot_be_reassigned) ... FAIL
+
+======================================================================
+ERROR: test_delayed_unit2_after_trusted_drain (tests.test_answer_contract_repairs.AnswerRepairTests.test_delayed_unit2_after_trusted_drain)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-1-ccr/tests/test_answer_contract_repairs.py", line 25, in test_delayed_unit2_after_trusted_drain
+    result=self.case.prepare_second()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-1-ccr/tests/test_durable_answer_contracts.py", line 36, in prepare_second
+    return self.j.prepare(q)
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-1-ccr/contracts/v0.5/durable-live-2/examples/python/reference.py", line 86, in prepare
+    if self.units and self.units[-1]['state']!='STARTED':fail('ANSWER_GAP')
+                                                         ^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive-agent-1-ccr/contracts/v0.5/durable-live-2/examples/python/reference.py", line 20, in fail
+    raise Rejected(code)
+answer_oracle.Rejected: ANSWER_GAP
+
+======================================================================
+FAIL: test_drain_receipt_cannot_cross_artifacts (tests.test_answer_contract_repairs.AnswerRepairTests.test_drain_receipt_cannot_cross_artifacts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-1-ccr/tests/test_answer_contract_repairs.py", line 40, in test_drain_receipt_cannot_cross_artifacts
+    with self.assertRaisesRegex(r.Rejected,'ANSWER_CONFLICT'):self.j.drain(q)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Rejected not raised
+
+======================================================================
+FAIL: test_grant_models_consume_deadline_instead_of_opaque_string (tests.test_answer_contract_repairs.AnswerRepairTests.test_grant_models_consume_deadline_instead_of_opaque_string)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-1-ccr/tests/test_answer_contract_repairs.py", line 45, in test_grant_models_consume_deadline_instead_of_opaque_string
+    self.assertIsInstance(grant,dict)
+AssertionError: 'grant_1' is not an instance of <class 'dict'>
+
+======================================================================
+FAIL: test_prepare_alias_key_cannot_be_reassigned (tests.test_answer_contract_repairs.AnswerRepairTests.test_prepare_alias_key_cannot_be_reassigned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-1-ccr/tests/test_answer_contract_repairs.py", line 34, in test_prepare_alias_key_cannot_be_reassigned
+    with self.assertRaisesRegex(r.Rejected,'ANSWER_CONFLICT'):self.j.prepare(q)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Rejected not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.010s
+
+FAILED (failures=3, errors=1)

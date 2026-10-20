@@ -1,0 +1,51 @@
+[
+  {
+    "label": "postgres-inventory",
+    "command": [
+      "psql",
+      "postgres://agent3_owner@127.0.0.1:58294/agent3_streaming_owned?sslmode=disable",
+      "-c",
+      "SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-3",
+    "exitCode": 0,
+    "elapsedSeconds": 0.017,
+    "childUserSeconds": 0.006994,
+    "childSystemSeconds": 0.003362000000000004,
+    "childPeakRSSBytes": 49987584
+  },
+  {
+    "label": "streaming-pg-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "./internal/turnmanager/answerstream",
+      "-run",
+      "^TestPostgres"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-3/backend",
+    "exitCode": 1,
+    "elapsedSeconds": 8.201,
+    "childUserSeconds": 3.7611109999999996,
+    "childSystemSeconds": 0.8688560000000001,
+    "childPeakRSSBytes": 326434816
+  },
+  {
+    "label": "migration-count",
+    "command": [
+      "psql",
+      "postgres://agent3_owner@127.0.0.1:58294/agent3_streaming_owned?sslmode=disable",
+      "-c",
+      "SELECT * FROM schema_migrations ORDER BY 1"
+    ],
+    "cwd": "/Users/sapiece/innovationProject/AstraLive-agent-3",
+    "exitCode": 0,
+    "elapsedSeconds": 0.017,
+    "childUserSeconds": 0.007298000000000027,
+    "childSystemSeconds": 0.003965999999999914,
+    "childPeakRSSBytes": 326434816
+  }
+]

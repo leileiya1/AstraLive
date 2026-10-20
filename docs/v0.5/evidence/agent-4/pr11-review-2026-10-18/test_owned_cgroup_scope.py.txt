@@ -1,0 +1,60 @@
+"""Ordinary-file control-flow probes only; never actual Linux fencing evidence.
+Only kernel filesystem magic verification is stubbed; no PID syscall/kill exists.
+"""
+from pathlib import Path
+import pytest
+from output_guardian.model import Closed
+from output_guardian.v2 import linux_fence
+
+
+def model(tmp_path, monkeypatch, *, populated='1', direct=''):
+    path = tmp_path / 'owned-leaf'
+    path.mkdir(mode=0o700)
+    (path / 'cgroup.procs').write_text(direct)
+    (path / 'cgroup.kill').write_text('')
+    (path / 'cgroup.events').write_text('populated '+populated+'\n')
+    group = linux_fence.OwnedCgroup.__new__(linux_fence.OwnedCgroup)
+    group.path, group.inode = path, path.stat().st_ino
+    group.members, group.retired = {}, False
+    monkeypatch.setattr(linux_fence, '_cgroup2', lambda p: None)
+    return group
+
+
+@pytest.mark.parametrize('when', ['preexisting', 'after-parent-procs-read'])
+def test_unknown_descendant_must_not_receive_recursive_kill(tmp_path, monkeypatch, when):
+    group = model(tmp_path, monkeypatch)
+    nested = group.path / 'unregistered-descendant'
+    def inject():
+        nested.mkdir(mode=0o700)
+        (nested / 'cgroup.procs').write_text('999999\n')  # inert text, not a PID syscall
+    if when == 'preexisting':
+        inject()
+    else:
+        read_text = Path.read_text
+        def read(path, *args, **kwargs):
+            text = read_text(path, *args, **kwargs)
+            if path == group.path/'cgroup.procs' and not nested.exists():
+                inject()
+            return text
+        monkeypatch.setattr(Path, 'read_text', read)
+    rejected = False
+    try:
+        group.fence()
+    except Closed:
+        rejected = True
+    kill = (group.path / 'cgroup.kill').read_text()
+    print(dict(ordinaryFilesOnly=True, when=when, killWrite=kill, rejected=rejected))
+    assert rejected and kill == '', 'P1: recursive kill issued without checking unknown descendant scope'
+
+
+def test_direct_unknown_member_is_rejected_before_write(tmp_path, monkeypatch):
+    group = model(tmp_path, monkeypatch, direct='999999\n')
+    with pytest.raises(Closed):
+        group.fence()
+    assert (group.path/'cgroup.kill').read_text() == ''
+
+
+def test_empty_owned_leaf_control(tmp_path, monkeypatch):
+    group = model(tmp_path, monkeypatch, populated='0')
+    assert group.fence()['scope'] == 'OWNED_PROCESS_FENCE_ONLY'
+    assert (group.path/'cgroup.kill').read_text() == '1'

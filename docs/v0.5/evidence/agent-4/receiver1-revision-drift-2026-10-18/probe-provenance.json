@@ -1,0 +1,16 @@
+{
+  "agent2Commit": "2d7e107b2d21550cd6e32e3f7c412ff4ef8ff028",
+  "source": "docs/v0.5/evidence/agent-2/receiver1-owner-review-2026-10-18/agent2-owner-review_test.go.txt",
+  "sha256": "db675df45a7bd9ce0cce4dd40ade107d19609b8137873e73e00570eb79914463",
+  "originalBytesUnchanged": true,
+  "testOnlyCompatibility": "agent2_probe_lifecycle_test.go adds explicit test-only stable gate capability to the synthetic reviewSource; original623 lines unchanged",
+  "inheritedRevisionFixture": "revisionSource embeds immutable physicalFixture whose stable gate pins revision1; its adversarial uncoordinated revision changes are detected, not endorsed",
+  "beforeBase": "eb00428eeb1f0506e9b71eea47480ba4d982c7db",
+  "beforeTests": "Both original cases x3 FAIL; stale source2 consumption true, latch1",
+  "candidateAfter": "Both original cases x3 PASS,15 owner probes PASS; latest focused22 native PG PASS",
+  "sourceConfirmationRequest": "https://github.com/leileiya1/AstraLive/pull/8#issuecomment-6249873676",
+  "initialToolingCorrections": [
+    "Original archive runner initially required git source for pinned PR11 archive; corrected harness Git read to original repository; no production/test source changed in before reproduction",
+    "One edit invocation used backend cwd with repository-relative paths and failed before editing; immediately reran at repository root"
+  ]
+}

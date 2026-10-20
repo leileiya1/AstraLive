@@ -25,6 +25,9 @@ async function call<T>(path: string, method = 'GET', body?: unknown, idempotency
   return parsed.data.data as T
 }
 export const api = {
+  durableSession: (id: string) => call<DurableSession>(`/api/v0.5/durable-live/sessions/${enc(id)}`),
+  resolveDurable: (runId: string, decision: DurableDecision) => call<{ decisionId: string; action: string; mediaAuthorized: false }>(`/api/v0.5/durable-live/runs/${enc(runId)}/decisions`, 'POST', decision),
+  stopDurable: (runId: string, decisionId: string) => call<unknown>(`/api/v0.5/durable-live/runs/${enc(runId)}/stop`, 'POST', { decisionId }),
   controlHealth: async (): Promise<S['Health']> => { const response = await fetch(apiUrl('/health/ready')); const data: unknown = await response.json(); if (!response.ok) { const error = failure.safeParse(data); throw new ApiError(error.success ? error.data.code : 'INTERNAL_ERROR', error.success ? error.data.message : 'Health check failed', error.success ? error.data.requestId : undefined, response.status) } const parsed = z.object({ status: z.string() }).safeParse(data); if (!parsed.success) throw new ApiError('INTERNAL_ERROR', 'Invalid health response'); return parsed.data },
   avatars: () => call<S['Avatar'][]>('/api/v1/avatars'),
   createAvatar: (body: S['CreateAvatarRequest']) => call<S['Avatar']>('/api/v1/avatars', 'POST', body),
@@ -52,3 +55,17 @@ export const api = {
   devEvent: (body: S['PlatformEvent']) => call<S['Utterance']>('/api/v1/dev/platform-events', 'POST', body, undefined, 202),
 }
 export type { S as ApiSchemas }
+
+export type DurableDecision = { decisionId: string; attemptId: string; expectedRevision: number; action: 'WAIT_FOR_EVIDENCE' | 'SKIP_WITH_GAP' | 'CREATE_NEW_TURN'; reason: string; createdAt: string }
+export type DurableSession = { managed: false } | {
+  managed: true;
+  snapshot: {
+    run: { runId: string; revision: number; status: string; desiredState: string; stopRevision: number };
+    completedPrefix: number; resumeSequence: number;
+    bundle: { plan: { planId: string; revision: number; productId: string }; segments: { sequence: number; segmentId: string; content: string; state: string }[] } | null;
+    unresolvedAttempts: { attemptId: string; lastCheckpoint: string; commandId: string }[];
+    decisions: { decisionId: string; action: string; reason: string }[];
+  };
+  choice: { state: import('../features/live-console/TurnManagerPanel').TurnManagerView['state']; source: string; pending: number; reason?: string };
+  releaseGate: string;
+}

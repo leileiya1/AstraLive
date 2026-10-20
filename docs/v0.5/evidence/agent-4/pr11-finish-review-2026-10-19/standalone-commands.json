@@ -1,0 +1,184 @@
+[
+  {
+    "label": "stale-callback",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "/tmp/agent4-pr11-final-probes/test_stale_callbacks.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-final-candidate",
+    "exitCode": 1,
+    "log": "stale-callback.txt",
+    "exactCommandNote": "local model omitted conftest plugin; fixtures imported from Owner module"
+  },
+  {
+    "label": "real-stale-media3",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "output_guardian.tests.conftest",
+      "/tmp/agent4-pr11-final-probes/test_real_stale_media.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-final-candidate",
+    "exitCode": 1,
+    "log": "real-stale-media3.txt",
+    "exactCommandNote": null
+  },
+  {
+    "label": "real-stale-media3-scoped",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "output_guardian.tests.conftest",
+      "/tmp/agent4-pr11-final-probes/test_real_stale_media_scoped.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-final-candidate",
+    "exitCode": 1,
+    "log": "real-stale-media3-scoped.txt",
+    "exactCommandNote": null
+  },
+  {
+    "label": "fixture-permit-concurrency3",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "output_guardian.tests.conftest",
+      "/tmp/agent4-pr11-final-probes/test_fixture_sql_concurrency.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-final-candidate",
+    "exitCode": 2,
+    "log": "fixture-permit-concurrency3.txt",
+    "exactCommandNote": null
+  },
+  {
+    "label": "fixture-permit-concurrency3-corrected",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "output_guardian.tests.conftest",
+      "/tmp/agent4-pr11-final-probes/test_fixture_sql_concurrency.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-final-candidate",
+    "exitCode": 1,
+    "log": "fixture-permit-concurrency3-corrected.txt",
+    "exactCommandNote": null
+  },
+  {
+    "label": "lifecycle35",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "output_guardian/tests/lifecycle",
+      "-q",
+      "-rs"
+    ],
+    "cwd": "/tmp/agent4-pr11-final-candidate",
+    "exitCode": 0,
+    "log": "lifecycle35.txt"
+  },
+  {
+    "label": "v1-exact25",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "output_guardian/tests/test_guardian.py",
+      "output_guardian/tests/test_supervisor_cleanup.py",
+      "-q",
+      "-rs"
+    ],
+    "cwd": "/tmp/agent4-pr11-final-candidate",
+    "exitCode": 0,
+    "log": "v1-exact25.txt"
+  },
+  {
+    "label": "cgroup-current8-owner56",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "/tmp/agent4-pr11-final-probes/test_current_cgroup.py",
+      "output_guardian/tests/v2/test_cgroup_scope.py",
+      "-q",
+      "-rs"
+    ],
+    "cwd": "/tmp/agent4-pr11-final-candidate",
+    "exitCode": 0,
+    "log": "cgroup-current8-owner56.txt"
+  },
+  {
+    "label": "v2-original69",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "output_guardian/tests/v2",
+      "--ignore=output_guardian/tests/v2/test_cgroup_scope.py",
+      "--ignore=output_guardian/tests/v2/test_evidence_archive.py",
+      "--ignore=output_guardian/tests/v2/test_readiness.py",
+      "--ignore=output_guardian/tests/v2/test_official.py",
+      "--ignore=output_guardian/tests/v2/test_physical.py",
+      "-q",
+      "-rs"
+    ],
+    "cwd": "/tmp/agent4-pr11-final-candidate",
+    "exitCode": 0,
+    "log": "v2-original69.txt"
+  },
+  {
+    "label": "real-stale-media3-fresh-output",
+    "command": [
+      "/tmp/astralive-agent4-receiver1-python/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-p",
+      "output_guardian.tests.conftest",
+      "/tmp/agent4-pr11-final-probes/test_real_stale_media_fresh_output.py",
+      "-q",
+      "-s"
+    ],
+    "cwd": "/tmp/agent4-pr11-final-candidate",
+    "exitCode": 1,
+    "log": "real-stale-media3-fresh-output.txt"
+  }
+]

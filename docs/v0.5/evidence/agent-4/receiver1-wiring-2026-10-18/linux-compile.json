@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "0a67a35e5815031d4d0d0a4ca4da89882e31e079",
+  "command": [
+    "go",
+    "test",
+    "-c",
+    "-o",
+    "/tmp/agent4-receiver1-final-linux.test",
+    "./internal/durableintegration/receiver1"
+  ],
+  "cwd": "backend",
+  "environment": {
+    "GOOS": "linux",
+    "GOARCH": "amd64"
+  },
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "acceptance": "COMPILE_ONLY; NO_LINUX_EXECUTION_OR_ISOLATION_PROOF",
+  "initialInvocation": {
+    "cwd": "repository root",
+    "exitCode": 1,
+    "stderr": "go: go.mod file not found in current directory or any parent directory; see go help modules"
+  }
+}

@@ -92,8 +92,14 @@ func TestAuditSelectionExpiresWhileWaitingForCommandLock(t *testing.T) {
 		defer func() {
 			cc.Stop(se.ID)
 			requests.Store(0)
-			_, _ = pool.Exec(ctx, `DELETE FROM utterances WHERE session_id=$1`, se.ID)
-			_, _ = pool.Exec(ctx, `DELETE FROM interaction_receipts WHERE session_id=$1`, se.ID)
+			// Receipts reference Utterances. Delete children first and surface any
+			// cleanup error; otherwise a hidden FK failure leaves QUEUED busy state
+			// and prevents the following lock/TTL scenario from selecting at all.
+			for _, q := range []string{`DELETE FROM interaction_receipts WHERE session_id=$1`, `DELETE FROM utterances WHERE session_id=$1`} {
+				if _, e := pool.Exec(ctx, q, se.ID); e != nil {
+					t.Errorf("isolated fixture cleanup: %v", e)
+				}
+			}
 		}()
 		if err = idle.Receive(ctx, platform.Event{Platform: "mock", PlatformRoomID: ro.ID, InternalRoomID: ro.ID, SessionID: se.ID, SourceEventID: "idle-latency", EventType: platform.Comment, UserExternalID: "idle-viewer", Content: "多少钱？", Transport: "MOCK_REPLAY"}); err != nil {
 			t.Fatal(err)

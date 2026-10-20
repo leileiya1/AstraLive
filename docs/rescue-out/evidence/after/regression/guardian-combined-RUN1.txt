@@ -1,0 +1,55 @@
+2026-10-20T10:43:36Z
+service.py sha256=0a5441b5064bda615977b47f1966809ed913f05d246cbeee5c58cb43c3a02508  output_guardian/service.py
+........................................................................ [ 32%]
+.............................................................F.......... [ 65%]
+................................s....................................... [ 98%]
+....                                                                     [100%]
+=================================== FAILURES ===================================
+___________ test_real_decode_unit1_finish_unit2_same_process_clocks ____________
+
+domain = namespace(x=<tests.test_receiver_contracts.ReceiverContractTests testMethod=runTest>, r=<output_guardian.v2.receiver.R...h_0'), execution=<function domain_source.<locals>.execution at 0x10e348ea0>, ipc_dir=PosixPath('/tmp/ag5-v2-x9b7juu9'))
+
+    @pytest.mark.asyncio
+    async def test_real_decode_unit1_finish_unit2_same_process_clocks(domain):
+        d = domain
+        # Trusted Session origins, not rewritten zero-origin media.
+        d.r.gate.audio_end, d.r.gate.video_end, d.r.gate.sequence = 48000, 2960000, 119
+        d.r.gate.video_frames = 75
+        cpu = await setup_cpu(d)
+        ack, q = await acknowledge(d)
+        publisher_pid = cpu.process.pid
+        renewer = asyncio.create_task(renew(d, q))
+        try:
+>           await av_unit(d, q, 120, 3000000)
+
+output_guardian/tests/v2/test_cpu.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+output_guardian/tests/v2/test_cpu.py:46: in av_unit
+    await media(d, q, sequence=start_sequence + index * 2, payload=pcm)
+output_guardian/tests/v2/conftest.py:196: in media
+    return await d.r.media(
+output_guardian/v2/receiver.py:524: in media
+    lineage = self._execution_locked(peer, q)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+output_guardian/v2/receiver.py:192: in _execution_locked
+    self.gate.execution_locked(lineage)
+output_guardian/v2/gate.py:184: in execution_locked
+    self.edge.check_locked(lineage)
+output_guardian/v2/gate.py:130: in check_locked
+    Budget(*self.deadlines).check()
+output_guardian/v2/gate.py:46: in check
+    require(time.monotonic() < self.mono and clock() < self.suspend, "LEASE_LOST")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, code = 'LEASE_LOST'
+
+    def require(condition, code="CONSUMPTION_UNKNOWN"):
+        if not condition:
+>           raise Closed(code)
+E           output_guardian.model.Closed: LEASE_LOST
+
+output_guardian/v2/gate.py:23: Closed
+=========================== short test summary info ============================
+FAILED output_guardian/tests/v2/test_cpu.py::test_real_decode_unit1_finish_unit2_same_process_clocks
+SKIPPED [1] output_guardian/tests/v2/test_physical.py:140: requires dedicated Linux cgroup-v2 delegation; NOT TESTED on Darwin
+1 failed, 218 passed, 1 skipped in 86.47s (0:01:26)

@@ -1,0 +1,25 @@
+unformatted: File would be reformatted
+  --> docs/rescue-out/evidence/run_agent4_probes.py:56:24
+   |
+55 |     command = [
+   -         sys.executable, "-m", "pytest", str(package), "-p", "no:cacheprovider",
+   -         "-q", "-rA",
+56 +         sys.executable,
+57 +         "-m",
+58 +         "pytest",
+59 +         str(package),
+60 +         "-p",
+61 +         "no:cacheprovider",
+62 +         "-q",
+63 +         "-rA",
+64 |     ]
+--------------------------------------------------------------------------------
+70 |             f.flush()
+   -             result = subprocess.run(command, cwd=ROOT, stdout=f, stderr=f, env=os.environ)
+71 +             result = subprocess.run(
+72 +                 command, cwd=ROOT, stdout=f, stderr=f, env=os.environ
+73 +             )
+74 |             f.write(f"\nexit={result.returncode}\n")
+   |
+
+1 file would be reformatted, 4 files already formatted

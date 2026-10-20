@@ -1,0 +1,82 @@
+{
+  "conclusion": "ASTRALIVE V0.5 BLOCKED",
+  "evidenceDirectory": "docs/v0.5/evidence/agent-4/verified-release",
+  "sourceUnchangedDuringVerification": true,
+  "cleanupExitCodes": [
+    0,
+    0
+  ],
+  "commandsAllExitZero": true,
+  "sourceManifestSHA256": "f694d0389edb208b2b6b5b6365ac09f85dc14de5b746ff5a39e4358af194d2c8",
+  "go": {
+    "go-test.jsonl": {
+      "pass": 142,
+      "fail": 0,
+      "skip": 3,
+      "skipped": [
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestIsolatedBackendHelper"
+        },
+        {
+          "package": "astralive/backend/internal/turnmanager",
+          "test": "TestExportContractRequests"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestConfigurationBrowserHarness"
+        }
+      ]
+    },
+    "go-race.jsonl": {
+      "pass": 142,
+      "fail": 0,
+      "skip": 3,
+      "skipped": [
+        {
+          "package": "astralive/backend/internal/durablelive",
+          "test": "TestIsolatedBackendHelper"
+        },
+        {
+          "package": "astralive/backend/internal/turnmanager",
+          "test": "TestExportContractRequests"
+        },
+        {
+          "package": "astralive/backend/internal/userconfig",
+          "test": "TestConfigurationBrowserHarness"
+        }
+      ]
+    }
+  },
+  "realGPU": "NOT TESTED",
+  "chrome": "NOT TESTED",
+  "durableWebRTC_RTMP": "BLOCKED",
+  "officialViewer": "NOT TESTED",
+  "runtimeUnittest": {
+    "total": 169,
+    "pass": 158,
+    "skip": 11,
+    "fail": 0
+  },
+  "journalPytest": {
+    "pass": 11,
+    "fail": 0
+  },
+  "contractUnittest": {
+    "pass": 17,
+    "fail": 0
+  },
+  "frontend": {
+    "pass": 45,
+    "fail": 0,
+    "build": "PASS"
+  },
+  "additionalLocalWebRTC": {
+    "pass": 4,
+    "fail": 0,
+    "layer": "legacy in-process aiortc, synthetic providers, no Chrome/GPU",
+    "log": "local-webrtc.log"
+  },
+  "testedIntegrationCodeCommit": "597ece2840c9a56b3998739cd86a4c749588bdeb",
+  "sourceManifestMatchesCommittedSource": true
+}

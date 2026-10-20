@@ -35,7 +35,14 @@ class JsonFormatter(logging.Formatter):
         return json.dumps(item, ensure_ascii=False)
 
 
-def create_app(settings: Settings | None = None, publisher=None, factories=None) -> FastAPI:
+def create_app(settings: Settings | None = None, publisher=None, factories=None, durable_registration=None) -> FastAPI:
+    durable_enabled = os.getenv("ASTRALIVE_DURABLE_LIVE_ENABLED", "false").lower() == "true"
+    if os.getenv("ASTRALIVE_DURABLE_LIVE_ENABLED", "false") not in {"true", "false"}:
+        raise RuntimeError("INVALID_ARGUMENT: ASTRALIVE_DURABLE_LIVE_ENABLED")
+    if durable_enabled:
+        # A supplied Python object is not proof of a separately owned publisher.
+        # Current FFmpeg credentials and WebRTC peers still live in Runtime.
+        raise RuntimeError("OUTPUT_FENCE_UNPROVEN: durable LIVE admission is closed")
     settings = settings or Settings.from_env()
     bound = binding_enabled()
     if os.getenv("APP_ENV") == "production" and not bound:
@@ -253,6 +260,17 @@ def create_app(settings: Settings | None = None, publisher=None, factories=None)
             outputs.append("rtmp")
         return {"status": "UP", "runtimeVersion": "0.1.0", "gpu": {"available": gpu_available}, "activeSessions": sum(s.state not in {"ENDED", "FAILED"} for s in manager.sessions.values()), "providers": {"llm": "session-binding" if bound else "mock" if settings.mock_llm else "openai-compatible", "tts": "session-binding" if bound else "mock" if settings.mock_tts else "sherpa-onnx", "avatar": "session-binding" if bound else "mock" if settings.mock_avatar else "lightweight-2d", "media": "+".join(outputs), "events": "redis" if settings.redis_url else "memory"}}
 
+    if durable_enabled:
+        for durable_router in durable_registration.routers:
+            app.include_router(durable_router)
+        @app.middleware("http")
+        async def durable_mode_guard(request: Request, call_next):
+            prefix = "/internal/v1/sessions/"
+            if request.url.path.startswith(prefix):
+                sid = request.url.path[len(prefix):].split("/", 1)[0]
+                if durable_registration.owns_session(sid):
+                    return JSONResponse({"detail": "durable Session requires v0.5 control"}, status_code=409)
+            return await call_next(request)
     return app
 
 

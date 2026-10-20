@@ -1,0 +1,35 @@
+test_a_guardian_stop_without_backend_stop_rejects_consume (tests.test_receiver_stop_races.ReceiverStopRaceTests.test_a_guardian_stop_without_backend_stop_rejects_consume) ... FAIL
+test_b_stop_after_authority_read_before_media_handoff (tests.test_receiver_stop_races.ReceiverStopRaceTests.test_b_stop_after_authority_read_before_media_handoff) ... FAIL
+test_c_stop_at_last_consume_query_suppresses_true_ack (tests.test_receiver_stop_races.ReceiverStopRaceTests.test_c_stop_at_last_consume_query_suppresses_true_ack) ... FAIL
+
+======================================================================
+FAIL: test_a_guardian_stop_without_backend_stop_rejects_consume (tests.test_receiver_stop_races.ReceiverStopRaceTests.test_a_guardian_stop_without_backend_stop_rejects_consume)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-1-ccr/tests/test_receiver_stop_races.py", line 25, in test_a_guardian_stop_without_backend_stop_rejects_consume
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_b_stop_after_authority_read_before_media_handoff (tests.test_receiver_stop_races.ReceiverStopRaceTests.test_b_stop_after_authority_read_before_media_handoff)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-1-ccr/tests/test_receiver_stop_races.py", line 45, in test_b_stop_after_authority_read_before_media_handoff
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_c_stop_at_last_consume_query_suppresses_true_ack (tests.test_receiver_stop_races.ReceiverStopRaceTests.test_c_stop_at_last_consume_query_suppresses_true_ack)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive-agent-1-ccr/tests/test_receiver_stop_races.py", line 63, in test_c_stop_at_last_consume_query_suppresses_true_ack
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.011s
+
+FAILED (failures=3)

@@ -1,0 +1,687 @@
+[
+  {
+    "operationId": "RegisterReceiverBootstrap",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_732cf6cfc8be46d4bcaab7fd4d25ba72",
+      "binding": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "sessionId": "session_demo",
+        "producerIncarnation": "runtime_demo",
+        "attemptId": "attempt_comment",
+        "commandId": "cmd_comment",
+        "turnId": "turn_comment",
+        "utteranceId": "utt_comment",
+        "runEpoch": 1,
+        "contractRevision": "durable-live-2",
+        "receiverRevision": "receiver-1",
+        "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+        "roomId": "room_demo",
+        "guardianId": "guardian_demo",
+        "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+        "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+        "runtimeIncarnation": "process_e9fb3bff30e34f0dbbb1c1a157820389",
+        "physicalInstallProofRef": "physical_install_0d2311c2f07546bdbb3397f28b35cb24",
+        "generationId": 1,
+        "outputBindingVersion": 1
+      },
+      "receipt": {
+        "contractRevision": "durable-live-2",
+        "receiverRevision": "receiver-1",
+        "installationRevision": 1,
+        "stageReceiptId": "stage_ee8f0639722d45ec8c863d049f61a53c",
+        "challenge": "challenge_a84cd794d1f545e29ab15247827a59c6",
+        "guardianPrincipalId": "principal_a22dac6c7e7d4bb9848e35bda0f9a5e1",
+        "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+        "keyId": "key_ceacd1e0e82f439da8191a80ae1d3fb5",
+        "bindingHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7",
+        "authorityIssuedAt": "2026-10-16T00:00:00.000Z",
+        "validUntil": "2026-10-16T00:00:01Z",
+        "state": "CLOSED_STAGED",
+        "signature": "6xU+MWUUV4sNs+onG2GXIoAbPQwpV8ov/mmqDc4bll/hJvDk2DOrMeXRhWSWVZvjCMEUXHXxEf9Xd1canswFCQ=="
+      },
+      "expectedRegistrationRevision": 0,
+      "expectedRunRevision": 1,
+      "expectedLeaseVersion": 1
+    },
+    "response": {
+      "requestId": "req_732cf6cfc8be46d4bcaab7fd4d25ba72",
+      "registration": {
+        "binding": {
+          "tenantId": "tenant_demo",
+          "ownerId": "owner_demo",
+          "runId": "run_demo",
+          "sessionId": "session_demo",
+          "producerIncarnation": "runtime_demo",
+          "attemptId": "attempt_comment",
+          "commandId": "cmd_comment",
+          "turnId": "turn_comment",
+          "utteranceId": "utt_comment",
+          "runEpoch": 1,
+          "contractRevision": "durable-live-2",
+          "receiverRevision": "receiver-1",
+          "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+          "roomId": "room_demo",
+          "guardianId": "guardian_demo",
+          "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+          "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+          "runtimeIncarnation": "process_e9fb3bff30e34f0dbbb1c1a157820389",
+          "physicalInstallProofRef": "physical_install_0d2311c2f07546bdbb3397f28b35cb24",
+          "generationId": 1,
+          "outputBindingVersion": 1
+        },
+        "registrationHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7",
+        "revision": 1,
+        "state": "ACTIVE",
+        "registeredAt": "2026-10-16T00:00:00.000Z",
+        "stageReceiptId": "stage_ee8f0639722d45ec8c863d049f61a53c"
+      }
+    }
+  },
+  {
+    "operationId": "RevokeReceiverBootstrap",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_72d74d998cf34d068a031700612da009",
+      "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+      "expectedRegistrationRevision": 1,
+      "reason": "AUTHORITY_LOST"
+    },
+    "response": {
+      "requestId": "req_72d74d998cf34d068a031700612da009",
+      "registration": {
+        "binding": {
+          "tenantId": "tenant_demo",
+          "ownerId": "owner_demo",
+          "runId": "run_demo",
+          "sessionId": "session_demo",
+          "producerIncarnation": "runtime_demo",
+          "attemptId": "attempt_comment",
+          "commandId": "cmd_comment",
+          "turnId": "turn_comment",
+          "utteranceId": "utt_comment",
+          "runEpoch": 1,
+          "contractRevision": "durable-live-2",
+          "receiverRevision": "receiver-1",
+          "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+          "roomId": "room_demo",
+          "guardianId": "guardian_demo",
+          "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+          "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+          "runtimeIncarnation": "process_e9fb3bff30e34f0dbbb1c1a157820389",
+          "physicalInstallProofRef": "physical_install_0d2311c2f07546bdbb3397f28b35cb24",
+          "generationId": 1,
+          "outputBindingVersion": 1
+        },
+        "registrationHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7",
+        "revision": 2,
+        "state": "REVOKED",
+        "registeredAt": "2026-10-16T00:00:00.000Z",
+        "stageReceiptId": "stage_ee8f0639722d45ec8c863d049f61a53c"
+      }
+    }
+  },
+  {
+    "operationId": "QueryReceiverAuthority",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_d763237f13eb4eb9b0e749d84bb1faab",
+      "references": {
+        "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+        "artifactId": "answer_unit_1",
+        "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+        "grantId": "grant_1",
+        "permitId": "renewed_permit_2"
+      }
+    },
+    "response": {
+      "requestId": "req_d763237f13eb4eb9b0e749d84bb1faab",
+      "snapshot": {
+        "registration": {
+          "binding": {
+            "tenantId": "tenant_demo",
+            "ownerId": "owner_demo",
+            "runId": "run_demo",
+            "sessionId": "session_demo",
+            "producerIncarnation": "runtime_demo",
+            "attemptId": "attempt_comment",
+            "commandId": "cmd_comment",
+            "turnId": "turn_comment",
+            "utteranceId": "utt_comment",
+            "runEpoch": 1,
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+            "roomId": "room_demo",
+            "guardianId": "guardian_demo",
+            "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+            "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+            "runtimeIncarnation": "process_e9fb3bff30e34f0dbbb1c1a157820389",
+            "physicalInstallProofRef": "physical_install_0d2311c2f07546bdbb3397f28b35cb24",
+            "generationId": 1,
+            "outputBindingVersion": 1
+          },
+          "registrationHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7",
+          "revision": 1,
+          "state": "ACTIVE",
+          "registeredAt": "2026-10-16T00:00:00.000Z",
+          "stageReceiptId": "stage_ee8f0639722d45ec8c863d049f61a53c"
+        },
+        "artifactRegistration": {
+          "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+          "answerId": "answer_demo",
+          "artifactId": "answer_unit_1",
+          "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+          "bindingHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7",
+          "sequence": 1,
+          "createdAt": "2026-10-16T00:00:00.000Z"
+        },
+        "artifact": {
+          "schemaVersion": "0.5",
+          "contractRevision": "durable-live-2",
+          "tenantId": "tenant_demo",
+          "ownerId": "owner_demo",
+          "runId": "run_demo",
+          "sessionId": "session_demo",
+          "commandId": "cmd_comment",
+          "attemptId": "attempt_comment",
+          "runEpoch": 1,
+          "requestHash": "1d51c2631d4c77181033da9ecd0dcca337311055aa8d2e5a2bde30f2bb22b44c",
+          "producerIncarnation": "runtime_demo",
+          "answerId": "answer_demo",
+          "artifactId": "answer_unit_1",
+          "sequence": 1,
+          "previousArtifactHash": null,
+          "answerText": "这款采用纯棉面料，穿着柔软舒适。",
+          "answerTextHash": "51912a595bdc92deaad2dff0fdd3a0d5e87cbb69dc27abeeff480572504f8aac",
+          "productId": "product_demo",
+          "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+          "factDependencies": [
+            {
+              "kind": "PRODUCT_DETAILS",
+              "productId": "product_demo",
+              "sourceVersion": "product_version_1",
+              "validatedAt": "2026-10-16T00:00:00Z",
+              "expiresAt": "2026-10-16T00:00:02Z",
+              "valueHash": "ef9022e8edadecad47c9f6e7c25daf3d12199e106607f9cd11ff6fdaaf7106e9"
+            }
+          ],
+          "assertionKinds": [
+            "PRODUCT_DETAILS"
+          ],
+          "semanticBoundary": "COMPLETE_SENTENCE",
+          "estimatedDurationMs": 3500,
+          "createdAt": "2026-10-16T00:00:00Z",
+          "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671"
+        },
+        "grant": {
+          "grantId": "grant_1",
+          "commandId": "cmd_comment",
+          "attemptId": "attempt_comment",
+          "sessionId": "session_demo",
+          "runEpoch": 1,
+          "producerIncarnation": "runtime_demo",
+          "answerId": "answer_demo",
+          "artifactId": "answer_unit_1",
+          "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+          "sequence": 1,
+          "permitId": "renewed_permit_2",
+          "factObservationId": "observation_1",
+          "factValidUntil": "2026-10-16T00:00:02.000Z",
+          "issuedAt": "2026-10-16T00:00:00.000Z",
+          "expiresAt": "2026-10-16T00:00:00.800Z",
+          "authorizationScope": "UNIT_START_ONCE"
+        },
+        "grantState": "CONSUMED",
+        "permit": {
+          "tenantId": "tenant_demo",
+          "ownerId": "owner_demo",
+          "runId": "run_demo",
+          "commandId": "cmd_comment",
+          "attemptId": "attempt_comment",
+          "sessionId": "session_demo",
+          "runEpoch": 1,
+          "producerIncarnation": "runtime_demo",
+          "answerId": "answer_demo",
+          "artifactId": "answer_unit_1",
+          "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+          "permitId": "renewed_permit_2",
+          "generationId": 1,
+          "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+          "factObservationId": "observation_1",
+          "issuedAt": "2026-10-16T00:00:00.000Z",
+          "expiresAt": "2026-10-16T00:00:00.800Z"
+        },
+        "observation": {
+          "tenantId": "tenant_demo",
+          "ownerId": "owner_demo",
+          "runId": "run_demo",
+          "commandId": "cmd_comment",
+          "attemptId": "attempt_comment",
+          "sessionId": "session_demo",
+          "runEpoch": 1,
+          "producerIncarnation": "runtime_demo",
+          "answerId": "answer_demo",
+          "artifactId": "answer_unit_1",
+          "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+          "observationId": "observation_1",
+          "generationId": 1,
+          "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+          "factSetHash": "5111b14472da855d30e3263eb0a138f134637fa05d48923e01746a093cd5a7fa",
+          "verifiedAt": "2026-10-16T00:00:00.000Z",
+          "validUntil": "2026-10-16T00:00:02.000Z",
+          "authorityRevision": "authority_demo"
+        },
+        "consumption": {
+          "state": "CONSUMED",
+          "receiptId": "consume_receipt_8837534755504022a30f1d203db85697"
+        },
+        "authorityTime": "2026-10-16T00:00:00.100Z",
+        "validUntil": "2026-10-16T00:00:00.800Z",
+        "timing": {
+          "remainingGrantMs": 700,
+          "remainingProofMs": 700,
+          "safetyMarginMs": 100
+        }
+      }
+    }
+  },
+  {
+    "operationId": "CommitReceiverConsume",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_8f3443c0d197481db322404d4f5377c7",
+      "consumeTicket": "YAPkcy7na_bgPOfXNWjfxwkl96UHxkxjhbyLMB5gmAM",
+      "references": {
+        "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+        "artifactId": "answer_unit_1",
+        "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+        "grantId": "grant_1",
+        "permitId": "renewed_permit_2"
+      },
+      "consumeRequestId": "consume_05a75effe58c4633889abfc2c3b5b2bb",
+      "runtimeIncarnation": "process_e9fb3bff30e34f0dbbb1c1a157820389",
+      "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+      "channelBinding": "67cc381a9fc99e6dfa59b6b7857e77052e5eb5392f0391ccd6b7f581d530a1eb",
+      "expectedRegistrationRevision": 1
+    },
+    "response": {
+      "requestId": "req_8f3443c0d197481db322404d4f5377c7",
+      "consumeAuthorized": true,
+      "consumption": {
+        "runtimeIncarnation": "process_e9fb3bff30e34f0dbbb1c1a157820389",
+        "consumeIdentityHash": "7a17b1d500663c069d9974512728e70178bcba91a8c7ae2e1eaf7f5030fd761c",
+        "receiptId": "consume_receipt_8837534755504022a30f1d203db85697",
+        "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+        "consumeRequestId": "consume_05a75effe58c4633889abfc2c3b5b2bb",
+        "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+        "guardianPrincipalId": "principal_a22dac6c7e7d4bb9848e35bda0f9a5e1",
+        "channelBinding": "67cc381a9fc99e6dfa59b6b7857e77052e5eb5392f0391ccd6b7f581d530a1eb",
+        "registrationHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7",
+        "registrationRevision": 1,
+        "binding": {
+          "tenantId": "tenant_demo",
+          "ownerId": "owner_demo",
+          "runId": "run_demo",
+          "commandId": "cmd_comment",
+          "attemptId": "attempt_comment",
+          "sessionId": "session_demo",
+          "runEpoch": 1,
+          "producerIncarnation": "runtime_demo",
+          "answerId": "answer_demo",
+          "artifactId": "answer_unit_1",
+          "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+          "executionId": "execution_grant_1",
+          "grantId": "grant_1",
+          "generationId": 1,
+          "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+          "consumedAt": "2026-10-16T00:00:00.100Z"
+        }
+      },
+      "consumeTiming": {
+        "remainingGrantMs": 700,
+        "remainingProofMs": 700,
+        "safetyMarginMs": 100
+      },
+      "summary": {
+        "state": "CONSUMED",
+        "receiptId": "consume_receipt_8837534755504022a30f1d203db85697"
+      }
+    }
+  },
+  {
+    "operationId": "ReceiverStage",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_377c4ba5240b425a89306ef0a42309df",
+      "binding": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "sessionId": "session_demo",
+        "producerIncarnation": "runtime_demo",
+        "attemptId": "attempt_comment",
+        "commandId": "cmd_comment",
+        "turnId": "turn_comment",
+        "utteranceId": "utt_comment",
+        "runEpoch": 1,
+        "contractRevision": "durable-live-2",
+        "receiverRevision": "receiver-1",
+        "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+        "roomId": "room_demo",
+        "guardianId": "guardian_demo",
+        "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+        "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+        "runtimeIncarnation": "process_e9fb3bff30e34f0dbbb1c1a157820389",
+        "physicalInstallProofRef": "physical_install_0d2311c2f07546bdbb3397f28b35cb24",
+        "generationId": 1,
+        "outputBindingVersion": 1
+      },
+      "challenge": "challenge_a84cd794d1f545e29ab15247827a59c6",
+      "challengeIssuedAt": "2026-10-16T00:00:00.000Z",
+      "challengeExpiresAt": "2026-10-16T00:00:01Z"
+    },
+    "response": {
+      "requestId": "req_377c4ba5240b425a89306ef0a42309df",
+      "receipt": {
+        "contractRevision": "durable-live-2",
+        "receiverRevision": "receiver-1",
+        "installationRevision": 1,
+        "stageReceiptId": "stage_ee8f0639722d45ec8c863d049f61a53c",
+        "challenge": "challenge_a84cd794d1f545e29ab15247827a59c6",
+        "guardianPrincipalId": "principal_a22dac6c7e7d4bb9848e35bda0f9a5e1",
+        "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+        "keyId": "key_ceacd1e0e82f439da8191a80ae1d3fb5",
+        "bindingHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7",
+        "authorityIssuedAt": "2026-10-16T00:00:00.000Z",
+        "validUntil": "2026-10-16T00:00:01Z",
+        "state": "CLOSED_STAGED",
+        "signature": "6xU+MWUUV4sNs+onG2GXIoAbPQwpV8ov/mmqDc4bll/hJvDk2DOrMeXRhWSWVZvjCMEUXHXxEf9Xd1canswFCQ=="
+      }
+    }
+  },
+  {
+    "operationId": "ReceiverConsume",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_8fdcb9b7eb0e4a4b9c758503081700b0",
+      "references": {
+        "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+        "artifactId": "answer_unit_1",
+        "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+        "grantId": "grant_1",
+        "permitId": "renewed_permit_2"
+      },
+      "consumeTicket": "YAPkcy7na_bgPOfXNWjfxwkl96UHxkxjhbyLMB5gmAM",
+      "consumeRequestId": "consume_05a75effe58c4633889abfc2c3b5b2bb",
+      "expectedGenerationId": 1,
+      "expectedGuardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+      "expectedRegistrationRevision": 1
+    },
+    "response": {
+      "requestId": "req_8fdcb9b7eb0e4a4b9c758503081700b0",
+      "consumeAuthorized": true,
+      "consumption": {
+        "runtimeIncarnation": "process_e9fb3bff30e34f0dbbb1c1a157820389",
+        "consumeIdentityHash": "7a17b1d500663c069d9974512728e70178bcba91a8c7ae2e1eaf7f5030fd761c",
+        "receiptId": "consume_receipt_8837534755504022a30f1d203db85697",
+        "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+        "consumeRequestId": "consume_05a75effe58c4633889abfc2c3b5b2bb",
+        "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+        "guardianPrincipalId": "principal_a22dac6c7e7d4bb9848e35bda0f9a5e1",
+        "channelBinding": "67cc381a9fc99e6dfa59b6b7857e77052e5eb5392f0391ccd6b7f581d530a1eb",
+        "registrationHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7",
+        "registrationRevision": 1,
+        "binding": {
+          "tenantId": "tenant_demo",
+          "ownerId": "owner_demo",
+          "runId": "run_demo",
+          "commandId": "cmd_comment",
+          "attemptId": "attempt_comment",
+          "sessionId": "session_demo",
+          "runEpoch": 1,
+          "producerIncarnation": "runtime_demo",
+          "answerId": "answer_demo",
+          "artifactId": "answer_unit_1",
+          "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+          "executionId": "execution_grant_1",
+          "grantId": "grant_1",
+          "generationId": 1,
+          "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+          "consumedAt": "2026-10-16T00:00:00.100Z"
+        }
+      },
+      "consumeTiming": {
+        "remainingGrantMs": 600,
+        "remainingProofMs": 600,
+        "safetyMarginMs": 100
+      },
+      "summary": {
+        "state": "CONSUMED",
+        "receiptId": "consume_receipt_8837534755504022a30f1d203db85697"
+      }
+    }
+  },
+  {
+    "operationId": "ReceiverRenew",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_f8ea924e39064fc484c16ec009f85ae9",
+      "executionId": "execution_grant_1",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "permitId": "renewed_permit_2"
+    },
+    "response": {
+      "requestId": "req_c52efa102a644d8e896dcb4668e161d8",
+      "state": "PROOF_UPDATED",
+      "permit": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "commandId": "cmd_comment",
+        "attemptId": "attempt_comment",
+        "sessionId": "session_demo",
+        "runEpoch": 1,
+        "producerIncarnation": "runtime_demo",
+        "answerId": "answer_demo",
+        "artifactId": "answer_unit_1",
+        "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+        "permitId": "renewed_permit_2",
+        "generationId": 1,
+        "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+        "factObservationId": "observation_1",
+        "issuedAt": "2026-10-16T00:00:00.000Z",
+        "expiresAt": "2026-10-16T00:00:00.800Z"
+      },
+      "observation": {
+        "tenantId": "tenant_demo",
+        "ownerId": "owner_demo",
+        "runId": "run_demo",
+        "commandId": "cmd_comment",
+        "attemptId": "attempt_comment",
+        "sessionId": "session_demo",
+        "runEpoch": 1,
+        "producerIncarnation": "runtime_demo",
+        "answerId": "answer_demo",
+        "artifactId": "answer_unit_1",
+        "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+        "observationId": "observation_1",
+        "generationId": 1,
+        "productSnapshotVersion": "df3e24030786df0118356a92a677ef4f686661dbbb148c2a3fa5538bc3460762",
+        "factSetHash": "5111b14472da855d30e3263eb0a138f134637fa05d48923e01746a093cd5a7fa",
+        "verifiedAt": "2026-10-16T00:00:00.000Z",
+        "validUntil": "2026-10-16T00:00:02.000Z",
+        "authorityRevision": "authority_demo"
+      },
+      "timing": {
+        "remainingGrantMs": 0,
+        "remainingProofMs": 600,
+        "safetyMarginMs": 100
+      }
+    }
+  },
+  {
+    "operationId": "ReceiverQueryConsumption",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_8d059a166eac40628186196c39f0549d",
+      "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+      "grantId": "grant_1"
+    },
+    "response": {
+      "requestId": "req_8d059a166eac40628186196c39f0549d",
+      "summary": {
+        "state": "CONSUMED",
+        "receiptId": "consume_receipt_8837534755504022a30f1d203db85697"
+      }
+    }
+  },
+  {
+    "operationId": "ReceiverMedia",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_af8f9aad9a5f426481b15cdf6bb2d09e",
+      "executionId": "execution_grant_1",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "permitId": "renewed_permit_2",
+      "kind": "audio",
+      "sequence": 1,
+      "ptsUs": null,
+      "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+    },
+    "response": {
+      "requestId": "req_media",
+      "accepted": true
+    }
+  },
+  {
+    "operationId": "ReceiverFinishUnit",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_0a3eb73562674b0bbbc7a951ec3814a6",
+      "executionId": "execution_grant_1",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671"
+    },
+    "response": {
+      "requestId": "req_finish",
+      "state": "LOCAL_MEDIA_DRAINED",
+      "executionId": "execution_grant_1",
+      "artifactId": "answer_unit_1",
+      "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+      "evidence": {
+        "evidenceType": "ALL_REQUIRED_DRAIN",
+        "evidenceRef": "proof_demo",
+        "evidenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredSinks": [
+          "rtmp_main"
+        ],
+        "sinkProofs": [
+          {
+            "sinkId": "rtmp_main",
+            "kind": "RTMP_PIPE_WRITE",
+            "generationId": 7,
+            "firstAudioSample": 0,
+            "finalAudioSampleExclusive": 84000,
+            "audioConsumedThroughExclusive": 84000,
+            "finalVideoFrame": 87,
+            "videoConsumedThroughFrame": 87,
+            "terminal": true
+          }
+        ],
+        "predecessorCheckpointIds": [
+          "checkpoint_playing"
+        ],
+        "audienceVisibility": "UNVERIFIED"
+      }
+    }
+  },
+  {
+    "operationId": "ReceiverStop",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_cc7b2d383ea24d92a07b4ac278bcf6c4",
+      "runId": "run_demo"
+    },
+    "response": {
+      "requestId": "req_stop",
+      "state": "CLOSED_FENCED",
+      "runId": "run_demo"
+    }
+  },
+  {
+    "operationId": "QueryReceiverConsumption",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_45a824879e864569b1b82bdb5538b8f2",
+      "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+      "grantId": "grant_1"
+    },
+    "response": {
+      "requestId": "req_8d059a166eac40628186196c39f0549d",
+      "summary": {
+        "state": "CONSUMED",
+        "receiptId": "consume_receipt_8837534755504022a30f1d203db85697"
+      }
+    }
+  },
+  {
+    "operationId": "ReadReceiverPhysicalInstallation",
+    "request": {
+      "contractRevision": "durable-live-2",
+      "receiverRevision": "receiver-1",
+      "requestId": "req_fdd50f29c86c49e2beaa3878ee7a4311",
+      "physicalInstallProofRef": "physical_install_0d2311c2f07546bdbb3397f28b35cb24",
+      "expectedBindingHash": "c70f94864207c0c8b120b5029d0401da597e367ff1de7776cc14744f53940fd7"
+    },
+    "response": {
+      "requestId": "req_fdd50f29c86c49e2beaa3878ee7a4311",
+      "installation": {
+        "binding": {
+          "tenantId": "tenant_demo",
+          "ownerId": "owner_demo",
+          "runId": "run_demo",
+          "sessionId": "session_demo",
+          "producerIncarnation": "runtime_demo",
+          "attemptId": "attempt_comment",
+          "commandId": "cmd_comment",
+          "turnId": "turn_comment",
+          "utteranceId": "utt_comment",
+          "runEpoch": 1,
+          "contractRevision": "durable-live-2",
+          "receiverRevision": "receiver-1",
+          "bootstrapId": "bootstrap_7686119de77343169a8a38775ac4ccfe",
+          "roomId": "room_demo",
+          "guardianId": "guardian_demo",
+          "guardianIncarnation": "process_90935561ca74448aae0abc6a61035c6b",
+          "runtimePrincipalId": "principal_7b83296bd47c49e6b58179e7248bddc2",
+          "runtimeIncarnation": "process_e9fb3bff30e34f0dbbb1c1a157820389",
+          "physicalInstallProofRef": "physical_install_0d2311c2f07546bdbb3397f28b35cb24",
+          "generationId": 1,
+          "outputBindingVersion": 1
+        },
+        "installationRevision": 1,
+        "observedByPrincipalId": "principal_9c02b24dbd4a4f64b67f69088d233298",
+        "guardianPrincipalId": "principal_a22dac6c7e7d4bb9848e35bda0f9a5e1",
+        "closedFenceProofRef": "closed_fence_ef8815cb5f45478eae55576bfd32c3a1",
+        "state": "CLOSED_INSTALLED"
+      }
+    }
+  }
+]

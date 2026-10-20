@@ -1,0 +1,41 @@
+{
+  "implementationCommit": "f43d3087f32aaa7053b02bed908ec31c284f44a6",
+  "baseline": "e98d8cf53d1aa5518f9c908785b7a5feae5117f8",
+  "timestamp": "2026-10-17T11:19:15.066270+00:00",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "python": "3.12.13 (main, Jun 11 2026, 03:55:21) [Clang 22.1.3 ]",
+  "files": {
+    "output_guardian/v2/journal.py": "9312a072b029db7a01e4b1d8c3be4bbd900039ec9904286125ab4631f6a265a1",
+    "output_guardian/v2/supervisor.py": "b44fe15c1e5ee687510202f2c9f909dfe3a780af6555168a98227b5a87f1dfef",
+    "output_guardian/v2/ipc.py": "a739c90236a734a0ebfd48f2123ca0be113d3987b05cee1f6014f6e8056e1789",
+    "output_guardian/v2/cpu.py": "20df9c75199163468d0aafdc2cdb5df5142c7a3425be62503152e9b2abc49574",
+    "output_guardian/v2/ports.py": "1009eb2c4877469122faff19e85900b3c1552b86bf15d28d6b41147afddc09bf",
+    "output_guardian/v2/receiver.py": "2a03ba6ef3060a051c0331fe218c6e3b19cbe968df0223a4c4a751a5b9372d3d",
+    "output_guardian/v2/__init__.py": "af1cf2d551dc8b55035c9f6535700fc84cacbb6611d2db7e030ca4d4fdee360a",
+    "output_guardian/v2/gate.py": "da5f117b4d3214ff9efb25b90e8d98528b3ddaaa84a298bcd1b039fe1f5015da",
+    "output_guardian/v2/clocks.py": "6d1039773786bd45e45a2d6d985c46bf387a48f78d3104fc9a7a49ee74ae8877",
+    "output_guardian/v2/__main__.py": "a457fb4a623a0525d115e34ecf7cbd01b0c15e0ea72c34717d3aa0dd5883ccd1",
+    "output_guardian/tests/v2/test_ipc.py": "eb3bb831e9df04e4d45a5c2c4662b87dc5abfb7c7730f129de306f3820ae251b",
+    "output_guardian/tests/v2/conftest.py": "1b3c89a491fc1909af6674cff3eaf6268da2a2b9a97275b8cc6ff3e476d7dbcd",
+    "output_guardian/tests/v2/test_cpu.py": "6efe6e9d289a3ca9f32c4fec6dfbeda680ac55f87fb987e5b8cc444c38417b3e",
+    "output_guardian/tests/v2/test_receiver.py": "78987c079c81c74a0deca96ba697ee5926ccf726bf33b1eff4ef3e6994aa7918",
+    "output_guardian/tests/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "output_guardian/tests/v2/test_crash.py": "4ecf6f067667f0bd2e4b1f05129dcc37e5e7c899174a36f98d341821f3db4219",
+    "infra/guardian/v2/guardian-v2.service": "bc445eea24e7225c49c6147c2b31da1b12391f9496b6c9abe9f7bfee84d2396e",
+    "infra/guardian/v2/runtime-isolation.conf": "f5d670a91a50e5810cb4b0a4d893fc624f0b9475d3f27a018943949633d7a6b5",
+    "infra/guardian/v2/run_acceptance.py": "54dfd18ba1ed0e08106f9ffdbbc013dc6a4697b6f86c7f63146a86a2192966b8"
+  },
+  "realProviderOptIns": "all explicitly disabled",
+  "gpu": "NOT TESTED",
+  "production": "OUTPUT_FENCE_UNPROVEN",
+  "supplementaryTestCommit": "7f21fc4cc6278c6cca4d4674cc787ed4d3be7bb2",
+  "supplementaryFiles": {
+    "output_guardian/tests/v2/test_ipc.py": "eb3bb831e9df04e4d45a5c2c4662b87dc5abfb7c7730f129de306f3820ae251b",
+    "output_guardian/tests/v2/conftest.py": "1b3c89a491fc1909af6674cff3eaf6268da2a2b9a97275b8cc6ff3e476d7dbcd",
+    "output_guardian/tests/v2/test_cpu.py": "6efe6e9d289a3ca9f32c4fec6dfbeda680ac55f87fb987e5b8cc444c38417b3e",
+    "output_guardian/tests/v2/test_receiver.py": "78987c079c81c74a0deca96ba697ee5926ccf726bf33b1eff4ef3e6994aa7918",
+    "output_guardian/tests/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "output_guardian/tests/v2/test_crash.py": "4ecf6f067667f0bd2e4b1f05129dcc37e5e7c899174a36f98d341821f3db4219",
+    "output_guardian/tests/v2/test_restart_identity.py": "84cdcdc82be9d9f9f9fe3d70893aeaf673b615c9867d9ce3088baba7ecb4c3cd"
+  }
+}

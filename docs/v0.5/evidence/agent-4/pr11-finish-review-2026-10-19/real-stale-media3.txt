@@ -1,0 +1,268 @@
+FFF
+=================================== FAILURES ===================================
+__________ test_delayed_old_media_ack_cannot_retire_new_generation[0] __________
+
+rig = <output_guardian.tests.conftest.Rig object at 0x10aa0b470>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10aa0a7b0>
+repeat = 0
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_delayed_old_media_ack_cannot_retire_new_generation(rig,monkeypatch,repeat):
+        await rig.activate();g=rig.guardian
+        entered,release=asyncio.Event(),asyncio.Event();original=g.publisher.call;captured=False
+        async def delayed(message,*a,**kw):
+            nonlocal captured
+            result=await original(message,*a,**kw)
+            if message.get('op')=='audio' and not captured:
+                captured=True;entered.set();await release.wait()
+            return result
+        monkeypatch.setattr(g.publisher,'call',delayed)
+        old=asyncio.create_task(g.media(rig.attempt,{'kind':'audio','sequence':0,'payload':b'\0'*640}))
+        record={'repeat':repeat,'realSql':True,'originalMediaAckOnlyDelayed':True,'physicalProductionAcceptance':False}
+        try:
+            await asyncio.wait_for(entered.wait(),0.5)
+            new=dataclasses.replace(rig.attempt,attemptId='new-attempt',utteranceId='new-utterance',commandId='new-command',generation=2)
+>           permit=await rig.permit();result=await g.bind(new,permit)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tmp/agent4-pr11-final-probes/test_real_stale_media.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+output_guardian/service.py:318: in bind
+    right = await self.authority.permit(attempt, permit_id)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <output_guardian.authority.PostgresAuthority object at 0x10aa0b410>
+attempt = Attempt(binding=Binding(tenantId='t', ownerId='o', roomId='room', runId='run', runEpoch=1, sessionId='session', output...erIncarnation='producer'), attemptId='new-attempt', utteranceId='new-utterance', generation=2, commandId='new-command')
+permit_id = 'p_3de6a60c484f4242811d077327141303'
+
+    async def permit(self, attempt, permit_id):
+        b = attempt.binding
+        self.scope_check(b)
+        sent, mono = clock(), time.monotonic()
+        row = await self.query(
+            """
+          SELECT EXTRACT(EPOCH FROM LEAST(p.expires_at,l.lease_expires_at,
+                         p.issued_at+interval '1 second')-clock_timestamp())::double precision AS remaining
+          FROM dl05_output_permits p
+          JOIN dl05_runs r ON r.run_id=p.run_id
+          JOIN dl05_run_terms t ON t.run_id=r.run_id AND t.run_epoch=p.run_epoch
+          JOIN dl05_run_leases l ON l.run_id=r.run_id AND l.run_epoch=p.run_epoch
+          JOIN dl05_room_outputs o ON o.room_id=p.room_id
+          JOIN dl05_attempts a ON a.run_id=r.run_id AND a.attempt_id=$10
+          JOIN dl05_runtime_inbox i ON i.command_id=a.command_id AND i.attempt_id=a.attempt_id
+          JOIN dl05_run_slots s ON s.run_id=r.run_id AND s.active_attempt_id=a.attempt_id
+          WHERE p.tenant_id=$1 AND p.owner_id=$2 AND p.room_id=$3 AND p.run_id=$4
+          AND p.run_epoch=$5 AND r.run_epoch=$5 AND p.session_id=$6 AND r.current_session_id=$6
+          AND p.output_binding_version=$7 AND p.producer_incarnation=$8 AND p.permit_id=$9
+          AND p.guardian_id=$13 AND t.guardian_id=$13 AND o.guardian_id=$13
+          AND o.active_run_id=p.run_id AND o.output_binding_version=p.output_binding_version
+          AND o.fence_proof_ref=p.fence_proof_ref AND t.output_fence_proof=p.fence_proof_ref
+          AND a.utterance_id=$11 AND a.command_id=$12 AND a.session_id=$6 AND a.run_epoch=$5
+          AND a.executor_incarnation=$8 AND i.producer_incarnation=$8 AND t.producer_incarnation=$8
+          AND i.status='STARTED' AND i.executor_sealed_at IS NULL
+          AND a.last_checkpoint IN ('RUNTIME_ACCEPTED','PLAYING','LOCAL_MEDIA_DRAINED')
+          AND r.stop_revision=0 AND r.desired_state='LIVE' AND r.status='LIVE'
+          AND l.phase='ACTIVE' AND t.phase='ACTIVE' AND l.lease_owner=t.lease_owner
+          AND p.revoked_at IS NULL AND p.expires_at>clock_timestamp()
+          AND l.lease_expires_at>clock_timestamp()
+        """,
+            b.tenantId,
+            b.ownerId,
+            b.roomId,
+            b.runId,
+            b.runEpoch,
+            b.sessionId,
+            b.outputBindingVersion,
+            b.producerIncarnation,
+            permit_id,
+            attempt.attemptId,
+            attempt.utteranceId,
+            attempt.commandId,
+            self.guardian_id,
+        )
+        if row is None:
+>           raise Closed("LEASE_LOST")
+E           output_guardian.model.Closed: LEASE_LOST
+
+output_guardian/authority.py:124: Closed
+__________ test_delayed_old_media_ack_cannot_retire_new_generation[1] __________
+
+rig = <output_guardian.tests.conftest.Rig object at 0x10aa0bce0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10aa0b7a0>
+repeat = 1
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_delayed_old_media_ack_cannot_retire_new_generation(rig,monkeypatch,repeat):
+        await rig.activate();g=rig.guardian
+        entered,release=asyncio.Event(),asyncio.Event();original=g.publisher.call;captured=False
+        async def delayed(message,*a,**kw):
+            nonlocal captured
+            result=await original(message,*a,**kw)
+            if message.get('op')=='audio' and not captured:
+                captured=True;entered.set();await release.wait()
+            return result
+        monkeypatch.setattr(g.publisher,'call',delayed)
+        old=asyncio.create_task(g.media(rig.attempt,{'kind':'audio','sequence':0,'payload':b'\0'*640}))
+        record={'repeat':repeat,'realSql':True,'originalMediaAckOnlyDelayed':True,'physicalProductionAcceptance':False}
+        try:
+            await asyncio.wait_for(entered.wait(),0.5)
+            new=dataclasses.replace(rig.attempt,attemptId='new-attempt',utteranceId='new-utterance',commandId='new-command',generation=2)
+>           permit=await rig.permit();result=await g.bind(new,permit)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tmp/agent4-pr11-final-probes/test_real_stale_media.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+output_guardian/service.py:318: in bind
+    right = await self.authority.permit(attempt, permit_id)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <output_guardian.authority.PostgresAuthority object at 0x10aa97260>
+attempt = Attempt(binding=Binding(tenantId='t', ownerId='o', roomId='room', runId='run', runEpoch=1, sessionId='session', output...erIncarnation='producer'), attemptId='new-attempt', utteranceId='new-utterance', generation=2, commandId='new-command')
+permit_id = 'p_dad78f08ccc64cfcb1c9ef7d75f89aa9'
+
+    async def permit(self, attempt, permit_id):
+        b = attempt.binding
+        self.scope_check(b)
+        sent, mono = clock(), time.monotonic()
+        row = await self.query(
+            """
+          SELECT EXTRACT(EPOCH FROM LEAST(p.expires_at,l.lease_expires_at,
+                         p.issued_at+interval '1 second')-clock_timestamp())::double precision AS remaining
+          FROM dl05_output_permits p
+          JOIN dl05_runs r ON r.run_id=p.run_id
+          JOIN dl05_run_terms t ON t.run_id=r.run_id AND t.run_epoch=p.run_epoch
+          JOIN dl05_run_leases l ON l.run_id=r.run_id AND l.run_epoch=p.run_epoch
+          JOIN dl05_room_outputs o ON o.room_id=p.room_id
+          JOIN dl05_attempts a ON a.run_id=r.run_id AND a.attempt_id=$10
+          JOIN dl05_runtime_inbox i ON i.command_id=a.command_id AND i.attempt_id=a.attempt_id
+          JOIN dl05_run_slots s ON s.run_id=r.run_id AND s.active_attempt_id=a.attempt_id
+          WHERE p.tenant_id=$1 AND p.owner_id=$2 AND p.room_id=$3 AND p.run_id=$4
+          AND p.run_epoch=$5 AND r.run_epoch=$5 AND p.session_id=$6 AND r.current_session_id=$6
+          AND p.output_binding_version=$7 AND p.producer_incarnation=$8 AND p.permit_id=$9
+          AND p.guardian_id=$13 AND t.guardian_id=$13 AND o.guardian_id=$13
+          AND o.active_run_id=p.run_id AND o.output_binding_version=p.output_binding_version
+          AND o.fence_proof_ref=p.fence_proof_ref AND t.output_fence_proof=p.fence_proof_ref
+          AND a.utterance_id=$11 AND a.command_id=$12 AND a.session_id=$6 AND a.run_epoch=$5
+          AND a.executor_incarnation=$8 AND i.producer_incarnation=$8 AND t.producer_incarnation=$8
+          AND i.status='STARTED' AND i.executor_sealed_at IS NULL
+          AND a.last_checkpoint IN ('RUNTIME_ACCEPTED','PLAYING','LOCAL_MEDIA_DRAINED')
+          AND r.stop_revision=0 AND r.desired_state='LIVE' AND r.status='LIVE'
+          AND l.phase='ACTIVE' AND t.phase='ACTIVE' AND l.lease_owner=t.lease_owner
+          AND p.revoked_at IS NULL AND p.expires_at>clock_timestamp()
+          AND l.lease_expires_at>clock_timestamp()
+        """,
+            b.tenantId,
+            b.ownerId,
+            b.roomId,
+            b.runId,
+            b.runEpoch,
+            b.sessionId,
+            b.outputBindingVersion,
+            b.producerIncarnation,
+            permit_id,
+            attempt.attemptId,
+            attempt.utteranceId,
+            attempt.commandId,
+            self.guardian_id,
+        )
+        if row is None:
+>           raise Closed("LEASE_LOST")
+E           output_guardian.model.Closed: LEASE_LOST
+
+output_guardian/authority.py:124: Closed
+__________ test_delayed_old_media_ack_cannot_retire_new_generation[2] __________
+
+rig = <output_guardian.tests.conftest.Rig object at 0x107a20aa0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b6fe630>
+repeat = 2
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_delayed_old_media_ack_cannot_retire_new_generation(rig,monkeypatch,repeat):
+        await rig.activate();g=rig.guardian
+        entered,release=asyncio.Event(),asyncio.Event();original=g.publisher.call;captured=False
+        async def delayed(message,*a,**kw):
+            nonlocal captured
+            result=await original(message,*a,**kw)
+            if message.get('op')=='audio' and not captured:
+                captured=True;entered.set();await release.wait()
+            return result
+        monkeypatch.setattr(g.publisher,'call',delayed)
+        old=asyncio.create_task(g.media(rig.attempt,{'kind':'audio','sequence':0,'payload':b'\0'*640}))
+        record={'repeat':repeat,'realSql':True,'originalMediaAckOnlyDelayed':True,'physicalProductionAcceptance':False}
+        try:
+            await asyncio.wait_for(entered.wait(),0.5)
+            new=dataclasses.replace(rig.attempt,attemptId='new-attempt',utteranceId='new-utterance',commandId='new-command',generation=2)
+>           permit=await rig.permit();result=await g.bind(new,permit)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tmp/agent4-pr11-final-probes/test_real_stale_media.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+output_guardian/service.py:318: in bind
+    right = await self.authority.permit(attempt, permit_id)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <output_guardian.authority.PostgresAuthority object at 0x10b6fe900>
+attempt = Attempt(binding=Binding(tenantId='t', ownerId='o', roomId='room', runId='run', runEpoch=1, sessionId='session', output...erIncarnation='producer'), attemptId='new-attempt', utteranceId='new-utterance', generation=2, commandId='new-command')
+permit_id = 'p_d271c984fd424934825d25b92b5b9030'
+
+    async def permit(self, attempt, permit_id):
+        b = attempt.binding
+        self.scope_check(b)
+        sent, mono = clock(), time.monotonic()
+        row = await self.query(
+            """
+          SELECT EXTRACT(EPOCH FROM LEAST(p.expires_at,l.lease_expires_at,
+                         p.issued_at+interval '1 second')-clock_timestamp())::double precision AS remaining
+          FROM dl05_output_permits p
+          JOIN dl05_runs r ON r.run_id=p.run_id
+          JOIN dl05_run_terms t ON t.run_id=r.run_id AND t.run_epoch=p.run_epoch
+          JOIN dl05_run_leases l ON l.run_id=r.run_id AND l.run_epoch=p.run_epoch
+          JOIN dl05_room_outputs o ON o.room_id=p.room_id
+          JOIN dl05_attempts a ON a.run_id=r.run_id AND a.attempt_id=$10
+          JOIN dl05_runtime_inbox i ON i.command_id=a.command_id AND i.attempt_id=a.attempt_id
+          JOIN dl05_run_slots s ON s.run_id=r.run_id AND s.active_attempt_id=a.attempt_id
+          WHERE p.tenant_id=$1 AND p.owner_id=$2 AND p.room_id=$3 AND p.run_id=$4
+          AND p.run_epoch=$5 AND r.run_epoch=$5 AND p.session_id=$6 AND r.current_session_id=$6
+          AND p.output_binding_version=$7 AND p.producer_incarnation=$8 AND p.permit_id=$9
+          AND p.guardian_id=$13 AND t.guardian_id=$13 AND o.guardian_id=$13
+          AND o.active_run_id=p.run_id AND o.output_binding_version=p.output_binding_version
+          AND o.fence_proof_ref=p.fence_proof_ref AND t.output_fence_proof=p.fence_proof_ref
+          AND a.utterance_id=$11 AND a.command_id=$12 AND a.session_id=$6 AND a.run_epoch=$5
+          AND a.executor_incarnation=$8 AND i.producer_incarnation=$8 AND t.producer_incarnation=$8
+          AND i.status='STARTED' AND i.executor_sealed_at IS NULL
+          AND a.last_checkpoint IN ('RUNTIME_ACCEPTED','PLAYING','LOCAL_MEDIA_DRAINED')
+          AND r.stop_revision=0 AND r.desired_state='LIVE' AND r.status='LIVE'
+          AND l.phase='ACTIVE' AND t.phase='ACTIVE' AND l.lease_owner=t.lease_owner
+          AND p.revoked_at IS NULL AND p.expires_at>clock_timestamp()
+          AND l.lease_expires_at>clock_timestamp()
+        """,
+            b.tenantId,
+            b.ownerId,
+            b.roomId,
+            b.runId,
+            b.runEpoch,
+            b.sessionId,
+            b.outputBindingVersion,
+            b.producerIncarnation,
+            permit_id,
+            attempt.attemptId,
+            attempt.utteranceId,
+            attempt.commandId,
+            self.guardian_id,
+        )
+        if row is None:
+>           raise Closed("LEASE_LOST")
+E           output_guardian.model.Closed: LEASE_LOST
+
+output_guardian/authority.py:124: Closed
+=========================== short test summary info ============================
+FAILED ../../../tmp/agent4-pr11-final-probes/test_real_stale_media.py::test_delayed_old_media_ack_cannot_retire_new_generation[0]
+FAILED ../../../tmp/agent4-pr11-final-probes/test_real_stale_media.py::test_delayed_old_media_ack_cannot_retire_new_generation[1]
+FAILED ../../../tmp/agent4-pr11-final-probes/test_real_stale_media.py::test_delayed_old_media_ack_cannot_retire_new_generation[2]
+3 failed in 1.30s

@@ -1,0 +1,637 @@
+{
+  "contractRevision": "durable-live-2",
+  "receiverRevision": "receiver-1",
+  "scenarios": [
+    {
+      "scenario": "A_LOCAL_STOP_BEFORE_BACKEND",
+      "initialAuthority": {
+        "registered": false,
+        "generationId": null,
+        "guardianIncarnation": null
+      },
+      "bootstrapMessages": [
+        {
+          "fromActor": "CONTROL_REGISTRAR",
+          "toActor": "GUARDIAN",
+          "operationId": "ReceiverStage",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_19416f5005cc484a85f2011c4bfce076",
+            "binding": {
+              "tenantId": "tenant_demo",
+              "ownerId": "owner_demo",
+              "runId": "run_demo",
+              "sessionId": "session_demo",
+              "producerIncarnation": "runtime_demo",
+              "attemptId": "attempt_comment",
+              "commandId": "cmd_comment",
+              "turnId": "turn_comment",
+              "utteranceId": "utt_comment",
+              "runEpoch": 1,
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "bootstrapId": "bootstrap_115b416da88440c9bbd7ce1ef035d583",
+              "roomId": "room_demo",
+              "guardianId": "guardian_demo",
+              "guardianIncarnation": "process_6f2f9c7523cb4487b8ab5cecf98d3c80",
+              "runtimePrincipalId": "principal_cd27dac3d5b34edb884a5c3a98dfae2f",
+              "runtimeIncarnation": "process_a3a73ecab94741bdbd1387c701bac79d",
+              "physicalInstallProofRef": "physical_install_b60762840242430fa301267798695e67",
+              "generationId": 1,
+              "outputBindingVersion": 1
+            },
+            "challenge": "challenge_f5a1c9daa35448379a2af8b225665de7",
+            "challengeIssuedAt": "2026-10-16T00:00:00.000Z",
+            "challengeExpiresAt": "2026-10-16T00:00:01Z"
+          },
+          "response": {
+            "requestId": "req_19416f5005cc484a85f2011c4bfce076",
+            "receipt": {
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "installationRevision": 1,
+              "stageReceiptId": "stage_9b58b460a861467687161eb482290bbc",
+              "challenge": "challenge_f5a1c9daa35448379a2af8b225665de7",
+              "guardianPrincipalId": "principal_1c7529565e774b2392e193ecb27c5484",
+              "guardianIncarnation": "process_6f2f9c7523cb4487b8ab5cecf98d3c80",
+              "keyId": "key_34f949a99c16442990ab66676a2ac971",
+              "bindingHash": "fc6a0b645b3d7af852d7c3ce4dae059b0b62f6627b324e1b8251b7f916594512",
+              "authorityIssuedAt": "2026-10-16T00:00:00.000Z",
+              "validUntil": "2026-10-16T00:00:01Z",
+              "state": "CLOSED_STAGED",
+              "signature": "A/fN7sGaALz51h/DkD80KKtLVuHXK0CtrluV7fLYtmKy8wO8mioHVM77Uq5ymQaTL6Git1nN5TUy5G1m9p+jDg=="
+            }
+          }
+        },
+        {
+          "fromActor": "CONTROL_REGISTRAR",
+          "toActor": "BACKEND",
+          "operationId": "RegisterReceiverBootstrap",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_239915b2c5f743169efa6bb8bfb5aadb",
+            "binding": {
+              "tenantId": "tenant_demo",
+              "ownerId": "owner_demo",
+              "runId": "run_demo",
+              "sessionId": "session_demo",
+              "producerIncarnation": "runtime_demo",
+              "attemptId": "attempt_comment",
+              "commandId": "cmd_comment",
+              "turnId": "turn_comment",
+              "utteranceId": "utt_comment",
+              "runEpoch": 1,
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "bootstrapId": "bootstrap_115b416da88440c9bbd7ce1ef035d583",
+              "roomId": "room_demo",
+              "guardianId": "guardian_demo",
+              "guardianIncarnation": "process_6f2f9c7523cb4487b8ab5cecf98d3c80",
+              "runtimePrincipalId": "principal_cd27dac3d5b34edb884a5c3a98dfae2f",
+              "runtimeIncarnation": "process_a3a73ecab94741bdbd1387c701bac79d",
+              "physicalInstallProofRef": "physical_install_b60762840242430fa301267798695e67",
+              "generationId": 1,
+              "outputBindingVersion": 1
+            },
+            "receipt": {
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "installationRevision": 1,
+              "stageReceiptId": "stage_9b58b460a861467687161eb482290bbc",
+              "challenge": "challenge_f5a1c9daa35448379a2af8b225665de7",
+              "guardianPrincipalId": "principal_1c7529565e774b2392e193ecb27c5484",
+              "guardianIncarnation": "process_6f2f9c7523cb4487b8ab5cecf98d3c80",
+              "keyId": "key_34f949a99c16442990ab66676a2ac971",
+              "bindingHash": "fc6a0b645b3d7af852d7c3ce4dae059b0b62f6627b324e1b8251b7f916594512",
+              "authorityIssuedAt": "2026-10-16T00:00:00.000Z",
+              "validUntil": "2026-10-16T00:00:01Z",
+              "state": "CLOSED_STAGED",
+              "signature": "A/fN7sGaALz51h/DkD80KKtLVuHXK0CtrluV7fLYtmKy8wO8mioHVM77Uq5ymQaTL6Git1nN5TUy5G1m9p+jDg=="
+            },
+            "expectedRegistrationRevision": 0,
+            "expectedRunRevision": 1,
+            "expectedLeaseVersion": 1
+          },
+          "response": {
+            "requestId": "req_239915b2c5f743169efa6bb8bfb5aadb",
+            "registration": {
+              "binding": {
+                "tenantId": "tenant_demo",
+                "ownerId": "owner_demo",
+                "runId": "run_demo",
+                "sessionId": "session_demo",
+                "producerIncarnation": "runtime_demo",
+                "attemptId": "attempt_comment",
+                "commandId": "cmd_comment",
+                "turnId": "turn_comment",
+                "utteranceId": "utt_comment",
+                "runEpoch": 1,
+                "contractRevision": "durable-live-2",
+                "receiverRevision": "receiver-1",
+                "bootstrapId": "bootstrap_115b416da88440c9bbd7ce1ef035d583",
+                "roomId": "room_demo",
+                "guardianId": "guardian_demo",
+                "guardianIncarnation": "process_6f2f9c7523cb4487b8ab5cecf98d3c80",
+                "runtimePrincipalId": "principal_cd27dac3d5b34edb884a5c3a98dfae2f",
+                "runtimeIncarnation": "process_a3a73ecab94741bdbd1387c701bac79d",
+                "physicalInstallProofRef": "physical_install_b60762840242430fa301267798695e67",
+                "generationId": 1,
+                "outputBindingVersion": 1
+              },
+              "registrationHash": "fc6a0b645b3d7af852d7c3ce4dae059b0b62f6627b324e1b8251b7f916594512",
+              "revision": 1,
+              "state": "ACTIVE",
+              "registeredAt": "2026-10-16T00:00:00.000Z",
+              "stageReceiptId": "stage_9b58b460a861467687161eb482290bbc"
+            }
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operationId": "ReceiverStop",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_5b5e96ff5ec546b2ba0468b4f0a34722",
+            "runId": "run_demo"
+          },
+          "response": {
+            "requestId": "req_5b5e96ff5ec546b2ba0468b4f0a34722",
+            "state": "CLOSED_FENCED",
+            "runId": "run_demo"
+          }
+        },
+        {
+          "operationId": "ReceiverConsume",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_6c112ea5581c4277a4511610d8d7e66d",
+            "references": {
+              "bootstrapId": "bootstrap_115b416da88440c9bbd7ce1ef035d583",
+              "artifactId": "answer_unit_1",
+              "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+              "grantId": "grant_1",
+              "permitId": "renewed_permit_2"
+            },
+            "consumeTicket": "lMe-YOPMFqt9_0ToZvb4hK3mOMFhOLEqoIHdqLIZAWA",
+            "consumeRequestId": "consume_c2ac8d81318646888836959bbaec1777",
+            "expectedGenerationId": 1,
+            "expectedGuardianIncarnation": "process_6f2f9c7523cb4487b8ab5cecf98d3c80",
+            "expectedRegistrationRevision": 1
+          },
+          "error": {
+            "requestId": "req_6c112ea5581c4277a4511610d8d7e66d",
+            "code": "RUN_STOPPED"
+          }
+        }
+      ],
+      "linearized": [
+        {
+          "kind": "STOP",
+          "barrierRevision": 2,
+          "runId": "run_demo",
+          "executionId": null
+        }
+      ],
+      "outcome": {
+        "barrierState": "FENCED",
+        "backendRegistrationState": "ACTIVE",
+        "latchCount": 0,
+        "localAuditStates": [],
+        "ttsBefore": 0,
+        "ttsAfter": 0,
+        "acceptedMediaBefore": 0,
+        "acceptedMediaAfter": 0
+      }
+    },
+    {
+      "scenario": "B_STOP_DURING_MEDIA_QUERY",
+      "initialAuthority": {
+        "registered": false,
+        "generationId": null,
+        "guardianIncarnation": null
+      },
+      "bootstrapMessages": [
+        {
+          "fromActor": "CONTROL_REGISTRAR",
+          "toActor": "GUARDIAN",
+          "operationId": "ReceiverStage",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_dc6bcefe596c4002b102faedab03ed42",
+            "binding": {
+              "tenantId": "tenant_demo",
+              "ownerId": "owner_demo",
+              "runId": "run_demo",
+              "sessionId": "session_demo",
+              "producerIncarnation": "runtime_demo",
+              "attemptId": "attempt_comment",
+              "commandId": "cmd_comment",
+              "turnId": "turn_comment",
+              "utteranceId": "utt_comment",
+              "runEpoch": 1,
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "bootstrapId": "bootstrap_09fbaf939c274d8b91333dc412ed3262",
+              "roomId": "room_demo",
+              "guardianId": "guardian_demo",
+              "guardianIncarnation": "process_1c446536dffb454db6eb92b3932d2563",
+              "runtimePrincipalId": "principal_93b3e7b0a341482b92f364ce491aa868",
+              "runtimeIncarnation": "process_c6bb7b022bbf4918a1c0c91602f5829a",
+              "physicalInstallProofRef": "physical_install_7d3c8caeeb984a6489fd200dc667f472",
+              "generationId": 1,
+              "outputBindingVersion": 1
+            },
+            "challenge": "challenge_ba5392e522004968831f1cff997f243f",
+            "challengeIssuedAt": "2026-10-16T00:00:00.000Z",
+            "challengeExpiresAt": "2026-10-16T00:00:01Z"
+          },
+          "response": {
+            "requestId": "req_dc6bcefe596c4002b102faedab03ed42",
+            "receipt": {
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "installationRevision": 1,
+              "stageReceiptId": "stage_81d5afd5afd046b98d3e21454a0a2c5a",
+              "challenge": "challenge_ba5392e522004968831f1cff997f243f",
+              "guardianPrincipalId": "principal_a6735a54efb84001ac9dd2a0a4dc3bf3",
+              "guardianIncarnation": "process_1c446536dffb454db6eb92b3932d2563",
+              "keyId": "key_d8e6d8e4884f4fec9c5b7340e6b7d456",
+              "bindingHash": "099ab878bfa66f9f827cdc8e9ec0ec7a873d77f10d0d7d1e3ef18d728591a835",
+              "authorityIssuedAt": "2026-10-16T00:00:00.000Z",
+              "validUntil": "2026-10-16T00:00:01Z",
+              "state": "CLOSED_STAGED",
+              "signature": "YzfFuQSGevtxtqH8sicO1FW4QnLvbZkPJYjXxSJ2OslMAbGE+N3FGET6/qIL+5NioOv+LcLhMPhiis4Pb5Y+Bw=="
+            }
+          }
+        },
+        {
+          "fromActor": "CONTROL_REGISTRAR",
+          "toActor": "BACKEND",
+          "operationId": "RegisterReceiverBootstrap",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_7d10cf6e95dc45ffbfaa3d3de0821fb9",
+            "binding": {
+              "tenantId": "tenant_demo",
+              "ownerId": "owner_demo",
+              "runId": "run_demo",
+              "sessionId": "session_demo",
+              "producerIncarnation": "runtime_demo",
+              "attemptId": "attempt_comment",
+              "commandId": "cmd_comment",
+              "turnId": "turn_comment",
+              "utteranceId": "utt_comment",
+              "runEpoch": 1,
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "bootstrapId": "bootstrap_09fbaf939c274d8b91333dc412ed3262",
+              "roomId": "room_demo",
+              "guardianId": "guardian_demo",
+              "guardianIncarnation": "process_1c446536dffb454db6eb92b3932d2563",
+              "runtimePrincipalId": "principal_93b3e7b0a341482b92f364ce491aa868",
+              "runtimeIncarnation": "process_c6bb7b022bbf4918a1c0c91602f5829a",
+              "physicalInstallProofRef": "physical_install_7d3c8caeeb984a6489fd200dc667f472",
+              "generationId": 1,
+              "outputBindingVersion": 1
+            },
+            "receipt": {
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "installationRevision": 1,
+              "stageReceiptId": "stage_81d5afd5afd046b98d3e21454a0a2c5a",
+              "challenge": "challenge_ba5392e522004968831f1cff997f243f",
+              "guardianPrincipalId": "principal_a6735a54efb84001ac9dd2a0a4dc3bf3",
+              "guardianIncarnation": "process_1c446536dffb454db6eb92b3932d2563",
+              "keyId": "key_d8e6d8e4884f4fec9c5b7340e6b7d456",
+              "bindingHash": "099ab878bfa66f9f827cdc8e9ec0ec7a873d77f10d0d7d1e3ef18d728591a835",
+              "authorityIssuedAt": "2026-10-16T00:00:00.000Z",
+              "validUntil": "2026-10-16T00:00:01Z",
+              "state": "CLOSED_STAGED",
+              "signature": "YzfFuQSGevtxtqH8sicO1FW4QnLvbZkPJYjXxSJ2OslMAbGE+N3FGET6/qIL+5NioOv+LcLhMPhiis4Pb5Y+Bw=="
+            },
+            "expectedRegistrationRevision": 0,
+            "expectedRunRevision": 1,
+            "expectedLeaseVersion": 1
+          },
+          "response": {
+            "requestId": "req_7d10cf6e95dc45ffbfaa3d3de0821fb9",
+            "registration": {
+              "binding": {
+                "tenantId": "tenant_demo",
+                "ownerId": "owner_demo",
+                "runId": "run_demo",
+                "sessionId": "session_demo",
+                "producerIncarnation": "runtime_demo",
+                "attemptId": "attempt_comment",
+                "commandId": "cmd_comment",
+                "turnId": "turn_comment",
+                "utteranceId": "utt_comment",
+                "runEpoch": 1,
+                "contractRevision": "durable-live-2",
+                "receiverRevision": "receiver-1",
+                "bootstrapId": "bootstrap_09fbaf939c274d8b91333dc412ed3262",
+                "roomId": "room_demo",
+                "guardianId": "guardian_demo",
+                "guardianIncarnation": "process_1c446536dffb454db6eb92b3932d2563",
+                "runtimePrincipalId": "principal_93b3e7b0a341482b92f364ce491aa868",
+                "runtimeIncarnation": "process_c6bb7b022bbf4918a1c0c91602f5829a",
+                "physicalInstallProofRef": "physical_install_7d3c8caeeb984a6489fd200dc667f472",
+                "generationId": 1,
+                "outputBindingVersion": 1
+              },
+              "registrationHash": "099ab878bfa66f9f827cdc8e9ec0ec7a873d77f10d0d7d1e3ef18d728591a835",
+              "revision": 1,
+              "state": "ACTIVE",
+              "registeredAt": "2026-10-16T00:00:00.000Z",
+              "stageReceiptId": "stage_81d5afd5afd046b98d3e21454a0a2c5a"
+            }
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operationId": "ReceiverStop",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_2f17e5a89a8c45d381a50edf376eb9e0",
+            "runId": "run_demo"
+          },
+          "response": {
+            "requestId": "req_2f17e5a89a8c45d381a50edf376eb9e0",
+            "state": "CLOSED_FENCED",
+            "runId": "run_demo"
+          }
+        },
+        {
+          "operationId": "ReceiverMedia",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_0d0e969cf1e54ef2849253985cffea6a",
+            "executionId": "execution_grant_1",
+            "artifactId": "answer_unit_1",
+            "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+            "permitId": "renewed_permit_2",
+            "kind": "audio",
+            "sequence": 0,
+            "ptsUs": null,
+            "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+          },
+          "error": {
+            "requestId": "req_0d0e969cf1e54ef2849253985cffea6a",
+            "code": "CONSUMPTION_UNKNOWN"
+          }
+        }
+      ],
+      "linearized": [
+        {
+          "kind": "CONSUME_ACK",
+          "barrierRevision": 1,
+          "runId": "run_demo",
+          "executionId": "execution_grant_1"
+        },
+        {
+          "kind": "RENEW",
+          "barrierRevision": 1,
+          "runId": "run_demo",
+          "executionId": "execution_grant_1"
+        },
+        {
+          "kind": "STOP",
+          "barrierRevision": 2,
+          "runId": "run_demo",
+          "executionId": null
+        }
+      ],
+      "outcome": {
+        "barrierState": "FENCED",
+        "backendRegistrationState": "REVOKED",
+        "latchCount": 1,
+        "localAuditStates": [
+          "UNKNOWN"
+        ],
+        "ttsBefore": 1,
+        "ttsAfter": 1,
+        "acceptedMediaBefore": 0,
+        "acceptedMediaAfter": 0
+      }
+    },
+    {
+      "scenario": "C_STOP_DURING_LAST_CONSUME_QUERY",
+      "initialAuthority": {
+        "registered": false,
+        "generationId": null,
+        "guardianIncarnation": null
+      },
+      "bootstrapMessages": [
+        {
+          "fromActor": "CONTROL_REGISTRAR",
+          "toActor": "GUARDIAN",
+          "operationId": "ReceiverStage",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_3d0d708c80dd482f9892eb2413cbd172",
+            "binding": {
+              "tenantId": "tenant_demo",
+              "ownerId": "owner_demo",
+              "runId": "run_demo",
+              "sessionId": "session_demo",
+              "producerIncarnation": "runtime_demo",
+              "attemptId": "attempt_comment",
+              "commandId": "cmd_comment",
+              "turnId": "turn_comment",
+              "utteranceId": "utt_comment",
+              "runEpoch": 1,
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "bootstrapId": "bootstrap_6afedbccc3a6415f830b28685900e304",
+              "roomId": "room_demo",
+              "guardianId": "guardian_demo",
+              "guardianIncarnation": "process_ededdd24ea434d4baa9f138b44249613",
+              "runtimePrincipalId": "principal_beb43d046d6a48c094cdd8a8c3a8f5ca",
+              "runtimeIncarnation": "process_b3a67eb6a73b4d32bc58c60ef8edbcbd",
+              "physicalInstallProofRef": "physical_install_1c2e35bd3617493a979ad01b7d2e571f",
+              "generationId": 1,
+              "outputBindingVersion": 1
+            },
+            "challenge": "challenge_414e974a6d3a4a4b94252887f0021f2f",
+            "challengeIssuedAt": "2026-10-16T00:00:00.000Z",
+            "challengeExpiresAt": "2026-10-16T00:00:01Z"
+          },
+          "response": {
+            "requestId": "req_3d0d708c80dd482f9892eb2413cbd172",
+            "receipt": {
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "installationRevision": 1,
+              "stageReceiptId": "stage_f8b9920030c0445b9a88674f2e14fe67",
+              "challenge": "challenge_414e974a6d3a4a4b94252887f0021f2f",
+              "guardianPrincipalId": "principal_53ab2667f93444ed8ace48d4c8da8de3",
+              "guardianIncarnation": "process_ededdd24ea434d4baa9f138b44249613",
+              "keyId": "key_44b2f228310542689042fdcde990a15a",
+              "bindingHash": "d8477220cdf39f76af37e07e9b23a5b64e8cca1b45de66e894097866effb2ef1",
+              "authorityIssuedAt": "2026-10-16T00:00:00.000Z",
+              "validUntil": "2026-10-16T00:00:01Z",
+              "state": "CLOSED_STAGED",
+              "signature": "FGwkOa3DGcqU5It57vdSyFlJuYDVqYIziEW7YV6r8XvuEEn/WimbOU3zEIG3UDaOdwdlFmD4+aXEBSguCrg7Dw=="
+            }
+          }
+        },
+        {
+          "fromActor": "CONTROL_REGISTRAR",
+          "toActor": "BACKEND",
+          "operationId": "RegisterReceiverBootstrap",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_8ead709f82f646018bab9a4df3047d94",
+            "binding": {
+              "tenantId": "tenant_demo",
+              "ownerId": "owner_demo",
+              "runId": "run_demo",
+              "sessionId": "session_demo",
+              "producerIncarnation": "runtime_demo",
+              "attemptId": "attempt_comment",
+              "commandId": "cmd_comment",
+              "turnId": "turn_comment",
+              "utteranceId": "utt_comment",
+              "runEpoch": 1,
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "bootstrapId": "bootstrap_6afedbccc3a6415f830b28685900e304",
+              "roomId": "room_demo",
+              "guardianId": "guardian_demo",
+              "guardianIncarnation": "process_ededdd24ea434d4baa9f138b44249613",
+              "runtimePrincipalId": "principal_beb43d046d6a48c094cdd8a8c3a8f5ca",
+              "runtimeIncarnation": "process_b3a67eb6a73b4d32bc58c60ef8edbcbd",
+              "physicalInstallProofRef": "physical_install_1c2e35bd3617493a979ad01b7d2e571f",
+              "generationId": 1,
+              "outputBindingVersion": 1
+            },
+            "receipt": {
+              "contractRevision": "durable-live-2",
+              "receiverRevision": "receiver-1",
+              "installationRevision": 1,
+              "stageReceiptId": "stage_f8b9920030c0445b9a88674f2e14fe67",
+              "challenge": "challenge_414e974a6d3a4a4b94252887f0021f2f",
+              "guardianPrincipalId": "principal_53ab2667f93444ed8ace48d4c8da8de3",
+              "guardianIncarnation": "process_ededdd24ea434d4baa9f138b44249613",
+              "keyId": "key_44b2f228310542689042fdcde990a15a",
+              "bindingHash": "d8477220cdf39f76af37e07e9b23a5b64e8cca1b45de66e894097866effb2ef1",
+              "authorityIssuedAt": "2026-10-16T00:00:00.000Z",
+              "validUntil": "2026-10-16T00:00:01Z",
+              "state": "CLOSED_STAGED",
+              "signature": "FGwkOa3DGcqU5It57vdSyFlJuYDVqYIziEW7YV6r8XvuEEn/WimbOU3zEIG3UDaOdwdlFmD4+aXEBSguCrg7Dw=="
+            },
+            "expectedRegistrationRevision": 0,
+            "expectedRunRevision": 1,
+            "expectedLeaseVersion": 1
+          },
+          "response": {
+            "requestId": "req_8ead709f82f646018bab9a4df3047d94",
+            "registration": {
+              "binding": {
+                "tenantId": "tenant_demo",
+                "ownerId": "owner_demo",
+                "runId": "run_demo",
+                "sessionId": "session_demo",
+                "producerIncarnation": "runtime_demo",
+                "attemptId": "attempt_comment",
+                "commandId": "cmd_comment",
+                "turnId": "turn_comment",
+                "utteranceId": "utt_comment",
+                "runEpoch": 1,
+                "contractRevision": "durable-live-2",
+                "receiverRevision": "receiver-1",
+                "bootstrapId": "bootstrap_6afedbccc3a6415f830b28685900e304",
+                "roomId": "room_demo",
+                "guardianId": "guardian_demo",
+                "guardianIncarnation": "process_ededdd24ea434d4baa9f138b44249613",
+                "runtimePrincipalId": "principal_beb43d046d6a48c094cdd8a8c3a8f5ca",
+                "runtimeIncarnation": "process_b3a67eb6a73b4d32bc58c60ef8edbcbd",
+                "physicalInstallProofRef": "physical_install_1c2e35bd3617493a979ad01b7d2e571f",
+                "generationId": 1,
+                "outputBindingVersion": 1
+              },
+              "registrationHash": "d8477220cdf39f76af37e07e9b23a5b64e8cca1b45de66e894097866effb2ef1",
+              "revision": 1,
+              "state": "ACTIVE",
+              "registeredAt": "2026-10-16T00:00:00.000Z",
+              "stageReceiptId": "stage_f8b9920030c0445b9a88674f2e14fe67"
+            }
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operationId": "ReceiverStop",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_9d6ee3e36a454ac0866d832554cd020c",
+            "runId": "run_demo"
+          },
+          "response": {
+            "requestId": "req_9d6ee3e36a454ac0866d832554cd020c",
+            "state": "CLOSED_FENCED",
+            "runId": "run_demo"
+          }
+        },
+        {
+          "operationId": "ReceiverConsume",
+          "request": {
+            "contractRevision": "durable-live-2",
+            "receiverRevision": "receiver-1",
+            "requestId": "req_4644cfb4da874315866ec08a4fac9847",
+            "references": {
+              "bootstrapId": "bootstrap_6afedbccc3a6415f830b28685900e304",
+              "artifactId": "answer_unit_1",
+              "artifactHash": "abcd4b3cb02ef73a4c84ff957a2ee500dd34b02398570ccc793d75320fdad671",
+              "grantId": "grant_1",
+              "permitId": "renewed_permit_2"
+            },
+            "consumeTicket": "mcS7g13BlXAKaWXwQG7ThDLP2BcIcNmoWz97CUojt0I",
+            "consumeRequestId": "consume_31178685dc4343babe5b9bba863a4327",
+            "expectedGenerationId": 1,
+            "expectedGuardianIncarnation": "process_ededdd24ea434d4baa9f138b44249613",
+            "expectedRegistrationRevision": 1
+          },
+          "error": {
+            "requestId": "req_4644cfb4da874315866ec08a4fac9847",
+            "code": "CONSUMPTION_UNKNOWN"
+          }
+        }
+      ],
+      "linearized": [
+        {
+          "kind": "STOP",
+          "barrierRevision": 2,
+          "runId": "run_demo",
+          "executionId": null
+        }
+      ],
+      "outcome": {
+        "barrierState": "FENCED",
+        "backendRegistrationState": "REVOKED",
+        "latchCount": 1,
+        "localAuditStates": [
+          "UNKNOWN"
+        ],
+        "ttsBefore": 0,
+        "ttsAfter": 0,
+        "acceptedMediaBefore": 0,
+        "acceptedMediaAfter": 0
+      }
+    }
+  ],
+  "note": "Typed synthetic errors and local commit ordering from actual registered actor fixtures; not physical IPC/SQL/media acceptance."
+}

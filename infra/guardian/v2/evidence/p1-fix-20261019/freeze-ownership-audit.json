@@ -1,0 +1,27 @@
+{
+  "testedImplementation": "dabe495fcc8102febe2ee1512f295a37662f34ae",
+  "integration": "0cc1a141e443ee1069dc997a91182e4b48257be5",
+  "frozenCommit": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+  "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+  "normativeFiles": 22,
+  "normativeAllByteIdentical": true,
+  "protectedFiles": 313,
+  "protectedMismatches": [],
+  "unchangedIntegrationFiles": [
+    "contracts/v0.5/durable-live-2/manifest.json",
+    "contracts/v0.5/durable-live-2/protected-files.json",
+    "scripts/validate-answer-contract.py",
+    "scripts/validate-durable-live-contracts.py"
+  ],
+  "migrations": {
+    "backend/db/migrations/000001_init.sql": "f39efce5acdf9c39f0b91a1dac4e99131348bc474ff99653083ccdafbc80597b",
+    "backend/db/migrations/000002_live_room_active_product.sql": "a3de02fc9c767e380626c6f892ed6ab381b55b502bf25a472b4eb2b29bc56e30",
+    "backend/db/migrations/000003_user_configuration.sql": "60bbe82d59abf5df2decb01b9725109960cf18ff5b14af9cb54bad7a438d8af3",
+    "backend/db/migrations/000004_session_integration.sql": "3a3db0853c318bac95dee5379ea9e409bfea4ba812aaa2087b7045cdd2407ef1",
+    "backend/db/migrations/000005_interaction_receipts.sql": "b40a4aae20ba9bfc1f16ff3f0ee56d19c564e753c23d5ff5d875acef16dd3872",
+    "backend/db/migrations/000006_durable_live.sql": "934fe2904e00e011297d21eb55963e45815544716d9ed5baf24b5f7062d9fdea",
+    "backend/db/migrations/000007_answer_stream.sql": "2c77dd37eeca99406e13a84f9c012f126fb1bd842a87d82e04d6ec31307b5cf5"
+  },
+  "sharedUnexpectedDiff": [],
+  "generatedAtUTC": "2026-10-19T00:06:47.843478+00:00"
+}

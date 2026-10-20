@@ -1,0 +1,9 @@
+{"Time":"2026-10-18T08:33:00.259322+08:00","Action":"start","Package":"astralive/backend/internal/durableintegration"}
+{"Time":"2026-10-18T08:33:00.699465+08:00","Action":"run","Package":"astralive/backend/internal/durableintegration","Test":"TestPostgresLegacyMigrationUpgradePreservesData"}
+{"Time":"2026-10-18T08:33:00.699568+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration","Test":"TestPostgresLegacyMigrationUpgradePreservesData","Output":"=== RUN   TestPostgresLegacyMigrationUpgradePreservesData\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:33:00.953731+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration","Test":"TestPostgresLegacyMigrationUpgradePreservesData","Output":"    integration_test.go:487: 7 \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-18T08:33:00.953859+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration","Test":"TestPostgresLegacyMigrationUpgradePreservesData","Output":"--- FAIL: TestPostgresLegacyMigrationUpgradePreservesData (0.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:33:00.953871+08:00","Action":"fail","Package":"astralive/backend/internal/durableintegration","Test":"TestPostgresLegacyMigrationUpgradePreservesData","Elapsed":0.25}
+{"Time":"2026-10-18T08:33:00.9539+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:33:00.955488+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration","Output":"FAIL\tastralive/backend/internal/durableintegration\t0.696s\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:33:00.955506+08:00","Action":"fail","Package":"astralive/backend/internal/durableintegration","Elapsed":0.696}

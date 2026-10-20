@@ -1,0 +1,39 @@
+{'ordinaryFilesOnly': True, 'unknownDescendant': 'unregistered-descendant', 'killWrite': '1', 'rejected': True, 'result': None}
+F
+=================================== FAILURES ===================================
+___________ test_unknown_descendant_must_not_receive_recursive_kill ____________
+
+tmp_path = PosixPath('/private/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/pytest-of-sapiece/pytest-188/test_unknown_descendant_must_n0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109bcb2f0>
+
+    def test_unknown_descendant_must_not_receive_recursive_kill(tmp_path, monkeypatch):
+        path = tmp_path / 'owned-leaf'
+        path.mkdir(mode=0o700)
+        (path / 'cgroup.procs').write_text('')
+        (path / 'cgroup.kill').write_text('')
+        (path / 'cgroup.events').write_text('populated 1\n')
+        nested = path / 'unregistered-descendant'
+        nested.mkdir(mode=0o700)
+        (nested / 'cgroup.procs').write_text('999999\n')  # inert marker, never a PID syscall
+        group = linux_fence.OwnedCgroup.__new__(linux_fence.OwnedCgroup)
+        group.path, group.inode = path, path.stat().st_ino
+        group.members, group.retired = {}, False
+        monkeypatch.setattr(linux_fence, '_cgroup2', lambda p: None)
+        rejected, result = False, None
+        try:
+            result = group.fence()
+        except Closed:
+            rejected = True
+        kill = (path / 'cgroup.kill').read_text()
+        print({'ordinaryFilesOnly': True, 'unknownDescendant': str(nested.name),
+               'killWrite': kill, 'rejected': rejected, 'result': result})
+>       assert rejected and kill == '', 'P1: recursive kill issued without checking unknown descendant scope'
+E       AssertionError: P1: recursive kill issued without checking unknown descendant scope
+E       assert (True and '1' == ''
+E         
+E         + 1)
+
+/tmp/agent4-pr11-probes/test_owned_cgroup_scope.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../tmp/agent4-pr11-probes/test_owned_cgroup_scope.py::test_unknown_descendant_must_not_receive_recursive_kill
+1 failed in 0.32s

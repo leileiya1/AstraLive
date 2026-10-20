@@ -1,5 +1,7 @@
 # durable-live-1 恢复语义
 
+> CCR-ADL-001 review at PR8 `01a752baf79c25d4d268167d016c8c62e754cfdf`: active durable-live-1 is preserved. [durable-live-2 incremental answer candidate](ccr/CCR-ADL-001.md) and [migration/owner handoff](ccr/CCR-ADL-001-HANDOFF.md) are PENDING OWNER ACK; this historical v1 freeze does not approve that upgrade.
+
 默认 recoveryPolicy=MANUAL_ON_UNKNOWN；可选 SAFE_SCRIPT_NEXT_BOUNDARY 仅自动恢复已证明未开始或已本地完成的脚本下一段，不能覆盖UNKNOWN媒体。任何策略均不自动重播歧义评论。逻辑run恢复可绑定新的physical Session；终态Session不复活，新Session重新capture合法Provider Binding，保持现有product context规则。
 
 | 故障情形 | 持久事实与处理 |

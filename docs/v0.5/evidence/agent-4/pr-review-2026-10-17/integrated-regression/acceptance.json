@@ -1,0 +1,363 @@
+{
+  "contractRevision": "durable-live-1",
+  "ownedCluster": "/tmp/astralive-agent2-agent4-jyhko6wq",
+  "commands": [
+    {
+      "command": [
+        "initdb",
+        "-D",
+        "/tmp/astralive-agent2-agent4-jyhko6wq/pg",
+        "--auth=trust",
+        "--no-locale",
+        "-E",
+        "UTF8"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "initdb.log",
+      "elapsedSeconds": 0.324,
+      "userCPUSeconds": 0.159,
+      "systemCPUSeconds": 0.156,
+      "cumulativeChildrenPeakRSS": 51036160,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "pg_ctl",
+        "-D",
+        "/tmp/astralive-agent2-agent4-jyhko6wq/pg",
+        "-l",
+        "/tmp/astralive-agent2-agent4-jyhko6wq/postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 55462 -k /tmp",
+        "-w",
+        "start"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "postgres-start.log",
+      "elapsedSeconds": 0.126,
+      "userCPUSeconds": 0.008,
+      "systemCPUSeconds": 0.005,
+      "cumulativeChildrenPeakRSS": 51036160,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "createdb",
+        "-h",
+        "127.0.0.1",
+        "-p",
+        "55462",
+        "agent2_agent4_acceptance"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "createdb.log",
+      "elapsedSeconds": 0.053,
+      "userCPUSeconds": 0.009,
+      "systemCPUSeconds": 0.005,
+      "cumulativeChildrenPeakRSS": 51036160,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "redis-server",
+        "--bind",
+        "127.0.0.1",
+        "--port",
+        "56382",
+        "--dir",
+        "/tmp/astralive-agent2-agent4-jyhko6wq/redis",
+        "--save",
+        "",
+        "--appendonly",
+        "no",
+        "--daemonize",
+        "yes",
+        "--pidfile",
+        "/tmp/astralive-agent2-agent4-jyhko6wq/redis/redis.pid",
+        "--logfile",
+        "/tmp/astralive-agent2-agent4-jyhko6wq/redis/redis.log"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "redis-start.log",
+      "elapsedSeconds": 0.015,
+      "userCPUSeconds": 0.003,
+      "systemCPUSeconds": 0.003,
+      "cumulativeChildrenPeakRSS": 51036160,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-p",
+        "1",
+        "./...",
+        "-count=1",
+        "-json"
+      ],
+      "cwd": "backend",
+      "exitCode": 0,
+      "log": "go-test.jsonl",
+      "elapsedSeconds": 19.056,
+      "userCPUSeconds": 5.078,
+      "systemCPUSeconds": 2.61,
+      "cumulativeChildrenPeakRSS": 373030912,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-p",
+        "1",
+        "./...",
+        "-count=1",
+        "-json"
+      ],
+      "cwd": "backend",
+      "exitCode": 0,
+      "log": "go-race.jsonl",
+      "elapsedSeconds": 43.262,
+      "userCPUSeconds": 12.757,
+      "systemCPUSeconds": 3.042,
+      "cumulativeChildrenPeakRSS": 404848640,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "backend",
+      "exitCode": 0,
+      "log": "go-vet.log",
+      "elapsedSeconds": 0.178,
+      "userCPUSeconds": 0.214,
+      "systemCPUSeconds": 0.909,
+      "cumulativeChildrenPeakRSS": 404848640,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "runtime-unittest.log",
+      "elapsedSeconds": 10.108,
+      "userCPUSeconds": 1.351,
+      "systemCPUSeconds": 0.327,
+      "cumulativeChildrenPeakRSS": 404848640,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "-m",
+        "pytest",
+        "runtime/tests/test_durable_live_journal.py",
+        "-q"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "runtime-journal.log",
+      "elapsedSeconds": 0.525,
+      "userCPUSeconds": 0.225,
+      "systemCPUSeconds": 0.039,
+      "cumulativeChildrenPeakRSS": 404848640,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "scripts/validate-durable-live-contracts.py"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "contract-schema.log",
+      "elapsedSeconds": 0.126,
+      "userCPUSeconds": 0.112,
+      "systemCPUSeconds": 0.009,
+      "cumulativeChildrenPeakRSS": 404848640,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_contracts",
+        "tests.test_durable_live_contracts",
+        "-v"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "contract-unittest.log",
+      "elapsedSeconds": 17.392,
+      "userCPUSeconds": 0.644,
+      "systemCPUSeconds": 0.064,
+      "cumulativeChildrenPeakRSS": 404848640,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "bun",
+        "install",
+        "--frozen-lockfile"
+      ],
+      "cwd": "frontend",
+      "exitCode": 0,
+      "log": "bun-install.log",
+      "elapsedSeconds": 0.104,
+      "userCPUSeconds": 0.008,
+      "systemCPUSeconds": 0.023,
+      "cumulativeChildrenPeakRSS": 404848640,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "test"
+      ],
+      "cwd": "frontend",
+      "exitCode": 0,
+      "log": "bun-test.log",
+      "elapsedSeconds": 1.727,
+      "userCPUSeconds": 8.251,
+      "systemCPUSeconds": 2.855,
+      "cumulativeChildrenPeakRSS": 404848640,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "build"
+      ],
+      "cwd": "frontend",
+      "exitCode": 0,
+      "log": "bun-build.log",
+      "elapsedSeconds": 2.748,
+      "userCPUSeconds": 3.757,
+      "systemCPUSeconds": 0.687,
+      "cumulativeChildrenPeakRSS": 581009408,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "diff-check.log",
+      "elapsedSeconds": 0.012,
+      "userCPUSeconds": 0.004,
+      "systemCPUSeconds": 0.007,
+      "cumulativeChildrenPeakRSS": 581009408,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "go",
+        "version"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "go-version.log",
+      "elapsedSeconds": 0.008,
+      "userCPUSeconds": 0.003,
+      "systemCPUSeconds": 0.003,
+      "cumulativeChildrenPeakRSS": 581009408,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "/tmp/astralive-agent2-python/bin/python",
+        "--version"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "python-version.log",
+      "elapsedSeconds": 0.007,
+      "userCPUSeconds": 0.003,
+      "systemCPUSeconds": 0.002,
+      "cumulativeChildrenPeakRSS": 581009408,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "postgres",
+        "--version"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "postgres-version.log",
+      "elapsedSeconds": 0.011,
+      "userCPUSeconds": 0.006,
+      "systemCPUSeconds": 0.003,
+      "cumulativeChildrenPeakRSS": 581009408,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "redis-server",
+        "--version"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "redis-version.log",
+      "elapsedSeconds": 0.006,
+      "userCPUSeconds": 0.003,
+      "systemCPUSeconds": 0.002,
+      "cumulativeChildrenPeakRSS": 581009408,
+      "rssUnit": "bytes"
+    },
+    {
+      "command": [
+        "bun",
+        "--version"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "bun-version.log",
+      "elapsedSeconds": 0.005,
+      "userCPUSeconds": 0.002,
+      "systemCPUSeconds": 0.001,
+      "cumulativeChildrenPeakRSS": 581009408,
+      "rssUnit": "bytes"
+    }
+  ],
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "gpu": {
+    "status": "NOT TESTED",
+    "samples": 0,
+    "reason": "OUTPUT_FENCE_UNPROVEN and pending CCR-ADL-001"
+  },
+  "mediaProofs": "Controlled fixtures, not production Guardian/GPU/Chrome/RTMP",
+  "sourceSHA": "d511302caea1c1dff5c90f4757eca4a46eeff1f9",
+  "dirtySource": [
+    "?? docs/v0.5/evidence/agent-4/pr-review-2026-10-17/"
+  ],
+  "sourceUnchangedDuringVerification": true,
+  "ownedServicesCleanupExitCodes": [
+    0,
+    0
+  ]
+}

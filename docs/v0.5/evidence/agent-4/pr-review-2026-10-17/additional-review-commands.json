@@ -1,0 +1,34 @@
+[
+  {
+    "command": [
+      "PYTHONPATH=.",
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "docs/v0.5/evidence/agent-4/pr-review-2026-10-17/runtime_version_probe.py",
+      "/tmp/astralive-agent4-pr9-review-moe6ipm2"
+    ],
+    "exitCode": 0,
+    "log": "runtime-version-probe.json"
+  },
+  {
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/python",
+      "docs/v0.5/evidence/agent-4/pr-review-2026-10-17/pr9_review_probe.py",
+      "/tmp/astralive-agent4-pr9-review-moe6ipm2"
+    ],
+    "exitCode": 0,
+    "log": "pr9-targeted-reproduction.log"
+  },
+  {
+    "command": [
+      "/Users/sapiece/innovationProject/AstraLive-agent-5/.venv-guardian/bin/ruff",
+      "check",
+      "--isolated",
+      "--select",
+      "E4,E7,E9,F,I",
+      "output_guardian",
+      "runtime/app/guardian_media.py"
+    ],
+    "exitCode": 0,
+    "log": "guardian-lint.log"
+  }
+]

@@ -1,0 +1,58 @@
+FFF
+=================================== FAILURES ===================================
+___ test_fixture_permit_writes_need_separate_connection_or_serialization[0] ____
+
+rig = <output_guardian.tests.conftest.Rig object at 0x10cffed20>, repeat = 0
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_fixture_permit_writes_need_separate_connection_or_serialization(rig,repeat):
+        await rig.activate()
+        results=await asyncio.gather(rig.permit(),rig.permit(),return_exceptions=True)
+        errors=[type(x).__name__ for x in results if isinstance(x,BaseException)]
+        out=Path('/tmp/agent4-pr11-final-results/fixture-concurrency');out.mkdir(exist_ok=True)
+        (out/f'case-{repeat}.json').write_text(json.dumps(dict(errors=errors,realPrivatePostgres=True,fixtureOnly=True,productionAuthorityUsesItsOwnLock=True),indent=2)+'\n')
+>       assert not errors,'Shared test-only Rig.db used concurrently without serialization'
+E       AssertionError: Shared test-only Rig.db used concurrently without serialization
+E       assert not ['InterfaceError']
+
+/tmp/agent4-pr11-final-probes/test_fixture_sql_concurrency.py:14: AssertionError
+___ test_fixture_permit_writes_need_separate_connection_or_serialization[1] ____
+
+rig = <output_guardian.tests.conftest.Rig object at 0x10cfff2c0>, repeat = 1
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_fixture_permit_writes_need_separate_connection_or_serialization(rig,repeat):
+        await rig.activate()
+        results=await asyncio.gather(rig.permit(),rig.permit(),return_exceptions=True)
+        errors=[type(x).__name__ for x in results if isinstance(x,BaseException)]
+        out=Path('/tmp/agent4-pr11-final-results/fixture-concurrency');out.mkdir(exist_ok=True)
+        (out/f'case-{repeat}.json').write_text(json.dumps(dict(errors=errors,realPrivatePostgres=True,fixtureOnly=True,productionAuthorityUsesItsOwnLock=True),indent=2)+'\n')
+>       assert not errors,'Shared test-only Rig.db used concurrently without serialization'
+E       AssertionError: Shared test-only Rig.db used concurrently without serialization
+E       assert not ['InterfaceError']
+
+/tmp/agent4-pr11-final-probes/test_fixture_sql_concurrency.py:14: AssertionError
+___ test_fixture_permit_writes_need_separate_connection_or_serialization[2] ____
+
+rig = <output_guardian.tests.conftest.Rig object at 0x10d08a000>, repeat = 2
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_fixture_permit_writes_need_separate_connection_or_serialization(rig,repeat):
+        await rig.activate()
+        results=await asyncio.gather(rig.permit(),rig.permit(),return_exceptions=True)
+        errors=[type(x).__name__ for x in results if isinstance(x,BaseException)]
+        out=Path('/tmp/agent4-pr11-final-results/fixture-concurrency');out.mkdir(exist_ok=True)
+        (out/f'case-{repeat}.json').write_text(json.dumps(dict(errors=errors,realPrivatePostgres=True,fixtureOnly=True,productionAuthorityUsesItsOwnLock=True),indent=2)+'\n')
+>       assert not errors,'Shared test-only Rig.db used concurrently without serialization'
+E       AssertionError: Shared test-only Rig.db used concurrently without serialization
+E       assert not ['InterfaceError']
+
+/tmp/agent4-pr11-final-probes/test_fixture_sql_concurrency.py:14: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../tmp/agent4-pr11-final-probes/test_fixture_sql_concurrency.py::test_fixture_permit_writes_need_separate_connection_or_serialization[0]
+FAILED ../../../tmp/agent4-pr11-final-probes/test_fixture_sql_concurrency.py::test_fixture_permit_writes_need_separate_connection_or_serialization[1]
+FAILED ../../../tmp/agent4-pr11-final-probes/test_fixture_sql_concurrency.py::test_fixture_permit_writes_need_separate_connection_or_serialization[2]
+3 failed in 1.22s

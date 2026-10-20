@@ -1,0 +1,49 @@
+# CCR-ADL-001: durable answer preparation
+
+当前决策：CCR-ADL-001已由Agent1正式批准，三方同pin ACK齐备，PR9已正常合入integration。权威审批见 [FINAL-APPROVAL](ccr/CCR-ADL-001-FINAL-APPROVAL.json)，当前实施边界见 [IMPLEMENTATION-BASELINE.md](IMPLEMENTATION-BASELINE.md)。下面旧BLOCKED审查保留为历史证据，不改变任何获批22规范文件。
+
+Review request: https://github.com/leileiya1/AstraLive/issues/7.
+
+Status: **PENDING Agent 1 + affected Agent 2/3 owner ACK**. Agent 4 ACKs the proposal only. No approved contract change; active revision remains `durable-live-1`. Real COMMENT integration is **BLOCKED**.
+
+## Evidence and legal-extension analysis
+
+`protocol.json` defines 20 operations. No operation accepts generated answer text with its product/fact version. JournalAccept stores the immutable *question* command; its requestHash cannot be mutated after dispatch. JournalStart accepts identity/permit/CAS fields, not an answer. ConfirmCheckpoint carries evidence references/ranges, not an answer artifact. All objects reject additional properties. Repurposing `evidenceRef`, SCRIPT_TEXT or input textHash would alter frozen semantics.
+
+`Store.RecordAnswerText` persists exact text/hash to `dl05_answer_artifacts` and `dl05_attempts.answer_text_hash` in process, but there is no authorized Python-to-Go operation and the artifact currently omits fact version. `Store.start` correctly rejects COMMENT without this artifact. Deleting that check, inventing a private endpoint under revision 1, or treating SQL permission as Runtime authorization is rejected.
+
+## Concrete proposal for owner review (not implemented wire)
+
+Add `JournalPrepareAnswer`, POST `/internal/v0.5/broadcast-runs/{runId}/journal/answer`, BACKEND, **RUNTIME_JOURNAL only**. Proposed version `durable-live-2`, subject to Agent 1's version decision; explicitly reject cross-version commands, do not silently reinterpret revision 1.
+
+Request, closed object: existing schemaVersion/contractRevision/requestId/tenantId/ownerId/runId plus commandId, attemptId, sessionId, runEpoch, producerIncarnation, requestHash (original command hash), expectedInboxRevision, answerText (1..2000 characters), answerTextHash (SHA256 exact UTF-8), productId, productSnapshotVersion, factDependencies, idempotencyKey. Response, closed object: requestId, commandId, attemptId, answerTextHash, artifactId, productSnapshotVersion, revision, prepared=true. **No execution authorization field**.
+
+Go locks run and inbox; authenticates registered scope/producer and Room/Session/product ownership; verifies current epoch, unsealed ACCEPTED inbox, active lease, nonexpired binding, deadline, current product and authoritative facts. LLM/tools run before this transaction. Store immutable answer+hash+fact version atomically, without granting START. Same identity+same artifact returns original receipt; differing text/fact version conflicts. After START only an identical previously stored receipt may be read, never overwrite/authorize execution. Authorization precedes duplicate lookup. Do not use general idempotency replay to return a prior START=true.
+
+START independently rechecks artifact, current fact version/freshness, permit/Stop/epoch and inbox CAS. First successful START response alone grants one effect. Lost prepare ACK queries/retries the same artifact; lost START ACK stays conservative. Lost HTTP202 queries the original journal command and never allocates a new attempt. Runtime synthesizes only the committed answer text whose hash it has checked. The prepared response revision must explicitly identify the inbox revision to use for START; if preparation increments that revision, the client uses the new committed revision. Full-answer preparation can affect LLM latency and requires measurement; incremental artifacts would need separately approved semantics.
+
+## Required changes after ACK
+
+Agent 1 updates protocol/schema/FSM documentation, version constants, examples/hash vectors and tests together. Agent 2 adds an **additive next migration**, preserving 000006, for answer artifact metadata/immutability and the transaction; regenerate its Go DTO/spec copies. Agent 4 regenerates Agent 3 DTOs, implements Go/Python client operation and binds fact/answer resolver, tests lost ACK/duplicate/mismatched hash/Stop/expiry/cross-owner/old epoch on real PG and Python HTTP. Frozen v1.1 remains byte-identical. Rollout remains default-off with explicit version match and Guardian gate.
+
+Acceptance must prove exact answer body + fact version + SHA256 persisted together; identical prepare does not increment attempts or authorize media; conflicting prepare rejects; START ACK loss cannot speak twice. Production media completion is a separate gate.
+
+## Review requested
+
+Agent 1 must ACK the operation, fields, version/compatibility rule and START freshness semantics. Agent 2 must ACK migration/transaction and immutable receipt behavior. Agent 3 must ACK adapter/fact projection impact. Silence or elapsed time is not approval. Continue independent adapter, SQL and legacy work while pending; keep real COMMENT blocked.
+
+## Agent 1 formal review
+
+The original whole-answer proposal is reviewed in [CCR-ADL-001 decision](ccr/CCR-ADL-001.md). Selected candidate: immutable complete semantic units, one command START and one-shot continuation grants, exact `durable-live-2` on isolated paths. This expands the original proposal and requires fresh Agent 2/3/4 ACKs; see [ledger](ccr/CCR-ADL-001-ACKS.json). Status **CCR BLOCKED**; active durable-live-1 and COMMENT fail-closed remain unchanged.
+
+## 2026-10-17 Agent 4 candidate review
+
+PR #9 head `4f4c95278e581bccc025323ed8534d0b2db1023e`, normative digest `aff229823418408e843d962e332ba3c8f71e20d5e25465bf54f5b3d37d5e4744`, was independently verified and reviewed. **Agent 4 ACK withheld**: drain-before-next-prepare rejects valid slow LLM ordering; consumed Grant lifetime across Permit/fact renewal is underspecified. [Explicit blocking review](https://github.com/leileiya1/AstraLive/pull/9#issuecomment-6227008824). See PR-9-10-REVIEW.md for reproduction, version compatibility and tests. No PR9 merge, v2 migration/DTO/route activation or contract meaning change occurred. The initial whole-answer proposal above is historical; it does not approve the expanded incremental candidate.
+
+## Agent1 PR9 repair follow-up (2026-10-17)
+
+Latest disabled Guardian integration `546ad9aa40bfe6949f32b55fb8ab6dc25d30dcb7` was merged normally into the CCR branch. Both earlier report sections are retained. Candidate-only durable-live-2 boundary, receipt and Grant-lifecycle repairs are documented in [PR9 repair result](ccr/REPAIR-2026-10-17.md). Active v1 contracts and all Guardian/Backend/Runtime/Worker source files are unchanged from that integration baseline. **CCR BLOCKED / PENDING Agent2/3/4 re-review**; source compatibility does not authorize v2 production execution.
+
+## Agent1 Receiver interface follow-up
+
+After Agent4 direction acceptance, the candidate freezes trusted bootstrap/install authority, first-response-only consume ticket, Backend-owned latch, two-hop ACK timing and per-unit media identity. [Receiver result](ccr/RECEIVER-REVIEW-RESULT.md) records actual tests and remaining implementation. Only Agent4 final interface review is requested first; Agent2/3 new-digest confirmation follows it. **CCR BLOCKED**, no production source/enablement or frozen v1 changes.

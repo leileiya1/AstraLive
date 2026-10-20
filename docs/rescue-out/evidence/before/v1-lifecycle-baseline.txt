@@ -1,0 +1,197 @@
+2026-10-20T10:30:54Z
+47eedbb0f4d990c18cbe8bdf462b65486d385523
+F...........................................................             [100%]
+=================================== FAILURES ===================================
+____________________ test_real_rtmp_full_decode_drain_stop _____________________
+
+rig = <conftest.Rig object at 0x10ee3a270>
+
+    @pytest.mark.asyncio
+    async def test_real_rtmp_full_decode_drain_stop(rig):
+        await rig.activate()
+        renewal = asyncio.create_task(rig.renew_forever())
+        try:
+>           await synthetic(rig, count=100)
+
+output_guardian/tests/test_guardian.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+output_guardian/tests/test_guardian.py:29: in synthetic
+    await rig.guardian.media(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <output_guardian.service.Guardian object at 0x10ef681a0>
+attempt = Attempt(binding=Binding(tenantId='t', ownerId='o', roomId='room', runId='run', runEpoch=1, sessionId='session', output...on=1, producerIncarnation='producer'), attemptId='attempt', utteranceId='utterance', generation=1, commandId='command')
+packet = {'kind': 'audio', 'sequence': 0, 'payload': b'\x00\x00_\x05\x95\n{\x0f\xeb\x13\xc3\x17\xe5\x1a;\x1d\xb2\x1e?\x1f\xdd\x...\x1b\x14\x18K\x14\xe8\x0f\x0b\x0b\xdb\x05}\x00\x1d\xfb\xe1\xf5\xf2\xf0w\xec\x90\xe8[\xe5\xf2\xe2g\xe1\xc4\xe0\x10\xe1'}
+
+    async def media(self, attempt, packet):
+        self.check(attempt)
+        if self.finishing:
+            raise Closed("STATE_CONFLICT")
+        barrier = self.barrier
+        kind, payload = packet["kind"], packet["payload"]
+        from runtime.app.providers import AudioChunk, VideoFrame
+    
+        if kind == "audio":
+            sequence = integer(packet["sequence"])
+            if (
+                sequence != self.audio_sequence
+                or not payload
+                or len(payload) % 2
+                or len(payload) > self.media_config["sample_rate"] * 2 // 5
+            ):
+                raise Closed("INVALID_ARGUMENT")
+            if (
+                self.audio_samples + len(payload) // 2
+                > self.media_config["sample_rate"] * 6
+            ):
+                raise Closed("INVALID_ARGUMENT")
+            self.audio_samples += len(payload) // 2
+            self.audio_sequence += 1
+            item = AudioChunk(
+                attempt.generation,
+                sequence,
+                payload,
+                self.media_config["sample_rate"],
+                1,
+            )
+            message = {"op": "audio", "payload": payload}
+        elif kind == "video":
+            pts = integer(packet["pts_us"])
+            if (
+                pts <= self.video_pts
+                or len(payload)
+                != self.media_config["width"] * self.media_config["height"] * 3
+            ):
+                raise Closed("INVALID_ARGUMENT")
+            if self.video_frames >= self.media_config["fps"] * 6:
+                raise Closed("INVALID_ARGUMENT")
+            if self.video_frames == 0 and pts != 0:
+                await self.retire()
+                raise Closed("OUTPUT_FENCE_UNPROVEN")
+            self.video_frames += 1
+            self.video_pts = pts
+            item = VideoFrame(
+                attempt.generation,
+                pts,
+                self.media_config["width"],
+                self.media_config["height"],
+                payload,
+            )
+            message = {"op": "video", "payload": payload, "pts_us": pts}
+        else:
+            raise Closed("INVALID_ARGUMENT")
+        try:
+            await self.publisher.call(message)
+            self.check(attempt)
+            if barrier != self.barrier:
+                raise Closed()
+            if self.web:
+                await asyncio.wait_for(getattr(self.web, "push_" + kind)(item), 0.1)
+            self.check(attempt)
+        except BaseException:
+            await self.retire()
+>           raise Closed("MEDIA_DELIVERY_FAILED") from None
+E           output_guardian.model.Closed: MEDIA_DELIVERY_FAILED
+
+output_guardian/service.py:509: Closed
+==================================== PASSES ====================================
+____________________ test_webrtc_real_peer_closed_on_expiry ____________________
+----------------------------- Captured stdout call -----------------------------
+REAL_WEBRTC_DECODE {'audio': 65, 'video': 34} all Guardian peers closed
+------------------------------ Captured log call -------------------------------
+WARNING  aiortc.rtcrtpsender:rtcrtpsender.py:487 RTCRtpsender(audio) Traceback (most recent call last):
+  File "/Users/sapiece/innovationProject/AstraLive/.venv-guardian/lib/python3.12/site-packages/aiortc/rtcrtpsender.py", line 371, in _run_rtp
+    enc_frame = await self._next_encoded_frame(codec)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive/.venv-guardian/lib/python3.12/site-packages/aiortc/rtcrtpsender.py", line 298, in _next_encoded_frame
+    data = await self.__track.recv()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sapiece/innovationProject/AstraLive/output_guardian/webrtc.py", line 15, in recv
+    self.guardian_check()
+  File "/Users/sapiece/innovationProject/AstraLive/output_guardian/service.py", line 364, in check_peer
+    self.check(attempt)
+  File "/Users/sapiece/innovationProject/AstraLive/output_guardian/service.py", line 181, in check
+    self.right.check()
+  File "/Users/sapiece/innovationProject/AstraLive/output_guardian/model.py", line 106, in check
+    raise Closed("LEASE_LOST")
+output_guardian.model.Closed: LEASE_LOST
+___________ test_sigkill_supervisor_restart_and_closed_admission[0] ____________
+----------------------------- Captured stdout call -----------------------------
+REAL_SIGKILL_RESTART supervisor exit=70, owned publisher dead, restart closed, old Runtime rejected
+___________ test_sigkill_supervisor_restart_and_closed_admission[1] ____________
+----------------------------- Captured stdout call -----------------------------
+REAL_SIGKILL_RESTART supervisor exit=70, owned publisher dead, restart closed, old Runtime rejected
+___________ test_sigkill_supervisor_restart_and_closed_admission[2] ____________
+----------------------------- Captured stdout call -----------------------------
+REAL_SIGKILL_RESTART supervisor exit=70, owned publisher dead, restart closed, old Runtime rejected
+_____________ test_runtime_adapter_real_unix_ipc_and_decoded_drain _____________
+----------------------------- Captured stdout call -----------------------------
+REAL_UNIX_RUNTIME_ADAPTER PCM/RGB -> IPC -> RTMP -> independent decoded range receipt
+______________ test_real_last_packet_missing_never_drains[audio] _______________
+----------------------------- Captured stdout call -----------------------------
+NEGATIVE_BOUNDARY_DIAGNOSTIC {'coverage': 'PENDING', 'pollFaults': [{'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail27_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail28_expected64_headmatchTrue_tailmatchFalse'}], 'terminal': 'FAILED', 'stage': 'COVERAGE', 'fault': 'DRAIN_UNKNOWN', 'cause': 'COVERAGE', 'revocation': None} {'connected': True, 'openErrorType': None, 'openErrorNumber': None, 'packets': {'audio': 29, 'video': 25}, 'decodeError': None, 'transportEnded': True, 'recordings': 1} authority None observerStarted True
+______________ test_real_last_packet_missing_never_drains[video] _______________
+----------------------------- Captured stdout call -----------------------------
+NEGATIVE_BOUNDARY_DIAGNOSTIC {'coverage': 'PENDING', 'pollFaults': [{'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_audio_head62_tail27_expected64_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}, {'terminal': False, 'code': 'DRAIN_PACKET_COVERAGE_video_head99_tail24_expected100_headmatchTrue_tailmatchFalse'}], 'terminal': 'FAILED', 'stage': 'COVERAGE', 'fault': 'DRAIN_UNKNOWN', 'cause': 'COVERAGE', 'revocation': None} {'connected': True, 'openErrorType': None, 'openErrorNumber': None, 'packets': {'audio': 29, 'video': 25}, 'decodeError': None, 'transportEnded': True, 'recordings': 1} authority None observerStarted True
+=========================== short test summary info ============================
+PASSED output_guardian/tests/test_guardian.py::test_old_epoch_identity_and_permit_expiry
+PASSED output_guardian/tests/test_guardian.py::test_competing_guardian_real_sql_lock
+PASSED output_guardian/tests/test_guardian.py::test_pg_connection_loss_retires_publisher
+PASSED output_guardian/tests/test_guardian.py::test_stop_races_delayed_renew_and_pending_install
+PASSED output_guardian/tests/test_guardian.py::test_late_renew_cannot_resurrect
+PASSED output_guardian/tests/test_guardian.py::test_authenticated_ipc_scopes_and_no_management_for_runtime
+PASSED output_guardian/tests/test_guardian.py::test_every_authority_dimension_and_tombstone
+PASSED output_guardian/tests/test_guardian.py::test_strict_identity_clock_and_bool_rejection
+PASSED output_guardian/tests/test_guardian.py::test_two_physical_publishers_and_old_credentials_reconnect
+PASSED output_guardian/tests/test_guardian.py::test_retained_real_ffmpeg_physically_kicked_before_activation
+PASSED output_guardian/tests/test_guardian.py::test_exclusivity_loss_closes_admission
+PASSED output_guardian/tests/test_guardian.py::test_webrtc_real_peer_closed_on_expiry
+PASSED output_guardian/tests/test_guardian.py::test_short_segment_and_missing_tail_remain_unknown
+PASSED output_guardian/tests/test_guardian.py::test_sigkill_supervisor_restart_and_closed_admission[0]
+PASSED output_guardian/tests/test_guardian.py::test_sigkill_supervisor_restart_and_closed_admission[1]
+PASSED output_guardian/tests/test_guardian.py::test_sigkill_supervisor_restart_and_closed_admission[2]
+PASSED output_guardian/tests/test_guardian.py::test_install_stop_concurrency
+PASSED output_guardian/tests/test_guardian.py::test_readonly_database_role_and_startup_db_unavailable
+PASSED output_guardian/tests/test_guardian.py::test_delayed_old_writer_cannot_reach_replacement_child
+PASSED output_guardian/tests/test_guardian.py::test_runtime_adapter_real_unix_ipc_and_decoded_drain
+PASSED output_guardian/tests/test_guardian.py::test_nonzero_source_pts_and_attempt_replay_fail_closed
+PASSED output_guardian/tests/test_supervisor_cleanup.py::test_live_owned_group_is_not_quiescent
+PASSED output_guardian/tests/test_supervisor_cleanup.py::test_unreaped_owned_zombie_group_is_quiescent
+PASSED output_guardian/tests/test_supervisor_cleanup.py::test_unreadable_group_census_is_not_quiescent
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_normal_teardown_new_and_late_renew_never_retire
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_reserved_renew_completes_before_teardown
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_sql_reply_after_terminal_is_conflict_without_publisher_call
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_stop_linearizes_before_completion_or_after_success[before]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_stop_linearizes_before_completion_or_after_success[reserved-renew]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_stop_linearizes_before_completion_or_after_success[teardown]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_stop_linearizes_before_completion_or_after_success[after]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_invalid_sql_reply_never_reauthorizes[old]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_invalid_sql_reply_never_reauthorizes[new]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_invalid_sql_reply_never_reauthorizes[barrier]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_invalid_sql_reply_never_reauthorizes[sql-failure]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_poll_fault_then_full_coverage_has_distinct_final_diagnostic
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_terminal_faults_are_not_success[pipe]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_terminal_faults_are_not_success[teardown]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_terminal_faults_are_not_success[cancel]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_terminal_faults_are_not_success[expire]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_terminal_faults_are_not_success[duplicate]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_dead_publisher_after_verified_ranges_is_unknown
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_abort_coalesces_actual_owned_process_and_blocks_reuse
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_delayed_sql_after_stop_cannot_touch_replacement
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_stop_fsync_failure_still_revokes_and_closes
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_expired_right_during_terminal_is_never_normal_conflict
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_rapid_new_generations_close_all_owned_listeners
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_actual_owned_pipe_failure_reaps_only_captured_child[eof]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_actual_owned_pipe_failure_reaps_only_captured_child[backpressure]
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_child_registry_fsync_failure_cannot_leave_publisher
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_duplicate_valid_renew_reservations_both_drain_before_abort
+PASSED output_guardian/tests/lifecycle/test_finish_renew.py::test_normal_terminal_abort_rejects_broken_original_pipe
+PASSED output_guardian/tests/lifecycle/test_real_edges.py::test_real_last_packet_missing_never_drains[audio]
+PASSED output_guardian/tests/lifecycle/test_real_edges.py::test_real_last_packet_missing_never_drains[video]
+PASSED output_guardian/tests/lifecycle/test_real_edges.py::test_real_proven_ranges_never_override_lifecycle[stop]
+PASSED output_guardian/tests/lifecycle/test_real_edges.py::test_real_proven_ranges_never_override_lifecycle[terminal]
+PASSED output_guardian/tests/lifecycle/test_real_edges.py::test_real_proven_ranges_never_override_lifecycle[expiry]
+PASSED output_guardian/tests/lifecycle/test_real_edges.py::test_real_proven_ranges_never_override_lifecycle[crash]
+PASSED output_guardian/tests/lifecycle/test_real_edges.py::test_real_proven_ranges_never_override_lifecycle[crash-at-abort]
+FAILED output_guardian/tests/test_guardian.py::test_real_rtmp_full_decode_drain_stop
+1 failed, 59 passed in 67.67s (0:01:07)

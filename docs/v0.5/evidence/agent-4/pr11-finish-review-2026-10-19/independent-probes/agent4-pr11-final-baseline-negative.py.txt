@@ -1,0 +1,17 @@
+from pathlib import Path
+import subprocess,tarfile,io,hashlib,json
+p=Path('/tmp/agent4-pr11-final-protection-baseline');p.mkdir(exist_ok=False)
+tarfile.open(fileobj=io.BytesIO(subprocess.check_output(['git','archive','864cdbf7545ea3fdd52d4f8405bcd83dcb3497b5']))).extractall(p,filter='data')
+out=Path('/tmp/agent4-pr11-final-results/baseline-negative');out.mkdir(exist_ok=True);py='/tmp/astralive-agent4-receiver1-python/bin/python';rows=[]
+def run(name):
+ r=subprocess.run([py,'scripts/validate-answer-contract.py'],cwd=p,capture_output=True);(out/(name+'.txt')).write_bytes(r.stdout+r.stderr);return r
+assert run('baseline').returncode==0
+for i,name in enumerate(['output_guardian/tests/conftest.py','runtime/app/models.py']):
+ f=p/name;before=f.read_bytes()
+ try:
+  f.write_bytes(before+b'\n# Unauthorized change must reject\n');r=run('reject-'+str(i));assert r.returncode!=0 and name.encode()in r.stdout+r.stderr
+  rows.append(dict(path=name,originalSHA256=hashlib.sha256(before).hexdigest(),exitCode=r.returncode,exactPathRejected=True))
+ finally:f.write_bytes(before)
+assert run('restored').returncode==0
+(out/'summary.json').write_text(json.dumps(dict(source='864cdbf7545ea3fdd52d4f8405bcd83dcb3497b5',baselineOnly=True,proposedPRPostimagesNotRegistered=True,protectedFiles=313,negativeResults=rows,restored=True),indent=2)+'\n')
+print('Existing baseline313 PASS;2 unauthorized mutations rejected; restored PASS. NOT a registered PR11 candidate.')

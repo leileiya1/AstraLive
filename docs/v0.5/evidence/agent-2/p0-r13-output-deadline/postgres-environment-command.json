@@ -1,0 +1,16 @@
+{
+  "command": [
+    "psql",
+    "postgres://agent2_owner@127.0.0.1:58787/agent2_v2_p0_output?sslmode=disable",
+    "-X",
+    "-A",
+    "-t",
+    "-v",
+    "ON_ERROR_STOP=1",
+    "-c",
+    "SELECT version(); SHOW fsync; SELECT current_database(); SELECT name FROM schema_migrations ORDER BY name; SELECT state,count(*) FROM dl05_v2_grant_state GROUP BY state ORDER BY state;"
+  ],
+  "exitCode": 0,
+  "isolatedOwnedRoot": "/tmp/astralive-agent2-p0-output.kczpw5d8",
+  "testsUseMockAssertionsAndPhysicalSources": true
+}

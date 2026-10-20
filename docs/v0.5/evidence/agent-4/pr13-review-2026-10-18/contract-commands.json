@@ -1,0 +1,77 @@
+[
+  {
+    "label": "contracts-137",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_contracts",
+      "tests.test_durable_live_contracts",
+      "tests.test_durable_answer_contracts",
+      "tests.test_answer_contract_repairs",
+      "tests.test_receiver_contracts",
+      "tests.test_receiver_stop_races",
+      "-v"
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes",
+    "exitCode": 1,
+    "elapsedSeconds": 20.443
+  },
+  {
+    "label": "wire-13",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_durable_live_v2_wire",
+      "-v"
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes",
+    "exitCode": 0,
+    "elapsedSeconds": 3.099
+  },
+  {
+    "label": "journal-11",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "-m",
+      "pytest",
+      "runtime/tests/test_durable_live_journal.py",
+      "-q"
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes",
+    "exitCode": 0,
+    "elapsedSeconds": 0.599
+  },
+  {
+    "label": "generated-check",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/durable-live/generate_v2_wire.py",
+      "--check"
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes",
+    "exitCode": 0,
+    "elapsedSeconds": 0.061
+  },
+  {
+    "label": "candidate-validator",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/validate-answer-contract.py"
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes",
+    "exitCode": 1,
+    "elapsedSeconds": 0.248
+  },
+  {
+    "label": "v1-validator",
+    "command": [
+      "/tmp/astralive-agent2-python/bin/python",
+      "scripts/validate-durable-live-contracts.py"
+    ],
+    "cwd": "/tmp/astralive-agent4-pr13-review-r057moes",
+    "exitCode": 0,
+    "elapsedSeconds": 0.138
+  }
+]

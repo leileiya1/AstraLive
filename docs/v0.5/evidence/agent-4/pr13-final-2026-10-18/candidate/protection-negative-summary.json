@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {
+      "case": "authorized-postimage-tamper",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "path": "backend/internal/durableintegration/integration_test.go"
+    },
+    {
+      "case": "unrelated-protected-tamper",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "path": "runtime/app/session.py"
+    }
+  ],
+  "restoredValidatorExitCode": 0,
+  "validatorSourceModified": false
+}

@@ -1,0 +1,277 @@
+{
+  "checkedAtUTC": "2026-10-18T00:04:42.373126+00:00",
+  "baseline": "c7fd46209d3cbc6f58541dba8b4e1c85609c823e",
+  "developmentBase": "e98d8cf53d1aa5518f9c908785b7a5feae5117f8",
+  "normativeFiles": 22,
+  "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1",
+  "frozenFilesByteIdentical": true,
+  "testedSourcesUnchanged": true,
+  "protectedProductionPathsUnchanged": [
+    "contracts",
+    "runtime",
+    "output_guardian",
+    "infra",
+    "gpu_worker",
+    "frontend",
+    "backend/cmd",
+    "backend/internal/app",
+    "backend/internal/httpapi",
+    "backend/internal/durablelive",
+    "backend/internal/durableintegration",
+    "backend/db"
+  ],
+  "schemaDefinitions": 132,
+  "coreOperations": 25,
+  "privateOperations": 13,
+  "pythonWireTests": {
+    "pass": 13,
+    "fail": 0
+  },
+  "preservedContractTests": {
+    "pass": 137,
+    "fail": 0
+  },
+  "journalTests": {
+    "pass": 11,
+    "fail": 0
+  },
+  "go": {
+    "backend-go": {
+      "topLevelTests": {
+        "pass": 103,
+        "fail": 0,
+        "skip": 50
+      },
+      "includingSubtests": {
+        "pass": 171,
+        "fail": 0,
+        "skip": 50
+      }
+    },
+    "backend-race": {
+      "topLevelTests": {
+        "pass": 103,
+        "fail": 0,
+        "skip": 50
+      },
+      "includingSubtests": {
+        "pass": 171,
+        "fail": 0,
+        "skip": 50
+      }
+    }
+  },
+  "goVet": "PASS",
+  "validators": "PASS",
+  "generatorCheck": "PASS",
+  "generationDeterminismAndDrift": "PASS; see wire-python test and raw log",
+  "skippedGoTests": [
+    {
+      "package": "astralive/backend/internal/app",
+      "test": "TestAuditSelectionExpiresWhileWaitingForCommandLock"
+    },
+    {
+      "package": "astralive/backend/internal/durableintegration",
+      "test": "TestPostgresManagerBoundaryCommentResume"
+    },
+    {
+      "package": "astralive/backend/internal/durableintegration",
+      "test": "TestPostgresProjectionAuthorizationRevisionAndProduct"
+    },
+    {
+      "package": "astralive/backend/internal/durableintegration",
+      "test": "TestPostgresUnknownGapAndStopPriority"
+    },
+    {
+      "package": "astralive/backend/internal/durableintegration",
+      "test": "TestPostgresManagedSessionLateLifecycleCannotAutoStart"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresCheckpointOrderingDuplicateAndBusinessCommit"
+    },
+    {
+      "package": "astralive/backend/internal/durableintegration",
+      "test": "TestPostgresLegacyMigrationUpgradePreservesData"
+    },
+    {
+      "package": "astralive/backend/internal/durableintegration",
+      "test": "TestPostgresRealSchedulerSelectsMergedCommentsDuringScript"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresRejectFakeCompletionAndOldEpochEvent"
+    },
+    {
+      "package": "astralive/backend/internal/durableintegration",
+      "test": "TestPostgresFairnessBudgetSurvivesManagerRestart"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresForeignKeysAndImmutableEnvelope"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresConcurrentMigrationRunners"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresNoSQLTransactionAcrossHTTP"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestRedisStreamsDuplicateReclaimAndSQLProjection"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestRedisIsolatedDisconnectAndSQLFallback"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresLeaseRenewDoesNotMutateCommandOrReplayStart"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresCommentAnswerJournalRequiredBeforeStart"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresSealNoEffectRequiresIndependentFence"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresCrossRunPublisherExclusionAfterFailedRun"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresCannotAdoptLegacyBusyOrMixSchedulers"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresRoleAuthenticationAndBodyScope"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresLeaseKeeperDoesNotReviveStopOrExpiredOwner"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresUnsentCannotBecomeUnknownByInventedTransition"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresSemanticTurnConflictIsNotRetryableDependencyFailure"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresBoundedRecoveryDoesNotStarveLaterRooms"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestIsolatedBackendHelper"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestProcessGoSIGKILLWhilePythonPlayingAndReattach"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestProcessPythonSIGKILLPreservesUnknown"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresOwnedConnectionDropRecovery"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresIsolatedServerOutage"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestProcessCommitThenGoSIGKILL"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestProcessRealRuntimeLost202"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresAtomicOutboxCommitAndResponseLoss"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresRollbackNoPartialAttempt"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresLost202ReattachNoReplay"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresRuntimeCrashUnknownAndOrphanBusyProjection"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresMissingInboxIsUnknown"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresLeaseCompetitionAndOldEpoch"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresStopWinsRecoveryAndUnsentOrphan"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresBindingExpiryAndWorkerUnavailable"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresNoCrossSessionOrPayloadConflict"
+    },
+    {
+      "package": "astralive/backend/internal/durablelive",
+      "test": "TestPostgresSkipLockedAndNoCrossRoomWait"
+    },
+    {
+      "package": "astralive/backend/internal/httpapi",
+      "test": "TestProductAuthorizationAndPinnedBindings"
+    },
+    {
+      "package": "astralive/backend/internal/httpapi",
+      "test": "TestPostgresDurableRecoveryOwnerCSRFAndStop"
+    },
+    {
+      "package": "astralive/backend/internal/httpapi",
+      "test": "TestInteractionFormalCPU"
+    },
+    {
+      "package": "astralive/backend/internal/userconfig",
+      "test": "TestConfigurationBrowserHarness"
+    },
+    {
+      "package": "astralive/backend/tests",
+      "test": "TestEventDedupAndStateUpdateWithPostgres"
+    },
+    {
+      "package": "astralive/backend/internal/userconfig",
+      "test": "TestPostgresConfigurationLifecycle"
+    },
+    {
+      "package": "astralive/backend/internal/userconfig",
+      "test": "TestLocalProviderProbesScopedAndVersioned"
+    },
+    {
+      "package": "astralive/backend/internal/turnmanager",
+      "test": "TestExportContractRequests"
+    }
+  ],
+  "acceptanceLayer": "SOURCE + CPU/CROSS-LANGUAGE ONLY",
+  "realV2SQLRedisCrash": "NOT TESTED",
+  "authenticatedIPCAndRuntimeWiring": "NOT IMPLEMENTED IN THIS DELIVERY",
+  "physicalGuardianMediaGPU": "NOT TESTED",
+  "durableLive": "DEFAULT OFF; existing OUTPUT_FENCE_UNPROVEN guard unchanged",
+  "resources": "commands.json records child CPU deltas and cumulative Darwin peak RSS; no steady-state/GPU benchmark",
+  "earlyFailures": "development-failures.json; resolved negative probes preserved"
+}

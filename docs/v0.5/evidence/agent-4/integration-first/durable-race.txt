@@ -1,0 +1,83 @@
+=== RUN   TestPostgresCheckpointOrderingDuplicateAndBusinessCommit
+--- PASS: TestPostgresCheckpointOrderingDuplicateAndBusinessCommit (0.23s)
+=== RUN   TestPostgresRejectFakeCompletionAndOldEpochEvent
+--- PASS: TestPostgresRejectFakeCompletionAndOldEpochEvent (0.08s)
+=== RUN   TestPostgresForeignKeysAndImmutableEnvelope
+--- PASS: TestPostgresForeignKeysAndImmutableEnvelope (0.05s)
+=== RUN   TestPostgresConcurrentMigrationRunners
+--- PASS: TestPostgresConcurrentMigrationRunners (0.01s)
+=== RUN   TestPostgresNoSQLTransactionAcrossHTTP
+--- PASS: TestPostgresNoSQLTransactionAcrossHTTP (0.06s)
+=== RUN   TestRedisStreamsDuplicateReclaimAndSQLProjection
+--- PASS: TestRedisStreamsDuplicateReclaimAndSQLProjection (0.09s)
+=== RUN   TestRedisIsolatedDisconnectAndSQLFallback
+redis: 2026/10/16 09:16:14 pool.go:422: redis: connection pool: failed to dial after 2 attempts: dial tcp 127.0.0.1:56382: i/o timeout
+redis: 2026/10/16 09:16:14 pool.go:422: redis: connection pool: failed to dial after 2 attempts: dial tcp 127.0.0.1:56382: i/o timeout
+--- PASS: TestRedisIsolatedDisconnectAndSQLFallback (0.29s)
+=== RUN   TestPostgresLeaseRenewDoesNotMutateCommandOrReplayStart
+--- PASS: TestPostgresLeaseRenewDoesNotMutateCommandOrReplayStart (0.07s)
+=== RUN   TestPostgresCommentAnswerJournalRequiredBeforeStart
+--- PASS: TestPostgresCommentAnswerJournalRequiredBeforeStart (0.07s)
+=== RUN   TestPostgresSealNoEffectRequiresIndependentFence
+--- PASS: TestPostgresSealNoEffectRequiresIndependentFence (0.07s)
+=== RUN   TestPostgresCrossRunPublisherExclusionAfterFailedRun
+--- PASS: TestPostgresCrossRunPublisherExclusionAfterFailedRun (0.04s)
+=== RUN   TestPostgresCannotAdoptLegacyBusyOrMixSchedulers
+--- PASS: TestPostgresCannotAdoptLegacyBusyOrMixSchedulers (0.05s)
+=== RUN   TestPostgresRoleAuthenticationAndBodyScope
+--- PASS: TestPostgresRoleAuthenticationAndBodyScope (0.03s)
+=== RUN   TestPostgresLeaseKeeperDoesNotReviveStopOrExpiredOwner
+--- PASS: TestPostgresLeaseKeeperDoesNotReviveStopOrExpiredOwner (0.04s)
+=== RUN   TestPostgresUnsentCannotBecomeUnknownByInventedTransition
+--- PASS: TestPostgresUnsentCannotBecomeUnknownByInventedTransition (0.05s)
+=== RUN   TestPostgresSemanticTurnConflictIsNotRetryableDependencyFailure
+--- PASS: TestPostgresSemanticTurnConflictIsNotRetryableDependencyFailure (0.03s)
+=== RUN   TestPostgresBoundedRecoveryDoesNotStarveLaterRooms
+--- PASS: TestPostgresBoundedRecoveryDoesNotStarveLaterRooms (0.02s)
+=== RUN   TestIsolatedBackendHelper
+    process_test.go:38: owned subprocess helper
+--- SKIP: TestIsolatedBackendHelper (0.00s)
+=== RUN   TestProcessGoSIGKILLWhilePythonPlayingAndReattach
+    process_test.go:228: real Go child SIGKILL; Python survived; watchdog closed local sink; restarted Go reconciled UNKNOWN; one synthetic sink execution; no replay
+--- PASS: TestProcessGoSIGKILLWhilePythonPlayingAndReattach (1.88s)
+=== RUN   TestProcessPythonSIGKILLPreservesUnknown
+    process_test.go:264: real Python child SIGKILL; SQL retains uncertain playback as UNKNOWN; no re-dispatch
+--- PASS: TestProcessPythonSIGKILLPreservesUnknown (1.33s)
+=== RUN   TestPostgresOwnedConnectionDropRecovery
+    process_test.go:289: terminated only test-owned PostgreSQL connection PID=50910; pool reconnected; stable pending command retained
+--- PASS: TestPostgresOwnedConnectionDropRecovery (0.06s)
+=== RUN   TestPostgresIsolatedServerOutage
+    process_test.go:333: isolated PostgreSQL server stopped/restarted; admission failed closed; persisted pending command recovered
+--- PASS: TestPostgresIsolatedServerOutage (0.30s)
+=== RUN   TestProcessCommitThenGoSIGKILL
+    process_test.go:363: SIGKILL after SQL commit and before dispatch; restarted Go sees exactly one original PENDING intent + attempt + QUEUED utterance; no fabricated execute
+--- PASS: TestProcessCommitThenGoSIGKILL (0.21s)
+=== RUN   TestProcessRealRuntimeLost202
+    process_test.go:416: real Python v0.5 HTTP received command and played synthetic local sink; 202 delayed beyond Go timeout; SQL reconciliation and duplicate execute produced one effect
+--- PASS: TestProcessRealRuntimeLost202 (0.87s)
+=== RUN   TestFrozenSchemaAndGoldenVectors
+--- PASS: TestFrozenSchemaAndGoldenVectors (0.03s)
+=== RUN   TestStrictJSON
+--- PASS: TestStrictJSON (0.00s)
+=== RUN   TestPostgresAtomicOutboxCommitAndResponseLoss
+--- PASS: TestPostgresAtomicOutboxCommitAndResponseLoss (0.06s)
+=== RUN   TestPostgresRollbackNoPartialAttempt
+--- PASS: TestPostgresRollbackNoPartialAttempt (0.04s)
+=== RUN   TestPostgresLost202ReattachNoReplay
+--- PASS: TestPostgresLost202ReattachNoReplay (0.08s)
+=== RUN   TestPostgresRuntimeCrashUnknownAndOrphanBusyProjection
+--- PASS: TestPostgresRuntimeCrashUnknownAndOrphanBusyProjection (0.08s)
+=== RUN   TestPostgresMissingInboxIsUnknown
+--- PASS: TestPostgresMissingInboxIsUnknown (0.06s)
+=== RUN   TestPostgresLeaseCompetitionAndOldEpoch
+--- PASS: TestPostgresLeaseCompetitionAndOldEpoch (0.03s)
+=== RUN   TestPostgresStopWinsRecoveryAndUnsentOrphan
+--- PASS: TestPostgresStopWinsRecoveryAndUnsentOrphan (0.06s)
+=== RUN   TestPostgresBindingExpiryAndWorkerUnavailable
+--- PASS: TestPostgresBindingExpiryAndWorkerUnavailable (0.07s)
+=== RUN   TestPostgresNoCrossSessionOrPayloadConflict
+--- PASS: TestPostgresNoCrossSessionOrPayloadConflict (0.05s)
+=== RUN   TestPostgresSkipLockedAndNoCrossRoomWait
+--- PASS: TestPostgresSkipLockedAndNoCrossRoomWait (0.05s)
+PASS
+ok  	astralive/backend/internal/durablelive	7.971s

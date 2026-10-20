@@ -1,0 +1,25 @@
+# Dedicated instance, same network namespace as Guardian. Never expose these ports.
+logLevel: error
+rtmp: yes
+rtmpAddress: 127.0.0.1:1935
+api: yes
+apiAddress: 127.0.0.1:9997
+rtsp: no
+hls: no
+webrtc: no
+srt: no
+playback: no
+moq: no
+authMethod: http
+authHTTPAddress: http://127.0.0.1:19999/auth
+authHTTPExclude: []
+pathDefaults:
+  source: publisher
+  overridePublisher: false
+  record: true
+  recordPath: /recordings/%path/%Y-%m-%d_%H-%M-%S-%f
+  recordFormat: fmp4
+  recordPartDuration: 100ms
+  recordSegmentDuration: 1h
+paths:
+  room:

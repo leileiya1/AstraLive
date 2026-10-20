@@ -1,0 +1,8 @@
+2026-10-20T11:21:22Z
+network=bridge (no published ports)
+  File "/src/output_guardian/model.py", line 106, in check
+    raise Closed("LEASE_LOST")
+output_guardian.model.Closed: LEASE_LOST
+=========================== short test summary info ============================
+PASSED output_guardian/tests/test_guardian.py::test_webrtc_real_peer_closed_on_expiry
+1 passed in 3.60s

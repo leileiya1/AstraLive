@@ -1,0 +1,29 @@
+{
+  "kind": "OWNER_PROPOSAL_NOT_PROTECTION_REGISTRATION",
+  "supersedes": "protected-owner-proposal.json (initial2751 candidate)",
+  "files": [
+    {
+      "path": "output_guardian/service.py",
+      "preimageSHA256": "12b5225dffcfad095bf4f07140d30c907325a8ccf244aa124b80d3153fc76e52",
+      "postimageSHA256": "94eb702cd978b76a21cd29e3642397c976a8b221593a651b55f5375b6a18fa47",
+      "sourceCommit": "864cdbf7545ea3fdd52d4f8405bcd83dcb3497b5",
+      "implementationCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69",
+      "ownerDecision": "APPROVED_EXACT_FINAL_PATCH_FOR_AGENT4_REVIEW",
+      "registration": "PENDING_AGENT4_PROTECTION_GOVERNANCE",
+      "reason": "normal drain/Renew cohort, actual live-owner reap, idempotent cancellation-safe closure, diagnostic attribution"
+    },
+    {
+      "path": "output_guardian/process.py",
+      "preimageSHA256": "5d95a661471d1f13415efae4b6ce35fb0fed23d961d45bceab35de9526f5b4d3",
+      "postimageSHA256": "56d4093b6cc35c35d668014b083bd52da290f8883f58437ecb98a3e9a605bf19",
+      "sourceCommit": "864cdbf7545ea3fdd52d4f8405bcd83dcb3497b5",
+      "implementationCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69",
+      "ownerDecision": "APPROVED_EXACT_FINAL_PATCH_FOR_AGENT4_REVIEW",
+      "registration": "PENDING_AGENT4_PROTECTION_GOVERNANCE",
+      "reason": "normal drain/Renew cohort, actual live-owner reap, idempotent cancellation-safe closure, diagnostic attribution"
+    }
+  ],
+  "inventoryChanged": false,
+  "fixtureUnchanged": true,
+  "generatedAtUTC": "2026-10-19T01:29:04.952705+00:00"
+}

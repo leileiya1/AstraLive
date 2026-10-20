@@ -1,0 +1,9 @@
+{"Time":"2026-10-18T16:14:39.310127+08:00","Action":"start","Package":"astralive/backend/internal/durableintegration/receiver1"}
+{"Time":"2026-10-18T16:14:39.853202+08:00","Action":"run","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport"}
+{"Time":"2026-10-18T16:14:39.853287+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Output":"=== RUN   TestPostgresReceiver1RealTransport\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:14:40.087203+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Output":"    interop_test.go:312: Install record installation: INVALID_ARGUMENT\n","OutputType":"error"}
+{"Time":"2026-10-18T16:14:40.089074+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Output":"--- FAIL: TestPostgresReceiver1RealTransport (0.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:14:40.089093+08:00","Action":"fail","Package":"astralive/backend/internal/durableintegration/receiver1","Test":"TestPostgresReceiver1RealTransport","Elapsed":0.24}
+{"Time":"2026-10-18T16:14:40.08911+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:14:40.090308+08:00","Action":"output","Package":"astralive/backend/internal/durableintegration/receiver1","Output":"FAIL\tastralive/backend/internal/durableintegration/receiver1\t0.780s\n","OutputType":"frame"}
+{"Time":"2026-10-18T16:14:40.090328+08:00","Action":"fail","Package":"astralive/backend/internal/durableintegration/receiver1","Elapsed":0.78}
