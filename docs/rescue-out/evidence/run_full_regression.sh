@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # Full local regression for the rescue/main integration. Usage:
 #   docs/rescue-out/evidence/run_full_regression.sh <out-dir>
-# Needs: .venv-guardian, PostgreSQL 17 binaries, MediaMTX, redis-server, go.
+# Needs: .venv-guardian, .venv-gpusim (gpu_worker/requirements-simulation.txt +
+# runtime/requirements.txt + pillow/aiohttp/pytest/psutil), PostgreSQL 17
+# binaries, MediaMTX, redis-server, go, bun.
 # Private PG/Redis are started on loopback and removed on exit. Redis must
 # use 127.0.0.1:56382 (a Go test guard); the run refuses if it is busy.
 set -uo pipefail
@@ -42,6 +44,9 @@ step validator-v1 "$PY" scripts/validate-durable-live-contracts.py
 step validator-v2 "$PY" scripts/validate-answer-contract.py
 step generated  "$PY" scripts/durable-live/generate_v2_wire.py --check
 step diff-check git diff --check HEAD
+step runtime    env PYTHONPATH=runtime "$PY" -m unittest discover -s runtime/tests -p 'test_*.py'
+step gpu-worker env PYTHONPATH=runtime "$ROOT/.venv-gpusim/bin/python" -m pytest gpu_worker/tests -p no:cacheprovider -q
+step frontend   sh -c 'cd frontend && bun install --frozen-lockfile && bun run test && bun run build'
 
 PORT=$("$PY" -c "import socket;s=socket.socket();s.bind(('127.0.0.1',0));print(s.getsockname()[1])")
 "$PGBIN/initdb" -D "$WORK/pg" -A trust -U rescue_owner >/dev/null
