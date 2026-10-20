@@ -1,0 +1,210 @@
+== ruff check --isolated (default rules)
+C408 Unnecessary `dict()` call (rewrite as a literal)
+  --> output_guardian/service.py:81:29
+   |
+79 |           self.state_dir, self.recording_dir = Path(state_dir), Path(recording_dir)
+80 |           self.path, self.rtmp_url = identifier(path), rtmp_url.rstrip("/")
+81 |           self.media_config = dict(
+   |  _____________________________^
+82 | |             width=width, height=height, fps=fps, sample_rate=sample_rate
+83 | |         )
+   | |_________^
+84 |           self.publisher = Publisher(state_dir)
+85 |           self.receiver = Publisher(state_dir, "receiver")
+   |
+help: Rewrite as a literal
+   |
+80 |         self.path, self.rtmp_url = identifier(path), rtmp_url.rstrip("/")
+   -         self.media_config = dict(
+   -             width=width, height=height, fps=fps, sample_rate=sample_rate
+   -         )
+81 +         self.media_config = {
+82 +             "width": width, "height": height, "fps": fps, "sample_rate": sample_rate
+83 +         }
+84 |         self.publisher = Publisher(state_dir)
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+BLE001 Do not catch blind exception: `Exception`
+   --> output_guardian/service.py:142:20
+    |
+140 |                 for run in self.stopped:
+141 |                     identifier(run)
+142 |             except Exception:
+    |                    ^^^^^^^^^
+143 |                 raise Closed() from None
+144 |         # Authentication is still closed. Do not restore an old permit/secret.
+    |
+
+BLE001 Do not catch blind exception: `BaseException`
+   --> output_guardian/service.py:225:28
+    |
+223 |                     try:
+224 |                         await action()
+225 |                     except BaseException as exc:
+    |                            ^^^^^^^^^^^^^
+226 |                         if fault is None:
+227 |                             fault = (
+    |
+
+BLE001 Do not catch blind exception: `BaseException`
+   --> output_guardian/service.py:251:16
+    |
+249 |         try:
+250 |             await self.close_resources()
+251 |         except BaseException:
+    |                ^^^^^^^^^^^^^
+252 |             self.failed = True
+253 |             raise Closed() from None
+    |
+
+BLE001 Do not catch blind exception: `BaseException`
+   --> output_guardian/service.py:430:16
+    |
+428 |         except _TerminalConflict:
+429 |             raise Closed("STATE_CONFLICT") from None
+430 |         except BaseException as exc:
+    |                ^^^^^^^^^^^^^
+431 |             try:
+432 |                 await self._retire_life(life, getattr(exc, "code", type(exc).__name__))
+    |
+
+BLE001 Do not catch blind exception: `BaseException`
+   --> output_guardian/service.py:510:16
+    |
+508 |                 await asyncio.wait_for(getattr(self.web, "push_" + kind)(item), 0.1)
+509 |             self._check_life(life)
+510 |         except BaseException as exc:
+    |                ^^^^^^^^^^^^^
+511 |             # A real fault of the still-current life is retired; a stale ACK,
+512 |             # failure or cancellation only fails this request (never replayed).
+    |
+
+BLE001 Do not catch blind exception: `Exception`
+   --> output_guardian/service.py:571:24
+    |
+569 |                     ).hexdigest()
+570 |                     break
+571 |                 except Exception as exc:
+    |                        ^^^^^^^^^
+572 |                     fault = getattr(exc, "code", type(exc).__name__)
+573 |                     if self._life is life:  # a replaced life keeps its own record
+    |
+
+BLE001 Do not catch blind exception: `BaseException`
+   --> output_guardian/service.py:617:16
+    |
+615 |                 "evidence": [evidence],
+616 |             }
+617 |         except BaseException as exc:
+    |                ^^^^^^^^^^^^^
+618 |             code = getattr(exc, "code", type(exc).__name__)
+619 |             cause = (
+    |
+
+BLE001 Do not catch blind exception: `BaseException`
+   --> output_guardian/service.py:646:16
+    |
+644 |         try:
+645 |             self.persist_stops()
+646 |         except BaseException:
+    |                ^^^^^^^^^^^^^
+647 |             # A failed tombstone fsync cannot skip physical revocation.
+648 |             await self.retire(fatal=True)
+    |
+
+BLE001 Do not catch blind exception: `Exception`
+   --> output_guardian/service.py:720:20
+    |
+718 |             except asyncio.CancelledError:
+719 |                 raise
+720 |             except Exception as exc:
+    |                    ^^^^^^^^^
+721 |                 if (
+722 |                     life is not self._life
+    |
+
+BLE001 Do not catch blind exception: `Exception`
+   --> output_guardian/service.py:815:16
+    |
+813 |         except (ValueError, KeyError, TypeError):
+814 |             return web.json_response({"code": "INVALID_ARGUMENT"}, status=422)
+815 |         except Exception:
+    |                ^^^^^^^^^
+816 |             return web.json_response({"code": "DEPENDENCY_UNAVAILABLE"}, status=503)
+    |
+
+SIM114 [*] Combine `if` branches using logical `or` operator
+   --> output_guardian/service.py:846:13
+    |
+844 |               if not control and attempt.binding.producerIncarnation != producer:
+845 |                   raise Closed("FORBIDDEN")
+846 | /             if (
+847 | |                 op == "media"
+848 | |                 and set(data) == {"attempt", "kind", "payload", "sequence"}
+849 | |                 and data["kind"] == "audio"
+850 | |             ):
+851 | |                 result = await guardian.media(
+852 | |                     attempt,
+853 | |                     data
+854 | |                     | {"payload": base64.b64decode(data["payload"], validate=True)},
+855 | |                 )
+856 | |             elif (
+857 | |                 op == "media"
+858 | |                 and set(data) == {"attempt", "kind", "payload", "pts_us"}
+859 | |                 and data["kind"] == "video"
+860 | |             ):
+861 | |                 result = await guardian.media(
+862 | |                     attempt,
+863 | |                     data
+864 | |                     | {"payload": base64.b64decode(data["payload"], validate=True)},
+865 | |                 )
+    | |_________________^
+866 |               elif (
+867 |                   op == "offer"
+    |
+help: Combine `if` branches
+    |
+849 |                 and data["kind"] == "audio"
+    -             ):
+    -                 result = await guardian.media(
+    -                     attempt,
+    -                     data
+    -                     | {"payload": base64.b64decode(data["payload"], validate=True)},
+    -                 )
+    -             elif (
+850 +             ) or (
+851 |                 op == "media"
+    |
+
+UP041 [*] Replace aliased errors with `TimeoutError`
+   --> output_guardian/service.py:876:24
+    |
+874 |                 try:
+875 |                     result = await asyncio.wait_for(guardian.finish(attempt), 2)
+876 |                 except asyncio.TimeoutError:
+    |                        ^^^^^^^^^^^^^^^^^^^^
+877 |                     # Retire only the life this Finish named, never a successor.
+878 |                     life = guardian._life
+    |
+help: Replace `asyncio.TimeoutError` with builtin `TimeoutError`
+    |
+875 |                     result = await asyncio.wait_for(guardian.finish(attempt), 2)
+    -                 except asyncio.TimeoutError:
+876 +                 except TimeoutError:
+877 |                     # Retire only the life this Finish named, never a successor.
+    |
+
+Found 13 errors.
+[*] 2 fixable with `--fix` (1 unsafe fix available with `--fix --unsafe-fixes`).
+exit 1
+== ruff format --check
+5 files already formatted
+exit 0
+== strict user config: service.py preimage vs postimage finding counts
+pre:    10 BLE001     1 C408     1 SIM114     1 UP041  
+post:   10 BLE001     1 C408     1 SIM114     1 UP041  
+== strict, new test/helper files
+All checks passed!
+exit 0
+== after F811 handling: ruff check (strict user config) test_stale_generation.py: All checks passed; lifecycle 52 passed

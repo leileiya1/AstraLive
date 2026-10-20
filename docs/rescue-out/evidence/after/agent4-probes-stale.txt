@@ -1,0 +1,72 @@
+utc=2026-10-20T10:37:38.343155+00:00
+head=47eedbb0f4d990c18cbe8bdf462b65486d385523
+service.py sha256=0a5441b5064bda615977b47f1966809ed913f05d246cbeee5c58cb43c3a02508
+command=/Users/sapiece/innovationProject/AstraLive/.venv-guardian/bin/python -m pytest /Users/sapiece/innovationProject/AstraLive/output_guardian/tests/agent4_probes -p no:cacheprovider -q -rA
+FFF.......                                                               [100%]
+=================================== FAILURES ===================================
+___ test_fixture_permit_writes_need_separate_connection_or_serialization[0] ____
+
+rig = <conftest.Rig object at 0x10b926390>, repeat = 0
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_fixture_permit_writes_need_separate_connection_or_serialization(rig,repeat):
+        await rig.activate()
+        results=await asyncio.gather(rig.permit(),rig.permit(),return_exceptions=True)
+        errors=[type(x).__name__ for x in results if isinstance(x,BaseException)]
+        out=Path('/Users/sapiece/innovationProject/AstraLive/docs/rescue-out/evidence/after/probe-out/fixture-concurrency');out.mkdir(exist_ok=True)
+        (out/f'case-{repeat}.json').write_text(json.dumps(dict(errors=errors,realPrivatePostgres=True,fixtureOnly=True,productionAuthorityUsesItsOwnLock=True),indent=2)+'\n')
+>       assert not errors,'Shared test-only Rig.db used concurrently without serialization'
+E       AssertionError: Shared test-only Rig.db used concurrently without serialization
+E       assert not ['InterfaceError']
+
+output_guardian/tests/agent4_probes/test_fixture_sql_concurrency.py:14: AssertionError
+___ test_fixture_permit_writes_need_separate_connection_or_serialization[1] ____
+
+rig = <conftest.Rig object at 0x10b103140>, repeat = 1
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_fixture_permit_writes_need_separate_connection_or_serialization(rig,repeat):
+        await rig.activate()
+        results=await asyncio.gather(rig.permit(),rig.permit(),return_exceptions=True)
+        errors=[type(x).__name__ for x in results if isinstance(x,BaseException)]
+        out=Path('/Users/sapiece/innovationProject/AstraLive/docs/rescue-out/evidence/after/probe-out/fixture-concurrency');out.mkdir(exist_ok=True)
+        (out/f'case-{repeat}.json').write_text(json.dumps(dict(errors=errors,realPrivatePostgres=True,fixtureOnly=True,productionAuthorityUsesItsOwnLock=True),indent=2)+'\n')
+>       assert not errors,'Shared test-only Rig.db used concurrently without serialization'
+E       AssertionError: Shared test-only Rig.db used concurrently without serialization
+E       assert not ['InterfaceError']
+
+output_guardian/tests/agent4_probes/test_fixture_sql_concurrency.py:14: AssertionError
+___ test_fixture_permit_writes_need_separate_connection_or_serialization[2] ____
+
+rig = <conftest.Rig object at 0x10e7a8f50>, repeat = 2
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('repeat',range(3))
+    async def test_fixture_permit_writes_need_separate_connection_or_serialization(rig,repeat):
+        await rig.activate()
+        results=await asyncio.gather(rig.permit(),rig.permit(),return_exceptions=True)
+        errors=[type(x).__name__ for x in results if isinstance(x,BaseException)]
+        out=Path('/Users/sapiece/innovationProject/AstraLive/docs/rescue-out/evidence/after/probe-out/fixture-concurrency');out.mkdir(exist_ok=True)
+        (out/f'case-{repeat}.json').write_text(json.dumps(dict(errors=errors,realPrivatePostgres=True,fixtureOnly=True,productionAuthorityUsesItsOwnLock=True),indent=2)+'\n')
+>       assert not errors,'Shared test-only Rig.db used concurrently without serialization'
+E       AssertionError: Shared test-only Rig.db used concurrently without serialization
+E       assert not ['InterfaceError']
+
+output_guardian/tests/agent4_probes/test_fixture_sql_concurrency.py:14: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED output_guardian/tests/agent4_probes/test_real_stale_media_fresh_output.py::test_delayed_old_media_ack_cannot_retire_new_generation[0]
+PASSED output_guardian/tests/agent4_probes/test_real_stale_media_fresh_output.py::test_delayed_old_media_ack_cannot_retire_new_generation[1]
+PASSED output_guardian/tests/agent4_probes/test_real_stale_media_fresh_output.py::test_delayed_old_media_ack_cannot_retire_new_generation[2]
+PASSED output_guardian/tests/agent4_probes/test_real_stale_media_scoped.py::test_delayed_old_media_ack_cannot_retire_new_generation[0]
+PASSED output_guardian/tests/agent4_probes/test_real_stale_media_scoped.py::test_delayed_old_media_ack_cannot_retire_new_generation[1]
+PASSED output_guardian/tests/agent4_probes/test_real_stale_media_scoped.py::test_delayed_old_media_ack_cannot_retire_new_generation[2]
+PASSED output_guardian/tests/agent4_probes/test_stale_callbacks.py::test_old_media_failure_cannot_retire_new_generation
+FAILED output_guardian/tests/agent4_probes/test_fixture_sql_concurrency.py::test_fixture_permit_writes_need_separate_connection_or_serialization[0]
+FAILED output_guardian/tests/agent4_probes/test_fixture_sql_concurrency.py::test_fixture_permit_writes_need_separate_connection_or_serialization[1]
+FAILED output_guardian/tests/agent4_probes/test_fixture_sql_concurrency.py::test_fixture_permit_writes_need_separate_connection_or_serialization[2]
+3 failed, 7 passed in 3.75s
+
+exit=1

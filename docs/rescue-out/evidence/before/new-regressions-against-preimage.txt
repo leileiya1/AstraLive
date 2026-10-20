@@ -1,0 +1,491 @@
+2026-10-20T10:37:18Z
+service.py sha256=94eb702cd978b76a21cd29e3642397c976a8b221593a651b55f5375b6a18fa47  output_guardian/service.py
+FFF..FFFFF.FFFF..                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_stale_media_never_retires_replacement[ack] ________________
+
+local = namespace(g=<output_guardian.service.Guardian object at 0x10b600080>, a=Attempt(binding=Binding(tenantId='t', ownerId=...l=None, calls=1, returned=Right(permit_id='permit', deadline=1832314.55748075, monotonic_deadline=1429421.8729368749)))
+outcome = 'ack'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("outcome", ["ack", "failure", "cancel"])
+    async def test_stale_media_never_retires_replacement(local, outcome):
+        g, a = local.g, local.a
+        fail = Closed("MEDIA_DELIVERY_FAILED") if outcome == "failure" else None
+        g.publisher.call, entered, release = hold_first(g.publisher, "audio", fail=fail)
+        old = asyncio.create_task(g.media(a, AUDIO))
+        try:
+            await asyncio.wait_for(entered.wait(), 1)
+            new = successor(a)
+            assert (await g.bind(new, "new-permit"))["state"] == "AUTHORIZED"
+            before = snapshot(g)
+            if outcome == "cancel":
+                old.cancel()
+            else:
+                release.set()
+            with pytest.raises(Closed, match="MEDIA_DELIVERY_FAILED"):
+                await old
+>           assert_untouched(g, before)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+g = <output_guardian.service.Guardian object at 0x10b600080>
+before = (<output_guardian.service._Lifecycle object at 0x10be96ba0>, 1, Right(permit_id='permit', deadline=1832314.55748075, monotonic_deadline=1429421.8729368749), namespace(poll=<function Endpoint.start.<locals>.<lambda> at 0x10b5e1940>))
+
+    def assert_untouched(g, before):
+        life, barrier, right, process = before
+>       assert g._life is life and life.phase == "ACTIVE" and life.revocation is None
+E       AssertionError: assert (<output_guardian.service._Lifecycle object at 0x10be96ba0> is <output_guardian.service._Lifecycle object at 0x10be96ba0> and 'REVOKED' == 'ACTIVE'
+E        +  where <output_guardian.service._Lifecycle object at 0x10be96ba0> = <output_guardian.service.Guardian object at 0x10b600080>._life
+E         
+E         - ACTIVE
+E         + REVOKED)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:61: AssertionError
+_____________ test_stale_media_never_retires_replacement[failure] ______________
+
+local = namespace(g=<output_guardian.service.Guardian object at 0x10be92cf0>, a=Attempt(binding=Binding(tenantId='t', ownerId=...None, calls=1, returned=Right(permit_id='permit', deadline=1832314.5754038328, monotonic_deadline=1429421.8908597908)))
+outcome = 'failure'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("outcome", ["ack", "failure", "cancel"])
+    async def test_stale_media_never_retires_replacement(local, outcome):
+        g, a = local.g, local.a
+        fail = Closed("MEDIA_DELIVERY_FAILED") if outcome == "failure" else None
+        g.publisher.call, entered, release = hold_first(g.publisher, "audio", fail=fail)
+        old = asyncio.create_task(g.media(a, AUDIO))
+        try:
+            await asyncio.wait_for(entered.wait(), 1)
+            new = successor(a)
+            assert (await g.bind(new, "new-permit"))["state"] == "AUTHORIZED"
+            before = snapshot(g)
+            if outcome == "cancel":
+                old.cancel()
+            else:
+                release.set()
+            with pytest.raises(Closed, match="MEDIA_DELIVERY_FAILED"):
+                await old
+>           assert_untouched(g, before)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+g = <output_guardian.service.Guardian object at 0x10be92cf0>
+before = (<output_guardian.service._Lifecycle object at 0x10be931d0>, 1, Right(permit_id='permit', deadline=1832314.5754038328, monotonic_deadline=1429421.8908597908), namespace(poll=<function Endpoint.start.<locals>.<lambda> at 0x10c794680>))
+
+    def assert_untouched(g, before):
+        life, barrier, right, process = before
+>       assert g._life is life and life.phase == "ACTIVE" and life.revocation is None
+E       AssertionError: assert (<output_guardian.service._Lifecycle object at 0x10be931d0> is <output_guardian.service._Lifecycle object at 0x10be931d0> and 'REVOKED' == 'ACTIVE'
+E        +  where <output_guardian.service._Lifecycle object at 0x10be931d0> = <output_guardian.service.Guardian object at 0x10be92cf0>._life
+E         
+E         - ACTIVE
+E         + REVOKED)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:61: AssertionError
+______________ test_stale_media_never_retires_replacement[cancel] ______________
+
+local = namespace(g=<output_guardian.service.Guardian object at 0x10be93f50>, a=Attempt(binding=Binding(tenantId='t', ownerId=...None, calls=1, returned=Right(permit_id='permit', deadline=1832314.5804226247, monotonic_deadline=1429421.8958785408)))
+outcome = 'cancel'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("outcome", ["ack", "failure", "cancel"])
+    async def test_stale_media_never_retires_replacement(local, outcome):
+        g, a = local.g, local.a
+        fail = Closed("MEDIA_DELIVERY_FAILED") if outcome == "failure" else None
+        g.publisher.call, entered, release = hold_first(g.publisher, "audio", fail=fail)
+        old = asyncio.create_task(g.media(a, AUDIO))
+        try:
+            await asyncio.wait_for(entered.wait(), 1)
+            new = successor(a)
+            assert (await g.bind(new, "new-permit"))["state"] == "AUTHORIZED"
+            before = snapshot(g)
+            if outcome == "cancel":
+                old.cancel()
+            else:
+                release.set()
+            with pytest.raises(Closed, match="MEDIA_DELIVERY_FAILED"):
+                await old
+>           assert_untouched(g, before)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+g = <output_guardian.service.Guardian object at 0x10be93f50>
+before = (<output_guardian.service._Lifecycle object at 0x10bea81a0>, 1, Right(permit_id='permit', deadline=1832314.5804226247, monotonic_deadline=1429421.8958785408), namespace(poll=<function Endpoint.start.<locals>.<lambda> at 0x10c794f40>))
+
+    def assert_untouched(g, before):
+        life, barrier, right, process = before
+>       assert g._life is life and life.phase == "ACTIVE" and life.revocation is None
+E       AssertionError: assert (<output_guardian.service._Lifecycle object at 0x10bea81a0> is <output_guardian.service._Lifecycle object at 0x10bea81a0> and 'REVOKED' == 'ACTIVE'
+E        +  where <output_guardian.service._Lifecycle object at 0x10bea81a0> = <output_guardian.service.Guardian object at 0x10be93f50>._life
+E         
+E         - ACTIVE
+E         + REVOKED)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:61: AssertionError
+___________ test_current_life_media_fault_is_still_retired[barrier] ____________
+
+local = namespace(g=<output_guardian.service.Guardian object at 0x10c0309e0>, a=Attempt(binding=Binding(tenantId='t', ownerId=...dId='c'), sql=namespace(entered=<asyncio.locks.Event object at 0x10c033e60 [unset]>, release=None, fail=None, calls=0))
+outcome = 'barrier'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("outcome", ["failure", "cancel", "barrier"])
+    async def test_current_life_media_fault_is_still_retired(local, outcome):
+        g, a = local.g, local.a
+        fail = Closed("MEDIA_DELIVERY_FAILED") if outcome == "failure" else None
+        g.publisher.call, entered, release = hold_first(g.publisher, "audio", fail=fail)
+        life, barrier = g._life, g.barrier
+        media = asyncio.create_task(g.media(a, AUDIO))
+        await asyncio.wait_for(entered.wait(), 1)
+        if outcome == "cancel":
+            media.cancel()
+        elif outcome == "barrier":
+            await g.retire()  # an unrelated revocation of the same life won first
+        release.set()
+        with pytest.raises(Closed, match="MEDIA_DELIVERY_FAILED"):
+            await media
+        assert life.phase == "REVOKED" and g.right is None
+>       assert g.barrier == barrier + 1  # exactly one revocation, never doubled
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 2 == (0 + 1)
+E        +  where 2 = <output_guardian.service.Guardian object at 0x10c0309e0>.barrier
+
+output_guardian/tests/lifecycle/test_stale_generation.py:114: AssertionError
+______________ test_stale_media_after_stop_keeps_stop_precedence _______________
+
+local = namespace(g=<output_guardian.service.Guardian object at 0x10be92f30>, a=Attempt(binding=Binding(tenantId='t', ownerId=...dId='c'), sql=namespace(entered=<asyncio.locks.Event object at 0x10be92fc0 [unset]>, release=None, fail=None, calls=0))
+
+    @pytest.mark.asyncio
+    async def test_stale_media_after_stop_keeps_stop_precedence(local):
+        g, a = local.g, local.a
+        g.publisher.call, entered, release = hold_first(g.publisher, "audio")
+        old = asyncio.create_task(g.media(a, AUDIO))
+        await asyncio.wait_for(entered.wait(), 1)
+        life = g._life
+        await g.stop("run")
+        barrier = g.barrier
+        release.set()
+        with pytest.raises(Closed, match="MEDIA_DELIVERY_FAILED"):
+            await old
+>       assert life.phase == "REVOKED" and g.barrier == barrier and g.right is None
+E       AssertionError: assert ('REVOKED' == 'REVOKED'
+E         
+E           REVOKED and 2 == 1)
+E        +  where 2 = <output_guardian.service.Guardian object at 0x10be92f30>.barrier
+
+output_guardian/tests/lifecycle/test_stale_generation.py:130: AssertionError
+________________ test_stale_media_after_expiry_then_replacement ________________
+
+local = namespace(g=<output_guardian.service.Guardian object at 0x10beaaba0>, a=Attempt(binding=Binding(tenantId='t', ownerId=...=None, calls=1, returned=Right(permit_id='permit', deadline=1832314.5958434578, monotonic_deadline=1429421.911299375)))
+
+    @pytest.mark.asyncio
+    async def test_stale_media_after_expiry_then_replacement(local):
+        g, a = local.g, local.a
+        g.publisher.call, entered, release = hold_first(g.publisher, "audio")
+        old = asyncio.create_task(g.media(a, AUDIO))
+        await asyncio.wait_for(entered.wait(), 1)
+        expired = g._life
+        expired.revocation = "LEASE_LOST"
+        await g.retire()  # what the watchdog does on a real expiry
+        new = successor(a)
+        await g.bind(new, "new-permit")
+        before = snapshot(g)
+        release.set()
+        with pytest.raises(Closed, match="MEDIA_DELIVERY_FAILED"):
+            await old
+        assert expired.phase == "REVOKED" and expired.revocation == "LEASE_LOST"
+>       assert_untouched(g, before)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:151: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+g = <output_guardian.service.Guardian object at 0x10beaaba0>
+before = (<output_guardian.service._Lifecycle object at 0x10bea8770>, 2, Right(permit_id='permit', deadline=1832314.5958434578, monotonic_deadline=1429421.911299375), namespace(poll=<function Endpoint.start.<locals>.<lambda> at 0x10c794b80>))
+
+    def assert_untouched(g, before):
+        life, barrier, right, process = before
+>       assert g._life is life and life.phase == "ACTIVE" and life.revocation is None
+E       AssertionError: assert (<output_guardian.service._Lifecycle object at 0x10bea8770> is <output_guardian.service._Lifecycle object at 0x10bea8770> and 'REVOKED' == 'ACTIVE'
+E        +  where <output_guardian.service._Lifecycle object at 0x10bea8770> = <output_guardian.service.Guardian object at 0x10beaaba0>._life
+E         
+E         - ACTIVE
+E         + REVOKED)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:61: AssertionError
+______________ test_old_media_never_reaches_replacement_counters _______________
+
+local = namespace(g=<output_guardian.service.Guardian object at 0x10c033f80>, a=Attempt(binding=Binding(tenantId='t', ownerId=...None, calls=1, returned=Right(permit_id='permit', deadline=1832314.6005766247, monotonic_deadline=1429421.9160325408)))
+
+    @pytest.mark.asyncio
+    async def test_old_media_never_reaches_replacement_counters(local):
+        g, a = local.g, local.a
+        g.publisher.call, entered, release = hold_first(g.publisher, "audio")
+        old = asyncio.create_task(g.media(a, AUDIO))
+        await asyncio.wait_for(entered.wait(), 1)
+        await g.bind(successor(a), "new-permit")
+        release.set()
+        await asyncio.gather(old, return_exceptions=True)
+        assert (g.audio_sequence, g.audio_samples) == (0, 0)
+>       with pytest.raises(Closed, match="STALE_RUN_EPOCH"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'STALE_RUN_EPOCH'
+E         Actual message: 'OUTPUT_FENCE_UNPROVEN'
+
+output_guardian/tests/lifecycle/test_stale_generation.py:164: AssertionError
+____________ test_ipc_finish_deadline_retires_only_named_life[old] _____________
+
+local = namespace(g=<output_guardian.service.Guardian object at 0x10c578710>, a=Attempt(binding=Binding(tenantId='t', ownerId=...=None, calls=1, returned=Right(permit_id='permit', deadline=1832314.604557291, monotonic_deadline=1429421.9200132077)))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c57b530>
+named = 'old'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("named", ["old", "current"])
+    async def test_ipc_finish_deadline_retires_only_named_life(local, monkeypatch, named):
+        g, a = local.g, local.a
+        started, original = asyncio.Event(), g.finish
+    
+        async def hung(attempt):
+            started.set()
+            await asyncio.Event().wait()  # never completes; cancelled at deadline
+    
+        monkeypatch.setattr(g, "finish", hung)
+        new = successor(a)
+        await g.bind(new, "new-permit")
+        before = snapshot(g)
+        target = a if named == "old" else new
+        client, headers = await ipc_client(g)
+        try:
+            response = await client.post(
+                "/guardian/v1/finish",
+                headers=headers,
+                data=json.dumps({"attempt": target.json()}),
+            )
+            assert started.is_set()
+            assert response.status == 409
+            assert (await response.json())["code"] == "DRAIN_UNKNOWN"
+        finally:
+            await client.close()
+            monkeypatch.setattr(g, "finish", original)
+        if named == "old":
+>           assert_untouched(g, before)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+g = <output_guardian.service.Guardian object at 0x10c578710>
+before = (<output_guardian.service._Lifecycle object at 0x10c578e90>, 1, Right(permit_id='permit', deadline=1832314.604557291, monotonic_deadline=1429421.9200132077), namespace(poll=<function Endpoint.start.<locals>.<lambda> at 0x10c796840>))
+
+    def assert_untouched(g, before):
+        life, barrier, right, process = before
+>       assert g._life is life and life.phase == "ACTIVE" and life.revocation is None
+E       AssertionError: assert (<output_guardian.service._Lifecycle object at 0x10c578e90> is <output_guardian.service._Lifecycle object at 0x10c578e90> and 'REVOKED' == 'ACTIVE'
+E        +  where <output_guardian.service._Lifecycle object at 0x10c578e90> = <output_guardian.service.Guardian object at 0x10c578710>._life
+E         
+E         - ACTIVE
+E         + REVOKED)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:61: AssertionError
+_________ test_poll_ingest_observation_for_replaced_life_is_discarded __________
+
+local = namespace(g=<output_guardian.service.Guardian object at 0x10c5817c0>, a=Attempt(binding=Binding(tenantId='t', ownerId=...=None, calls=3, returned=Right(permit_id='permit', deadline=1832318.7828651248, monotonic_deadline=1429426.098321125)))
+
+    @pytest.mark.asyncio
+    async def test_poll_ingest_observation_for_replaced_life_is_discarded(local):
+        g, a = local.g, local.a
+        entered, release = asyncio.Event(), asyncio.Event()
+        observed, exclusive = [], []
+    
+        async def publishers():
+            if observed:
+                return []  # the replacement has not published yet
+            entered.set()
+            await release.wait()
+            observed.append(True)
+            return [{"id": "old-connection"}]  # taken before the replacement
+    
+        async def check_exclusive(expected):
+            exclusive.append(expected)
+    
+        async def never_ready():
+            return False
+    
+        g.ingest.publishers, g.ingest.ready = publishers, never_ready
+        g.ingest.exclusive = check_exclusive
+        g.observer_started = True
+        g.publisher_id = "old-connection"
+        g.poller = asyncio.create_task(g._poll())
+        try:
+            await asyncio.wait_for(entered.wait(), 1)
+            new = successor(a)
+            await g.bind(new, "new-permit")
+            g.publisher_id = "new-connection"  # its own publish auth callback
+            before = snapshot(g)
+            release.set()
+            for _ in range(30):
+                await asyncio.sleep(0.01)
+                if observed:
+                    break
+            await asyncio.sleep(0.2)  # several further real poll iterations
+            # A stale list never proves (nor later disproves) the new publisher.
+>           assert observed and exclusive == [] and not g.publisher_seen
+E           AssertionError: assert ([True] and ['new-connection'] == []
+E             
+E             Left contains one more item: 'new-connection'
+E             Use -v to get more diff)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:250: AssertionError
+______________ test_real_stale_media_ack_keeps_new_generation[0] _______________
+
+rig = <conftest.Rig object at 0x10c581430>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c5814f0>
+repeat = 0
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("repeat", range(3))
+    async def test_real_stale_media_ack_keeps_new_generation(rig, monkeypatch, repeat):
+        await rig.activate()
+        g = rig.guardian
+        call, entered, release = hold_first(g.publisher, "audio")
+        monkeypatch.setattr(g.publisher, "call", call)
+        old = asyncio.create_task(g.media(rig.attempt, tone(0)))
+        try:
+            await asyncio.wait_for(entered.wait(), 0.5)
+            old_child = g.publisher.process
+            new = successor(rig.attempt)
+            await provision_successor(rig, new)
+            assert (await g.bind(new, await rig.permit()))["state"] == "AUTHORIZED"
+            assert old_child.poll() is not None  # the old owned child was reaped
+            before = snapshot(g)
+            child = before[3]
+            release.set()
+            with pytest.raises(Closed, match="MEDIA_DELIVERY_FAILED"):
+                await old
+>           assert_untouched(g, before)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:324: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+g = <output_guardian.service.Guardian object at 0x10c63b9b0>
+before = (<output_guardian.service._Lifecycle object at 0x10c63a570>, 3, Right(permit_id='p_e006074d0e5b4bd6b8da859906579465', ...notonic_deadline=1429426.8679032498), <Popen: returncode: -9 args: ['/Users/sapiece/innovationProject/AstraLive/.v...>)
+
+    def assert_untouched(g, before):
+        life, barrier, right, process = before
+>       assert g._life is life and life.phase == "ACTIVE" and life.revocation is None
+E       AssertionError: assert (<output_guardian.service._Lifecycle object at 0x10c63a570> is <output_guardian.service._Lifecycle object at 0x10c63a570> and 'REVOKED' == 'ACTIVE'
+E        +  where <output_guardian.service._Lifecycle object at 0x10c63a570> = <output_guardian.service.Guardian object at 0x10c63b9b0>._life
+E         
+E         - ACTIVE
+E         + REVOKED)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:61: AssertionError
+______________ test_real_stale_media_ack_keeps_new_generation[1] _______________
+
+rig = <conftest.Rig object at 0x10c63bb60>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c63a270>
+repeat = 1
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("repeat", range(3))
+    async def test_real_stale_media_ack_keeps_new_generation(rig, monkeypatch, repeat):
+        await rig.activate()
+        g = rig.guardian
+        call, entered, release = hold_first(g.publisher, "audio")
+        monkeypatch.setattr(g.publisher, "call", call)
+        old = asyncio.create_task(g.media(rig.attempt, tone(0)))
+        try:
+            await asyncio.wait_for(entered.wait(), 0.5)
+            old_child = g.publisher.process
+            new = successor(rig.attempt)
+            await provision_successor(rig, new)
+            assert (await g.bind(new, await rig.permit()))["state"] == "AUTHORIZED"
+            assert old_child.poll() is not None  # the old owned child was reaped
+            before = snapshot(g)
+            child = before[3]
+            release.set()
+            with pytest.raises(Closed, match="MEDIA_DELIVERY_FAILED"):
+                await old
+>           assert_untouched(g, before)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:324: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+g = <output_guardian.service.Guardian object at 0x10c60a780>
+before = (<output_guardian.service._Lifecycle object at 0x10c60b710>, 3, Right(permit_id='p_325b0116af814b4a9e2f438e18bbb274', ...onotonic_deadline=1429427.238839333), <Popen: returncode: -9 args: ['/Users/sapiece/innovationProject/AstraLive/.v...>)
+
+    def assert_untouched(g, before):
+        life, barrier, right, process = before
+>       assert g._life is life and life.phase == "ACTIVE" and life.revocation is None
+E       AssertionError: assert (<output_guardian.service._Lifecycle object at 0x10c60b710> is <output_guardian.service._Lifecycle object at 0x10c60b710> and 'REVOKED' == 'ACTIVE'
+E        +  where <output_guardian.service._Lifecycle object at 0x10c60b710> = <output_guardian.service.Guardian object at 0x10c60a780>._life
+E         
+E         - ACTIVE
+E         + REVOKED)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:61: AssertionError
+______________ test_real_stale_media_ack_keeps_new_generation[2] _______________
+
+rig = <conftest.Rig object at 0x10c63a300>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c69c740>
+repeat = 2
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("repeat", range(3))
+    async def test_real_stale_media_ack_keeps_new_generation(rig, monkeypatch, repeat):
+        await rig.activate()
+        g = rig.guardian
+        call, entered, release = hold_first(g.publisher, "audio")
+        monkeypatch.setattr(g.publisher, "call", call)
+        old = asyncio.create_task(g.media(rig.attempt, tone(0)))
+        try:
+            await asyncio.wait_for(entered.wait(), 0.5)
+            old_child = g.publisher.process
+            new = successor(rig.attempt)
+            await provision_successor(rig, new)
+            assert (await g.bind(new, await rig.permit()))["state"] == "AUTHORIZED"
+            assert old_child.poll() is not None  # the old owned child was reaped
+            before = snapshot(g)
+            child = before[3]
+            release.set()
+            with pytest.raises(Closed, match="MEDIA_DELIVERY_FAILED"):
+                await old
+>           assert_untouched(g, before)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:324: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+g = <output_guardian.service.Guardian object at 0x10c69f890>
+before = (<output_guardian.service._Lifecycle object at 0x10c69d010>, 3, Right(permit_id='p_ce2a5d8423a74d8496fde11cbf936637', ...onotonic_deadline=1429427.614304375), <Popen: returncode: -9 args: ['/Users/sapiece/innovationProject/AstraLive/.v...>)
+
+    def assert_untouched(g, before):
+        life, barrier, right, process = before
+>       assert g._life is life and life.phase == "ACTIVE" and life.revocation is None
+E       AssertionError: assert (<output_guardian.service._Lifecycle object at 0x10c69d010> is <output_guardian.service._Lifecycle object at 0x10c69d010> and 'REVOKED' == 'ACTIVE'
+E        +  where <output_guardian.service._Lifecycle object at 0x10c69d010> = <output_guardian.service.Guardian object at 0x10c69f890>._life
+E         
+E         - ACTIVE
+E         + REVOKED)
+
+output_guardian/tests/lifecycle/test_stale_generation.py:61: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED output_guardian/tests/lifecycle/test_stale_generation.py::test_current_life_media_fault_is_still_retired[failure]
+PASSED output_guardian/tests/lifecycle/test_stale_generation.py::test_current_life_media_fault_is_still_retired[cancel]
+PASSED output_guardian/tests/lifecycle/test_stale_generation.py::test_ipc_finish_deadline_retires_only_named_life[current]
+PASSED output_guardian/tests/lifecycle/test_stale_generation.py::test_real_current_publisher_death_is_still_retired
+PASSED output_guardian/tests/lifecycle/test_stale_generation.py::test_real_fixture_writes_are_serialized
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_stale_media_never_retires_replacement[ack]
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_stale_media_never_retires_replacement[failure]
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_stale_media_never_retires_replacement[cancel]
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_current_life_media_fault_is_still_retired[barrier]
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_stale_media_after_stop_keeps_stop_precedence
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_stale_media_after_expiry_then_replacement
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_old_media_never_reaches_replacement_counters
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_ipc_finish_deadline_retires_only_named_life[old]
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_poll_ingest_observation_for_replaced_life_is_discarded
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_real_stale_media_ack_keeps_new_generation[0]
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_real_stale_media_ack_keeps_new_generation[1]
+FAILED output_guardian/tests/lifecycle/test_stale_generation.py::test_real_stale_media_ack_keeps_new_generation[2]
+12 failed, 5 passed in 6.63s

@@ -7,6 +7,7 @@ import pytest
 
 from output_guardian import service
 from output_guardian.model import Closed
+from output_guardian.tests.lifecycle.serial_rig import serial_rig  # noqa: F401
 from output_guardian.tests.test_guardian import synthetic
 
 
