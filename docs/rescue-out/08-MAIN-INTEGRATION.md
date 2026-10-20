@@ -44,6 +44,26 @@ Durable LIVE：`ASTRALIVE_DURABLE_LIVE_ENABLED=true` 时 Backend 拒绝启动并
 - answerstream 8：需要 Agent3 专用 streaming 库。
 - 其余：浏览器、owned 子进程助手、显式 opt-in。
 
+## 推送记录
+
+- 2026-10-20 所有者确认“1，先推送”：`origin/main` 7fe5d24 → **1a51576**（fast-forward）；同时推送 `rescue/astralive-v05-final` 供追溯。未改动任何 PR。
+
+## 补齐专用库测试（推送后，`evidence/full-regression-dedicated-db/`、`evidence/owned-extras/`）
+
+| 项 | 之前 | 现在 |
+| --- | --- | --- |
+| receiver1（Agent4 专用库约定：`agent4_receiver1_*` + 标记文件 + Python peer + `AGENT4_PR11_ARCHIVE`=仓库本身） | 36 SKIP | **PASS** |
+| answerstream（Agent3 约定：`agent3_streaming_*` + 标记文件） | 8 SKIP | **PASS** |
+| Go race 全量 | 228 P / 52 S | **272 PASS / 0 FAIL / 8 SKIP** |
+| `TestPostgresIsolatedServerOutage`（自行停/启私有 PG :55462） | SKIP | **PASS** |
+| `TestRedisIsolatedDisconnectAndSQLFallback`（私有 Redis :56382/0） | SKIP | **PASS** |
+| `TestInteractionFormalCPU`（真实 Python Runtime 子进程 + SQL + Redis） | SKIP | **PASS** |
+| `TestEventDedupAndStateUpdateWithPostgres` | SKIP | **PASS**（首次因库未迁移失败，日志保留于 `owned-extras-ATTEMPT1-legacy-unmigrated/`） |
+
+剩余 4 个 SKIP 均为设计如此：`TestOwnedCommitCrashChild`、`TestIsolatedBackendHelper` 只是子进程入口（其父测试已运行并通过）；`TestExportContractRequests` 是证据导出工具；`TestConfigurationBrowserHarness` 需要真实 Chrome 的 opt-in。
+
+所有标记文件与数据库均由脚本在全新目录中创建、只用于本次运行、退出即删除；未触碰其他 Agent 的 `/tmp/astralive-agent2-*` 目录。
+
 ## 推送条件（“全部成功”的定义，供你确认）
 
 当前合并是“阶段 1 完成”的状态，已经可以推送，但按你的指示暂不推送。建议的推送门槛：

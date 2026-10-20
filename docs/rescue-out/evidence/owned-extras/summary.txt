@@ -1,0 +1,6 @@
+2026-10-20T12:30:25Z
+head=4456f33873fdaadda10938aa24aa70c62ffd379e work=/tmp/astralive-agent2-rescue-gV43
+pg-outage        exit=0  --- PASS: TestPostgresIsolatedServerOutage (0.56s) ok  	astralive/backend/internal/durablelive	1.919s 
+redis-owned      exit=0  --- PASS: TestRedisIsolatedDisconnectAndSQLFallback (0.38s) ok  	astralive/backend/internal/durablelive	2.095s 
+interaction      exit=0  --- PASS: TestInteractionFormalCPU (1.45s) ok  	astralive/backend/internal/httpapi	2.849s 
+legacy-dedup     exit=0  --- PASS: TestEventDedupAndStateUpdateWithPostgres (0.01s) ok  	astralive/backend/tests	1.420s 
