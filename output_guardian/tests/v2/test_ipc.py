@@ -45,7 +45,8 @@ async def send(d, connection, path, value, token, *, raw=None):
     await writer.drain()
     try:
         headers = await asyncio.wait_for(reader.readuntil(b"\r\n\r\n"), 1)
-    except asyncio.IncompleteReadError:
+    except (asyncio.IncompleteReadError, ConnectionResetError):
+        # Closed without a reply: EOF on Darwin, RST on Linux for an unread body.
         return None
     size = int(
         next(
@@ -175,7 +176,7 @@ async def test_real_ipc_denies_unprovisioned_context(domain, fault):
         assert not d.x.b.latches and d.r.gate.active is None
     finally:
         connection[1].close()
-        # Linux resets a client whose unread request the server refused.
+        # The same reset is stored on the transport and re-raised here.
         with contextlib.suppress(ConnectionResetError):
             await connection[1].wait_closed()
         await ipc.close()
