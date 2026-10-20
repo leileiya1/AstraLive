@@ -89,6 +89,8 @@ type interop struct {
 	prefix, product, plan, root, repo       string
 	control, registrar, runtime, guardian   authority.Actor
 	cmd, template, unit, prepareQ, consumeQ authority.Document
+	start                                   authority.Document
+	startSent                               time.Time
 	binding                                 wire.ReceiverBootstrapBinding
 	rt, second, g                           *childPeer
 	registry                                *Registry
@@ -334,7 +336,9 @@ func (f *interop) ready() {
 	f.stageRegister()
 	f.call(f.runtime, "JournalPrepareAnswer", f.prepareQ)
 	p := f.call(f.runtime, "AcquireOutputPermit", f.q(authority.Document{"sessionId": f.cmd["sessionId"], "runEpoch": 1, "producerIncarnation": f.runtime.Producer, "guardianId": f.binding.GuardianID, "answerArtifactId": f.unit["artifactId"]}))
+	f.startSent = time.Now() // anchor BEFORE the START RPC, as the contract requires
 	start := f.call(f.runtime, "JournalStart", f.q(authority.Document{"commandId": f.cmd["commandId"], "attemptId": f.cmd["attemptId"], "sessionId": f.cmd["sessionId"], "runEpoch": 1, "producerIncarnation": f.runtime.Producer, "requestHash": f.cmd["requestHash"], "permitId": p["permitId"], "expectedInboxRevision": 2, "answerArtifactId": f.unit["artifactId"], "answerArtifactHash": f.unit["artifactHash"], "expectedAnswerRevision": 1}))
+	f.start = start
 	f.consumeQ = f.private(authority.Document{"references": authority.Document{"bootstrapId": f.binding.BootstrapID, "artifactId": f.unit["artifactId"], "artifactHash": f.unit["artifactHash"], "grantId": testObj(start, "answerGrant")["grantId"], "permitId": p["permitId"]}, "consumeTicket": start["consumeTicket"], "consumeRequestId": fresh("consume_"), "runtimePrincipalId": f.runtime.ID, "runtimeIncarnation": f.runtime.Incarnation, "channelBinding": testHash("fixture-runtime-channel"), "expectedRegistrationRevision": 1})
 }
 func (f *interop) remote(name string, q authority.Document) authority.Document {
@@ -659,6 +663,54 @@ func TestPostgresReceiver1NativeRuntimeIPCChannels(t *testing.T) {
 	}
 	// No TTS side effect is available in this test peer. Positive IPC ACK is not
 	// production Runtime once-TTS, required drain, browser AV or SLA acceptance.
+}
+
+// The production Runtime client (runtime/app/receiver1/runtime_client.py) in a
+// separately pinned OS process, against the real Guardian receiver and the real
+// PostgreSQL Authority. TTS is a counting stand-in and the Observer is the
+// closed fixture, so Finish must refuse: no drain/browser/SLA claim is made.
+func TestPostgresReceiver1RuntimeClientOnceTTS(t *testing.T) {
+	f := newInterop(t)
+	f.ready()
+	refs := testObj(f.consumeQ, "references")
+	call := map[string]any{
+		"action": "runtime_client_flow", "socket": filepath.Join(f.root, "guardian/runtime.sock"),
+		"guardian": f.g.managed.Pin.Identity(), "grant": testObj(f.start, "answerGrant"),
+		"start":        authority.Document{"consumeTicket": f.start["consumeTicket"], "consumeTiming": f.start["consumeTiming"]},
+		"registration": authority.Document{"binding": authority.Document{"generationId": 7, "guardianIncarnation": f.guardian.Incarnation}, "revision": 1},
+		"references":   refs, "artifact": f.unit, "sequenceOrigin": 0,
+		"startElapsedMs": time.Since(f.startSent).Milliseconds() + 1,
+	}
+	out := f.rt.rpc(call)
+	if out["ok"] != true {
+		t.Fatal("runtime client flow", out)
+	}
+	r := testObj(out, "result")
+	if r["consumeError"] != nil || fmt.Sprint(r["ttsInvocations"]) != "1" || fmt.Sprint(r["spoken"]) != "1" || r["secondTTS"] != "TTS_ALREADY_STARTED" {
+		t.Fatal("not exactly one TTS after one true consume", r)
+	}
+	if fmt.Sprint(r["ticketsLeft"]) != "0" || r["knowledge"] != "CONSUMED" || r["mediaAccepted"] != true || fmt.Sprint(r["nextSequence"]) != "1" {
+		t.Fatal("ticket/media/ordinal", r)
+	}
+	if r["finish"] == "DRAINED" {
+		t.Fatal("closed Observer fixture produced a drain")
+	}
+	if len(testText(r, "channelBinding")) != 64 || f.count("dl05_receiver_consumptions") != 1 {
+		t.Fatal("durable latch or channel binding", r)
+	}
+	var principal string
+	if e := f.s.DB.QueryRow(f.ctx, "SELECT runtime_principal FROM dl05_receiver_consumptions WHERE command_id=$1", f.cmd["commandId"]).Scan(&principal); e != nil {
+		t.Fatal(e)
+	}
+	if principal != f.runtime.ID {
+		t.Fatal("latch not bound to the authenticated Runtime process", principal)
+	}
+	// The same ticket in a second registered Runtime process can never win.
+	call["action"] = "runtime_client_flow"
+	again := f.second.rpc(call)
+	if again["ok"] != true || testObj(again, "result")["consumeError"] == nil || fmt.Sprint(testObj(again, "result")["ttsInvocations"]) != "0" || f.count("dl05_receiver_consumptions") != 1 {
+		t.Fatal("second Runtime process consumed or spoke", again)
+	}
 }
 func TestPostgresReceiver1ControlCredentialSeparation(t *testing.T) {
 	f := newInterop(t)

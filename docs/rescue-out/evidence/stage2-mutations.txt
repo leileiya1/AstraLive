@@ -19,3 +19,8 @@ M5 skip guardian socket peer pin => 1 failed, 13 passed in 0.21s
 M6 sequence advances on rejection => 4 failed, 10 passed in 0.22s
 M7 swallow cancellation as UNKNOWN => 1 failed, 13 passed in 0.22s
 source restored (hash identical)
+--- 2b end-to-end (real PG Authority + real Guardian + separate Runtime process)
+E2E-M1 keep ticket after consume => go-race                exit=1   {'fail': 1} fails=['receiver1.TestPostgresReceiver1RuntimeClientOnceTTS']
+E2E-M2 latch after TTS call => go-race                exit=0   {'pass': 1} fails=[]
+source restored (hash identical)
+note: E2E-M2 is not observable when TTS succeeds; it is detected by test_tts_failure_never_reopens_the_latch (Python suite, see above)
