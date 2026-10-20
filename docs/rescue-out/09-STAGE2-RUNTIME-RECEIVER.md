@@ -43,8 +43,25 @@
 3. **架构决策待定（Agent4 所有权）**：Agent3 的流式协调器在 Go 中用 RUNTIME_JOURNAL 身份调用 Journal，但生产中只有 Python Runtime 进程持有该凭据及 Guardian 消费权限。需要决定：协调器移入 Runtime 侧，或 Go 协调器通过 Runtime 执行 consume（`ReceiverProofs` 的生产实现）。本步骤没有替该决策做选择。
 4. Linux 隔离、真实媒体、GPU、延迟 SLA 均未涉及；`OUTPUT_FENCE_UNPROVEN` 不变，Durable LIVE 仍无法开启。
 
+## 架构决策（2026-10-20，仓库所有者选择方案 1）
+
+流式答案协调器的逻辑**移入 Python Runtime**：它本来就持有 RUNTIME_JOURNAL 凭据和 Guardian 消费权限，凭据与权限边界最简单。Agent3 的 Go 协调器及其测试保留为语义参考与回归（不删除），生产路径由 Runtime 侧实现，后续 2c 落地。
+
+## 2b：真实 PostgreSQL Authority + 真实 Guardian + 独立 Runtime 进程（已完成）
+
+`backend/internal/durableintegration/receiver1/interop_test.go` 新增 `TestPostgresReceiver1RuntimeClientOnceTTS`；`testdata/guardian_peer.py` 新增 `runtime_client_flow` 动作，在**独立钉住的 Runtime OS 进程**中运行生产客户端 `runtime_client.py`：
+
+- 真实链路：Go Backend JournalStart（真实 PG，一次性 ticket）→ Runtime 客户端 → Guardian（真实 PR11 receiver + PrivateIPC）→ Backend `QueryReceiverAuthority`/`CommitReceiverConsume`（真实 PG 唯一 latch）。
+- 断言：一次真 consume；TTS 恰好 1 次，第二次 `TTS_ALREADY_STARTED`；ticket 已擦除；媒体被 Guardian 门接受、序号从 Session 原点连续；SQL `dl05_receiver_consumptions` 恰好 1 行且 `runtime_principal` 是认证过的 Runtime 进程；同一 ticket 在第二个已注册 Runtime 进程中既不能消费也不会触发 TTS。
+- Finish 必须被拒绝（Observer 是关闭夹具）——测试反向断言不得出现 DRAINED。
+- START 期限锚点：Go 在 JournalStart **之前**记录时间，把已用毫秒传给子进程向前回拨，保证不会比契约更宽松。
+- 结果：`-race` 3/3 PASS；完整回归 Go race 273 PASS/0 FAIL/8 SKIP。端到端变异：保留 ticket（E2E-M1）被检出；“TTS 后上锁”（E2E-M2）在 TTS 成功的端到端流程中不可观测，由 Python 测试 `test_tts_failure_never_reopens_the_latch` 检出（已如实记录）。
+- 客户端新增 `sequence_origin`：外层序号从受信 Session 原点继续，不按单元归零。
+
+仍未证明：真实 TTS、真实 Observer/Sink drain、浏览器音视频、延迟 SLA。
+
 ## 阶段 2 后续步骤（建议顺序）
 
-- 2b：在 Go receiver1 真实 PG 测试框架中，用本客户端替换测试用 Python peer 的 Runtime 角色，做真实 Backend Authority + 真实 Guardian + 本客户端的端到端测试。
-- 2c：Python Runtime v2 Journal 客户端（四个 RUNTIME_JOURNAL 操作），以及协调器归属决策落地。
+- ~~2b~~ 已完成（见上）。
+- 2c：Python Runtime v2 Journal 客户端（RUNTIME_JOURNAL 操作）与 Runtime 侧流式协调器（按方案 1）。
 - 2d：真实 TTS 适配器经 `speak_once` 接入（CPU/模拟提供方），PCM 提交时绑定 lineage。

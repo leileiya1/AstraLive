@@ -253,7 +253,7 @@ class GuardianChannel:
 class ReceiverRuntime:
     """REGISTERED_RUNTIME actor. One instance per Runtime process incarnation."""
 
-    def __init__(self, open_channel, wire, *, clocks=None):
+    def __init__(self, open_channel, wire, *, clocks=None, sequence_origin=0):
         self._open_channel = open_channel  # () -> GuardianChannel
         self.wire = wire
         self.clocks = clocks or (time.monotonic, continuous)
@@ -262,7 +262,8 @@ class ReceiverRuntime:
         self._pending = set()
         self.executions = {}
         self.knowledge = {}  # grantId -> metadata-only state after doubt
-        self.next_sequence = 0
+        # The trusted Session's existing outer ordinal; never reset per unit.
+        self.next_sequence = sequence_origin
         self.tts_invocations = 0
 
     def now(self):

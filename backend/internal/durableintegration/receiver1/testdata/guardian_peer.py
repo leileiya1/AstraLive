@@ -72,6 +72,38 @@ async def main():
                 # Keep the authenticated channel alive; no TTS/media is started.
                 held=(sock,stream)
                 result=wire.decode(op.response_schema if status==200 else op.error_schema,raw)
+            elif q['action']=='runtime_client_flow':
+                # Production Runtime client (runtime_client.py), not a raw
+                # request. TTS is a counting stand-in; the START anchor is
+                # moved back by the root's measured elapsed time (never later).
+                import time
+                from runtime.app.receiver1.runtime_client import GuardianChannel,ReceiverRuntime,ReceiverRefused,ReceiverUnknown
+                from runtime.app.receiver1.transport import continuous
+                guardian=ProcessIdentity(q['guardian']['PID'],q['guardian']['UID'],q['guardian']['Birth'])
+                own=Credential(deployment.credential._raw)
+                rt=ReceiverRuntime(lambda:GuardianChannel(q['socket'],guardian,own),wire,sequence_origin=q['sequenceOrigin'])
+                back=q['startElapsedMs']/1000
+                rt.remember_start(q['grant'],q['start'],(time.monotonic()-back,continuous()-back))
+                spoken=[]
+                async def synthesize(text):spoken.append(len(text));return [bytes(640)]
+                outcome={}
+                try:
+                    execution=await rt.consume(q['registration'],q['references'],q['artifact'])
+                    outcome['executionId']=execution.lineage.execution_id
+                    outcome['channelBinding']=execution.consumption['channelBinding']
+                    await rt.speak_once(execution,q['artifact'],synthesize)
+                    lineage=rt.submit(execution)
+                    outcome['mediaAccepted']=(await rt.media(lineage,q['references']['permitId'],'audio',bytes(640)))['accepted']
+                    try:
+                        await rt.speak_once(execution,q['artifact'],synthesize)
+                    except ReceiverRefused as e:outcome['secondTTS']=e.code
+                    try:
+                        await rt.finish(lineage);outcome['finish']='DRAINED'
+                    except (ReceiverRefused,ReceiverUnknown) as e:outcome['finish']=e.code
+                except (ReceiverRefused,ReceiverUnknown) as e:outcome['consumeError']=e.code
+                outcome.update(ttsInvocations=rt.tts_invocations,spoken=len(spoken),ticketsLeft=len(rt._tickets),nextSequence=rt.next_sequence,knowledge=rt.knowledge.get(q['references']['grantId']))
+                await rt.close()
+                result=outcome
             elif q['action']=='raw':
                 body=base64.b64decode(q['body'])
                 with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as sock:
