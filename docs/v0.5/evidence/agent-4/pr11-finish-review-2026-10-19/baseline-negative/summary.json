@@ -1,0 +1,21 @@
+{
+  "source": "864cdbf7545ea3fdd52d4f8405bcd83dcb3497b5",
+  "baselineOnly": true,
+  "proposedPRPostimagesNotRegistered": true,
+  "protectedFiles": 313,
+  "negativeResults": [
+    {
+      "path": "output_guardian/tests/conftest.py",
+      "originalSHA256": "101add95bf76d9a6d0fe317572e20d69b72248547fb8eea9d3cfc150ad377525",
+      "exitCode": 1,
+      "exactPathRejected": true
+    },
+    {
+      "path": "runtime/app/models.py",
+      "originalSHA256": "db539830e84cc905028eae18d4659ddc6dd4e20d34f88e4458ff7e28c095f197",
+      "exitCode": 1,
+      "exactPathRejected": true
+    }
+  ],
+  "restored": true
+}

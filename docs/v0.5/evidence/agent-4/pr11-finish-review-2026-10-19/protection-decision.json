@@ -1,0 +1,43 @@
+{
+  "status": "NOT_APPROVED_NOT_REGISTERED",
+  "reviewedHead": "47eedbb0f4d990c18cbe8bdf462b65486d385523",
+  "implementation": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69",
+  "files": [
+    {
+      "path": "output_guardian/service.py",
+      "preimageSHA256": "12b5225dffcfad095bf4f07140d30c907325a8ccf244aa124b80d3153fc76e52",
+      "postimageSHA256": "94eb702cd978b76a21cd29e3642397c976a8b221593a651b55f5375b6a18fa47",
+      "sourceCommit": "864cdbf7545ea3fdd52d4f8405bcd83dcb3497b5",
+      "implementationCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69",
+      "ownerDecision": "APPROVED_EXACT_FINAL_PATCH_FOR_AGENT4_REVIEW",
+      "registration": "PENDING_AGENT4_PROTECTION_GOVERNANCE",
+      "reason": "normal drain/Renew cohort, actual live-owner reap, idempotent cancellation-safe closure, diagnostic attribution"
+    },
+    {
+      "path": "output_guardian/process.py",
+      "preimageSHA256": "5d95a661471d1f13415efae4b6ce35fb0fed23d961d45bceab35de9526f5b4d3",
+      "postimageSHA256": "56d4093b6cc35c35d668014b083bd52da290f8883f58437ecb98a3e9a605bf19",
+      "sourceCommit": "864cdbf7545ea3fdd52d4f8405bcd83dcb3497b5",
+      "implementationCommit": "ecfad8d5b358f0461981d9f2950dd034f8d0fe69",
+      "ownerDecision": "APPROVED_EXACT_FINAL_PATCH_FOR_AGENT4_REVIEW",
+      "registration": "PENDING_AGENT4_PROTECTION_GOVERNANCE",
+      "reason": "normal drain/Renew cohort, actual live-owner reap, idempotent cancellation-safe closure, diagnostic attribution"
+    }
+  ],
+  "reason": "PR11-STALE-MEDIA-RETIRES-NEW-LIFECYCLE source P1; do not approve unsafe exact postimages",
+  "ownerProposalAndActualDiffByteExact": true,
+  "inventoryPreimageSHA256": "f97ea1ea0ed9ea9b048daef86c2502defc708f6370387d2000534bfb1d7559ea",
+  "inventoryPostimageSHA256": "f97ea1ea0ed9ea9b048daef86c2502defc708f6370387d2000534bfb1d7559ea",
+  "changedExpectedHashes": 0,
+  "protectedFiles": 313,
+  "candidateMatching": 311,
+  "candidateUnregistered": [
+    "output_guardian/process.py",
+    "output_guardian/service.py"
+  ],
+  "fixtureSHA256": "101add95bf76d9a6d0fe317572e20d69b72248547fb8eea9d3cfc150ad377525",
+  "baselineNegativeMutations": "2 rejected; prospective registered-candidate negatives NOT TESTED because no approval",
+  "approvalSource": "Current user authorizes two exact postimages ONLY after independent source review passes; condition not met",
+  "normativeFiles": 22,
+  "normativeDigest": "3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1"
+}

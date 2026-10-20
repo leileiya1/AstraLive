@@ -1,0 +1,35 @@
+"""Real loopback SQL/native media. Delay original old media ACK only."""
+import asyncio,dataclasses,json,time
+from pathlib import Path
+import pytest
+from output_guardian.model import Closed,clock
+OUT=Path('/tmp/agent4-pr11-final-results/stale-real');OUT.mkdir(exist_ok=True)
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('repeat',range(3))
+async def test_delayed_old_media_ack_cannot_retire_new_generation(rig,monkeypatch,repeat):
+    await rig.activate();g=rig.guardian
+    entered,release=asyncio.Event(),asyncio.Event();original=g.publisher.call;captured=False
+    async def delayed(message,*a,**kw):
+        nonlocal captured
+        result=await original(message,*a,**kw)
+        if message.get('op')=='audio' and not captured:
+            captured=True;entered.set();await release.wait()
+        return result
+    monkeypatch.setattr(g.publisher,'call',delayed)
+    old=asyncio.create_task(g.media(rig.attempt,{'kind':'audio','sequence':0,'payload':b'\0'*640}))
+    record={'repeat':repeat,'realSql':True,'originalMediaAckOnlyDelayed':True,'physicalProductionAcceptance':False}
+    try:
+        await asyncio.wait_for(entered.wait(),0.5)
+        new=dataclasses.replace(rig.attempt,attemptId='new-attempt',utteranceId='new-utterance',commandId='new-command',generation=2)
+        permit=await rig.permit();result=await g.bind(new,permit)
+        assert result['state']=='AUTHORIZED'
+        life,barrier,child=g._life,g.barrier,g.publisher.process
+        record.update(newAuthorized=True,newGeneration=g.generation,newBarrierBefore=barrier,newPublisherPid=child.pid,newPublisherAliveBefore=child.poll() is None,remainingMsBefore=1000*min(g.right.deadline-clock(),g.right.monotonic_deadline-time.monotonic()))
+        release.set()
+        with pytest.raises(Closed):await old
+        record.update(newBarrierAfter=g.barrier,newLifePhaseAfter=life.phase,newRightAfter=g.right is not None,newPublisherAliveAfter=child.poll() is None,newPublisherPresentAfter=g.publisher.process is not None,stopRequested=bool(g.stopped))
+        assert g._life is life and g.barrier==barrier and g.right is not None and life.phase=='ACTIVE' and child.poll() is None,'Stale old Media ACK retired a newly authorized real Generation/Publisher'
+    finally:
+        release.set();await asyncio.gather(old,return_exceptions=True)
+        (OUT/f'case-{repeat}.json').write_text(json.dumps(record,indent=2)+'\n')
