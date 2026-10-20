@@ -1,0 +1,41 @@
+{
+  "paths": [
+    "output_guardian/service.py",
+    "output_guardian/process.py"
+  ],
+  "changes": [
+    {
+      "path": "output_guardian/service.py",
+      "preimageSHA256": "12b5225dffcfad095bf4f07140d30c907325a8ccf244aa124b80d3153fc76e52",
+      "postimageSHA256": "0a5441b5064bda615977b47f1966809ed913f05d246cbeee5c58cb43c3a02508",
+      "auditRecord": "docs/v0.5/implementation/protection-changes/RESCUE-GUARDIAN-LIFECYCLE.json",
+      "preimageCommit": "84738b37c2ee39cc4b8f3a1d449802171ba0a7e0",
+      "diffEvidence": "docs/rescue-out/evidence/protected/owner-registration/service.py.registered-to-postimage.diff",
+      "diffSHA256": "7180bb2fc0cc18db02ac370529f6a26563d4ad278637acfd88be282fc38f6c1c"
+    },
+    {
+      "path": "output_guardian/process.py",
+      "preimageSHA256": "5d95a661471d1f13415efae4b6ce35fb0fed23d961d45bceab35de9526f5b4d3",
+      "postimageSHA256": "56d4093b6cc35c35d668014b083bd52da290f8883f58437ecb98a3e9a605bf19",
+      "auditRecord": "docs/v0.5/implementation/protection-changes/RESCUE-GUARDIAN-LIFECYCLE.json",
+      "preimageCommit": "84738b37c2ee39cc4b8f3a1d449802171ba0a7e0",
+      "diffEvidence": "docs/rescue-out/evidence/protected/owner-registration/process.py.registered-to-postimage.diff",
+      "diffSHA256": "8f099237286bab2cc9947d9a98e6922e452019f5fb36c65b554ed4ede436e53b"
+    }
+  ],
+  "owner": "Agent 5 (Guardian) implementation; rescue session (Claude) P1 fix",
+  "approvalSource": {
+    "kind": "explicit repository-owner instruction in the rescue session, 2026-10-20",
+    "requirements": [
+      "没事你随便操作我现在给你所有的权限，你可以先合并一点到main分支上，然后等后续弄好了就继续合并直到全部成功之后给我推送到主分支"
+    ],
+    "independentAgent4Review": false,
+    "note": "NOT an independent Agent4 review. Agent4 blocked service.py 94eb (P1) on 2026-10-19; the P1 fix (0a5441b5) and process.py 56d4 were never independently approved. Registered on owner authority so the merged tree is checked against exact bytes; Agent4 re-review remains recommended."
+  },
+  "scope": "exactly two Guardian v1 source files; no normative contract, DTO, validator, migration or generated code",
+  "frozenManifestUnchanged": true,
+  "otherProtectedHashesChanged": 0,
+  "inventoryPreimageSHA256": "f97ea1ea0ed9ea9b048daef86c2502defc708f6370387d2000534bfb1d7559ea",
+  "inventoryPostimageSHA256": "df8e5df928f30d134602f801425331ac7cd3f4af6363405a89b5b28a1b087cba",
+  "verification": "docs/rescue-out/05-TEST-REPORT.md and docs/rescue-out/08-MAIN-INTEGRATION.md"
+}
