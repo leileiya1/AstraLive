@@ -1,0 +1,10 @@
+# Stage 3b mutation run (2026-10-22T02:08:46Z), commands: python docs/rescue-out/evidence/stage3b-probes/mutations.py
+# First run had M7a/M7b SURVIVED (revocation probe could not distinguish a leak); test strengthened, rerun below.
+M1 child drops last sample of each audio item -> DETECTED 1 failed, 9 passed in 0.87s
+M2 observer skips audio hash check -> DETECTED 1 failed, 8 passed in 0.14s
+M3 observer skips evidence peer pin -> DETECTED 1 failed, 10 passed in 2.17s
+M4 ledger skips audio continuity -> DETECTED 1 failed, 4 passed in 0.07s
+M5 prove does not wait for the tail -> DETECTED 1 failed, 8 passed in 0.14s
+M6 observer skips video PTS check -> DETECTED 1 failed, 9 passed in 1.93s
+M7a child ignores revocable edge before audio write -> DETECTED 1 failed, 11 passed in 2.66s
+M7b child ignores revocable edge before video write -> DETECTED 1 failed, 12 passed in 3.12s

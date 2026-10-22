@@ -1,0 +1,56 @@
+bun install v1.3.14 (0d9b296a)
+
+Checked 217 installs across 300 packages (no changes) [33.00ms]
+$ vitest run
+
+ RUN  v3.2.7 /Users/sapiece/innovationProject/AstraLive/frontend
+
+ ✓ tests/api.test.ts (5 tests) 6ms
+ ✓ tests/events.test.ts (3 tests) 3ms
+ ✓ tests/heartbeat.test.tsx (1 test) 10ms
+ ✓ src/features/live-console/TurnManagerPanel.test.tsx (3 tests) 90ms
+ ✓ src/features/live-console/DurableRecovery.test.tsx (2 tests) 115ms
+ ✓ tests/integration.test.tsx (2 tests) 108ms
+ ✓ tests/rooms.test.tsx (2 tests) 162ms
+ ✓ tests/preview.test.tsx (11 tests) 238ms
+ ✓ tests/interaction.test.tsx (4 tests) 191ms
+ ✓ tests/console.test.tsx (5 tests) 236ms
+ ✓ tests/settings.test.tsx (8 tests) 278ms
+
+ Test Files  11 passed (11)
+      Tests  46 passed (46)
+   Start at  10:12:05
+   Duration  967ms (transform 467ms, setup 1.10s, collect 1.34s, tests 1.44s, environment 3.02s, prepare 442ms)
+
+$ bun run generate:api && bun run generate:config-api && bun run generate:personal-api && tsgo --noEmit && vite build
+$ openapi-typescript ../contracts/control-api.openapi.yaml -o src/api/generated.ts
+✨ openapi-typescript 7.13.0
+🚀 ../contracts/control-api.openapi.yaml → src/api/generated.ts [26.1ms]
+$ openapi-typescript ../contracts/user-config/schema.json -o src/api/config-generated.ts
+✨ openapi-typescript 7.13.0
+🚀 ../contracts/user-config/schema.json → src/api/config-generated.ts [26.1ms]
+$ openapi-typescript ../contracts/personal-assets/schema.json -o src/api/personal-assets-generated.ts
+✨ openapi-typescript 7.13.0
+🚀 ../contracts/personal-assets/schema.json → src/api/personal-assets-generated.ts [32.7ms]
+vite v7.3.7 building client environment for production...
+transforming...
+node_modules/zod/v4/core/util.js (400:0): A comment
+
+"// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+
+in "node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/zod/v4/core/regexes.js (74:0): A comment
+
+"/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+ * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+ * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+
+in "node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 2168 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                            0.36 kB │ gzip:   0.26 kB
+dist/assets/index-DHU8shUn.css            18.05 kB │ gzip:   4.39 kB
+dist/assets/motion-features-piTvxlDn.js   86.17 kB │ gzip:  28.44 kB
+dist/assets/index-B5zuuJjE.js            486.65 kB │ gzip: 151.86 kB
+✓ built in 1.43s

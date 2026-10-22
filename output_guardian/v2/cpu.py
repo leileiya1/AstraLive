@@ -237,6 +237,15 @@ class CPUMedia:
     Observer adapter (test mocks are labelled as such); absent => UNKNOWN.
     """
 
+    # Output child and its readiness kind. Subclasses (e.g. the RTMP publisher)
+    # replace only the child's media work; ownership, revocation edges,
+    # readiness challenge, sink rows and tail comparison are inherited.
+    child_target = staticmethod(_child)
+    ready_kind = "CPU_CODEC_READY"
+
+    def child_args(self):
+        return ()
+
     def __init__(
         self,
         gate,
@@ -325,7 +334,7 @@ class CPUMedia:
         reader, writer = ctx.Pipe(duplex=False)
         nonce = secrets.token_hex(32)
         self.process = ctx.Process(
-            target=_child,
+            target=self.child_target,
             args=(
                 child,
                 self.edge,
@@ -338,7 +347,8 @@ class CPUMedia:
                 self.startup_barrier,
                 self.installed_binding,
                 origins,
-            ),
+            )
+            + self.child_args(),
         )
         self.process.start()
         child.close()
@@ -381,7 +391,7 @@ class CPUMedia:
             require(
                 observation
                 == dict(
-                    kind="CPU_CODEC_READY",
+                    kind=self.ready_kind,
                     nonce=nonce,
                     pid=self.process.pid,
                     parent=os.getpid(),

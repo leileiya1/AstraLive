@@ -1,0 +1,9 @@
+# MediaMTX v1.21.1 acceptance of the Guardian Publisher framing via the Observer tap, 6s stream (2026-10-22T02:09:02Z)
+tap bit-exact: True frames 150 fault PUBLISHER_CLOSED
+mediamtx reader: got 63360 samples; contiguous slice at sample 32640 missing tail samples 0 end OSError
+# mediamtx log:
+2026/10/22 10:09:05 INF [path live/room] stream is available and online, 2 tracks (H264, LPCM)
+2026/10/22 10:09:05 INF [RTMP] [conn 127.0.0.1:55057] is publishing to path 'live/room'
+2026/10/22 10:09:05 INF [RTMP] [conn 127.0.0.1:55200] is reading from path 'live/room', 2 tracks (H264, LPCM)
+2026/10/22 10:09:10 INF [RTMP] [conn 127.0.0.1:55057] closed: EOF
+2026/10/22 10:09:10 INF [RTMP] [conn 127.0.0.1:55200] closed: terminated
