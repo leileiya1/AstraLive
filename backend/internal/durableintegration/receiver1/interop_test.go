@@ -821,6 +821,124 @@ func TestPostgresReceiver1RuntimeCoordinatorFailsClosedWithoutObserver(t *testin
 		t.Fatal("Backend recorded a drain without Observer proof", drains)
 	}
 }
+
+// Stage 3a: the OBSERVER seam end to end on real PostgreSQL. A separately
+// launched and provisioned OBSERVER process records drain evidence through
+// ObserverServer -> ObserverVerifier -> Store.RecordDrainEvidence, and only
+// then can the Runtime confirm the drain via its own Journal credential.
+// The evidence VALUES are an explicit fixture (no real sink exists yet).
+func TestPostgresReceiver1ObserverSeamRecordsThenRuntimeDrains(t *testing.T) {
+	f := newInterop(t)
+	f.stageRegister()
+	jpin, jtoken, e := NewJournalPin(f.rt.managed.Pin)
+	if e != nil {
+		t.Fatal(e)
+	}
+	journal, e := NewJournalServer(f.s, jpin)
+	if e != nil {
+		t.Fatal(e)
+	}
+	jdir := filepath.Join(f.root, "journal")
+	if e = os.Mkdir(jdir, 0700); e != nil {
+		t.Fatal(e)
+	}
+	if e = journal.Listen(filepath.Join(jdir, "journal.sock")); e != nil {
+		t.Fatal(e)
+	}
+	t.Cleanup(func() { journal.Close() })
+	me, e := InspectProcess(os.Getpid())
+	if e != nil {
+		t.Fatal(e)
+	}
+	permitQ := f.q(authority.Document{"sessionId": f.cmd["sessionId"], "runEpoch": 1, "producerIncarnation": f.runtime.Producer, "guardianId": f.binding.GuardianID, "answerArtifactId": f.unit["artifactId"]})
+	startQ := f.q(authority.Document{"commandId": f.cmd["commandId"], "attemptId": f.cmd["attemptId"], "sessionId": f.cmd["sessionId"], "runEpoch": 1, "producerIncarnation": f.runtime.Producer, "requestHash": f.cmd["requestHash"], "permitId": "permit_pending", "expectedInboxRevision": 2, "answerArtifactId": f.unit["artifactId"], "answerArtifactHash": f.unit["artifactHash"], "expectedAnswerRevision": 1})
+	flow := f.rt.rpc(map[string]any{"action": "runtime_journal_flow", "journalSocket": filepath.Join(jdir, "journal.sock"), "backend": me, "journalCredential": jtoken, "socket": filepath.Join(f.root, "guardian/runtime.sock"), "guardian": f.g.managed.Pin.Identity(), "prepare": f.prepareQ, "permit": permitQ, "start": startQ, "retryRequestId": fresh("req_"), "artifact": f.unit, "bootstrapId": f.binding.BootstrapID, "registration": authority.Document{"binding": authority.Document{"generationId": 7, "guardianIncarnation": f.guardian.Incarnation}, "revision": 1}})
+	if flow["ok"] != true || testObj(flow, "result")["error"] != nil || f.count("dl05_receiver_consumptions") != 1 {
+		t.Fatal("runtime consume", flow)
+	}
+
+	observer := f.launch("OBSERVER")
+	if e = f.registry.Provision(f.ctx, f.registrar, observer.managed.Pin); e != nil {
+		t.Fatal(e)
+	}
+	if _, e = NewObserverPin(f.rt.managed.Pin, "RTMP_PIPE_WRITE"); e == nil {
+		t.Fatal("Runtime pin became an Observer")
+	}
+	opin, e := NewObserverPin(observer.managed.Pin, "RTMP_PIPE_WRITE")
+	if e != nil {
+		t.Fatal(e)
+	}
+	f.s.Observer = ObserverVerifier(opin)
+	server, e := NewObserverServer(f.s, opin)
+	if e != nil {
+		t.Fatal(e)
+	}
+	odir := filepath.Join(f.root, "observer")
+	if e = os.Mkdir(odir, 0700); e != nil {
+		t.Fatal(e)
+	}
+	if e = server.Listen(filepath.Join(odir, "observer.sock")); e != nil {
+		t.Fatal(e)
+	}
+	t.Cleanup(func() { server.Close() })
+	// evidenceRef is a global key: a reused ref from another command is a
+	// conflict by design, so each test run uses its own.
+	ref := fresh("evidence_")
+	evidence := func(kind string) authority.Document {
+		return authority.Document{"evidenceType": "ALL_REQUIRED_DRAIN", "evidenceRef": ref + "_" + strings.ToLower(kind), "evidenceHash": testHash("fixture-" + kind), "requiredSinks": []any{"sink"}, "predecessorCheckpointIds": []any{"sink_admitted_fixture"}, "audienceVisibility": "UNVERIFIED",
+			"sinkProofs": []any{authority.Document{"sinkId": "sink", "kind": kind, "generationId": 7, "firstAudioSample": 0, "finalAudioSampleExclusive": 640, "audioConsumedThroughExclusive": 640, "finalVideoFrame": 0, "videoConsumedThroughFrame": 0, "terminal": true}}}
+	}
+	record := func(peer *childPeer, ev authority.Document) authority.Document {
+		out := peer.rpc(map[string]any{"action": "observer_record", "observerSocket": filepath.Join(odir, "observer.sock"), "backend": me, "commandId": f.cmd["commandId"], "artifactId": f.unit["artifactId"], "evidence": ev})
+		if out["ok"] != true {
+			t.Fatal("observer rpc", out)
+		}
+		return testObj(out, "result")
+	}
+	journalCall := func(op string, doc authority.Document) authority.Document {
+		out := f.rt.rpc(map[string]any{"action": "journal_call", "journalSocket": filepath.Join(jdir, "journal.sock"), "backend": me, "journalCredential": jtoken, "operation": op, "document": doc})
+		if out["ok"] != true {
+			t.Fatal("journal rpc", out)
+		}
+		return testObj(out, "result")
+	}
+	if r := record(f.rt, evidence("RTMP_PIPE_WRITE")); r["refused"] != "UNAUTHENTICATED" {
+		t.Fatal("Runtime credential recorded drain evidence", r)
+	}
+	if r := record(observer, evidence("WEBRTC_TRACK_RECV")); r["refused"] != "EVIDENCE_CONFLICT" {
+		t.Fatal("RTMP observer vouched for a WebRTC sink", r)
+	}
+	base := authority.Document{"commandId": f.cmd["commandId"], "attemptId": f.cmd["attemptId"], "sessionId": f.cmd["sessionId"], "runEpoch": 1, "producerIncarnation": f.runtime.Producer, "requestHash": f.cmd["requestHash"], "answerId": f.unit["answerId"]}
+	revision := func() any {
+		return testObj(journalCall("JournalQueryAnswer", f.q(base)), "answer")["answerRevision"]
+	}
+	confirm := func(ev authority.Document) authority.Document {
+		q := f.q(base)
+		q["artifactId"], q["artifactHash"], q["expectedAnswerRevision"] = f.unit["artifactId"], f.unit["artifactHash"], revision()
+		q["idempotencyKey"], q["evidence"] = "drain:"+fmt.Sprint(f.unit["artifactId"]), ev
+		return journalCall("JournalConfirmAnswerSegment", q)
+	}
+	if r := confirm(evidence("RTMP_PIPE_WRITE")); r["refused"] != "EVIDENCE_CONFLICT" {
+		t.Fatal("drain confirmed with unrecorded evidence", r)
+	}
+	if r := record(observer, evidence("RTMP_PIPE_WRITE")); r["recorded"] != true {
+		t.Fatal("observer could not record", r)
+	}
+	if r := record(observer, evidence("RTMP_PIPE_WRITE")); r["recorded"] != true {
+		t.Fatal("identical record is not idempotent", r)
+	}
+	if r := confirm(evidence("RTMP_PIPE_WRITE")); r["state"] != "DRAINED" {
+		t.Fatal("runtime drain confirmation", r)
+	}
+	var drains, records int
+	if e = f.s.DB.QueryRow(f.ctx, "SELECT (SELECT count(*) FROM dl05_answer_drain_receipts WHERE command_id=$1),(SELECT count(*) FROM dl05_v2_observer_evidence WHERE command_id=$1)", f.cmd["commandId"]).Scan(&drains, &records); e != nil || drains != 1 || records != 1 {
+		t.Fatal("drain/evidence rows", drains, records, e)
+	}
+	observer.managed.Pin.Retire()
+	if r := record(observer, evidence("RTMP_PIPE_WRITE")); r["refused"] != "UNAUTHENTICATED" {
+		t.Fatal("retired Observer still accepted", r)
+	}
+}
 func TestPostgresReceiver1ControlCredentialSeparation(t *testing.T) {
 	f := newInterop(t)
 	q, e := f.registry.StageRequest(f.ctx, f.registrar, f.binding)

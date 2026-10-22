@@ -93,11 +93,12 @@ def load_inherited(expected_role, fd=3):
             return out
         v = json.loads(raw, object_pairs_hook=pairs)
         required = {'credential','principalId','incarnation','role','keyId','privateKey','binding','processIdentity','parentIdentity'}
-        if set(v) not in (required, required | {'controlProvisioning'}) or expected_role not in {'OUTPUT_GUARDIAN','REGISTERED_RUNTIME'} or v['role'] != expected_role:
+        if set(v) not in (required, required | {'controlProvisioning'}) or expected_role not in {'OUTPUT_GUARDIAN','REGISTERED_RUNTIME','OBSERVER'} or v['role'] != expected_role:
             raise TransportFailure('UNAUTHENTICATED')
         if _native(v['processIdentity']) != identity(os.getpid()) or _native(v['parentIdentity']) != identity(os.getppid()):
             raise TransportFailure('UNAUTHENTICATED')
-        if expected_role == 'REGISTERED_RUNTIME' and (v['privateKey'] or v['keyId'] or 'controlProvisioning' in v):
+        # Runtime and Observer processes never hold a signing key or CONTROL.
+        if expected_role in {'REGISTERED_RUNTIME','OBSERVER'} and (v['privateKey'] or v['keyId'] or 'controlProvisioning' in v):
             raise TransportFailure('FORBIDDEN')
         binding = dto.decode('ReceiverBootstrapBinding', dto.canonical_json(v['binding']))
         key = None
