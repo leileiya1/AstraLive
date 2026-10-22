@@ -1,0 +1,32 @@
+2026-10-22T00:56:06Z
+model sha256 c8882021fe2da5440870c4d18a45ffd8036ee3219660b0eef8a1f57cc3f0c166
+1 failed, 2 passed in 1.44s
+1 failed, 2 passed in 1.63s
+1 failed, 2 passed in 1.66s
+1 failed, 2 passed in 1.48s
+3 passed in 1.67s
+S1 resampler tail not flushed => 1 failed, 2 passed in 1.37s
+S2 last partial chunk dropped => 2 failed, 1 passed in 1.52s
+S3 per-unit avatar clock reset => 1 failed, 2 passed in 1.69s
+source restored
+--- after real-time pacing fix
+3 passed in 7.31s
+3 passed in 7.49s
+3 passed in 7.10s
+3 passed in 7.10s
+3 passed in 7.51s
+3 passed in 7.50s
+3 passed in 7.29s
+3 passed in 7.29s
+3 passed in 7.30s
+3 passed in 7.29s
+--- mutations on stable baseline (earlier mutation lines above are INVALID: baseline was unstable)
+S1 resampler tail not flushed => 3 passed in 7.50s
+S2 last partial chunk dropped => 1 failed, 2 passed in 6.73s
+S3 avatar frame clock reset per unit => 3 passed in 7.29s
+P1 no real-time pacing => 1 failed, 2 passed in 1.64s
+--- after tightening sample tolerance to 1 (measured exact rounding)
+baseline => 3 passed in 7.51s
+S1 resampler tail not flushed => 1 failed, 2 passed in 7.14s
+S3 avatar frame clock reset per unit (corrected) => 2 failed, 1 passed in 5.10s
+source restored

@@ -83,8 +83,27 @@
 
 全量回归：Guardian 239/0/1，Go race 275/0/8，其余全绿（`evidence/stage2c/coordinator-full-regression-summary.txt`）。第一次全量运行中出现 1 个与本改动无关的负载偶发失败，原始日志保留，见 02 P3-f。
 
+## 2d：接入真实 TTS（已完成）
+
+`runtime/app/receiver1/speech_media.py`：`SpeechMedia` 是交给 `speak_once` 的唯一一次 TTS 调用。它流式读取现有 TTS 提供方（本机实测 sherpa-onnx VITS `zh_CN-xiao_ya`，CPU，22050 Hz），用**一个**有状态 libav 重采样器转换到受信 Session 采样率（16000/24000/48000）并在结尾 flush，切成 ≤200 ms 的块；配置头像时把每块喂给现有 CPU 轻量头像引擎并交错输出口型视频帧。一个 `SpeechMedia`（及其头像引擎）贯穿整个 Session，视频 PTS 跨单元连续递增。
+
+为接入真实流式 TTS 而修复的问题（均由真实测试暴露）：
+- `speak_once` 原先 `await synthesize(...)`，流式 TTS 返回异步生成器会崩溃——现在接受可等待对象或流；一次性闩锁仍在调用前获取。
+- 执行器原先按“每 8 个媒体项”续 proof——真实合成耗费墙钟时间，改为**按剩余 proof 时间**续期（剩余 <0.35 s 时续）。
+- 执行器原先尽快推送媒体，Guardian 有界队列（8 项）满后按契约 `OVERLOADED` 失败关闭（10 次中 4 次）——Runtime 现在按**实时节奏**推送（音频最多领先墙钟 0.25 s），这也是真实直播推流的行为。修复后 10/10 通过。
+- 执行器改为流式交付：媒体边合成边推送，不先整段缓存。
+
+测试 `output_guardian/tests/v2/test_real_speech.py`（真实模型缺失时显式 skip，绝不假通过；模型 SHA-256 记录在 `evidence/stage2d-real-tts.txt`）：
+1. 同一次合成内重采样样本守恒：输出 = 输入×16000/22050，误差 ≤1 个样本（实测 libav flush 后为向上取整；不 flush 会少 16–17 个样本），块大小受限，RMS 证明是真实可听语音。VITS 有随机性，不跨两次合成比较。
+2. 头像帧：PTS 严格递增且跨单元不归零；帧数≈时长×25；尺寸等于 Session 尺寸。
+3. 端到端：协调器 × 两个答案单元 × 真实 TTS + 真实头像 → 真实 Guardian Receiver/IPC → **真实 CPU 输出子进程编解码**（消费 Guardian 队列）→ drain 证据（信封合成，区间来自真实解码）→ oracle 检查单元 2 音频紧接单元 1 → seal。TTS 恰好 2 次；Guardian 的 tail 与 TTS 实际输出样本数完全一致。
+
+稳定性：节奏修复后 10/10 PASS（每次约 7 s，按实时播放）。变异：去掉重采样 flush、丢弃最后不足一块的音频、每单元重置头像时钟、去掉实时节奏——**4/4 均被检出**（第一次的变异结果在基线不稳定时无效，已在证据中标注；S3 第一次的变异写错、S1 第一次因容差 32 过宽未检出，均已修正并如实保留）。全量回归：Guardian 242/0/1、Go race 275/0/8，其余全绿；第一次全量运行出现 1 次已知负载偶发（02 P3-f）。
+
+真实发现（未修改受保护文件）：该 VITS 中文模型**静默跳过拉丁字母**（日志 “Ignore OOV 'T'/'S'/'M'/'L'”）。“纯棉T恤有S、M、L和XL尺码”会被读成“纯棉恤有……XL尺码”，S/M/L 不读。现有 `spoken_sizes()` 只覆盖“尺码有 S、M…”等句式。见 02 P8。
+
 ## 阶段 2 后续步骤（建议顺序）
 
 - ~~2b~~ 已完成（见上）。
 - 2c：Python Runtime v2 Journal 客户端（RUNTIME_JOURNAL 操作）与 Runtime 侧流式协调器（按方案 1）。
-- 2d：真实 TTS 适配器经 `speak_once` 接入（CPU/模拟提供方），PCM 提交时绑定 lineage。
+- ~~2d~~ 已完成（见上）。剩余：把协调器接到 Runtime 实际的评论处理入口（与阶段 6 一起）。

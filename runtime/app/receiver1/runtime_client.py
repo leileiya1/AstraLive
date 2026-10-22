@@ -23,6 +23,7 @@ import asyncio
 import base64
 import contextlib
 import dataclasses
+import inspect
 import secrets
 import socket
 import struct
@@ -81,6 +82,11 @@ class Deadline:
             remaining = min(timing["remainingGrantMs"], remaining)
         duration = remaining / 1000 - timing["safetyMarginMs"] / 1000
         self.mono, self.suspended = sent[0] + duration, sent[1] + duration
+
+    def remaining(self):
+        """Seconds left on the earlier of the two local clocks."""
+        mono, suspended = self.clocks
+        return min(self.mono - mono(), self.suspended - suspended())
 
     def check(self, code="GRANT_EXPIRED"):
         mono, suspended = self.clocks
@@ -412,7 +418,11 @@ class ReceiverRuntime:
         execution.proof.check("LEASE_LOST")
         execution.tts_started = True
         self.tts_invocations += 1
-        return await synthesize(artifact["answerText"])
+        result = synthesize(artifact["answerText"])
+        # A streaming TTS returns an async iterator (work starts when it is
+        # consumed); a buffered one returns an awaitable. Either way the latch
+        # above was taken first, so this is still the only invocation.
+        return await result if inspect.isawaitable(result) else result
 
     # -- lineage-bound media -----------------------------------------------
 

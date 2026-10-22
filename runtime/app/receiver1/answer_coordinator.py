@@ -59,9 +59,25 @@ class JournalExecutor:
     text; they are submitted under the unit's lineage captured at consume.
     """
 
-    def __init__(self, journal, receiver, command, synthesize, *, renew_every=8):
+    def __init__(
+        self,
+        journal,
+        receiver,
+        command,
+        synthesize,
+        *,
+        renew_margin=0.35,
+        sample_rate=16000,
+        max_lead=0.25,
+    ):
         self.journal, self.receiver, self.command = journal, receiver, dict(command)
-        self.synthesize, self.renew_every = synthesize, renew_every
+        # Renew by remaining proof TIME (real TTS takes wall-clock time),
+        # never by item count. Renew grants nothing; it only refreshes proof.
+        self.synthesize, self.renew_margin = synthesize, renew_margin
+        # Live pacing: never run more than max_lead seconds of audio ahead of
+        # wall clock. Guardian's queue is bounded and refuses (OVERLOADED,
+        # fail-closed) rather than dropping required media.
+        self.sample_rate, self.max_lead = sample_rate, max_lead
         self.inbox_revision = command["expectedInboxRevision"]
         self.answer_revision = command["expectedAnswerRevision"]
         self._lock = asyncio.Lock()  # one writer: no self-inflicted CAS races
@@ -211,10 +227,30 @@ class JournalExecutor:
         lineage = self.receiver.submit(execution)  # owner fixed at submission
         self.executions[artifact["artifactId"]] = (execution, lineage)
         media = await self.receiver.speak_once(execution, artifact, self.synthesize)
-        for n, (kind, payload, pts) in enumerate(media):
-            if n and n % self.renew_every == 0:
+        self.renewals = 0
+        loop = asyncio.get_running_loop()
+        started, sent_samples = loop.time(), 0
+
+        async def send(kind, payload, pts):
+            nonlocal sent_samples
+            if kind == "audio":
+                lead = sent_samples / self.sample_rate - (loop.time() - started)
+                if lead > self.max_lead:
+                    await asyncio.sleep(lead - self.max_lead)
+            if execution.proof.remaining() < self.renew_margin:
                 await self.receiver.renew(lineage, permit["permitId"])
+                self.renewals += 1
             await self.receiver.media(lineage, permit["permitId"], kind, payload, pts)
+            if kind == "audio":
+                sent_samples += len(payload) // 2
+
+        # A real TTS stream is handed off as it is produced; a list also works.
+        if hasattr(media, "__aiter__"):
+            async for kind, payload, pts in media:
+                await send(kind, payload, pts)
+        else:
+            for kind, payload, pts in media:
+                await send(kind, payload, pts)
 
     async def confirm_drain(self, artifact):
         _, lineage = self.executions[artifact["artifactId"]]
