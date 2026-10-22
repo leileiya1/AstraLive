@@ -68,6 +68,21 @@
 - **端到端测试 `TestPostgresReceiver1RuntimeOwnedJournalFlow`**：Runtime 进程自己 Prepare → AcquireOutputPermit → JournalStart（真实 PG，拿到 ticket）→ 在真实 Guardian 消费 → TTS 恰好 1 次 → 媒体被接受；重复 START 不会再给 ticket；另一个已注册 Runtime 进程拿着偷来的 Journal 凭据在任何状态变化前被拒（`UNAUTHENTICATED`）。`-race` 3/3 PASS；去掉内核对端校验的变异被检出（`evidence/stage2c-mutations.txt`）。全量回归 Go race 274/0/8。
 - 仍未做：凭据向生产 Runtime 进程的投递（属于阶段 4 Host Launcher；测试中经可信父进程管道传入）；Runtime 侧完整协调器（多单元、drain 确认、seal、Stop/UNKNOWN 处理）。
 
+## 2c 第二步：Runtime 侧答案流协调器（方案 1，已完成）
+
+`runtime/app/receiver1/answer_coordinator.py`：
+
+- **`AnswerCoordinator`**：逐条移植 Agent3 Go 协调器状态机——最多 2 个未 drain 单元（1 播放 + 1 预备）；最新单元仍 PREPARED/STARTING 时不再 Prepare；只有 Prepare 在回执不确定时可用**同一** Artifact/幂等键重试；前一单元 DRAINED 后才 START/续段；START、消费、一次 TTS 任何失败都终止为 UNKNOWN 且不重试；drain 需要 Guardian 已注册证据 + Backend 确认；只在来源真正结束时 seal；业务完成仍归 CONTROL；Stop 不可逆、不从内存恢复。
+- **`JournalExecutor`**：用 Runtime 自己的凭据实现执行器——`JournalClient` 做 Prepare / AcquireOutputPermit + START 或续段 / ConfirmAnswerSegment / Seal；`ReceiverRuntime` 做一次消费、一次 TTS、按 lineage 推送媒体并定期续 proof；Finish 拿到 Guardian 证据后才确认 drain。
+- **修订号并发**：Guardian 在 Backend 提交消费时会合法地推进 answerRevision（参考模型第 233 行），因此写操作前用只读 `JournalQueryAnswer` 刷新；只有带稳定幂等键的写（Prepare/Confirm/Seal）在 `STATE_CONFLICT` 后刷新并原样重试一次；发 ticket 的 START/续段永不重试。
+- **Seal 哈希**：manifestHash = 有序 `{artifactId, sequence, artifactHash}` 的 digest；finalAnswerTextHash = 各单元文本拼接的 SHA-256，与 Go builder 和参考实现一致（oracle 校验通过）。
+
+测试（`output_guardian/tests/v2/test_answer_coordinator.py`，真实 Guardian Receiver + PrivateIPC + ReceiverRuntime；Backend 为契约 oracle，接口与 JournalClient 相同）：两单元 Prepare→START→drain→续段→drain→seal 全流程，**oracle 校验单元 2 的首个音频样本正好接在单元 1 末尾**（真实 Guardian 保持会话时钟连续）；Prepare 回执丢失只重试同一单元；START 回复丢失 → 终止 UNKNOWN、不 TTS；播放中 Stop 不可逆；Observer 不可用 → 不确认 drain、不开始下一单元；他人命令的 Artifact 在 Prepare 前被拒。6 PASS；6 个变异全部检出（`evidence/stage2c-coordinator-mutations.txt`）。
+
+真实链路（`TestPostgresReceiver1RuntimeCoordinatorFailsClosedWithoutObserver`，-race 3/3）：协调器驱动真实 JournalServer + 真实 PostgreSQL + 真实 Guardian：Prepare、START（含真实 JournalQueryAnswer 刷新）、一次消费、一次 TTS 成功；Observer 是关闭夹具，drain 必须失败——Backend `dl05_answer_drain_receipts` 为 0 行，latch 恰 1 行。
+
+全量回归：Guardian 239/0/1，Go race 275/0/8，其余全绿（`evidence/stage2c/coordinator-full-regression-summary.txt`）。第一次全量运行中出现 1 个与本改动无关的负载偶发失败，原始日志保留，见 02 P3-f。
+
 ## 阶段 2 后续步骤（建议顺序）
 
 - ~~2b~~ 已完成（见上）。

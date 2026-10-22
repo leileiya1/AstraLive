@@ -141,6 +141,30 @@ async def main():
                 outcome.update(ttsInvocations=rt.tts_invocations,ticketsLeft=len(rt._tickets))
                 await rt.close()
                 result=outcome
+            elif q['action']=='runtime_coordinator_flow':
+                # The Runtime AnswerCoordinator against the real Journal/Guardian.
+                from runtime.app.receiver1.journal_client import JournalClient
+                from runtime.app.receiver1.runtime_client import GuardianChannel,ReceiverRuntime
+                from runtime.app.receiver1.answer_coordinator import AnswerCoordinator,JournalExecutor,CoordinatorError
+                backend_id=ProcessIdentity(q['backend']['PID'],q['backend']['UID'],q['backend']['Birth'])
+                journal=JournalClient(q['journalSocket'],backend_id,Credential(q['journalCredential'].encode()))
+                guardian=ProcessIdentity(q['guardian']['PID'],q['guardian']['UID'],q['guardian']['Birth'])
+                own=Credential(deployment.credential._raw)
+                rt=ReceiverRuntime(lambda:GuardianChannel(q['socket'],guardian,own),wire,sequence_origin=0)
+                spoken=[]
+                async def synthesize(text):spoken.append(len(text));return [('audio',bytes(640),None)]
+                async def units():
+                    yield q['artifact']
+                coord=AnswerCoordinator(units(),JournalExecutor(journal,rt,q['command'],synthesize))
+                outcome={}
+                for step in ('prepare_next','start_next','drain'):
+                    try:
+                        await getattr(coord,step)();outcome[step]='OK'
+                    except CoordinatorError as e:
+                        outcome[step]=e.code;break
+                outcome.update(view=coord.view(),ttsInvocations=rt.tts_invocations,spoken=len(spoken),ticketsLeft=len(rt._tickets))
+                await rt.close()
+                result=outcome
             elif q['action']=='raw':
                 body=base64.b64decode(q['body'])
                 with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as sock:

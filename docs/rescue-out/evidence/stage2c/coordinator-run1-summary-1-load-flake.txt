@@ -1,0 +1,15 @@
+2026-10-22T00:36:58Z
+head=a702552e18da65112d1318efb44d779d35878280 index-tree=61918c433818a9bad9b5464b0748b573d7e9a6e4
+guardian               exit=1     84s  1 failed, 238 passed, 1 skipped in 83.58s (0:01:23)
+contracts              exit=0     20s  OK
+adapter-wire           exit=0      3s  OK
+journal                exit=0      1s  11 passed in 0.57s
+validator-v1           exit=0      0s  PASS {"frozen_files": 44, "hash_vectors": 4, "machines": 5, "object_examples": 14, "operations": 20}
+validator-v2           exit=0      0s  PASS {"definitions": 132, "goldenVectors": 13, "machines": 12, "operations": 25, "privateOperations": 13, "protectedFiles": 313, "stopScenarios": 3}
+generated              exit=0      0s  CHECK 132 definitions / 38 operations; 3c0c317ed00f6fa4d2cf15ef3f61fc002d4bb22bf02d53ee9f1b407458bb28b1
+diff-check             exit=0      0s  
+runtime                exit=0     10s  OK (skipped=11)
+gpu-worker             exit=0     26s  23 passed, 2 subtests passed in 25.71s
+frontend               exit=0      4s        Tests  46 passed (46)
+go-vet                 exit=0      1s  
+go-race                exit=0   {'pass': 275, 'skip': 8} fails=[]

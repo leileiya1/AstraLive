@@ -1,0 +1,94 @@
+.................................F...................................... [ 30%]
+........................................................................ [ 60%]
+......................................s................................. [ 90%]
+........................                                                 [100%]
+=================================== FAILURES ===================================
+___________ test_real_proven_ranges_never_override_lifecycle[crash] ____________
+
+rig = <conftest.Rig object at 0x10fecb830>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11008a270>
+boundary = 'crash'
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "boundary", ["stop", "terminal", "expiry", "crash", "crash-at-abort"]
+    )
+    async def test_real_proven_ranges_never_override_lifecycle(rig, monkeypatch, boundary):
+        await rig.activate()
+        g = rig.guardian
+        renewal = asyncio.create_task(rig.renew_forever())
+        verified, paused, release, revoked = (asyncio.Event() for _ in range(4))
+        loop = asyncio.get_running_loop()
+        verify = service.verify_combined
+    
+        def verification(*args):
+            proof = verify(*args)
+            if boundary == "crash":
+                # Only the exact Popen owned by this dedicated test rig is killed.
+                g.publisher.process.kill()
+                g.publisher.process.wait(timeout=1)
+            loop.call_soon_threadsafe(verified.set)
+            return proof
+    
+        monkeypatch.setattr(service, "verify_combined", verification)
+        abort = g.publisher.abort
+    
+        async def pause_abort(*a, **kw):
+            if boundary == "crash-at-abort" and verified.is_set() and not paused.is_set():
+                paused.set()
+                g.publisher.process.kill()
+                await asyncio.to_thread(g.publisher.process.wait)
+            result = await abort(*a, **kw)
+            if (
+                verified.is_set()
+                and not paused.is_set()
+                and boundary not in {"crash", "crash-at-abort"}
+            ):
+                paused.set()
+                await release.wait()
+            return result
+    
+        monkeypatch.setattr(g.publisher, "abort", pause_abort)
+        invalidate = g.invalidate
+    
+        def invalidated(*a, **kw):
+            invalidate(*a, **kw)
+            revoked.set()
+    
+        monkeypatch.setattr(g, "invalidate", invalidated)
+        finish = late = stopping = None
+        try:
+            # Same full64000-sample/100-frame input as the original acceptance:
+            # the earlier30-frame test never reached ingest/observer readiness.
+            await synthetic(rig, count=100)
+            if boundary in {"stop", "terminal"}:
+                target = await rig.permit()
+                committed, sql_release = asyncio.Event(), asyncio.Event()
+                original = g.authority.permit
+    
+                async def delayed(attempt, permit):
+                    right = await original(attempt, permit)
+                    if permit == target:
+                        committed.set()
+                        await sql_release.wait()  # actual query already completed
+                    return right
+    
+                monkeypatch.setattr(g.authority, "permit", delayed)
+                late = asyncio.create_task(g.renew(rig.attempt, target))
+                await committed.wait()
+            finish = asyncio.create_task(g.finish(rig.attempt))
+            if boundary in {"crash", "crash-at-abort"}:
+                with pytest.raises(Closed, match="DRAIN_UNKNOWN"):
+                    await finish
+                assert g.last_drain_result["coverage"] == "PASS"
+>               assert g.last_drain_result["fault"] == "MEDIA_DELIVERY_FAILED"
+E               AssertionError: assert 'OUTPUT_FENCE_UNPROVEN' == 'MEDIA_DELIVERY_FAILED'
+E                 
+E                 - MEDIA_DELIVERY_FAILED
+E                 + OUTPUT_FENCE_UNPROVEN
+
+output_guardian/tests/lifecycle/test_real_edges.py:127: AssertionError
+=========================== short test summary info ============================
+FAILED output_guardian/tests/lifecycle/test_real_edges.py::test_real_proven_ranges_never_override_lifecycle[crash]
+SKIPPED [1] output_guardian/tests/v2/test_physical.py:140: requires dedicated Linux cgroup-v2 delegation; NOT TESTED on Darwin
+1 failed, 238 passed, 1 skipped in 83.58s (0:01:23)

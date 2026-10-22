@@ -773,6 +773,54 @@ func TestPostgresReceiver1RuntimeOwnedJournalFlow(t *testing.T) {
 		t.Fatal("durable latch count", f.count("dl05_receiver_consumptions"))
 	}
 }
+
+// The Runtime AnswerCoordinator (option 1) drives the real JournalServer and
+// Guardian: Prepare, START, one consume and one TTS succeed against real
+// PostgreSQL; drain must fail closed because the Observer is the closed
+// fixture, so the Backend never records a drain (stage 3 supplies the proof).
+func TestPostgresReceiver1RuntimeCoordinatorFailsClosedWithoutObserver(t *testing.T) {
+	f := newInterop(t)
+	f.stageRegister()
+	pin, token, e := NewJournalPin(f.rt.managed.Pin)
+	if e != nil {
+		t.Fatal(e)
+	}
+	server, e := NewJournalServer(f.s, pin)
+	if e != nil {
+		t.Fatal(e)
+	}
+	dir := filepath.Join(f.root, "journal")
+	if e = os.Mkdir(dir, 0700); e != nil {
+		t.Fatal(e)
+	}
+	if e = server.Listen(filepath.Join(dir, "journal.sock")); e != nil {
+		t.Fatal(e)
+	}
+	t.Cleanup(func() { server.Close() })
+	me, e := InspectProcess(os.Getpid())
+	if e != nil {
+		t.Fatal(e)
+	}
+	command := authority.Document{"tenantId": f.control.Tenant, "ownerId": f.control.Owner, "runId": f.cmd["runId"], "commandId": f.cmd["commandId"], "attemptId": f.cmd["attemptId"], "sessionId": f.cmd["sessionId"], "runEpoch": 1, "producerIncarnation": f.runtime.Producer, "requestHash": f.cmd["requestHash"], "guardianId": f.binding.GuardianID, "bootstrapId": f.binding.BootstrapID, "registration": authority.Document{"binding": authority.Document{"generationId": 7, "guardianIncarnation": f.guardian.Incarnation}, "revision": 1}, "expectedInboxRevision": f.prepareQ["expectedInboxRevision"], "expectedAnswerRevision": f.prepareQ["expectedAnswerRevision"]}
+	out := f.rt.rpc(map[string]any{"action": "runtime_coordinator_flow", "journalSocket": filepath.Join(dir, "journal.sock"), "backend": me, "journalCredential": token, "socket": filepath.Join(f.root, "guardian/runtime.sock"), "guardian": f.g.managed.Pin.Identity(), "artifact": f.unit, "command": command})
+	if out["ok"] != true {
+		t.Fatal("coordinator flow", out)
+	}
+	r := testObj(out, "result")
+	if r["prepare_next"] != "OK" || r["start_next"] != "OK" || fmt.Sprint(r["ttsInvocations"]) != "1" || fmt.Sprint(r["ticketsLeft"]) != "0" {
+		t.Fatal("coordinator prepare/start/once-TTS", r)
+	}
+	if r["drain"] != "ANSWER_UNKNOWN" || testObj(r, "view")["unknown"] != true || fmt.Sprint(testObj(r, "view")["drained"]) != "0" {
+		t.Fatal("drain did not fail closed", r)
+	}
+	var drains int
+	if e = f.s.DB.QueryRow(f.ctx, "SELECT count(*) FROM dl05_answer_drain_receipts WHERE command_id=$1", f.cmd["commandId"]).Scan(&drains); e != nil {
+		t.Fatal(e)
+	}
+	if drains != 0 || f.count("dl05_receiver_consumptions") != 1 {
+		t.Fatal("Backend recorded a drain without Observer proof", drains)
+	}
+}
 func TestPostgresReceiver1ControlCredentialSeparation(t *testing.T) {
 	f := newInterop(t)
 	q, e := f.registry.StageRequest(f.ctx, f.registrar, f.binding)
