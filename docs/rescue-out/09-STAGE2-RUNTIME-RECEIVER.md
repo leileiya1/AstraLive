@@ -60,6 +60,14 @@
 
 仍未证明：真实 TTS、真实 Observer/Sink drain、浏览器音视频、延迟 SLA。
 
+## 2c 第一步：Runtime 自己调用 Backend Journal（方案 1 的传输层，已完成）
+
+- **Go `JournalServer`**（`backend/internal/durableintegration/receiver1/journal_server.go`）：只开放 11 个 RUNTIME_JOURNAL 操作，全部交给 `authority.Store.Handle`（它负责角色、范围、状态校验）。私有 AF_UNIX、内核对端身份、每请求 1 秒、最多 16 并发、URL 中的 runId 必须等于请求体 runId，失败只返回冻结错误码；超时或认证存疑时不返回成功（丢失的 START 回复不会被另一个成功替代）。
+- **`NewJournalPin(runtimePin)`**：由可信部署代码从已托管的 Runtime pin 派生 RUNTIME_JOURNAL 身份——同一 principal/incarnation/OS 进程（一次性 ticket 的 verifier 绑定该 principal），但**单独的新凭据**；Runtime pin 退役或进程结束即失效；Guardian pin 不能派生。
+- **Python `JournalClient`**（`runtime/app/receiver1/journal_client.py`）：官方 SDK 编解码，钉住 Backend 进程身份，每次调用返回请求**之前**的双时钟锚点，供一次性 ticket 计算期限；任何传输疑问为 `JournalUnknown`，不重试。
+- **端到端测试 `TestPostgresReceiver1RuntimeOwnedJournalFlow`**：Runtime 进程自己 Prepare → AcquireOutputPermit → JournalStart（真实 PG，拿到 ticket）→ 在真实 Guardian 消费 → TTS 恰好 1 次 → 媒体被接受；重复 START 不会再给 ticket；另一个已注册 Runtime 进程拿着偷来的 Journal 凭据在任何状态变化前被拒（`UNAUTHENTICATED`）。`-race` 3/3 PASS；去掉内核对端校验的变异被检出（`evidence/stage2c-mutations.txt`）。全量回归 Go race 274/0/8。
+- 仍未做：凭据向生产 Runtime 进程的投递（属于阶段 4 Host Launcher；测试中经可信父进程管道传入）；Runtime 侧完整协调器（多单元、drain 确认、seal、Stop/UNKNOWN 处理）。
+
 ## 阶段 2 后续步骤（建议顺序）
 
 - ~~2b~~ 已完成（见上）。
