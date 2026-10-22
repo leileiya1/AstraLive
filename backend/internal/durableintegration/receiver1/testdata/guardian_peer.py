@@ -165,6 +165,20 @@ async def main():
                 outcome.update(view=coord.view(),ttsInvocations=rt.tts_invocations,spoken=len(spoken),ticketsLeft=len(rt._tickets))
                 await rt.close()
                 result=outcome
+            elif q['action']=='observer_record':
+                # This process's OWN deployment credential; only an OBSERVER pin
+                # is accepted by the Backend ObserverServer.
+                from runtime.app.receiver1.observer_client import ObserverClient,ObserverRefused,ObserverUnknown
+                backend_id=ProcessIdentity(q['backend']['PID'],q['backend']['UID'],q['backend']['Birth'])
+                try:
+                    result=await ObserverClient(q['observerSocket'],backend_id,Credential(deployment.credential._raw)).record(q['commandId'],q['artifactId'],q['evidence'])
+                except (ObserverRefused,ObserverUnknown) as e:result={'refused':e.code}
+            elif q['action']=='journal_call':
+                from runtime.app.receiver1.journal_client import JournalClient,JournalRefused,JournalUnknown
+                backend_id=ProcessIdentity(q['backend']['PID'],q['backend']['UID'],q['backend']['Birth'])
+                try:
+                    result,_=await JournalClient(q['journalSocket'],backend_id,Credential(q['journalCredential'].encode())).call(q['operation'],q['document'])
+                except (JournalRefused,JournalUnknown) as e:result={'refused':e.code}
             elif q['action']=='raw':
                 body=base64.b64decode(q['body'])
                 with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as sock:

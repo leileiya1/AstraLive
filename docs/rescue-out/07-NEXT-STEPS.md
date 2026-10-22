@@ -25,6 +25,8 @@ Runtime 侧 receiver1 adapter 消费 v2 Grant，单次 TTS 结果绑定 Receiver
 
 ## 阶段 3 — 真实 Observer 与 required Sink
 
+**进展（2026-10-22）**：3a Backend Observer 接缝已完成；3b 真实 RTMP/WebRTC sink 与独立 Observer 待选方向。见 [13-STAGE3-OBSERVER.md](13-STAGE3-OBSERVER.md)。
+
 用独立 Observer 解码实际 Sink 输出（替换当前 CPU 本地解码夹具），`requiredSinks` 全部到达才可 DRAINED。
 
 ## 阶段 4 — 可信 PhysicalSource 与 Host Launcher

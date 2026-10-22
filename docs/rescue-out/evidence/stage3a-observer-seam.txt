@@ -1,0 +1,7 @@
+x3 race: go-race                exit=1   {'pass': 1, 'fail': 2} fails=['receiver1.TestPostgresReceiver1ObserverSeamRecordsThenRuntimeDrains', 'receiver1.TestPostgresReceiver1ObserverSeamRecordsThenRuntimeDrains']
+O1 verifier ignores sink kind => go-race                exit=1   {'fail': 1} fails=['receiver1.TestPostgresReceiver1ObserverSeamRecordsThenRuntimeDrains']
+O2 server ignores kernel peer identity => go-race                exit=1   {'fail': 1} fails=['receiver1.TestPostgresReceiver1ObserverSeamRecordsThenRuntimeDrains']
+--- above: fixed evidenceRef reused across -count runs (test bug, Backend correctly refused); mutation lines above INVALID
+x3 race (fixed): go-race                exit=0   {'pass': 3} fails=[]
+O1 verifier ignores sink kind => go-race                exit=1   {'fail': 1} fails=['receiver1.TestPostgresReceiver1ObserverSeamRecordsThenRuntimeDrains']
+O2 server ignores kernel peer identity => go-race                exit=1   {'fail': 1} fails=['receiver1.TestPostgresReceiver1ObserverSeamRecordsThenRuntimeDrains']

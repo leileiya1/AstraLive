@@ -87,7 +87,7 @@ func StartManaged(ctx context.Context, cmd *exec.Cmd, actor authority.Actor, bin
 	if e := ctx.Err(); e != nil {
 		return nil, e
 	}
-	if actor.Role != "OUTPUT_GUARDIAN" && actor.Role != "REGISTERED_RUNTIME" {
+	if actor.Role != "OUTPUT_GUARDIAN" && actor.Role != "REGISTERED_RUNTIME" && actor.Role != "OBSERVER" {
 		return nil, denied()
 	}
 	if len(controls) > 1 || (len(controls) > 0 && actor.Role != "OUTPUT_GUARDIAN") {
