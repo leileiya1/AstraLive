@@ -1,0 +1,114 @@
+diff --git a/docs/rescue-out/evidence/protected/p8/real_tts.py.preimage b/docs/rescue-out/evidence/protected/p8/real_tts.py.postimage
+index 9dffed0..c6c1361 100644
+--- a/docs/rescue-out/evidence/protected/p8/real_tts.py.preimage
++++ b/docs/rescue-out/evidence/protected/p8/real_tts.py.postimage
+@@ -28,8 +28,90 @@ def spoken_sizes(text: str) -> str:
+                   lambda m: re.sub(size, pronounce, m.group()), text)
+ 
+ 
++# Chinese letter names; S/M/L/X match spoken_sizes() so sizes sound the same.
++LETTERS = {
++    "A": "诶", "B": "比", "C": "西", "D": "迪", "E": "伊", "F": "艾弗", "G": "吉",
++    "H": "艾尺", "I": "艾", "J": "杰", "K": "开", "L": "艾尔", "M": "艾姆", "N": "恩",
++    "O": "欧", "P": "皮", "Q": "丘", "R": "阿尔", "S": "艾丝", "T": "提", "U": "优",
++    "V": "维", "W": "达不溜", "X": "艾克斯", "Y": "歪", "Z": "贼",
++}
++# Units only directly after a number ("500ML", "20 M", "30 S"): never sizes.
++UNITS = {
++    "mah": "毫安时", "ml": "毫升", "mm": "毫米", "cm": "厘米", "km": "千米", "kg": "千克",
++    "mg": "毫克", "min": "分钟", "gb": "吉字节", "tb": "太字节", "mb": "兆字节",
++    "kw": "千瓦", "l": "升", "m": "米", "g": "克", "s": "秒", "h": "小时", "w": "瓦",
++    "v": "伏", "a": "安",
++}
++_UNIT = re.compile(r"(\d+(?:\.\d+)?)\s*(" + "|".join(sorted(UNITS, key=len, reverse=True))
++                   + r")(?![A-Za-z])", re.IGNORECASE)
++
++
++# Characters the engine may drop without losing meaning (prosody only).
++PROSODY = frozenset("“”‘’\"'()（）《》<>[]【】「」-—_·")
++# Meaning-carrying symbols the lexicon cannot read; order matters (most
++# specific first). Applied before letters so "A/B" keeps both letters.
++_SYMBOLS = [
++    (re.compile(r"[¥￥]\s*(\d+(?:\.\d+)?)\s*元?"), r"\1元"),
++    (re.compile(r"\$\s*(\d+(?:\.\d+)?)"), r"\1美元"),
++    (re.compile(r"(\d+(?:\.\d+)?)\s*[%％]"), r"百分之\1"),
++    (re.compile(r"(\d)\s*[~～]\s*(?=\d)"), r"\1到"),
++    (re.compile(r"[#＃]\s*(\d+)"), r"\1号"),
++    (re.compile(r"/(?=[\u4e00-\u9fff])"), "每"),
++    (re.compile(r"/"), "或"),
++    (re.compile(r"[+＋]"), "加"),
++    (re.compile(r"(?<=\d)\s*[xX×]\s*(?=\d)"), "乘"),
++    (re.compile(r"×"), "乘"),
++    (re.compile(r"℃"), "摄氏度"),
++    (re.compile(r"㎡"), "平方米"),
++    (re.compile(r"[&＆]"), "和"),
++    (re.compile(r"[~～]"), "到"),
++    (re.compile(r"[%％]"), "百分号"),
++]
++
++
++def spoken_text(text: str, pronunciations: dict[str, str] | None = None) -> str:
++    """Spoken form of committed text for a lexicon without Latin letters.
++
++    The committed answer text is never changed; only what the engine reads.
++    Order matters: size labels (unchanged spoken_sizes), operator/product
++    glossary, number+unit, the common T恤 reading, then any remaining Latin
++    run read letter by letter -- never silently skipped.
++    """
++    text = spoken_sizes(text)
++    for word in sorted(pronunciations or {}, key=len, reverse=True):
++        text = re.sub(r"(?<![A-Za-z])" + re.escape(word) + r"(?![A-Za-z])",
++                      pronunciations[word], text, flags=re.IGNORECASE)
++    for pattern, reading in _SYMBOLS:
++        text = pattern.sub(reading, text)
++    text = _UNIT.sub(lambda m: m.group(1) + UNITS[m.group(2).lower()], text)
++    text = re.sub(r"(?<![A-Za-z])[Tt](?=恤)", "踢", text)
++    return re.sub(r"[A-Za-z]+", lambda m: "".join(LETTERS[c.upper()] for c in m.group()), text)
++
++
++def lexicon_characters(model_dir: str) -> frozenset[str]:
++    """Every single character the model's own lexicon can pronounce."""
++    root = Path(model_dir).expanduser().resolve()
++    chars = set()
++    with open(root / "lexicon.txt", encoding="utf-8") as lexicon:
++        for line in lexicon:
++            word = line.split(" ", 1)[0]
++            chars.update(word)
++    return frozenset(chars)
++
++
++def uncovered(text: str, known: frozenset[str]) -> set[str]:
++    """Characters the engine would drop that carry meaning: anything not in
++    its lexicon except digits (number.fst), whitespace, sentence punctuation
++    the engine handles and PROSODY characters."""
++    return {c for c in text if c not in known and not c.isdigit() and not c.isspace()
++            and c not in PROSODY and c not in "，。！？、；：,.!?;:…"}
++
++
+ class SherpaOnnxTTSProvider:
+-    def __init__(self, model_dir: str, speaker_id: int = 0, num_threads: int = 2):
++    pronunciations = None  # optional operator/product glossary (see spoken_text)
++
++    def __init__(self, model_dir: str, speaker_id: int = 0, num_threads: int = 2,
++                 pronunciations: dict[str, str] | None = None):
+         import sherpa_onnx
+ 
+         root = Path(model_dir).expanduser().resolve()
+@@ -52,6 +134,7 @@ class SherpaOnnxTTSProvider:
+         self.engine = sherpa_onnx.OfflineTts(config)
+         self.sample_rate = self.engine.sample_rate
+         self.speaker_id = speaker_id
++        self.pronunciations = dict(pronunciations or {})
+ 
+     async def synthesize_stream(self, text: str, voice: VoiceConfig, ctx: GenerationContext):
+         import numpy as np
+@@ -93,7 +176,8 @@ class SherpaOnnxTTSProvider:
+ 
+         def generate():
+             try:
+-                self.engine.generate(spoken_sizes(text), sid=self.speaker_id, speed=1.0, callback=callback)
++                self.engine.generate(spoken_text(text, self.pronunciations), sid=self.speaker_id,
++                                     speed=1.0, callback=callback)
+             except Exception as exc:
+                 send(exc)
+             finally:

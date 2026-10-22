@@ -18,7 +18,7 @@
 | P6 | P2（Linux 测试） | v2 `test_real_ipc_denies_unprovisioned_context[v1]` 在 Linux 确定性失败：服务端拒绝未读请求后 Linux 发 RST，`send()` 只处理 EOF | **FIXED**（`d17d008`；`f036fa3` 的首次修复无效，已记录） |
 | P7 | KNOWN-FLAKE（Linux） | 受保护 `rig` fixture：MediaMTX SIGTERM 3 s 超时；`start()` 失败被 `close()` 的 `OUTPUT_FENCE_UNPROVEN` 掩盖 | OPEN，需 Agent4 决定是否修改受保护 conftest |
 | P3-f | KNOWN-FLAKE（负载） | v1 `test_real_proven_ranges_never_override_lifecycle[crash]` 在全量负载下 1 次失败：安全断言（DRAIN_UNKNOWN、未 drain）通过，仅诊断标签不同——ingest 轮询先发现被杀的 Publisher，得到 `OUTPUT_FENCE_UNPROVEN` 而非 `MEDIA_DELIVERY_FAILED`；单独 20/20 通过；近 7 次全量运行中出现 2 次（机器同时有其他高负载进程）；未放宽断言 | OPEN（`evidence/stage2c/coordinator-run1-*`、`after/regression/crash-case-x20.txt`） |
-| P8 | P2（产品质量） | 真实 TTS（sherpa-onnx VITS `zh_CN-xiao_ya`）静默跳过拉丁字母：商品名“T恤”读成“恤”，“有S、M、L和XL尺码”里 S/M/L 不读。`spoken_sizes()` 只覆盖部分句式 | OPEN；`runtime/app/real_tts.py` 受保护，需你确认后按受保护流程修改（建议：在发音规范化里把孤立的字母/尺码统一转成中文读音，并加覆盖测试） |
+| P8 | P2（产品质量） | 真实 TTS 静默丢字：拉丁字母（T恤、S/M/L、USB-C）以及影响含义的符号（%、+、~、¥、℃、×、㎡、/、&、#）都被跳过，价格/折扣会读错 | **FIXED**：通用读法规范化 + 按模型词表核对，真实引擎验证只剩停顿符被跳过，见 12-P8 |
 
 ---
 

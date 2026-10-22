@@ -1,0 +1,28 @@
+{
+  "paths": [
+    "runtime/app/real_tts.py"
+  ],
+  "changes": [
+    {
+      "path": "runtime/app/real_tts.py",
+      "preimageSHA256": "125371e6c7287bb80d044d6b000f3299772feb229f0118c90408381ccc0d85c7",
+      "postimageSHA256": "ba752c2491f55f6c97597145672b89c15161015662794fab97504658f44cd247",
+      "diffEvidence": "docs/rescue-out/evidence/protected/p8/real_tts.py.diff",
+      "diffSHA256": "0765e9b1f5fe10b0d85fdf5c93414d03d62e0f6f9fb8bec3ff57f964aa763f19"
+    }
+  ],
+  "owner": "rescue session (Claude), CPU TTS pronunciation",
+  "approvalSource": {
+    "kind": "explicit repository-owner instruction in the rescue session, 2026-10-22",
+    "requirements": [
+      "先修复P8然后继续阶段3或者你深度思考一下我们有没有别的或者更好的解决方法"
+    ],
+    "independentAgent4Review": false
+  },
+  "scope": "spoken form only: spoken_text() (spoken_sizes unchanged), symbol/unit/letter readings, lexicon coverage helpers, optional glossary; committed answer text and hashes unchanged",
+  "frozenManifestUnchanged": true,
+  "otherProtectedHashesChanged": 0,
+  "inventoryPreimageSHA256": "df8e5df928f30d134602f801425331ac7cd3f4af6363405a89b5b28a1b087cba",
+  "inventoryPostimageSHA256": "601018255716bee42a7d6d9e5860da7465026590b8b69e5078dc4f51a14326bc",
+  "verification": "runtime/tests/test_tts_pronunciation.py (real engine stderr: no content character dropped); docs/rescue-out/12-P8-TTS-PRONUNCIATION.md"
+}

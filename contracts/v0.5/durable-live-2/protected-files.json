@@ -305,7 +305,7 @@
     "runtime/app/personal_voice.py": "d097f93b0f041cf3ec102e355662ac9cd36a2171c3aba9b65bb34ea22dde98b4",
     "runtime/app/production_launcher.py": "550c4bde74c1b2a8aa9a30fdab0c0a3b28ace8f3717dc3dfd02dcb29c94c6a85",
     "runtime/app/providers.py": "01e37ed53e0dc86a94b6923ec420aa9b3d4e8f71e76817436d91792636c55ff0",
-    "runtime/app/real_tts.py": "125371e6c7287bb80d044d6b000f3299772feb229f0118c90408381ccc0d85c7",
+    "runtime/app/real_tts.py": "ba752c2491f55f6c97597145672b89c15161015662794fab97504658f44cd247",
     "runtime/app/rtmp_media.py": "afab2d7d79263ba9d25307ff4858797010b356f0230b9e67b09d2ffc4c54e201",
     "runtime/app/rtmp_preflight.py": "2965942baad691e03ca5a764e097c651b39d30ddd431a2ed305036608224f5ae",
     "runtime/app/session.py": "a80e7c1333c684686e838741e2377a6a73bfa2d1cc1448c68cbe04701bda22ce",
@@ -340,6 +340,12 @@
       "preimageSHA256": "5d95a661471d1f13415efae4b6ce35fb0fed23d961d45bceab35de9526f5b4d3",
       "postimageSHA256": "56d4093b6cc35c35d668014b083bd52da290f8883f58437ecb98a3e9a605bf19",
       "auditRecord": "docs/v0.5/implementation/protection-changes/RESCUE-GUARDIAN-LIFECYCLE.json"
+    },
+    {
+      "path": "runtime/app/real_tts.py",
+      "preimageSHA256": "125371e6c7287bb80d044d6b000f3299772feb229f0118c90408381ccc0d85c7",
+      "postimageSHA256": "ba752c2491f55f6c97597145672b89c15161015662794fab97504658f44cd247",
+      "auditRecord": "docs/v0.5/implementation/protection-changes/RESCUE-P8-TTS-PRONUNCIATION.json"
     }
   ]
 }
