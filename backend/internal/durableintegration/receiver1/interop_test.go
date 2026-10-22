@@ -712,6 +712,67 @@ func TestPostgresReceiver1RuntimeClientOnceTTS(t *testing.T) {
 		t.Fatal("second Runtime process consumed or spoke", again)
 	}
 }
+
+// Option 1: the Runtime process itself calls the real Backend JournalServer
+// (own RUNTIME_JOURNAL credential, kernel-pinned socket), receives the one-time
+// START ticket, consumes at the real Guardian and speaks once. No Journal call
+// is made in-process for it. TTS is a counting stand-in; no drain is claimed.
+func TestPostgresReceiver1RuntimeOwnedJournalFlow(t *testing.T) {
+	f := newInterop(t)
+	f.stageRegister()
+	pin, token, e := NewJournalPin(f.rt.managed.Pin)
+	if e != nil {
+		t.Fatal(e)
+	}
+	if _, _, e = NewJournalPin(f.g.managed.Pin); e == nil {
+		t.Fatal("Guardian pin became a Journal principal")
+	}
+	server, e := NewJournalServer(f.s, pin)
+	if e != nil {
+		t.Fatal(e)
+	}
+	dir := filepath.Join(f.root, "journal")
+	if e = os.Mkdir(dir, 0700); e != nil {
+		t.Fatal(e)
+	}
+	if e = server.Listen(filepath.Join(dir, "journal.sock")); e != nil {
+		t.Fatal(e)
+	}
+	t.Cleanup(func() { server.Close() })
+	me, e := InspectProcess(os.Getpid())
+	if e != nil {
+		t.Fatal(e)
+	}
+	permitQ := f.q(authority.Document{"sessionId": f.cmd["sessionId"], "runEpoch": 1, "producerIncarnation": f.runtime.Producer, "guardianId": f.binding.GuardianID, "answerArtifactId": f.unit["artifactId"]})
+	startQ := f.q(authority.Document{"commandId": f.cmd["commandId"], "attemptId": f.cmd["attemptId"], "sessionId": f.cmd["sessionId"], "runEpoch": 1, "producerIncarnation": f.runtime.Producer, "requestHash": f.cmd["requestHash"], "permitId": "permit_pending", "expectedInboxRevision": 2, "answerArtifactId": f.unit["artifactId"], "answerArtifactHash": f.unit["artifactHash"], "expectedAnswerRevision": 1})
+	call := map[string]any{
+		"action": "runtime_journal_flow", "journalSocket": filepath.Join(dir, "journal.sock"), "backend": me, "journalCredential": token,
+		"socket": filepath.Join(f.root, "guardian/runtime.sock"), "guardian": f.g.managed.Pin.Identity(),
+		"prepare": f.prepareQ, "permit": permitQ, "start": startQ, "retryRequestId": fresh("req_"),
+		"artifact": f.unit, "bootstrapId": f.binding.BootstrapID,
+		"registration": authority.Document{"binding": authority.Document{"generationId": 7, "guardianIncarnation": f.guardian.Incarnation}, "revision": 1},
+	}
+	// Another registered Runtime process holding the stolen credential is
+	// refused by the kernel peer pin before any Journal state changes.
+	stolen := f.second.rpc(call)
+	if stolen["ok"] != true || fmt.Sprint(testObj(stolen, "result")["error"]) != "JournalRefused:UNAUTHENTICATED" || f.count("dl05_receiver_consumptions") != 0 {
+		t.Fatal("stolen Journal credential", stolen)
+	}
+	out := f.rt.rpc(call)
+	if out["ok"] != true {
+		t.Fatal("runtime journal flow", out)
+	}
+	r := testObj(out, "result")
+	if r["error"] != nil || r["ticketReturned"] != true || fmt.Sprint(r["ttsInvocations"]) != "1" || r["mediaAccepted"] != true || fmt.Sprint(r["ticketsLeft"]) != "0" {
+		t.Fatal("runtime-owned START/consume/once-TTS", r)
+	}
+	if r["duplicateStartTicket"] == true {
+		t.Fatal("a repeated START returned another consume ticket", r)
+	}
+	if f.count("dl05_receiver_consumptions") != 1 {
+		t.Fatal("durable latch count", f.count("dl05_receiver_consumptions"))
+	}
+}
 func TestPostgresReceiver1ControlCredentialSeparation(t *testing.T) {
 	f := newInterop(t)
 	q, e := f.registry.StageRequest(f.ctx, f.registrar, f.binding)

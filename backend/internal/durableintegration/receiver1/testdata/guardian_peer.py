@@ -104,6 +104,43 @@ async def main():
                 outcome.update(ttsInvocations=rt.tts_invocations,spoken=len(spoken),ticketsLeft=len(rt._tickets),nextSequence=rt.next_sequence,knowledge=rt.knowledge.get(q['references']['grantId']))
                 await rt.close()
                 result=outcome
+            elif q['action']=='runtime_journal_flow':
+                # Runtime-owned v2 flow (option 1): this process calls the real
+                # Backend Journal with its own RUNTIME_JOURNAL credential, gets
+                # the one-time ticket itself, then consumes at Guardian.
+                import copy
+                from runtime.app.receiver1.journal_client import JournalClient,JournalRefused,JournalUnknown
+                from runtime.app.receiver1.runtime_client import GuardianChannel,ReceiverRuntime,ReceiverRefused,ReceiverUnknown
+                backend_id=ProcessIdentity(q['backend']['PID'],q['backend']['UID'],q['backend']['Birth'])
+                journal=JournalClient(q['journalSocket'],backend_id,Credential(q['journalCredential'].encode()))
+                guardian=ProcessIdentity(q['guardian']['PID'],q['guardian']['UID'],q['guardian']['Birth'])
+                own=Credential(deployment.credential._raw)
+                rt=ReceiverRuntime(lambda:GuardianChannel(q['socket'],guardian,own),wire,sequence_origin=0)
+                spoken=[]
+                async def synthesize(text):spoken.append(len(text));return [bytes(640)]
+                outcome={}
+                try:
+                    await journal.call('JournalPrepareAnswer',q['prepare'])
+                    permit,_=await journal.call('AcquireOutputPermit',q['permit'])
+                    start_q=copy.deepcopy(q['start']);start_q['permitId']=permit['permitId']
+                    start,sent=await journal.call('JournalStart',start_q)
+                    outcome['ticketReturned']=start.get('consumeTicket') is not None
+                    grant=start['answerGrant']
+                    rt.remember_start(grant,start,sent)
+                    refs={'bootstrapId':q['bootstrapId'],'artifactId':q['artifact']['artifactId'],'artifactHash':q['artifact']['artifactHash'],'grantId':grant['grantId'],'permitId':permit['permitId']}
+                    execution=await rt.consume(q['registration'],refs,q['artifact'])
+                    outcome['executionId']=execution.lineage.execution_id
+                    await rt.speak_once(execution,q['artifact'],synthesize)
+                    outcome['mediaAccepted']=(await rt.media(rt.submit(execution),permit['permitId'],'audio',bytes(640)))['accepted']
+                    try:
+                        again=copy.deepcopy(start_q);again['requestId']=q['retryRequestId']
+                        dup,_=await journal.call('JournalStart',again)
+                        outcome['duplicateStartTicket']=dup.get('consumeTicket') is not None
+                    except (JournalRefused,JournalUnknown) as e:outcome['duplicateStart']=e.code
+                except (JournalRefused,JournalUnknown,ReceiverRefused,ReceiverUnknown) as e:outcome['error']=type(e).__name__+':'+e.code
+                outcome.update(ttsInvocations=rt.tts_invocations,ticketsLeft=len(rt._tickets))
+                await rt.close()
+                result=outcome
             elif q['action']=='raw':
                 body=base64.b64decode(q['body'])
                 with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as sock:
