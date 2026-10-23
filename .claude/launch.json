@@ -4,8 +4,19 @@
     {
       "name": "astralive-local",
       "runtimeExecutable": "bash",
-      "runtimeArgs": ["scripts/run-local-isolated.sh"],
+      "runtimeArgs": [
+        "scripts/run-local-isolated.sh"
+      ],
       "port": 18081
+    },
+    {
+      "name": "frontend-dev",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-c",
+        "cd frontend && VITE_ENABLE_DEV_EVENTS=true VITE_ENABLE_DEV_PLATFORM_EVENTS=true exec bun run dev --port 5173 --strictPort"
+      ],
+      "port": 5173
     }
   ]
 }
