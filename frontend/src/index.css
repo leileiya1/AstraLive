@@ -1,1 +1,195 @@
 @import "tailwindcss";
+
+/*
+ * AstraLive design tokens. Runtime CSS variables carry the theme (dark is the
+ * default; :root[data-theme="light"] swaps them) and @theme inline exposes them
+ * as Tailwind utilities: bg-surface, text-fg-muted, border-border, bg-live…
+ */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-brand: var(--brand);
+  --color-brand-2: var(--brand-2);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-fg: var(--brand-fg);
+  --color-ring: var(--ring);
+  --color-danger-solid: var(--danger-solid);
+  --color-live-solid: var(--live-solid);
+  --color-live: var(--live);
+  --color-live-soft: var(--live-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-glow: var(--shadow-glow);
+}
+
+@theme {
+  --font-sans: "Inter", "PingFang SC", "HarmonyOS Sans SC", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  /* Type scale: display / title / body / caption */
+  --text-display: 1.75rem;
+  --text-display--line-height: 2.25rem;
+  --text-display--font-weight: 650;
+  --text-title: 1.0625rem;
+  --text-title--line-height: 1.5rem;
+  --text-title--font-weight: 600;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.375rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.125rem;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --animate-live-pulse: live-pulse 1.8s var(--ease-soft) infinite;
+  --animate-breathe: breathe 2.4s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+
+  @keyframes live-pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--live) 55%, transparent); }
+    70% { box-shadow: 0 0 0 10px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+}
+
+:root {
+  color-scheme: dark;
+  --bg: oklch(0.155 0.018 275);
+  --bg-elevated: oklch(0.175 0.02 275);
+  --surface: oklch(0.2 0.022 275);
+  --surface-2: oklch(0.235 0.024 275);
+  --surface-3: oklch(0.28 0.026 275);
+  --border: oklch(1 0 0 / 0.08);
+  --border-strong: oklch(1 0 0 / 0.16);
+  --fg: oklch(0.96 0.008 275);
+  --fg-muted: oklch(0.74 0.02 275);
+  --fg-subtle: oklch(0.63 0.02 275);
+  --brand: oklch(0.76 0.16 288);
+  --brand-2: oklch(0.66 0.16 245);
+  --brand-soft: oklch(0.64 0.2 288 / 0.16);
+  --brand-fg: oklch(0.99 0 0);
+  --ring: oklch(0.7 0.18 288);
+  --grad-a: oklch(0.55 0.21 288);
+  --grad-b: oklch(0.54 0.17 252);
+  --danger-solid: oklch(0.55 0.2 22);
+  --live-solid: oklch(0.56 0.22 25);
+  --live: oklch(0.75 0.18 22);
+  --live-soft: oklch(0.64 0.23 25 / 0.16);
+  --warn: oklch(0.86 0.14 85);
+  --warn-soft: oklch(0.82 0.15 85 / 0.14);
+  --ok: oklch(0.8 0.15 155);
+  --ok-soft: oklch(0.75 0.16 155 / 0.14);
+  --danger: oklch(0.76 0.16 22);
+  --danger-soft: oklch(0.66 0.21 22 / 0.14);
+  --info: oklch(0.79 0.11 235);
+  --info-soft: oklch(0.72 0.13 235 / 0.14);
+  --shadow-card: 0 1px 0 0 oklch(1 0 0 / 0.04) inset, 0 12px 32px -20px oklch(0 0 0 / 0.7);
+  --shadow-raised: 0 1px 0 0 oklch(1 0 0 / 0.06) inset, 0 20px 48px -24px oklch(0 0 0 / 0.8);
+  --shadow-glow: 0 0 0 1px oklch(0.64 0.2 288 / 0.45), 0 8px 28px -8px oklch(0.64 0.2 288 / 0.55);
+  --backdrop: radial-gradient(1200px 600px at 85% -10%, oklch(0.64 0.2 288 / 0.12), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, oklch(0.66 0.16 245 / 0.08), transparent 60%);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.975 0.006 275);
+  --bg-elevated: oklch(0.995 0.002 275);
+  --surface: oklch(1 0 0);
+  --surface-2: oklch(0.965 0.008 275);
+  --surface-3: oklch(0.93 0.012 275);
+  --border: oklch(0.2 0.03 275 / 0.09);
+  --border-strong: oklch(0.2 0.03 275 / 0.18);
+  --fg: oklch(0.22 0.025 275);
+  --fg-muted: oklch(0.45 0.025 275);
+  --fg-subtle: oklch(0.53 0.02 275);
+  --brand: oklch(0.52 0.22 288);
+  --brand-2: oklch(0.56 0.18 250);
+  --brand-soft: oklch(0.55 0.22 288 / 0.1);
+  --brand-fg: oklch(0.99 0 0);
+  --ring: oklch(0.6 0.2 288);
+  --grad-a: oklch(0.52 0.22 288);
+  --grad-b: oklch(0.52 0.18 252);
+  --danger-solid: oklch(0.54 0.21 22);
+  --live-solid: oklch(0.55 0.22 25);
+  --live: oklch(0.54 0.22 25);
+  --live-soft: oklch(0.58 0.23 25 / 0.1);
+  --warn: oklch(0.52 0.13 65);
+  --warn-soft: oklch(0.8 0.15 85 / 0.18);
+  --ok: oklch(0.5 0.14 155);
+  --ok-soft: oklch(0.7 0.16 155 / 0.14);
+  --danger: oklch(0.56 0.22 22);
+  --danger-soft: oklch(0.6 0.21 22 / 0.1);
+  --info: oklch(0.5 0.14 240);
+  --info-soft: oklch(0.6 0.14 240 / 0.1);
+  --shadow-card: 0 1px 2px oklch(0.2 0.03 275 / 0.05), 0 8px 24px -16px oklch(0.2 0.03 275 / 0.18);
+  --shadow-raised: 0 2px 4px oklch(0.2 0.03 275 / 0.06), 0 20px 40px -24px oklch(0.2 0.03 275 / 0.28);
+  --shadow-glow: 0 0 0 1px oklch(0.55 0.22 288 / 0.35), 0 8px 24px -10px oklch(0.55 0.22 288 / 0.4);
+  --backdrop: radial-gradient(1200px 600px at 85% -10%, oklch(0.55 0.22 288 / 0.07), transparent 60%);
+}
+
+@layer base {
+  html { background: var(--bg); }
+  body {
+    @apply bg-bg font-sans text-body text-fg antialiased;
+    background-image: var(--backdrop);
+    background-attachment: fixed;
+    min-height: 100dvh;
+  }
+  ::selection { background: var(--brand-soft); }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  * { scrollbar-width: thin; scrollbar-color: var(--surface-3) transparent; }
+  button:not(:disabled), [role="button"]:not([aria-disabled="true"]) { cursor: pointer; }
+}
+
+/* Used through arbitrary animate-[…] values, so they live outside @theme. */
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes dialog-in { from { opacity: 0; transform: translate(-50%, -48%) scale(0.97); } }
+@keyframes slide-up { from { opacity: 0; transform: translateY(8px); } }
+
+@utility bg-brand-gradient {
+  background-image: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+}
+@utility text-brand-gradient {
+  background-image: linear-gradient(135deg, var(--brand), var(--brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@utility tabular { font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
