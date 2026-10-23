@@ -17,6 +17,7 @@ import { Rooms } from "../features/rooms/Rooms";
 import { LiveConsole } from "../features/live-console/LiveConsole";
 import { useUi } from "../stores/ui";
 import { TooltipProvider } from "../components/ui/tooltip";
+import { Toaster } from "../components/ui/toast";
 import { MobileNav, Sidebar, pageTitles, type Page } from "./Sidebar";
 import { Topbar } from "./Topbar";
 const queryClient = new QueryClient({
@@ -90,6 +91,7 @@ export function App() {
         >
           <TooltipProvider delayDuration={250}>
             <Shell />
+            <Toaster />
           </TooltipProvider>
         </MotionConfig>
       </LazyMotion>
