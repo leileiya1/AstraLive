@@ -16,7 +16,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 const variants: Record<Variant, string> = {
   default: 'bg-brand-gradient text-brand-fg shadow-[0_6px_20px_-8px_var(--brand)] hover:brightness-110 hover:shadow-glow',
   outline: 'border border-border-strong bg-surface-2/60 text-fg hover:border-brand/50 hover:bg-surface-3',
-  danger: 'bg-danger text-white shadow-[0_6px_20px_-10px_var(--danger)] hover:brightness-110',
+  danger: 'bg-danger-solid text-white shadow-[0_6px_20px_-10px_var(--danger)] hover:brightness-110',
   ghost: 'text-fg-muted hover:bg-surface-3 hover:text-fg',
   subtle: 'bg-brand-soft text-brand hover:bg-brand/20',
 }

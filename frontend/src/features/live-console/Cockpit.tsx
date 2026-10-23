@@ -45,7 +45,7 @@ export function VideoStage({ videoRef, muted, fit, status, previewStatus, mediaR
       <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-2 bg-gradient-to-b from-black/55 to-transparent p-3 sm:p-4">
         <div className="flex flex-wrap items-center gap-2">
           {live ? (
-            <span className="flex items-center gap-1.5 rounded-md bg-live px-2 py-1 text-[11px] font-bold tracking-wider text-white shadow-[0_0_24px_-4px_var(--live)]">
+            <span className="flex items-center gap-1.5 rounded-md bg-live-solid px-2 py-1 text-[11px] font-bold tracking-wider text-white shadow-[0_0_24px_-4px_var(--live)]">
               <StatusDot tone="neutral" ping className="bg-white" />LIVE
             </span>
           ) : (
