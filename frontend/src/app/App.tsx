@@ -54,16 +54,16 @@ function Shell() {
   const open = useUi((s) => s.sidebarOpen);
   const setOpen = useUi((s) => s.setSidebarOpen);
   return (
-    <div className="flex min-h-dvh min-w-[320px] w-full flex-col bg-slate-50 font-sans text-slate-800 md:flex-row [&_button]:cursor-pointer">
+    <div className="flex min-h-dvh min-w-[320px] w-full flex-col text-fg md:flex-row [&_button]:cursor-pointer">
       <AnimatePresence initial={false}>
         {open && (
           <m.aside
             initial={{ opacity: 0, x: -12 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -12 }}
-            className="w-full shrink-0 border-r border-slate-200/80 bg-white p-4 md:sticky md:top-0 md:h-dvh md:w-[clamp(12rem,15vw,15rem)] md:overflow-y-auto"
+            className="w-full shrink-0 border-r border-border bg-bg-elevated p-4 md:sticky md:top-0 md:h-dvh md:w-[clamp(12rem,15vw,15rem)] md:overflow-y-auto"
           >
-            <div className="mb-8 flex items-center gap-2 text-lg font-bold text-sky-700">
+            <div className="mb-8 flex items-center gap-2 text-lg font-bold text-brand-gradient">
               <Activity size={22} /> AstraLive
             </div>
             <nav
@@ -75,12 +75,12 @@ function Shell() {
                   key={id}
                   onClick={() => setPage(id)}
                   aria-current={page === id ? "page" : undefined}
-                  className={`relative flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm transition-colors motion-reduce:transition-none ${page === id ? "font-semibold text-sky-800" : "text-slate-600 hover:bg-slate-100"}`}
+                  className={`relative flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm transition-colors motion-reduce:transition-none ${page === id ? "font-semibold text-fg" : "text-fg-muted hover:bg-surface-3"}`}
                 >
                   {page === id && (
                     <m.span
                       layoutId="navigation-active"
-                      className="absolute inset-0 rounded-xl border border-sky-100 bg-sky-50"
+                      className="absolute inset-0 rounded-xl border border-brand/25 bg-brand-soft"
                     />
                   )}
                   <Icon size={18} className="relative shrink-0" />
@@ -92,7 +92,7 @@ function Shell() {
         )}
       </AnimatePresence>
       <main className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-20 flex min-h-16 flex-wrap items-center gap-3 border-b border-slate-200/80 bg-white/95 px-3 backdrop-blur sm:px-5">
+        <header className="sticky top-0 z-20 flex min-h-16 flex-wrap items-center gap-3 border-b border-border bg-bg/80 px-3 backdrop-blur sm:px-5">
           <Button
             variant="ghost"
             aria-label="Toggle sidebar"
@@ -102,7 +102,7 @@ function Shell() {
             <Menu size={18} />
           </Button>
           <span className="font-semibold">AstraLive Control</span>
-          <span className="ml-auto text-xs text-slate-500">
+          <span className="ml-auto text-xs text-fg-subtle">
             Go Control Plane
           </span>
         </header>

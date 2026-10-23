@@ -10,6 +10,15 @@
       "port": 18081
     },
     {
+      "name": "astralive-local-mock",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-c",
+        "MOCK_LLM=true MOCK_TTS=true exec bash scripts/run-local-isolated.sh"
+      ],
+      "port": 18081
+    },
+    {
       "name": "frontend-dev",
       "runtimeExecutable": "bash",
       "runtimeArgs": [
