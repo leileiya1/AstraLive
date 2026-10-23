@@ -1,4 +1,5 @@
-import { Card } from "../../components/ui/card";
+import { Bot } from "lucide-react";
+import { Card, CardHeader } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 
 export type TurnManagerView = {
@@ -27,10 +28,9 @@ export function TurnManagerPanel({ view, onReviewRecovery, busy = false }: {
     RECOVERING: "等待恢复确认", STOPPED: "已停止自动讲解",
   };
   const needsReview = view.hasUnknown || view.state === "RECOVERING" || view.state === "OPERATOR_OVERRIDE";
-  return <Card>
-    <h2 className="font-semibold">自动场控</h2>
-    <p role="status" className="mt-2 text-sm">{labels[view.state]}</p>
-    <dl className="mt-3 grid grid-cols-2 gap-2 text-sm">
+  return <Card className="p-4">
+    <CardHeader as="h3" className="mb-3" icon={<Bot />} title="自动场控" actions={<p role="status" className="rounded-full border border-brand/25 bg-brand-soft px-2 py-0.5 text-caption font-medium text-brand">{labels[view.state]}</p>} />
+    <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1.5 text-caption [&_dt]:text-fg-subtle [&_dd]:text-fg">
       <dt>当前计划</dt><dd className="break-all">{view.plan ? `${view.plan.planId} · v${view.plan.revision}` : "尚无计划"}</dd>
       <dt>当前商品</dt><dd>{view.plan?.productId ?? "—"}</dd>
       <dt>讲话来源</dt><dd>{({ SCRIPT: "商品讲解", COMMENT: "观众问题", OPERATOR: "操作员", SYSTEM: "系统" } as Record<string, string>)[view.source] ?? "空闲"}</dd>
@@ -39,8 +39,8 @@ export function TurnManagerPanel({ view, onReviewRecovery, busy = false }: {
       <dt>当前段</dt><dd>{view.currentSegment ? `${view.currentSegment.sequence} · ${view.currentSegment.content}` : "—"}</dd>
       <dt>下一段</dt><dd>{view.nextSegment ? `${view.nextSegment.sequence} · ${view.nextSegment.content}` : "—"}</dd>
     </dl>
-    {view.hasUnknown && <p role="alert" className="mt-3 text-sm text-amber-700">部分内容是否播放完成尚不确定，已暂停续讲。请先检查证据并选择恢复方式。</p>}
-    {view.reason && <p className="mt-2 break-words text-sm text-amber-700">场控提示：{view.reason}</p>}
-    {needsReview && <Button className="mt-3" disabled={busy || view.state === "STOPPED"} onClick={onReviewRecovery}>检查并人工恢复</Button>}
+    {view.hasUnknown && <p role="alert" className="mt-3 rounded-md border border-warn/30 bg-warn-soft px-3 py-2 text-caption text-warn">部分内容是否播放完成尚不确定，已暂停续讲。请先检查证据并选择恢复方式。</p>}
+    {view.reason && <p className="mt-2 break-words text-caption text-warn">场控提示：{view.reason}</p>}
+    {needsReview && <Button className="mt-3" variant="outline" disabled={busy || view.state === "STOPPED"} onClick={onReviewRecovery}>检查并人工恢复</Button>}
   </Card>;
 }

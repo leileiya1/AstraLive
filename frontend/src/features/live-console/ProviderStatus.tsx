@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import { Cpu } from "lucide-react";
 import { integrationApi } from "../settings/integration-client";
 import { configApi } from "../../api/config-client";
-import { Card } from "../../components/ui/card";
+import { Badge, StatusDot } from "../../components/ui/badge";
+import { Card, CardHeader } from "../../components/ui/card";
 import { ErrorNotice } from "../../components/feedback";
 export function ProviderStatus({ sessionId }: { sessionId: string | null }) {
   const me = useQuery({
@@ -23,49 +25,60 @@ export function ProviderStatus({ sessionId }: { sessionId: string | null }) {
     retry: false,
     refetchInterval: 2000,
   });
+  const tone = !bound.data ? "neutral" : bound.data.mode === "REAL" && !bound.data.errorCode ? "ok" : bound.data.mode === "UNAVAILABLE" ? "danger" : "warn";
   return (
-    <Card>
-      <h2 className="font-semibold">实际 Provider 绑定</h2>
-      <p className="mt-2 text-sm">
-        用户：{me.data?.identity.userId ?? (me.isPending ? "正在确认身份…" : "未登录")}
-        {!me.data && !me.isPending && " · 请前往用户配置中心登录。"}
-      </p>
-      <p className="text-sm">
-        后续 Session 默认：
-        {defaults.data
-          ?.filter(
-            (p) =>
-              p.isDefault &&
-              ["LLM", "TTS", "AVATAR", "GPU_WORKER"].includes(p.kind),
-          )
-          .map((p) => `${p.kind}: ${p.provider} v${p.version}`)
-          .join(" · ") || "未配置"}
-      </p>
-      {bound.data ? (
-        <>
-          <p className="mt-2 font-semibold" data-testid="provider-mode">
-            {bound.data.mode}
-            {bound.data.errorCode && ` · ${bound.data.errorCode}`}
-          </p>
-          <p className="text-sm">
-            本次绑定：
-            {bound.data.profiles
-              .map((p) => `${p.kind}: ${p.provider} v${p.version}`)
-              .join(" · ")}
-          </p>
-          <p className="text-xs text-slate-500">
-            生效：{new Date(bound.data.capturedAt).toLocaleString()} · 到期：
-            {new Date(bound.data.expiresAt).toLocaleString()}
-          </p>
-        </>
-      ) : (
-        <p className="mt-2 text-sm">
-          {sessionId
-            ? "实际绑定状态尚不可用"
-            : "创建 Session 时固定配置；直播期间修改默认项只影响后续 Session。"}
+    <Card className="p-4">
+      <CardHeader
+        className="mb-3"
+        as="h3"
+        icon={<Cpu />}
+        title="实际 Provider 绑定"
+        actions={bound.data ? <Badge tone={tone}><StatusDot tone={tone} />{bound.data.mode}</Badge> : undefined}
+      />
+      <div className="space-y-1.5 text-caption text-fg-muted">
+        <p>
+          用户：<span className="text-fg">{me.data?.identity.userId ?? (me.isPending ? "正在确认身份…" : "未登录")}</span>
+          {!me.data && !me.isPending && " · 请前往配置中心登录。"}
         </p>
-      )}
-      {bound.error && <ErrorNotice error={bound.error} />}
+        <p className="break-words">
+          后续 Session 默认：
+          <span className="text-fg">
+            {defaults.data
+              ?.filter(
+                (p) =>
+                  p.isDefault &&
+                  ["LLM", "TTS", "AVATAR", "GPU_WORKER"].includes(p.kind),
+              )
+              .map((p) => `${p.kind}: ${p.provider} v${p.version}`)
+              .join(" · ") || "未配置"}
+          </span>
+        </p>
+        {bound.data ? (
+          <>
+            <p className="font-medium text-fg" data-testid="provider-mode">
+              {bound.data.mode}
+              {bound.data.errorCode && ` · ${bound.data.errorCode}`}
+            </p>
+            <p className="break-words">
+              本次绑定：
+              {bound.data.profiles
+                .map((p) => `${p.kind}: ${p.provider} v${p.version}`)
+                .join(" · ")}
+            </p>
+            <p className="text-[11px] text-fg-subtle">
+              生效：{new Date(bound.data.capturedAt).toLocaleString()} · 到期：
+              {new Date(bound.data.expiresAt).toLocaleString()}
+            </p>
+          </>
+        ) : (
+          <p className="text-fg-subtle">
+            {sessionId
+              ? "实际绑定状态尚不可用"
+              : "创建会话时固定配置；直播期间修改默认项只影响后续会话。"}
+          </p>
+        )}
+      </div>
+      {bound.error && <div className="mt-3"><ErrorNotice error={bound.error} /></div>}
     </Card>
   );
 }
