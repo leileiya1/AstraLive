@@ -1,0 +1,93 @@
+[
+  {
+    "label": "restart-stable-source",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+      "-D",
+      "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/data",
+      "-l",
+      "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/evidence/postgres.txt",
+      "-o",
+      "-h 127.0.0.1 -p 53580 -k /tmp/a2r1-jgyxcbht",
+      "-w",
+      "start"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht",
+    "exitCode": 0,
+    "elapsedSeconds": 0.126
+  },
+  {
+    "label": "stable-source-pg-inventory",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/psql",
+      "postgres://agent2_review@127.0.0.1:53580/agent4_receiver1_agent2_review?sslmode=disable",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-c",
+      "SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht",
+    "exitCode": 0,
+    "elapsedSeconds": 0.022
+  },
+  {
+    "label": "stable-source-owner-race",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "120s",
+      "./internal/durableintegration/receiver1"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source/backend",
+    "exitCode": 1,
+    "elapsedSeconds": 16.886
+  },
+  {
+    "label": "stable-source-repeat3",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-json",
+      "-count=3",
+      "-timeout",
+      "120s",
+      "./internal/durableintegration/receiver1",
+      "-run",
+      "^TestAgent2ReviewCurrentPhysicalRevision"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source/backend",
+    "exitCode": 1,
+    "elapsedSeconds": 3.043
+  },
+  {
+    "label": "stable-source-vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/durableintegration/receiver1"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 0.101
+  },
+  {
+    "label": "stop-stable-source",
+    "command": [
+      "/opt/homebrew/opt/postgresql@17/bin/pg_ctl",
+      "-D",
+      "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/data",
+      "-m",
+      "fast",
+      "-w",
+      "stop"
+    ],
+    "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht",
+    "exitCode": 0,
+    "elapsedSeconds": 0.108
+  }
+]

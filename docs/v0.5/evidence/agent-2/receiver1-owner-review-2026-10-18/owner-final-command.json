@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "120s",
+    "./internal/durableintegration/receiver1"
+  ],
+  "cwd": "/var/folders/3w/7rslnljn2jx_fk8lx_l7x6740000gn/T/agent2-receiver1-review-jgyxcbht/source/backend",
+  "exitCode": 1
+}

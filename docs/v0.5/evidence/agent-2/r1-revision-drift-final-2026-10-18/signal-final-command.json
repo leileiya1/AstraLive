@@ -1,0 +1,16 @@
+{
+  "cmd": [
+    "go",
+    "test",
+    "-tags=agent2r1review",
+    "-race",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "180s",
+    "./internal/durableintegration/receiver1",
+    "-run",
+    "^TestAgent2Final"
+  ],
+  "exitCode": 0
+}

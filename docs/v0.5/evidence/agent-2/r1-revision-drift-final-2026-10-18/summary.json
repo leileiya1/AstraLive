@@ -1,0 +1,228 @@
+{
+  "layerA": {
+    "decision": "AGENT 2 FINAL ACK — R1-INSTALLATION-REVISION-DRIFT SOURCE FIX",
+    "scope": "Fixed Registrar/Authority code and existing SQL permission boundaries under a genuinely coordinated immutable source lifecycle; no new P0/P1 found",
+    "registrarSHA": "58cbc59042c70f9010a368f963257fdad5154b91",
+    "testedFixtureAndProtectionSHA": "08af1049250d2657d7afb5e303d97a02e9761570",
+    "latestIntegrationSHA": "a0a05071d3eae1cc918fc7d7c2c56604fea380da"
+  },
+  "layerB": {
+    "decision": "BLOCKED",
+    "reason": "No positive production PhysicalSource or Linux sole-owner/publisher/sink isolation acceptance. Local gate capability is not physical fencing."
+  },
+  "originalProbe": {
+    "sha256": "db675df45a7bd9ce0cce4dd40ade107d19609b8137873e73e00570eb79914463",
+    "lines": 623,
+    "sourceAssertionsTimingUnchanged": true
+  },
+  "checks": {
+    "originalAandBRepeat3": {
+      "counts": {
+        "top_pass": 6
+      },
+      "failed": [],
+      "skips": []
+    },
+    "originalOwner15": {
+      "counts": {
+        "top_pass": 15,
+        "sub_pass": 7
+      },
+      "failed": [],
+      "skips": []
+    },
+    "latestReceiver22": {
+      "counts": {
+        "top_pass": 22,
+        "sub_pass": 6
+      },
+      "failed": [],
+      "skips": []
+    },
+    "newOwnerAdversarial": {
+      "counts": {
+        "top_pass": 12,
+        "sub_pass": 13,
+        "top_skip": 1
+      },
+      "failed": [],
+      "skips": [
+        {
+          "test": "TestAgent2FinalCrashHelper",
+          "reason": "=== RUN   TestAgent2FinalCrashHelper\n    agent2_gate_adversarial_test.go:516: owned SIGKILL helper executed by parent\n--- SKIP: TestAgent2FinalCrashHelper (0.00s)\n"
+        }
+      ]
+    },
+    "newRaceGroupsRepeat3": {
+      "counts": {
+        "top_pass": 12,
+        "sub_pass": 6
+      },
+      "failed": [],
+      "skips": []
+    },
+    "fullGo": {
+      "counts": {
+        "top_pass": 267,
+        "sub_pass": 204,
+        "top_skip": 13
+      },
+      "failed": [],
+      "skips": [
+        {
+          "test": "TestAuditSelectionExpiresWhileWaitingForCommandLock",
+          "reason": "=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock\n    interaction_audit_test.go:28: explicit disposable SQL required\n--- SKIP: TestAuditSelectionExpiresWhileWaitingForCommandLock (0.00s)\n"
+        },
+        {
+          "test": "TestRedisStreamsDuplicateReclaimAndSQLProjection",
+          "reason": "=== RUN   TestRedisStreamsDuplicateReclaimAndSQLProjection\n    evidence_test.go:176: isolated Redis required\n--- SKIP: TestRedisStreamsDuplicateReclaimAndSQLProjection (0.00s)\n"
+        },
+        {
+          "test": "TestRedisIsolatedDisconnectAndSQLFallback",
+          "reason": "=== RUN   TestRedisIsolatedDisconnectAndSQLFallback\n    evidence_test.go:240: owned Redis required\n--- SKIP: TestRedisIsolatedDisconnectAndSQLFallback (0.00s)\n"
+        },
+        {
+          "test": "TestIsolatedBackendHelper",
+          "reason": "=== RUN   TestIsolatedBackendHelper\n    process_test.go:38: owned subprocess helper\n--- SKIP: TestIsolatedBackendHelper (0.00s)\n"
+        },
+        {
+          "test": "TestPostgresIsolatedServerOutage",
+          "reason": "=== RUN   TestPostgresIsolatedServerOutage\n    process_test.go:295: owned cluster path required\n--- SKIP: TestPostgresIsolatedServerOutage (0.00s)\n"
+        },
+        {
+          "test": "TestOwnedCommitCrashChild",
+          "reason": "=== RUN   TestOwnedCommitCrashChild\n    acceptance_test.go:412: owned subprocess helper\n--- SKIP: TestOwnedCommitCrashChild (0.00s)\n"
+        },
+        {
+          "test": "TestProductAuthorizationAndPinnedBindings",
+          "reason": "=== RUN   TestProductAuthorizationAndPinnedBindings\n    authorization_integration_test.go:28: explicit disposable DB required\n--- SKIP: TestProductAuthorizationAndPinnedBindings (0.00s)\n"
+        },
+        {
+          "test": "TestInteractionFormalCPU",
+          "reason": "=== RUN   TestInteractionFormalCPU\n    interaction_integration_test.go:39: RUN_INTERACTION_CPU=1 and disposable SQL/Redis required\n--- SKIP: TestInteractionFormalCPU (0.00s)\n"
+        },
+        {
+          "test": "TestExportContractRequests",
+          "reason": "=== RUN   TestExportContractRequests\n    manager_test.go:530: set ASTRALIVE_DIRECTOR_EVIDENCE for schema/evidence export\n--- SKIP: TestExportContractRequests (0.00s)\n"
+        },
+        {
+          "test": "TestConfigurationBrowserHarness",
+          "reason": "=== RUN   TestConfigurationBrowserHarness\n    browser_harness_test.go:23: browser harness opt-in\n--- SKIP: TestConfigurationBrowserHarness (0.00s)\n"
+        },
+        {
+          "test": "TestPostgresConfigurationLifecycle",
+          "reason": "=== RUN   TestPostgresConfigurationLifecycle\n    postgres_test.go:23: CONFIG_TEST_DATABASE_URL not set\n--- SKIP: TestPostgresConfigurationLifecycle (0.00s)\n"
+        },
+        {
+          "test": "TestLocalProviderProbesScopedAndVersioned",
+          "reason": "=== RUN   TestLocalProviderProbesScopedAndVersioned\n    provider_probe_test.go:22: explicit disposable DB required\n--- SKIP: TestLocalProviderProbesScopedAndVersioned (0.00s)\n"
+        },
+        {
+          "test": "TestEventDedupAndStateUpdateWithPostgres",
+          "reason": "=== RUN   TestEventDedupAndStateUpdateWithPostgres\n    integration_test.go:45: DATABASE_URL not set\n--- SKIP: TestEventDedupAndStateUpdateWithPostgres (0.00s)\n"
+        }
+      ]
+    },
+    "fullGoRace": {
+      "counts": {
+        "top_pass": 267,
+        "sub_pass": 204,
+        "top_skip": 13
+      },
+      "failed": [],
+      "skips": [
+        {
+          "test": "TestAuditSelectionExpiresWhileWaitingForCommandLock",
+          "reason": "=== RUN   TestAuditSelectionExpiresWhileWaitingForCommandLock\n    interaction_audit_test.go:28: explicit disposable SQL required\n--- SKIP: TestAuditSelectionExpiresWhileWaitingForCommandLock (0.00s)\n"
+        },
+        {
+          "test": "TestRedisStreamsDuplicateReclaimAndSQLProjection",
+          "reason": "=== RUN   TestRedisStreamsDuplicateReclaimAndSQLProjection\n    evidence_test.go:176: isolated Redis required\n--- SKIP: TestRedisStreamsDuplicateReclaimAndSQLProjection (0.00s)\n"
+        },
+        {
+          "test": "TestRedisIsolatedDisconnectAndSQLFallback",
+          "reason": "=== RUN   TestRedisIsolatedDisconnectAndSQLFallback\n    evidence_test.go:240: owned Redis required\n--- SKIP: TestRedisIsolatedDisconnectAndSQLFallback (0.00s)\n"
+        },
+        {
+          "test": "TestIsolatedBackendHelper",
+          "reason": "=== RUN   TestIsolatedBackendHelper\n    process_test.go:38: owned subprocess helper\n--- SKIP: TestIsolatedBackendHelper (0.00s)\n"
+        },
+        {
+          "test": "TestPostgresIsolatedServerOutage",
+          "reason": "=== RUN   TestPostgresIsolatedServerOutage\n    process_test.go:295: owned cluster path required\n--- SKIP: TestPostgresIsolatedServerOutage (0.00s)\n"
+        },
+        {
+          "test": "TestOwnedCommitCrashChild",
+          "reason": "=== RUN   TestOwnedCommitCrashChild\n    acceptance_test.go:412: owned subprocess helper\n--- SKIP: TestOwnedCommitCrashChild (0.00s)\n"
+        },
+        {
+          "test": "TestProductAuthorizationAndPinnedBindings",
+          "reason": "=== RUN   TestProductAuthorizationAndPinnedBindings\n    authorization_integration_test.go:28: explicit disposable DB required\n--- SKIP: TestProductAuthorizationAndPinnedBindings (0.00s)\n"
+        },
+        {
+          "test": "TestInteractionFormalCPU",
+          "reason": "=== RUN   TestInteractionFormalCPU\n    interaction_integration_test.go:39: RUN_INTERACTION_CPU=1 and disposable SQL/Redis required\n--- SKIP: TestInteractionFormalCPU (0.00s)\n"
+        },
+        {
+          "test": "TestExportContractRequests",
+          "reason": "=== RUN   TestExportContractRequests\n    manager_test.go:530: set ASTRALIVE_DIRECTOR_EVIDENCE for schema/evidence export\n--- SKIP: TestExportContractRequests (0.00s)\n"
+        },
+        {
+          "test": "TestConfigurationBrowserHarness",
+          "reason": "=== RUN   TestConfigurationBrowserHarness\n    browser_harness_test.go:23: browser harness opt-in\n--- SKIP: TestConfigurationBrowserHarness (0.00s)\n"
+        },
+        {
+          "test": "TestPostgresConfigurationLifecycle",
+          "reason": "=== RUN   TestPostgresConfigurationLifecycle\n    postgres_test.go:23: CONFIG_TEST_DATABASE_URL not set\n--- SKIP: TestPostgresConfigurationLifecycle (0.00s)\n"
+        },
+        {
+          "test": "TestLocalProviderProbesScopedAndVersioned",
+          "reason": "=== RUN   TestLocalProviderProbesScopedAndVersioned\n    provider_probe_test.go:22: explicit disposable DB required\n--- SKIP: TestLocalProviderProbesScopedAndVersioned (0.00s)\n"
+        },
+        {
+          "test": "TestEventDedupAndStateUpdateWithPostgres",
+          "reason": "=== RUN   TestEventDedupAndStateUpdateWithPostgres\n    integration_test.go:45: DATABASE_URL not set\n--- SKIP: TestEventDedupAndStateUpdateWithPostgres (0.00s)\n"
+        }
+      ]
+    }
+  },
+  "otherResults": {
+    "contracts": 137,
+    "journal": 11,
+    "officialWire": 13,
+    "adapterResource": 8,
+    "guardianV1ApprovedFixture": 25,
+    "validators": 2,
+    "generatorCheck": "PASS",
+    "goVetFull": "PASS",
+    "taggedOwnerVet": "PASS"
+  },
+  "semanticFindings": [
+    "CloseAdmission rejects all new readers; already held readers may finish a SQL latch against the unchanged physical tuple. Positive execution admission is suppressed when withdrawal is detected; spent/unacknowledged latch remains retained and UNKNOWN after revoke.",
+    "A pre-close committed Backend true ACK can be delivered after CloseAdmission but before reader drain. The response-writer probe observes true. Retirement cannot complete or change physical source while this writer still holds its reader. This is not a new post-retirement grant.",
+    "Separately delayed that already committed ACK until durable retirement completed/source changed: real Receiver final proof rejects, gate inactive, ACK count zero, latch1/UNKNOWN retained. Transport ACK is never alone an output right.",
+    "Source gate fixes every official tuple field, native process identity and Guardian key/mirror. Unsupported nil/Observe-only sources and nine gate/snapshot subcases (nil gate plus eight tuple mismatches) deny installation.",
+    "Source observation/drain wait are outside SQL locks; Run-first mirror retirement precedes official revoke CAS. Partial failure remains closed; durable REVOKED readback is required after CAS conflict.",
+    "Own Backend SIGKILL before mirror retirement: fresh Registry cannot reconstruct old authority; durable latch remains and authenticated explicit CONTROL marks UNKNOWN. This is conservative reconciliation, not automatic physical recovery."
+  ],
+  "productionAssumptionAssessment": "Potentially implementable only with a sole trusted Linux physical owner controlling ALL Generation/source/process/key/fence changes and publisher credentials/actual sink access, durable fail-closed restart behavior, and verified old-publisher isolation. Interface implementation or OS PID liveness alone is insufficient. Must prove those properties before enabling a real source. A physical process that can bypass this gate is outside the supported source contract and keeps layerB BLOCKED.",
+  "notes": [
+    "40 native requests submitted without lowering concurrency or changing existing timeouts; bounded listener admitted16 active readers and refused/timed out excess; zero positive results after withdrawal, one spent UNKNOWN latch.",
+    "PG outage test stops/restarts ONLY this run marked cluster. After restart a stale idle pooled connection can return57P01; assert closed/unchanged source on that exact error and permit at most3 explicit retirement-only retries, never Consume replay.",
+    "No original test edits. New probes are opt-in build-tag additions; full267 Go tests run unchanged with normal tags. Native peer extension is a separate test-only file, never production transport.",
+    "All13 normal Go SKIPs retained; new owned SIGKILL helper has1 top-level SKIP while its parent executes it and verifies the actual SIGKILL signal. Counts overlap and are not summed.",
+    "Nonblocking handoff clarification: claims that no positive response can ever arrive after CloseAdmission must explicitly exclude already committed/in-flight replies and require Receiver final proof/current physical sink checks. No P0/P1 production code correction requested for layerA."
+  ],
+  "developmentFailuresPreserved": [
+    "owner-full-tuple.txt initially used a direct type assertion and misclassified fmt-wrapped OUTPUT_FENCE_UNPROVEN errors. Corrected test-only errors.As unwrap; the exact required frozen error code/denial invariant remains unchanged.",
+    "development-first-owner-adversarial-final.txt retained first post-PG-restart Ping57P01 failure. Immediate pool Ping was not a recovery guarantee; final test verifies closed admission through that exact failure and bounded retirement-only retry. No original timeout/assertion was weakened."
+  ],
+  "notTested": [
+    "Actual Linux UID/group/socket/network/cgroup/namespace isolation and malicious physical-owner bypass resistance",
+    "Actual PID reuse rather than creation-identity and replacement-process checks",
+    "Production PhysicalSource, Session Generation installation, remote Registrar transport or physical old-publisher credentials/sink isolation",
+    "Production Runtime once-TTS, physical Guardian outputs/fsync/drain/Observer, continuous GPU/RTMP/WebRTC/audience/latency SLA",
+    "Unrelated Redis/browser/config opt-in tests listed in full Go SKIPs"
+  ],
+  "noProductionCodeEdits": true
+}

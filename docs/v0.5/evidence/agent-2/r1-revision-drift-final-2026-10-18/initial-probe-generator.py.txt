@@ -1,0 +1,183 @@
+import json,pathlib
+m=json.load(open('/tmp/a2-r1-final-current.json'));p=pathlib.Path(m['source'])/'backend/internal/durableintegration/receiver1';peer=(p/'testdata/guardian_peer.py').read_text();action='''            elif q['action']=='review_many':
+                calls=[('QueryReceiverAuthority',q['query']) if i%2 else ('CommitReceiverConsume',q['consume']) for i in range(q['count'])]
+                replies=await asyncio.gather(*(asyncio.to_thread(transport._call,op,doc) for op,doc in calls),return_exceptions=True)
+                result={'submitted':len(replies),'positive':sum(isinstance(v,dict) and ('snapshot' in v or v.get('consumeAuthorized') is True) for v in replies),'errors':sum(isinstance(v,BaseException) for v in replies)}
+            elif q['action']=='review_delayed_ack':
+                original=transport._call
+                def delayed(op,doc,**kw):
+                    out=original(op,doc,**kw)
+                    if op=='CommitReceiverConsume' and out.get('consumeAuthorized') is True:
+                        Path(q['arrived']).write_text('SQL_COMMITTED_BACKEND_REPLY_IN_TRANSIT')
+                        import time
+                        until=time.monotonic()+2
+                        while not Path(q['release']).exists():
+                            if time.monotonic()>until:raise TransportFailure('CONSUMPTION_UNKNOWN')
+                            time.sleep(.001)
+                    return out
+                transport._call=delayed
+                try:result=await receiver.consume(runtime,wire.decode('ReceiverConsumeRequest',dto.canonical_json(q['document'])))
+                finally:transport._call=original
+'''
+needle="            elif q['action']=='call':";assert needle in peer;peer=peer.replace(needle,action+needle);(p/'testdata/agent2_gate_peer.py').write_text(peer)
+(p/'agent2_gate_adversarial_test.go').write_text(r'''//go:build agent2r1review
+
+package receiver1
+
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "bufio"
+ "net/http"
+ "os"
+ "os/exec"
+ "path/filepath"
+ "strconv"
+ "strings"
+ "sync"
+ "sync/atomic"
+ "testing"
+ "time"
+
+ "astralive/backend/internal/durablelivev2/authority"
+ "astralive/backend/internal/durablelivev2/wire"
+ "github.com/jackc/pgx/v5/pgxpool"
+)
+func gatePeer(t *testing.T){
+ t.Helper();root:=t.TempDir();wrapper:=filepath.Join(root,"peer");py:=os.Getenv("AGENT4_RECEIVER1_PYTHON");cwd,_:=os.Getwd();helper:=filepath.Join(cwd,"testdata/agent2_gate_peer.py")
+ if strings.ContainsAny(py+helper,"'\n"){t.Fatal("unsafe fixture paths")}
+ if e:=os.WriteFile(wrapper,[]byte("#!/bin/sh\nshift\nexec '"+py+"' '"+helper+"' \"$@\"\n"),0700);e!=nil{t.Fatal(e)}
+ t.Setenv("AGENT4_RECEIVER1_PYTHON",wrapper)
+}
+func currentGate(f *interop)*InstallationGate{return reviewRecord(f).gate}
+func closeServer(t *testing.T,f *interop){t.Helper();if e:=f.server.Close();e!=nil{t.Fatal(e)}}
+func latchState(t *testing.T,f *interop)(int,string){t.Helper();var n int;var s string;if e:=f.s.DB.QueryRow(f.ctx,"SELECT count(*) FROM dl05_receiver_consumptions WHERE command_id=$1",f.cmd["commandId"]).Scan(&n);e!=nil{t.Fatal(e)};if n>0{if e:=f.s.DB.QueryRow(f.ctx,"SELECT state FROM dl05_v2_execution_state WHERE command_id=$1",f.cmd["commandId"]).Scan(&s);e!=nil{t.Fatal(e)}};return n,s}
+func waitFile(t *testing.T,p string){t.Helper();end:=time.Now().Add(2*time.Second);for{if _,e:=os.Stat(p);e==nil{return};if time.Now().After(end){t.Fatal("fixture marker missing")};time.Sleep(time.Millisecond)}}
+
+func TestAgent2FinalFortyNativeQueryConsumeVsRetire(t *testing.T){
+ gatePeer(t);f,source:=newLifecycle(t);f.ready();tx,e:=f.s.DB.Begin(f.ctx);if e!=nil{t.Fatal(e)};defer tx.Rollback(f.ctx)
+ if _,e=tx.Exec(f.ctx,"SELECT run_id FROM dl05_runs WHERE run_id=$1 FOR UPDATE",f.cmd["runId"]);e!=nil{t.Fatal(e)}
+ responses:=make(chan authority.Document,1);go func(){responses<-f.g.rpc(map[string]any{"action":"review_many","count":40,"query":reviewQuery(f),"consume":f.consumeQ})}();waitRunLock(t,f)
+ done:=make(chan error,1);go func(){done<-f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID))}();waitGateClosed(t,source.gate)
+ source.gate.mu.Lock();active:=source.gate.readers;source.gate.mu.Unlock();if active<1{t.Fatal("no actual in-flight reader")};if e=tx.Commit(f.ctx);e!=nil{t.Fatal(e)}
+ got:=<-responses;if got["ok"]!=true||testN(testObj(got,"result")["submitted"])!=40||testN(testObj(got,"result")["positive"])!=0{t.Fatal("positive after withdrawal",got)}
+ if e=<-done;e!=nil{t.Fatal(e)};assertRetired(t,f);n,s:=latchState(t,f);if n>1||(n==1&&s!="UNKNOWN"){t.Fatal("latch/UNKNOWN",n,s)}
+ t.Logf("40 real native calls, bounded listener refused/expired excess work; activeReadersAtClose=%d latch=%d state=%s",active,n,s)
+}
+func TestAgent2FinalRetireBeforeConsumeSQLCommit(t *testing.T){
+ f,source:=newLifecycle(t);f.ready();original:=f.s.Assertions;entered,release:=make(chan struct{}),make(chan struct{});var once sync.Once
+ f.s.Assertions=func(ctx context.Context,p authority.Actor,a authority.Document)error{if e:=original(ctx,p,a);e!=nil{return e};once.Do(func(){close(entered)});<-release;return nil}
+ result:=make(chan authority.Document,1);go func(){result<-f.remote("CommitReceiverConsume",f.consumeQ)}();<-entered
+ done:=make(chan error,1);go func(){done<-f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID))}();waitGateClosed(t,source.gate);close(release)
+ got:=<-result;if got["ok"]==true{t.Fatal("first positive ACK crossed closed admission")};if e:=<-done;e!=nil{t.Fatal(e)};assertRetired(t,f);n,s:=latchState(t,f);if n>1||(n==1&&s!="UNKNOWN"){t.Fatal(n,s)}
+}
+func TestAgent2FinalDelayedBackendACKAfterDurableRetire(t *testing.T){
+ gatePeer(t);f,source:=newLifecycle(t);f.ready();arrived,release:=filepath.Join(f.root,"ack-arrived"),filepath.Join(f.root,"ack-release")
+ q:=f.private(authority.Document{"references":f.consumeQ["references"],"consumeTicket":f.consumeQ["consumeTicket"],"consumeRequestId":f.consumeQ["consumeRequestId"],"expectedGenerationId":7,"expectedGuardianIncarnation":f.guardian.Incarnation,"expectedRegistrationRevision":1})
+ done:=make(chan authority.Document,1);go func(){done<-f.g.rpc(map[string]any{"action":"review_delayed_ack","arrived":arrived,"release":release,"document":q})}();waitFile(t,arrived)
+ if n,_:=latchState(t,f);n!=1{t.Fatal("no durable consume before ACK delay")}
+ if e:=f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID));e!=nil{t.Fatal(e)};source.revision.Store(2);assertRetired(t,f)
+ if e:=os.WriteFile(release,[]byte("release old already-committed reply after retire"),0600);e!=nil{t.Fatal(e)}
+ got:=<-done;if got["ok"]==true&&testObj(got,"result")["consumeAuthorized"]==true{t.Fatal("Receiver accepted delayed ACK")};meta:=testObj(f.g.rpc(map[string]any{"action":"metadata"}),"result");if meta["active"]==true||testN(meta["acks"])!=0{t.Fatal("late reply activated Receiver",meta)}
+ if n,s:=latchState(t,f);n!=1||s!="UNKNOWN"{t.Fatal(n,s)}
+}
+func TestAgent2FinalDrainWaitStopOrOutputExpiry(t *testing.T){
+ for _,kind:=range []string{"stop","output-expiry"}{t.Run(kind,func(t *testing.T){
+  f,source:=newLifecycle(t);f.ready();closeServer(t,f);release,e:=source.gate.acquire(f.ctx);if e!=nil{t.Fatal(e)}
+  retired:=make(chan error,1);go func(){retired<-f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID))}();waitGateClosed(t,source.gate)
+  tx,e:=f.s.DB.Begin(f.ctx);if e!=nil{t.Fatal(e)};if _,e=tx.Exec(f.ctx,"SELECT run_id FROM dl05_runs WHERE run_id=$1 FOR UPDATE NOWAIT",f.cmd["runId"]);e!=nil{t.Fatal("drain wait held SQL lock",e)};tx.Rollback(f.ctx)
+  if kind=="stop"{f.call(f.control,"StopBroadcastRun",f.q(authority.Document{"reasonCode":"test-stop","decisionId":fresh("stop_"),"expectedRevision":1,"idempotencyKey":"stop"}))}else{f.exec("UPDATE dl05_room_outputs SET expires_at=clock_timestamp() WHERE room_id=$1",f.control.Room)}
+  release();if e=<-retired;e!=nil{t.Fatal(e)};assertRetired(t,f);if _,e=source.gate.acquire(f.ctx);e==nil{t.Fatal("closed gate reopened")}
+ })}
+}
+func TestAgent2FinalRetireContextFailureStaysClosed(t *testing.T){
+ f,source:=newLifecycle(t);f.ready();closeServer(t,f);release,e:=source.gate.acquire(f.ctx);if e!=nil{t.Fatal(e)}
+ ctx,cancel:=context.WithCancel(f.ctx);cancel();if e=f.registry.RetireInstallation(ctx,f.registrar,string(f.binding.CommandID));e==nil{t.Fatal("cancelled retirement succeeded with reader")};if source.gate.valid(){t.Fatal("closed admission reopened")};if source.revision.Load()!=1{t.Fatal("source changed")};release()
+ if e=f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID));e!=nil{t.Fatal(e)};assertRetired(t,f)
+}
+func TestAgent2FinalCASConflictRequiresDurableRevoke(t *testing.T){
+ for _,kind:=range []string{"persisted-revoked","not-revoked"}{t.Run(kind,func(t *testing.T){
+ f,_:=newLifecycle(t);f.ready();if v:=f.remote("CommitReceiverConsume",f.consumeQ);v["ok"]!=true{t.Fatal(v)};closeServer(t,f)
+ original:=f.s.Validate;var triggered atomic.Bool
+ f.s.Validate=func(name string,d authority.Document)error{
+  if e:=original(name,d);e!=nil{return e};if name=="RevokeReceiverBootstrapRequest"&&triggered.CompareAndSwap(false,true){
+   if kind=="not-revoked"{return &authority.Error{Code:"STATE_CONFLICT"}}
+   op,_:=wire.LookupOperation(wire.OpRevokeReceiverBootstrap);wc:=wire.RequestContext{Role:wire.RoleControlRegistrar,Target:op.Target,Method:op.Method,RouteTemplate:op.Path};_,e:=f.s.Handle(f.ctx,f.registrar,op.ID,wc,mustJSON(d));return e
+  };return nil
+ }
+ e:=f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID));if !triggered.Load(){t.Fatal("CAS seam not exercised")}
+ if kind=="not-revoked"{if e==nil||reviewRecord(f).settled.Load()||currentGate(f).valid(){t.Fatal("CAS conflict treated as durable revoke",e)};f.s.Validate=original;if e=f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID));e!=nil{t.Fatal(e)}}else if e!=nil{t.Fatal(e)}
+ assertRetired(t,f);if n,s:=latchState(t,f);n!=1||s!="UNKNOWN"{t.Fatal(n,s)}
+ })}
+}
+func TestAgent2FinalPartialSQLFailureNeverReopens(t *testing.T){
+ f,_:=newLifecycle(t);f.ready();if v:=f.remote("CommitReceiverConsume",f.consumeQ);v["ok"]!=true{t.Fatal(v)};closeServer(t,f)
+ fun:=f.prefix+"revoke_fail";trigger:=f.prefix+"block_revoke"
+ f.exec("CREATE FUNCTION "+fun+"() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'owned-test-revoke-failure'; END $$")
+ f.exec("CREATE TRIGGER "+trigger+" BEFORE UPDATE ON dl05_v2_registration_state FOR EACH ROW WHEN (OLD.bootstrap_id='"+string(f.binding.BootstrapID)+"') EXECUTE FUNCTION "+fun+"()")
+ e:=f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID));if e==nil||currentGate(f).valid(){t.Fatal("partial SQL failure reopened/succeeded")}
+ var retired bool;f.s.DB.QueryRow(f.ctx,"SELECT retired_at IS NOT NULL FROM dl05_v2_installations WHERE command_id=$1",f.cmd["commandId"]).Scan(&retired);known,err:=f.registry.Confirm(f.ctx,f.registrar,f.binding);if !retired||err!=nil||known["state"]!="ACTIVE"{t.Fatal("did not exercise mirror-commit/revoke-rollback gap",known,err)}
+ if _,e=currentGate(f).acquire(f.ctx);e==nil{t.Fatal("new reader after partial failure")};f.exec("DROP TRIGGER "+trigger+" ON dl05_v2_registration_state");f.exec("DROP FUNCTION "+fun+"()")
+ if e=f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID));e!=nil{t.Fatal(e)};assertRetired(t,f);if n,s:=latchState(t,f);n!=1||s!="UNKNOWN"{t.Fatal(n,s)}
+}
+func TestAgent2FinalOwnedPostgresOutageDuringRetire(t *testing.T){
+ f,source:=newLifecycle(t);f.ready();if v:=f.remote("CommitReceiverConsume",f.consumeQ);v["ok"]!=true{t.Fatal(v)};closeServer(t,f)
+ root:=os.Getenv("AGENT4_RECEIVER1_OWNED_ROOT");b,e:=os.ReadFile(filepath.Join(root,"OWNED_AGENT2"));if e!=nil||string(b)!="08af1049250d2657d7afb5e303d97a02e9761570"||!strings.HasPrefix(root,"/tmp/a2-r1-final-"){t.Fatal("refuse non-owned PG")};port:=os.Getenv("AGENT2_R1_PG_PORT");if _,e=strconv.Atoi(port);e!=nil{t.Fatal(e)}
+ ctl:="/opt/homebrew/opt/postgresql@17/bin/pg_ctl";run:=func(args ...string){t.Helper();if out,e:=exec.Command(ctl,args...).CombinedOutput();e!=nil{t.Fatalf("owned PG operation %v: %s",e,out)}}
+ source.gate.CloseAdmission();run("-D",filepath.Join(root,"data"),"-m","fast","-w","stop")
+ restart:=func(){run("-D",filepath.Join(root,"data"),"-l",filepath.Join(root,"evidence/postgres.txt"),"-o","-h 127.0.0.1 -p "+port+" -k "+filepath.Join(root,"sockets"),"-w","start")};stopped:=true;defer func(){if stopped{restart()}}()
+ ctx,cancel:=context.WithTimeout(f.ctx,200*time.Millisecond);e=f.registry.RetireInstallation(ctx,f.registrar,string(f.binding.CommandID));cancel();if e==nil||source.gate.valid()||source.revision.Load()!=1{t.Fatal("DB failure allowed replacement",e)}
+ restart();stopped=false;if e=f.s.DB.Ping(f.ctx);e!=nil{t.Fatal(e)};if e=f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID));e!=nil{t.Fatal(e)};assertRetired(t,f);if n,s:=latchState(t,f);n!=1||s!="UNKNOWN"{t.Fatal(n,s)}
+}
+func TestAgent2FinalStableTwoUnitsNativeAuthority(t *testing.T){
+ f,source:=newLifecycle(t);f.ready();first:=f.remote("CommitReceiverConsume",f.consumeQ);if first["ok"]!=true||testObj(first,"result")["consumeAuthorized"]!=true{t.Fatal(first)}
+ observer:=f.control;observer.Role="OBSERVER";observer.ID=f.prefix+"observer";observer.Incarnation=f.prefix+"observer_inc"
+ if e:=f.s.ProvisionProcess(f.ctx,f.registrar,observer.ID,observer.Role,observer.Incarnation,"","","owned-observer-fixture",nil);e!=nil{t.Fatal(e)};f.s.Observer=func(context.Context,authority.Actor,authority.Document,authority.Document)error{return nil}
+ ev:=authority.Document{"evidenceType":"ALL_REQUIRED_DRAIN","evidenceRef":fresh("observed_"),"evidenceHash":testHash(f.unit),"requiredSinks":[]any{"sink"},"sinkProofs":[]any{authority.Document{"sinkId":"sink","kind":"RTMP_PIPE_WRITE","generationId":7,"firstAudioSample":0,"finalAudioSampleExclusive":100,"audioConsumedThroughExclusive":100,"finalVideoFrame":100,"videoConsumedThroughFrame":100,"terminal":true}},"predecessorCheckpointIds":[]any{},"audienceVisibility":"UNVERIFIED"}
+ if e:=f.s.RecordDrainEvidence(f.ctx,observer,testText(f.cmd,"commandId"),testText(f.unit,"artifactId"),ev);e!=nil{t.Fatal(e)}
+ f.call(f.runtime,"JournalConfirmAnswerSegment",f.q(authority.Document{"commandId":f.cmd["commandId"],"attemptId":f.cmd["attemptId"],"sessionId":f.cmd["sessionId"],"runEpoch":1,"producerIncarnation":f.runtime.Producer,"requestHash":f.cmd["requestHash"],"answerId":f.unit["answerId"],"artifactId":f.unit["artifactId"],"artifactHash":f.unit["artifactHash"],"expectedAnswerRevision":2,"idempotencyKey":"drain:1","evidence":ev}))
+ a:=testDecode(mustJSON(f.unit));delete(a,"artifactHash");a["artifactId"]=f.prefix+"unit2";a["sequence"]=2;a["previousArtifactHash"]=f.unit["artifactHash"];a["artifactHash"]=testHash(a);q:=testDecode(mustJSON(f.prepareQ));q["artifact"]=a;q["idempotencyKey"]="prepare:2";q["expectedInboxRevision"]=3;q["expectedAnswerRevision"]=3;f.call(f.runtime,"JournalPrepareAnswer",q)
+ pm:=f.call(f.runtime,"AcquireOutputPermit",f.q(authority.Document{"sessionId":f.cmd["sessionId"],"runEpoch":1,"producerIncarnation":f.runtime.Producer,"guardianId":f.binding.GuardianID,"answerArtifactId":a["artifactId"]}));start:=f.call(f.runtime,"JournalStartAnswerSegment",f.q(authority.Document{"commandId":f.cmd["commandId"],"attemptId":f.cmd["attemptId"],"sessionId":f.cmd["sessionId"],"runEpoch":1,"producerIncarnation":f.runtime.Producer,"requestHash":f.cmd["requestHash"],"permitId":pm["permitId"],"answerId":a["answerId"],"artifactId":a["artifactId"],"artifactHash":a["artifactHash"],"expectedAnswerRevision":4}))
+ second:=testDecode(mustJSON(f.consumeQ));refs:=testObj(second,"references");refs["artifactId"]=a["artifactId"];refs["artifactHash"]=a["artifactHash"];refs["grantId"]=testObj(start,"grant")["grantId"];refs["permitId"]=pm["permitId"];second["consumeTicket"]=start["consumeTicket"];second["consumeRequestId"]=fresh("unit2_")
+ got:=f.remote("CommitReceiverConsume",second);if got["ok"]!=true||testObj(got,"result")["consumeAuthorized"]!=true||f.count("dl05_receiver_consumptions")!=2||!source.gate.valid(){t.Fatal("legal unit2 denied",got)};reviewNoTrue(t,f.remote("CommitReceiverConsume",second));t.Log("two distinct native RPC unit consumptions; Observer/drain evidence is explicit fixture, not physical output")
+}
+func TestAgent2FinalResponseConstructionReaderDrain(t *testing.T){
+ f,source:=newLifecycle(t);f.ready();closeServer(t,f);arrived,release:=make(chan struct{}),make(chan struct{});srv,e:=NewServer(f.s,f.registry,f.g.managed.Pin);if e!=nil{t.Fatal(e)}
+ op,_:=wire.LookupOperation(wire.OpCommitReceiverConsume);srv.http.Handler=http.HandlerFunc(func(w http.ResponseWriter,r *http.Request){if r.URL.Path==op.Path{w=&reviewWriter{ResponseWriter:w,at:arrived,release:release}};srv.ServeHTTP(w,r)});f.server=srv;if e=srv.Listen(filepath.Join(f.root,"authority.sock"));e!=nil{t.Fatal(e)}
+ gotCh:=make(chan authority.Document,1);go func(){gotCh<-f.remote("CommitReceiverConsume",f.consumeQ)}();<-arrived
+ retired:=make(chan error,1);go func(){retired<-f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID))}();waitGateClosed(t,source.gate)
+ select{case <-retired:t.Fatal("reader released before response write finished");default:};if source.revision.Load()!=1{t.Fatal("physical changed")};close(release);got:=<-gotCh;if e=<-retired;e!=nil{t.Fatal(e)};assertRetired(t,f)
+ // Already committed responses can be in flight. Do not confuse a network ACK
+ // delivered after close with a NEW post-retirement right; final Receiver proof
+ // and physical sink fencing are independent. Record actual behavior exactly.
+ t.Logf("pre-close SQL committed ACK delivered after CloseAdmission: rpcOK=%v true=%v; physical tuple unchanged until reader drain",got["ok"],testObj(got,"result")["consumeAuthorized"])
+ if n,s:=latchState(t,f);n!=1||s!="UNKNOWN"{t.Fatal(n,s)}
+}
+type reviewWriter struct{http.ResponseWriter;at chan struct{};release chan struct{}}
+func(w *reviewWriter)WriteHeader(n int){if n==200{close(w.at);<-w.release};w.ResponseWriter.WriteHeader(n)}
+
+// Helper is invoked by its owner-only parent; it never kills a shared process.
+func TestAgent2FinalCrashHelper(t *testing.T){
+ if os.Getenv("AGENT2_R1_CRASH_CHILD")!="owned"{t.Skip("owned SIGKILL helper executed by parent")}
+ f,source:=newLifecycle(t);f.ready();if v:=f.remote("CommitReceiverConsume",f.consumeQ);v["ok"]!=true{t.Fatal(v)};release,e:=source.gate.acquire(f.ctx);if e!=nil{t.Fatal(e)};defer release()
+ go f.registry.RetireInstallation(f.ctx,f.registrar,string(f.binding.CommandID));waitGateClosed(t,source.gate)
+ data:=map[string]any{"command":f.cmd,"binding":f.binding,"control":f.control,"registrar":f.registrar,"runtime":f.rt.managed.Pin.identity,"second":f.second.managed.Pin.identity,"guardian":f.g.managed.Pin.identity};b,_:=json.Marshal(data);fmt.Println("A2_OWNED_RETIRE_CLOSED "+string(b));select{}
+}
+func TestAgent2FinalSIGKILLClosedRetireFreshRootFailsClosed(t *testing.T){
+ ctx:=context.Background();cmd:=exec.Command(os.Args[0],"-test.run=^TestAgent2FinalCrashHelper$","-test.timeout=15s");cmd.Env=append(os.Environ(),"AGENT2_R1_CRASH_CHILD=owned");pipe,e:=cmd.StdoutPipe();if e!=nil{t.Fatal(e)};if e=cmd.Start();e!=nil{t.Fatal(e)}
+ defer func(){cmd.Process.Kill();cmd.Wait()}();lines:=bufio.NewScanner(pipe);var data struct{Command authority.Document `json:"command"`;Binding wire.ReceiverBootstrapBinding `json:"binding"`;Control authority.Actor `json:"control"`;Registrar authority.Actor `json:"registrar"`;Runtime Identity `json:"runtime"`;Second Identity `json:"second"`;Guardian Identity `json:"guardian"`}
+ seen:=false;for lines.Scan(){if strings.HasPrefix(lines.Text(),"A2_OWNED_RETIRE_CLOSED "){if e=json.Unmarshal([]byte(strings.TrimPrefix(lines.Text(),"A2_OWNED_RETIRE_CLOSED ")),&data);e!=nil{t.Fatal(e)};seen=true;break}};if !seen{t.Fatal("owned child did not reach gate-closed retirement")}
+ for _,id:=range []Identity{data.Runtime,data.Second,data.Guardian}{id:=id;t.Cleanup(func(){if now,e:=InspectProcess(id.PID);e==nil&&now==id{p,e:=os.FindProcess(id.PID);if e==nil{p.Kill()}}})}
+ if e=cmd.Process.Kill();e!=nil{t.Fatal(e)};cmd.Wait()
+ pool,e:=pgxpool.New(ctx,os.Getenv("AGENT4_RECEIVER1_DATABASE_URL"));if e!=nil{t.Fatal(e)};defer pool.Close();store:=authority.New(pool);registry,e:=NewRegistry(store);if e!=nil{t.Fatal(e)}
+ if _,_,e=registry.hold(ctx,data.Registrar,data.Binding);e==nil{t.Fatal("fresh root reconstructed old capability")}
+ command:=data.Command["commandId"];var n int;if e=pool.QueryRow(ctx,"SELECT count(*) FROM dl05_receiver_consumptions WHERE command_id=$1",command).Scan(&n);e!=nil||n!=1{t.Fatal("crash lost latch",n,e)}
+ // An authenticated test CONTROL marks the unresolved execution UNKNOWN using
+ // the frozen operation; it does not recreate a source/ticket or replay it.
+ q:=authority.Document{"schemaVersion":"0.5","contractRevision":"durable-live-2","requestId":fresh("unknown_"),"tenantId":data.Control.Tenant,"ownerId":data.Control.Owner,"runId":data.Command["runId"],"expectedRevision":1,"runEpoch":1,"attemptId":data.Command["attemptId"],"lastKnownState":"DISPATCHED","reasonCode":"ACK_LOST","evidenceRef":"test:owned-backend-sigkill-during-retire","idempotencyKey":"unknown:retire-crash"}
+ op,_:=wire.LookupOperation(wire.OpMarkExecutionUnknown);wc:=wire.RequestContext{Role:wire.RoleControl,Target:op.Target,Method:op.Method,RouteTemplate:op.Path};if _,e=store.Handle(ctx,data.Control,op.ID,wc,mustJSON(q));e!=nil{t.Fatal(e)}
+ var state string;pool.QueryRow(ctx,"SELECT state FROM dl05_v2_execution_state WHERE command_id=$1",command).Scan(&state);if state!="UNKNOWN"{t.Fatal(state)};t.Log("SIGKILL only owned Go child; fresh Registry denies old identity; latch retained and explicit CONTROL audit UNKNOWN")
+}
+''')
+print(p/'agent2_gate_adversarial_test.go')

@@ -1,0 +1,128 @@
+import pathlib,json
+m=json.loads(pathlib.Path('/tmp/agent2-receiver1-review-current.json').read_text());p=pathlib.Path(m['source'])/'backend/internal/durableintegration/receiver1/agent2_owner_review_test.go'
+p.write_text(r'''package receiver1
+
+import (
+ "context"
+ "errors"
+ "sync"
+ "sync/atomic"
+ "testing"
+ "time"
+ "path/filepath"
+ "os"
+
+ "astralive/backend/internal/durablelivev2/authority"
+ "astralive/backend/internal/durablelivev2/wire"
+)
+
+type reviewSource struct { valid atomic.Bool; entered chan struct{}; release chan struct{}; once sync.Once; fixture physicalFixture }
+func (s *reviewSource) Observe(ctx context.Context,b wire.ReceiverBootstrapBinding,r,g Identity)(wire.ReceiverPhysicalInstallation,error){
+ if s.entered!=nil { s.once.Do(func(){close(s.entered)});select {case <-ctx.Done():return wire.ReceiverPhysicalInstallation{},ctx.Err();case <-s.release:} }
+ if !s.valid.Load(){return wire.ReceiverPhysicalInstallation{},errors.New("independent source revoked")}
+ return s.fixture.Observe(ctx,b,r,g)
+}
+func reviewRecord(f *interop)*installation{f.registry.mu.RLock();defer f.registry.mu.RUnlock();return f.registry.records[string(f.binding.CommandID)]}
+func reviewQuery(f *interop)authority.Document{return f.private(authority.Document{"references":f.consumeQ["references"]})}
+func reviewNoTrue(t *testing.T,got authority.Document){t.Helper();if got["ok"]==true && testObj(got,"result")["consumeAuthorized"]==true {t.Fatal("unexpected new execution authority")}}
+
+func TestAgent2ReviewNilSourceActuallyRejects(t *testing.T){
+ f:=newInterop(t)
+ // newInterop already verifies nil before its sole successful Install. Repeat
+ // with a separately launched same-scope pair and prove no installation delta.
+ r:=f.launch("REGISTERED_RUNTIME");g:=f.launch("OUTPUT_GUARDIAN")
+ var before,after int;f.s.DB.QueryRow(f.ctx,"SELECT count(*) FROM dl05_v2_installations").Scan(&before)
+ _,e:=f.registry.Install(f.ctx,f.registrar,r.managed.Pin,g.managed.Pin,nil)
+ var ae *authority.Error;if !errors.As(e,&ae)||ae.Code!="OUTPUT_FENCE_UNPROVEN"{t.Fatalf("nil source: %v",e)}
+ f.s.DB.QueryRow(f.ctx,"SELECT count(*) FROM dl05_v2_installations").Scan(&after)
+ if before!=after {t.Fatal("nil source persisted installation")}
+}
+func TestAgent2ReviewLostRegistrationACKHistoricalOnly(t *testing.T){
+ f:=newInterop(t);q,e:=f.registry.StageRequest(f.ctx,f.registrar,f.binding);if e!=nil{t.Fatal(e)}
+ stage,e:=f.channel.Stage(f.ctx,filepath.Join(f.root,"guardian/control.sock"),f.g.managed.Pin,q);if e!=nil{t.Fatal(e)}
+ if _,e=f.registry.Register(f.ctx,f.registrar,f.binding,stage.Receipt);e!=nil{t.Fatal(e)} // deliberately discard ACK
+ var wg sync.WaitGroup;errs:=make(chan error,8)
+ for i:=0;i<8;i++ {wg.Add(1);go func(){defer wg.Done();v,e:=f.registry.Confirm(f.ctx,f.registrar,f.binding);if e!=nil{errs<-e;return};if v["registrationHash"]!=bindingHash(f.binding){errs<-errors.New("identity changed")}}()};wg.Wait();close(errs);for e:=range errs{t.Error(e)}
+ if _,e=f.registry.StageRequest(f.ctx,f.registrar,f.binding);e==nil{t.Fatal("history enabled Stage")}
+ b:=f.binding;b.RuntimeIncarnation="replacement";if _,e=f.registry.Confirm(f.ctx,f.registrar,b);e==nil{t.Fatal("history accepted replacement")}
+ if f.count("dl05_receiver_bootstraps")!=1||f.count("dl05_answer_grants")!=0||f.count("dl05_receiver_consumptions")!=0{t.Fatal("historical confirm minted authority")}
+}
+func TestAgent2ReviewConcurrentRevokePreservesLatch(t *testing.T){
+ f:=newInterop(t);f.ready();if v:=f.remote("CommitReceiverConsume",f.consumeQ);v["ok"]!=true||testObj(v,"result")["consumeAuthorized"]!=true{t.Fatal(v)}
+ f.rt.managed.Pin.Retire() // only this managed test process: supervisor native local denial
+ var wg sync.WaitGroup;errs:=make(chan error,8)
+ for i:=0;i<8;i++{wg.Add(1);go func(){defer wg.Done();errs<-f.registry.ReconcileDead(f.ctx,string(f.binding.CommandID))}()};wg.Wait();close(errs);for e:=range errs{if e!=nil{t.Error(e)}}
+ v,e:=f.registry.Confirm(f.ctx,f.registrar,f.binding);if e!=nil||v["state"]!="REVOKED"{t.Fatal(v,e)}
+ var n int;var state string;f.s.DB.QueryRow(f.ctx,"SELECT revision FROM dl05_v2_registration_state WHERE bootstrap_id=$1",f.binding.BootstrapID).Scan(&n);f.s.DB.QueryRow(f.ctx,"SELECT state FROM dl05_v2_execution_state WHERE command_id=$1",f.cmd["commandId"]).Scan(&state)
+ if n!=2||state!="UNKNOWN"||f.count("dl05_receiver_consumptions")!=1{t.Fatalf("CAS/latch: revision=%d state=%s",n,state)}
+ reviewNoTrue(t,f.remote("CommitReceiverConsume",f.consumeQ))
+}
+func TestAgent2ReviewReplacementCannotReuseInstallation(t *testing.T){
+ f:=newInterop(t);f.ready();replacement:=f.launch("REGISTERED_RUNTIME")
+ b:=f.binding;b.RuntimePrincipalID=wire.ID(replacement.managed.Pin.actor.ID);b.RuntimeIncarnation=wire.ID(replacement.managed.Pin.actor.Incarnation)
+ if _,e:=f.registry.VerifyInstallation(f.ctx,f.registrar,mustDocument(&b));e==nil{t.Fatal("new process reused source")}
+ if _,e:=f.registry.StageRequest(f.ctx,f.registrar,b);e==nil{t.Fatal("new process staged old source")}
+ q:=testDecode(mustJSON(f.consumeQ));q["runtimePrincipalId"]=replacement.managed.Pin.actor.ID;q["runtimeIncarnation"]=replacement.managed.Pin.actor.Incarnation
+ reviewNoTrue(t,f.remote("CommitReceiverConsume",q));if f.count("dl05_receiver_consumptions")!=0{t.Fatal("replacement latch")}
+}
+func TestAgent2ReviewSourceRevocationDeniesRPC(t *testing.T){
+ f:=newInterop(t);f.ready();src:=&reviewSource{fixture:physicalFixture{f.registrar.ID,f.guardian.ID}};src.valid.Store(true);reviewRecord(f).source=src
+ if v:=f.remote("QueryReceiverAuthority",reviewQuery(f));v["ok"]!=true{t.Fatal(v)}
+ src.valid.Store(false)
+ for _,op:=range []string{"QueryReceiverAuthority","CommitReceiverConsume"}{q:=reviewQuery(f);if op=="CommitReceiverConsume"{q=f.consumeQ};if v:=f.remote(op,q);v["ok"]==true{t.Fatal("source loss allowed ",op)}}
+ if f.count("dl05_receiver_consumptions")!=0{t.Fatal("invalid source consumed")}
+}
+func TestAgent2ReviewPhysicalObserveOutsideSQLLocks(t *testing.T){
+ f:=newInterop(t);f.ready();src:=&reviewSource{fixture:physicalFixture{f.registrar.ID,f.guardian.ID},entered:make(chan struct{}),release:make(chan struct{})};src.valid.Store(true);reviewRecord(f).source=src
+ done:=make(chan error,1);go func(){_,e:=f.registry.VerifyInstallation(f.ctx,f.registrar,mustDocument(&f.binding));done<-e}();<-src.entered
+ ctx,cancel:=context.WithTimeout(f.ctx,100*time.Millisecond);defer cancel();tx,e:=f.s.DB.Begin(ctx);if e!=nil{t.Fatal(e)}
+ _,e=tx.Exec(ctx,"SELECT run_id FROM dl05_runs WHERE run_id=$1 FOR UPDATE NOWAIT",f.cmd["runId"]);tx.Rollback(context.Background());close(src.release)
+ if e!=nil{t.Fatal("Observe held run SQL lock",e)};if e=<-done;e!=nil{t.Fatal(e)}
+}
+func TestAgent2ReviewOutputExpiresDuringFirstConsumeRPC(t *testing.T){
+ f:=newInterop(t);f.ready();src:=&reviewSource{fixture:physicalFixture{f.registrar.ID,f.guardian.ID},entered:make(chan struct{}),release:make(chan struct{})};src.valid.Store(true);reviewRecord(f).source=src
+ done:=make(chan authority.Document,1);go func(){done<-f.remote("CommitReceiverConsume",f.consumeQ)}();<-src.entered
+ f.exec("UPDATE dl05_room_outputs SET expires_at=clock_timestamp() WHERE room_id=$1",f.control.Room);close(src.release)
+ v:=<-done;reviewNoTrue(t,v);if v["ok"]==true||f.count("dl05_receiver_consumptions")!=0{t.Fatal("expired output consumed",v)}
+}
+func TestAgent2ReviewRevocationDuringSourceReadDenies(t *testing.T){
+ f:=newInterop(t);f.ready();src:=&reviewSource{fixture:physicalFixture{f.registrar.ID,f.guardian.ID},entered:make(chan struct{}),release:make(chan struct{})};src.valid.Store(true);reviewRecord(f).source=src
+ done:=make(chan authority.Document,1);go func(){done<-f.remote("CommitReceiverConsume",f.consumeQ)}();<-src.entered
+ op,_:=wire.LookupOperation(wire.OpRevokeReceiverBootstrap);wc:=wire.RequestContext{Role:wire.RoleControlRegistrar,Target:op.Target,Method:op.Method,RouteTemplate:op.Path}
+ raw:=mustJSON(f.private(authority.Document{"bootstrapId":f.binding.BootstrapID,"expectedRegistrationRevision":1,"reason":"SESSION_REPLACED"}))
+ _,e:=f.s.Handle(f.ctx,f.registrar,op.ID,wc,raw);close(src.release);if e!=nil{t.Fatal(e)}
+ v:=<-done;reviewNoTrue(t,v);if v["ok"]==true||f.count("dl05_receiver_consumptions")!=0{t.Fatal("revoked context consumed",v)}
+}
+func TestAgent2ReviewRegistrationSourceChangeAndScope(t *testing.T){
+ f:=newInterop(t)
+ for _,kind:=range []string{"tenant","owner","room","command","generation","guardian","runtime"}{t.Run(kind,func(t *testing.T){b:=f.binding;actor:=f.registrar;switch kind{case "tenant":actor.Tenant="foreign";case "owner":actor.Owner="foreign";case "room":actor.Room="foreign";case "command":b.CommandID="foreign";case "generation":b.GenerationID++;case "guardian":b.GuardianIncarnation="foreign";case "runtime":b.RuntimePrincipalID="foreign"};if _,e:=f.registry.VerifyInstallation(f.ctx,actor,mustDocument(&b));e==nil{t.Fatal("foreign source accepted")}})}
+}
+func TestAgent2ReviewSharedStoreRegistryDispatch(t *testing.T){
+ a:=newInterop(t);b:=newInterop(t)
+ // Move the second immutable native installation through the SAME registry/store
+ // repository seam. Both SQL scopes exist in this owned database.
+ if _,e:=a.registry.Install(b.ctx,b.registrar,b.rt.managed.Pin,b.g.managed.Pin,physicalFixture{b.registrar.ID,b.guardian.ID});e!=nil{t.Fatal(e)}
+ for i:=0;i<3;i++{for _,f:=range []*interop{a,b}{if _,e:=a.registry.VerifyInstallation(f.ctx,f.registrar,mustDocument(&f.binding));e!=nil{t.Fatal("last-session-wins source",e)}}}
+ if _,e:=NewRegistry(a.s);e==nil{t.Fatal("second registry replaced source")}
+ if _,e:=a.registry.VerifyInstallation(a.ctx,a.registrar,mustDocument(&b.binding));e==nil{t.Fatal("foreign registrar read second scope")}
+ // Do not invent a production Assertions dispatcher. Pin the delivered seam's
+ // actual behavior: the second per-command verifier must not overwrite first.
+ va,vb:=a.s.Assertions,b.s.Assertions
+ a.s.Assertions=func(ctx context.Context,p authority.Actor,d authority.Document)error{switch d["commandId"]{case a.cmd["commandId"]:return va(ctx,p,d);case b.cmd["commandId"]:return vb(ctx,p,d);default:return errors.New("unknown command")}}
+ b.s=a.s;b.registry=a.registry
+ a.ready();b.ready()
+ for _,f:=range []*interop{a,b}{q:=f.private(authority.Document{"references":f.consumeQ["references"]});op,_:=wire.LookupOperation(wire.OpQueryReceiverAuthority);wc:=wire.RequestContext{Role:wire.RoleOutputGuardian,Target:op.Target,Method:op.Method,RouteTemplate:op.Path};if _,e:=a.s.Handle(f.ctx,f.guardian,op.ID,wc,mustJSON(q));e!=nil{t.Fatal("shared Store legal scope denied",e)}}
+ t.Log("InstallationSource uses delivered single dispatcher. Assertions multiplexing here is an explicit test-only composition; no production multi-room Assertions root is delivered.")
+}
+func TestAgent2ReviewHistoricalConsumptionAfterSourceLoss(t *testing.T){
+ f:=newInterop(t);f.ready();if v:=f.remote("CommitReceiverConsume",f.consumeQ);v["ok"]!=true{t.Fatal(v)}
+ src:=&reviewSource{fixture:physicalFixture{f.registrar.ID,f.guardian.ID}};reviewRecord(f).source=src // false
+ q:=f.private(authority.Document{"bootstrapId":f.binding.BootstrapID,"grantId":testObj(f.consumeQ,"references")["grantId"]})
+ got:=f.remote("QueryReceiverConsumption",q);if got["ok"]!=true||testObj(testObj(got,"result"),"summary")["state"]!="CONSUMED"{t.Fatal("historical metadata lost",got)}
+ reviewNoTrue(t,f.remote("CommitReceiverConsume",f.consumeQ));if f.count("dl05_receiver_consumptions")!=1{t.Fatal("history changed latch")}
+}
+func TestAgent2ReviewGuardianRoutesDenyEveryControlOperation(t *testing.T){
+ f:=newInterop(t);f.ready();for _,id:=range []wire.OperationID{wire.OpRegisterReceiverBootstrap,wire.OpRevokeReceiverBootstrap,wire.OpJournalStart,wire.OpAcquireOutputPermit,wire.OpStopBroadcastRun}{op,_:=wire.LookupOperation(id);v:=f.g.rpc(map[string]any{"action":"raw","path":op.Path,"body":"e30="});if testN(testObj(v,"result")["status"])!=403{t.Fatal("Guardian reached control route",id,v)}}
+ _=os.Getpid()
+}
+''');print(p)

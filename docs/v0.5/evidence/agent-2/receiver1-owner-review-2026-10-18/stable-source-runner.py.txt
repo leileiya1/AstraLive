@@ -1,0 +1,16 @@
+import json,pathlib,subprocess,time
+m=json.load(open('/tmp/agent2-receiver1-review-current.json'));p=pathlib.Path(m['root']);src=pathlib.Path(m['source']);env=json.loads((p/'env.json').read_text());pg='/opt/homebrew/opt/postgresql@17/bin/';assert (p/'OWNED_AGENT2').read_text()==m['sha'];records=[]
+def run(label,cmd,cwd=None):
+ t=time.monotonic()
+ with (p/'evidence'/f'{label}.txt').open('w') as f:r=subprocess.run(cmd,cwd=cwd,env=env,stdout=f,stderr=subprocess.STDOUT)
+ records.append({'label':label,'command':cmd,'cwd':str(cwd or p),'exitCode':r.returncode,'elapsedSeconds':round(time.monotonic()-t,3)});(p/'evidence/stable-source-commands.json').write_text(json.dumps(records,indent=2));print(label,r.returncode,flush=True)
+ return r.returncode
+try:
+ assert run('restart-stable-source',[pg+'pg_ctl','-D',str(p/'data'),'-l',str(p/'evidence/postgres.txt'),'-o',f"-h 127.0.0.1 -p {m['port']} -k /tmp/a2r1-{p.name.rsplit('-',1)[-1]}",'-w','start'])==0
+ assert run('stable-source-pg-inventory',[pg+'psql',m['dsn'],'-v','ON_ERROR_STOP=1','-c','SELECT version(),current_database(),inet_server_addr(),inet_server_port(); SHOW fsync; SHOW synchronous_commit; SHOW full_page_writes;'])==0
+ run('stable-source-owner-race',['go','test','-race','-json','-count=1','-timeout','120s','./internal/durableintegration/receiver1'],src/'backend')
+ run('stable-source-repeat3',['go','test','-race','-json','-count=3','-timeout','120s','./internal/durableintegration/receiver1','-run','^TestAgent2ReviewCurrentPhysicalRevision'],src/'backend')
+ run('stable-source-vet',['go','vet','./internal/durableintegration/receiver1'],src/'backend')
+finally:
+ r=run('stop-stable-source',[pg+'pg_ctl','-D',str(p/'data'),'-m','fast','-w','stop'])
+ (p/'evidence/cleanup.json').write_text(json.dumps({'ownedRoot':str(p),'port':m['port'],'postgresStopped':not(p/'data/postmaster.pid').exists(),'stopExitCode':r,'dataAndLogsRetained':True,'sharedServicesTouched':False,'gpuStarted':False,'allChildren':'only test-owned launchers closed'},indent=2))

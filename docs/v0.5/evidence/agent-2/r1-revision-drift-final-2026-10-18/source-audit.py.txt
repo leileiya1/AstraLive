@@ -1,0 +1,30 @@
+import pathlib,json,hashlib,subprocess,tarfile,io,shutil
+m=json.load(open('/tmp/a2-r1-final-current.json'));root=pathlib.Path(m['root']);src=pathlib.Path(m['source']);out=root/'evidence';repo='/Users/sapiece/innovationProject/AstraLive-agent-2';sha=m['sha'];fix='58cbc59042c70f9010a368f963257fdad5154b91';latest='a0a05071d3eae1cc918fc7d7c2c56604fea380da';freeze='c7fd46209d3cbc6f58541dba8b4e1c85609c823e'
+def git(*args):return subprocess.check_output(['git',*args],cwd=repo)
+raw=git('archive',sha);tar=tarfile.open(fileobj=io.BytesIO(raw));changed=[];count=0;hashes={}
+for member in tar:
+ if not member.isfile() or not member.name.endswith(('.go','.py','.sql')):continue
+ old=tar.extractfile(member).read();actual=(src/member.name).read_bytes();count+=1
+ if old!=actual:changed.append(member.name)
+ if member.name.startswith(('backend/internal/durableintegration/receiver1/','backend/db/migrations/','runtime/app/receiver1/')):hashes[member.name]=hashlib.sha256(actual).hexdigest()
+assert not changed
+manifest='contracts/v0.5/durable-live-2/manifest.json';man=json.loads((src/manifest).read_text());files={}
+for name,h in man['files'].items():
+ b=(src/name).read_bytes();assert b==git('show',freeze+':'+name);files[name]=hashlib.sha256(b).hexdigest();assert files[name]==h
+assert (src/manifest).read_bytes()==git('show',freeze+':'+manifest)
+digest=hashlib.sha256(json.dumps(files,sort_keys=True,separators=(',',':')).encode()).hexdigest();assert digest==man['normativeDigest']
+probe=src/'backend/internal/durableintegration/receiver1/agent2_owner_review_test.go';probehash=hashlib.sha256(probe.read_bytes()).hexdigest();assert probehash=='db675df45a7bd9ce0cce4dd40ade107d19609b8137873e73e00570eb79914463';assert probe.read_bytes()==git('show','2d7e107b2d21550cd6e32e3f7c412ff4ef8ff028:docs/v0.5/evidence/agent-2/receiver1-owner-review-2026-10-18/agent2-owner-review_test.go.txt')
+prod=['backend/internal/durableintegration/receiver1/installation_gate.go','backend/internal/durableintegration/receiver1/installation_repository.go','backend/internal/durableintegration/receiver1/registrar.go','backend/internal/durableintegration/receiver1/server.go','backend/internal/durableintegration/receiver1/control.go','backend/internal/durableintegration/receiver1/process.go']
+for name in prod:assert (src/name).read_bytes()==git('show',fix+':'+name)==git('show',latest+':'+name)
+after=git('diff','--name-only',sha,latest).decode().splitlines();assert all(n.startswith('docs/') for n in after)
+migrations={}
+for p in (src/'backend/db/migrations').glob('*.sql'):
+ rel=str(p.relative_to(src));assert p.read_bytes()==git('show','7140881c5103e6bc0a33b743f6e726c4b1b7b474:'+rel);migrations[rel]=hashlib.sha256(p.read_bytes()).hexdigest()
+pre=json.loads(git('show',fix+':contracts/v0.5/durable-live-2/protected-files.json'));post=json.loads((src/'contracts/v0.5/durable-live-2/protected-files.json').read_text());changedProtection=[k for k in pre['files'] if pre['files'][k]!=post['files'][k]];assert changedProtection==['output_guardian/tests/conftest.py'];assert len(pre['files'])==len(post['files'])==313
+extras={}
+for name in ['backend/internal/durableintegration/receiver1/agent2_gate_adversarial_test.go','backend/internal/durableintegration/receiver1/testdata/agent2_gate_peer.py']:
+ b=(src/name).read_bytes();extras[name]=hashlib.sha256(b).hexdigest();shutil.copyfile(src/name,out/(pathlib.Path(name).name+'.txt'))
+for srcpath,name in [('/tmp/a2_r1_final_setup.py','owned-setup.py.txt'),('/tmp/a2_r1_full_runs.py','full-runner.py.txt'),('/tmp/a2_r1_write_adversarial.py','initial-probe-generator.py.txt'),('/tmp/a2_r1_final_extra_runs.py','owner-final-runner.py.txt'),('/tmp/a2_r1_final_audit.py','source-audit.py.txt')]:shutil.copyfile(srcpath,out/name)
+shutil.copyfile(probe,out/'original-owner-probe.go.txt')
+(out/'source-audit.json').write_text(json.dumps({'testedSourceSHA':sha,'registrarFixSHA':fix,'latestIntegrationSHA':latest,'unchangedOriginalCodeFileCount':count,'originalCodeChanges':changed,'originalProbeSHA256':probehash,'originalProbeLines':len(probe.read_text().splitlines()),'freezeSHA':freeze,'normativeFileCount':len(files),'normativeDigest':digest,'manifestByteIdentical':True,'productionGateBytesMatchAllThreePins':prod,'migrations':migrations,'protectedFiles':313,'onlyApprovedProtectedPostimageChange':changedProtection,'sourceHashes':hashes,'addedTestOnlyFiles':extras,'afterTestedSHAOnlyDocs':after},indent=2)+'\n')
+print('AUDIT',count,'code files unchanged, original623 exact, normative22',digest)

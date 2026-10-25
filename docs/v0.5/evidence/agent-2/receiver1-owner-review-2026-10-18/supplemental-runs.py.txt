@@ -1,0 +1,8 @@
+import pathlib,json,subprocess,time
+m=json.load(open('/tmp/agent2-receiver1-review-current.json'));p=pathlib.Path(m['root']);s=pathlib.Path(m['source']);env=json.loads((p/'env.json').read_text());py=env['AGENT4_RECEIVER1_PYTHON'];records=[]
+subprocess.run(['gofmt','-w',str(s/'backend/internal/durableintegration/receiver1/agent2_owner_review_test.go')],check=True)
+checks=[('receiver1-plus-owner-probes-race',['go','test','-race','-json','-count=1','-timeout','120s','./internal/durableintegration/receiver1'],s/'backend'),('receiver1-vet',['go','vet','./internal/durableintegration/receiver1'],s/'backend'),('contracts137',[py,'-m','unittest','tests.test_contracts','tests.test_durable_live_contracts','tests.test_durable_answer_contracts','tests.test_answer_contract_repairs','tests.test_receiver_contracts','tests.test_receiver_stop_races','-v'],s),('wire13-adapter8',[py,'-m','unittest','tests.test_durable_live_v2_wire','tests.test_receiver1_wiring','-v'],s),('journal11',[py,'-m','pytest','-p','no:cacheprovider','runtime/tests/test_durable_live_journal.py','-q'],s),('validator-v1',[py,'scripts/validate-durable-live-contracts.py'],s),('validator-v2',[py,'scripts/validate-answer-contract.py'],s),('generated-check',[py,'scripts/durable-live/generate_v2_wire.py','--check'],s)]
+for label,cmd,cwd in checks:
+ t=time.monotonic()
+ with (p/'evidence'/f'{label}.txt').open('w') as f:r=subprocess.run(cmd,cwd=cwd,env=env,stdout=f,stderr=subprocess.STDOUT)
+ records.append(dict(label=label,command=cmd,cwd=str(cwd),exitCode=r.returncode,elapsedSeconds=round(time.monotonic()-t,3)));(p/'evidence/final-commands.json').write_text(json.dumps(records,indent=2));print(label,r.returncode,flush=True)

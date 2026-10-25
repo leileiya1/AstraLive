@@ -1,0 +1,40 @@
+[
+  {
+    "label": "owner-adversarial-final",
+    "cmd": [
+      "go",
+      "test",
+      "-tags=agent2r1review",
+      "-race",
+      "-json",
+      "-timeout",
+      "180s",
+      "-count=1",
+      "-run",
+      "^TestAgent2Final",
+      "./internal/durableintegration/receiver1"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af/source/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 11.292
+  },
+  {
+    "label": "owner-races-repeat3",
+    "cmd": [
+      "go",
+      "test",
+      "-tags=agent2r1review",
+      "-race",
+      "-json",
+      "-timeout",
+      "180s",
+      "-count=3",
+      "-run",
+      "^TestAgent2Final(FortyNative|RetireBeforeConsume|DelayedBackendACK|CASConflict)",
+      "./internal/durableintegration/receiver1"
+    ],
+    "cwd": "/tmp/a2-r1-final-bs8ul5af/source/backend",
+    "exitCode": 0,
+    "elapsedSeconds": 10.42
+  }
+]
